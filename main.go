@@ -50,6 +50,14 @@ func main() {
 		Manifest:        ManifestYaml{},
 		RootPackageTree: pkgtree.PackageTree{
 			ImportRoot: importroot,
+			Packages: map[string]pkgtree.PackageOrErr{
+				"Hello": pkgtree.PackageOrErr{
+					P: pkgtree.Package{
+						Name: "go_stack",
+						
+					},
+				},
+			},
 		},
 	}
 	// Perform static analysis on the current project to find all of its imports.
