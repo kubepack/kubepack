@@ -1,5 +1,3 @@
-// +build ignore
-
 package main
 
 import (
@@ -11,8 +9,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/sdboyer/gps"
-	"github.com/sdboyer/gps/pkgtree"
+	"github.com/tamalsaha/dep/gps"
+	"github.com/tamalsaha/dep/gps/pkgtree"
 	"github.com/ghodss/yaml"
 )
 
@@ -60,7 +58,7 @@ func main() {
 
 	params := gps.SolveParameters{
 		RootDir:         root,
-		Trace:           false,
+		// Trace:           false,
 		TraceLogger:     log.New(os.Stdout, "", 0),
 		ProjectAnalyzer: NaiveAnalyzer{},
 		Manifest:        ManifestYaml{},
@@ -109,13 +107,16 @@ func (a NaiveAnalyzer) DeriveManifestAndLock(path string, n gps.ProjectRoot) (gp
 
 // Reports the name and version of the analyzer. This is used internally as part
 // of gps' hashing memoization scheme.
-func (a NaiveAnalyzer) Info() (name string, version int) {
-	return "example-analyzer", 1
+func (a NaiveAnalyzer) Info() gps.ProjectAnalyzerInfo {
+	return gps.ProjectAnalyzerInfo{
+		Name: "example-analyzer",
+		Version: 1,
+	}
 }
 
 type ManifestYaml struct{}
 
-func (a ManifestYaml) IgnoredPackages() map[string]bool {
+func (a ManifestYaml) IgnoredPackages() *pkgtree.IgnoredRuleset {
 	return nil
 }
 
