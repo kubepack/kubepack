@@ -12,6 +12,9 @@ import (
 	"github.com/tamalsaha/dep/gps"
 	"github.com/tamalsaha/dep/gps/pkgtree"
 	"github.com/ghodss/yaml"
+	// "time"
+	"context"
+	"time"
 )
 
 // This is probably the simplest possible implementation of gps. It does the
@@ -57,7 +60,7 @@ func main() {
 	importroot := filepath.ToSlash(strings.TrimPrefix(root, srcprefix))
 
 	params := gps.SolveParameters{
-		RootDir:         root,
+		RootDir: root,
 		// Trace:           false,
 		TraceLogger:     log.New(os.Stdout, "", 0),
 		ProjectAnalyzer: NaiveAnalyzer{},
@@ -78,20 +81,27 @@ func main() {
 
 	// Set up a SourceManager. This manages interaction with sources (repositories).
 	tempdir, _ := ioutil.TempDir("", "gps-repocache")
-	sourcemgr, _ := gps.NewSourceManager(filepath.Join(tempdir))
+	srcManagerConfig := gps.SourceManagerConfig{
+		Cachedir:       filepath.Join(tempdir),
+		Logger:         log.New(os.Stdout, "", 0),
+		DisableLocking: true,
+	}
+	sourcemgr, _ := gps.NewSourceManager(srcManagerConfig)
 	defer sourcemgr.Release()
 
+	ctx, cancel := context.WithTimeout(context.Background(), 50 * time.Minute)
+	defer cancel()
 	// Prep and run the solver
 	fmt.Println("Got it never")
 	solver, err := gps.Prepare(params, sourcemgr)
 	fmt.Println("Got it", err)
-	solution, err := solver.Solve()
+	solution, err := solver.Solve(ctx)
 	fmt.Println("Hello Error", err)
 	if err == nil {
 		// If no failure, blow away the vendor dir and write a new one out,
 		// stripping nested vendor directories as we go.
 		os.RemoveAll(filepath.Join(root, "vendor"))
-		gps.WriteDepTree(filepath.Join(root, "vendor"), solution, sourcemgr, true)
+		gps.WriteDepTree(filepath.Join(root, "vendor"), solution, sourcemgr, true, log.New(os.Stdout, "", 0))
 	}
 }
 
@@ -109,7 +119,7 @@ func (a NaiveAnalyzer) DeriveManifestAndLock(path string, n gps.ProjectRoot) (gp
 // of gps' hashing memoization scheme.
 func (a NaiveAnalyzer) Info() gps.ProjectAnalyzerInfo {
 	return gps.ProjectAnalyzerInfo{
-		Name: "example-analyzer",
+		Name:    "example-analyzer",
 		Version: 1,
 	}
 }
