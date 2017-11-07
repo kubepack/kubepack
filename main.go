@@ -26,13 +26,14 @@ import (
 //  in the cwd. Be careful!
 type ManifestDef struct {
 	Package string `json:"package"`
-	Owners []struct {
+	Owners  []struct {
 		Name  string `json:"name"`
 		Email string `json:"email"`
 	} `json:"owners"`
 	Dependencies []struct {
 		Package string `json:"package"`
 		Version string `json:"version,omitempty"`
+		Repo    string `json:"repo,omitempty"`
 		Branch  string `json:"branch,omitempty"`
 	} `json:"dependencies"`
 }
@@ -84,9 +85,7 @@ func main() {
 	defer sourcemgr.Release()
 
 	// Prep and run the solver
-	fmt.Println("Got it never")
 	solver, err := gps.Prepare(params, sourcemgr)
-	fmt.Println("Got it", err)
 	solution, err := solver.Solve()
 	fmt.Println("Hello Error", err)
 	if err == nil {
@@ -104,6 +103,14 @@ type NaiveAnalyzer struct{}
 // parameter) at a particular version. That version will be checked out in a
 // directory rooted at path.
 func (a NaiveAnalyzer) DeriveManifestAndLock(path string, n gps.ProjectRoot) (gps.Manifest, gps.Lock, error) {
+	fmt.Println("Hello path", path)
+	fmt.Println("Hello n", n)
+
+	// this check should be unnecessary, but keeping it for now as a canary
+	if _, err := os.Lstat(path); err != nil {
+		return nil, nil, fmt.Errorf("No directory exists at %s; cannot produce ProjectInfo", path)
+	}
+
 	return nil, nil, nil
 }
 
