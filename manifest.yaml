@@ -5,9 +5,6 @@ owners:
 dependencies:
 - package: github.com/Masterminds/vcs
   version: abd1ea7037d3652ef9833a164b627f49225e1131
-- package: github.com/appscode/kubed/tree/master/pkg/api
-  repo: github.com/appscode/kubed
-  branch: master
 - package: github.com/Masterminds/semver
   branch: 2.x
 - package: github.com/sdboyer/gps

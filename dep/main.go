@@ -9,8 +9,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/tamalsaha/dep/gps"
-	"github.com/tamalsaha/dep/gps/pkgtree"
+	"github.com/golang/dep/gps"
+	"github.com/golang/dep/gps/pkgtree"
 	"github.com/ghodss/yaml"
 	// "time"
 	"context"
