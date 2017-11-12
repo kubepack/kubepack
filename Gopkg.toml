@@ -26,9 +26,9 @@
   version = "1.0.0"
 
 [[constraint]]
-  branch = "gomvpkg"
   name = "github.com/golang/dep"
-  source = "https://github.com/tamalsaha/dep.git"
+  branch = "gomvpkg"
+  source = "git@github.com:tamalsaha/dep.git"
 
 [[constraint]]
   name = "github.com/sdboyer/gps"

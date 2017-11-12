@@ -9,12 +9,14 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/golang/dep/gps"
-	"github.com/golang/dep/gps/pkgtree"
-	"github.com/ghodss/yaml"
-	// "time"
 	"context"
 	"time"
+
+	"github.com/ghodss/yaml"
+	"github.com/golang/dep/gps"
+	"github.com/golang/dep/gps/pkgtree"
+	"github.com/packsh/demo-dep/dep/copy"
+	typ "github.com/packsh/demo-dep/type"
 )
 
 // This is probably the simplest possible implementation of gps. It does the
@@ -25,26 +27,17 @@ import (
 //
 //  This will compile and work...and then blow away any vendor directory present
 //  in the cwd. Be careful!
-type ManifestDef struct {
-	Package string `json:"package"`
-	Owners []struct {
-		Name  string `json:"name"`
-		Email string `json:"email"`
-	} `json:"owners"`
-	Dependencies []struct {
-		Package string `json:"package"`
-		Version string `json:"version,omitempty"`
-		Branch  string `json:"branch,omitempty"`
-	} `json:"dependencies"`
-}
 
 func main() {
 	// Assume the current directory is correctly placed on a GOPATH, and that it's the
 	// root of the project.
 	root, _ := os.Getwd()
-	man := root + "/manifest.yaml"
+	err := copy.Copy(root)
+	fmt.Println("Hello error", err)
+	return
+	man := filepath.Join(root, "manifest.yaml")
 	byt, err := ioutil.ReadFile(man)
-	manStruc := ManifestDef{}
+	manStruc := typ.ManifestDef{}
 	err = yaml.Unmarshal(byt, &manStruc)
 	if err != nil {
 		log.Fatalln("Error Occuered-----", err)
@@ -89,7 +82,7 @@ func main() {
 	sourcemgr, _ := gps.NewSourceManager(srcManagerConfig)
 	defer sourcemgr.Release()
 
-	ctx, cancel := context.WithTimeout(context.Background(), 50 * time.Minute)
+	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Minute)
 	defer cancel()
 	// Prep and run the solver
 	fmt.Println("Got it never")
@@ -100,8 +93,10 @@ func main() {
 	if err == nil {
 		// If no failure, blow away the vendor dir and write a new one out,
 		// stripping nested vendor directories as we go.
-		os.RemoveAll(filepath.Join(root, "vendor"))
-		gps.WriteDepTree(filepath.Join(root, "vendor"), solution, sourcemgr, true, log.New(os.Stdout, "", 0))
+		os.RemoveAll(filepath.Join(root, "_vendor"))
+		gps.WriteDepTree(filepath.Join(root, "_vendor"), solution, sourcemgr, true, log.New(os.Stdout, "Hello", 0))
+		err = copy.Copy(root)
+		fmt.Println("Hello error", err)
 	}
 }
 

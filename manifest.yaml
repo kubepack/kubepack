@@ -10,4 +10,5 @@ dependencies:
 - package: github.com/sdboyer/gps
   branch: master
 - package: github.com/termie/go-shutil
+  folder: test
   version: bcacb06fecaeec8dc42af03c87c6949f4a05c74c

@@ -36,8 +36,8 @@
   branch = "gomvpkg"
   name = "github.com/golang/dep"
   packages = ["gps","gps/internal/pb","gps/paths","gps/pkgtree","internal/fs"]
-  revision = "217d6ab629654ed9ec93c9f37bc80bf831daa641"
-  source = "https://github.com/tamalsaha/dep.git"
+  revision = "e9669650a14e622ea3b468c6bc46815e426ae5bd"
+  source = "git@github.com:tamalsaha/dep.git"
 
 [[projects]]
   branch = "master"
@@ -76,28 +76,32 @@
   version = "v0.16.3"
 
 [[projects]]
+  branch = "master"
   name = "golang.org/x/net"
   packages = ["context"]
-  revision = "f2499483f923065a842d38eb4c7f1927e6fc6e6d"
+  revision = "a337091b0525af65de94df2eb7e98bd9962dcbe2"
 
 [[projects]]
+  branch = "master"
   name = "golang.org/x/sync"
   packages = ["errgroup"]
-  revision = "316e794f7b5e3df4e95175a45a5fb8b12f85cb4f"
+  revision = "fd80eb99c8f653c847d294a001bdf2a3a6f768f5"
 
 [[projects]]
+  branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "8f0908ab3b2457e2e15403d3697c9ef5cb4b57a9"
+  revision = "1e2299c37cc91a509f1b12369872d27be0ce98a6"
 
 [[projects]]
+  branch = "v2"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
-  revision = "53feefa2559fb8dfa8d81baad31be332c97d6c77"
+  revision = "eb3733d160e74a9c7e442f435eb3bea458e1d19f"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "b8fcf20cbe868619864341ea91b2f60fa22065debdf3a25f654c5d5a87d5f336"
+  inputs-digest = "54097ab5ba3a18496d50133e53158e393eaac6df7ff9c466a7c50ca3168686dc"
   solver-name = "gps-cdcl"
   solver-version = 1
