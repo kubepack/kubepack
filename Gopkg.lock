@@ -33,11 +33,10 @@
   version = "v1.0.0"
 
 [[projects]]
-  branch = "gomvpkg"
+  branch = "master"
   name = "github.com/golang/dep"
   packages = ["gps","gps/internal/pb","gps/paths","gps/pkgtree","internal/fs"]
-  revision = "e9669650a14e622ea3b468c6bc46815e426ae5bd"
-  source = "git@github.com:tamalsaha/dep.git"
+  revision = "4ecb1d1fb9c38bf44686a7292f586bb165a10c1b"
 
 [[projects]]
   branch = "master"
@@ -102,6 +101,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "54097ab5ba3a18496d50133e53158e393eaac6df7ff9c466a7c50ca3168686dc"
+  inputs-digest = "0b0ccaae169cb1a6f4338b93761a6ace523591e9d6e66285720f2e986049b425"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -41,7 +41,7 @@ func Copy(root string) error {
 func (a manifestStr) copyCallback(path string, info os.FileInfo, err error) error {
 	man := filepath.Join(a.root, "manifest.yaml")
 	byt, err := ioutil.ReadFile(man)
-	manStruc := typ.ManifestDef{}
+	manStruc := typ.ManifestDefinition{}
 	err = yaml.Unmarshal(byt, &manStruc)
 	for _, val := range manStruc.Dependencies {
 		tmpPath := filepath.Join(val.Package, val.Folder)

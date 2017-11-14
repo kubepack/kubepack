@@ -27,8 +27,7 @@
 
 [[constraint]]
   name = "github.com/golang/dep"
-  branch = "gomvpkg"
-  source = "git@github.com:tamalsaha/dep.git"
+  branch = "master"
 
 [[constraint]]
   name = "github.com/sdboyer/gps"
