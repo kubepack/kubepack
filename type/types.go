@@ -1,6 +1,6 @@
 package types
 
-type ManifestDef struct {
+type ManifestDefinition struct {
 	Package string `json:"package"`
 	Owners  []struct {
 		Name  string `json:"name"`
@@ -11,6 +11,6 @@ type ManifestDef struct {
 		Version string `json:"version,omitempty"`
 		Branch  string `json:"branch,omitempty"`
 		Folder  string `json:"folder,omitempty"`
+		Repo    string `json:"repo,omitempty"`
 	} `json:"dependencies"`
 }
-
