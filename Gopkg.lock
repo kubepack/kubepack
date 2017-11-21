@@ -33,16 +33,17 @@
   version = "v1.0.0"
 
 [[projects]]
-  branch = "master"
+  branch = "dep-mod"
   name = "github.com/golang/dep"
   packages = ["gps","gps/internal/pb","gps/paths","gps/pkgtree","internal/fs"]
-  revision = "4ecb1d1fb9c38bf44686a7292f586bb165a10c1b"
+  revision = "520fe860c6acd880e61255451aacbb8ab9fef5d2"
+  source = "https://github.com/packsh/dep.git"
 
 [[projects]]
   branch = "master"
   name = "github.com/golang/protobuf"
   packages = ["proto"]
-  revision = "1643683e1b54a9e88ad26d98f81400c8c9d9f4f9"
+  revision = "1e59b77b52bf8e4b449a57e6f79f21226d571845"
 
 [[projects]]
   name = "github.com/jmank88/nuts"
@@ -78,7 +79,7 @@
   branch = "master"
   name = "golang.org/x/net"
   packages = ["context"]
-  revision = "a337091b0525af65de94df2eb7e98bd9962dcbe2"
+  revision = "9dfe39835686865bff950a07b394c12a98ddc811"
 
 [[projects]]
   branch = "master"
@@ -90,17 +91,17 @@
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "1e2299c37cc91a509f1b12369872d27be0ce98a6"
+  revision = "328643532ee3c60c099171d4ce2cad0ca0354ca9"
 
 [[projects]]
   branch = "v2"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
-  revision = "eb3733d160e74a9c7e442f435eb3bea458e1d19f"
+  revision = "287cf08546ab5e7e37d55a84f7ed3fd1db036de5"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "0b0ccaae169cb1a6f4338b93761a6ace523591e9d6e66285720f2e986049b425"
+  inputs-digest = "431a9596b2aa3bf7f87923ee661ae986706758bc17b7cf2244d1741a33c60980"
   solver-name = "gps-cdcl"
   solver-version = 1

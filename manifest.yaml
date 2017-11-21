@@ -3,16 +3,5 @@ owners:
 - name: Sam Boyer
   email: tech@samboyer.org
 dependencies:
-- package: github.com/Masterminds/vcs
-  version: v1.12.0
-- package: github.com/Masterminds/semver
-  branch: 2.x
-- package: github.com/sdboyer/gps
+- package: github.com/a8uhnf/test-yml
   branch: master
-  folder: internal
-- package: github.com/termie/go-shutil
-  folder: test
-  revision: bcacb06fecaeec8dc42af03c87c6949f4a05c74c
-- package: github.com/golang/dep
-  branch: cleanupFSTests
-  repo: https://github.com/tamalsaha/dep.git
