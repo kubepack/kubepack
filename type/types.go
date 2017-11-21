@@ -1,5 +1,7 @@
 package types
 
+const ManifestFile = "manifest.yaml"
+
 type ManifestDefinition struct {
 	Package string `json:"package"`
 	Owners []struct {

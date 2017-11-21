@@ -151,16 +151,9 @@ func (a ManifestYaml) RequiredPackages() map[string]bool {
 
 func (a ManifestYaml) Overrides() gps.ProjectConstraints {
 	return nil
-	return gps.ProjectConstraints{
-		"github.com/Masterminds/semver": gps.ProjectProperties{
-			Source:     "github.com/Masterminds/semver",
-			Constraint: gps.NewBranch("2.x"),
-		},
-	}
 }
 
 func (a ManifestYaml) DependencyConstraints() gps.ProjectConstraints {
-	fmt.Println("hello manifest DependencyConstraints method")
 	projectConstraints := make(gps.ProjectConstraints)
 
 	man := filepath.Join(a.root, "manifest.yaml")
@@ -181,6 +174,7 @@ func (a ManifestYaml) DependencyConstraints() gps.ProjectConstraints {
 			properties.Source = value.Package
 		}
 		if value.Branch != "" {
+			fmt.Println("Hello branch -----", value.Branch)
 			properties.Constraint = gps.NewBranch(value.Branch)
 		} else if value.Version != "" {
 			properties.Constraint = gps.Revision(value.Version)
@@ -199,10 +193,9 @@ type InternalManifest struct {
 }
 
 func (a InternalManifest) DependencyConstraints() gps.ProjectConstraints {
-	fmt.Println("hello InternalManifest DependencyConstraints method")
 	projectConstraints := make(gps.ProjectConstraints)
 
-	man := filepath.Join(a.root, "manifest.yaml")
+	man := filepath.Join(a.root, typ.ManifestFile)
 	byt, err := ioutil.ReadFile(man)
 	manStruc := typ.ManifestDefinition{}
 	err = yaml.Unmarshal(byt, &manStruc)
@@ -227,23 +220,56 @@ func (a InternalManifest) DependencyConstraints() gps.ProjectConstraints {
 	return projectConstraints
 }
 
+type InternalLock struct {
+	root string
+}
+
+func (a InternalLock) Projects() []gps.LockedProject {
+	man := filepath.Join(a.root, typ.ManifestFile)
+	byt, err := ioutil.ReadFile(man)
+	manStruc := typ.ManifestDefinition{}
+	err = yaml.Unmarshal(byt, &manStruc)
+	if err != nil {
+		panic(err)
+	}
+	lockedProjs := make([]gps.LockedProject, len(manStruc.Dependencies))
+
+	for key, value := range manStruc.Dependencies {
+		// r := gps.Revision()
+		// properties := gps.ProjectProperties{}
+		ident := gps.ProjectIdentifier{
+			ProjectRoot: gps.ProjectRoot(value.Package),
+		}
+		var v gps.Version
+		if value.Repo != "" {
+			ident.Source = value.Repo
+		} else {
+			ident.Source = value.Package
+		}
+
+		if value.Branch != "" {
+			v = gps.NewBranch(value.Branch)
+		} else if value.Version != "" {
+			// properties.Constraint = gps.Revision(value.Version)
+			v = gps.NewVersion(value.Version)
+		}
+		lockedProjs[key] = &gps.LockedProject{
+			ident,
+			v,
+			"",
+		}
+	}
+	return lockedProjs
+}
+
+func (a InternalLock) InputsDigest() []byte {
+	return nil
+}
 
 func (a NaiveAnalyzer) lookForManifest(root string) (gps.Manifest, gps.Lock, error) {
-	/*mpath := filepath.Join(root, "manifest.yaml")
-	if _, err := os.Lstat(mpath); err != nil {
-		return nil, nil, err
-	}
-	yml, err := ioutil.ReadFile(mpath)
-	if err != nil {
-		return nil, nil, fmt.Errorf("Error while reading glide manifest data: %s", root)
-	}
-
-	m, _, err := typ.ConfigFromYaml(yml)
-	if err != nil {
-		return nil, nil, fmt.Errorf("Error while parsing glide manifest data: %s", root)
-	}
-	return m, nil, nil*/
 	man := &InternalManifest{}
 	man.root = root
-	return man, nil, nil
+	lck := &InternalLock{}
+	lck.root = root
+	return man, lck, nil
 }
