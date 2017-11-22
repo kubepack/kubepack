@@ -156,7 +156,7 @@ func (a ManifestYaml) Overrides() gps.ProjectConstraints {
 func (a ManifestYaml) DependencyConstraints() gps.ProjectConstraints {
 	projectConstraints := make(gps.ProjectConstraints)
 
-	man := filepath.Join(a.root, "manifest.yaml")
+	man := filepath.Join(a.root, typ.ManifestFile)
 	byt, err := ioutil.ReadFile(man)
 	manStruc := typ.ManifestDefinition{}
 	err = yaml.Unmarshal(byt, &manStruc)
@@ -220,46 +220,24 @@ func (a InternalManifest) DependencyConstraints() gps.ProjectConstraints {
 	return projectConstraints
 }
 
+func (a InternalManifest) Overrides() gps.ProjectConstraints {
+	// return map[gps.ProjectRoot("")]
+	fmt.Println("Hello Project Constraints overrrides------------")
+	return gps.ProjectConstraints{
+		gps.ProjectRoot("github.com/a8uhnf/test-go2"): gps.ProjectProperties{
+			Source: "github.com/a8uhnf/test-go2",
+			Constraint: gps.NewBranch("test-dep"),
+		},
+	}
+	return nil
+}
+
 type InternalLock struct {
 	root string
 }
 
 func (a InternalLock) Projects() []gps.LockedProject {
-	man := filepath.Join(a.root, typ.ManifestFile)
-	byt, err := ioutil.ReadFile(man)
-	manStruc := typ.ManifestDefinition{}
-	err = yaml.Unmarshal(byt, &manStruc)
-	if err != nil {
-		panic(err)
-	}
-	lockedProjs := make([]gps.LockedProject, len(manStruc.Dependencies))
-
-	for key, value := range manStruc.Dependencies {
-		// r := gps.Revision()
-		// properties := gps.ProjectProperties{}
-		ident := gps.ProjectIdentifier{
-			ProjectRoot: gps.ProjectRoot(value.Package),
-		}
-		var v gps.Version
-		if value.Repo != "" {
-			ident.Source = value.Repo
-		} else {
-			ident.Source = value.Package
-		}
-
-		if value.Branch != "" {
-			v = gps.NewBranch(value.Branch)
-		} else if value.Version != "" {
-			// properties.Constraint = gps.Revision(value.Version)
-			v = gps.NewVersion(value.Version)
-		}
-		lockedProjs[key] = &gps.LockedProject{
-			ident,
-			v,
-			"",
-		}
-	}
-	return lockedProjs
+	return nil
 }
 
 func (a InternalLock) InputsDigest() []byte {
