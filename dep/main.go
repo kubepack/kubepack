@@ -111,7 +111,6 @@ type NaiveAnalyzer struct {
 // parameter) at a particular version. That version will be checked out in a
 // directory rooted at path.
 func (a NaiveAnalyzer) DeriveManifestAndLock(path string, n gps.ProjectRoot) (gps.Manifest, gps.Lock, error) {
-	fmt.Println("hello world naive analyzer.........", path, n)
 	// man := filepath.Join(filepath.Join(path, "manifest.yaml"))
 	// return nil, nil, nil
 	// this check should be unnecessary, but keeping it for now as a canary
@@ -150,6 +149,38 @@ func (a ManifestYaml) RequiredPackages() map[string]bool {
 }
 
 func (a ManifestYaml) Overrides() gps.ProjectConstraints {
+	fmt.Println("Hello world!!!!--------", a.root)
+	ovrr := gps.ProjectConstraints{}
+
+	mpath := filepath.Join(a.root, typ.ManifestFile)
+	byt, err := ioutil.ReadFile(mpath)
+	manStruc := typ.ManifestDefinition{}
+	err = yaml.Unmarshal(byt, &manStruc)
+	if err != nil {
+		log.Fatalln("Error Occuered-----", err)
+	}
+
+	for _, value := range manStruc.Dependencies {
+		properties := gps.ProjectProperties{}
+		if value.Repo != "" {
+			properties.Source = value.Repo
+		} else {
+			properties.Source = value.Package
+		}
+		if value.Branch != "" {
+			properties.Constraint = gps.NewBranch(value.Branch)
+		} else if value.Version != "" {
+			properties.Constraint = gps.Revision(value.Version)
+		}
+		ovrr[gps.ProjectRoot(value.Package)] = properties
+	}
+	return ovrr
+	return gps.ProjectConstraints{
+		gps.ProjectRoot("github.com/a8uhnf/test-yml"): gps.ProjectProperties{
+			Source:     "github.com/a8uhnf/test-yml",
+			Constraint: gps.NewVersion("0.0.1"),
+		},
+	}
 	return nil
 }
 
@@ -165,8 +196,6 @@ func (a ManifestYaml) DependencyConstraints() gps.ProjectConstraints {
 	}
 
 	for _, value := range manStruc.Dependencies {
-		// fmt.Println("Hello key", key)
-		// fmt.Println("Hello value package", value.Package)
 		properties := gps.ProjectProperties{}
 		if value.Repo != "" {
 			properties.Source = value.Repo
@@ -174,7 +203,6 @@ func (a ManifestYaml) DependencyConstraints() gps.ProjectConstraints {
 			properties.Source = value.Package
 		}
 		if value.Branch != "" {
-			fmt.Println("Hello branch -----", value.Branch)
 			properties.Constraint = gps.NewBranch(value.Branch)
 		} else if value.Version != "" {
 			properties.Constraint = gps.Revision(value.Version)
@@ -220,18 +248,6 @@ func (a InternalManifest) DependencyConstraints() gps.ProjectConstraints {
 	return projectConstraints
 }
 
-func (a InternalManifest) Overrides() gps.ProjectConstraints {
-	// return map[gps.ProjectRoot("")]
-	fmt.Println("Hello Project Constraints overrrides------------")
-	return gps.ProjectConstraints{
-		gps.ProjectRoot("github.com/a8uhnf/test-go2"): gps.ProjectProperties{
-			Source: "github.com/a8uhnf/test-go2",
-			Constraint: gps.NewBranch("test-dep"),
-		},
-	}
-	return nil
-}
-
 type InternalLock struct {
 	root string
 }
@@ -245,6 +261,10 @@ func (a InternalLock) InputsDigest() []byte {
 }
 
 func (a NaiveAnalyzer) lookForManifest(root string) (gps.Manifest, gps.Lock, error) {
+	mpath := filepath.Join(root, typ.ManifestFile)
+	if _, err := os.Lstat(mpath); err != nil {
+		return nil, nil, err
+	}
 	man := &InternalManifest{}
 	man.root = root
 	lck := &InternalLock{}

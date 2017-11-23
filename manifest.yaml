@@ -4,4 +4,4 @@ owners:
   email: tech@samboyer.org
 dependencies:
 - package: github.com/a8uhnf/test-yml
-  branch: test-dep
+  version: 0.0.1

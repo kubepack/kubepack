@@ -28,4 +28,4 @@
 [[constraint]]
   name = "github.com/golang/dep"
   source = "https://github.com/packsh/dep.git"
-  branch = "dep-mod"
+  branch = "dep-bypass"

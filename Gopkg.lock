@@ -33,10 +33,10 @@
   version = "v1.0.0"
 
 [[projects]]
-  branch = "dep-mod"
+  branch = "dep-bypass"
   name = "github.com/golang/dep"
   packages = ["gps","gps/internal/pb","gps/paths","gps/pkgtree","internal/fs"]
-  revision = "520fe860c6acd880e61255451aacbb8ab9fef5d2"
+  revision = "19731f27e8cb7ac7b567a19413be0b9a44bf9a82"
   source = "https://github.com/packsh/dep.git"
 
 [[projects]]
@@ -79,7 +79,7 @@
   branch = "master"
   name = "golang.org/x/net"
   packages = ["context"]
-  revision = "9dfe39835686865bff950a07b394c12a98ddc811"
+  revision = "c7086645de248775cbf2373cf5ca4d2fa664b8c1"
 
 [[projects]]
   branch = "master"
@@ -91,7 +91,7 @@
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "328643532ee3c60c099171d4ce2cad0ca0354ca9"
+  revision = "82aafbf43bf885069dc71b7e7c2f9d7a614d47da"
 
 [[projects]]
   branch = "v2"
@@ -102,6 +102,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "431a9596b2aa3bf7f87923ee661ae986706758bc17b7cf2244d1741a33c60980"
+  inputs-digest = "d8c2e1ecb64996f136094639172ee031eee28d9b92c30dc6f584abb335f0540b"
   solver-name = "gps-cdcl"
   solver-version = 1
