@@ -3,6 +3,8 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
+	"github.com/packsh/demo-dep/dep/cmd/edit"
+
 )
 var RootCmd = &cobra.Command{
 	Use:   "heft",
@@ -10,13 +12,21 @@ var RootCmd = &cobra.Command{
 }
 
 func NewDemoDepCmd() *cobra.Command {
-	fmt.Println("Hello World!!!!")
 	cmds := &cobra.Command{
 		Use: "ddep",
 		Short: "Cli for demo dep",
 		Long: "A alternative kubernetes dependency manager...",
 	}
 
+	tstCmd := &cobra.Command{
+		Use: "test",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println("XXXXXHello world!!!---------", args)
+			fmt.Println("XXXXXHello world!!!---------", args)
+		},
+	}
+	cmds.AddCommand(tstCmd)
+	cmds.AddCommand(edit.NewEditCommand())
 	return cmds
 }
 

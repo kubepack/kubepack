@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	// "github.com/spf13/cobra"
 	// "github.com/spf13/viper"
 	"github.com/packsh/demo-dep/dep/cmd"
@@ -13,8 +12,7 @@ import (
 	Long: "A alternative kubernetes package manager",
 }*/
 
-func main()  {
-	fmt.Println("Hello World!!!!!")
+func main() {
 	// rootCmd.Execute()
 	cmd := cmd.NewDemoDepCmd()
 	if err := cmd.Execute(); err != nil {
