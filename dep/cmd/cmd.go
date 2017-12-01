@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/packsh/demo-dep/dep/cmd/edit"
-
 )
+
 var RootCmd = &cobra.Command{
 	Use:   "heft",
 	Short: "Access heft.io from the command line",
@@ -13,9 +13,9 @@ var RootCmd = &cobra.Command{
 
 func NewDemoDepCmd() *cobra.Command {
 	cmds := &cobra.Command{
-		Use: "ddep",
+		Use:   "ddep",
 		Short: "Cli for demo dep",
-		Long: "A alternative kubernetes dependency manager...",
+		Long:  "A alternative kubernetes dependency manager...",
 	}
 
 	tstCmd := &cobra.Command{
@@ -30,7 +30,7 @@ func NewDemoDepCmd() *cobra.Command {
 	return cmds
 }
 
-
 func init() {
+	fmt.Println("hello world------")
 	// RootCmd.AddCommand(versionCmd)
 }

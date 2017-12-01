@@ -3,15 +3,27 @@ package edit
 import (
 	"github.com/spf13/cobra"
 	"fmt"
-	"log"
+	// "log"
 	"os"
 	"path/filepath"
-	"io"
 	"k8s.io/kubernetes/pkg/kubectl/cmd/util/editor"
 	"io/ioutil"
+	"bytes"
+
+	apps "k8s.io/api/apps/v1beta1"
+	// "k8s.io/apimachinery/pkg/util/jsonmergepatch"
+	"k8s.io/apimachinery/pkg/util/strategicpatch"
+	"github.com/ghodss/yaml"
 )
 
+var patchTypes = []string{"json", "merge", "strategic"}
+
 const defaultEditor = "nano"
+
+var (
+	srcPath   string
+	patchType string
+)
 
 func NewEditCommand() *cobra.Command {
 	cmd := &cobra.Command{
@@ -24,83 +36,76 @@ func NewEditCommand() *cobra.Command {
 		},
 	}
 
-	AddEditFlag(cmd)
+	// AddEditFlag(cmd)
+
+	cmd.Flags().StringVarP(&srcPath, "src", "s", "", "File want to edit")
+	cmd.Flags().StringVarP(&patchType, "type", "t", "strategic", fmt.Sprintf("Type of patch; one of %v", patchTypes))
 
 	return cmd
 }
 
 func AddEditFlag(cmd *cobra.Command) {
-	cmd.Flags().StringP("file", "f", "", "Edit file, provided through the --file flag.")
+	// cmd.Flags().StringP("file", "f", "888888", "Edit file, provided through the --file flag.")
 }
 
 func RunEdit(cmd *cobra.Command) {
 	s, err := cmd.Flags().GetString("file")
 	if err != nil {
-		log.Fatalln("Error occurred during get flag", err)
+		fmt.Errorf("Error occurred during get flag. %v", err)
 	}
 
 	root, err := os.Getwd()
 	if err != nil {
-		log.Fatalln("Error during get root path.", err)
+		fmt.Errorf("Error during get root path.", err)
 	}
 	path := filepath.Join(root, s)
-	fmt.Println("Hello path......", path)
 
-	file, err := os.Stat(path)
-
+	_, err = os.Stat(path)
 	if err != nil {
-		log.Fatalln(err)
+		fmt.Errorf("--------------", err)
 	}
 
-	fmt.Println(file.Name())
+	srcFile, err := ioutil.ReadFile(path)
 
-	fileByte, err := ioutil.ReadFile(path)
-	// fileInfo, err := io.ReadFile(path)
-
-	fmt.Println("Hello file byte array....", string(fileByte))
-	// fmt.Println("Hello file byte array....", fileByte)
-
-	// CopyFileToTempDir(path)
+	buf := &bytes.Buffer{}
+	buf.Write(srcFile)
 
 	edit := NewDefaultEditor()
+	edited, filess, err := edit.LaunchTempFile(fmt.Sprintf("%s-edit-", filepath.Base(os.Args[0])), ".yaml", buf)
+	fmt.Println("Hello os---------------", string(edited), filess)
+	fmt.Println("Hello Working-----------------------")
+
+	srcJson, err := yaml.YAMLToJSON(srcFile)
+	if err != nil {
+		fmt.Errorf("Error, while converting source from yaml to json", err)
+	}
+
+	dstJson, err := yaml.YAMLToJSON(edited)
+	if err != nil {
+		fmt.Errorf("Error, while converting destination from yaml to json", err)
+	}
+
+	GetPatch(srcJson, dstJson)
 }
 
-func CopyFileToTempDir(src string, file os.FileInfo)  {
-	// Open original file
-	originalFile, err := os.Open(src)
+func GetPatch(src, dst []byte) {
+	var err error
+	var patch []byte
+
+	fmt.Println("hello world----XXXXXX", string(src), string(dst))
+
+	switch patchType {
+	case "strategic":
+		patch, err = strategicpatch.CreateTwoWayMergePatch(src, dst, apps.Deployment{})
+	}
 	if err != nil {
-		log.Fatal(err)
+		fmt.Errorf("Error to generate patch", err)
 	}
-	defer originalFile.Close()
 
-	for i := 0; i < 10000; i++  {
-		tmpDir := os.TempDir()
-		path := filepath.Join(tmpDir, file.Name())
 
-		if  {
+	fmt.Println(string(patch))
 
-		}
-	}
-	// Create new file
-	newFile, err := os.Create(dst)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer newFile.Close()
-
-	// Copy the bytes to destination from source
-	bytesWritten, err := io.Copy(newFile, originalFile)
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Printf("Copied %d bytes.", bytesWritten)
-
-	// Commit the file contents
-	// Flushes memory to disk
-	err = newFile.Sync()
-	if err != nil {
-		log.Fatal(err)
-	}
+	fmt.Println(src, dst)
 }
 
 func NewDefaultEditor() editor.Editor {

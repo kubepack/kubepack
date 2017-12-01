@@ -7,10 +7,6 @@ import (
 	"os"
 )
 
-/*var rootCmd = &cobra.Command{
-	Use: "ddep",
-	Long: "A alternative kubernetes package manager",
-}*/
 
 func main() {
 	// rootCmd.Execute()

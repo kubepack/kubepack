@@ -29,3 +29,23 @@
   name = "github.com/golang/dep"
   source = "https://github.com/packsh/dep.git"
   branch = "dep-bypass"
+
+[[constraint]]
+  revision = "019ae5ada31de202164b118aee88ee2d14075c31"
+  name = "k8s.io/apimachinery"
+
+[[constraint]]
+  name = "k8s.io/kubernetes"
+  version = "v1.8.0"
+
+[[constraint]]
+  name = "github.com/docker/docker"
+  branch = "master"
+
+[[constraint]]
+  name = "github.com/docker/distribution"
+  branch = "master"
+
+[[constraint]]
+  name = ""k8s.io/api"
+  version = "kubernetes-1.8.0"
