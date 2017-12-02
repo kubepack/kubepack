@@ -34,18 +34,24 @@
   revision = "019ae5ada31de202164b118aee88ee2d14075c31"
   name = "k8s.io/apimachinery"
 
+
 [[constraint]]
   name = "k8s.io/kubernetes"
   version = "v1.8.0"
 
 [[constraint]]
+  branch = "master"
   name = "github.com/docker/docker"
-  branch = "master"
 
 [[constraint]]
+  branch = "=master"
   name = "github.com/docker/distribution"
-  branch = "master"
 
-[[constraint]]
-  name = ""k8s.io/api"
-  version = "kubernetes-1.8.0"
+[[override]]
+  branch = "master"
+  name = "github.com/docker/distribution"
+
+[[override]]
+  branch = "parse-constraints-with-dash-in-pre"
+  name = "github.com/Masterminds/semver"
+  source = "https://github.com/carolynvs/semver.git"

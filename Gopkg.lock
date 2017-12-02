@@ -81,10 +81,10 @@
   version = "v3.1.0"
 
 [[projects]]
+  branch = "master"
   name = "github.com/docker/distribution"
-  packages = ["digest","reference"]
-  revision = "48294d928ced5dd9b378f7fd7c6f5da3ff3f2c89"
-  version = "v2.6.2"
+  packages = ["digestset","reference"]
+  revision = "bc3c7b0525e59d3ecfab3e1568350895fd4a462f"
 
 [[projects]]
   name = "github.com/docker/docker"
@@ -298,6 +298,12 @@
   revision = "6a197d5ea61168f2ac821de2b7f011b250904900"
 
 [[projects]]
+  name = "github.com/opencontainers/go-digest"
+  packages = ["."]
+  revision = "279bed98673dd5bef374d3b6e4b09e2af76183bf"
+  version = "v1.0.0-rc1"
+
+[[projects]]
   name = "github.com/pborman/uuid"
   packages = ["."]
   revision = "e790cca94e6cc75c7064b1332e63811d4aae1a53"
@@ -474,7 +480,7 @@
   branch = "master"
   name = "k8s.io/utils"
   packages = ["exec"]
-  revision = "a3c8e744b9d1547626d1c4f520069a1cb01a3ce9"
+  revision = "66423a0293c555337adc04fe2c59748151291de8"
 
 [[projects]]
   branch = "master"
@@ -485,6 +491,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "286779a3c546be1ffcb005d6d1e9dab02bcc15139b274ad5db6455d22aaa84e4"
+  inputs-digest = "5806c456995f9559c99a9e68d4d6e463aeafd2510e598a5fba3a2d049d39c66e"
   solver-name = "gps-cdcl"
   solver-version = 1

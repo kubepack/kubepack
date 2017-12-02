@@ -25,6 +25,10 @@ var (
 	patchType string
 )
 
+type Test struct {
+
+}
+
 func NewEditCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "edit (filename)",
@@ -49,16 +53,11 @@ func AddEditFlag(cmd *cobra.Command) {
 }
 
 func RunEdit(cmd *cobra.Command) {
-	s, err := cmd.Flags().GetString("file")
-	if err != nil {
-		fmt.Errorf("Error occurred during get flag. %v", err)
-	}
-
 	root, err := os.Getwd()
 	if err != nil {
 		fmt.Errorf("Error during get root path.", err)
 	}
-	path := filepath.Join(root, s)
+	path := filepath.Join(root, srcPath)
 
 	_, err = os.Stat(path)
 	if err != nil {
@@ -101,11 +100,7 @@ func GetPatch(src, dst []byte) {
 	if err != nil {
 		fmt.Errorf("Error to generate patch", err)
 	}
-
-
-	fmt.Println(string(patch))
-
-	fmt.Println(src, dst)
+	fmt.Println("hello patch", string(patch))
 }
 
 func NewDefaultEditor() editor.Editor {
