@@ -25,22 +25,15 @@ var (
 	patchType string
 )
 
-type Test struct {
-
-}
-
 func NewEditCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "edit (filename)",
 		Short: "Edit a file.",
 		Long:  "Edit a _vendor file to generate kubectl patch.",
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("Hello edit Commands!!!!", args)
 			RunEdit(cmd)
 		},
 	}
-
-	// AddEditFlag(cmd)
 
 	cmd.Flags().StringVarP(&srcPath, "src", "s", "", "File want to edit")
 	cmd.Flags().StringVarP(&patchType, "type", "t", "strategic", fmt.Sprintf("Type of patch; one of %v", patchTypes))
@@ -70,9 +63,7 @@ func RunEdit(cmd *cobra.Command) {
 	buf.Write(srcFile)
 
 	edit := NewDefaultEditor()
-	edited, filess, err := edit.LaunchTempFile(fmt.Sprintf("%s-edit-", filepath.Base(os.Args[0])), ".yaml", buf)
-	fmt.Println("Hello os---------------", string(edited), filess)
-	fmt.Println("Hello Working-----------------------")
+	edited, _, err := edit.LaunchTempFile(fmt.Sprintf("%s-edit-", filepath.Base(os.Args[0])), ".yaml", buf)
 
 	srcJson, err := yaml.YAMLToJSON(srcFile)
 	if err != nil {
@@ -91,8 +82,6 @@ func GetPatch(src, dst []byte) {
 	var err error
 	var patch []byte
 
-	// fmt.Println("hello world----XXXXXX", string(src), string(dst))
-
 	switch patchType {
 	case "strategic":
 		patch, err = strategicpatch.CreateTwoWayMergePatch(src, dst, apps.Deployment{})
@@ -104,7 +93,7 @@ func GetPatch(src, dst []byte) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	fmt.Println("hello patch: ")
+	fmt.Println("Patch: ")
 	fmt.Println(string(yamlPatch))
 }
 

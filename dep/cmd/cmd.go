@@ -31,6 +31,5 @@ func NewDemoDepCmd() *cobra.Command {
 }
 
 func init() {
-	fmt.Println("hello world------")
 	// RootCmd.AddCommand(versionCmd)
 }
