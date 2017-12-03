@@ -3,7 +3,7 @@ package edit
 import (
 	"github.com/spf13/cobra"
 	"fmt"
-	// "log"
+	"log"
 	"os"
 	"path/filepath"
 	"k8s.io/kubernetes/pkg/kubectl/cmd/util/editor"
@@ -91,7 +91,7 @@ func GetPatch(src, dst []byte) {
 	var err error
 	var patch []byte
 
-	fmt.Println("hello world----XXXXXX", string(src), string(dst))
+	// fmt.Println("hello world----XXXXXX", string(src), string(dst))
 
 	switch patchType {
 	case "strategic":
@@ -100,7 +100,12 @@ func GetPatch(src, dst []byte) {
 	if err != nil {
 		fmt.Errorf("Error to generate patch", err)
 	}
-	fmt.Println("hello patch", string(patch))
+	yamlPatch, err := yaml.JSONToYAML(patch)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	fmt.Println("hello patch: ")
+	fmt.Println(string(yamlPatch))
 }
 
 func NewDefaultEditor() editor.Editor {
