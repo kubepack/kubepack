@@ -1,3 +1,5 @@
 apiVersion: apps/v1beta2
+metadata:
+  name: nginx1
 spec:
   replicas: 2

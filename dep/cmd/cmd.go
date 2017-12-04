@@ -3,7 +3,8 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"github.com/packsh/demo-dep/dep/cmd/edit"
+	// "github.com/packsh/demo-dep/dep/cmd/edit"
+	// "github.com/packsh/demo-dep/dep/cmd/edit"
 )
 
 var RootCmd = &cobra.Command{
@@ -26,7 +27,7 @@ func NewDemoDepCmd() *cobra.Command {
 		},
 	}
 	cmds.AddCommand(tstCmd)
-	cmds.AddCommand(edit.NewEditCommand())
+	cmds.AddCommand(NewEditCommand())
 	return cmds
 }
 
