@@ -14,15 +14,19 @@ import (
 	// "k8s.io/apimachinery/pkg/util/jsonmergepatch"
 	"k8s.io/apimachinery/pkg/util/strategicpatch"
 	"github.com/ghodss/yaml"
+	"strings"
 )
 
 var patchTypes = []string{"json", "merge", "strategic"}
 
 const defaultEditor = "nano"
+const _VendorFolder = "_vendor"
+const PatchFolder = "patch"
 
 var (
 	srcPath   string
 	patchType string
+	fileInfo  os.FileInfo
 )
 
 func NewEditCommand() *cobra.Command {
@@ -31,7 +35,7 @@ func NewEditCommand() *cobra.Command {
 		Short: "Edit a file.",
 		Long:  "Edit a _vendor file to generate kubectl patch.",
 		Run: func(cmd *cobra.Command, args []string) {
-			RunEdit(cmd)
+			RunEdit()
 		},
 	}
 
@@ -45,16 +49,16 @@ func AddEditFlag(cmd *cobra.Command) {
 	// cmd.Flags().StringP("file", "f", "888888", "Edit file, provided through the --file flag.")
 }
 
-func RunEdit(cmd *cobra.Command) {
+func RunEdit() {
 	root, err := os.Getwd()
 	if err != nil {
-		fmt.Errorf("Error during get root path.", err)
+		log.Fatalln("Error during get root path.", err)
 	}
 	path := filepath.Join(root, srcPath)
 
-	_, err = os.Stat(path)
+	fileInfo, err = os.Stat(path)
 	if err != nil {
-		fmt.Errorf("--------------", err)
+		log.Fatalln("--------------", err)
 	}
 
 	srcFile, err := ioutil.ReadFile(path)
@@ -67,12 +71,12 @@ func RunEdit(cmd *cobra.Command) {
 
 	srcJson, err := yaml.YAMLToJSON(srcFile)
 	if err != nil {
-		fmt.Errorf("Error, while converting source from yaml to json", err)
+		log.Fatalln("Error, while converting source from yaml to json", err)
 	}
 
 	dstJson, err := yaml.YAMLToJSON(edited)
 	if err != nil {
-		fmt.Errorf("Error, while converting destination from yaml to json", err)
+		log.Fatalln("Error, while converting destination from yaml to json", err)
 	}
 
 	GetPatch(srcJson, dstJson)
@@ -87,14 +91,40 @@ func GetPatch(src, dst []byte) {
 		patch, err = strategicpatch.CreateTwoWayMergePatch(src, dst, apps.Deployment{})
 	}
 	if err != nil {
-		fmt.Errorf("Error to generate patch", err)
+		log.Fatalln("Error to generate patch", err)
 	}
 	yamlPatch, err := yaml.JSONToYAML(patch)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	fmt.Println("Patch: ")
+	// strings.LastIndex(strings.Replace(srcPath, _VendorFolder, PatchFolder, 1), "/")
+	root, err := os.Getwd()
+	if err != nil {
+		log.Fatalln("Error during get root path.", err)
+	}
+	lstIndexSlash := strings.LastIndex(strings.Replace(srcPath, _VendorFolder, PatchFolder, 1), "/")
+	dstPath := filepath.Join(root, strings.Replace(srcPath, _VendorFolder, PatchFolder, 1)[0:lstIndexSlash])
+	fmt.Println("Patch: ", dstPath)
+
+	err = os.MkdirAll(dstPath, 0755)
+	if err != nil {
+		log.Fatalln("Error to MkdirAll", err)
+	}
+	patchFilePath := filepath.Join(dstPath, fileInfo.Name())
+	_, err = os.Create(patchFilePath)
+	if err != nil {
+		log.Fatalln("Error creating patch file.", err)
+	}
+
+	err = ioutil.WriteFile(patchFilePath, yamlPatch, 07555)
+	if err != nil {
+		log.Fatalln("Error to writing patch file.", err)
+	}
+
+	// os.Open()
+
 	fmt.Println(string(yamlPatch))
+
 }
 
 func NewDefaultEditor() editor.Editor {
