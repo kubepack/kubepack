@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	// "github.com/packsh/demo-dep/dep"
 	"os"
 	"go/build"
 	"path/filepath"

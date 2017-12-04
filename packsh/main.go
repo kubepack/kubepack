@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com-old/spf13/cobra"
+	"github.com/spf13/cobra"
 	"os"
 	"github.com/packsh/demo-dep/dep/cmd"
 )
