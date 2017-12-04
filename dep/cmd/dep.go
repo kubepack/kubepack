@@ -78,7 +78,7 @@ func DepRun() {
 		Logger:         log.New(os.Stdout, "", 0),
 		DisableLocking: true,
 	}
-	log.Println("hello tempdir", tempdir)
+	log.Println("Tempdir: ", tempdir)
 	sourcemgr, _ := gps.NewSourceManager(srcManagerConfig)
 	defer sourcemgr.Release()
 
@@ -150,7 +150,6 @@ func (a ManifestYaml) RequiredPackages() map[string]bool {
 }
 
 func (a ManifestYaml) Overrides() gps.ProjectConstraints {
-	fmt.Println("Hello world!!!!--------", a.root)
 	ovrr := gps.ProjectConstraints{}
 
 	mpath := filepath.Join(a.root, typ.ManifestFile)
