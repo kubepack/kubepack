@@ -1,0 +1,17 @@
+apiVersion: apps/v1beta2
+spec:
+  replicas: 2
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: nginx1
+      containers:
+      - image: nginx
+        name: nginx1
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 10m
+      - $patch: delete
+        name: nginx

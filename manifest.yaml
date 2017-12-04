@@ -1,0 +1,7 @@
+package: github.com/sdboyer/gps
+owners:
+- name: Sam Boyer
+  email: tech@samboyer.org
+dependencies:
+- package: github.com/a8uhnf/test-yml
+  version: 0.0.1
