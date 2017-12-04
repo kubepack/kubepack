@@ -102,17 +102,17 @@ func TestNonRootValidate(t *testing.T) {
 		{
 			container: &api.Container{
 				SecurityContext: &api.SecurityContext{
-					RunAsNonRoot: nil,
-					RunAsUser:    nil,
+					RunAsNonRoot: &unfalse,
+					RunAsUser:    &badUID,
 				},
 			},
 			expectedErr: true,
-			msg:         "in test case %d, expected errors from nil runAsNonRoot and nil runAsUser but got %v",
+			msg:         "in test case %d, expected errors from root uid but got %v",
 		},
 	}
 
 	for i, tc := range tests {
-		errs := s.Validate(nil, nil, nil, tc.container.SecurityContext.RunAsNonRoot, tc.container.SecurityContext.RunAsUser)
+		errs := s.Validate(nil, tc.container)
 		if (len(errs) == 0) == tc.expectedErr {
 			t.Errorf(tc.msg, i, errs)
 		}

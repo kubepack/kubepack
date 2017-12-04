@@ -21,6 +21,7 @@ package internalversion
 import (
 	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions"
 	"k8s.io/apimachinery/pkg/api/errors"
+	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/client-go/tools/cache"
 )
@@ -54,7 +55,8 @@ func (s *customResourceDefinitionLister) List(selector labels.Selector) (ret []*
 
 // Get retrieves the CustomResourceDefinition from the index for a given name.
 func (s *customResourceDefinitionLister) Get(name string) (*apiextensions.CustomResourceDefinition, error) {
-	obj, exists, err := s.indexer.GetByKey(name)
+	key := &apiextensions.CustomResourceDefinition{ObjectMeta: v1.ObjectMeta{Name: name}}
+	obj, exists, err := s.indexer.Get(key)
 	if err != nil {
 		return nil, err
 	}

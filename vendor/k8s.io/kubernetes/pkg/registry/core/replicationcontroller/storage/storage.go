@@ -32,9 +32,7 @@ import (
 	"k8s.io/apiserver/pkg/registry/rest"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/autoscaling"
-	autoscalingv1 "k8s.io/kubernetes/pkg/apis/autoscaling/v1"
 	"k8s.io/kubernetes/pkg/apis/autoscaling/validation"
-	extensionsv1beta1 "k8s.io/kubernetes/pkg/apis/extensions/v1beta1"
 	"k8s.io/kubernetes/pkg/printers"
 	printersinternal "k8s.io/kubernetes/pkg/printers/internalversion"
 	printerstorage "k8s.io/kubernetes/pkg/printers/storage"
@@ -132,13 +130,8 @@ type ScaleREST struct {
 var _ = rest.Patcher(&ScaleREST{})
 var _ = rest.GroupVersionKindProvider(&ScaleREST{})
 
-func (r *ScaleREST) GroupVersionKind(containingGV schema.GroupVersion) schema.GroupVersionKind {
-	switch containingGV {
-	case extensionsv1beta1.SchemeGroupVersion:
-		return extensionsv1beta1.SchemeGroupVersion.WithKind("Scale")
-	default:
-		return autoscalingv1.SchemeGroupVersion.WithKind("Scale")
-	}
+func (r *ScaleREST) GroupVersionKind() schema.GroupVersionKind {
+	return schema.GroupVersionKind{Group: "autoscaling", Version: "v1", Kind: "Scale"}
 }
 
 // New creates a new Scale object

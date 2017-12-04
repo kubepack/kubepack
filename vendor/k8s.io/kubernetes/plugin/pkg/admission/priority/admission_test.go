@@ -139,10 +139,10 @@ func TestPriorityClassAdmission(t *testing.T) {
 		attrs := admission.NewAttributesRecord(
 			test.newClass,
 			nil,
-			scheduling.Kind("PriorityClass").WithVersion("version"),
+			api.Kind("PriorityClass").WithVersion("version"),
 			"",
 			"",
-			scheduling.Resource("priorityclasses").WithVersion("version"),
+			api.Resource("priorityclasses").WithVersion("version"),
 			"",
 			admission.Create,
 			nil,
@@ -160,8 +160,8 @@ func TestPriorityClassAdmission(t *testing.T) {
 
 // TestDefaultPriority tests that default priority is resolved correctly.
 func TestDefaultPriority(t *testing.T) {
-	pcResource := scheduling.Resource("priorityclasses").WithVersion("version")
-	pcKind := scheduling.Kind("PriorityClass").WithVersion("version")
+	pcResource := api.Resource("priorityclasses").WithVersion("version")
+	pcKind := api.Kind("PriorityClass").WithVersion("version")
 	updatedDefaultClass1 := *defaultClass1
 	updatedDefaultClass1.GlobalDefault = false
 

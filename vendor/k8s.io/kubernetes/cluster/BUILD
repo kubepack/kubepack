@@ -33,7 +33,6 @@ pkg_tar(
     deps = [
         "//cluster/addons",
         "//cluster/gce:gci-trusty-manifests",
-        "//cluster/gce/addons",
         "//cluster/saltbase:gci-trusty-salt-manifests",
     ],
 )

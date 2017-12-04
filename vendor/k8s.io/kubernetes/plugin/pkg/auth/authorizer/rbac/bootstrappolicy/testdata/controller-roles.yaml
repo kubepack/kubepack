@@ -255,7 +255,6 @@ items:
     verbs:
     - update
   - apiGroups:
-    - apps
     - extensions
     resources:
     - replicasets
@@ -304,7 +303,6 @@ items:
     - list
     - watch
   - apiGroups:
-    - apps
     - extensions
     resources:
     - replicasets
@@ -495,7 +493,6 @@ items:
     resources:
     - '*'
     verbs:
-    - get
     - list
   - apiGroups:
     - ""
@@ -768,7 +765,6 @@ items:
     name: system:controller:replicaset-controller
   rules:
   - apiGroups:
-    - apps
     - extensions
     resources:
     - replicasets
@@ -778,14 +774,12 @@ items:
     - update
     - watch
   - apiGroups:
-    - apps
     - extensions
     resources:
     - replicasets/status
     verbs:
     - update
   - apiGroups:
-    - apps
     - extensions
     resources:
     - replicasets/finalizers

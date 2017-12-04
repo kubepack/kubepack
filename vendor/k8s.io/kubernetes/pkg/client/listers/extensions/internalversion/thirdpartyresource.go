@@ -20,6 +20,7 @@ package internalversion
 
 import (
 	"k8s.io/apimachinery/pkg/api/errors"
+	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/client-go/tools/cache"
 	extensions "k8s.io/kubernetes/pkg/apis/extensions"
@@ -54,7 +55,8 @@ func (s *thirdPartyResourceLister) List(selector labels.Selector) (ret []*extens
 
 // Get retrieves the ThirdPartyResource from the index for a given name.
 func (s *thirdPartyResourceLister) Get(name string) (*extensions.ThirdPartyResource, error) {
-	obj, exists, err := s.indexer.GetByKey(name)
+	key := &extensions.ThirdPartyResource{ObjectMeta: v1.ObjectMeta{Name: name}}
+	obj, exists, err := s.indexer.Get(key)
 	if err != nil {
 		return nil, err
 	}

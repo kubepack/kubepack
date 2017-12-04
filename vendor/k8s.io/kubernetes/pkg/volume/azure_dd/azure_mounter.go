@@ -43,16 +43,10 @@ var _ volume.Unmounter = &azureDiskUnmounter{}
 var _ volume.Mounter = &azureDiskMounter{}
 
 func (m *azureDiskMounter) GetAttributes() volume.Attributes {
-	readOnly := false
-	volumeSource, err := getVolumeSource(m.spec)
-	if err != nil {
-		glog.Infof("azureDisk - mounter failed to get volume source for spec %s %v", m.spec.Name(), err)
-	} else if volumeSource.ReadOnly != nil {
-		readOnly = *volumeSource.ReadOnly
-	}
+	volumeSource, _ := getVolumeSource(m.spec)
 	return volume.Attributes{
-		ReadOnly:        readOnly,
-		Managed:         !readOnly,
+		ReadOnly:        *volumeSource.ReadOnly,
+		Managed:         !*volumeSource.ReadOnly,
 		SupportsSELinux: true,
 	}
 }
@@ -100,7 +94,7 @@ func (m *azureDiskMounter) SetUpAt(dir string, fsGroup *int64) error {
 
 	options := []string{"bind"}
 
-	if volumeSource.ReadOnly != nil && *volumeSource.ReadOnly {
+	if *volumeSource.ReadOnly {
 		options = append(options, "ro")
 	}
 
@@ -144,7 +138,7 @@ func (m *azureDiskMounter) SetUpAt(dir string, fsGroup *int64) error {
 		return mountErr
 	}
 
-	if volumeSource.ReadOnly == nil || !*volumeSource.ReadOnly {
+	if !*volumeSource.ReadOnly {
 		volume.SetVolumeOwnership(m, fsGroup)
 	}
 

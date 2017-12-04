@@ -20,21 +20,19 @@ FROM BASEIMAGE
 RUN ln -s /bin/sh /bin/bash
 
 RUN echo CACHEBUST>/dev/null && clean-install \
-    ca-certificates \
-    ceph-common \
-    cifs-utils \
-    conntrack \
+    iptables \
     e2fsprogs \
     ebtables \
     ethtool \
-    git \
-    glusterfs-client \
-    iptables \
-    jq \
-    kmod \
-    openssh-client \
-    nfs-common \
+    ca-certificates \
+    conntrack \
+    util-linux \
     socat \
-    util-linux
+    git \
+    jq \
+    nfs-common \
+    glusterfs-client \
+    cifs-utils \
+    ceph-common
 
 COPY cni-bin/bin /opt/cni/bin

@@ -20,6 +20,7 @@ package internalversion
 
 import (
 	"k8s.io/apimachinery/pkg/api/errors"
+	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/client-go/tools/cache"
 	rbac "k8s.io/kubernetes/pkg/apis/rbac"
@@ -54,7 +55,8 @@ func (s *clusterRoleLister) List(selector labels.Selector) (ret []*rbac.ClusterR
 
 // Get retrieves the ClusterRole from the index for a given name.
 func (s *clusterRoleLister) Get(name string) (*rbac.ClusterRole, error) {
-	obj, exists, err := s.indexer.GetByKey(name)
+	key := &rbac.ClusterRole{ObjectMeta: v1.ObjectMeta{Name: name}}
+	obj, exists, err := s.indexer.Get(key)
 	if err != nil {
 		return nil, err
 	}

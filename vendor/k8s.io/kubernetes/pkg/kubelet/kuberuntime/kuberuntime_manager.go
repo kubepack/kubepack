@@ -65,10 +65,9 @@ var (
 	ErrVersionNotSupported = errors.New("Runtime api version is not supported")
 )
 
-// podStateProvider can determine if a pod is deleted ir terminated
-type podStateProvider interface {
+// podDeletionProvider can determine if a pod is deleted
+type podDeletionProvider interface {
 	IsPodDeleted(kubetypes.UID) bool
-	IsPodTerminated(kubetypes.UID) bool
 }
 
 type kubeGenericRuntimeManager struct {
@@ -128,7 +127,7 @@ func NewKubeGenericRuntimeManager(
 	seccompProfileRoot string,
 	containerRefManager *kubecontainer.RefManager,
 	machineInfo *cadvisorapi.MachineInfo,
-	podStateProvider podStateProvider,
+	podDeletionProvider podDeletionProvider,
 	osInterface kubecontainer.OSInterface,
 	runtimeHelper kubecontainer.RuntimeHelper,
 	httpClient types.HttpGetter,
@@ -194,7 +193,7 @@ func NewKubeGenericRuntimeManager(
 		imagePullQPS,
 		imagePullBurst)
 	kubeRuntimeManager.runner = lifecycle.NewHandlerRunner(httpClient, kubeRuntimeManager, kubeRuntimeManager)
-	kubeRuntimeManager.containerGC = NewContainerGC(runtimeService, podStateProvider, kubeRuntimeManager)
+	kubeRuntimeManager.containerGC = NewContainerGC(runtimeService, podDeletionProvider, kubeRuntimeManager)
 
 	kubeRuntimeManager.versionCache = cache.NewObjectCache(
 		func() (interface{}, error) {

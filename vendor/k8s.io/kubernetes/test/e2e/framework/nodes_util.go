@@ -114,20 +114,23 @@ func masterUpgradeKubernetesAnywhere(v string) error {
 	backupConfigPath := filepath.Join(kaPath, ".config.bak")
 	updatedConfigPath := filepath.Join(kaPath, fmt.Sprintf(".config-%s", v))
 
-	// modify config with specified k8s version
-	if _, _, err := RunCmd("sed",
-		"-i.bak", // writes original to .config.bak
-		fmt.Sprintf(`s/kubernetes_version=.*$/kubernetes_version=%q/`, v),
-		originalConfigPath); err != nil {
+	// backup .config to .config.bak
+	if err := os.Rename(originalConfigPath, backupConfigPath); err != nil {
 		return err
 	}
-
 	defer func() {
 		// revert .config.bak to .config
 		if err := os.Rename(backupConfigPath, originalConfigPath); err != nil {
 			Logf("Could not rename %s back to %s", backupConfigPath, originalConfigPath)
 		}
 	}()
+
+	// modify config with specified k8s version
+	if _, _, err := RunCmd("sed",
+		fmt.Sprintf(`s/kubernetes_version=.*$/kubernetes_version=%s/`, v),
+		backupConfigPath, ">", originalConfigPath); err != nil {
+		return err
+	}
 
 	// invoke ka upgrade
 	if _, _, err := RunCmd("make", "-C", TestContext.KubernetesAnywherePath,

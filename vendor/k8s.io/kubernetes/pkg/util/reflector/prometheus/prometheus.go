@@ -68,12 +68,6 @@ var (
 		Name:      "items_per_watch",
 		Help:      "How many items an API watch returns to the reflectors",
 	}, []string{"name"})
-
-	lastResourceVersion = prometheus.NewGaugeVec(prometheus.GaugeOpts{
-		Subsystem: reflectorSubsystem,
-		Name:      "last_resource_version",
-		Help:      "Last resource version seen for the reflectors",
-	}, []string{"name"})
 )
 
 func init() {
@@ -84,7 +78,6 @@ func init() {
 	prometheus.MustRegister(shortWatchesTotal)
 	prometheus.MustRegister(watchDuration)
 	prometheus.MustRegister(itemsPerWatch)
-	prometheus.MustRegister(lastResourceVersion)
 
 	cache.SetReflectorMetricsProvider(prometheusMetricsProvider{})
 }
@@ -124,5 +117,11 @@ func (prometheusMetricsProvider) NewItemsInWatchMetric(name string) cache.Summar
 }
 
 func (prometheusMetricsProvider) NewLastResourceVersionMetric(name string) cache.GaugeMetric {
-	return lastResourceVersion.WithLabelValues(name)
+	rv := prometheus.NewGauge(prometheus.GaugeOpts{
+		Subsystem: name,
+		Name:      "last_resource_version",
+		Help:      "last resource version seen for the reflectors",
+	})
+	prometheus.MustRegister(rv)
+	return rv
 }

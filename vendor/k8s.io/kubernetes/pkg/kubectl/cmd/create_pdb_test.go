@@ -32,7 +32,7 @@ func TestCreatePdb(t *testing.T) {
 	pdbName := "my-pdb"
 	f, tf, _, ns := cmdtesting.NewAPIFactory()
 	tf.Client = &fake.RESTClient{
-		GroupVersion:         api.Registry.GroupOrDie(api.GroupName).GroupVersion,
+		APIRegistry:          api.Registry,
 		NegotiatedSerializer: ns,
 		Client: fake.CreateHTTPClient(func(req *http.Request) (*http.Response, error) {
 			return &http.Response{

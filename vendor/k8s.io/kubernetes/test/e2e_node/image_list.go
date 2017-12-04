@@ -56,7 +56,6 @@ var NodeImageWhiteList = sets.NewString(
 	imageutils.GetE2EImage(imageutils.Netexec),
 	"gcr.io/google_containers/nonewprivs:1.2",
 	framework.GetPauseImageNameForHostArch(),
-	framework.GetGPUDevicePluginImage(),
 )
 
 func init() {

@@ -366,23 +366,17 @@ endif
 
 define RELEASE_HELP_INFO
 # Build a release
-# Use the 'release-in-a-container' target to build the release when already in
-# a container vs. creating a new container to build in using the 'release'
-# target.  Useful for running in GCB.
 #
 # Example:
 #   make release
-#   make release-in-a-container
 endef
-.PHONY: release release-in-a-container
+.PHONY: release
 ifeq ($(PRINT_HELP),y)
-release release-in-a-container:
+release:
 	@echo "$$RELEASE_HELP_INFO"
 else
 release:
 	build/release.sh
-release-in-a-container:
-	build/release-in-a-container.sh
 endif
 
 define RELEASE_SKIP_TESTS_HELP_INFO
@@ -407,47 +401,19 @@ release-skip-tests quick-release:
 	build/release.sh
 endif
 
-define PACKAGE_HELP_INFO
-# Package tarballs
-# Use the 'package-tarballs' target to run the final packaging steps of
-# a release.
-#
-# Example:
-#   make package-tarballs
-endef
-.PHONY: package package-tarballs
-ifeq ($(PRINT_HELP),y)
-package package-tarballs:
-	@echo "$$PACKAGE_HELP_INFO"
-else
-package package-tarballs:
-	build/package-tarballs.sh
-endif
-
 define CROSS_HELP_INFO
 # Cross-compile for all platforms
-# Use the 'cross-in-a-container' target to cross build when already in
-# a container vs. creating a new container to build from (build-image)
-# Useful for running in GCB.
 #
 # Example:
 #   make cross
-#   make cross-in-a-container
 endef
-.PHONY: cross cross-in-a-container
+.PHONY: cross
 ifeq ($(PRINT_HELP),y)
-cross cross-in-a-container:
+cross:
 	@echo "$$CROSS_HELP_INFO"
 else
 cross:
 	hack/make-rules/cross.sh
-cross-in-a-container: KUBE_OUTPUT_SUBPATH = $(OUT_DIR)/dockerized
-cross-in-a-container:
-ifeq (,$(wildcard /.dockerenv))
-	@echo -e "\nThe 'cross-in-a-container' target can only be used from within a docker container.\n"
-else
-	hack/make-rules/cross.sh
-endif
 endif
 
 define CMD_HELP_INFO

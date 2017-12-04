@@ -152,16 +152,7 @@ func ClusterRoles() []rbac.ClusterRole {
 			// a role which provides just enough power to determine if the server is ready and discover API versions for negotiation
 			ObjectMeta: metav1.ObjectMeta{Name: "system:discovery"},
 			Rules: []rbac.PolicyRule{
-				rbac.NewRule("get").URLs(
-					"/healthz", "/version",
-					// remove once swagger 1.2 support is removed
-					"/swaggerapi", "/swaggerapi/*",
-					// do not expand this pattern for openapi discovery docs
-					// move to a single openapi endpoint that takes accept/accept-encoding headers
-					"/swagger.json", "/swagger-2.0.0.pb-v1",
-					"/api", "/api/*",
-					"/apis", "/apis/*",
-				).RuleOrDie(),
+				rbac.NewRule("get").URLs("/healthz", "/version", "/swaggerapi", "/swaggerapi/*", "/api", "/api/*", "/apis", "/apis/*").RuleOrDie(),
 			},
 		},
 		{
@@ -188,9 +179,7 @@ func ClusterRoles() []rbac.ClusterRole {
 				rbac.NewRule("impersonate").Groups(legacyGroup).Resources("serviceaccounts").RuleOrDie(),
 
 				rbac.NewRule(ReadWrite...).Groups(appsGroup).Resources("statefulsets",
-					"daemonsets",
-					"deployments", "deployments/scale", "deployments/rollback",
-					"replicasets", "replicasets/scale").RuleOrDie(),
+					"deployments", "deployments/scale", "deployments/rollback").RuleOrDie(),
 
 				rbac.NewRule(ReadWrite...).Groups(autoscalingGroup).Resources("horizontalpodautoscalers").RuleOrDie(),
 
@@ -222,9 +211,7 @@ func ClusterRoles() []rbac.ClusterRole {
 				rbac.NewRule("impersonate").Groups(legacyGroup).Resources("serviceaccounts").RuleOrDie(),
 
 				rbac.NewRule(ReadWrite...).Groups(appsGroup).Resources("statefulsets",
-					"daemonsets",
-					"deployments", "deployments/scale", "deployments/rollback",
-					"replicasets", "replicasets/scale").RuleOrDie(),
+					"deployments", "deployments/scale", "deployments/rollback").RuleOrDie(),
 
 				rbac.NewRule(ReadWrite...).Groups(autoscalingGroup).Resources("horizontalpodautoscalers").RuleOrDie(),
 
@@ -248,10 +235,7 @@ func ClusterRoles() []rbac.ClusterRole {
 				// indicator of which namespaces you have access to.
 				rbac.NewRule(Read...).Groups(legacyGroup).Resources("namespaces").RuleOrDie(),
 
-				rbac.NewRule(Read...).Groups(appsGroup).Resources("statefulsets",
-					"daemonsets",
-					"deployments", "deployments/scale",
-					"replicasets", "replicasets/scale").RuleOrDie(),
+				rbac.NewRule(Read...).Groups(appsGroup).Resources("statefulsets", "deployments", "deployments/scale").RuleOrDie(),
 
 				rbac.NewRule(Read...).Groups(autoscalingGroup).Resources("horizontalpodautoscalers").RuleOrDie(),
 
@@ -354,7 +338,7 @@ func ClusterRoles() []rbac.ClusterRole {
 				rbac.NewRule("update").Groups(legacyGroup).Resources("pods/status").RuleOrDie(),
 				// things that select pods
 				rbac.NewRule(Read...).Groups(legacyGroup).Resources("services", "replicationcontrollers").RuleOrDie(),
-				rbac.NewRule(Read...).Groups(appsGroup, extensionsGroup).Resources("replicasets").RuleOrDie(),
+				rbac.NewRule(Read...).Groups(extensionsGroup).Resources("replicasets").RuleOrDie(),
 				rbac.NewRule(Read...).Groups(appsGroup).Resources("statefulsets").RuleOrDie(),
 				// things that pods use
 				rbac.NewRule(Read...).Groups(legacyGroup).Resources("persistentvolumeclaims", "persistentvolumes").RuleOrDie(),

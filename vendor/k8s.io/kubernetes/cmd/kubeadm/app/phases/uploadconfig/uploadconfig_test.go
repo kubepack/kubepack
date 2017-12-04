@@ -17,7 +17,6 @@ limitations under the License.
 package uploadconfig
 
 import (
-	"strings"
 	"testing"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -36,7 +35,6 @@ func TestUploadConfiguration(t *testing.T) {
 			"basic validation with correct key",
 			&kubeadmapi.MasterConfiguration{
 				KubernetesVersion: "1.7.3",
-				Token:             "1234567",
 			},
 			false,
 		},
@@ -52,11 +50,6 @@ func TestUploadConfiguration(t *testing.T) {
 				t.Errorf("Fail to query ConfigMap error = %v", err)
 			} else if masterCfg.Data[kubeadmconstants.MasterConfigurationConfigMapKey] == "" {
 				t.Errorf("Fail to find ConfigMap key = %v", err)
-			}
-
-			configStr := masterCfg.Data[kubeadmconstants.MasterConfigurationConfigMapKey]
-			if strings.Contains(configStr, tt.cfg.Token) {
-				t.Errorf("Decoded value contains token (sensitive info): %#v, expected not to contain %q", configStr, tt.cfg.Token)
 			}
 		})
 	}

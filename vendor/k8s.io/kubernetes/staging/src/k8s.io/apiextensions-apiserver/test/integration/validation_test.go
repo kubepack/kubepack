@@ -21,7 +21,6 @@ import (
 	"testing"
 	"time"
 
-	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/util/wait"
@@ -380,18 +379,15 @@ func TestCRValidationOnCRDUpdate(t *testing.T) {
 
 	// update the CRD to a less stricter schema
 	gottenCRD.Spec.Validation.OpenAPIV3Schema.Required = []string{"alpha", "beta"}
-	if _, err = apiExtensionClient.ApiextensionsV1beta1().CustomResourceDefinitions().Update(gottenCRD); err != nil {
+
+	updatedCRD, err := apiExtensionClient.ApiextensionsV1beta1().CustomResourceDefinitions().Update(gottenCRD)
+	if err != nil {
 		t.Fatal(err)
 	}
 
 	// CR is now accepted
 	err = wait.Poll(500*time.Millisecond, wait.ForeverTestTimeout, func() (bool, error) {
-		_, err := noxuResourceClient.Create(newNoxuValidationInstance(ns, "foo"))
-		if statusError, isStatus := err.(*apierrors.StatusError); isStatus {
-			if strings.Contains(statusError.Error(), "is invalid") {
-				return false, nil
-			}
-		}
+		_, err = instantiateCustomResource(t, newNoxuValidationInstance(ns, "foo"), noxuResourceClient, updatedCRD)
 		if err != nil {
 			return false, err
 		}

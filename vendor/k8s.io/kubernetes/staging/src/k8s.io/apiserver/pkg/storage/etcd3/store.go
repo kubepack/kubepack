@@ -332,11 +332,8 @@ func (s *store) GuaranteedUpdate(
 				if err != nil {
 					return err
 				}
-				if !bytes.Equal(data, origState.data) {
-					// original data changed, restart loop
-					mustCheckData = false
-					continue
-				}
+				mustCheckData = false
+				continue
 			}
 			return decode(s.codec, s.versioner, origState.data, out, origState.rev)
 		}

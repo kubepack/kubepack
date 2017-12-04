@@ -27,9 +27,7 @@ import (
 	"k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	"k8s.io/apimachinery/pkg/util/sets"
-	utilfeature "k8s.io/apiserver/pkg/util/feature"
 	v1qos "k8s.io/kubernetes/pkg/api/v1/helper/qos"
-	"k8s.io/kubernetes/pkg/features"
 	statsapi "k8s.io/kubernetes/pkg/kubelet/apis/stats/v1alpha1"
 	"k8s.io/kubernetes/pkg/kubelet/cm"
 	evictionapi "k8s.io/kubernetes/pkg/kubelet/eviction/api"
@@ -792,33 +790,31 @@ func makeSignalObservations(summaryProvider stats.SummaryProvider, capacityProvi
 		}
 	}
 
-	if utilfeature.DefaultFeatureGate.Enabled(features.LocalStorageCapacityIsolation) {
-		ephemeralStorageCapacity, ephemeralStorageAllocatable, exist := getResourceAllocatable(nodeCapacity, allocatableReservation, v1.ResourceEphemeralStorage)
-		if exist {
-			for _, pod := range pods {
-				podStat, ok := statsFunc(pod)
-				if !ok {
-					continue
-				}
-
-				fsStatsSet := []fsStatsType{}
-				if withImageFs {
-					fsStatsSet = []fsStatsType{fsStatsLogs, fsStatsLocalVolumeSource}
-				} else {
-					fsStatsSet = []fsStatsType{fsStatsRoot, fsStatsLogs, fsStatsLocalVolumeSource}
-				}
-
-				usage, err := podDiskUsage(podStat, pod, fsStatsSet)
-				if err != nil {
-					glog.Warningf("eviction manager: error getting pod disk usage %v", err)
-					continue
-				}
-				ephemeralStorageAllocatable.Sub(usage[resourceDisk])
+	ephemeralStorageCapacity, ephemeralStorageAllocatable, exist := getResourceAllocatable(nodeCapacity, allocatableReservation, v1.ResourceEphemeralStorage)
+	if exist {
+		for _, pod := range pods {
+			podStat, ok := statsFunc(pod)
+			if !ok {
+				continue
 			}
-			result[evictionapi.SignalAllocatableNodeFsAvailable] = signalObservation{
-				available: ephemeralStorageAllocatable,
-				capacity:  ephemeralStorageCapacity,
+
+			fsStatsSet := []fsStatsType{}
+			if withImageFs {
+				fsStatsSet = []fsStatsType{fsStatsLogs, fsStatsLocalVolumeSource}
+			} else {
+				fsStatsSet = []fsStatsType{fsStatsRoot, fsStatsLogs, fsStatsLocalVolumeSource}
 			}
+
+			usage, err := podDiskUsage(podStat, pod, fsStatsSet)
+			if err != nil {
+				glog.Warningf("eviction manager: error getting pod disk usage %v", err)
+				continue
+			}
+			ephemeralStorageAllocatable.Sub(usage[resourceDisk])
+		}
+		result[evictionapi.SignalAllocatableNodeFsAvailable] = signalObservation{
+			available: ephemeralStorageAllocatable,
+			capacity:  ephemeralStorageCapacity,
 		}
 	}
 

@@ -217,7 +217,7 @@ func TestEdit(t *testing.T) {
 				versionedAPIPath = "/apis/" + mapping.GroupVersionKind.Group + "/" + mapping.GroupVersionKind.Version
 			}
 			return &fake.RESTClient{
-				GroupVersion:         api.Registry.GroupOrDie(api.GroupName).GroupVersion,
+				APIRegistry:          api.Registry,
 				VersionedAPIPath:     versionedAPIPath,
 				NegotiatedSerializer: unstructuredSerializer,
 				Client:               fake.CreateHTTPClient(reqResp),

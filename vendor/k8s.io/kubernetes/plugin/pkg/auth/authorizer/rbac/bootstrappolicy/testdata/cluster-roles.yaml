@@ -81,12 +81,9 @@ items:
   - apiGroups:
     - apps
     resources:
-    - daemonsets
     - deployments
     - deployments/rollback
     - deployments/scale
-    - replicasets
-    - replicasets/scale
     - statefulsets
     verbs:
     - create
@@ -265,12 +262,9 @@ items:
   - apiGroups:
     - apps
     resources:
-    - daemonsets
     - deployments
     - deployments/rollback
     - deployments/scale
-    - replicasets
-    - replicasets/scale
     - statefulsets
     verbs:
     - create
@@ -414,8 +408,6 @@ items:
     - /apis
     - /apis/*
     - /healthz
-    - /swagger-2.0.0.pb-v1
-    - /swagger.json
     - /swaggerapi
     - /swaggerapi/*
     - /version
@@ -624,7 +616,6 @@ items:
     - list
     - watch
   - apiGroups:
-    - apps
     - extensions
     resources:
     - replicasets
@@ -952,11 +943,8 @@ items:
   - apiGroups:
     - apps
     resources:
-    - daemonsets
     - deployments
     - deployments/scale
-    - replicasets
-    - replicasets/scale
     - statefulsets
     verbs:
     - get

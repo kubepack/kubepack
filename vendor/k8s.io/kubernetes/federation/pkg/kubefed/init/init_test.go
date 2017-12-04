@@ -1143,7 +1143,7 @@ func fakeInitHostFactory(apiserverServiceType v1.ServiceType, federationName, na
 	tf.ClientConfig = kubefedtesting.DefaultClientConfig()
 	tf.TmpDir = tmpDirPath
 	tf.Client = &fake.RESTClient{
-		GroupVersion:         api.Registry.GroupOrDie(api.GroupName).GroupVersion,
+		APIRegistry:          api.Registry,
 		NegotiatedSerializer: ns,
 		Client: fake.CreateHTTPClient(func(req *http.Request) (*http.Response, error) {
 			switch p, m := req.URL.Path, req.Method; {

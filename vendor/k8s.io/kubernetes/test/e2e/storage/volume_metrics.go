@@ -97,9 +97,29 @@ var _ = SIGDescribe("[Serial] Volume metrics", func() {
 		framework.Logf("Deleting pod %q/%q", pod.Namespace, pod.Name)
 		framework.ExpectNoError(framework.DeletePodWithWait(f, c, pod))
 
-		updatedStorageMetrics := waitForDetachAndGrabMetrics(storageOpMetrics, metricsGrabber)
+		backoff := wait.Backoff{
+			Duration: 10 * time.Second,
+			Factor:   1.2,
+			Steps:    3,
+		}
 
-		Expect(len(updatedStorageMetrics)).ToNot(Equal(0), "Error fetching c-m updated storage metrics")
+		updatedStorageMetrics := make(map[string]int64)
+
+		waitErr := wait.ExponentialBackoff(backoff, func() (bool, error) {
+			updatedMetrics, err := metricsGrabber.GrabFromControllerManager()
+
+			if err != nil {
+				framework.Logf("Error fetching controller-manager metrics")
+				return false, err
+			}
+			updatedStorageMetrics = getControllerStorageMetrics(updatedMetrics)
+			if len(updatedStorageMetrics) == 0 {
+				framework.Logf("Volume metrics not collected yet, going to retry")
+				return false, nil
+			}
+			return true, nil
+		})
+		Expect(waitErr).NotTo(HaveOccurred(), "Error fetching storage c-m metrics : %v", waitErr)
 
 		volumeOperations := []string{"volume_provision", "volume_detach", "volume_attach"}
 
@@ -152,48 +172,6 @@ var _ = SIGDescribe("[Serial] Volume metrics", func() {
 	})
 })
 
-func waitForDetachAndGrabMetrics(oldMetrics map[string]int64, metricsGrabber *metrics.MetricsGrabber) map[string]int64 {
-	backoff := wait.Backoff{
-		Duration: 10 * time.Second,
-		Factor:   1.2,
-		Steps:    21,
-	}
-
-	updatedStorageMetrics := make(map[string]int64)
-	oldDetachCount, ok := oldMetrics["volume_detach"]
-	if !ok {
-		oldDetachCount = 0
-	}
-
-	verifyMetricFunc := func() (bool, error) {
-		updatedMetrics, err := metricsGrabber.GrabFromControllerManager()
-
-		if err != nil {
-			framework.Logf("Error fetching controller-manager metrics")
-			return false, err
-		}
-
-		updatedStorageMetrics = getControllerStorageMetrics(updatedMetrics)
-		newDetachCount, ok := updatedStorageMetrics["volume_detach"]
-
-		// if detach metrics are not yet there, we need to retry
-		if !ok {
-			return false, nil
-		}
-
-		// if old Detach count is more or equal to new detach count, that means detach
-		// event has not been observed yet.
-		if oldDetachCount >= newDetachCount {
-			return false, nil
-		}
-		return true, nil
-	}
-
-	waitErr := wait.ExponentialBackoff(backoff, verifyMetricFunc)
-	Expect(waitErr).NotTo(HaveOccurred(), "Timeout error fetching storage c-m metrics : %v", waitErr)
-	return updatedStorageMetrics
-}
-
 func verifyMetricCount(oldMetrics map[string]int64, newMetrics map[string]int64, metricName string) {
 	oldCount, ok := oldMetrics[metricName]
 	// if metric does not exist in oldMap, it probably hasn't been emitted yet.
@@ -203,10 +181,8 @@ func verifyMetricCount(oldMetrics map[string]int64, newMetrics map[string]int64,
 
 	newCount, ok := newMetrics[metricName]
 	Expect(ok).To(BeTrue(), "Error getting updated metrics for %s", metricName)
-	// It appears that in a busy cluster some spurious detaches are unavoidable
-	// even if the test is run serially.  We really just verify if new count
-	// is greater than old count
-	Expect(newCount).To(BeNumerically(">", oldCount), "New count %d should be more than old count %d for action %s", newCount, oldCount, metricName)
+
+	Expect(oldCount + 1).To(Equal(newCount))
 }
 
 func getControllerStorageMetrics(ms metrics.ControllerManagerMetrics) map[string]int64 {

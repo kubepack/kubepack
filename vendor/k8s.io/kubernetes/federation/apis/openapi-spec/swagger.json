@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
    "title": "Generic API Server",
-   "version": "v1.8.4"
+   "version": "v1.8.0"
   },
   "paths": {
    "/api/": {
@@ -12273,7 +12273,7 @@
       "type": "string"
      },
      "protectionDomain": {
-      "description": "The name of the ScaleIO Protection Domain for the configured storage.",
+      "description": "The name of the Protection Domain for the configured storage (defaults to \"default\").",
       "type": "string"
      },
      "readOnly": {
@@ -12289,11 +12289,11 @@
       "type": "boolean"
      },
      "storageMode": {
-      "description": "Indicates whether the storage for a volume should be ThickProvisioned or ThinProvisioned.",
+      "description": "Indicates whether the storage for a volume should be thick or thin (defaults to \"thin\").",
       "type": "string"
      },
      "storagePool": {
-      "description": "The ScaleIO Storage Pool associated with the protection domain.",
+      "description": "The Storage Pool associated with the protection domain (defaults to \"default\").",
       "type": "string"
      },
      "system": {

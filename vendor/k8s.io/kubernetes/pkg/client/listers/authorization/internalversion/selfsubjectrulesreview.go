@@ -20,6 +20,7 @@ package internalversion
 
 import (
 	"k8s.io/apimachinery/pkg/api/errors"
+	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/client-go/tools/cache"
 	authorization "k8s.io/kubernetes/pkg/apis/authorization"
@@ -54,7 +55,8 @@ func (s *selfSubjectRulesReviewLister) List(selector labels.Selector) (ret []*au
 
 // Get retrieves the SelfSubjectRulesReview from the index for a given name.
 func (s *selfSubjectRulesReviewLister) Get(name string) (*authorization.SelfSubjectRulesReview, error) {
-	obj, exists, err := s.indexer.GetByKey(name)
+	key := &authorization.SelfSubjectRulesReview{ObjectMeta: v1.ObjectMeta{Name: name}}
+	obj, exists, err := s.indexer.Get(key)
 	if err != nil {
 		return nil, err
 	}

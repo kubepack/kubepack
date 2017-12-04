@@ -56,7 +56,6 @@ const (
 )
 
 var cleanUpRoutineInitialized = false
-var datastoreFolderIDMap = make(map[string]map[string]string)
 
 var clientLock sync.Mutex
 var cleanUpRoutineInitLock sync.Mutex
@@ -128,7 +127,7 @@ type Volumes interface {
 
 	// DisksAreAttached checks if a list disks are attached to the given node.
 	// Assumption: If node doesn't exist, disks are not attached to the node.
-	DisksAreAttached(nodeVolumes map[k8stypes.NodeName][]string) (map[k8stypes.NodeName]map[string]bool, error)
+	DisksAreAttached(volPath []string, nodeName k8stypes.NodeName) (map[string]bool, error)
 
 	// CreateVolume creates a new vmdk with specified parameters.
 	CreateVolume(volumeOptions *vclib.VolumeOptions) (volumePath string, err error)
@@ -412,8 +411,8 @@ func (vs *VSphere) InstanceID(nodeName k8stypes.NodeName) (string, error) {
 	if isActive {
 		return "/" + vm.InventoryPath, nil
 	}
-	glog.Warningf("The VM: %s is not in %s state", nodeNameToVMName(nodeName), vclib.ActivePowerState)
-	return "", cloudprovider.InstanceNotFound
+
+	return "", fmt.Errorf("The node %q is not active", nodeNameToVMName(nodeName))
 }
 
 // InstanceTypeByProviderID returns the cloudprovider instance type of the node with the specified unique providerID
@@ -555,7 +554,7 @@ func (vs *VSphere) DiskIsAttached(volPath string, nodeName k8stypes.NodeName) (b
 			glog.Errorf("Failed to get VM object for node: %q. err: +%v", vSphereInstance, err)
 			return false, err
 		}
-		volPath = vclib.RemoveClusterFromVDiskPath(volPath)
+
 		attached, err := vm.IsDiskAttached(ctx, volPath)
 		if err != nil {
 			glog.Errorf("DiskIsAttached failed to determine whether disk %q is still attached on node %q",
@@ -571,11 +570,18 @@ func (vs *VSphere) DiskIsAttached(volPath string, nodeName k8stypes.NodeName) (b
 }
 
 // DisksAreAttached returns if disks are attached to the VM using controllers supported by the plugin.
-func (vs *VSphere) DisksAreAttached(nodeVolumes map[k8stypes.NodeName][]string) (map[k8stypes.NodeName]map[string]bool, error) {
-	disksAreAttachedInternal := func(nodeVolumes map[k8stypes.NodeName][]string) (map[k8stypes.NodeName]map[string]bool, error) {
-		attached := make(map[k8stypes.NodeName]map[string]bool)
-		if len(nodeVolumes) == 0 {
+func (vs *VSphere) DisksAreAttached(volPaths []string, nodeName k8stypes.NodeName) (map[string]bool, error) {
+	disksAreAttachedInternal := func(volPaths []string, nodeName k8stypes.NodeName) (map[string]bool, error) {
+		attached := make(map[string]bool)
+		if len(volPaths) == 0 {
 			return attached, nil
+		}
+		var vSphereInstance string
+		if nodeName == "" {
+			vSphereInstance = vs.localInstanceID
+			nodeName = vmNameToNodeName(vSphereInstance)
+		} else {
+			vSphereInstance = nodeNameToVMName(nodeName)
 		}
 		// Create context
 		ctx, cancel := context.WithCancel(context.Background())
@@ -585,41 +591,41 @@ func (vs *VSphere) DisksAreAttached(nodeVolumes map[k8stypes.NodeName][]string) 
 		if err != nil {
 			return nil, err
 		}
-		dc, err := vclib.GetDatacenter(ctx, vs.conn, vs.cfg.Global.Datacenter)
+		vm, err := vs.getVMByName(ctx, nodeName)
 		if err != nil {
+			if vclib.IsNotFound(err) {
+				glog.Warningf("Node %q does not exist, vsphere CP will assume all disks %v are not attached to it.", nodeName, volPaths)
+				// make all the disks as detached and return false without error.
+				attached := make(map[string]bool)
+				for _, volPath := range volPaths {
+					attached[volPath] = false
+				}
+				return attached, nil
+			}
+			glog.Errorf("Failed to get VM object for node: %q. err: +%v", vSphereInstance, err)
 			return nil, err
 		}
 
-		vmVolumes := make(map[string][]string)
-		for nodeName, volPaths := range nodeVolumes {
-			for i, volPath := range volPaths {
-				volPath = vclib.RemoveClusterFromVDiskPath(volPath)
-				// Get the canonical volume path for volPath.
-				canonicalVolumePath, err := getcanonicalVolumePath(ctx, dc, volPath)
-				if err != nil {
-					glog.Errorf("Failed to get canonical vsphere volume path for volume: %s. err: %+v", volPath, err)
-					return nil, err
+		for _, volPath := range volPaths {
+			result, err := vm.IsDiskAttached(ctx, volPath)
+			if err == nil {
+				if result {
+					attached[volPath] = true
+				} else {
+					attached[volPath] = false
 				}
-				// Check if the volume path contains .vmdk extension. If not, add the extension and update the nodeVolumes Map
-				if len(canonicalVolumePath) > 0 && filepath.Ext(canonicalVolumePath) != ".vmdk" {
-					canonicalVolumePath += ".vmdk"
-				}
-				volPaths[i] = canonicalVolumePath
+			} else {
+				glog.Errorf("DisksAreAttached failed to determine whether disk %q from volPaths %+v is still attached on node %q",
+					volPath,
+					volPaths,
+					vSphereInstance)
+				return nil, err
 			}
-			vmVolumes[nodeNameToVMName(nodeName)] = volPaths
-		}
-		// Check if the disks are attached to their respective nodes
-		disksAttachedList, err := dc.CheckDisksAttached(ctx, vmVolumes)
-		if err != nil {
-			return nil, err
-		}
-		for vmName, volPaths := range disksAttachedList {
-			attached[vmNameToNodeName(vmName)] = volPaths
 		}
 		return attached, nil
 	}
 	requestTime := time.Now()
-	attached, err := disksAreAttachedInternal(nodeVolumes)
+	attached, err := disksAreAttachedInternal(volPaths, nodeName)
 	vclib.RecordvSphereMetric(vclib.OperationDisksAreAttached, requestTime, err)
 	return attached, err
 }
@@ -628,9 +634,9 @@ func (vs *VSphere) DisksAreAttached(nodeVolumes map[k8stypes.NodeName][]string) 
 // If the volumeOptions.Datastore is part of datastore cluster for example - [DatastoreCluster/sharedVmfs-0] then
 // return value will be [DatastoreCluster/sharedVmfs-0] kubevols/<volume-name>.vmdk
 // else return value will be [sharedVmfs-0] kubevols/<volume-name>.vmdk
-func (vs *VSphere) CreateVolume(volumeOptions *vclib.VolumeOptions) (canonicalVolumePath string, err error) {
+func (vs *VSphere) CreateVolume(volumeOptions *vclib.VolumeOptions) (volumePath string, err error) {
 	glog.V(1).Infof("Starting to create a vSphere volume with volumeOptions: %+v", volumeOptions)
-	createVolumeInternal := func(volumeOptions *vclib.VolumeOptions) (canonicalVolumePath string, err error) {
+	createVolumeInternal := func(volumeOptions *vclib.VolumeOptions) (volumePath string, err error) {
 		var datastore string
 		// Default datastore is the datastore in the vSphere config file that is used to initialize vSphere cloud provider.
 		if volumeOptions.Datastore == "" {
@@ -638,7 +644,6 @@ func (vs *VSphere) CreateVolume(volumeOptions *vclib.VolumeOptions) (canonicalVo
 		} else {
 			datastore = volumeOptions.Datastore
 		}
-		datastore = strings.TrimSpace(datastore)
 		// Create context
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
@@ -689,34 +694,27 @@ func (vs *VSphere) CreateVolume(volumeOptions *vclib.VolumeOptions) (canonicalVo
 			glog.Errorf("Cannot create dir %#v. err %s", kubeVolsPath, err)
 			return "", err
 		}
-		volumePath := kubeVolsPath + volumeOptions.Name + ".vmdk"
+		volumePath = kubeVolsPath + volumeOptions.Name + ".vmdk"
 		disk := diskmanagers.VirtualDisk{
 			DiskPath:      volumePath,
 			VolumeOptions: volumeOptions,
 			VMOptions:     vmOptions,
 		}
-		volumePath, err = disk.Create(ctx, ds)
+		err = disk.Create(ctx, ds)
 		if err != nil {
 			glog.Errorf("Failed to create a vsphere volume with volumeOptions: %+v on datastore: %s. err: %+v", volumeOptions, datastore, err)
 			return "", err
 		}
-		// Get the canonical path for the volume path.
-		canonicalVolumePath, err = getcanonicalVolumePath(ctx, dc, volumePath)
-		if err != nil {
-			glog.Errorf("Failed to get canonical vsphere volume path for volume: %s with volumeOptions: %+v on datastore: %s. err: %+v", volumePath, volumeOptions, datastore, err)
-			return "", err
-		}
 		if filepath.Base(datastore) != datastore {
 			// If datastore is within cluster, add cluster path to the volumePath
-			canonicalVolumePath = strings.Replace(canonicalVolumePath, filepath.Base(datastore), datastore, 1)
+			volumePath = strings.Replace(volumePath, filepath.Base(datastore), datastore, 1)
 		}
-		return canonicalVolumePath, nil
+		return volumePath, nil
 	}
 	requestTime := time.Now()
-	canonicalVolumePath, err = createVolumeInternal(volumeOptions)
+	volumePath, err = createVolumeInternal(volumeOptions)
 	vclib.RecordCreateVolumeMetric(volumeOptions, requestTime, err)
-	glog.V(1).Infof("The canonical volume path for the newly created vSphere volume is %q", canonicalVolumePath)
-	return canonicalVolumePath, err
+	return volumePath, err
 }
 
 // DeleteVolume deletes a volume given volume name.

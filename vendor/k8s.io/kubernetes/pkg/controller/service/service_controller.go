@@ -29,7 +29,6 @@ import (
 	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/util/runtime"
 	"k8s.io/apimachinery/pkg/util/wait"
-	utilfeature "k8s.io/apiserver/pkg/util/feature"
 	coreinformers "k8s.io/client-go/informers/core/v1"
 	clientset "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/kubernetes/scheme"
@@ -42,7 +41,6 @@ import (
 	v1helper "k8s.io/kubernetes/pkg/api/v1/helper"
 	"k8s.io/kubernetes/pkg/cloudprovider"
 	"k8s.io/kubernetes/pkg/controller"
-	kubefeatures "k8s.io/kubernetes/pkg/features"
 	"k8s.io/kubernetes/pkg/util/metrics"
 )
 
@@ -65,14 +63,6 @@ const (
 	notRetryable = false
 
 	doNotRetry = time.Duration(0)
-
-	// LabelNodeRoleMaster specifies that a node is a master
-	// It's copied over to kubeadm until it's merged in core: https://github.com/kubernetes/kubernetes/pull/39112
-	LabelNodeRoleMaster = "node-role.kubernetes.io/master"
-
-	// LabelNodeRoleExcludeBalancer specifies that the node should be
-	// exclude from load balancers created by a cloud provider.
-	LabelNodeRoleExcludeBalancer = "alpha.service-controller.kubernetes.io/exclude-balancer"
 )
 
 type cachedService struct {
@@ -246,17 +236,15 @@ func (s *ServiceController) processServiceUpdate(cachedService *cachedService, s
 	err, retry := s.createLoadBalancerIfNeeded(key, service)
 	if err != nil {
 		message := "Error creating load balancer"
-		var retryToReturn time.Duration
 		if retry {
 			message += " (will retry): "
-			retryToReturn = cachedService.nextRetryDelay()
 		} else {
 			message += " (will not retry): "
-			retryToReturn = doNotRetry
 		}
 		message += err.Error()
 		s.eventRecorder.Event(service, v1.EventTypeWarning, "CreatingLoadBalancerFailed", message)
-		return err, retryToReturn
+
+		return err, cachedService.nextRetryDelay()
 	}
 	// Always update the cache upon success.
 	// NOTE: Since we update the cached service if and only if we successfully
@@ -608,12 +596,6 @@ func getNodeConditionPredicate() corelisters.NodeConditionPredicate {
 		// Recognize nodes labeled as master, and filter them also, as we were doing previously.
 		if _, hasMasterRoleLabel := node.Labels[constants.LabelNodeRoleMaster]; hasMasterRoleLabel {
 			return false
-		}
-
-		if utilfeature.DefaultFeatureGate.Enabled(kubefeatures.ServiceNodeExclusion) {
-			if _, hasExcludeBalancerLabel := node.Labels[LabelNodeRoleExcludeBalancer]; hasExcludeBalancerLabel {
-				return false
-			}
 		}
 
 		// If we have no info, don't accept

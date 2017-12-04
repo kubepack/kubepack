@@ -34,10 +34,13 @@
   revision = "019ae5ada31de202164b118aee88ee2d14075c31"
   name = "k8s.io/apimachinery"
 
-
 [[constraint]]
   name = "k8s.io/kubernetes"
-  version = "v1.8.0"
+  version = "=v1.8.0"
+
+[[constraint]]
+  name = "k8s.io/api"
+  version = "kubernetes-1.8.0"
 
 [[constraint]]
   branch = "master"

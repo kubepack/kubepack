@@ -64,7 +64,7 @@ type flunderStrategy struct {
 }
 
 func (flunderStrategy) NamespaceScoped() bool {
-	return true
+	return false
 }
 
 func (flunderStrategy) PrepareForCreate(ctx genericapirequest.Context, obj runtime.Object) {

@@ -322,7 +322,8 @@ func (s *$.type|private$Lister) $.type|publicPlural$(namespace string) $.type|pu
 var typeLister_NonNamespacedGet = `
 // Get retrieves the $.type|public$ from the index for a given name.
 func (s *$.type|private$Lister) Get(name string) (*$.type|raw$, error) {
-  obj, exists, err := s.indexer.GetByKey(name)
+  key := &$.type|raw${ObjectMeta: $.objectMeta|raw${Name: name}}
+  obj, exists, err := s.indexer.Get(key)
   if err != nil {
     return nil, err
   }

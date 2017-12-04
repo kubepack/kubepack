@@ -32,7 +32,7 @@ func TestCreateService(t *testing.T) {
 	f, tf, codec, negSer := cmdtesting.NewAPIFactory()
 	tf.Printer = &testPrinter{}
 	tf.Client = &fake.RESTClient{
-		GroupVersion:         api.Registry.GroupOrDie(api.GroupName).GroupVersion,
+		APIRegistry:          api.Registry,
 		NegotiatedSerializer: negSer,
 		Client: fake.CreateHTTPClient(func(req *http.Request) (*http.Response, error) {
 			switch p, m := req.URL.Path, req.Method; {
@@ -62,7 +62,7 @@ func TestCreateServiceNodePort(t *testing.T) {
 	f, tf, codec, negSer := cmdtesting.NewAPIFactory()
 	tf.Printer = &testPrinter{}
 	tf.Client = &fake.RESTClient{
-		GroupVersion:         api.Registry.GroupOrDie(api.GroupName).GroupVersion,
+		APIRegistry:          api.Registry,
 		NegotiatedSerializer: negSer,
 		Client: fake.CreateHTTPClient(func(req *http.Request) (*http.Response, error) {
 			switch p, m := req.URL.Path, req.Method; {
@@ -92,7 +92,7 @@ func TestCreateServiceExternalName(t *testing.T) {
 	f, tf, codec, negSer := cmdtesting.NewAPIFactory()
 	tf.Printer = &testPrinter{}
 	tf.Client = &fake.RESTClient{
-		GroupVersion:         api.Registry.GroupOrDie(api.GroupName).GroupVersion,
+		APIRegistry:          api.Registry,
 		NegotiatedSerializer: negSer,
 		Client: fake.CreateHTTPClient(func(req *http.Request) (*http.Response, error) {
 			switch p, m := req.URL.Path, req.Method; {

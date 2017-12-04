@@ -75,7 +75,7 @@ func TestCreateRoleBinding(t *testing.T) {
 	tf.Printer = &testPrinter{}
 	tf.Client = &RoleBindingRESTClient{
 		RESTClient: &fake.RESTClient{
-			GroupVersion:         api.Registry.GroupOrDie(api.GroupName).GroupVersion,
+			APIRegistry:          api.Registry,
 			NegotiatedSerializer: ns,
 			Client: fake.CreateHTTPClient(func(req *http.Request) (*http.Response, error) {
 				switch p, m := req.URL.Path, req.Method; {

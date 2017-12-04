@@ -31,7 +31,6 @@ import (
 	"github.com/go-openapi/validate"
 	"github.com/golang/glog"
 
-	apiequality "k8s.io/apimachinery/pkg/api/equality"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -81,11 +80,6 @@ type crdHandler struct {
 
 // crdInfo stores enough information to serve the storage for the custom resource
 type crdInfo struct {
-	// spec and acceptedNames are used to compare against if a change is made on a CRD. We only update
-	// the storage if one of these changes.
-	spec          *apiextensions.CustomResourceDefinitionSpec
-	acceptedNames *apiextensions.CustomResourceDefinitionNames
-
 	storage      *customresource.REST
 	requestScope handlers.RequestScope
 }
@@ -115,9 +109,6 @@ func NewCustomResourceDefinitionHandler(
 
 	crdInformer.Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
 		UpdateFunc: ret.updateCustomResourceDefinition,
-		DeleteFunc: func(obj interface{}) {
-			ret.removeDeadStorage()
-		},
 	})
 
 	ret.customStorage.Store(crdStorageMap{})
@@ -255,7 +246,7 @@ func (r *crdHandler) removeDeadStorage() {
 		return
 	}
 
-	for uid, s := range storageMap {
+	for uid := range storageMap {
 		found := false
 		for _, crd := range allCustomResourceDefinitions {
 			if crd.UID == uid {
@@ -264,8 +255,6 @@ func (r *crdHandler) removeDeadStorage() {
 			}
 		}
 		if !found {
-			glog.V(4).Infof("Removing dead CRD storage for %v", s.requestScope.Resource)
-			s.storage.DestroyFunc()
 			delete(storageMap, uid)
 		}
 	}
@@ -313,7 +302,7 @@ func (r *crdHandler) getServingInfoFor(crd *apiextensions.CustomResourceDefiniti
 	parameterScheme.AddGeneratedDeepCopyFuncs(metav1.GetGeneratedDeepCopyFuncs()...)
 	parameterCodec := runtime.NewParameterCodec(parameterScheme)
 
-	kind := schema.GroupVersionKind{Group: crd.Spec.Group, Version: crd.Spec.Version, Kind: crd.Status.AcceptedNames.Kind}
+	kind := schema.GroupVersionKind{Group: crd.Spec.Group, Version: crd.Spec.Version, Kind: crd.Spec.Names.Kind}
 	typer := unstructuredObjectTyper{
 		delegate:          parameterScheme,
 		unstructuredTyper: discovery.NewUnstructuredObjectTyper(nil),
@@ -331,8 +320,8 @@ func (r *crdHandler) getServingInfoFor(crd *apiextensions.CustomResourceDefiniti
 	validator := validate.NewSchemaValidator(openapiSchema, nil, "", strfmt.Default)
 
 	storage := customresource.NewREST(
-		schema.GroupResource{Group: crd.Spec.Group, Resource: crd.Status.AcceptedNames.Plural},
-		schema.GroupVersionKind{Group: crd.Spec.Group, Version: crd.Spec.Version, Kind: crd.Status.AcceptedNames.ListKind},
+		schema.GroupResource{Group: crd.Spec.Group, Resource: crd.Spec.Names.Plural},
+		schema.GroupVersionKind{Group: crd.Spec.Group, Version: crd.Spec.Version, Kind: crd.Spec.Names.ListKind},
 		UnstructuredCopier{},
 		customresource.NewStrategy(
 			typer,
@@ -376,7 +365,7 @@ func (r *crdHandler) getServingInfoFor(crd *apiextensions.CustomResourceDefiniti
 		Typer:           typer,
 		UnsafeConvertor: unstructured.UnstructuredObjectConverter{},
 
-		Resource:    schema.GroupVersionResource{Group: crd.Spec.Group, Version: crd.Spec.Version, Resource: crd.Status.AcceptedNames.Plural},
+		Resource:    schema.GroupVersionResource{Group: crd.Spec.Group, Version: crd.Spec.Version, Resource: crd.Spec.Names.Plural},
 		Kind:        kind,
 		Subresource: "",
 
@@ -384,9 +373,6 @@ func (r *crdHandler) getServingInfoFor(crd *apiextensions.CustomResourceDefiniti
 	}
 
 	ret = &crdInfo{
-		spec:          &crd.Spec,
-		acceptedNames: &crd.Status.AcceptedNames,
-
 		storage:      storage,
 		requestScope: requestScope,
 	}
@@ -404,36 +390,23 @@ func (r *crdHandler) getServingInfoFor(crd *apiextensions.CustomResourceDefiniti
 	return ret, nil
 }
 
-func (c *crdHandler) updateCustomResourceDefinition(oldObj, newObj interface{}) {
+func (c *crdHandler) updateCustomResourceDefinition(oldObj, _ interface{}) {
 	oldCRD := oldObj.(*apiextensions.CustomResourceDefinition)
-	newCRD := newObj.(*apiextensions.CustomResourceDefinition)
+	glog.V(4).Infof("Updating customresourcedefinition %s", oldCRD.Name)
 
 	c.customStorageLock.Lock()
 	defer c.customStorageLock.Unlock()
+
 	storageMap := c.customStorage.Load().(crdStorageMap)
-
-	oldInfo, found := storageMap[newCRD.UID]
-	if !found {
-		return
-	}
-	if apiequality.Semantic.DeepEqual(&newCRD.Spec, oldInfo.spec) && apiequality.Semantic.DeepEqual(&newCRD.Status.AcceptedNames, oldInfo.acceptedNames) {
-		glog.V(6).Infof("Ignoring customresourcedefinition %s update because neither spec, nor accepted names changed", oldCRD.Name)
-		return
-	}
-
-	glog.V(4).Infof("Updating customresourcedefinition %s", oldCRD.Name)
 	storageMap2 := make(crdStorageMap, len(storageMap))
 
 	// Copy because we cannot write to storageMap without a race
 	// as it is used without locking elsewhere
 	for k, v := range storageMap {
-		if k == oldCRD.UID {
-			v.storage.DestroyFunc()
-			continue
-		}
 		storageMap2[k] = v
 	}
 
+	delete(storageMap2, oldCRD.UID)
 	c.customStorage.Store(storageMap2)
 }
 

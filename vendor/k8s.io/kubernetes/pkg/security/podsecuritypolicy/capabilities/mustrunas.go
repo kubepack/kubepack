@@ -48,17 +48,13 @@ func NewDefaultCapabilities(defaultAddCapabilities, requiredDropCapabilities, al
 // 1.  a capabilities.Add set containing all the required adds (unless the
 // 		container specifically is dropping the cap) and container requested adds
 // 2.  a capabilities.Drop set containing all the required drops and container requested drops
-//
-// Returns the original container capabilities if no changes are required.
 func (s *defaultCapabilities) Generate(pod *api.Pod, container *api.Container) (*api.Capabilities, error) {
 	defaultAdd := makeCapSet(s.defaultAddCapabilities)
 	requiredDrop := makeCapSet(s.requiredDropCapabilities)
 	containerAdd := sets.NewString()
 	containerDrop := sets.NewString()
 
-	var containerCapabilities *api.Capabilities
 	if container.SecurityContext != nil && container.SecurityContext.Capabilities != nil {
-		containerCapabilities = container.SecurityContext.Capabilities
 		containerAdd = makeCapSet(container.SecurityContext.Capabilities.Add)
 		containerDrop = makeCapSet(container.SecurityContext.Capabilities.Drop)
 	}
@@ -66,25 +62,32 @@ func (s *defaultCapabilities) Generate(pod *api.Pod, container *api.Container) (
 	// remove any default adds that the container is specifically dropping
 	defaultAdd = defaultAdd.Difference(containerDrop)
 
-	combinedAdd := defaultAdd.Union(containerAdd)
-	combinedDrop := requiredDrop.Union(containerDrop)
+	combinedAdd := defaultAdd.Union(containerAdd).List()
+	combinedDrop := requiredDrop.Union(containerDrop).List()
 
-	// no changes? return the original capabilities
-	if (len(combinedAdd) == len(containerAdd)) && (len(combinedDrop) == len(containerDrop)) {
-		return containerCapabilities, nil
+	// nothing generated?  return nil
+	if len(combinedAdd) == 0 && len(combinedDrop) == 0 {
+		return nil, nil
 	}
 
 	return &api.Capabilities{
-		Add:  capabilityFromStringSlice(combinedAdd.List()),
-		Drop: capabilityFromStringSlice(combinedDrop.List()),
+		Add:  capabilityFromStringSlice(combinedAdd),
+		Drop: capabilityFromStringSlice(combinedDrop),
 	}, nil
 }
 
 // Validate ensures that the specified values fall within the range of the strategy.
-func (s *defaultCapabilities) Validate(pod *api.Pod, container *api.Container, capabilities *api.Capabilities) field.ErrorList {
+func (s *defaultCapabilities) Validate(pod *api.Pod, container *api.Container) field.ErrorList {
 	allErrs := field.ErrorList{}
 
-	if capabilities == nil {
+	// if the security context isn't set then we haven't generated correctly.  Shouldn't get here
+	// if using the provider correctly
+	if container.SecurityContext == nil {
+		allErrs = append(allErrs, field.Invalid(field.NewPath("securityContext"), container.SecurityContext, "no security context is set"))
+		return allErrs
+	}
+
+	if container.SecurityContext.Capabilities == nil {
 		// if container.SC.Caps is nil then nothing was defaulted by the strategy or requested by the pod author
 		// if there are no required caps on the strategy and nothing is requested on the pod
 		// then we can safely return here without further validation.
@@ -94,7 +97,7 @@ func (s *defaultCapabilities) Validate(pod *api.Pod, container *api.Container, c
 
 		// container has no requested caps but we have required caps.  We should have something in
 		// at least the drops on the container.
-		allErrs = append(allErrs, field.Invalid(field.NewPath("capabilities"), capabilities,
+		allErrs = append(allErrs, field.Invalid(field.NewPath("capabilities"), container.SecurityContext.Capabilities,
 			"required capabilities are not set on the securityContext"))
 		return allErrs
 	}
@@ -109,7 +112,7 @@ func (s *defaultCapabilities) Validate(pod *api.Pod, container *api.Container, c
 	// validate that anything being added is in the default or allowed sets
 	defaultAdd := makeCapSet(s.defaultAddCapabilities)
 
-	for _, cap := range capabilities.Add {
+	for _, cap := range container.SecurityContext.Capabilities.Add {
 		sCap := string(cap)
 		if !defaultAdd.Has(sCap) && !allowedAdd.Has(sCap) {
 			allErrs = append(allErrs, field.Invalid(field.NewPath("capabilities", "add"), sCap, "capability may not be added"))
@@ -117,12 +120,12 @@ func (s *defaultCapabilities) Validate(pod *api.Pod, container *api.Container, c
 	}
 
 	// validate that anything that is required to be dropped is in the drop set
-	containerDrops := makeCapSet(capabilities.Drop)
+	containerDrops := makeCapSet(container.SecurityContext.Capabilities.Drop)
 
 	for _, requiredDrop := range s.requiredDropCapabilities {
 		sDrop := string(requiredDrop)
 		if !containerDrops.Has(sDrop) {
-			allErrs = append(allErrs, field.Invalid(field.NewPath("capabilities", "drop"), capabilities.Drop,
+			allErrs = append(allErrs, field.Invalid(field.NewPath("capabilities", "drop"), container.SecurityContext.Capabilities.Drop,
 				fmt.Sprintf("%s is required to be dropped but was not found", sDrop)))
 		}
 	}

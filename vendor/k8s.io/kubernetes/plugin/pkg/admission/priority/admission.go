@@ -96,7 +96,7 @@ func (p *priorityPlugin) SetInternalKubeInformerFactory(f informers.SharedInform
 
 var (
 	podResource           = api.Resource("pods")
-	priorityClassResource = scheduling.Resource("priorityclasses")
+	priorityClassResource = api.Resource("priorityclasses")
 )
 
 // Admit checks Pods and PriorityClasses and admits or rejects them. It also resolves the priority of pods based on their PriorityClass.
