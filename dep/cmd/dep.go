@@ -1,105 +1,33 @@
-package main
+package cmd
 
 import (
-	"fmt"
-	"go/build"
-	"io/ioutil"
-	"log"
+	"github.com/spf13/cobra"
+	// "github.com/packsh/demo-dep/dep"
 	"os"
+	"go/build"
 	"path/filepath"
+	"io/ioutil"
+	"github.com/ghodss/yaml"
+	"log"
+	typ "github.com/packsh/demo-dep/type"
+	"github.com/golang/dep/gps/pkgtree"
+	"github.com/golang/dep/gps"
 	"strings"
-
 	"context"
 	"time"
-
-	"github.com/ghodss/yaml"
-	"github.com/golang/dep/gps"
-	"github.com/golang/dep/gps/pkgtree"
-	// "github.com/packsh/demo-dep/dep/copy"
-	typ "github.com/packsh/demo-dep/type"
+	"fmt"
 )
 
-// This is probably the simplest possible implementation of gps. It does the
-// substantive work that `go get` does, except:
-//  1. It drops the resulting tree into vendor instead of GOPATH
-//  2. It prefers semver tags (if available) over branches
-//  3. It removes any vendor directories nested within dependencies
-//
-//  This will compile and work...and then blow away any vendor directory present
-//  in the cwd. Be careful!
-
-func main() {
-	// Assume the current directory is correctly placed on a GOPATH, and that it's the
-	// root of the project.
-	root, _ := os.Getwd()
-	man := filepath.Join(root, "manifest.yaml")
-	byt, err := ioutil.ReadFile(man)
-	manStruc := typ.ManifestDefinition{}
-	err = yaml.Unmarshal(byt, &manStruc)
-	if err != nil {
-		log.Fatalln("Error Occuered-----", err)
-	}
-
-	imports := make([]string, len(manStruc.Dependencies))
-
-	for key, value := range manStruc.Dependencies {
-		imports[key] = value.Package
-	}
-
-	srcprefix := filepath.Join(build.Default.GOPATH, "src") + string(filepath.Separator)
-	importroot := filepath.ToSlash(strings.TrimPrefix(root, srcprefix))
-
-	manifestYaml := ManifestYaml{}
-	manifestYaml.root = root
-	pkgTree := map[string]pkgtree.PackageOrErr{
-		"github.com/sdboyer/gps": {
-			P: pkgtree.Package{
-				// Name:       "github.com/a8uhnf/go_stack",
-				// ImportPath: "github.com/packsh/demo-dep",
-				Imports: imports,
-			},
+func NewDepCommand() *cobra.Command {
+	cmd := &cobra.Command{
+		Use: "dep",
+		Short: "Command for get non go file(especially yaml files).",
+		Run: func(cmd *cobra.Command, args []string) {
+			DepRun()
 		},
 	}
-	params := gps.SolveParameters{
-		RootDir:         root,
-		TraceLogger:     log.New(os.Stdout, "", 0),
-		ProjectAnalyzer: NaiveAnalyzer{},
-		Manifest:        manifestYaml,
-		RootPackageTree: pkgtree.PackageTree{
-			ImportRoot: importroot,
-			Packages:   pkgTree,
-		},
-	}
-	// Set up a SourceManager. This manages interaction with sources (repositories).
-	tempdir, _ := ioutil.TempDir("", "gps-repocache")
-	srcManagerConfig := gps.SourceManagerConfig{
-		Cachedir:       filepath.Join(tempdir),
-		Logger:         log.New(os.Stdout, "", 0),
-		DisableLocking: true,
-	}
-	log.Println("hello tempdir", tempdir)
-	sourcemgr, _ := gps.NewSourceManager(srcManagerConfig)
-	defer sourcemgr.Release()
 
-	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Minute)
-	defer cancel()
-	// Prep and run the solver
-	solver, err := gps.Prepare(params, sourcemgr)
-	if err != nil {
-		fmt.Println("Prepare error occurred..", err)
-		return
-	}
-	solution, err := solver.Solve(ctx)
-	if err != nil {
-		fmt.Println("Solve error occurred..", err)
-		return
-	}
-	if err == nil {
-		// If no failure, blow away the vendor dir and write a new one out,
-		// stripping nested vendor directories as we go.
-		os.RemoveAll(filepath.Join(root, "_vendor"))
-		gps.WriteDepTree(filepath.Join(root, "_vendor"), solution, sourcemgr, true, log.New(os.Stdout, "Hello:-----", 4))
-	}
+	return cmd
 }
 
 func DepRun() {
@@ -160,12 +88,12 @@ func DepRun() {
 	// Prep and run the solver
 	solver, err := gps.Prepare(params, sourcemgr)
 	if err != nil {
-		fmt.Println("Prepare error occurred..", err)
+		log.Fatalln("Prepare error occurred..", err)
 		return
 	}
 	solution, err := solver.Solve(ctx)
 	if err != nil {
-		fmt.Println("Solve error occurred..", err)
+		log.Fatalln("Solve error occurred..", err)
 		return
 	}
 	if err == nil {
@@ -345,3 +273,4 @@ func (a NaiveAnalyzer) lookForManifest(root string) (gps.Manifest, gps.Lock, err
 	lck.root = root
 	return man, lck, nil
 }
+
