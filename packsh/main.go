@@ -8,11 +8,6 @@ import (
 )
 
 func main() {
-	/*cmd := NewCmd()
-	if err := cmd.Execute(); err != nil {
-		os.Exit(1)
-	}
-	os.Exit(0)*/
 	cmd := cmd.NewDemoDepCmd()
 	if err := cmd.Execute(); err != nil {
 		os.Exit(1)

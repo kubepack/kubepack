@@ -27,6 +27,7 @@ func NewDemoDepCmd() *cobra.Command {
 	cmds.AddCommand(tstCmd)
 	cmds.AddCommand(NewEditCommand())
 	cmds.AddCommand(NewDepCommand())
+	cmds.AddCommand(NewCompileCommand())
 	return cmds
 }
 
