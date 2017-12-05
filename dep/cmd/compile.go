@@ -9,11 +9,13 @@ import (
 	"log"
 	"path/filepath"
 	"fmt"
+	"strings"
 )
 
 var (
-	src   string
-	patch string
+	src           string
+	patch         string
+	patchFileInfo os.FileInfo
 )
 
 const CompileDirectory = "_outlook"
@@ -46,6 +48,11 @@ func CompileWithPatch() ([]byte, error) {
 	}
 
 	srcDir := filepath.Join(root, src)
+	_, err = os.Stat(srcDir)
+	if err != nil {
+		return nil, err
+	}
+
 	srcFile, err := ioutil.ReadFile(srcDir)
 	if err != nil {
 		log.Fatalln(err)
@@ -59,6 +66,11 @@ func CompileWithPatch() ([]byte, error) {
 	}
 
 	patchDir := filepath.Join(root, patch)
+	patchFileInfo, err = os.Stat(patchDir)
+	if err != nil {
+		return nil, err
+	}
+
 	patchFile, err := ioutil.ReadFile(patchDir)
 	if err != nil {
 		log.Fatalln(err)
@@ -70,7 +82,6 @@ func CompileWithPatch() ([]byte, error) {
 		log.Fatalln(err)
 		return nil, err
 	}
-
 
 	compiled, err := jsonpatch.MergePatch(jsonSrc, jsonPatch)
 	if err != nil {
@@ -86,6 +97,30 @@ func CompileWithPatch() ([]byte, error) {
 	return yaml, err
 }
 
-func DumpCompiledFile (compiledYaml []byte)  {
+func DumpCompiledFile(compiledYaml []byte) error {
 	fmt.Println("hello yaml", string(compiledYaml))
+	outlookDir := strings.Replace(patch, PatchFolder, CompileDirectory, 1)
+	fmt.Println("path")
+	lstIndexOfSlash := strings.LastIndex(outlookDir, "/")
+	root, err := os.Getwd()
+	if err != nil {
+		return err
+	}
+	dstPath := filepath.Join(root, outlookDir[0:lstIndexOfSlash])
+	err = os.MkdirAll(dstPath, 0755)
+	if err != nil {
+		return err
+	}
+	outLookFilePath := filepath.Join(dstPath, patchFileInfo.Name())
+	fmt.Println("file name-----", outLookFilePath)
+	_, err = os.Create(outLookFilePath)
+	if err != nil {
+		return err
+	}
+	err = ioutil.WriteFile(outLookFilePath, compiledYaml, 0755)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
