@@ -3,14 +3,27 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
+	"github.com/Masterminds/vcs"
+	"os"
+	"log"
 )
 
-var RootCmd = &cobra.Command{
-	Use:   "heft",
-	Short: "Access heft.io from the command line",
-}
 
 func NewDemoDepCmd() *cobra.Command {
+	root, err := os.Getwd()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	repo, err := vcs.NewRepo("", root)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	crnt, err := repo.Current()
+	commitInfo, err := repo.CommitInfo(string(crnt))
+	if err != nil {
+		log.Fatalln(err)
+	}
+	fmt.Println("Hello repo ---- commitInfos ======", commitInfo.Commit)
 	cmds := &cobra.Command{
 		Use:   "ddep",
 		Short: "Cli for demo dep",

@@ -3,6 +3,9 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 	"github.com/evanphx/json-patch"
+	apps "k8s.io/api/apps/v1beta1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"github.com/Masterminds/vcs"
 	"github.com/ghodss/yaml"
 	"io/ioutil"
 	"os"
@@ -43,7 +46,6 @@ func NewCompileCommand() *cobra.Command {
 func CompileWithPatch() ([]byte, error) {
 	root, err := os.Getwd()
 	if err != nil {
-		log.Fatalln(err)
 		return nil, err
 	}
 
@@ -55,13 +57,11 @@ func CompileWithPatch() ([]byte, error) {
 
 	srcFile, err := ioutil.ReadFile(srcDir)
 	if err != nil {
-		log.Fatalln(err)
 		return nil, err
 	}
 
 	jsonSrc, err := yaml.YAMLToJSON(srcFile)
 	if err != nil {
-		log.Fatalln(err)
 		return nil, err
 	}
 
@@ -73,19 +73,16 @@ func CompileWithPatch() ([]byte, error) {
 
 	patchFile, err := ioutil.ReadFile(patchDir)
 	if err != nil {
-		log.Fatalln(err)
 		return nil, err
 	}
 
 	jsonPatch, err := yaml.YAMLToJSON(patchFile)
 	if err != nil {
-		log.Fatalln(err)
 		return nil, err
 	}
 
 	compiled, err := jsonpatch.MergePatch(jsonSrc, jsonPatch)
 	if err != nil {
-		log.Fatalln(err)
 		return nil, err
 	}
 	yaml, err := yaml.JSONToYAML(compiled)
@@ -98,29 +95,69 @@ func CompileWithPatch() ([]byte, error) {
 }
 
 func DumpCompiledFile(compiledYaml []byte) error {
-	fmt.Println("hello yaml", string(compiledYaml))
-	outlookDir := strings.Replace(patch, PatchFolder, CompileDirectory, 1)
-	fmt.Println("path")
-	lstIndexOfSlash := strings.LastIndex(outlookDir, "/")
 	root, err := os.Getwd()
 	if err != nil {
 		return err
 	}
+
+	annotateYaml, err := getAnnotatedWithCommitHash(compiledYaml, root)
+	if err != nil {
+		return err
+	}
+
+	outlookDir := strings.Replace(patch, PatchFolder, CompileDirectory, 1)
+	lstIndexOfSlash := strings.LastIndex(outlookDir, "/")
+	if err != nil {
+		return err
+	}
+
 	dstPath := filepath.Join(root, outlookDir[0:lstIndexOfSlash])
 	err = os.MkdirAll(dstPath, 0755)
 	if err != nil {
 		return err
 	}
+
 	outLookFilePath := filepath.Join(dstPath, patchFileInfo.Name())
 	fmt.Println("file name-----", outLookFilePath)
 	_, err = os.Create(outLookFilePath)
 	if err != nil {
 		return err
 	}
-	err = ioutil.WriteFile(outLookFilePath, compiledYaml, 0755)
+
+	err = ioutil.WriteFile(outLookFilePath, annotateYaml, 0755)
 	if err != nil {
 		return err
 	}
 
 	return nil
+}
+
+func getAnnotatedWithCommitHash(yamlByte []byte, dir string) ([]byte, error) {
+	repo, err := vcs.NewRepo("", dir)
+	if err != nil {
+		return nil, err
+	}
+
+	crnt, err := repo.Current()
+	if err != nil {
+		return nil, err
+	}
+
+	commitInfo, err := repo.CommitInfo(string(crnt))
+	if err != nil {
+		return nil, err
+	}
+
+	deploy := &apps.Deployment{}
+	err = yaml.Unmarshal(yamlByte, deploy)
+	metav1.SetMetaDataAnnotation(&deploy.ObjectMeta, "git-commit-hash", commitInfo.Commit)
+
+	annotatedYamlByte, err := yaml.Marshal(deploy)
+	if err != nil {
+		return nil, err
+	}
+
+	fmt.Println("Hello world---------------After annotated yaml---", string(annotatedYamlByte))
+
+	return annotatedYamlByte, nil
 }
