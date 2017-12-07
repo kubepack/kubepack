@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"
-	"github.com/packsh/demo-dep/dep/cmd"
+	"github.com/kubepack/pack/dep/cmd"
 )
 
 func main() {

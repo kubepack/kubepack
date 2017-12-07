@@ -1,2 +1,2 @@
-# demo-dep
-Demo dependency manager
+# Pack
+Kubernetes dependency manager
