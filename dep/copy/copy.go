@@ -3,7 +3,7 @@ package copy
 import (
 	"fmt"
 	"github.com/ghodss/yaml"
-	typ "github.com/packsh/demo-dep/type"
+	typ "github.com/kubepack/pack/type"
 	"io/ioutil"
 	"io"
 	"log"

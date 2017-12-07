@@ -8,7 +8,7 @@ import (
 	"io/ioutil"
 	"github.com/ghodss/yaml"
 	"log"
-	typ "github.com/packsh/demo-dep/type"
+	typ "github.com/kubepack/pack/type"
 	"github.com/golang/dep/gps/pkgtree"
 	"github.com/golang/dep/gps"
 	"strings"
