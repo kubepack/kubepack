@@ -27,7 +27,7 @@
 
 [[constraint]]
   name = "github.com/golang/dep"
-  source = "https://github.com/packsh/dep.git"
+  source = "https://github.com/kubepack/dep.git"
   branch = "dep-bypass"
 
 [[constraint]]
