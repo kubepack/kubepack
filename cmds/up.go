@@ -26,7 +26,7 @@ const CompileDirectory = "_outlook"
 func NewUpCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "up",
-		Short: "Compiles patches and vendored manifests into final final resource definitions",
+		Short: "Compiles patches and vendored manifests into final resource definitions",
 		Run: func(cmd *cobra.Command, args []string) {
 			rootPath, err := os.Getwd()
 			if err != nil {

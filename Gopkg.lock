@@ -53,7 +53,7 @@
 [[projects]]
   branch = "master"
   name = "github.com/appscode/go"
-  packages = ["analytics","context","homedir","log","log/golog","version"]
+  packages = ["analytics","context","homedir","log","log/golog","runtime","version"]
   revision = "0042f7fe164fd03992cfa5ea70a98615516be99b"
 
 [[projects]]
@@ -73,6 +73,12 @@
   packages = ["."]
   revision = "2f1ce7a837dcb8da3ec595b1dac9d0632f0f99e8"
   version = "v1.3.1"
+
+[[projects]]
+  name = "github.com/cpuguy83/go-md2man"
+  packages = ["md2man"]
+  revision = "1d903dcb749992f3741d744c0f8376b4bd7eb3e1"
+  version = "v1.0.7"
 
 [[projects]]
   name = "github.com/davecgh/go-spew"
@@ -370,6 +376,12 @@
   revision = "a6e9df898b1336106c743392c48ee0b71f5c4efa"
 
 [[projects]]
+  name = "github.com/russross/blackfriday"
+  packages = ["."]
+  revision = "4048872b16cc0fc2c5fd9eacf0ed2c2fedaa0c8c"
+  version = "v1.5"
+
+[[projects]]
   branch = "master"
   name = "github.com/sdboyer/constext"
   packages = ["."]
@@ -377,7 +389,7 @@
 
 [[projects]]
   name = "github.com/spf13/cobra"
-  packages = ["."]
+  packages = [".","doc"]
   revision = "7b2c5ac9fc04fc5efafb60700713d4fa609b777b"
   version = "v0.0.1"
 
@@ -503,6 +515,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "04bd95c46c456954de453b393a63b359c619201ea966736e09c0abdba7acce82"
+  inputs-digest = "481bafc07861bb3f9ac8b063a3b93cd559c36e150fe8717e20f5e561063d7cfb"
   solver-name = "gps-cdcl"
   solver-version = 1
