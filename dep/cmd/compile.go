@@ -28,18 +28,10 @@ func NewCompileCommand() *cobra.Command {
 		Use:   "compile",
 		Short: "Compile with patch.",
 		Run: func(cmd *cobra.Command, args []string) {
-			/*compiledYaml, err := CompileWithPatch()
-			if err != nil {
-				log.Fatalln(err)
-			}
-			// fmt.Println("yaml", string(compiledYaml))
-			DumpCompiledFile(compiledYaml)*/
 			rootPath,err := os.Getwd()
 			if err != nil {
 				log.Fatalln(err)
 			}
-
-			fmt.Println("Hello rootpath", rootPath)
 
 			err = filepath.Walk(filepath.Join(rootPath, PatchFolder), visitPatchAndDump)
 			if err != nil {
@@ -63,11 +55,8 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, err error) error {
 		return err
 	}
 
-	fmt.Println("hello path-----", string(patchByte))
-
 	srcFilepath := strings.Replace(path, PatchFolder, _VendorFolder, 1)
 
-	fmt.Println("------------------", filepath.Dir(srcFilepath))
 	if _, err := os.Stat(srcFilepath); err != nil {
 		return err
 	}
@@ -113,7 +102,6 @@ func CompileWithPatch(srcByte, patchByte []byte) ([]byte, error) {
 }
 
 func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
-	fmt.Println("hello Dump Compiled File------------", outlookPath)
 	root, err := os.Getwd()
 	if err != nil {
 		return err
@@ -124,8 +112,7 @@ func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
 		return err
 	}
 
-
-	// If not exists mkdir the folder
+	// If not exists mkdir all the folder
 	outlookDir := filepath.Dir(outlookPath)
 	if _, err := os.Stat(outlookDir); err != nil {
 		if os.IsNotExist(err) {
@@ -136,8 +123,6 @@ func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
 		}
 	}
 
-	// outLookFilePath := filepath.Join(dstPath, patchFileInfo.Name())
-	fmt.Println("file name-----", outlookPath)
 	_, err = os.Create(outlookPath)
 	if err != nil {
 		return err
@@ -175,8 +160,6 @@ func getAnnotatedWithCommitHash(yamlByte []byte, dir string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	fmt.Println("Hello world---------------After annotated yaml---", string(annotatedYamlByte))
 
 	return annotatedYamlByte, nil
 }
