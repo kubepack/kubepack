@@ -5,14 +5,14 @@ import (
 	"log"
 	"os"
 
-	"github.com/kubepack/pack/pkg/cmds"
+	"github.com/kubepack/pack/cmds"
 	"github.com/appscode/go/runtime"
 	"github.com/spf13/cobra/doc"
 )
 
 // ref: https://github.com/spf13/cobra/blob/master/doc/md_docs.md
 func main() {
-	rootCmd := cmds.NewRootCmd("")
+	rootCmd := cmds.NewPackCmd("")
 	dir := runtime.GOPath() + "/src/github.com/kubepack/pack/docs/reference"
 	fmt.Printf("Generating cli markdown tree in: %v\n", dir)
 	err := os.MkdirAll(dir, 0755)

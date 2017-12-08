@@ -42,12 +42,17 @@ libbuild.BIN_MATRIX = {
     'pack': {
         'type': 'go',
         'go_version': True,
+        'release': True,
         'distro': {
-            'alpine': ['amd64'],
-            'linux': ['amd64']
+            'linux': ['amd64'],
+            'darwin': ['amd64']
         }
     }
 }
+if libbuild.ENV not in ['prod']:
+    libbuild.BIN_MATRIX['pack']['distro'] = {
+        libbuild.GOHOSTOS: [libbuild.GOHOSTARCH]
+    }
 
 libbuild.BUCKET_MATRIX = {
     'prod': 'gs://appscode-cdn',
@@ -122,13 +127,13 @@ def build(name=None):
 
 
 def install():
-    die(call('GO15VENDOREXPERIMENT=1 ' + libbuild.GOC + ' install ./...'))
+    die(call(libbuild.GOC + ' install ./...'))
 
 
 def default():
     gen()
     fmt()
-    die(call('GO15VENDOREXPERIMENT=1 ' + libbuild.GOC + ' install .'))
+    die(call(libbuild.GOC + ' install .'))
 
 
 if __name__ == "__main__":
