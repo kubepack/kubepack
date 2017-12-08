@@ -18,30 +18,29 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	verboseMode bool
-)
-
 func NewPullCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "pull",
 		Short: "Pulls dependent app manifests",
 		Run: func(cmd *cobra.Command, args []string) {
-			err := DepRun()
+			err := pullDeps(cmd)
 			if err != nil {
 				log.Fatalln(err)
 			}
 		},
 	}
-	cmd.Flags().BoolVarP(&verboseMode, "verbose", "v", verboseMode, "Use this flag for verbose output when install dependencies.")
 	return cmd
 }
 
-func DepRun() error {
+func pullDeps(cmd *cobra.Command) error {
 	// Assume the current directory is correctly placed on a GOPATH, and that it's the
 	// root of the project.
 	logger := log.New(ioutil.Discard, "", 0)
-	if verboseMode {
+	verbose, err := cmd.Flags().GetBool("verbose")
+	if err != nil {
+		return err
+	}
+	if verbose {
 		logger = log.New(os.Stdout, "", 0)
 	}
 	root, _ := os.Getwd()
