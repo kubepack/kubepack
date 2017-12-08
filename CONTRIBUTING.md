@@ -18,10 +18,10 @@ dev environment to how to build and test Pac. If you find something undocumented
 please feel free to send a Pull Request.
 
 ## Getting Help
-If you have a question about Pac or having problem using it, you can contact us on our public Slack channel. Follow [this link](https://slack.appscode.com) to get invitation to our Slack channel.
+If you have a question about Pack or having problem using it, you can contact us on our public Slack channel. Follow [this link](https://slack.appscode.com) to get invitation to our Slack channel.
 
 ## Bugs/Feature request
-If you have found a bug with Pac or want to request for new features, please [file an issue](https://github.com/kubepack/pack/issues/new). 
+If you have found a bug with Pack or want to request for new features, please [file an issue](https://github.com/kubepack/pack/issues/new).
 
 ## Contribution Flow
 If you fix a bug or developed a new feature, feel free to submit a PR. In either case, please file a [Github issue]((https://github.com/kubepack/pack/issues/new)) first, so that we can have a discussion on it. This is a rough outline of what a contributor's workflow looks like:
