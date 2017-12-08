@@ -1,16 +1,11 @@
 package cmd
 
 import (
-	"fmt"
 	"github.com/spf13/cobra"
-	"github.com/Masterminds/vcs"
-	"os"
-	"log"
 )
 
-
 func NewDemoDepCmd() *cobra.Command {
-	root, err := os.Getwd()
+	/*root, err := os.Getwd()
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -22,27 +17,15 @@ func NewDemoDepCmd() *cobra.Command {
 	commitInfo, err := repo.CommitInfo(string(crnt))
 	if err != nil {
 		log.Fatalln(err)
-	}
+	}*/
 	cmds := &cobra.Command{
-		Use:   "ddep",
+		Use:   "pack",
 		Short: "Cli for demo dep",
-		Long:  "A alternative kubernetes dependency manager...",
+		Long:  "A alternative kubernetes dependency manager.",
 	}
 
-	tstCmd := &cobra.Command{
-		Use: "test",
-		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("XXXXXHello world!!!---------", args)
-			fmt.Println("XXXXXHello world!!!---------", args)
-		},
-	}
-	cmds.AddCommand(tstCmd)
 	cmds.AddCommand(NewEditCommand())
 	cmds.AddCommand(NewDepCommand())
 	cmds.AddCommand(NewCompileCommand())
 	return cmds
-}
-
-func init() {
-	// RootCmd.AddCommand(versionCmd)
 }

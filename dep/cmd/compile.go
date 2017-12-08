@@ -11,7 +11,6 @@ import (
 	"os"
 	"log"
 	"path/filepath"
-	"fmt"
 	"strings"
 )
 
@@ -28,7 +27,7 @@ func NewCompileCommand() *cobra.Command {
 		Use:   "compile",
 		Short: "Compile with patch.",
 		Run: func(cmd *cobra.Command, args []string) {
-			rootPath,err := os.Getwd()
+			rootPath, err := os.Getwd()
 			if err != nil {
 				log.Fatalln(err)
 			}

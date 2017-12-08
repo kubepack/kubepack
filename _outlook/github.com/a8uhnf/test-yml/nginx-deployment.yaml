@@ -1,20 +1,20 @@
-apiVersion: apps/v1beta2
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   annotations:
-    git-commit-hash: 070dec3cb7b8485c933bd65a75830e6f3599b92f
+    git-commit-hash: 659d24c1e7207e087d903f810d34c641b3c4f741
   creationTimestamp: null
   name: nginx
 spec:
-  replicas: 2
+  replicas: 3
   strategy: {}
   template:
     metadata:
       annotations:
-        app: nginx
+        app: nginx1
       creationTimestamp: null
       labels:
-        app: nginx1
+        app: nginx
       name: nginx
     spec:
       containers:
