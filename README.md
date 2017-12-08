@@ -1,2 +1,2 @@
-# demo-dep
-Demo dependency manager
+# Pack
+Secure Lightweight Kubernetes Package Manager

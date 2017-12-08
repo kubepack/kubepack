@@ -8,10 +8,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-
 	"context"
 	"time"
-
 	"github.com/ghodss/yaml"
 	"github.com/golang/dep/gps"
 	"github.com/golang/dep/gps/pkgtree"
