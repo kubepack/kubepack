@@ -10,7 +10,7 @@ func main() {
 	logs.InitLogs()
 	defer logs.FlushLogs()
 
-	if err := cmds.NewPackCmd().Execute(); err != nil {
+	if err := cmds.NewPackCmd(Version).Execute(); err != nil {
 		os.Exit(1)
 	}
 	os.Exit(0)
