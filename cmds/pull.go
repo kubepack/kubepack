@@ -21,10 +21,10 @@ var (
 	verboseMode bool
 )
 
-func NewDepCommand() *cobra.Command {
+func NewPullCommand() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "dep",
-		Short: "Command for get non go file(especially yaml files).",
+		Use:   "pull",
+		Short: "Pulls dependent app manifests",
 		Run: func(cmd *cobra.Command, args []string) {
 			err := DepRun()
 			if err != nil {

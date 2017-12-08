@@ -22,10 +22,10 @@ var (
 
 const CompileDirectory = "_outlook"
 
-func NewCompileCommand() *cobra.Command {
+func NewUpCommand() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "compile",
-		Short: "Compile with patch.",
+		Use:   "up",
+		Short: "Compiles patches and vendored manifests into final final resource definitions",
 		Run: func(cmd *cobra.Command, args []string) {
 			rootPath, err := os.Getwd()
 			if err != nil {

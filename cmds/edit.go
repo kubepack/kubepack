@@ -31,8 +31,8 @@ var (
 func NewEditCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "edit (filename)",
-		Short: "Edit a file.",
-		Long:  "Edit a _vendor file to generate kubectl patch.",
+		Short: "Edit resource definition",
+		Long:  "Generates patch via edit command",
 		Run: func(cmd *cobra.Command, args []string) {
 			err := RunEdit()
 			if err != nil {
