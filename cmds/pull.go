@@ -3,11 +3,6 @@ package cmds
 import (
 	"context"
 	"fmt"
-	"github.com/ghodss/yaml"
-	"github.com/golang/dep/gps"
-	"github.com/golang/dep/gps/pkgtree"
-	typ "github.com/kubepack/pack/type"
-	"github.com/spf13/cobra"
 	"go/build"
 	"io/ioutil"
 	"log"
@@ -15,6 +10,12 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
+
+	"github.com/ghodss/yaml"
+	"github.com/golang/dep/gps"
+	"github.com/golang/dep/gps/pkgtree"
+	typ "github.com/kubepack/pack/type"
+	"github.com/spf13/cobra"
 )
 
 var (

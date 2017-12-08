@@ -3,17 +3,17 @@ package cmds
 import (
 	"bytes"
 	"fmt"
-	"github.com/spf13/cobra"
 	"io/ioutil"
-	"k8s.io/kubernetes/pkg/kubectl/cmd/util/editor"
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/ghodss/yaml"
+	"github.com/spf13/cobra"
 	apps "k8s.io/api/apps/v1beta1"
 	"k8s.io/apimachinery/pkg/util/strategicpatch"
-	"strings"
+	"k8s.io/kubernetes/pkg/kubectl/cmd/util/editor"
 )
 
 var patchTypes = []string{"json", "merge", "strategic"}

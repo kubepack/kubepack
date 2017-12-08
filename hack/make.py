@@ -39,7 +39,7 @@ from os.path import expandvars, join, dirname
 libbuild.REPO_ROOT = expandvars('$GOPATH') + '/src/github.com/kubepack/pack'
 BUILD_METADATA = libbuild.metadata(libbuild.REPO_ROOT)
 libbuild.BIN_MATRIX = {
-    'pac': {
+    'pack': {
         'type': 'go',
         'go_version': True,
         'distro': {
@@ -77,17 +77,17 @@ def version():
 
 
 def fmt():
-    libbuild.ungroup_go_imports('*.go', 'pkg')
-    die(call('goimports -w *.go pkg'))
-    call('gofmt -s -w *.go pkg')
+    libbuild.ungroup_go_imports('*.go', 'cmds', 'type')
+    die(call('goimports -w *.go cmds type'))
+    call('gofmt -s -w *.go cmds type')
 
 
 def vet():
-    call('go vet *.go ./pkg/...')
+    call('go vet *.go ./cmds/... ./type/...')
 
 
 def lint():
-    call('golint *.go ./pkg/...')
+    call('golint *.go ./cmds/... ./type/...')
 
 
 def gen():

@@ -1,17 +1,18 @@
 package cmds
 
 import (
-	"github.com/Masterminds/vcs"
-	"github.com/evanphx/json-patch"
-	"github.com/ghodss/yaml"
-	"github.com/spf13/cobra"
 	"io/ioutil"
-	apps "k8s.io/api/apps/v1beta1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/Masterminds/vcs"
+	"github.com/evanphx/json-patch"
+	"github.com/ghodss/yaml"
+	"github.com/spf13/cobra"
+	apps "k8s.io/api/apps/v1beta1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 var (
