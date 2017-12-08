@@ -58,7 +58,8 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, err error) error {
 	srcFilepath := strings.Replace(path, PatchFolder, _VendorFolder, 1)
 
 	if _, err := os.Stat(srcFilepath); err != nil {
-		return err
+		rootDirFilepath := strings.Replace(path, "/patch", "", 1)
+		srcFilepath = rootDirFilepath
 	}
 
 	srcYamlByte, err := ioutil.ReadFile(srcFilepath)
