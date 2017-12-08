@@ -1,2 +1,2 @@
 # Pack
-Kubernetes dependency manager
+Secure Lightweight Kubernetes Package Manager
