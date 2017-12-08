@@ -14,6 +14,7 @@ import (
 	"github.com/ghodss/yaml"
 	"github.com/golang/dep/gps"
 	"github.com/golang/dep/gps/pkgtree"
+	"github.com/golang/glog"
 	typ "github.com/kubepack/pack/type"
 	"github.com/spf13/cobra"
 )
@@ -36,11 +37,7 @@ func pullDeps(cmd *cobra.Command) error {
 	// Assume the current directory is correctly placed on a GOPATH, and that it's the
 	// root of the project.
 	logger := log.New(ioutil.Discard, "", 0)
-	verbose, err := cmd.Flags().GetBool("verbose")
-	if err != nil {
-		return err
-	}
-	if verbose {
+	if glog.V(glog.Level(1)) {
 		logger = log.New(os.Stdout, "", 0)
 	}
 	root, _ := os.Getwd()
