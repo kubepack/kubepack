@@ -11,6 +11,7 @@ import (
 
 	"github.com/sdboyer/gps"
 	"github.com/sdboyer/gps/pkgtree"
+	typ "github.com/kubepack/pack/type"
 	"github.com/ghodss/yaml"
 )
 
@@ -22,19 +23,7 @@ import (
 //
 //  This will compile and work...and then blow away any vendor directory present
 //  in the cwd. Be careful!
-type ManifestDef struct {
-	Package string `json:"package"`
-	Owners  []struct {
-		Name  string `json:"name"`
-		Email string `json:"email"`
-	} `json:"owners"`
-	Dependencies []struct {
-		Package string `json:"package"`
-		Version string `json:"version,omitempty"`
-		Repo    string `json:"repo,omitempty"`
-		Branch  string `json:"branch,omitempty"`
-	} `json:"dependencies"`
-}
+
 
 func main() {
 	// Assume the current directory is correctly placed on a GOPATH, and that it's the
@@ -42,7 +31,7 @@ func main() {
 	root, _ := os.Getwd()
 	man := root + "/manifest.yaml"
 	byt, err := ioutil.ReadFile(man)
-	manStruc := ManifestDef{}
+	manStruc := typ.ManifestDefinition{}
 	err = yaml.Unmarshal(byt, &manStruc)
 	if err != nil {
 		log.Fatalln("Error Occuered-----", err)
