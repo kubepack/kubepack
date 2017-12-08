@@ -52,6 +52,12 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/appscode/go"
+  packages = ["context","log","log/golog","version"]
+  revision = "0042f7fe164fd03992cfa5ea70a98615516be99b"
+
+[[projects]]
+  branch = "master"
   name = "github.com/armon/go-radix"
   packages = ["."]
   revision = "1fca145dffbcaa8fe914309b1ec0cfc67500fe61"
@@ -181,7 +187,7 @@
   name = "github.com/golang/dep"
   packages = ["gps","gps/internal/pb","gps/paths","gps/pkgtree","internal/fs"]
   revision = "19731f27e8cb7ac7b567a19413be0b9a44bf9a82"
-  source = "https://github.com/packsh/dep.git"
+  source = "https://github.com/kubepack/dep.git"
 
 [[projects]]
   branch = "master"
@@ -212,6 +218,12 @@
   name = "github.com/google/gofuzz"
   packages = ["."]
   revision = "24818f796faf91cd76ec7bddd72458fbced7a6c1"
+
+[[projects]]
+  name = "github.com/google/uuid"
+  packages = ["."]
+  revision = "064e2069ce9c359c118179501254f67d7d37ba24"
+  version = "0.2"
 
 [[projects]]
   name = "github.com/googleapis/gnostic"
@@ -260,6 +272,12 @@
   packages = ["."]
   revision = "a1e02c788669d022c325a8ee674f15360d7104f4"
   version = "v0.2.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/jpillora/go-ogle-analytics"
+  packages = ["."]
+  revision = "14b04e0594ef6a9fd943363b135656f0ec8c9d0e"
 
 [[projects]]
   name = "github.com/json-iterator/go"
@@ -356,12 +374,6 @@
   name = "github.com/sdboyer/constext"
   packages = ["."]
   revision = "836a144573533ea4da4e6929c235fd348aed1c80"
-
-[[projects]]
-  name = "github.com/sdboyer/gps"
-  packages = [".","internal","internal/fs","pkgtree"]
-  revision = "da7569e414959d639654919aaf67259c3add73f4"
-  version = "v0.16.3"
 
 [[projects]]
   name = "github.com/spf13/cobra"
@@ -491,6 +503,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "75083ab2aa81251bda9b7a675a69b4b35e97ff927e54a5d39b8eaa262ea60abc"
+  inputs-digest = "207397266e2f4066cd1c4d9d959e1148bedca36688842f185a210cd9a0b761f0"
   solver-name = "gps-cdcl"
   solver-version = 1
