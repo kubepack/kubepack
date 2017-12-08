@@ -5,11 +5,11 @@ import (
 	"log"
 	"strings"
 
+	"github.com/appscode/go/analytics"
 	v "github.com/appscode/go/version"
 	"github.com/jpillora/go-ogle-analytics"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
-	"github.com/appscode/go/analytics"
 )
 
 const (

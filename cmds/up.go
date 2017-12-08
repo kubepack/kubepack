@@ -1,17 +1,18 @@
 package cmds
 
 import (
-	"github.com/Masterminds/vcs"
-	"github.com/evanphx/json-patch"
-	"github.com/ghodss/yaml"
-	"github.com/spf13/cobra"
 	"io/ioutil"
-	apps "k8s.io/api/apps/v1beta1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/Masterminds/vcs"
+	"github.com/evanphx/json-patch"
+	"github.com/ghodss/yaml"
+	"github.com/spf13/cobra"
+	apps "k8s.io/api/apps/v1beta1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 var (
@@ -25,7 +26,7 @@ const CompileDirectory = "_outlook"
 func NewUpCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "up",
-		Short: "Compiles patches and vendored manifests into final final resource definitions",
+		Short: "Compiles patches and vendored manifests into final resource definitions",
 		Run: func(cmd *cobra.Command, args []string) {
 			rootPath, err := os.Getwd()
 			if err != nil {
