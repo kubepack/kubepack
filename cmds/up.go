@@ -13,7 +13,6 @@ import (
 	"github.com/spf13/cobra"
 	apps "k8s.io/api/apps/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"fmt"
 )
 
 var (
