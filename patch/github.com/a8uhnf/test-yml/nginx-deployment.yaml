@@ -1,7 +1,2 @@
-apiVersion: apps/v1beta2
 spec:
   replicas: 2
-  template:
-    metadata:
-      labels:
-        app: nginx1
