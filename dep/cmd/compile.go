@@ -28,12 +28,23 @@ func NewCompileCommand() *cobra.Command {
 		Use:   "compile",
 		Short: "Compile with patch.",
 		Run: func(cmd *cobra.Command, args []string) {
-			compiledYaml, err := CompileWithPatch()
+			/*compiledYaml, err := CompileWithPatch()
 			if err != nil {
 				log.Fatalln(err)
 			}
 			// fmt.Println("yaml", string(compiledYaml))
-			DumpCompiledFile(compiledYaml)
+			DumpCompiledFile(compiledYaml)*/
+			rootPath,err := os.Getwd()
+			if err != nil {
+				log.Fatalln(err)
+			}
+
+			fmt.Println("Hello rootpath", rootPath)
+
+			err = filepath.Walk(filepath.Join(rootPath, PatchFolder), visitPatchAndDump)
+			if err != nil {
+				log.Fatalln(err)
+			}
 		},
 	}
 
@@ -43,40 +54,48 @@ func NewCompileCommand() *cobra.Command {
 	return cmd
 }
 
-func CompileWithPatch() ([]byte, error) {
-	root, err := os.Getwd()
+func visitPatchAndDump(path string, fileInfo os.FileInfo, err error) error {
+	if fileInfo.IsDir() {
+		return nil
+	}
+	patchByte, err := ioutil.ReadFile(path)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("hello path-----", string(patchByte))
+
+	srcFilepath := strings.Replace(path, PatchFolder, _VendorFolder, 1)
+
+	fmt.Println("------------------", filepath.Dir(srcFilepath))
+	if _, err := os.Stat(srcFilepath); err != nil {
+		return err
+	}
+
+	srcYamlByte, err := ioutil.ReadFile(srcFilepath)
+	if err != nil {
+		return err
+	}
+
+	mergedPatchYaml, err := CompileWithPatch(srcYamlByte, patchByte)
+	if err != nil {
+		return err
+	}
+
+	err = DumpCompiledFile(mergedPatchYaml, strings.Replace(path, PatchFolder, CompileDirectory, 1))
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func CompileWithPatch(srcByte, patchByte []byte) ([]byte, error) {
+	jsonSrc, err := yaml.YAMLToJSON(srcByte)
 	if err != nil {
 		return nil, err
 	}
 
-	srcDir := filepath.Join(root, src)
-	_, err = os.Stat(srcDir)
-	if err != nil {
-		return nil, err
-	}
-
-	srcFile, err := ioutil.ReadFile(srcDir)
-	if err != nil {
-		return nil, err
-	}
-
-	jsonSrc, err := yaml.YAMLToJSON(srcFile)
-	if err != nil {
-		return nil, err
-	}
-
-	patchDir := filepath.Join(root, patch)
-	patchFileInfo, err = os.Stat(patchDir)
-	if err != nil {
-		return nil, err
-	}
-
-	patchFile, err := ioutil.ReadFile(patchDir)
-	if err != nil {
-		return nil, err
-	}
-
-	jsonPatch, err := yaml.YAMLToJSON(patchFile)
+	jsonPatch, err := yaml.YAMLToJSON(patchByte)
 	if err != nil {
 		return nil, err
 	}
@@ -85,16 +104,16 @@ func CompileWithPatch() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	yaml, err := yaml.JSONToYAML(compiled)
 	if err != nil {
-		log.Println(err)
 		return nil, err
 	}
-	fmt.Println(string(yaml))
 	return yaml, err
 }
 
-func DumpCompiledFile(compiledYaml []byte) error {
+func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
+	fmt.Println("hello Dump Compiled File------------", outlookPath)
 	root, err := os.Getwd()
 	if err != nil {
 		return err
@@ -105,26 +124,26 @@ func DumpCompiledFile(compiledYaml []byte) error {
 		return err
 	}
 
-	outlookDir := strings.Replace(patch, PatchFolder, CompileDirectory, 1)
-	lstIndexOfSlash := strings.LastIndex(outlookDir, "/")
+
+	// If not exists mkdir the folder
+	outlookDir := filepath.Dir(outlookPath)
+	if _, err := os.Stat(outlookDir); err != nil {
+		if os.IsNotExist(err) {
+			err := os.MkdirAll(outlookDir, 0755)
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	// outLookFilePath := filepath.Join(dstPath, patchFileInfo.Name())
+	fmt.Println("file name-----", outlookPath)
+	_, err = os.Create(outlookPath)
 	if err != nil {
 		return err
 	}
 
-	dstPath := filepath.Join(root, outlookDir[0:lstIndexOfSlash])
-	err = os.MkdirAll(dstPath, 0755)
-	if err != nil {
-		return err
-	}
-
-	outLookFilePath := filepath.Join(dstPath, patchFileInfo.Name())
-	fmt.Println("file name-----", outLookFilePath)
-	_, err = os.Create(outLookFilePath)
-	if err != nil {
-		return err
-	}
-
-	err = ioutil.WriteFile(outLookFilePath, annotateYaml, 0755)
+	err = ioutil.WriteFile(outlookPath, annotateYaml, 0755)
 	if err != nil {
 		return err
 	}

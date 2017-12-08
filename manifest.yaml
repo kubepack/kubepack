@@ -1,7 +1,7 @@
-package: github.com/sdboyer/gps
+package: github.com/kubepack/pack
 owners:
-- name: Sam Boyer
-  email: tech@samboyer.org
+- name: Appscode Inc.
+  email: admin@appscode.com
 dependencies:
 - package: github.com/a8uhnf/test-yml
   version: 0.0.1

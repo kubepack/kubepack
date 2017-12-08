@@ -8,7 +8,7 @@ import (
 	"io/ioutil"
 	"github.com/ghodss/yaml"
 	"log"
-	typ "github.com/packsh/demo-dep/type"
+	typ "github.com/kubepack/pack/type"
 	"github.com/golang/dep/gps/pkgtree"
 	"github.com/golang/dep/gps"
 	"strings"
@@ -17,28 +17,39 @@ import (
 	"fmt"
 )
 
+var (
+	verboseMode bool
+)
+
 func NewDepCommand() *cobra.Command {
 	cmd := &cobra.Command{
-		Use: "dep",
+		Use:   "dep",
 		Short: "Command for get non go file(especially yaml files).",
 		Run: func(cmd *cobra.Command, args []string) {
-			DepRun()
+			err := DepRun()
+			if err != nil {
+				log.Fatalln(err)
+			}
 		},
 	}
-
+	cmd.Flags().BoolVarP(&verboseMode, "verbose", "v", verboseMode, "Use this flag for verbose output when install dependencies.")
 	return cmd
 }
 
-func DepRun() {
+func DepRun() error {
 	// Assume the current directory is correctly placed on a GOPATH, and that it's the
 	// root of the project.
+	logger := log.New(ioutil.Discard, "", 0)
+	if verboseMode {
+		logger = log.New(os.Stdout, "", 0)
+	}
 	root, _ := os.Getwd()
-	man := filepath.Join(root, "manifest.yaml")
+	man := filepath.Join(root, typ.ManifestFile)
 	byt, err := ioutil.ReadFile(man)
 	manStruc := typ.ManifestDefinition{}
 	err = yaml.Unmarshal(byt, &manStruc)
 	if err != nil {
-		log.Fatalln("Error Occuered-----", err)
+		return err
 	}
 
 	imports := make([]string, len(manStruc.Dependencies))
@@ -63,7 +74,7 @@ func DepRun() {
 	}
 	params := gps.SolveParameters{
 		RootDir:         root,
-		TraceLogger:     log.New(os.Stdout, "", 0),
+		TraceLogger:     logger,
 		ProjectAnalyzer: NaiveAnalyzer{},
 		Manifest:        manifestYaml,
 		RootPackageTree: pkgtree.PackageTree{
@@ -75,7 +86,7 @@ func DepRun() {
 	tempdir, _ := ioutil.TempDir("", "gps-repocache")
 	srcManagerConfig := gps.SourceManagerConfig{
 		Cachedir:       filepath.Join(tempdir),
-		Logger:         log.New(os.Stdout, "", 0),
+		Logger:         logger,
 		DisableLocking: true,
 	}
 	log.Println("Tempdir: ", tempdir)
@@ -87,20 +98,19 @@ func DepRun() {
 	// Prep and run the solver
 	solver, err := gps.Prepare(params, sourcemgr)
 	if err != nil {
-		log.Fatalln("Prepare error occurred..", err)
-		return
+		return err
 	}
 	solution, err := solver.Solve(ctx)
 	if err != nil {
-		log.Fatalln("Solve error occurred..", err)
-		return
+		return err
 	}
 	if err == nil {
 		// If no failure, blow away the vendor dir and write a new one out,
 		// stripping nested vendor directories as we go.
 		os.RemoveAll(filepath.Join(root, "_vendor"))
-		gps.WriteDepTree(filepath.Join(root, "_vendor"), solution, sourcemgr, true, log.New(os.Stdout, "Hello:-----", 4))
+		gps.WriteDepTree(filepath.Join(root, "_vendor"), solution, sourcemgr, true, logger)
 	}
+	return nil
 }
 
 type NaiveAnalyzer struct {
@@ -271,4 +281,3 @@ func (a NaiveAnalyzer) lookForManifest(root string) (gps.Manifest, gps.Lock, err
 	lck.root = root
 	return man, lck, nil
 }
-
