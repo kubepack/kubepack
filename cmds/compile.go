@@ -1,15 +1,15 @@
-package cmd
+package cmds
 
 import (
-	"github.com/spf13/cobra"
+	"github.com/Masterminds/vcs"
 	"github.com/evanphx/json-patch"
+	"github.com/ghodss/yaml"
+	"github.com/spf13/cobra"
+	"io/ioutil"
 	apps "k8s.io/api/apps/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"github.com/Masterminds/vcs"
-	"github.com/ghodss/yaml"
-	"io/ioutil"
-	"os"
 	"log"
+	"os"
 	"path/filepath"
 	"strings"
 )

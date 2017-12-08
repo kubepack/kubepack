@@ -1,18 +1,18 @@
-package cmd
+package cmds
 
 import (
-	"github.com/spf13/cobra"
+	"bytes"
 	"fmt"
+	"github.com/spf13/cobra"
+	"io/ioutil"
+	"k8s.io/kubernetes/pkg/kubectl/cmd/util/editor"
 	"log"
 	"os"
 	"path/filepath"
-	"k8s.io/kubernetes/pkg/kubectl/cmd/util/editor"
-	"io/ioutil"
-	"bytes"
 
+	"github.com/ghodss/yaml"
 	apps "k8s.io/api/apps/v1beta1"
 	"k8s.io/apimachinery/pkg/util/strategicpatch"
-	"github.com/ghodss/yaml"
 	"strings"
 )
 

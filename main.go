@@ -1,13 +1,16 @@
 package main
 
 import (
+	logs "github.com/appscode/go/log/golog"
+	"github.com/kubepack/pack/cmds"
 	"os"
-	"github.com/kubepack/pack/dep/cmd"
 )
 
 func main() {
-	cmd := cmd.NewDemoDepCmd()
-	if err := cmd.Execute(); err != nil {
+	logs.InitLogs()
+	defer logs.FlushLogs()
+
+	if err := cmds.NewPackCmd().Execute(); err != nil {
 		os.Exit(1)
 	}
 	os.Exit(0)

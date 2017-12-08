@@ -1,20 +1,20 @@
-package cmd
+package cmds
 
 import (
-	"github.com/spf13/cobra"
-	"os"
-	"go/build"
-	"path/filepath"
-	"io/ioutil"
-	"github.com/ghodss/yaml"
-	"log"
-	typ "github.com/kubepack/pack/type"
-	"github.com/golang/dep/gps/pkgtree"
-	"github.com/golang/dep/gps"
-	"strings"
 	"context"
-	"time"
 	"fmt"
+	"github.com/ghodss/yaml"
+	"github.com/golang/dep/gps"
+	"github.com/golang/dep/gps/pkgtree"
+	typ "github.com/kubepack/pack/type"
+	"github.com/spf13/cobra"
+	"go/build"
+	"io/ioutil"
+	"log"
+	"os"
+	"path/filepath"
+	"strings"
+	"time"
 )
 
 var (
