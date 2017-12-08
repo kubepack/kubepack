@@ -15,9 +15,14 @@ func main() {
 	rootCmd := cmds.NewPackCmd("")
 	dir := runtime.GOPath() + "/src/github.com/kubepack/pack/docs/reference"
 	fmt.Printf("Generating cli markdown tree in: %v\n", dir)
-	err := os.MkdirAll(dir, 0755)
+	fmt.Printf("Generating cli markdown tree in: %v\n", dir)
+	err := os.RemoveAll(dir)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
+	}
+	err = os.MkdirAll(dir, 0755)
+	if err != nil {
+		log.Fatalln(err)
 	}
 	doc.GenMarkdownTree(rootCmd, dir)
 }
