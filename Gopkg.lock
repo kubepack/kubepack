@@ -53,7 +53,7 @@
 [[projects]]
   branch = "master"
   name = "github.com/appscode/go"
-  packages = ["context","log","log/golog","version"]
+  packages = ["analytics","context","homedir","log","log/golog","version"]
   revision = "0042f7fe164fd03992cfa5ea70a98615516be99b"
 
 [[projects]]
@@ -503,6 +503,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "207397266e2f4066cd1c4d9d959e1148bedca36688842f185a210cd9a0b761f0"
+  inputs-digest = "04bd95c46c456954de453b393a63b359c619201ea966736e09c0abdba7acce82"
   solver-name = "gps-cdcl"
   solver-version = 1
