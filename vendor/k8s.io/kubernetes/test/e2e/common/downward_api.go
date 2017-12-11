@@ -23,10 +23,13 @@ import (
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/uuid"
+	utilversion "k8s.io/kubernetes/pkg/util/version"
 	"k8s.io/kubernetes/test/e2e/framework"
 
 	. "github.com/onsi/ginkgo"
 )
+
+var hostIPVersion = utilversion.MustParseSemantic("v1.8.0")
 
 var _ = framework.KubeDescribe("Downward API", func() {
 	f := framework.NewDefaultFramework("downward-api")
@@ -62,7 +65,7 @@ var _ = framework.KubeDescribe("Downward API", func() {
 		testDownwardAPI(f, podName, env, expectations)
 	})
 
-	It("should provide pod and host IP as an env var [Conformance]", func() {
+	It("should provide pod IP as an env var [Conformance]", func() {
 		podName := "downward-api-" + string(uuid.NewUUID())
 		env := []v1.EnvVar{
 			{
@@ -74,6 +77,19 @@ var _ = framework.KubeDescribe("Downward API", func() {
 					},
 				},
 			},
+		}
+
+		expectations := []string{
+			"POD_IP=(?:\\d+)\\.(?:\\d+)\\.(?:\\d+)\\.(?:\\d+)",
+		}
+
+		testDownwardAPI(f, podName, env, expectations)
+	})
+
+	It("should provide host IP as an env var [Conformance]", func() {
+		framework.SkipUnlessServerVersionGTE(hostIPVersion, f.ClientSet.Discovery())
+		podName := "downward-api-" + string(uuid.NewUUID())
+		env := []v1.EnvVar{
 			{
 				Name: "HOST_IP",
 				ValueFrom: &v1.EnvVarSource{
@@ -86,7 +102,6 @@ var _ = framework.KubeDescribe("Downward API", func() {
 		}
 
 		expectations := []string{
-			"POD_IP=(?:\\d+)\\.(?:\\d+)\\.(?:\\d+)\\.(?:\\d+)",
 			"HOST_IP=(?:\\d+)\\.(?:\\d+)\\.(?:\\d+)\\.(?:\\d+)",
 		}
 

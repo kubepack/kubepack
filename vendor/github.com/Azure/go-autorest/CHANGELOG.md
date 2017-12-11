@@ -1,5 +1,31 @@
 # CHANGELOG
 
+## v9.5.1
+
+### Bug Fixes
+
+- Don't count http.StatusTooManyRequests (429) against the retry cap.
+- Use retry logic when SkipResourceProviderRegistration is set to true.
+
+## v9.5.0
+
+### New Features
+
+- Added support for username + password, API key, authoriazation code and cognitive services authentication.
+- Added field SkipResourceProviderRegistration to clients to provide a way to skip auto-registration of RPs.
+- Added utility function AsStringSlice() to convert its parameters to a string slice.
+
+### Bug Fixes
+
+- When checking for authentication failures look at the error type not the status code as it could vary.
+
+## v9.4.2
+
+### Bug Fixes
+
+- Validate parameters when creating credentials.
+- Don't retry requests if the returned status is a 401 (http.StatusUnauthorized) as it will never succeed.
+
 ## v9.4.1
 
 ### Bug Fixes

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	dcontext "github.com/docker/distribution/context"
+	"github.com/docker/distribution/context"
 	"github.com/docker/distribution/registry/storage"
 	"github.com/docker/distribution/registry/storage/driver/factory"
 	"github.com/docker/distribution/version"
@@ -56,7 +56,7 @@ var GCCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		ctx := dcontext.Background()
+		ctx := context.Background()
 		ctx, err = configureLogging(ctx, config)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "unable to configure logging with config: %s", err)

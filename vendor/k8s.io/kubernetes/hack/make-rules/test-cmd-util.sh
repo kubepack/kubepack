@@ -912,6 +912,32 @@ __EOF__
   set +o errexit
 }
 
+# runs specific kubectl create tests
+run_create_tests() {
+    set -o nounset
+    set -o errexit
+
+    ### Create generic secret with explicit namespace
+    # Pre-condition: secret 'mysecret' does not exist
+    output_message=$(! kubectl get secrets mysecret 2>&1 "${kube_flags[@]}")
+    kube::test::if_has_string "${output_message}" 'secrets "mysecret" not found'
+    # Command
+    output_message=$(kubectl create "${kube_flags[@]}" secret generic mysecret --dry-run --from-literal=foo=bar -o jsonpath='{.metadata.namespace}' --namespace=user-specified)
+    # Post-condition: mysecret still not created since --dry-run was used
+    # Output from 'create' command should contain the specified --namespace value
+    failure_message=$(! kubectl get secrets mysecret 2>&1 "${kube_flags[@]}")
+    kube::test::if_has_string "${failure_message}" 'secrets "mysecret" not found'
+    kube::test::if_has_string "${output_message}" 'user-specified'
+    # Command
+    output_message=$(kubectl create "${kube_flags[@]}" secret generic mysecret --dry-run --from-literal=foo=bar -o jsonpath='{.metadata.namespace}')
+    # Post-condition: jsonpath for .metadata.namespace should be empty for object since --namespace was not explicitly specified
+    kube::test::if_empty_string "${output_message}"
+
+    set +o nounset
+    set +o errexit
+}
+
+
 # Runs tests related to kubectl apply.
 run_kubectl_apply_tests() {
   set -o nounset
@@ -2981,6 +3007,16 @@ run_rs_tests() {
   # Cleanup services
   kubectl delete service frontend{,-2} "${kube_flags[@]}"
 
+  # Test set commands
+  # Pre-condition: frontend replica set exists at generation 1
+  kube::test::get_object_assert 'rs frontend' "{{${generation_field}}}" '1'
+  kubectl set image rs/frontend "${kube_flags[@]}" *=gcr.io/google-containers/pause:test-cmd
+  kube::test::get_object_assert 'rs frontend' "{{${generation_field}}}" '2'
+  kubectl set env rs/frontend "${kube_flags[@]}" foo=bar
+  kube::test::get_object_assert 'rs frontend' "{{${generation_field}}}" '3'
+  kubectl set resources rs/frontend "${kube_flags[@]}" --limits=cpu=200m,memory=512Mi
+  kube::test::get_object_assert 'rs frontend' "{{${generation_field}}}" '4'
+
   ### Delete replica set with id
   # Pre-condition: frontend replica set exists
   kube::test::get_object_assert rs "{{range.items}}{{$id_field}}:{{end}}" 'frontend:'
@@ -3060,6 +3096,14 @@ run_daemonset_tests() {
   kubectl apply -f hack/testdata/rollingupdate-daemonset.yaml "${kube_flags[@]}"
   # Template Generation should stay 1
   kube::test::get_object_assert 'daemonsets bind' "{{${template_generation_field}}}" '1'
+  # Test set commands
+  kubectl set image daemonsets/bind "${kube_flags[@]}" *=gcr.io/google-containers/pause:test-cmd
+  kube::test::get_object_assert 'daemonsets bind' "{{${template_generation_field}}}" '2'
+  kubectl set env daemonsets/bind "${kube_flags[@]}" foo=bar
+  kube::test::get_object_assert 'daemonsets bind' "{{${template_generation_field}}}" '3'
+  kubectl set resources daemonsets/bind "${kube_flags[@]}" --limits=cpu=200m,memory=512Mi
+  kube::test::get_object_assert 'daemonsets bind' "{{${template_generation_field}}}" '4'
+
   # Clean up
   kubectl delete -f hack/testdata/rollingupdate-daemonset.yaml "${kube_flags[@]}"
 
@@ -4351,6 +4395,7 @@ runTests() {
   change_cause_annotation='.*kubernetes.io/change-cause.*'
   pdb_min_available=".spec.minAvailable"
   pdb_max_unavailable=".spec.maxUnavailable"
+  generation_field=".metadata.generation"
   template_generation_field=".spec.templateGeneration"
   container_len="(len .spec.template.spec.containers)"
   image_field0="(index .spec.template.spec.containers 0).image"
@@ -4463,6 +4508,14 @@ runTests() {
     # TODO: Move get tests to run on rs instead of pods so that they can be
     # run for federation apiserver as well.
     record_command run_kubectl_get_tests
+  fi
+
+
+  ######################
+  # Create             #
+  ######################
+  if kube::test::if_supports_resource "${secrets}" ; then
+    record_command run_create_tests
   fi
 
   ##################
