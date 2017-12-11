@@ -451,7 +451,7 @@ func (swc SwapCheck) Check() (warnings, errors []error) {
 	}
 
 	if len(buf) > 1 {
-		return []error{fmt.Errorf("Running with swap on is not supported. Please disable swap or set kubelet's --fail-swap-on flag to false.")}, nil
+		return nil, []error{fmt.Errorf("running with swap on is not supported. Please disable swap")}
 	}
 
 	return nil, nil
@@ -610,7 +610,6 @@ func RunInitMasterChecks(cfg *kubeadmapi.MasterConfiguration) error {
 		PortOpenCheck{port: 10252},
 		HTTPProxyCheck{Proto: "https", Host: cfg.API.AdvertiseAddress, Port: int(cfg.API.BindPort)},
 		DirAvailableCheck{Path: filepath.Join(kubeadmconstants.KubernetesDir, kubeadmconstants.ManifestsSubDirName)},
-		DirAvailableCheck{Path: "/var/lib/kubelet"},
 		FileContentCheck{Path: bridgenf, Content: []byte{'1'}},
 		SwapCheck{},
 		InPathCheck{executable: "ip", mandatory: true},
@@ -669,7 +668,6 @@ func RunJoinNodeChecks(cfg *kubeadmapi.NodeConfiguration) error {
 		ServiceCheck{Service: "docker", CheckIfActive: true},
 		PortOpenCheck{port: 10250},
 		DirAvailableCheck{Path: filepath.Join(kubeadmconstants.KubernetesDir, kubeadmconstants.ManifestsSubDirName)},
-		DirAvailableCheck{Path: "/var/lib/kubelet"},
 		FileAvailableCheck{Path: cfg.CACertPath},
 		FileAvailableCheck{Path: filepath.Join(kubeadmconstants.KubernetesDir, kubeadmconstants.KubeletKubeConfigFileName)},
 		FileContentCheck{Path: bridgenf, Content: []byte{'1'}},

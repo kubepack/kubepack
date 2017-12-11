@@ -13,7 +13,6 @@ package oss
 
 import (
 	"bytes"
-	"context"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -22,6 +21,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/docker/distribution/context"
 
 	"github.com/denverdino/aliyungo/oss"
 	storagedriver "github.com/docker/distribution/registry/storage/driver"
