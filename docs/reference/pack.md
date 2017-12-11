@@ -22,8 +22,8 @@ Secure Lightweight Kubernetes Package Manager
 ```
 
 ### SEE ALSO
+* [pack dep](pack_dep.md)	 - Pulls dependent app manifests
 * [pack edit](pack_edit.md)	 - Edit resource definition
-* [pack pull](pack_pull.md)	 - Pulls dependent app manifests
 * [pack up](pack_up.md)	 - Compiles patches and vendored manifests into final resource definitions
 * [pack version](pack_version.md)	 - Prints binary version number.
 
