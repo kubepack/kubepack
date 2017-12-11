@@ -1,4 +1,4 @@
-## pack pull
+## pack dep
 
 Pulls dependent app manifests
 
@@ -8,13 +8,13 @@ Pulls dependent app manifests
 Pulls dependent app manifests
 
 ```
-pack pull [flags]
+pack dep [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for pull
+  -h, --help   help for dep
 ```
 
 ### Options inherited from parent commands

@@ -19,12 +19,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func NewPullCommand() *cobra.Command {
+func NewDepCommand() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "pull",
+		Use:   "dep",
 		Short: "Pulls dependent app manifests",
 		Run: func(cmd *cobra.Command, args []string) {
-			err := pullDeps(cmd)
+			err := runDeps(cmd)
 			if err != nil {
 				log.Fatalln(err)
 			}
@@ -33,7 +33,7 @@ func NewPullCommand() *cobra.Command {
 	return cmd
 }
 
-func pullDeps(cmd *cobra.Command) error {
+func runDeps(cmd *cobra.Command) error {
 	// Assume the current directory is correctly placed on a GOPATH, and that it's the
 	// root of the project.
 	logger := log.New(ioutil.Discard, "", 0)

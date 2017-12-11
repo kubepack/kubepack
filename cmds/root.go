@@ -42,8 +42,8 @@ func NewPackCmd(version string) *cobra.Command {
 	flag.CommandLine.Parse([]string{})
 	cmd.PersistentFlags().BoolVar(&enableAnalytics, "analytics", enableAnalytics, "Send analytical events to Google Guard")
 
+	cmd.AddCommand(NewDepCommand())
 	cmd.AddCommand(NewEditCommand())
-	cmd.AddCommand(NewPullCommand())
 	cmd.AddCommand(NewUpCommand())
 	cmd.AddCommand(v.NewCmdVersion())
 	return cmd
