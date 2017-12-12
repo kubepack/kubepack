@@ -116,38 +116,25 @@ func runDeps(cmd *cobra.Command) error {
 
 		vendorPkgs = make(map[string]string)
 		filepath.Walk(filepath.Join(root, _VendorFolder), findPatchFolder)
-		fmt.Println("Patch directories=====", patchDirs)
-		fmt.Println("Patch pkgs directories=====", patchPkgs)
+
 		for key, value := range vendorPkgs {
 			vendorPath := filepath.Join(root, _VendorFolder, key)
 			if _, err = os.Stat(vendorPath); err != nil {
 				return err
 			}
 			err = os.RemoveAll(vendorPath)
+			if err != nil {
+				return err
+			}
 
 			oldPath := filepath.Dir(value)
 			newPath := vendorPath
 
-			fmt.Println("oldValue", oldPath)
-			fmt.Println("newValue", newPath)
 			err = os.Rename(oldPath, newPath)
 			if err != nil {
-				log.Println("No error", err)
+				return err
 			}
 		}
-
-		// oldPath := filepath.Join(strings.Replace(patchDirs[0], PatchFolder, _VendorFolder, 1), "github.com/a8uhnf/test-yml1")
-		// newPath := filepath.Join(root, _VendorFolder, "github.com/a8uhnf/test-yml1")
-
-		// err = os.RemoveAll(newPath)
-		/*if err != nil {
-			fmt.Println("Error Occurred---")
-			log.Println(err)
-		}
-		err = os.Rename(oldPath, newPath)
-		if err != nil {
-			log.Println("No error", err)
-		}*/
 	}
 	return nil
 }
