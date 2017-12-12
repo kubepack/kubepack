@@ -10,7 +10,7 @@ Kubernetes 1.8+
 Want to help improve Kubepack? Please start [here](/CONTRIBUTING.md).
 
 ## Support
-If you have any questions, [file an issue](https://github.com/kubepack/pack/issues/new) or talk to us on the [Kubernetes Slack team](http://slack.kubernetes.io/) channel `#kubepack`.
+If you have any questions, [file an issue](https://github.com/kubepack/pack/issues/new) or talk to us on the [Kubernetes Slack team](http://slack.kubernetes.io) channel `#kubepack`.
 
 ---
 
