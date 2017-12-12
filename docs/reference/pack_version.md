@@ -1,9 +1,18 @@
+---
+title: Pack Version
+menu:
+  docs_0.1.0-alpha.0:
+    identifier: pack-version
+    name: Pack Version
+    parent: reference
+menu_name: docs_0.1.0-alpha.0
+section_menu_id: reference
+---
 ## pack version
 
 Prints binary version number.
 
 ### Synopsis
-
 
 Prints binary version number.
 
@@ -31,5 +40,6 @@ pack version [flags]
 ```
 
 ### SEE ALSO
-* [pack](pack.md)	 - Secure Lightweight Kubernetes Package Manager
+
+* [pack](/docs/reference/pack.md)	 - Secure Lightweight Kubernetes Package Manager
 
