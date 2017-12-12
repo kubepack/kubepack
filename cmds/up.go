@@ -46,7 +46,11 @@ func NewUpCommand() *cobra.Command {
 	return cmd
 }
 
-func visitPatchAndDump(path string, fileInfo os.FileInfo, err error) error {
+func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
+	if ferr != nil {
+		return ferr
+	}
+
 	if fileInfo.IsDir() {
 		return nil
 	}

@@ -17,6 +17,13 @@ import (
 	"github.com/golang/glog"
 	typ "github.com/kubepack/pack/type"
 	"github.com/spf13/cobra"
+	"github.com/Masterminds/vcs"
+)
+
+var (
+	patchDirs  []string
+	patchPkgs  []string
+	vendorPkgs map[string]string
 )
 
 func NewDepCommand() *cobra.Command {
@@ -104,14 +111,113 @@ func runDeps(cmd *cobra.Command) error {
 	if err == nil {
 		// If no failure, blow away the vendor dir and write a new one out,
 		// stripping nested vendor directories as we go.
-		os.RemoveAll(filepath.Join(root, "_vendor"))
-		gps.WriteDepTree(filepath.Join(root, "_vendor"), solution, sourcemgr, true, logger)
+		os.RemoveAll(filepath.Join(root, _VendorFolder))
+		gps.WriteDepTree(filepath.Join(root, _VendorFolder), solution, sourcemgr, true, logger)
+
+		vendorPkgs = make(map[string]string)
+		filepath.Walk(filepath.Join(root, _VendorFolder), findPatchFolder)
+		fmt.Println("Patch directories=====", patchDirs)
+		fmt.Println("Patch pkgs directories=====", patchPkgs)
+		for key, value := range vendorPkgs {
+			vendorPath := filepath.Join(root, _VendorFolder, key)
+			if _, err = os.Stat(vendorPath); err != nil {
+				return err
+			}
+			err = os.RemoveAll(vendorPath)
+
+			oldPath := filepath.Dir(value)
+			newPath := vendorPath
+
+			fmt.Println("oldValue", oldPath)
+			fmt.Println("newValue", newPath)
+			err = os.Rename(oldPath, newPath)
+			if err != nil {
+				log.Println("No error", err)
+			}
+		}
+
+		// oldPath := filepath.Join(strings.Replace(patchDirs[0], PatchFolder, _VendorFolder, 1), "github.com/a8uhnf/test-yml1")
+		// newPath := filepath.Join(root, _VendorFolder, "github.com/a8uhnf/test-yml1")
+
+		// err = os.RemoveAll(newPath)
+		/*if err != nil {
+			fmt.Println("Error Occurred---")
+			log.Println(err)
+		}
+		err = os.Rename(oldPath, newPath)
+		if err != nil {
+			log.Println("No error", err)
+		}*/
 	}
 	return nil
 }
 
+func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
+	if err != nil {
+		return err
+	}
+	if strings.HasSuffix(path, PatchFolder) {
+		patchDirs = append(patchDirs, path)
+	}
+
+	if !strings.Contains(path, PatchFolder) {
+		return nil
+	}
+	if fileInfo.IsDir() {
+		return nil
+	}
+
+	vendorPath := strings.Replace(path, PatchFolder, _VendorFolder, 1)
+	if _, err := os.Stat(vendorPath); err == nil {
+		srcYaml, err := ioutil.ReadFile(vendorPath)
+		if err != nil {
+			return err
+		}
+
+		patchYaml, err := ioutil.ReadFile(path)
+		if err != nil {
+			return err
+		}
+		mergedYaml, err := CompileWithPatch(srcYaml, patchYaml)
+		if err != nil {
+			return err
+		}
+
+		err = ioutil.WriteFile(vendorPath, mergedYaml, 0755)
+		if err != nil {
+			return err
+		}
+
+		for {
+			dir := filepath.Dir(path)
+
+			manifestPath := filepath.Join(strings.Split(dir, PatchFolder)[0], typ.ManifestFile)
+			if _, err := os.Stat(manifestPath); err != nil {
+				if os.IsNotExist(err) {
+					continue
+				}
+			}
+
+			byt, err := ioutil.ReadFile(manifestPath)
+			manStruc := typ.ManifestDefinition{}
+			err = yaml.Unmarshal(byt, &manStruc)
+			if err != nil {
+				return err
+			}
+
+			for _, value := range manStruc.Dependencies {
+				if strings.Contains(path, value.Package) {
+					patchPkgs = append(patchPkgs, value.Package)
+					vendorPkgs[value.Package] = vendorPath
+				}
+			}
+			break
+		}
+	}
+	return err
+}
+
 type NaiveAnalyzer struct {
-	// lookForManifest(root string) (gps.)
 }
 
 // DeriveManifestAndLock is called when the solver needs manifest/lock data
@@ -119,9 +225,10 @@ type NaiveAnalyzer struct {
 // parameter) at a particular version. That version will be checked out in a
 // directory rooted at path.
 func (a NaiveAnalyzer) DeriveManifestAndLock(path string, n gps.ProjectRoot) (gps.Manifest, gps.Lock, error) {
-	// man := filepath.Join(filepath.Join(path, "manifest.yaml"))
-	// return nil, nil, nil
 	// this check should be unnecessary, but keeping it for now as a canary
+	repo, err := vcs.NewRepo("", path)
+	fmt.Println("-----------------------", repo.Remote())
+
 	if _, err := os.Lstat(path); err != nil {
 		return nil, nil, fmt.Errorf("No directory exists at %s; cannot produce ProjectInfo", path)
 	}
@@ -139,7 +246,7 @@ func (a NaiveAnalyzer) DeriveManifestAndLock(path string, n gps.ProjectRoot) (gp
 // of gps' hashing memoization scheme.
 func (a NaiveAnalyzer) Info() gps.ProjectAnalyzerInfo {
 	return gps.ProjectAnalyzerInfo{
-		Name:    "example-analyzer",
+		Name:    "kubernetes-dependency-mngr",
 		Version: 1,
 	}
 }
@@ -182,13 +289,6 @@ func (a ManifestYaml) Overrides() gps.ProjectConstraints {
 		ovrr[gps.ProjectRoot(value.Package)] = properties
 	}
 	return ovrr
-	return gps.ProjectConstraints{
-		gps.ProjectRoot("github.com/a8uhnf/test-yml"): gps.ProjectProperties{
-			Source:     "github.com/a8uhnf/test-yml",
-			Constraint: gps.NewVersion("0.0.1"),
-		},
-	}
-	return nil
 }
 
 func (a ManifestYaml) DependencyConstraints() gps.ProjectConstraints {
