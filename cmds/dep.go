@@ -17,7 +17,6 @@ import (
 	"github.com/golang/glog"
 	typ "github.com/kubepack/pack/type"
 	"github.com/spf13/cobra"
-	"github.com/Masterminds/vcs"
 )
 
 var (
@@ -228,8 +227,6 @@ func findManifestFile(path, vendorPath string) error {
 	}
 
 	for _, value := range manStruc.Dependencies {
-		fmt.Println("Dep-------------------", value)
-		fmt.Println("Vendorpath------------", vendorPath)
 		if importExists(value.Package) {
 			continue
 		}
@@ -262,9 +259,6 @@ type NaiveAnalyzer struct {
 // directory rooted at path.
 func (a NaiveAnalyzer) DeriveManifestAndLock(path string, n gps.ProjectRoot) (gps.Manifest, gps.Lock, error) {
 	// this check should be unnecessary, but keeping it for now as a canary
-	repo, err := vcs.NewRepo("", path)
-	fmt.Println("-----------------------", repo.Remote())
-
 	if _, err := os.Lstat(path); err != nil {
 		return nil, nil, fmt.Errorf("No directory exists at %s; cannot produce ProjectInfo", path)
 	}
