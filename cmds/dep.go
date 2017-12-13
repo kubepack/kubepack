@@ -123,17 +123,19 @@ func runDeps(cmd *cobra.Command) error {
 			if _, err = os.Stat(vendorPath); err != nil {
 				return err
 			}
-			err = os.RemoveAll(vendorPath)
-			if err != nil {
-				return err
-			}
 
 			oldPath := filepath.Dir(value)
 			newPath := vendorPath
 
-			err = os.Rename(oldPath, newPath)
-			if err != nil {
-				return err
+			if _, err = os.Stat(oldPath); err == nil {
+				err = os.RemoveAll(vendorPath)
+				if err != nil {
+					return err
+				}
+				err = os.Rename(oldPath, newPath)
+				if err != nil {
+					return err
+				}
 			}
 		}
 	}
