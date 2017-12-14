@@ -22,7 +22,7 @@ import (
 var (
 	patchDirs  []string
 	patchPkgs  []string
-	vendorPkgs map[string]string
+	patchFiles map[string]string
 	imports    []string
 )
 
@@ -114,29 +114,8 @@ func runDeps(cmd *cobra.Command) error {
 		os.RemoveAll(filepath.Join(root, _VendorFolder))
 		gps.WriteDepTree(filepath.Join(root, _VendorFolder), solution, sourcemgr, true, logger)
 
-		vendorPkgs = make(map[string]string)
+		patchFiles = make(map[string]string)
 		filepath.Walk(filepath.Join(root, _VendorFolder), findPatchFolder)
-
-		/*for key, value := range vendorPkgs {
-			vendorPath := filepath.Join(root, _VendorFolder, key)
-			if _, err = os.Stat(vendorPath); err != nil {
-				return err
-			}
-
-			oldPath := filepath.Dir(value)
-			newPath := vendorPath
-
-			if _, err = os.Stat(oldPath); err == nil {
-				err = os.RemoveAll(vendorPath)
-				if err != nil {
-					return err
-				}
-				err = os.Rename(oldPath, newPath)
-				if err != nil {
-					return err
-				}
-			}
-		}*/
 	}
 	return nil
 }
@@ -155,10 +134,15 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 	if fileInfo.IsDir() {
 		return nil
 	}
-	srcDir := filepath.Join(strings.Split(path, _VendorFolder)[0], _VendorFolder, strings.Split(path, PatchFolder)[1])
-	// vendorPath := strings.Replace(path, PatchFolder, _VendorFolder, 1)
+	patchFilePath := strings.Split(path, PatchFolder)[1]
+	srcDir := filepath.Join(strings.Split(path, _VendorFolder)[0], _VendorFolder, patchFilePath)
+	fmt.Println("hello patch files------", patchFilePath)
+	if _, ok := patchFiles[patchFilePath]; ok {
+		return fmt.Errorf("Multiple patch on same file: %s", patchFilePath)
+	}
 	if _, err := os.Stat(srcDir); err == nil {
 
+		fmt.Println("Hello path------------", path)
 		fmt.Println("Hello Source path-----", srcDir)
 		srcYaml, err := ioutil.ReadFile(srcDir)
 		if err != nil {
@@ -178,78 +162,8 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
-		/*err = findManifestFile(path, vendorPath)
-		if err != nil {
-			return err
-		}*/
-		/*for {
-			dir := filepath.Dir(path)
-
-			manifestPath := filepath.Join(strings.Split(dir, PatchFolder)[0], typ.ManifestFile)
-			if _, err := os.Stat(manifestPath); err != nil {
-				if os.IsNotExist(err) {
-					continue
-				}
-			}
-
-			byt, err := ioutil.ReadFile(manifestPath)
-			manStruc := typ.ManifestDefinition{}
-			err = yaml.Unmarshal(byt, &manStruc)
-			if err != nil {
-				return err
-			}
-
-			for _, value := range manStruc.Dependencies {
-				if strings.Contains(path, value.Package) {
-					patchPkgs = append(patchPkgs, value.Package)
-					vendorPkgs[value.Package] = vendorPath
-				}
-			}
-			break
-		}*/
 	}
 	return err
-}
-
-func findManifestFile(path, vendorPath string) error {
-	dir := filepath.Dir(path)
-
-	manifestPath := filepath.Join(strings.Split(dir, PatchFolder)[0], typ.ManifestFile)
-	if _, err := os.Stat(manifestPath); err != nil {
-		if os.IsNotExist(err) {
-			return err
-		}
-	}
-
-	byt, err := ioutil.ReadFile(manifestPath)
-	manStruc := typ.ManifestDefinition{}
-	err = yaml.Unmarshal(byt, &manStruc)
-	if err != nil {
-		return err
-	}
-
-	for _, value := range manStruc.Dependencies {
-		if importExists(value.Package) {
-			continue
-		}
-		if strings.Contains(path, value.Package) {
-			patchPkgs = append(patchPkgs, value.Package)
-			if _, ok := vendorPkgs[value.Package]; !ok {
-				vendorPkgs[value.Package] = vendorPath
-			}
-		}
-	}
-	return nil
-}
-
-func importExists(s string) bool {
-	for _, val := range imports {
-		if s == val {
-			return true
-		}
-	}
-
-	return false
 }
 
 type NaiveAnalyzer struct {
