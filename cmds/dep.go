@@ -117,7 +117,7 @@ func runDeps(cmd *cobra.Command) error {
 		vendorPkgs = make(map[string]string)
 		filepath.Walk(filepath.Join(root, _VendorFolder), findPatchFolder)
 
-		for key, value := range vendorPkgs {
+		/*for key, value := range vendorPkgs {
 			vendorPath := filepath.Join(root, _VendorFolder, key)
 			if _, err = os.Stat(vendorPath); err != nil {
 				return err
@@ -136,7 +136,7 @@ func runDeps(cmd *cobra.Command) error {
 					return err
 				}
 			}
-		}
+		}*/
 	}
 	return nil
 }
@@ -155,10 +155,12 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 	if fileInfo.IsDir() {
 		return nil
 	}
+	srcDir := filepath.Join(strings.Split(path, _VendorFolder)[0], _VendorFolder, strings.Split(path, PatchFolder)[1])
+	// vendorPath := strings.Replace(path, PatchFolder, _VendorFolder, 1)
+	if _, err := os.Stat(srcDir); err == nil {
 
-	vendorPath := strings.Replace(path, PatchFolder, _VendorFolder, 1)
-	if _, err := os.Stat(vendorPath); err == nil {
-		srcYaml, err := ioutil.ReadFile(vendorPath)
+		fmt.Println("Hello Source path-----", srcDir)
+		srcYaml, err := ioutil.ReadFile(srcDir)
 		if err != nil {
 			return err
 		}
@@ -172,14 +174,14 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 			return err
 		}
 
-		err = ioutil.WriteFile(vendorPath, mergedYaml, 0755)
+		err = ioutil.WriteFile(srcDir, mergedYaml, 0755)
 		if err != nil {
 			return err
 		}
-		err = findManifestFile(path, vendorPath)
+		/*err = findManifestFile(path, vendorPath)
 		if err != nil {
 			return err
-		}
+		}*/
 		/*for {
 			dir := filepath.Dir(path)
 
