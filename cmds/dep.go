@@ -141,7 +141,7 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 		return fmt.Errorf("Multiple patch on same file: %s", patchFilePath)
 	}
 	if _, err := os.Stat(srcDir); err == nil {
-
+		patchFiles[patchFilePath] = path
 		fmt.Println("Hello path------------", path)
 		fmt.Println("Hello Source path-----", srcDir)
 		srcYaml, err := ioutil.ReadFile(srcDir)
