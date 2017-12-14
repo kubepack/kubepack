@@ -125,7 +125,6 @@ func runDeps(cmd *cobra.Command) error {
 
 func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 	if err != nil {
-		fmt.Println("-------------------", err)
 		return err
 	}
 	if strings.HasSuffix(path, PatchFolder) {
@@ -140,15 +139,11 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 	}
 	patchFilePath := strings.Split(path, PatchFolder)[1]
 	srcDir := filepath.Join(strings.Split(path, _VendorFolder)[0], _VendorFolder, patchFilePath)
-	fmt.Println("hello patch files------", patchFilePath)
 	if _, ok := patchFiles[patchFilePath]; ok {
-		fmt.Println("hello patch files------XXXXXXXXXX", patchFilePath)
 		return fmt.Errorf("Multiple patch on same file: %s", patchFilePath)
 	}
 	if _, err := os.Stat(srcDir); err == nil {
 		patchFiles[patchFilePath] = path
-		fmt.Println("Hello path------------", path)
-		fmt.Println("Hello Source path-----", srcDir)
 		srcYaml, err := ioutil.ReadFile(srcDir)
 		if err != nil {
 			return err
