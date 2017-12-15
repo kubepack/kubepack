@@ -33,6 +33,7 @@ func NewDepCommand() *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			err := runDeps(cmd)
 			if err != nil {
+
 				log.Fatalln(err)
 			}
 		},
@@ -111,8 +112,14 @@ func runDeps(cmd *cobra.Command) error {
 	if err == nil {
 		// If no failure, blow away the vendor dir and write a new one out,
 		// stripping nested vendor directories as we go.
-		os.RemoveAll(filepath.Join(root, _VendorFolder))
-		gps.WriteDepTree(filepath.Join(root, _VendorFolder), solution, sourcemgr, true, logger)
+		err = os.RemoveAll(filepath.Join(root, _VendorFolder))
+		if err != nil {
+			return err
+		}
+		err = gps.WriteDepTree(filepath.Join(root, _VendorFolder), solution, sourcemgr, true, logger)
+		if err != nil {
+			return err
+		}
 
 		patchFiles = make(map[string]string)
 		err = filepath.Walk(filepath.Join(root, _VendorFolder), findPatchFolder)
@@ -164,6 +171,15 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 		}
 	}
 	return err
+}
+
+func findImportInManifest(repo string) bool {
+	for _, val := range imports {
+		if repo == val {
+			 return true
+		}
+	}
+	return false
 }
 
 type NaiveAnalyzer struct {
