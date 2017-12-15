@@ -20,10 +20,10 @@ import (
 )
 
 var (
-	patchDirs  []string
-	patchPkgs  []string
-	patchFiles map[string]string
-	imports    []string
+	patchDirs      []string
+	patchFiles     map[string]string
+	imports        []string
+	packagePatches map[string]string
 )
 
 func NewDepCommand() *cobra.Command {
@@ -44,6 +44,7 @@ func NewDepCommand() *cobra.Command {
 func runDeps(cmd *cobra.Command) error {
 	// Assume the current directory is correctly placed on a GOPATH, and that it's the
 	// root of the project.
+	packagePatches = make(map[string]string)
 	logger := log.New(ioutil.Discard, "", 0)
 	if glog.V(glog.Level(1)) {
 		logger = log.New(os.Stdout, "", 0)
@@ -144,8 +145,19 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 	if fileInfo.IsDir() {
 		return nil
 	}
-	patchFilePath := strings.Split(path, PatchFolder)[1]
+
+	splitVendor := strings.Split(path, _VendorFolder)
+	forkDir := strings.Split(splitVendor[1], PatchFolder)[0]
+	fmt.Println("Fork Repo---------------", strings.TrimPrefix(forkDir, "/"))
+	patchFilePath := strings.TrimPrefix(strings.Split(path, PatchFolder)[1], "/")
 	srcDir := filepath.Join(strings.Split(path, _VendorFolder)[0], _VendorFolder, patchFilePath)
+	fmt.Println("patchFilePath------", patchFilePath)
+	fmt.Println("srcDir-------------", srcDir)
+	fmt.Println("filepath-----------", strings.TrimPrefix(patchFilePath, "/"))
+	fmt.Println("filepath------XXXXX", strings.Split(strings.Split(path, _VendorFolder)[1], PatchFolder)[0])
+	if _, ok := packagePatches[patchFilePath]; ok {
+		fmt.Println("hello ---------------------", ok)
+	}
 	if _, ok := patchFiles[patchFilePath]; ok {
 		return fmt.Errorf("Multiple patch on same file: %s", patchFilePath)
 	}
@@ -176,7 +188,7 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 func findImportInManifest(repo string) bool {
 	for _, val := range imports {
 		if repo == val {
-			 return true
+			return true
 		}
 	}
 	return false
@@ -265,6 +277,7 @@ func (a ManifestYaml) DependencyConstraints() gps.ProjectConstraints {
 	}
 
 	for _, value := range manStruc.Dependencies {
+		fmt.Println("hello patch erray***********", value.Patch)
 		properties := gps.ProjectProperties{}
 		if value.Repo != "" {
 			properties.Source = value.Repo
@@ -276,9 +289,16 @@ func (a ManifestYaml) DependencyConstraints() gps.ProjectConstraints {
 		} else if value.Version != "" {
 			properties.Constraint = gps.Revision(value.Version)
 		}
+		mapPatches(value.Package, value.Patch)
 		projectConstraints[gps.ProjectRoot(value.Package)] = properties
 	}
 	return projectConstraints
+}
+
+func mapPatches(repo string, patches []string) {
+	for _, val := range patches {
+		packagePatches[val] = repo
+	}
 }
 
 func (a ManifestYaml) TestDependencyConstraints() gps.ProjectConstraints {
