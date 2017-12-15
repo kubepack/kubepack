@@ -147,16 +147,20 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 	}
 
 	splitVendor := strings.Split(path, _VendorFolder)
-	forkDir := strings.Split(splitVendor[1], PatchFolder)[0]
-	fmt.Println("Fork Repo---------------", strings.TrimPrefix(forkDir, "/"))
+	forkDir := strings.TrimPrefix(strings.Split(splitVendor[1], PatchFolder)[0], "/")
+	fmt.Println("Fork Repo---------------", forkDir)
 	patchFilePath := strings.TrimPrefix(strings.Split(path, PatchFolder)[1], "/")
 	srcDir := filepath.Join(strings.Split(path, _VendorFolder)[0], _VendorFolder, patchFilePath)
 	fmt.Println("patchFilePath------", patchFilePath)
 	fmt.Println("srcDir-------------", srcDir)
 	fmt.Println("filepath-----------", strings.TrimPrefix(patchFilePath, "/"))
 	fmt.Println("filepath------XXXXX", strings.Split(strings.Split(path, _VendorFolder)[1], PatchFolder)[0])
-	if _, ok := packagePatches[patchFilePath]; ok {
-		fmt.Println("hello ---------------------", ok)
+	if val, ok := packagePatches[patchFilePath]; ok {
+		fmt.Println("hello ---------------------", val)
+		fmt.Println("hello ---------------------", strings.TrimPrefix(forkDir, "/"))
+		if val == strings.TrimSuffix(strings.TrimPrefix(forkDir, "/"), "/") {
+			fmt.Println("hello ---------------------", ok)
+		}
 	}
 	if _, ok := patchFiles[patchFilePath]; ok {
 		return fmt.Errorf("Multiple patch on same file: %s", patchFilePath)
