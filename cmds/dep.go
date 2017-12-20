@@ -20,7 +20,6 @@ import (
 )
 
 var (
-	patchDirs      []string
 	patchFiles     map[string]string
 	imports        []string
 	packagePatches map[string]string
@@ -31,9 +30,8 @@ func NewDepCommand() *cobra.Command {
 		Use:   "dep",
 		Short: "Pulls dependent app manifests",
 		Run: func(cmd *cobra.Command, args []string) {
-			err := runDeps(cmd)
+			err := runDeps()
 			if err != nil {
-
 				log.Fatalln(err)
 			}
 		},
@@ -41,7 +39,7 @@ func NewDepCommand() *cobra.Command {
 	return cmd
 }
 
-func runDeps(cmd *cobra.Command) error {
+func runDeps() error {
 	// Assume the current directory is correctly placed on a GOPATH, and that it's the
 	// root of the project.
 	packagePatches = make(map[string]string)
@@ -134,9 +132,6 @@ func runDeps(cmd *cobra.Command) error {
 func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 	if err != nil {
 		return err
-	}
-	if strings.HasSuffix(path, PatchFolder) {
-		patchDirs = append(patchDirs, path)
 	}
 
 	if !strings.Contains(path, PatchFolder) {
