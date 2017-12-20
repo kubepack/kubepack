@@ -148,18 +148,11 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 
 	splitVendor := strings.Split(path, _VendorFolder)
 	forkDir := strings.TrimPrefix(strings.Split(splitVendor[1], PatchFolder)[0], "/")
-	fmt.Println("Fork Repo---------------", forkDir)
 	patchFilePath := strings.TrimPrefix(strings.Split(path, PatchFolder)[1], "/")
 	srcDir := filepath.Join(strings.Split(path, _VendorFolder)[0], _VendorFolder, patchFilePath)
-	fmt.Println("patchFilePath------", patchFilePath)
-	fmt.Println("srcDir-------------", srcDir)
-	fmt.Println("filepath-----------", strings.TrimPrefix(patchFilePath, "/"))
-	fmt.Println("filepath------XXXXX", strings.Split(strings.Split(path, _VendorFolder)[1], PatchFolder)[0])
 	if val, ok := packagePatches[patchFilePath]; ok {
-		fmt.Println("hello ---------------------", val)
-		fmt.Println("hello ---------------------", strings.TrimPrefix(forkDir, "/"))
-		if val == strings.TrimSuffix(strings.TrimPrefix(forkDir, "/"), "/") {
-			fmt.Println("hello ---------------------", ok)
+		if val != strings.TrimSuffix(strings.TrimPrefix(forkDir, "/"), "/") {
+			return nil
 		}
 	}
 	if _, ok := patchFiles[patchFilePath]; ok {
@@ -277,11 +270,10 @@ func (a ManifestYaml) DependencyConstraints() gps.ProjectConstraints {
 	manStruc := typ.ManifestDefinition{}
 	err = yaml.Unmarshal(byt, &manStruc)
 	if err != nil {
-		log.Fatalln("Error Occuered-----", err)
+		log.Fatalln(err)
 	}
 
 	for _, value := range manStruc.Dependencies {
-		fmt.Println("hello patch erray***********", value.Patch)
 		properties := gps.ProjectProperties{}
 		if value.Repo != "" {
 			properties.Source = value.Repo
@@ -293,16 +285,23 @@ func (a ManifestYaml) DependencyConstraints() gps.ProjectConstraints {
 		} else if value.Version != "" {
 			properties.Constraint = gps.Revision(value.Version)
 		}
-		mapPatches(value.Package, value.Patch)
+		err = mapPatches(value.Package, value.Patch)
+		if err != nil {
+			log.Fatal(err)
+		}
 		projectConstraints[gps.ProjectRoot(value.Package)] = properties
 	}
 	return projectConstraints
 }
 
-func mapPatches(repo string, patches []string) {
+func mapPatches(repo string, patches []string) error {
 	for _, val := range patches {
+		if _, ok := packagePatches[val]; ok {
+			return fmt.Errorf("%s defined in multiple packages.", val)
+		}
 		packagePatches[val] = repo
 	}
+	return nil
 }
 
 func (a ManifestYaml) TestDependencyConstraints() gps.ProjectConstraints {
