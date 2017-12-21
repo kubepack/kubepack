@@ -133,11 +133,14 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 	if err != nil {
 		return err
 	}
-
 	if !strings.Contains(path, PatchFolder) {
 		return nil
 	}
 	if fileInfo.IsDir() {
+		return nil
+	}
+
+	if strings.Index(path, _VendorFolder) != strings.LastIndex(path, _VendorFolder) {
 		return nil
 	}
 
@@ -150,9 +153,7 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 			return nil
 		}
 	}
-	if _, ok := patchFiles[patchFilePath]; ok {
-		return fmt.Errorf("Multiple patch on same file: %s", patchFilePath)
-	}
+
 	if _, err := os.Stat(srcDir); err == nil {
 		patchFiles[patchFilePath] = path
 		srcYaml, err := ioutil.ReadFile(srcDir)
