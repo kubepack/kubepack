@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"regexp"
 	"strings"
+
+	"github.com/appscode/go/sets"
 )
 
 type IPRange struct {
@@ -19,7 +21,7 @@ func NewIPRange(from string, to string) IPRange {
 	return IPRange{net.ParseIP(from).To4(), net.ParseIP(to).To4()}
 }
 
-var privateIPRanges []IPRange = []IPRange{
+var privateIPRanges = []IPRange{
 	NewIPRange("10.0.0.0", "10.255.255.255"),
 	NewIPRange("172.16.0.0", "172.31.255.255"),
 	NewIPRange("192.168.0.0", "192.168.255.255"),
@@ -37,10 +39,10 @@ func IsPrivateIP(ip net.IP) bool {
 var (
 	knownLocalBridges = regexp.MustCompile(`^(docker|cbr|cni)[0-9]+$`)
 
-	InterfaceDownErr       = errors.New("Interface down")
-	LoopbackInterfaceErr   = errors.New("Loopback interface")
-	KnownLocalInterfaceErr = errors.New("Known local interface")
-	NotFoundErr            = errors.New("No IPV4 address found!")
+	InterfaceDownErr       = errors.New("interface down")
+	LoopbackInterfaceErr   = errors.New("loopback interface")
+	KnownLocalInterfaceErr = errors.New("known local interface")
+	NotFoundErr            = errors.New("no IPV4 address found")
 )
 
 /*
@@ -134,9 +136,9 @@ func NodeIP(interfaceName ...string) (string, net.IP, error) {
 	}
 }
 
-func detectIPs(routable bool) ([]net.IP, []net.IP, error) {
-	internalIPs := make([]net.IP, 0)
-	externalIPs := make([]net.IP, 0)
+func detectIPs(routable bool) ([]string, []string, error) {
+	internalIPs := sets.NewString()
+	externalIPs := sets.NewString()
 
 	ifaces, _ := net.Interfaces()
 	for _, iface := range ifaces {
@@ -169,9 +171,9 @@ func detectIPs(routable bool) ([]net.IP, []net.IP, error) {
 				continue // not an ipv4 address
 			}
 			if IsPrivateIP(ip) {
-				internalIPs = append(internalIPs, ip)
+				internalIPs.Insert(ip.String())
 			} else {
-				externalIPs = append(externalIPs, ip)
+				externalIPs.Insert(ip.String())
 			}
 		}
 	}
@@ -185,7 +187,7 @@ func detectIPs(routable bool) ([]net.IP, []net.IP, error) {
 					ip = ip.To4()
 				}
 				if ip != nil {
-					externalIPs = append(externalIPs, ip)
+					externalIPs.Insert(ip.String())
 				}
 			}
 		}
@@ -193,16 +195,16 @@ func detectIPs(routable bool) ([]net.IP, []net.IP, error) {
 	if len(internalIPs)+len(externalIPs) == 0 {
 		return nil, nil, NotFoundErr
 	}
-	return externalIPs, internalIPs, nil
+	return externalIPs.List(), internalIPs.List(), nil
 }
 
 // RoutableIPs returns routable public and private IPs associated with current host.
 // It will also use https://ipinfo.io/ip to detect public IP, if no public IP is assigned to a host interface.
-func RoutableIPs() ([]net.IP, []net.IP, error) {
+func RoutableIPs() ([]string, []string, error) {
 	return detectIPs(true)
 }
 
 // HostIPs returns public and private IPs assigned to various interfaces on current host.
-func HostIPs() ([]net.IP, []net.IP, error) {
+func HostIPs() ([]string, []string, error) {
 	return detectIPs(false)
 }
