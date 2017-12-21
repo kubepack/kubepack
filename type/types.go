@@ -14,6 +14,7 @@ type ManifestDefinition struct {
 		Branch  string   `json:"branch,omitempty"`
 		Folder  string   `json:"folder,omitempty"`
 		Repo    string   `json:"repo,omitempty"`
+		Fork    string   `json:"fork,omitempty"`
 		Patch   []string `json:"patch,omitempty"`
 	} `json:"dependencies"`
 }

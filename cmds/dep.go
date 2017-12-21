@@ -144,18 +144,27 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 		return nil
 	}
 
+	fmt.Println("hello vendor path-----", path)
+
 	splitVendor := strings.Split(path, _VendorFolder)
 	forkDir := strings.TrimPrefix(strings.Split(splitVendor[1], PatchFolder)[0], "/")
-	patchFilePath := strings.TrimPrefix(strings.Split(path, PatchFolder)[1], "/")
+	fmt.Println("fork directory---------", strings.TrimSuffix(forkDir, "/"))
+	splitPatch := strings.Split(path, PatchFolder)
+	patchFilePath := strings.TrimPrefix(splitPatch[1], "/")
 	srcDir := filepath.Join(strings.Split(path, _VendorFolder)[0], _VendorFolder, patchFilePath)
+	fmt.Println("patchFilePath.....", patchFilePath)
 	if val, ok := packagePatches[patchFilePath]; ok {
 		if val != strings.TrimSuffix(strings.TrimPrefix(forkDir, "/"), "/") {
 			return nil
 		}
 	}
 
+	if _, ok := packagePatches[strings.TrimSuffix(forkDir, "/")]; ok {
+		src := strings.Replace(path, PatchFolder, _VendorFolder, 1)
+		srcDir = src
+	}
+
 	if _, err := os.Stat(srcDir); err == nil {
-		patchFiles[patchFilePath] = path
 		srcYaml, err := ioutil.ReadFile(srcDir)
 		if err != nil {
 			return err
@@ -171,6 +180,18 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 		}
 
 		err = ioutil.WriteFile(srcDir, mergedYaml, 0755)
+		if err != nil {
+			return err
+		}
+	}
+
+	if _, ok := packagePatches[strings.TrimSuffix(forkDir, "/")]; ok {
+		srcDir = filepath.Join(splitPatch[0], _VendorFolder, forkDir)
+		// src := strings.Replace(path, PatchFolder, _VendorFolder, 1)
+		fmt.Println("XXXXXXXXXXXXXXXXXXXXXXXx", srcDir)
+		dstDir := filepath.Join(splitVendor[0], _VendorFolder, forkDir)
+		fmt.Println("YYYYYYYYYYYYYYYYYYYYYYYY", dstDir)
+		err = os.Rename(srcDir, dstDir)
 		if err != nil {
 			return err
 		}
@@ -245,6 +266,8 @@ func (a ManifestYaml) Overrides() gps.ProjectConstraints {
 		properties := gps.ProjectProperties{}
 		if value.Repo != "" {
 			properties.Source = value.Repo
+		} else if value.Fork != "" {
+			properties.Source = value.Fork
 		} else {
 			properties.Source = value.Package
 		}
@@ -273,6 +296,12 @@ func (a ManifestYaml) DependencyConstraints() gps.ProjectConstraints {
 		properties := gps.ProjectProperties{}
 		if value.Repo != "" {
 			properties.Source = value.Repo
+		} else if value.Fork != "" {
+			if _, ok := packagePatches[value.Package]; ok {
+				log.Fatal(fmt.Errorf("%s defined in multiple packages.", value.Package))
+			}
+			packagePatches[value.Package] = value.Fork
+			properties.Source = value.Fork
 		} else {
 			properties.Source = value.Package
 		}
@@ -281,10 +310,12 @@ func (a ManifestYaml) DependencyConstraints() gps.ProjectConstraints {
 		} else if value.Version != "" {
 			properties.Constraint = gps.Revision(value.Version)
 		}
-		err = mapPatches(value.Package, value.Patch)
+
+		/*err = mapPatches(value.Package, value.Patch)
 		if err != nil {
 			log.Fatal(err)
-		}
+		}*/
+
 		projectConstraints[gps.ProjectRoot(value.Package)] = properties
 	}
 	return projectConstraints
