@@ -21,9 +21,9 @@ import (
 )
 
 var (
-	patchFiles     map[string]string
 	imports        []string
 	packagePatches map[string]string
+	forkRepo       []string
 )
 
 func NewDepCommand() *cobra.Command {
@@ -124,17 +124,36 @@ func runDeps() error {
 			return err
 		}
 
-		patchFiles = make(map[string]string)
 		err = filepath.Walk(filepath.Join(root, _VendorFolder), findPatchFolder)
 		if err != nil {
 			return err
+		}
+
+		for _, val := range forkRepo {
+			srcPath := filepath.Join(root, _VendorFolder, val, _VendorFolder, val)
+			if _, err = os.Stat(srcPath); err != nil {
+				return nil
+			}
+			tmpDir := filepath.Join(root, _VendorFolder, rand.WithUniqSuffix("hello"))
+			err = os.Rename(srcPath, tmpDir)
+			if err != nil {
+				return err
+			}
+
+			dstPath := filepath.Join(root, _VendorFolder, val)
+
+			err = os.RemoveAll(dstPath)
+			if err != nil {
+				return err
+			}
+
+			err = os.Rename(tmpDir, dstPath)
 		}
 	}
 	return nil
 }
 
 func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
-	fmt.Println("err--asfsf", err)
 	if err != nil {
 		return err
 	}
@@ -159,10 +178,13 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 			return nil
 		}
 	}
-
-	if _, ok := packagePatches[strings.TrimSuffix(forkDir, "/")]; ok {
+	pkg := strings.TrimSuffix(forkDir, "/")
+	if _, ok := packagePatches[pkg]; ok {
 		src := strings.Replace(path, PatchFolder, _VendorFolder, 1)
 		srcDir = src
+		if !findImportInSlice(pkg, forkRepo) {
+			forkRepo = append(forkRepo, pkg)
+		}
 	}
 
 	if _, err := os.Stat(srcDir); err == nil {
@@ -179,40 +201,18 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
-
 		err = ioutil.WriteFile(srcDir, mergedYaml, 0755)
 		if err != nil {
 			return err
 		}
 	}
 
-	if _, ok := packagePatches[strings.TrimSuffix(forkDir, "/")]; ok {
-		srcDir = filepath.Join(splitPatch[0], _VendorFolder, forkDir)
-		// src := strings.Replace(path, PatchFolder, _VendorFolder, 1)
-		fmt.Println("XXXXXXXXXXXXXXXXXXXXXXXx", srcDir)
-		dstDir := filepath.Join(splitVendor[0], _VendorFolder, forkDir)
-		fmt.Println("YYYYYYYYYYYYYYYYYYYYYYYY", dstDir)
-
-		tmpDir := filepath.Join(filepath.Dir(dstDir), rand.WithUniqSuffix("hello"))
-
-		err = os.Rename(srcDir, tmpDir)
-		if err != nil {
-			return err
-		}
-		
-		err = os.Rename(tmpDir, dstDir)
-		if err != nil {
-			return err
-		}
-		fmt.Println("Hello ------------------", tmpDir)
-	}
-	fmt.Println("error---", err)
 	return err
 }
 
-func findImportInManifest(repo string) bool {
-	for _, val := range imports {
-		if repo == val {
+func findImportInSlice(r string, repos []string) bool {
+	for _, val := range repos {
+		if r == val {
 			return true
 		}
 	}
