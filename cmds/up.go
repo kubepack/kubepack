@@ -18,7 +18,6 @@ import (
 var (
 	src           string
 	patch         string
-	patchFileInfo os.FileInfo
 )
 
 const CompileDirectory = "_outlook"
