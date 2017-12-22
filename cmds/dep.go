@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/appscode/go/crypto/rand"
 	"github.com/ghodss/yaml"
 	"github.com/golang/dep/gps"
 	"github.com/golang/dep/gps/pkgtree"
@@ -87,7 +88,10 @@ func runDeps() error {
 		},
 	}
 	// Set up a SourceManager. This manages interaction with sources (repositories).
-	tempdir, _ := ioutil.TempDir("", "gps-repocache")
+	tempdir, err := ioutil.TempDir("", "gps-repocache")
+	if err != nil {
+		return err
+	}
 	srcManagerConfig := gps.SourceManagerConfig{
 		Cachedir:       filepath.Join(tempdir),
 		Logger:         logger,
@@ -130,6 +134,7 @@ func runDeps() error {
 }
 
 func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
+	fmt.Println("err--asfsf", err)
 	if err != nil {
 		return err
 	}
@@ -144,15 +149,11 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 		return nil
 	}
 
-	fmt.Println("hello vendor path-----", path)
-
 	splitVendor := strings.Split(path, _VendorFolder)
 	forkDir := strings.TrimPrefix(strings.Split(splitVendor[1], PatchFolder)[0], "/")
-	fmt.Println("fork directory---------", strings.TrimSuffix(forkDir, "/"))
 	splitPatch := strings.Split(path, PatchFolder)
 	patchFilePath := strings.TrimPrefix(splitPatch[1], "/")
 	srcDir := filepath.Join(strings.Split(path, _VendorFolder)[0], _VendorFolder, patchFilePath)
-	fmt.Println("patchFilePath.....", patchFilePath)
 	if val, ok := packagePatches[patchFilePath]; ok {
 		if val != strings.TrimSuffix(strings.TrimPrefix(forkDir, "/"), "/") {
 			return nil
@@ -191,11 +192,21 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 		fmt.Println("XXXXXXXXXXXXXXXXXXXXXXXx", srcDir)
 		dstDir := filepath.Join(splitVendor[0], _VendorFolder, forkDir)
 		fmt.Println("YYYYYYYYYYYYYYYYYYYYYYYY", dstDir)
-		err = os.Rename(srcDir, dstDir)
+
+		tmpDir := filepath.Join(filepath.Dir(dstDir), rand.WithUniqSuffix("hello"))
+
+		err = os.Rename(srcDir, tmpDir)
 		if err != nil {
 			return err
 		}
+		
+		err = os.Rename(tmpDir, dstDir)
+		if err != nil {
+			return err
+		}
+		fmt.Println("Hello ------------------", tmpDir)
 	}
+	fmt.Println("error---", err)
 	return err
 }
 
