@@ -1,9 +1,18 @@
+---
+title: Pack Up
+menu:
+  docs_0.1.0-alpha.0:
+    identifier: pack-up
+    name: Pack Up
+    parent: reference
+menu_name: docs_0.1.0-alpha.0
+section_menu_id: reference
+---
 ## pack up
 
 Compiles patches and vendored manifests into final resource definitions
 
 ### Synopsis
-
 
 Compiles patches and vendored manifests into final resource definitions
 
@@ -33,5 +42,6 @@ pack up [flags]
 ```
 
 ### SEE ALSO
-* [pack](pack.md)	 - Secure Lightweight Kubernetes Package Manager
+
+* [pack](/docs/reference/pack.md)	 - Secure Lightweight Kubernetes Package Manager
 

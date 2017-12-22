@@ -1,9 +1,23 @@
+---
+title: Pack
+menu:
+  docs_0.1.0-alpha.0:
+    identifier: pack
+    name: Pack
+    parent: reference
+    weight: 0
+
+menu_name: docs_0.1.0-alpha.0
+section_menu_id: reference
+aliases:
+  - /docs/0.1.0-alpha.0/reference/
+
+---
 ## pack
 
 Secure Lightweight Kubernetes Package Manager
 
 ### Synopsis
-
 
 Secure Lightweight Kubernetes Package Manager
 
@@ -22,8 +36,9 @@ Secure Lightweight Kubernetes Package Manager
 ```
 
 ### SEE ALSO
-* [pack dep](pack_dep.md)	 - Pulls dependent app manifests
-* [pack edit](pack_edit.md)	 - Edit resource definition
-* [pack up](pack_up.md)	 - Compiles patches and vendored manifests into final resource definitions
-* [pack version](pack_version.md)	 - Prints binary version number.
+
+* [pack dep](/docs/reference/pack_dep.md)	 - Pulls dependent app manifests
+* [pack edit](/docs/reference/pack_edit.md)	 - Edit resource definition
+* [pack up](/docs/reference/pack_up.md)	 - Compiles patches and vendored manifests into final resource definitions
+* [pack version](/docs/reference/pack_version.md)	 - Prints binary version number.
 

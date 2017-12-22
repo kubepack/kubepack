@@ -13,15 +13,13 @@ simple statement that you, as a contributor, have the legal right to make the
 contribution. See the [DCO](DCO) file for details.
 
 ## Developer Guide
-We have a [Developer Guide](/docs/developer-guide/README.md) that outlines everything you need to know from setting up your
-dev environment to how to build and test Pac. If you find something undocumented or incorrect along the way,
-please feel free to send a Pull Request.
+We have a [Developer Guide](/docs/developer-guide/README.md) that outlines everything you need to know from setting up your dev environment to how to build and test Kubepack. If you find something undocumented or incorrect along the way, please feel free to send a Pull Request.
 
 ## Getting Help
-If you have a question about Pack or having problem using it, you can contact us on our public Slack channel. Follow [this link](https://slack.appscode.com) to get invitation to our Slack channel.
+If you have a question about Kubepack or having problem using it, you can contact us on the [Kubernetes Slack team](http://slack.kubernetes.io) channel `#kubepack`. Follow [this link](http://slack.kubernetes.io) to get invitation to our Slack channel.
 
 ## Bugs/Feature request
-If you have found a bug with Pack or want to request for new features, please [file an issue](https://github.com/kubepack/pack/issues/new).
+If you have found a bug with Kubepack or want to request for new features, please [file an issue](https://github.com/kubepack/pack/issues/new).
 
 ## Contribution Flow
 If you fix a bug or developed a new feature, feel free to submit a PR. In either case, please file a [Github issue]((https://github.com/kubepack/pack/issues/new)) first, so that we can have a discussion on it. This is a rough outline of what a contributor's workflow looks like:
@@ -35,4 +33,4 @@ If you fix a bug or developed a new feature, feel free to submit a PR. In either
 Thanks for your contributions!
 
 ## Spread the word
-If you have written blog post or tutorial on Pac, please share it with us on [Twitter](https://twitter.com/AppsCodeHQ) or [Slack](https://slack.appscode.com).
+If you have written blog post or tutorial on Kubepack, please share it with us on [Twitter](https://twitter.com/Kubepack) or [Slack](http://slack.kubernetes.io).
