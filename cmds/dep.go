@@ -322,11 +322,6 @@ func (a ManifestYaml) DependencyConstraints() gps.ProjectConstraints {
 			properties.Constraint = gps.Revision(value.Version)
 		}
 
-		/*err = mapPatches(value.Package, value.Patch)
-		if err != nil {
-			log.Fatal(err)
-		}*/
-
 		projectConstraints[gps.ProjectRoot(value.Package)] = properties
 	}
 	return projectConstraints
