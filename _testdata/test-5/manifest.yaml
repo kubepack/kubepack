@@ -5,12 +5,5 @@ owners:
 dependencies:
 - package: github.com/kubepack/kube-a
   branch: test-2
-  patch:
-  - github.com/kubepack/kube-c/nginx-deployment.yaml
 - package: github.com/kubepack/kube-b
-  branch: test-2
-  patch:
-  - github.com/kubepack/kube-c/nginx-deployment.yaml
-- package: github.com/kubepack/kube-c
-  source: github.com/kubepack/kube-b
   branch: test-2
