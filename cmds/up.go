@@ -16,8 +16,8 @@ import (
 )
 
 var (
-	src           string
-	patch         string
+	src   string
+	patch string
 )
 
 const CompileDirectory = "_outlook"
@@ -59,7 +59,6 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 	}
 
 	srcFilepath := strings.Replace(path, PatchFolder, _VendorFolder, 1)
-
 	if _, err := os.Stat(srcFilepath); err != nil {
 		return err
 	}
@@ -68,7 +67,6 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 	if err != nil {
 		return err
 	}
-
 	mergedPatchYaml, err := CompileWithPatch(srcYamlByte, patchByte)
 	if err != nil {
 		return err
@@ -140,7 +138,7 @@ func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
 }
 
 func getAnnotatedWithCommitHash(yamlByte []byte, dir string) ([]byte, error) {
-	repo, err := vcs.NewRepo("", dir)
+	repo, err := getRootDir(dir)
 	if err != nil {
 		return nil, err
 	}
@@ -165,4 +163,20 @@ func getAnnotatedWithCommitHash(yamlByte []byte, dir string) ([]byte, error) {
 	}
 
 	return annotatedYamlByte, nil
+}
+
+func getRootDir(path string) (vcs.Repo, error) {
+	var err error
+	for ; ; {
+		repo, err := vcs.NewRepo("", path)
+		if err == nil {
+			return repo, err
+		}
+		if os.Getenv("HOME") == path {
+			break
+		}
+		path = filepath.Dir(path)
+	}
+
+	return nil, err
 }

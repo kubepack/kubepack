@@ -49,8 +49,8 @@ func runDeps() error {
 		logger = log.New(os.Stdout, "", 0)
 	}
 	root, _ := os.Getwd()
-	man := filepath.Join(root, typ.ManifestFile)
-	byt, err := ioutil.ReadFile(man)
+	manifestPath := filepath.Join(root, typ.ManifestFile)
+	byt, err := ioutil.ReadFile(manifestPath)
 	manStruc := typ.ManifestDefinition{}
 	err = yaml.Unmarshal(byt, &manStruc)
 	if err != nil {
