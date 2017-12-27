@@ -4,8 +4,8 @@
 [[projects]]
   name = "cloud.google.com/go"
   packages = ["compute/metadata"]
-  revision = "2d3a6656c17a60b0815b7e06ab0be04eacb6e613"
-  version = "v0.16.0"
+  revision = "050b16d2314d5fc3d4c9a51e4cd5c7468e77f162"
+  version = "v0.17.0"
 
 [[projects]]
   branch = "master"
@@ -16,8 +16,8 @@
 [[projects]]
   name = "github.com/Azure/go-autorest"
   packages = ["autorest","autorest/adal","autorest/azure","autorest/date"]
-  revision = "4f2543ee0bc9b28d71bf1be8b9318a1c1904b83a"
-  version = "v9.5.1"
+  revision = "809ed2ef5c4c9a60c3c2f3aa9cc11f3a7c2ce59d"
+  version = "v9.6.0"
 
 [[projects]]
   branch = "parse-constraints-with-dash-in-pre"
@@ -47,8 +47,8 @@
 [[projects]]
   branch = "master"
   name = "github.com/appscode/go"
-  packages = ["analytics","context","homedir","log","log/golog","runtime","version"]
-  revision = "0042f7fe164fd03992cfa5ea70a98615516be99b"
+  packages = ["analytics","context","crypto/rand","homedir","log","log/golog","runtime","version"]
+  revision = "f08cee5a2aa53a1ab6d30e4ae11e381d1b265f81"
 
 [[projects]]
   branch = "master"
@@ -166,7 +166,7 @@
   branch = "master"
   name = "github.com/go-openapi/spec"
   packages = ["."]
-  revision = "01738944bdee0f26bf66420c5b17d54cfdf55341"
+  revision = "fa03337d7da5735229ee8f5e9d5d0b996014b7f8"
 
 [[projects]]
   branch = "master"
@@ -233,7 +233,7 @@
   branch = "master"
   name = "github.com/gophercloud/gophercloud"
   packages = [".","openstack","openstack/identity/v2/tenants","openstack/identity/v2/tokens","openstack/identity/v3/tokens","openstack/utils","pagination"]
-  revision = "4d2733c962898d8cd68456bd275aee64256cd2a1"
+  revision = "cf81d92c5aa5aa965c729e10fec2b65d13194320"
 
 [[projects]]
   branch = "master"
@@ -371,7 +371,7 @@
   branch = "master"
   name = "github.com/prometheus/procfs"
   packages = [".","xfs"]
-  revision = "a6e9df898b1336106c743392c48ee0b71f5c4efa"
+  revision = "8f918ac9ab4be3a790338bda8624fec5d71260b3"
 
 [[projects]]
   name = "github.com/russross/blackfriday"
@@ -407,19 +407,19 @@
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["ssh/terminal"]
-  revision = "94eea52f7b742c7cbe0b03b22f0c4c8631ece122"
+  revision = "d585fd2cc9195196078f516b69daff6744ef5e84"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/net"
   packages = ["context","context/ctxhttp","http2","http2/hpack","idna","lex/httplex"]
-  revision = "dc871a5d77e227f5bbf6545176ef3eeebf87e76e"
+  revision = "d866cfc389cec985d6fda2859936a575a55a3ab6"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/oauth2"
   packages = [".","google","internal","jws","jwt"]
-  revision = "3ea2187447eda3a5f01aa1b80d5c1c10a3555f72"
+  revision = "0448841f0cbe9d174c6c1cedd177f583337b8e2c"
 
 [[projects]]
   branch = "master"
@@ -431,13 +431,13 @@
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix","windows"]
-  revision = "b8f5ef32195cae6470b728e8ca677f0dbed1a004"
+  revision = "d818ba11af4465e00c1998bd3f8a55603b422290"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/text"
   packages = ["collate","collate/build","encoding","encoding/internal","encoding/internal/identifier","encoding/unicode","internal/colltab","internal/gen","internal/tag","internal/triegen","internal/ucd","internal/utf8internal","language","runes","secure/bidirule","transform","unicode/bidi","unicode/cldr","unicode/norm","unicode/rangetable","width"]
-  revision = "3b24cac7bc3a458991ab409aa2a339ac9e0d60d6"
+  revision = "eb22672bea55af56d225d4e35405f4d2e9f062a0"
 
 [[projects]]
   name = "google.golang.org/appengine"
@@ -467,7 +467,7 @@
   branch = "master"
   name = "k8s.io/apiextensions-apiserver"
   packages = ["pkg/features"]
-  revision = "099fd227da1f60394aac19c77254374142d01079"
+  revision = "20a63611e6173b98673742938961dd9ba5fb5b23"
 
 [[projects]]
   name = "k8s.io/apimachinery"
@@ -478,7 +478,7 @@
   branch = "master"
   name = "k8s.io/apiserver"
   packages = ["pkg/apis/audit","pkg/authentication/authenticator","pkg/authentication/serviceaccount","pkg/authentication/user","pkg/endpoints/request","pkg/features","pkg/util/feature","pkg/util/flag"]
-  revision = "73f85001b53a0adc72b5d3dc68abbcda0837fe3a"
+  revision = "0c42e4c46abc11a3294cb75e652a67ba8cc7afb9"
 
 [[projects]]
   name = "k8s.io/client-go"
@@ -490,7 +490,7 @@
   branch = "master"
   name = "k8s.io/kube-openapi"
   packages = ["pkg/common"]
-  revision = "c4fd2f0a5bff91647fd75e77ea52a8722264b0ce"
+  revision = "b16ebc07f5cad97831f961e4b5a9cc1caed33b7e"
 
 [[projects]]
   name = "k8s.io/kubernetes"
@@ -502,13 +502,13 @@
   branch = "master"
   name = "k8s.io/metrics"
   packages = ["pkg/apis/metrics","pkg/apis/metrics/v1alpha1","pkg/apis/metrics/v1beta1","pkg/client/clientset_generated/clientset","pkg/client/clientset_generated/clientset/scheme","pkg/client/clientset_generated/clientset/typed/metrics/v1alpha1","pkg/client/clientset_generated/clientset/typed/metrics/v1beta1"]
-  revision = "79239b4dbcda894c89aadd3cffa4cc70a81175cb"
+  revision = "94eb0250e657ab378be1fb870c3a98827c1028bd"
 
 [[projects]]
   branch = "master"
   name = "k8s.io/utils"
   packages = ["exec"]
-  revision = "66423a0293c555337adc04fe2c59748151291de8"
+  revision = "0ab3217ce272697eb60feb79a613a86a2fab7918"
 
 [[projects]]
   branch = "master"
@@ -519,6 +519,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "bd64c24f31a844b6b1103a1b730a50ea0f5e3b8a3f4046cad2e449b8129cc5ff"
+  inputs-digest = "6db25ab1fd554279d4803cb7591f9f5d93096254e08c3c479d59acbba922edae"
   solver-name = "gps-cdcl"
   solver-version = 1

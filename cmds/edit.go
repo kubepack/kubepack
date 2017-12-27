@@ -14,6 +14,7 @@ import (
 	apps "k8s.io/api/apps/v1beta1"
 	"k8s.io/apimachinery/pkg/util/strategicpatch"
 	"k8s.io/kubernetes/pkg/kubectl/cmd/util/editor"
+	"k8s.io/apimachinery/pkg/runtime"
 )
 
 var patchTypes = []string{"json", "merge", "strategic"}
@@ -83,6 +84,14 @@ func RunEdit() error {
 func GetPatch(src, dst []byte) error {
 	var err error
 	var patch []byte
+
+	var ro runtime.TypeMeta
+	if err := yaml.Unmarshal(src, &ro); err != nil {
+		fmt.Println("-------------------", err)
+		return err
+	}
+	kind := ro.GetObjectKind().GroupVersionKind().Kind
+	fmt.Println("--------------", kind)
 
 	switch patchType {
 	case "strategic":

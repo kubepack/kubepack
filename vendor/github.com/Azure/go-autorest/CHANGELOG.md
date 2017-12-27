@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## v9.6.0
+
+### New Features
+
+- Added support for acquiring tokens via MSI with a user assigned identity.
+
+## v9.5.3
+
+### Bug Fixes
+- Don't remove encoding of existing URL Query parameters when calling autorest.WithQueryParameters.
+- Set correct Content Type when using autorest.WithFormData.
+
+## v9.5.2
+
+### Bug Fixes
+
+- Check for nil *http.Response before dereferencing it.
+
 ## v9.5.1
 
 ### Bug Fixes
@@ -140,7 +158,7 @@ Support for UNIX time.
 - Added telemetry.
 
 ## v7.2.3
-- Fixing bug in calls to `DelayForBackoff` that caused doubling of delay 
+- Fixing bug in calls to `DelayForBackoff` that caused doubling of delay
   duration.
 
 ## v7.2.2

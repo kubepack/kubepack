@@ -4,4 +4,4 @@ owners:
   email: admin@appscode.com
 dependencies:
 - package: github.com/a8uhnf/test-yml
-  version: 0.0.1
+  version: 0.0.2
