@@ -11,8 +11,8 @@ import (
 	"github.com/evanphx/json-patch"
 	"github.com/ghodss/yaml"
 	"github.com/spf13/cobra"
-	apps "k8s.io/api/apps/v1beta1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"fmt"
+	"reflect"
 )
 
 var (
@@ -95,11 +95,11 @@ func CompileWithPatch(srcByte, patchByte []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	yaml, err := yaml.JSONToYAML(compiled)
+	compiledYaml, err := yaml.JSONToYAML(compiled)
 	if err != nil {
 		return nil, err
 	}
-	return yaml, err
+	return compiledYaml, err
 }
 
 func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
@@ -107,9 +107,9 @@ func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
 	if err != nil {
 		return err
 	}
-
 	annotateYaml, err := getAnnotatedWithCommitHash(compiledYaml, root)
 	if err != nil {
+		fmt.Println(err)
 		return err
 	}
 
@@ -140,30 +140,46 @@ func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
 func getAnnotatedWithCommitHash(yamlByte []byte, dir string) ([]byte, error) {
 	repo, err := getRootDir(dir)
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 
 	crnt, err := repo.Current()
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 
 	commitInfo, err := repo.CommitInfo(string(crnt))
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 
-	deploy := &apps.Deployment{}
-	err = yaml.Unmarshal(yamlByte, deploy)
-	metav1.SetMetaDataAnnotation(&deploy.ObjectMeta, "git-commit-hash", commitInfo.Commit)
-
-	annotatedYamlByte, err := yaml.Marshal(deploy)
+	annotatedMap := map[string]interface{}{}
+	err = yaml.Unmarshal(yamlByte, &annotatedMap)
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 
-	return annotatedYamlByte, nil
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	metadata := annotatedMap["metadata"]
+	annotations, ok := metadata.(map[string]interface{})["annotations"]
+	if !ok {
+		metadata.(map[string]interface{})["annotations"] = map[string]interface{}{}
+		annotations = metadata.(map[string]interface{})["annotations"]
+	}
+	annotations.(map[string]interface{})["git-commit-hash"] = commitInfo.Commit
+	annotatedMap["metadata"] = metadata
+
+	return yaml.Marshal(annotatedMap)
 }
+
 
 func getRootDir(path string) (vcs.Repo, error) {
 	var err error
