@@ -11,10 +11,11 @@ import (
 
 	"github.com/ghodss/yaml"
 	"github.com/spf13/cobra"
-	apps "k8s.io/api/apps/v1beta1"
+	"github.com/evanphx/json-patch"
 	"k8s.io/apimachinery/pkg/util/strategicpatch"
 	"k8s.io/kubernetes/pkg/kubectl/cmd/util/editor"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/kubernetes/pkg/api"
 )
 
 var patchTypes = []string{"json", "merge", "strategic"}
@@ -87,19 +88,18 @@ func GetPatch(src, dst []byte) error {
 
 	var ro runtime.TypeMeta
 	if err := yaml.Unmarshal(src, &ro); err != nil {
-		fmt.Println("-------------------", err)
 		return err
 	}
-	kind := ro.GetObjectKind().GroupVersionKind().Kind
-	fmt.Println("--------------", kind)
+	kind := ro.GetObjectKind().GroupVersionKind()
+	versionedObject, err := api.Scheme.New(kind)
 
-	switch patchType {
-	case "strategic":
-		patch, err = strategicpatch.CreateTwoWayMergePatch(src, dst, apps.Deployment{})
+	switch {
+	case runtime.IsNotRegisteredError(err):
+		patch, err = jsonpatch.CreateMergePatch(src, dst)
+	default:
+		patch, err = strategicpatch.CreateTwoWayMergePatch(src, dst, versionedObject)
 	}
-	if err != nil {
-		return err
-	}
+
 	yamlPatch, err := yaml.JSONToYAML(patch)
 	if err != nil {
 		return err
