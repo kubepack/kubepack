@@ -44,7 +44,6 @@ func NewEditCommand() *cobra.Command {
 	}
 
 	cmd.Flags().StringVarP(&srcPath, "src", "s", "", "File want to edit")
-	cmd.Flags().StringVarP(&patchType, "type", "t", "strategic", fmt.Sprintf("Type of patch; one of %v", patchTypes))
 
 	return cmd
 }
@@ -86,6 +85,8 @@ func GetPatch(src, dst []byte) error {
 	var err error
 	var patch []byte
 
+	// ref: https://github.com/kubernetes/kubernetes/blob/master/pkg/kubectl/cmd/util/editor/editoptions.go#L549
+
 	var ro runtime.TypeMeta
 	if err := yaml.Unmarshal(src, &ro); err != nil {
 		return err
@@ -96,6 +97,8 @@ func GetPatch(src, dst []byte) error {
 	switch {
 	case runtime.IsNotRegisteredError(err):
 		patch, err = jsonpatch.CreateMergePatch(src, dst)
+	case err != nil:
+		return err
 	default:
 		patch, err = strategicpatch.CreateTwoWayMergePatch(src, dst, versionedObject)
 	}
