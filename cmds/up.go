@@ -11,10 +11,7 @@ import (
 	"github.com/evanphx/json-patch"
 	"github.com/ghodss/yaml"
 	"github.com/spf13/cobra"
-	"fmt"
-	"k8s.io/apimachinery/pkg/runtime"
 	typ "github.com/kubepack/pack/type"
-	"k8s.io/kubernetes/pkg/api"
 )
 
 var (
@@ -97,15 +94,6 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 	return nil
 }
 
-func getVersionedObject(json []byte) (runtime.Object, error) {
-	var ro runtime.TypeMeta
-	if err := yaml.Unmarshal(json, &ro); err != nil {
-		return nil, err
-	}
-	kind := ro.GetObjectKind().GroupVersionKind()
-	return api.Scheme.New(kind)
-}
-
 func CompileWithPatch(srcByte, patchByte []byte) ([]byte, error) {
 	jsonSrc, err := yaml.YAMLToJSON(srcByte)
 	if err != nil {
@@ -136,7 +124,6 @@ func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
 	}
 	annotateYaml, err := getAnnotatedWithCommitHash(compiledYaml, root)
 	if err != nil {
-		fmt.Println(err)
 		return err
 	}
 
@@ -167,31 +154,26 @@ func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
 func getAnnotatedWithCommitHash(yamlByte []byte, dir string) ([]byte, error) {
 	repo, err := getRootDir(dir)
 	if err != nil {
-		fmt.Println(err)
 		return nil, err
 	}
 
 	crnt, err := repo.Current()
 	if err != nil {
-		fmt.Println(err)
 		return nil, err
 	}
 
 	commitInfo, err := repo.CommitInfo(string(crnt))
 	if err != nil {
-		fmt.Println(err)
 		return nil, err
 	}
 
 	annotatedMap := map[string]interface{}{}
 	err = yaml.Unmarshal(yamlByte, &annotatedMap)
 	if err != nil {
-		fmt.Println(err)
 		return nil, err
 	}
 
 	if err != nil {
-		fmt.Println(err)
 		return nil, err
 	}
 
