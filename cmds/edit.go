@@ -18,7 +18,6 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 )
 
-var patchTypes = []string{"json", "merge", "strategic"}
 
 const defaultEditor = "nano"
 const _VendorFolder = "_vendor"
@@ -26,7 +25,6 @@ const PatchFolder = "patch"
 
 var (
 	srcPath   string
-	patchType string
 	fileInfo  os.FileInfo
 )
 

@@ -12,7 +12,9 @@ import (
 	"github.com/ghodss/yaml"
 	"github.com/spf13/cobra"
 	"fmt"
-	"reflect"
+	"k8s.io/apimachinery/pkg/runtime"
+	typ "github.com/kubepack/pack/type"
+	"k8s.io/kubernetes/pkg/api"
 )
 
 var (
@@ -32,7 +34,7 @@ func NewUpCommand() *cobra.Command {
 				log.Fatalln(err)
 			}
 
-			err = filepath.Walk(filepath.Join(rootPath, PatchFolder), visitPatchAndDump)
+			err = filepath.Walk(filepath.Join(rootPath, _VendorFolder), visitPatchAndDump)
 			if err != nil {
 				log.Fatalln(err)
 			}
@@ -53,30 +55,55 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 	if fileInfo.IsDir() {
 		return nil
 	}
-	patchByte, err := ioutil.ReadFile(path)
-	if err != nil {
-		return err
+
+	if fileInfo.Name() == typ.ManifestFile {
+		return nil
 	}
 
-	srcFilepath := strings.Replace(path, PatchFolder, _VendorFolder, 1)
-	if _, err := os.Stat(srcFilepath); err != nil {
-		return err
-	}
-
+	srcFilepath := path
 	srcYamlByte, err := ioutil.ReadFile(srcFilepath)
 	if err != nil {
 		return err
 	}
+
+	patchFilePath := strings.Replace(path, _VendorFolder, PatchFolder, 1)
+	if _, err := os.Stat(patchFilePath); err != nil {
+		err = DumpCompiledFile(srcYamlByte, strings.Replace(path, _VendorFolder, CompileDirectory, 1))
+		if err != nil {
+			return err
+		}
+		return nil
+	}
+
+	patchByte, err := ioutil.ReadFile(strings.Replace(path, _VendorFolder, PatchFolder, 1))
+	if err != nil {
+		return err
+	}
+
+	splitWithVendor := strings.Split(path, _VendorFolder)
+	if len(splitWithVendor) != 2 {
+		return nil
+	}
+
 	mergedPatchYaml, err := CompileWithPatch(srcYamlByte, patchByte)
 	if err != nil {
 		return err
 	}
 
-	err = DumpCompiledFile(mergedPatchYaml, strings.Replace(path, PatchFolder, CompileDirectory, 1))
+	err = DumpCompiledFile(mergedPatchYaml, strings.Replace(path, _VendorFolder, CompileDirectory, 1))
 	if err != nil {
 		return err
 	}
 	return nil
+}
+
+func getVersionedObject(json []byte) (runtime.Object, error) {
+	var ro runtime.TypeMeta
+	if err := yaml.Unmarshal(json, &ro); err != nil {
+		return nil, err
+	}
+	kind := ro.GetObjectKind().GroupVersionKind()
+	return api.Scheme.New(kind)
 }
 
 func CompileWithPatch(srcByte, patchByte []byte) ([]byte, error) {
@@ -170,7 +197,7 @@ func getAnnotatedWithCommitHash(yamlByte []byte, dir string) ([]byte, error) {
 
 	metadata := annotatedMap["metadata"]
 	annotations, ok := metadata.(map[string]interface{})["annotations"]
-	if !ok {
+	if !ok || annotations == nil {
 		metadata.(map[string]interface{})["annotations"] = map[string]interface{}{}
 		annotations = metadata.(map[string]interface{})["annotations"]
 	}
