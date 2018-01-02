@@ -1,3 +1,5 @@
+> New to Pack? Please start [here](/docs/tutorials/README.md).
+
 # Users Docs
 
 ## How To Use
@@ -12,7 +14,7 @@ If you want to use others application with pack, then follow below instruction:
 This command will generate a patch under `patch` folder. `_vendor` will be unchanged.
 6. Run `pack up` to combine `patch` and `_vendor` folder files. 
 And final combination will be under `_outlook` folder.
-7. Now, all is need to do `kubectl apply -R -f ./_outlook/`.
+7. Now, all is need to do `kubectl apply -R -f _outlook/`.
  Then, your desired application will be deployed in kubernetes cluster.   
 
 **Note: If you're application developer and needs to expose your application using pack, follow [this](/docs/tutorials/dev-doc.md) doc**
