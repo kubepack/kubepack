@@ -94,4 +94,4 @@ Also, need to create manifest.yaml file in the repository.
 
 So that, others can use it through pack cli.
 
-**How can user use this repository. Follow [user](/docs/tutorials/user-doc.md) doc**
+**How can user use this repository? Follow [user](/docs/tutorials/user-doc.md) doc**
