@@ -17,4 +17,9 @@ And final combination will be under `_outlook` folder.
 7. Now, all is need to do `kubectl apply -R -f _outlook/`.
  Then, your desired application will be deployed in kubernetes cluster.   
 
-**Note: If you're application developer and needs to expose your application using pack, follow [this](/docs/tutorials/dev-doc.md) doc**
+
+## Next Steps
+
+ - Learn how to wrap your application with pack. Please visit [hear](/docs/tutorials/dev-doc.md)
+ - Learn about `manifest.yaml` file. Please visit [here](/docs/tutorials/manifest.md).
+ - Learn about `pack` cli. Please visit [here](/docs/tutorials/cli.md)

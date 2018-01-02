@@ -96,4 +96,8 @@ Also, need to create manifest.yaml file in the repository.
 
 So that, others can use it through pack cli.
 
-**How can user use this repository? Follow [user](/docs/tutorials/user-doc.md) doc**
+## Next Steps
+
+ - How can user use this repository? Follow [user](/docs/tutorials/user-doc.md) doc
+ - Learn about `manifest.yaml` file. Please visit [here](/docs/tutorials/manifest.md).
+ - Learn about `pack` cli. Please visit [here](/docs/tutorials/cli.md)
