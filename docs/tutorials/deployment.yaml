@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: pack-deploy
+  labels:
+    app: kubepack
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kubepack
+  template:
+    metadata:
+      labels:
+        app: kubepack
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.7.9
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /tmp/pack
+          name: pack
+      volumes:
+      - name: pack
+        secret:
+          secretName: pack-test
