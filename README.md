@@ -1,10 +1,16 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/kubepack/pack)](https://goreportcard.com/report/github.com/kubepack/pack)
 
 # Pack
-Secure Lightweight Kubernetes Package Manager
+Pack by AppsCode is a  Secure Lightweight Kubernetes Package Manager. 
 
 ## Supported Versions
 Kubernetes 1.8+
+
+## Installation
+To install Pack, please follow the guide [here](/docs/install.md).
+
+## Using Pack
+Want to learn how to use Pack? Please start [here](/docs/tutorials/README.md).
 
 ## Contribution guidelines
 Want to help improve Kubepack? Please start [here](/CONTRIBUTING.md).
