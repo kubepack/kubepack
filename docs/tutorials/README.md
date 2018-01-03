@@ -11,6 +11,6 @@
   - [Cli](/docs/tutorials/cli.md) Know about Pack cli commands.  
   
   We're always looking for help improving our documentation, so please don't hesitate to
-  [file an issue](https://github.com/kubepack/pack/issues/new) if you see some problem.
+  [file an issuge](https://github.com/kubepack/pack/issues/new) if you see some problem.
   Or better yet, submit your own [contributions](/CONTRIBUTING.md) to help
   make our docs better.
