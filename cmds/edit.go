@@ -11,13 +11,13 @@ import (
 
 	"github.com/ghodss/yaml"
 	"github.com/spf13/cobra"
-	apps "k8s.io/api/apps/v1beta1"
+	"github.com/evanphx/json-patch"
 	"k8s.io/apimachinery/pkg/util/strategicpatch"
 	"k8s.io/kubernetes/pkg/kubectl/cmd/util/editor"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/kubernetes/pkg/api"
 )
 
-var patchTypes = []string{"json", "merge", "strategic"}
 
 const defaultEditor = "nano"
 const _VendorFolder = "_vendor"
@@ -25,7 +25,6 @@ const PatchFolder = "patch"
 
 var (
 	srcPath   string
-	patchType string
 	fileInfo  os.FileInfo
 )
 
@@ -43,7 +42,6 @@ func NewEditCommand() *cobra.Command {
 	}
 
 	cmd.Flags().StringVarP(&srcPath, "src", "s", "", "File want to edit")
-	cmd.Flags().StringVarP(&patchType, "type", "t", "strategic", fmt.Sprintf("Type of patch; one of %v", patchTypes))
 
 	return cmd
 }
@@ -85,21 +83,24 @@ func GetPatch(src, dst []byte) error {
 	var err error
 	var patch []byte
 
+	// ref: https://github.com/kubernetes/kubernetes/blob/master/pkg/kubectl/cmd/util/editor/editoptions.go#L549
+
 	var ro runtime.TypeMeta
 	if err := yaml.Unmarshal(src, &ro); err != nil {
-		fmt.Println("-------------------", err)
 		return err
 	}
-	kind := ro.GetObjectKind().GroupVersionKind().Kind
-	fmt.Println("--------------", kind)
+	kind := ro.GetObjectKind().GroupVersionKind()
+	versionedObject, err := api.Scheme.New(kind)
 
-	switch patchType {
-	case "strategic":
-		patch, err = strategicpatch.CreateTwoWayMergePatch(src, dst, apps.Deployment{})
-	}
-	if err != nil {
+	switch {
+	case runtime.IsNotRegisteredError(err):
+		patch, err = jsonpatch.CreateMergePatch(src, dst)
+	case err != nil:
 		return err
+	default:
+		patch, err = strategicpatch.CreateTwoWayMergePatch(src, dst, versionedObject)
 	}
+
 	yamlPatch, err := yaml.JSONToYAML(patch)
 	if err != nil {
 		return err
