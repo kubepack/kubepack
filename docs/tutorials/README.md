@@ -21,8 +21,6 @@
   - [Scenario-5](/docs/tutorials/scenario-5.md)
   - [Scenario-6](/docs/tutorials/scenario-6.md)
   - [Scenario-7](/docs/tutorials/scenario-7.md)
-  - [Scenario-8](/docs/tutorials/scenario-8.md)
-  - [Scenario-9](/docs/tutorials/scenario-9.md)
    
   We're always looking for help improving our documentation, so please don't hesitate to
   [file an issuge](https://github.com/kubepack/pack/issues/new) if you see some problem.
