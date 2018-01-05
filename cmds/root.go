@@ -45,7 +45,6 @@ func NewPackCmd(version string) *cobra.Command {
 	cmd.AddCommand(NewDepCommand())
 	cmd.AddCommand(NewEditCommand())
 	cmd.AddCommand(NewUpCommand())
-	cmd.AddCommand(NewSyncCommand())
 	cmd.AddCommand(v.NewCmdVersion())
 	return cmd
 }
