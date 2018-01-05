@@ -111,6 +111,10 @@ func GetPatch(src, dst []byte) error {
 		return err
 	}
 	patchFolderDir := strings.Replace(srcPath, _VendorFolder, PatchFolder, 1)
+	if !strings.Contains(srcPath, _VendorFolder) {
+		patchFolderDir = filepath.Join(PatchFolder, patchFolderDir)
+	}
+
 	lstIndexSlash := strings.LastIndex(patchFolderDir, "/")
 	dstPath := filepath.Join(root, patchFolderDir[0:lstIndexSlash])
 

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: server
+spec:
+  containers:
+  - image: a8uhnf/git-mount:1.0.0
+    imagePullPolicy: Always
+    name: git-mount
+    resources: {}
+    volumeMounts:
+    - mountPath: /mypath
+      name: git-volume
+  volumes:
+  - gitRepo:
+      repository: https://github.com/kubepack/kube-a.git
+      revision: c90e98d6c0a6143c19a6e3a575befbdfa170fa00
+    name: git-volume
+status: {}

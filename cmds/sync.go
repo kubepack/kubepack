@@ -11,6 +11,7 @@ import (
 	clientset "k8s.io/client-go/kubernetes"
 	"path/filepath"
 	"k8s.io/client-go/util/homedir"
+	"github.com-old/ghodss/yaml"
 )
 
 func NewSyncCommand() *cobra.Command {
@@ -56,19 +57,15 @@ func runSync() error {
 		Spec: v1.PodSpec{
 			Containers: []v1.Container{
 				{
-					Name:  "kubectl",
-					Image: "appscode/kubectl:1.8.0",
+					Name:  "git-mount",
+					Image: "a8uhnf/git-mount:1.0.0",
 					VolumeMounts: []v1.VolumeMount{
 						{
 							MountPath: "/mypath",
 							Name:      "git-volume",
 						},
 					},
-					Command: []string{
-						"/bin/sh",
-						"-c",
-						"while true;do echo hi ; sleep 500;  done",
-					},
+					ImagePullPolicy: "Always",
 				},
 			},
 			Volumes: []v1.Volume{
@@ -76,14 +73,19 @@ func runSync() error {
 					Name: "git-volume",
 					VolumeSource: v1.VolumeSource{
 						GitRepo: &v1.GitRepoVolumeSource{
-							Repository: "https://github.com/kubepack/pack.git",
-							Revision:   "dbb56d3cda8130a4dc05fbf76f31a4a4bc61dc89",
+							Repository: "https://github.com/kubepack/kube-a.git",
+							Revision:   "c90e98d6c0a6143c19a6e3a575befbdfa170fa00",
 						},
 					},
 				},
 			},
 		},
 	}
+
+	bytes, err := yaml.Marshal(pod)
+
+
+	fmt.Println("----------------", string(bytes))
 
 	fmt.Println("------------------- POD", pod)
 	// repo.Remote()
