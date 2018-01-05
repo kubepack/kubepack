@@ -1,48 +1,81 @@
 > New to Pack? Please start [here](/docs/tutorials/README.md).
 
-# Scenario-7
+# Scenario-9
 
-**This docs trying to explain the behavior of Pack**
+**This docs explain how can deploy kubed using Pack.**
 ***
 
-This section explain [test-7](https://github.com/kubepack/pack/tree/master/_testdata/test-7).
+In this example, you'll see how to deploy [AppsCode kubed](https://github.com/appscode/kubed)
+ in minikube using `Pack`.
 
-If you look into this test's `manifest.yaml` file.
-
+In this example, we're using [this](https://github.com/kubepack/pack/tree/master/_testdata/test-9) test-case.
+  
+Below command show the `manifest.yaml` file.
 ```console
 $ cat manifest.yaml
-
 package: github.com/kubepack/pack/_testdata/test-7
 owners:
 - name: Appscode
   email: team@appscode.com
 dependencies:
-- package: github.com/kubepack/kube-a
-  branch: test-7
+- package: github.com/kubepack/test-kubed
+  branch: master
+```
+`manifest.yaml` file contain [test-kubed](https://github.com/kubepack/test-kubed) as `dependencies`. `test-kubed` contains
+ all the necessary yaml file needs to deploy kubed in minikube cluster.
+ 
+ Now, `pack dep` command will pull all the dependencies and place it in `_vendor` folder.
+  If `test-kubed` repository also depend on some other repository then `pack` will get that too.
+  
+  ```console
+  $ pack dep
+  $ tree _vendor/
+  _vendor/
+  └── github.com
+      └── kubepack
+          └── test-kubed
+              ├── deployment.yaml
+              ├── kubed-config.yaml
+              ├── manifest.yaml
+              └── service.yaml
+  
+  3 directories, 4 files
+  ```
+  Now, all the dependencies in place. Now, we can edit `_vendor` and this will generate patch.
+  
+  We're want to change `kubed-config.yaml` file, which is a secret yaml file.
+  
+  ```console
+    $ cat _vendor/github.com/kubepack/test-kubed/kubed-config.yaml
+    apiVersion: v1
+    data:
+      config.yaml: YXBpU2VydmVyOgogIGFkZHJlc3M6IDo4MDgwCiAgZW5hYmxlUmV2ZXJzZUluZGV4OiB0cnVlCiAgZW5hYmxlU2VhcmNoSW5kZXg6IHRydWUKY2x1c3Rlck5hbWU6IHVuaWNvcm4KZW5hYmxlQ29uZmlnU3luY2VyOiB0cnVlCmV2ZW50Rm9yd2FyZGVyOgogIGNzckV2ZW50czoKICAgIGhhbmRsZTogZmFsc2UKICBpbmdyZXNzQWRkZWQ6CiAgICBoYW5kbGU6IHRydWUKICBub2RlQWRkZWQ6CiAgICBoYW5kbGU6IHRydWUKICByZWNlaXZlcnM6CiAgLSBub3RpZmllcjogTWFpbGd1bgogICAgdG86CiAgICAtIG9wc0BleGFtcGxlLmNvbQogIHN0b3JhZ2VBZGRlZDoKICAgIGhhbmRsZTogdHJ1ZQogIHdhcm5pbmdFdmVudHM6CiAgICBoYW5kbGU6IHRydWUKICAgIG5hbWVzcGFjZXM6CiAgICAtIGt1YmUtc3lzdGVtCmphbml0b3JzOgotIGVsYXN0aWNzZWFyY2g6CiAgICBlbmRwb2ludDogaHR0cHM6Ly9lbGFzdGljc2VhcmNoLWxvZ2dpbmcua3ViZS1zeXN0ZW06OTIwMAogICAgbG9nSW5kZXhQcmVmaXg6IGxvZ3N0YXNoLQogICAgc2VjcmV0TmFtZTogZWxhc3RpY3NlYXJjaC1sb2dnaW5nLWNlcnQKICBraW5kOiBFbGFzdGljc2VhcmNoCiAgdHRsOiAyMTYwaDBtMHMKLSBpbmZsdXhkYjoKICAgIGVuZHBvaW50OiBodHRwczovL21vbml0b3JpbmctaW5mbHV4ZGIua3ViZS1zeXN0ZW06ODA4NgogIGtpbmQ6IEluZmx1eERCCiAgdHRsOiAyMTYwaDBtMHMKbm90aWZpZXJTZWNyZXROYW1lOiBub3RpZmllci1jb25maWcKcmVjeWNsZUJpbjoKICBoYW5kbGVVcGRhdGVzOiBmYWxzZQogIHBhdGg6IC90bXAva3ViZWQvdHJhc2gKICByZWNlaXZlcnM6CiAgLSBub3RpZmllcjogTWFpbGd1bgogICAgdG86CiAgICAtIG9wc0BleGFtcGxlLmNvbQogIHR0bDogMTY4aDBtMHMKc25hcHNob3R0ZXI6CiAgZ2NzOgogICAgYnVja2V0OiByZXN0aWMKICAgIHByZWZpeDogbWluaWt1YmUKICBzYW5pdGl6ZTogdHJ1ZQogIHNjaGVkdWxlOiAnQGV2ZXJ5IDZoJwogIHN0b3JhZ2VTZWNyZXROYW1lOiBzbmFwLXNlY3JldAo=
+    kind: Secret
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: kubed
+      name: kubed-config
+      namespace: kube-system
 ```
 
-See image below, which describe whole dependency.
-![alt text](/_testdata/test-7/test-7.jpg)
+We'll change `config.yaml` under `data` field. `config.yaml` value will be `YXBpU2VydmVyOgogIGFkZHJlc3M6IDo4MDgwCiAgZW5hYmxlUmV2ZXJzZUluZGV4OiB0cnVlCiAgZW5hYmxlU2VhcmNoSW5kZXg6IHRydWUKY2x1c3Rlck5hbWU6IHVuaWNvcm4KZW5hYmxlQ29uZmlnU3luY2VyOiB0cnVlCg==`
 
-Explanation of image:
-
-1. This test directly depends on `kube-a` of branch `test-7`.
-2. `kube-a`'s depends on `kube-b` of branch `test-7`. 
-See this manifest.yaml file [here](https://github.com/kubepack/kube-a/blob/test-7/manifest.yaml).
-3. `kube-b`'s depends on `kube-c` of branch `test-7`. 
-See this manifest.yaml file [here](https://github.com/kubepack/kube-b/blob/test-7/manifest.yaml).
-4. `kube-c`'s depends on none. 
-See this manifest.yaml file [here](https://github.com/kubepack/kube-c/blob/test-7/manifest.yaml).
-
-Here, both `kube-a` and `kube-b` has patch of repository `kube-c`'s [nginx-deployment.yaml file](https://github.com/kubepack/kube-c/blob/test-7/nginx-deployment.yaml).
-You can check these patch here: 
-[kube-a](https://github.com/kubepack/kube-a/blob/test-7/patch/github.com/kubepack/kube-c/nginx-deployment.yaml) and
- [kube-b](https://github.com/kubepack/kube-b/blob/test-7/patch/github.com/kubepack/kube-c/nginx-deployment.yaml).
-
-
-Now, run `$ pack dep` command, get all the dependencies `kube-a`, `kube-b` and  `kube-c` of branch `test-7`.
-As, `kube-a` and `kube-b` both contain patch of `kube-c`'s [nginx-deployment.yaml file](https://github.com/kubepack/kube-c/blob/test-7/nginx-deployment.yaml). 
-This file is the combination of both patch and original file.
+```console
+$ pack edit -s _vendor/github.com/kubepack/test-kubed/kubed-config.yaml
+```
+Above command will open file in editor.
+ Then, change `config.yaml` to above value. This will generate a patch in `patch` folder.
+ 
+ Below `$ pack up` command will combine `patch` and `_vendor` folder files and dump in `_outlook` folder.
+ 
+ ```console
+ $ pack up
+ $ kubectl apply -R -f _outlook/
+ ``` 
+ `$ kubectl apply -R -f _outlook/` command will deploy kubed in minikube cluster.
+ 
+ 
 
 # Next Steps
 
