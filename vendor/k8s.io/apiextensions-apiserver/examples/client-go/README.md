@@ -2,29 +2,18 @@
 
 **Note:** CustomResourceDefinition is the successor of the deprecated ThirdPartyResource.
 
-This particular example demonstrates how to generate a client for CustomResources using [`k8s.io/code-generator`](https://github.com/kubernetes/code-generator). The clientset can
-be generated using the `./hack/update-codegen.sh` script.
+This particular example demonstrates how to perform basic operations such as:
 
-The `update-codegen` script will automatically generate the following files and
-directories:
+* How to register a new custom resource (custom resource type) using a CustomResourceDefinition
+* How to create/get/list instances of your new resource type (update/delete/etc work as well but are not demonstrated)
+* How to setup a controller on resource handling create/update/delete events
 
-* `pkg/apis/cr/v1/zz_generated.deepcopy.go`
-* `pkg/client/`
+## Running
 
-The following code-generators are used:
-
-* `deepcopy-gen` - creates a method `func (t* T) DeepCopy() *T` for each type T
-* `client-gen` - creates typed clientsets for CustomResource APIGroups
-* `informer-gen` - creates informers for CustomResources which offer an event based
-interface to react on changes of CustomResources on the server
-* `lister-gen` - creates listers for CustomResources which offer a read-only caching layer for GET and LIST requests.
-
-Changes should not be made to these files manually, and when creating your own
-controller based off of this implementation you should not copy these files and
-instead run the `update-codegen` script to generate your own.
-
-Please see [`k8s.io/sample-controller`](https://github.com/kubernetes/sample-controller) for an example
-controller for CustomResources using the generated client.
+```
+# assumes you have a working kubeconfig, not required if operating in-cluster
+go run *.go -kubeconfig=$HOME/.kube/config
+```
 
 ## Use Cases
 
@@ -55,3 +44,9 @@ type User struct {
 	Password string `json:"password"`
 }
 ```
+
+## Cleanup
+
+Successfully running this program will clean the created artifacts. If you terminate the program without completing, you can clean up the created CustomResourceDefinition with:
+
+    kubectl delete crd examples.cr.client-go.k8s.io

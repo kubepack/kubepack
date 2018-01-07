@@ -6,14 +6,14 @@
   gathers metrics, writes them to metrics storage "sinks", and exposes the
   resource metrics API from in-memory storage.
 
-- [Metrics Server](https://github.com/kubernetes-incubator/metrics-server):
+- [Metrics Server](https://github.com/kubernetes/heapster):
   a lighter-weight in-memory server specifically for the resource metrics
   API.
 
 ## Custom Metrics API
 
 ***NB: None of the below implemenations are officially part of Kubernetes.
-They are listed here for convenience.***
+They are listed here for convinience.***
 
 - [Prometheus
   Adapter](https://github.com/directxman12/k8s-prometheus-adapter).  An

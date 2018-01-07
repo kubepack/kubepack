@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v9.7.0
+
+### New Features
+
+- Added support for application/octet-stream MIME types.
+
+## v9.6.1
+
+### Bug Fixes
+
+- Ensure Authorization header is added to request when polling for registration status.
+
 ## v9.6.0
 
 ### New Features

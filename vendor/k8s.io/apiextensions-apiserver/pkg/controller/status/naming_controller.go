@@ -25,6 +25,7 @@ import (
 	"github.com/golang/glog"
 
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
 	utilerrors "k8s.io/apimachinery/pkg/util/errors"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
@@ -191,20 +192,22 @@ func (c *NamingConditionController) calculateNamesAndConditions(in *apiextension
 
 	// set EstablishedCondition to true if all names are accepted. Never set it back to false.
 	establishedCondition := apiextensions.CustomResourceDefinitionCondition{
-		Type:    apiextensions.Established,
-		Status:  apiextensions.ConditionFalse,
-		Reason:  "NotAccepted",
-		Message: "not all names are accepted",
+		Type:               apiextensions.Established,
+		Status:             apiextensions.ConditionFalse,
+		Reason:             "NotAccepted",
+		Message:            "not all names are accepted",
+		LastTransitionTime: metav1.NewTime(time.Now()),
 	}
 	if old := apiextensions.FindCRDCondition(in, apiextensions.Established); old != nil {
 		establishedCondition = *old
 	}
 	if establishedCondition.Status != apiextensions.ConditionTrue && namesAcceptedCondition.Status == apiextensions.ConditionTrue {
 		establishedCondition = apiextensions.CustomResourceDefinitionCondition{
-			Type:    apiextensions.Established,
-			Status:  apiextensions.ConditionTrue,
-			Reason:  "InitialNamesAccepted",
-			Message: "the initial names have been accepted",
+			Type:               apiextensions.Established,
+			Status:             apiextensions.ConditionTrue,
+			Reason:             "InitialNamesAccepted",
+			Message:            "the initial names have been accepted",
+			LastTransitionTime: metav1.NewTime(time.Now()),
 		}
 	}
 

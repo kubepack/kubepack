@@ -37,20 +37,23 @@ import (
 )
 
 // newHandlerForTest returns a configured handler for testing.
-func newHandlerForTest(c clientset.Interface) (*Lifecycle, informers.SharedInformerFactory, error) {
+func newHandlerForTest(c clientset.Interface) (admission.Interface, informers.SharedInformerFactory, error) {
 	return newHandlerForTestWithClock(c, clock.RealClock{})
 }
 
 // newHandlerForTestWithClock returns a configured handler for testing.
-func newHandlerForTestWithClock(c clientset.Interface, cacheClock clock.Clock) (*Lifecycle, informers.SharedInformerFactory, error) {
+func newHandlerForTestWithClock(c clientset.Interface, cacheClock clock.Clock) (admission.Interface, informers.SharedInformerFactory, error) {
 	f := informers.NewSharedInformerFactory(c, 5*time.Minute)
 	handler, err := newLifecycleWithClock(sets.NewString(metav1.NamespaceDefault, metav1.NamespaceSystem), cacheClock)
 	if err != nil {
 		return nil, f, err
 	}
-	pluginInitializer := kubeadmission.New(c, f, nil, nil)
+	pluginInitializer, err := kubeadmission.New(c, f, nil)
+	if err != nil {
+		return handler, f, err
+	}
 	pluginInitializer.Initialize(handler)
-	err = admission.ValidateInitialization(handler)
+	err = admission.Validate(handler)
 	return handler, f, err
 }
 

@@ -35,50 +35,50 @@ import (
 
 type impersonateAuthorizer struct{}
 
-func (impersonateAuthorizer) Authorize(a authorizer.Attributes) (authorized authorizer.Decision, reason string, err error) {
+func (impersonateAuthorizer) Authorize(a authorizer.Attributes) (authorized bool, reason string, err error) {
 	user := a.GetUser()
 
 	switch {
 	case user.GetName() == "system:admin":
-		return authorizer.DecisionAllow, "", nil
+		return true, "", nil
 
 	case user.GetName() == "tester":
-		return authorizer.DecisionNoOpinion, "", fmt.Errorf("works on my machine")
+		return false, "", fmt.Errorf("works on my machine")
 
 	case user.GetName() == "deny-me":
-		return authorizer.DecisionNoOpinion, "denied", nil
+		return false, "denied", nil
 	}
 
 	if len(user.GetGroups()) > 0 && user.GetGroups()[0] == "wheel" && a.GetVerb() == "impersonate" && a.GetResource() == "users" {
-		return authorizer.DecisionAllow, "", nil
+		return true, "", nil
 	}
 
 	if len(user.GetGroups()) > 0 && user.GetGroups()[0] == "sa-impersonater" && a.GetVerb() == "impersonate" && a.GetResource() == "serviceaccounts" {
-		return authorizer.DecisionAllow, "", nil
+		return true, "", nil
 	}
 
 	if len(user.GetGroups()) > 0 && user.GetGroups()[0] == "regular-impersonater" && a.GetVerb() == "impersonate" && a.GetResource() == "users" {
-		return authorizer.DecisionAllow, "", nil
+		return true, "", nil
 	}
 
 	if len(user.GetGroups()) > 1 && user.GetGroups()[1] == "group-impersonater" && a.GetVerb() == "impersonate" && a.GetResource() == "groups" {
-		return authorizer.DecisionAllow, "", nil
+		return true, "", nil
 	}
 
 	if len(user.GetGroups()) > 1 && user.GetGroups()[1] == "extra-setter-scopes" && a.GetVerb() == "impersonate" && a.GetResource() == "userextras" && a.GetSubresource() == "scopes" {
-		return authorizer.DecisionAllow, "", nil
+		return true, "", nil
 	}
 
 	if len(user.GetGroups()) > 1 && user.GetGroups()[1] == "extra-setter-particular-scopes" &&
 		a.GetVerb() == "impersonate" && a.GetResource() == "userextras" && a.GetSubresource() == "scopes" && a.GetName() == "scope-a" {
-		return authorizer.DecisionAllow, "", nil
+		return true, "", nil
 	}
 
 	if len(user.GetGroups()) > 1 && user.GetGroups()[1] == "extra-setter-project" && a.GetVerb() == "impersonate" && a.GetResource() == "userextras" && a.GetSubresource() == "project" {
-		return authorizer.DecisionAllow, "", nil
+		return true, "", nil
 	}
 
-	return authorizer.DecisionNoOpinion, "deny by default", nil
+	return false, "deny by default", nil
 }
 
 func TestImpersonationFilter(t *testing.T) {

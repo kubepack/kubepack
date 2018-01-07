@@ -70,6 +70,10 @@ type MatchValue struct {
 // to that function.
 type TriggerPublisherFunc func(obj runtime.Object) []MatchValue
 
+// FilterFunc takes an API object and returns true if the object satisfies some requirements.
+// TODO: We will remove this type and use SelectionPredicate everywhere.
+type FilterFunc func(obj runtime.Object) bool
+
 // Everything accepts all objects.
 var Everything = SelectionPredicate{
 	Label: labels.Everything(),

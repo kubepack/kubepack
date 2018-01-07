@@ -10,8 +10,8 @@ import (
 	"github.com/Masterminds/vcs"
 	"github.com/evanphx/json-patch"
 	"github.com/ghodss/yaml"
-	"github.com/spf13/cobra"
 	typ "github.com/kubepack/pack/type"
+	"github.com/spf13/cobra"
 )
 
 var (
@@ -189,10 +189,9 @@ func getAnnotatedWithCommitHash(yamlByte []byte, dir string) ([]byte, error) {
 	return yaml.Marshal(annotatedMap)
 }
 
-
 func getRootDir(path string) (vcs.Repo, error) {
 	var err error
-	for ; ; {
+	for {
 		repo, err := vcs.NewRepo("", path)
 		if err == nil {
 			return repo, err

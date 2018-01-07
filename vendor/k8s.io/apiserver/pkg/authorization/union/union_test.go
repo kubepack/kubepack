@@ -17,7 +17,6 @@ limitations under the License.
 package union
 
 import (
-	"errors"
 	"fmt"
 	"reflect"
 	"testing"
@@ -27,43 +26,49 @@ import (
 )
 
 type mockAuthzHandler struct {
-	decision authorizer.Decision
-	err      error
+	isAuthorized bool
+	err          error
 }
 
-func (mock *mockAuthzHandler) Authorize(a authorizer.Attributes) (authorizer.Decision, string, error) {
-	return mock.decision, "", mock.err
+func (mock *mockAuthzHandler) Authorize(a authorizer.Attributes) (bool, string, error) {
+	if mock.err != nil {
+		return false, "", mock.err
+	}
+	if !mock.isAuthorized {
+		return false, "", nil
+	}
+	return true, "", nil
 }
 
 func TestAuthorizationSecondPasses(t *testing.T) {
-	handler1 := &mockAuthzHandler{decision: authorizer.DecisionNoOpinion}
-	handler2 := &mockAuthzHandler{decision: authorizer.DecisionAllow}
+	handler1 := &mockAuthzHandler{isAuthorized: false}
+	handler2 := &mockAuthzHandler{isAuthorized: true}
 	authzHandler := New(handler1, handler2)
 
 	authorized, _, _ := authzHandler.Authorize(nil)
-	if authorized != authorizer.DecisionAllow {
+	if !authorized {
 		t.Errorf("Unexpected authorization failure")
 	}
 }
 
 func TestAuthorizationFirstPasses(t *testing.T) {
-	handler1 := &mockAuthzHandler{decision: authorizer.DecisionAllow}
-	handler2 := &mockAuthzHandler{decision: authorizer.DecisionNoOpinion}
+	handler1 := &mockAuthzHandler{isAuthorized: true}
+	handler2 := &mockAuthzHandler{isAuthorized: false}
 	authzHandler := New(handler1, handler2)
 
 	authorized, _, _ := authzHandler.Authorize(nil)
-	if authorized != authorizer.DecisionAllow {
+	if !authorized {
 		t.Errorf("Unexpected authorization failure")
 	}
 }
 
 func TestAuthorizationNonePasses(t *testing.T) {
-	handler1 := &mockAuthzHandler{decision: authorizer.DecisionNoOpinion}
-	handler2 := &mockAuthzHandler{decision: authorizer.DecisionNoOpinion}
+	handler1 := &mockAuthzHandler{isAuthorized: false}
+	handler2 := &mockAuthzHandler{isAuthorized: false}
 	authzHandler := New(handler1, handler2)
 
 	authorized, _, _ := authzHandler.Authorize(nil)
-	if authorized == authorizer.DecisionAllow {
+	if authorized {
 		t.Errorf("Expected failed authorization")
 	}
 }
@@ -217,50 +222,4 @@ func getNonResourceRules(infos []authorizer.NonResourceRuleInfo) []authorizer.De
 		}
 	}
 	return rules
-}
-
-func TestAuthorizationUnequivocalDeny(t *testing.T) {
-	cs := []struct {
-		authorizers []authorizer.Authorizer
-		decision    authorizer.Decision
-	}{
-		{
-			authorizers: []authorizer.Authorizer{},
-			decision:    authorizer.DecisionNoOpinion,
-		},
-		{
-			authorizers: []authorizer.Authorizer{
-				&mockAuthzHandler{decision: authorizer.DecisionNoOpinion},
-				&mockAuthzHandler{decision: authorizer.DecisionAllow},
-				&mockAuthzHandler{decision: authorizer.DecisionDeny},
-			},
-			decision: authorizer.DecisionAllow,
-		},
-		{
-			authorizers: []authorizer.Authorizer{
-				&mockAuthzHandler{decision: authorizer.DecisionNoOpinion},
-				&mockAuthzHandler{decision: authorizer.DecisionDeny},
-				&mockAuthzHandler{decision: authorizer.DecisionAllow},
-			},
-			decision: authorizer.DecisionDeny,
-		},
-		{
-			authorizers: []authorizer.Authorizer{
-				&mockAuthzHandler{decision: authorizer.DecisionNoOpinion},
-				&mockAuthzHandler{decision: authorizer.DecisionDeny, err: errors.New("webhook failed closed")},
-				&mockAuthzHandler{decision: authorizer.DecisionAllow},
-			},
-			decision: authorizer.DecisionDeny,
-		},
-	}
-	for i, c := range cs {
-		t.Run(fmt.Sprintf("case %v", i), func(t *testing.T) {
-			authzHandler := New(c.authorizers...)
-
-			decision, _, _ := authzHandler.Authorize(nil)
-			if decision != c.decision {
-				t.Errorf("Unexpected authorization failure: %v, expected: %v", decision, c.decision)
-			}
-		})
-	}
 }

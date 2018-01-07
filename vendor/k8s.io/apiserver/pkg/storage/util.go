@@ -22,6 +22,8 @@ import (
 	"strings"
 	"sync/atomic"
 
+	"github.com/golang/glog"
+
 	"k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/apimachinery/pkg/api/validation/path"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -35,6 +37,19 @@ func SimpleUpdate(fn SimpleUpdateFunc) UpdateFunc {
 	return func(input runtime.Object, _ ResponseMeta) (runtime.Object, *uint64, error) {
 		out, err := fn(input)
 		return out, nil, err
+	}
+}
+
+// SimpleFilter converts a selection predicate into a FilterFunc.
+// It ignores any error from Matches().
+func SimpleFilter(p SelectionPredicate) FilterFunc {
+	return func(obj runtime.Object) bool {
+		matches, err := p.Matches(obj)
+		if err != nil {
+			glog.Errorf("invalid object for matching. Obj: %v. Err: %v", obj, err)
+			return false
+		}
+		return matches
 	}
 }
 

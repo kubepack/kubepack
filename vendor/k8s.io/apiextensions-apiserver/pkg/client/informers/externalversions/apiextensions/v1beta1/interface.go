@@ -29,17 +29,15 @@ type Interface interface {
 }
 
 type version struct {
-	factory          internalinterfaces.SharedInformerFactory
-	namespace        string
-	tweakListOptions internalinterfaces.TweakListOptionsFunc
+	internalinterfaces.SharedInformerFactory
 }
 
 // New returns a new Interface.
-func New(f internalinterfaces.SharedInformerFactory, namespace string, tweakListOptions internalinterfaces.TweakListOptionsFunc) Interface {
-	return &version{factory: f, namespace: namespace, tweakListOptions: tweakListOptions}
+func New(f internalinterfaces.SharedInformerFactory) Interface {
+	return &version{f}
 }
 
 // CustomResourceDefinitions returns a CustomResourceDefinitionInformer.
 func (v *version) CustomResourceDefinitions() CustomResourceDefinitionInformer {
-	return &customResourceDefinitionInformer{factory: v.factory, tweakListOptions: v.tweakListOptions}
+	return &customResourceDefinitionInformer{factory: v.SharedInformerFactory}
 }

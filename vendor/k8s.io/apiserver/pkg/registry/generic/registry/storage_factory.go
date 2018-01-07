@@ -17,8 +17,6 @@ limitations under the License.
 package registry
 
 import (
-	"sync"
-
 	"github.com/golang/glog"
 
 	"k8s.io/apimachinery/pkg/runtime"
@@ -32,6 +30,7 @@ import (
 // Creates a cacher based given storageConfig.
 func StorageWithCacher(capacity int) generic.StorageDecorator {
 	return func(
+		copier runtime.ObjectCopier,
 		storageConfig *storagebackend.Config,
 		objectType runtime.Object,
 		resourcePrefix string,
@@ -53,6 +52,7 @@ func StorageWithCacher(capacity int) generic.StorageDecorator {
 			CacheCapacity:        capacity,
 			Storage:              s,
 			Versioner:            etcdstorage.APIObjectVersioner{},
+			Copier:               copier,
 			Type:                 objectType,
 			ResourcePrefix:       resourcePrefix,
 			KeyFunc:              keyFunc,
@@ -67,53 +67,6 @@ func StorageWithCacher(capacity int) generic.StorageDecorator {
 			d()
 		}
 
-		// TODO : Remove RegisterStorageCleanup below when PR
-		// https://github.com/kubernetes/kubernetes/pull/50690
-		// merges as that shuts down storage properly
-		RegisterStorageCleanup(destroyFunc)
-
 		return cacher, destroyFunc
-	}
-}
-
-// TODO : Remove all the code below when PR
-// https://github.com/kubernetes/kubernetes/pull/50690
-// merges as that shuts down storage properly
-// HACK ALERT : Track the destroy methods to call them
-// from the test harness. TrackStorageCleanup will be called
-// only from the test harness, so Register/Cleanup will be
-// no-op at runtime.
-
-var cleanupLock sync.Mutex
-var cleanup []func() = nil
-
-func TrackStorageCleanup() {
-	cleanupLock.Lock()
-	defer cleanupLock.Unlock()
-
-	if cleanup != nil {
-		panic("Conflicting storage tracking")
-	}
-	cleanup = make([]func(), 0)
-}
-
-func RegisterStorageCleanup(fn func()) {
-	cleanupLock.Lock()
-	defer cleanupLock.Unlock()
-
-	if cleanup == nil {
-		return
-	}
-	cleanup = append(cleanup, fn)
-}
-
-func CleanupStorage() {
-	cleanupLock.Lock()
-	old := cleanup
-	cleanup = nil
-	cleanupLock.Unlock()
-
-	for _, d := range old {
-		d()
 	}
 }

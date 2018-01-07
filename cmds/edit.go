@@ -9,23 +9,22 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/evanphx/json-patch"
 	"github.com/ghodss/yaml"
 	"github.com/spf13/cobra"
-	"github.com/evanphx/json-patch"
-	"k8s.io/apimachinery/pkg/util/strategicpatch"
-	"k8s.io/kubernetes/pkg/kubectl/cmd/util/editor"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/util/strategicpatch"
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/kubectl/cmd/util/editor"
 )
-
 
 const defaultEditor = "nano"
 const _VendorFolder = "_vendor"
 const PatchFolder = "patch"
 
 var (
-	srcPath   string
-	fileInfo  os.FileInfo
+	srcPath  string
+	fileInfo os.FileInfo
 )
 
 func NewEditCommand() *cobra.Command {

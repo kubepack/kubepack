@@ -26,7 +26,6 @@ import (
 
 func ValidatePolicy(policy *audit.Policy) field.ErrorList {
 	var allErrs field.ErrorList
-	allErrs = append(allErrs, validateOmitStages(policy.OmitStages, field.NewPath("omitStages"))...)
 	rulePath := field.NewPath("rules")
 	for i, rule := range policy.Rules {
 		allErrs = append(allErrs, validatePolicyRule(rule, rulePath.Index(i))...)

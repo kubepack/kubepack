@@ -17,7 +17,6 @@ limitations under the License.
 package server
 
 import (
-	"context"
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
@@ -26,10 +25,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/golang/glog"
-
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	"k8s.io/apimachinery/pkg/util/validation"
+
+	"github.com/golang/glog"
+	"github.com/pkg/errors"
 )
 
 const (
@@ -40,12 +40,8 @@ const (
 // be loaded or the initial listen call fails. The actual server loop (stoppable by closing
 // stopCh) runs in a go routine, i.e. serveSecurely does not block.
 func (s *GenericAPIServer) serveSecurely(stopCh <-chan struct{}) error {
-	if s.SecureServingInfo.Listener == nil {
-		return fmt.Errorf("listener must not be nil")
-	}
-
 	secureServer := &http.Server{
-		Addr:           s.SecureServingInfo.Listener.Addr().String(),
+		Addr:           s.SecureServingInfo.BindAddress,
 		Handler:        s.Handler,
 		MaxHeaderBytes: 1 << 20,
 		TLSConfig: &tls.Config{
@@ -86,30 +82,39 @@ func (s *GenericAPIServer) serveSecurely(stopCh <-chan struct{}) error {
 		secureServer.TLSConfig.ClientCAs = s.SecureServingInfo.ClientCA
 	}
 
-	glog.Infof("Serving securely on %s", secureServer.Addr)
-	err := RunServer(secureServer, s.SecureServingInfo.Listener, s.ShutdownTimeout, stopCh)
+	glog.Infof("Serving securely on %s", s.SecureServingInfo.BindAddress)
+	var err error
+	s.effectiveSecurePort, err = RunServer(secureServer, s.SecureServingInfo.BindNetwork, stopCh)
 	return err
 }
 
-// RunServer listens on the given port if listener is not given,
-// then spawns a go-routine continuously serving
-// until the stopCh is closed. This function does not block.
-func RunServer(
-	server *http.Server,
-	ln net.Listener,
-	shutDownTimeout time.Duration,
-	stopCh <-chan struct{},
-) error {
-	if ln == nil {
-		return fmt.Errorf("listener must not be nil")
+// RunServer listens on the given port, then spawns a go-routine continuously serving
+// until the stopCh is closed. The port is returned. This function does not block.
+func RunServer(server *http.Server, network string, stopCh <-chan struct{}) (int, error) {
+	if len(server.Addr) == 0 {
+		return 0, errors.New("address cannot be empty")
 	}
 
-	// Shutdown server gracefully.
+	if len(network) == 0 {
+		network = "tcp"
+	}
+
+	ln, err := net.Listen(network, server.Addr)
+	if err != nil {
+		return 0, fmt.Errorf("failed to listen on %v: %v", server.Addr, err)
+	}
+
+	// get port
+	tcpAddr, ok := ln.Addr().(*net.TCPAddr)
+	if !ok {
+		ln.Close()
+		return 0, fmt.Errorf("invalid listen address: %q", ln.Addr().String())
+	}
+
+	// Stop the server by closing the listener
 	go func() {
 		<-stopCh
-		ctx, cancel := context.WithTimeout(context.Background(), shutDownTimeout)
-		server.Shutdown(ctx)
-		cancel()
+		ln.Close()
 	}()
 
 	go func() {
@@ -123,7 +128,7 @@ func RunServer(
 
 		err := server.Serve(listener)
 
-		msg := fmt.Sprintf("Stopped listening on %s", ln.Addr().String())
+		msg := fmt.Sprintf("Stopped listening on %s", tcpAddr.String())
 		select {
 		case <-stopCh:
 			glog.Info(msg)
@@ -132,7 +137,7 @@ func RunServer(
 		}
 	}()
 
-	return nil
+	return tcpAddr.Port, nil
 }
 
 type NamedTLSCert struct {

@@ -396,13 +396,13 @@ func TestTLSConfig(t *testing.T) {
 
 			// Allow all and see if we get an error.
 			service.Allow()
-			decision, _, err := wh.Authorize(attr)
+			authorized, _, err := wh.Authorize(attr)
 			if tt.wantAuth {
-				if decision != authorizer.DecisionAllow {
+				if !authorized {
 					t.Errorf("expected successful authorization")
 				}
 			} else {
-				if decision == authorizer.DecisionAllow {
+				if authorized {
 					t.Errorf("expected failed authorization")
 				}
 			}
@@ -418,7 +418,7 @@ func TestTLSConfig(t *testing.T) {
 			}
 
 			service.Deny()
-			if decision, _, _ := wh.Authorize(attr); decision == authorizer.DecisionAllow {
+			if authorized, _, _ := wh.Authorize(attr); authorized {
 				t.Errorf("%s: incorrectly authorized with DenyAll policy", tt.test)
 			}
 		}()
@@ -522,11 +522,11 @@ func TestWebhook(t *testing.T) {
 	}
 
 	for i, tt := range tests {
-		decision, _, err := wh.Authorize(tt.attr)
+		authorized, _, err := wh.Authorize(tt.attr)
 		if err != nil {
 			t.Fatal(err)
 		}
-		if decision != authorizer.DecisionAllow {
+		if !authorized {
 			t.Errorf("case %d: authorization failed", i)
 			continue
 		}
@@ -567,7 +567,7 @@ func testWebhookCacheCases(t *testing.T, serv *mockService, wh *WebhookAuthorize
 			continue
 		}
 
-		if test.expectedAuthorized != (authorized == authorizer.DecisionAllow) {
+		if test.expectedAuthorized != authorized {
 			t.Errorf("%d: expected authorized=%v, got %v", i, test.expectedAuthorized, authorized)
 		}
 
