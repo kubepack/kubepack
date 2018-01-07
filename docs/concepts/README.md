@@ -18,13 +18,9 @@ aliases:
 Concepts help you learn about the different parts of the Kubepack and the abstractions it uses.
 
 - What is Kubepack
-  - [Overview](/docs/concepts/what-is-kubepack/overview.md). Provides a conceptual introduction to Kubepack, including the problems it solves and its high-level architecture.
-- Databases
-  - [Elasticsearch](/docs/concepts/databases/elasticsearch.md). Introduces the concept of `Elasticsearch` to manage Elasticsearch using Kubepack.
-  - [Memcached](/docs/concepts/databases/memcached.md). Introduces the concept of `Memcached` to manage Memcached using Kubepack.
-  - [MongoDB](/docs/concepts/databases/mongodb.md). Introduces the concept of `MongoDB` to manage MongoDB using Kubepack.
-  - [MySQL](/docs/concepts/databases/mysql.md). Introduces the concept of `MySQL` to manage MySQL using Kubepack.
-  - [PostgreSQL](/docs/concepts/databases/postgres.md). Introduces the concept of `PostgreSQL` to manage PostgreSQL using Kubepack.
-  - [Redis](/docs/concepts/databases/redis.md). Introduces the concept of `Redis` to manage Redis using Kubepack.
-- [Monitoring](/docs/concepts/monitoring.md). Introduces various aspects of Kubepack's support for monitoring via Prometheus.
-- [Snapshot](/docs/concepts/snapshot.md). Introduces the concept of `Snapshot` to take backups of a Kubepack managed database.
+  - [Overview](/docs/concepts/what/overview.md). Provides a conceptual introduction to Kubepack, including the problems it solves and its high-level architecture.
+- How It Works
+  - [App Publisher](/docs/concepts/how/publisher.md) Learn to publish apps using Kubepack.
+  - [App User](/docs/concepts/how/user.md). Learn to consume apps published using Kubepack.
+  - [here](/docs/concepts/how/manifest.md). Explains various aspects of `manifest.yaml` file.
+  - [Kubepack CLI](/docs/concepts/how/cli.md). Learn about `pack` cli.

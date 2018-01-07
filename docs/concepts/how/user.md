@@ -5,7 +5,7 @@ menu:
     identifier: user-how
     name: App Users
     parent: how-concepts
-    weight: 10
+    weight: 15
 menu_name: docs_0.1.0-alpha.0
 section_menu_id: concepts
 ---
