@@ -14,6 +14,6 @@ rm -rf dist
 ./hack/make.py push
 ./hack/make.py update_registry
 
-rm dist/.tag
+rm -rf dist/.tag
 
 popd

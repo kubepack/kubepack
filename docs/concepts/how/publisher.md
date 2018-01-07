@@ -21,7 +21,7 @@ Developer creates a git repo which contains all required yamls and manifest.yaml
 
 ## Before You Begin
 
-Get the overview and what various fields means, read [manifest.yaml](/docs/guides/manifest.md) tutorial.
+Get the overview and what various fields means, read [manifest.yaml](/docs/concepts/how/manifest.md) tutorial.
 
 
 ## Deploy with Pack
@@ -38,7 +38,7 @@ Now, anyone can use this repository to deploy your application in their cluster.
 
 ### Example
 
-Suppose, you're building a application called `A`. It needs a [deployment](https://raw.githubusercontent.com/kubepack/pack/doc-init/docs/guides/deployment.yaml), [service](https://raw.githubusercontent.com/kubepack/pack/doc-init/docs/guides/service.yaml) and [secret](https://raw.githubusercontent.com/kubepack/pack/doc-init/docs/guides/secret.yaml).
+Suppose, you're building a application called `A`. It needs a [deployment](/docs/examples/publisher/deployment.yaml), [service](/docs/examples/publisher/service.yaml) and [secret](/docs/examples/publisher/secret.yaml).
 
 Deployment.yaml:
 ```
@@ -103,13 +103,13 @@ spec:
     app: kubepack
 ```
 
-You need to create a repository and put all the [deployment](https://raw.githubusercontent.com/kubepack/pack/doc-init/docs/guides/deployment.yaml), [service](https://raw.githubusercontent.com/kubepack/pack/doc-init/docs/guides/service.yaml) and [secret](https://raw.githubusercontent.com/kubepack/pack/doc-init/docs/guides/secret.yaml) yaml in the repository.
+You need to create a repository and put all the [deployment](/docs/examples/publisher/deployment.yaml), [service](/docs/examples/publisher/service.yaml) and [secret](/docs/examples/publisher/secret.yaml) yaml in the repository.
 Also, need to create manifest.yaml file in the repository.
 
 So that, others can use it through pack cli.
 
 ## Next Steps
 
- - How can user use this repository? Follow [user](/docs/guides/user-doc.md) doc
- - Learn about `manifest.yaml` file. Please visit [here](/docs/guides/manifest.md).
- - Learn about `pack` cli. Please visit [here](/docs/guides/cli.md)
+- Want to consume apps published using Kubepack? Please visit [here](/docs/concepts/how/user.md).
+- To learn about `manifest.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
+- Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).

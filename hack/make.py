@@ -33,6 +33,7 @@ import os
 import os.path
 import subprocess
 import sys
+import time
 import yaml
 from os.path import expandvars, join, dirname
 
@@ -112,7 +113,8 @@ def build_cmd(name):
 
 def build_cmds():
     gen()
-    for name in libbuild.BIN_MATRIX:
+    fmt()
+    for name in libbuild.BIN_MATRIX.keys():
         build_cmd(name)
 
 
@@ -121,9 +123,51 @@ def build(name=None):
         cfg = libbuild.BIN_MATRIX[name]
         if cfg['type'] == 'go':
             gen()
+            fmt()
             build_cmd(name)
     else:
         build_cmds()
+
+
+def push_bin(bindir):
+    call('rm -f *.md5', cwd=bindir)
+    call('rm -f *.sha1', cwd=bindir)
+    for f in os.listdir(bindir):
+        if os.path.isfile(bindir + '/' + f):
+            libbuild.upload_to_cloud(bindir, f, BUILD_METADATA['version'])
+
+
+def push(name=None):
+    if name:
+        bindir = libbuild.REPO_ROOT + '/dist/' + name
+        push_bin(bindir)
+    else:
+        dist = libbuild.REPO_ROOT + '/dist'
+        for name in os.listdir(dist):
+            d = dist + '/' + name
+            if os.path.isdir(d):
+                push_bin(d)
+
+
+def update_registry():
+    vf = libbuild.REPO_ROOT + '/dist/pack/versions.json'
+    bucket = libbuild.BUCKET_MATRIX.get(libbuild.ENV, libbuild.BUCKET_MATRIX['dev'])
+    call('gsutil cp {0}/binaries/pack/versions.json {1}'.format(bucket, vf))
+    vj = {}
+    if os.path.isfile(vf):
+        vj = libbuild.read_json(vf)
+    vj[BUILD_METADATA['version']] = {
+        'changesets': [],
+        'release_date': int(time.time())
+    }
+    libbuild.write_json(vj, vf)
+    call("gsutil cp {1} {0}/binaries/pack/versions.json".format(bucket, vf))
+    call('gsutil acl ch -u AllUsers:R -r {0}/binaries/pack/versions.json'.format(bucket))
+
+    lf = libbuild.REPO_ROOT + '/dist/pack/latest.txt'
+    libbuild.write_file(lf, BUILD_METADATA['version'])
+    call("gsutil cp {1} {0}/binaries/pack/latest.txt".format(bucket, lf))
+    call('gsutil acl ch -u AllUsers:R -r {0}/binaries/pack/latest.txt'.format(bucket))
 
 
 def install():
