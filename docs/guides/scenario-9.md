@@ -1,29 +1,27 @@
-> New to Pack? Please start [here](/docs/tutorials/README.md).
+---
+title: Scenarios | Kubepack
+menu:
+  docs_0.1.0-alpha.0:
+    identifier: s9-guides
+    name: Schenario 9
+    parent: guides
+    weight: 70
+menu_name: docs_0.1.0-alpha.0
+section_menu_id: guides
+---
 
-# Users Docs
+> New to Kubepack? Please start [here](/docs/concepts/README.md).
 
-## How To Use
+# Scenario-9
 
-If you want to use others application with pack, then follow below instruction:
-
-1. Create a git repository.
-2. Create manifest.yaml file in the repository. See [manifest.yaml](/docs/tutorials/manifest.md) doc
-3. Add all the dependencies under `dependencies` in manifest.yaml file.
-4. Run `pack dep -v 10` to get all the dependencies in `_vendor` folder.
-5. Run `pack edit -s <filepath>`, if you want to change some file from `_vendor` folder. 
-This command will generate a patch under `patch` folder. `_vendor` will be unchanged.
-6. Run `pack up` to combine `patch` and `_vendor` folder files. 
-And final combination will be under `_outlook` folder.
-7. Now, all is need to do `kubectl apply -R -f _outlook/`.
- Then, your desired application will be deployed in kubernetes cluster.   
-
-### Example
+**This docs explain how can deploy kubed using Pack.**
+***
 
 In this example, you'll see how to deploy [AppsCode kubed](https://github.com/appscode/kubed)
  in minikube using `Pack`.
 
 In this example, we're using [this](https://github.com/kubepack/pack/tree/master/_testdata/test-9) test-case.
-  
+
 Below command show the `manifest.yaml` file.
 ```console
 $ cat manifest.yaml
@@ -37,10 +35,10 @@ dependencies:
 ```
 `manifest.yaml` file contain [test-kubed](https://github.com/kubepack/test-kubed) as `dependencies`. `test-kubed` contains
  all the necessary yaml file needs to deploy kubed in minikube cluster.
- 
+
  Now, `pack dep` command will pull all the dependencies and place it in `_vendor` folder.
   If `test-kubed` repository also depend on some other repository then `pack` will get that too.
-  
+
   ```console
   $ pack dep
   $ tree _vendor/
@@ -52,13 +50,13 @@ dependencies:
               ├── kubed-config.yaml
               ├── manifest.yaml
               └── service.yaml
-  
+
   3 directories, 4 files
   ```
   Now, all the dependencies in place. Now, we can edit `_vendor` and this will generate patch.
-  
+
   We're want to change `kubed-config.yaml` file, which is a secret yaml file.
-  
+
   ```console
     $ cat _vendor/github.com/kubepack/test-kubed/kubed-config.yaml
     apiVersion: v1
@@ -80,21 +78,20 @@ $ pack edit -s _vendor/github.com/kubepack/test-kubed/kubed-config.yaml
 ```
 Above command will open file in editor.
  Then, change `config.yaml` to above value. This will generate a patch in `patch` folder.
- 
+
  Below `$ pack up` command will combine `patch` and `_vendor` folder files and dump in `_outlook` folder.
- 
+
  ```console
  $ pack up
  $ kubectl apply -R -f _outlook/
- ``` 
+ ```
  `$ kubectl apply -R -f _outlook/` command will deploy kubed in minikube cluster.
- 
- 
 
 
 
 ## Next Steps
 
- - Learn how to wrap your application with pack. Please visit [hear](/docs/tutorials/dev-doc.md)
- - Learn about `manifest.yaml` file. Please visit [here](/docs/tutorials/manifest.md).
- - Learn about `pack` cli. Please visit [here](/docs/tutorials/cli.md)
+- Want to publish apps using Kubepack? Please visit [here](/docs/concepts/how/publisher.md).
+- Want to consume apps published using Kubepack? Please visit [here](/docs/concepts/how/user.md).
+- To learn about `manifest.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
+- Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).

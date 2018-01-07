@@ -1,6 +1,18 @@
-> New to Pack? Please start [here](/docs/tutorials/README.md).
+---
+title: Scenarios | Kubepack
+menu:
+  docs_0.1.0-alpha.0:
+    identifier: s10-guides
+    name: Schenario 10
+    parent: guides
+    weight: 70
+menu_name: docs_0.1.0-alpha.0
+section_menu_id: guides
+---
 
-# Scenario-8
+> New to Kubepack? Please start [here](/docs/concepts/README.md).
+
+# Scenario-10
 
 
 **This docs explain how Pack works inside cluster.**
@@ -13,22 +25,22 @@ In this scenario, we'll do following things.
    - Run `$ pack dep` to get the dependencies and `$ pack edit -s <filepath>` to make desired changes.
    - Then, run `$ pack up` to final version under `_outlook` folder.
    - Last, commit our changes to git repository.
-   
+
 2.  Now, I write a pod yaml, you can see it [here](https://raw.githubusercontent.com/kubepack/pack/test-mount/_testdata/test-10/pod.yaml).
 In this pod, our above git repository mounted as volume path and
- image [a8uhnf/git-mount:1.0.0](https://cloud.docker.com/swarm/a8uhnf/repository/docker/a8uhnf/git-mount/tags), 
+ image [a8uhnf/git-mount:1.0.0](https://cloud.docker.com/swarm/a8uhnf/repository/docker/a8uhnf/git-mount/tags),
 is checking the mounted path if their is `_outlook` folder then it'll apply `$ kubectl apply -R -f <_outlook folder path>`.
 
 
-### Step by Step Guide
+## Step by Step Guide
 
-First, create a git repository  
+First, create a git repository
 
 Create a `manifest.yaml` file in your git repository. Your manifest.yaml file will look like below.
 
 ```console
     $ cat manifest.yaml
-    
+
 package: YOUR_REPO_LOCATION # github.com/packsh/tasty-kube
 owners:
 - name: # Appscode
@@ -44,7 +56,7 @@ Now, run `$ pack dep`. This command will get all the dependencies and place unde
 
 ```console
     $ tree _vendor/
-    
+
     _vendor/
     └── github.com
         └── kubepack
@@ -53,7 +65,7 @@ Now, run `$ pack dep`. This command will get all the dependencies and place unde
                 ├── kubed-config.yaml
                 ├── manifest.yaml
                 └── service.yaml
-    
+
     3 directories, 4 files
 ```
 
@@ -65,19 +77,19 @@ Now, suppose you want to edit `deployment.yaml` file and make the replicas from 
 Below command will open the `deployment.yaml` file in editor. Then made the changes.
 ```console
     $ pack edit -s _vendor/github.com/kubepack/test-kubed/deployment.yaml
-``` 
+```
 
 This command will generate a patch file under `patch` folder.
 
 ```console
     $ tree patch/
-    
+
     patch/
     └── github.com
         └── kubepack
             └── test-kubed
                 └── deployment.yaml
-    
+
     3 directories, 1 file
 ```
 
@@ -86,7 +98,7 @@ Then, run `$ pack up`, which will combine original and patch file and place unde
 
 ```console
     $ tree _outlook/
-    
+
     _outlook/
     └── github.com
         └── kubepack
@@ -94,7 +106,7 @@ Then, run `$ pack up`, which will combine original and patch file and place unde
                 ├── deployment.yaml
                 ├── kubed-config.yaml
                 └── service.yaml
-    
+
     3 directories, 3 files
 ```
 
@@ -104,7 +116,7 @@ Now, last step, commit the whole thing and push it git repository.
 
 Now, see below [this](https://raw.githubusercontent.com/kubepack/pack/test-mount/_testdata/test-10/pod.yaml) yaml file.
 
-```console    
+```console
     apiVersion: v1
     kind: Pod
     metadata:
@@ -134,14 +146,14 @@ change the above yaml file's `gitRepo.Repository` and `gitRepo.revision` to your
 ```
 
 This pod mount your git repository in /mypath in the container and if their is exist any `_outlook` folder, then it'll `$ kubeclt apply -R -f <outlook filepath>`.
-You can check actual implementation [here](https://github.com/a8uhnf/git-mount/blob/master/main.go). 
+You can check actual implementation [here](https://github.com/a8uhnf/git-mount/blob/master/main.go).
 
-Now, you can see the all the desired kubernetes object in your cluster. 
-
-   
+Now, you can see the all the desired kubernetes object in your cluster.
 
 
-# Next Steps
+## Next Steps
 
-- Learn about `manifest.yaml` file. Please visit [here](/docs/tutorials/manifest.md).
-- Learn about `pack` cli. Please visit [here](/docs/tutorials/cli.md)
+- Want to publish apps using Kubepack? Please visit [here](/docs/concepts/how/publisher.md).
+- Want to consume apps published using Kubepack? Please visit [here](/docs/concepts/how/user.md).
+- To learn about `manifest.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
+- Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).

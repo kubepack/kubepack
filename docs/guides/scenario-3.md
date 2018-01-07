@@ -1,4 +1,16 @@
-> New to Pack? Please start [here](/docs/tutorials/README.md).
+---
+title: Scenarios | Kubepack
+menu:
+  docs_0.1.0-alpha.0:
+    identifier: s3-guides
+    name: Schenario 3
+    parent: guides
+    weight: 70
+menu_name: docs_0.1.0-alpha.0
+section_menu_id: guides
+---
+
+> New to Kubepack? Please start [here](/docs/concepts/README.md).
 
 # Scenario-3
 
@@ -29,14 +41,14 @@ Here, [test-3](https://github.com/kubepack/pack/tree/master/_testdata/test-3) de
 
 Both of the above repository(kube-a and kube-b) require dependency of
  [kube-c](https://github.com/kubepack/kube-c) but two different branch.
- `kube-a` depends on `kube-c` of branch `test-1` and `kube-b` depends on `kube-c` of branch `master`. 
- 
+ `kube-a` depends on `kube-c` of branch `test-1` and `kube-b` depends on `kube-c` of branch `master`.
+
  To clarify, see image.
  ![alt text](/_testdata/test-3/test-3.jpg)
- 
+
  Now, when run `$ pack dep --v=10` command, `pack` could not resolve dependencies. As, this dependencies contradict with each other.
   Give below error.
-  
+
   ```console
   $ pack dep --v=10
   I0103 15:46:39.430663    5923 logs.go:19] No versions of github.com/kubepack/kube-b met constraints:
@@ -48,10 +60,11 @@ Both of the above repository(kube-a and kube-b) require dependency of
           test-6: Could not introduce github.com/kubepack/kube-b@test-6, as it is not allowed by constraint test-3 from project github.com/a8uhnf/pack/_testdata/test-3.
           test-7: Could not introduce github.com/kubepack/kube-b@test-7, as it is not allowed by constraint test-3 from project github.com/a8uhnf/pack/_testdata/test-3.
           test-8: Could not introduce github.com/kubepack/kube-b@test-8, as it is not allowed by constraint test-3 from project github.com/a8uhnf/pack/_testdata/test-3.
+```
 
-```  
+## Next Steps
 
-# Next Steps
-
-- Learn about `manifest.yaml` file. Please visit [here](/docs/tutorials/manifest.md).
-- Learn about `pack` cli. Please visit [here](/docs/tutorials/cli.md)
+- Want to publish apps using Kubepack? Please visit [here](/docs/concepts/how/publisher.md).
+- Want to consume apps published using Kubepack? Please visit [here](/docs/concepts/how/user.md).
+- To learn about `manifest.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
+- Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).

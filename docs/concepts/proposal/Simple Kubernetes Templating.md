@@ -4,7 +4,7 @@ Tamal Saha ([tamal@appscode.com](mailto:tamal@appscode.com))
 
 08/02/2017
 
-This document describes a simple package manager for Kubernetes. The general model is based on how tools like [glide](https://github.com/Masterminds/glide), [dep](https://github.com/golang/dep) or [npm](https://www.npmjs.com/) works. 
+This document describes a simple package manager for Kubernetes. The general model is based on how tools like [glide](https://github.com/Masterminds/glide), [dep](https://github.com/golang/dep) or [npm](https://www.npmjs.com/) works.
 
 ## Goals:
 
@@ -16,7 +16,7 @@ This document describes a simple package manager for Kubernetes. The general mod
 
 **Name of tool:**
 
-I am going to refer to this as X. 
+I am going to refer to this as X.
 
 **Problems with Helm/Tiller:**
 
@@ -36,7 +36,7 @@ Now, you can vendor your YAMLs.
 
 $ x up (like glide up).
 
-This will do dependency resolution and flattening like glide and put all your dependency YAMLs in a x-vendor/ folder. I like to call this "external dependency". 
+This will do dependency resolution and flattening like glide and put all your dependency YAMLs in a x-vendor/ folder. I like to call this "external dependency".
 
 > **I propose that there is no separate version for YAMLs**. The git repo from where YAMLs are pulled is the version of the YAML. This is different from package.json where you can define a separate version. I want to avoid a central package manager for YAMLs (like that Helm is doing now).  My reasons are:
 
@@ -77,7 +77,7 @@ These names are used by DSl in apply phase.
 
 ### Apply Phase:
 
-This is the phase where YAMLs are applied to cluster. The command may be "x apply". There are 3 sub phases. 
+This is the phase where YAMLs are applied to cluster. The command may be "x apply". There are 3 sub phases.
 
 **Secret Realization sub-phase:** At this point, x goes into the cluster, searches a secret by name, merges them to produce the final secret YAML.
 
@@ -103,7 +103,7 @@ This phase essentially replicates what a human operator will do to actually appl
 
 Note that, RBAC objects included in **this** repo are applied first. Then, YAMLs from ancestor pkg-1 are applied. Then YAMLs from ancestor pkg-2 are applied. Finally deployments and services from current repo are applied. The fact that cluster roles should be created before deployments in this repo, I call it "internal dependency".
 
-I think in general any repo should be able to tell how its YAMLs and its ancestors YAMLs will be applied in a recursive fashion. This essentially becomes a DAG. 
+I think in general any repo should be able to tell how its YAMLs and its ancestors YAMLs will be applied in a recursive fashion. This essentially becomes a DAG.
 
 One unknown is, how to trigger, go to next step. This can be also part of the DSL.
 
@@ -143,7 +143,7 @@ This can’t be in git, since this will have real YAMLs. I think it will similar
 
 **Background Reading**
 
-[https://medium.com/@sdboyer/so-you-want-to-write-a-package-manager-4ae9c17d9527](https://medium.com/@sdboyer/so-you-want-to-write-a-package-manager-4ae9c17d9527) 
+[https://medium.com/@sdboyer/so-you-want-to-write-a-package-manager-4ae9c17d9527](https://medium.com/@sdboyer/so-you-want-to-write-a-package-manager-4ae9c17d9527)
 
 [https://github.com/sdboyer/gps/wiki/Introduction-to-gps](https://github.com/sdboyer/gps/wiki/Introduction-to-gps)
 
@@ -153,5 +153,5 @@ This can’t be in git, since this will have real YAMLs. I think it will similar
 
 [https://github.com/sdboyer/gps/blob/master/vcs_repo.go](https://github.com/sdboyer/gps/blob/master/vcs_repo.go)
 
-[https://github.com/Masterminds/vcs](https://github.com/Masterminds/vcs) 
+[https://github.com/Masterminds/vcs](https://github.com/Masterminds/vcs)
 
