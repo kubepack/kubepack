@@ -16,7 +16,7 @@ section_menu_id: concepts
 
 ### manifest.yaml
 
-`manifest.yaml` is metadata file for pack like [dep](https://github.com/golang/dep)'s Gopkg.toml and [glide](https://github.com/Mastermind/glide)'s glide.yaml.
+`manifest.yaml` is metadata file for pack like [dep](https://github.com/golang/dep)'s Gopkg.toml and [glide](https://github.com/Masterminds/glide)'s glide.yaml.
 
  The `manifest.yaml` contains below element:
 

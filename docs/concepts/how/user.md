@@ -19,7 +19,7 @@ section_menu_id: concepts
 If you want to use others application with pack, then follow below instruction:
 
 1. Create a git repository.
-2. Create manifest.yaml file in the repository. See [manifest.yaml](/docs/guides/manifest.md) doc
+2. Create manifest.yaml file in the repository. See [manifest.yaml](/docs/concepts/how/manifest.md) doc
 3. Add all the dependencies under `dependencies` in manifest.yaml file.
 4. Run `pack dep -v 10` to get all the dependencies in `_vendor` folder.
 5. Run `pack edit -s <filepath>`, if you want to change some file from `_vendor` folder.
@@ -102,11 +102,8 @@ Above command will open file in editor.
  `$ kubectl apply -R -f _outlook/` command will deploy kubed in minikube cluster.
 
 
-
-
-
 ## Next Steps
 
- - Learn how to wrap your application with pack. Please visit [hear](/docs/guides/dev-doc.md)
- - Learn about `manifest.yaml` file. Please visit [here](/docs/guides/manifest.md).
- - Learn about `pack` cli. Please visit [here](/docs/guides/cli.md)
+- Want to publish apps using Kubepack? Please visit [here](/docs/concepts/how/publisher.md).
+- To learn about `manifest.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
+- Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).
