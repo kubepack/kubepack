@@ -1,4 +1,16 @@
-> New to Pack? Please start [here](/docs/tutorials/README.md).
+---
+title: Scenarios | Kubepack
+menu:
+  docs_0.1.0-alpha.0:
+    identifier: s1-guides
+    name: Schenario 1
+    parent: guides
+    weight: 70
+menu_name: docs_0.1.0-alpha.0
+section_menu_id: guides
+---
+
+> New to Kubepack? Please start [here](/docs/concepts/README.md).
 
 # Scenario-1
 
@@ -28,8 +40,8 @@ You can see the whole dependencies in below image.
 ### Explanation
 
 1. [test-1](https://github.com/kubepack/pack/tree/master/_testdata/test-1) directly depends on [kube-a](https://kubepack/kube-a) of branch `test-1`.
-2. [kube-a](https://kubepack/kube-a) depends on  [kube-b](https://kubepack/kube-b) of branch `test-1`. 
-`kube-a` contains the patch patch of `kube-b`'s `nginx-deployment.yaml` file. 
+2. [kube-a](https://kubepack/kube-a) depends on  [kube-b](https://kubepack/kube-b) of branch `test-1`.
+`kube-a` contains the patch patch of `kube-b`'s `nginx-deployment.yaml` file.
 3. [kube-b](https://kubepack/kube-b) depends on [kube-c](https://kubepack/kube-c) of branch `test-1`.
 `kube-b` contains the patch patch of `kube-c`'s `nginx-deployment.yaml` file.
 
@@ -39,7 +51,9 @@ When run `pack dep` in `test-1`, following things happen.
 2. `kube-b`'s `nginx-deployment.yaml` file is combination of patch (exists in `kube-a` repository) and original file (exists in `kube-b` repository).
 3. `kube-c`'s `nginx-deployment.yaml` file is combination of patch (exists in `kube-b` repository) and original file (exists in `kube-c` repository).
 
-# Next Steps
+## Next Steps
 
-- Learn about `manifest.yaml` file. Please visit [here](/docs/tutorials/manifest.md).
-- Learn about `pack` cli. Please visit [here](/docs/tutorials/cli.md)
+- Want to publish apps using Kubepack? Please visit [here](/docs/concepts/how/publisher.md).
+- Want to consume apps published using Kubepack? Please visit [here](/docs/concepts/how/user.md).
+- To learn about `manifest.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
+- Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).

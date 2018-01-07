@@ -1,4 +1,19 @@
-## Development Guide
+---
+title: Developer Guide
+menu:
+  docs_0.1.0-alpha.0:
+    identifier: developer-guide-readme
+    name: Overview
+    parent: developer-guide
+    weight: 10
+menu_name: docs_0.1.0-alpha.0
+section_menu_id: setup
+aliases:
+  - /docs/0.1.0-alpha.0/setup/developer-guide/
+---
+
+# Development Guide
+
 This document is intended to be the canonical source of truth for things like supported toolchain versions for building Pack.
 If you find a requirement that this doc does not capture, please submit an issue on github.
 
@@ -38,7 +53,7 @@ If you want to update/add dependencies, run:
 $ dep ensure
 ```
 
-#### Generate CLI Reference Docs
+#### Generate Kubepack Reference Docs
 ```console
 $ ./hack/gendocs/make.sh
 ```

@@ -23,9 +23,8 @@ pack edit (filename) [flags]
 ### Options
 
 ```
-  -h, --help          help for edit
-  -s, --src string    File want to edit
-  -t, --type string   Type of patch; one of [json merge strategic] (default "strategic")
+  -h, --help         help for edit
+  -s, --src string   File want to edit
 ```
 
 ### Options inherited from parent commands

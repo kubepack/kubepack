@@ -1,3 +1,15 @@
+---
+title: Release
+menu:
+  docs_0.1.0-alpha.0:
+    identifier: developer-guide-release
+    name: Release Process
+    parent: developer-guide
+    weight: 20
+menu_name: docs_0.1.0-alpha.0
+section_menu_id: setup
+---
+
 # Release Process
 
 The following steps must be done from a Linux x64 bit machine.
@@ -6,6 +18,7 @@ The following steps must be done from a Linux x64 bit machine.
 - Push changes to the `release-x` branch and apply new tag.
 - Push all the changes to remote repo.
 - Build and push pac docker image:
+
 ```console
 $ cd ~/go/src/github.com/kubepack/pack
 ./hack/release.sh
