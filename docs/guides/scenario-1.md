@@ -30,7 +30,8 @@ owners:
   email: team@appscode.com
 dependencies:
 - package: github.com/kubepack/kube-a
-  branch: test-6
+  branch: test-1
+
 ```
 
 See image below, which describe whole dependency.
@@ -38,13 +39,13 @@ See image below, which describe whole dependency.
 
 Explanation of image:
 
-1. This test directly depends on `kube-a` of branch `test-6`.
-2. `kube-a`'s depends on `kube-b` of branch `test-6`.
-See this manifest.yaml file [here](https://github.com/kubepack/kube-a/blob/test-6/manifest.yaml)
-3. `kube-b`'s depends on `kube-c` of branch `test-6`.
-See this manifest.yaml file [here](https://github.com/kubepack/kube-b/blob/test-6/manifest.yaml)
+1. This test directly depends on `kube-a` of branch `test-1`.
+2. `kube-a`'s depends on `kube-b` of branch `test-1`.
+See this manifest.yaml file [here](https://github.com/kubepack/kube-a/blob/test-1/manifest.yaml)
+3. `kube-b`'s depends on `kube-c` of branch `test-1`.
+See this manifest.yaml file [here](https://github.com/kubepack/kube-b/blob/test-1/manifest.yaml)
 4. `kube-c`'s depends on none.
-See this manifest.yaml file [here](https://github.com/kubepack/kube-c/blob/test-6/manifest.yaml)
+See this manifest.yaml file [here](https://github.com/kubepack/kube-c/blob/test-1/manifest.yaml)
 
 
 Now, `$ pack dep` command will get all the dependencies and place it under `_vendor` folder.

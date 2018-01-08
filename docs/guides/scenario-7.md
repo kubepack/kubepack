@@ -36,7 +36,7 @@ dependencies:
 `manifest.yaml` file contain [test-kubed](https://github.com/kubepack/test-kubed) as `dependencies`. `test-kubed` contains
  all the necessary yaml file needs to deploy kubed in minikube cluster.
 
- Now, `pack dep` command will pull all the dependencies and place it in `_vendor` folder.
+ Now, `$ pack dep` command will pull all the dependencies and place it in `_vendor` folder.
   If `test-kubed` repository also depend on some other repository then `pack` will get that too.
 
   ```console

@@ -35,9 +35,9 @@ dependencies:
   branch: test-4
 ```
 
-Here, [test-3](https://github.com/kubepack/kubepack/tree/master/_testdata/test-4) depends on two repositories.
-1. [kube-a](https://github.com/kubepack/kube-a) of branch `test-3`.
-2. [kube-b](https://github.com/kubepack/kube-b) of branch `test-3`.
+Here, [test-4](https://github.com/kubepack/kubepack/tree/master/_testdata/test-4) depends on two repositories.
+1. [kube-a](https://github.com/kubepack/kube-a) of branch `test-4`.
+2. [kube-b](https://github.com/kubepack/kube-b) of branch `test-4`.
 
 Both of the above repository(kube-a and kube-b) require dependency of
  [kube-c](https://github.com/kubepack/kube-c) but two different branch.
