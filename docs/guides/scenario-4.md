@@ -30,9 +30,9 @@ owners:
   email: team@appscode.com
 dependencies:
 - package: github.com/kubepack/kube-a
-  branch: test-3
+  branch: test-4
 - package: github.com/kubepack/kube-b
-  branch: test-3
+  branch: test-4
 ```
 
 Here, [test-3](https://github.com/kubepack/kubepack/tree/master/_testdata/test-4) depends on two repositories.
@@ -51,15 +51,20 @@ Both of the above repository(kube-a and kube-b) require dependency of
 
   ```console
   $ pack dep --v=10
-  I0103 15:46:39.430663    5923 logs.go:19] No versions of github.com/kubepack/kube-b met constraints:
-          master: Could not introduce github.com/kubepack/kube-b@master, as it is not allowed by constraint test-3 from project github.com/kubepack/kubepack/_testdata/test-3.
-          dep-c: Could not introduce github.com/kubepack/kube-b@dep-c, as it is not allowed by constraint test-3 from project github.com/kubepack/kubepack/_testdata/test-3.
-          test-1: Could not introduce github.com/kubepack/kube-b@test-1, as it is not allowed by constraint test-3 from project github.com/kubepack/kubepack/_testdata/test-3.
-          test-2: Could not introduce github.com/kubepack/kube-b@test-2, as it is not allowed by constraint test-3 from project github.com/kubepack/kubepack/_testdata/test-3.
-          test-3: Could not introduce github.com/kubepack/kube-b@test-3, as it has a dependency on github.com/kubepack/kube-c with constraint master, which has no overlap with existing constraint test-1 from github.com/kubepack/kube-a@test-3
-          test-6: Could not introduce github.com/kubepack/kube-b@test-6, as it is not allowed by constraint test-3 from project github.com/kubepack/kubepack/_testdata/test-3.
-          test-7: Could not introduce github.com/kubepack/kube-b@test-7, as it is not allowed by constraint test-3 from project github.com/kubepack/kubepack/_testdata/test-3.
-          test-8: Could not introduce github.com/kubepack/kube-b@test-8, as it is not allowed by constraint test-3 from project github.com/kubepack/kubepack/_testdata/test-3.
+  
+  
+  
+  I0108 15:58:18.241539   16369 logs.go:19] No versions of github.com/kubepack/kube-a met constraints:
+          master: Could not introduce github.com/kubepack/kube-a@master, as it is not allowed by constraint test-4 from project github.com/kubepack/pack/_testdata/test-4.
+          dep-c: Could not introduce github.com/kubepack/kube-a@dep-c, as it is not allowed by constraint test-4 from project github.com/kubepack/pack/_testdata/test-4.
+          test-1: Could not introduce github.com/kubepack/kube-a@test-1, as it is not allowed by constraint test-4 from project github.com/kubepack/pack/_testdata/test-4.
+          test-10: Could not introduce github.com/kubepack/kube-a@test-10, as it is not allowed by constraint test-4 from project github.com/kubepack/pack/_testdata/test-4.
+          test-2: Could not introduce github.com/kubepack/kube-a@test-2, as it is not allowed by constraint test-4 from project github.com/kubepack/pack/_testdata/test-4.
+          test-3: Could not introduce github.com/kubepack/kube-a@test-3, as it is not allowed by constraint test-4 from project github.com/kubepack/pack/_testdata/test-4.
+          test-4: Could not introduce github.com/kubepack/kube-a@test-4, as it has a dependency on github.com/kubepack/kube-c with constraint test-1, which has no overlap with existing constraint master from github.com/kubepack/kube-b@test-4
+          test-6: Could not introduce github.com/kubepack/kube-a@test-6, as it is not allowed by constraint test-4 from project github.com/kubepack/pack/_testdata/test-4.
+          test-7: Could not introduce github.com/kubepack/kube-a@test-7, as it is not allowed by constraint test-4 from project github.com/kubepack/pack/_testdata/test-4.
+          test-8: Could not introduce github.com/kubepack/kube-a@test-8, as it is not allowed by constraint test-4 from project github.com/kubepack/pack/_testdata/test-4.
 ```
 
 ## Next Steps

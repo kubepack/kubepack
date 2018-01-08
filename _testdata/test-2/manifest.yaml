@@ -4,4 +4,4 @@ owners:
   email: team@appscode.com
 dependencies:
 - package: github.com/kubepack/kube-a
-  branch: test-1
+  branch: test-2

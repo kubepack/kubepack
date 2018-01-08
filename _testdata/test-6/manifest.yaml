@@ -4,8 +4,8 @@ owners:
   email: team@appscode.com
 dependencies:
 - package: github.com/kubepack/kube-a
-  branch: test-8
+  branch: test-6
   fork: https://github.com/kubepack/kube-d.git
 - package: github.com/kubepack/kube-b
-  branch: test-8
+  branch: test-6
   fork: github.com/kubepack/kube-c
