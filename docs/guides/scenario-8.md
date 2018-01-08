@@ -3,9 +3,9 @@ title: Scenarios | Kubepack
 menu:
   docs_0.1.0-alpha.0:
     identifier: s8-guides
-    name: Schenario 8
+    name: Scenario 8
     parent: guides
-    weight: 70
+    weight: 75
 menu_name: docs_0.1.0-alpha.0
 section_menu_id: guides
 ---
@@ -14,41 +14,141 @@ section_menu_id: guides
 
 # Scenario-8
 
-**This docs explain how Pack's fork works.**
+
+**This docs explain how Pack works inside cluster.**
 ***
 
-This section explain [test-8](https://github.com/kubepack/pack/tree/master/_testdata/test-8).
+In this scenario, we'll do following things.
 
-If you look into this test's `manifest.yaml` file.
+1. Create a git repository.
+   - In this repository, require [test-kubed](https://github.com/kubepack/test-kubed) through manifest.yaml file.
+   - Run `$ pack dep` to get the dependencies and `$ pack edit -s <filepath>` to make desired changes.
+   - Then, run `$ pack up` to final version under `_outlook` folder.
+   - Last, commit our changes to git repository.
+
+2.  Now, I write a pod yaml, you can see it [here](https://raw.githubusercontent.com/kubepack/pack/test-mount/_testdata/test-10/pod.yaml).
+In this pod, our above git repository mounted as volume path and
+ image [a8uhnf/git-mount:1.0.0](https://cloud.docker.com/swarm/a8uhnf/repository/docker/a8uhnf/git-mount/tags),
+is checking the mounted path if their is `_outlook` folder then it'll apply `$ kubectl apply -R -f <_outlook folder path>`.
+
+
+## Step by Step Guide
+
+First, create a git repository
+
+Create a `manifest.yaml` file in your git repository. Your manifest.yaml file will look like below.
 
 ```console
-$ cat manifest.yaml
+    $ cat manifest.yaml
 
-package: github.com/kubepack/pack/_testdata/test-7
+package: YOUR_REPO_LOCATION # github.com/packsh/tasty-kube
 owners:
-- name: Appscode
-  email: team@appscode.com
+- name: # Appscode
+  email: # team@appscode.com
 dependencies:
-- package: github.com/kubepack/kube-a
-  branch: test-8
-  fork: https://github.com/kubepack/kube-d.git
-- package: github.com/kubepack/kube-b
-  branch: test-8
-  fork: github.com/kubepack/kube-c
+ - package: github.com/kubepack/test-kubed
+   branch: master
 ```
 
-See image below, which describe whole dependency.
-![alt text](/_testdata/test-8/test-8.jpg)
+It depends on [test-kubed](github.com/kubepack/test-kubed)'s master branch.
 
-Explanation of image:
+Now, run `$ pack dep`. This command will get all the dependencies and place under `_vendor` folder.
 
-1. `kube-c` and `kube-d` both has patch of both `kube-a` and `kube-b`.
-2. This test depends on two repository.
-  - `kube-a` from fork `kube-d`. Means `kube-a` is which exist in `_vendor` folder in `kube-d` repository. Also, applied the patch.
-  - `kube-b` from fork `kube-c`. Means `kube-b` is which exist in `_vendor` folder in `kube-c` repository. Also, applied the patch.
+```console
+    $ tree _vendor/
 
-Now, `$ pack dep` command get the dependencies and place under `_vendor` folder.
-Here, `kube-a` from fork `kube-d` and `kube-b` from fork `kube-c`.
+    _vendor/
+    └── github.com
+        └── kubepack
+            └── test-kubed
+                ├── deployment.yaml
+                ├── kubed-config.yaml
+                ├── manifest.yaml
+                └── service.yaml
+
+    3 directories, 4 files
+```
+
+Now, you have all the dependencies.
+
+Now, suppose you want to edit `deployment.yaml` file and make the replicas from 1 to 2.
+
+
+Below command will open the `deployment.yaml` file in editor. Then made the changes.
+```console
+    $ pack edit -s _vendor/github.com/kubepack/test-kubed/deployment.yaml
+```
+
+This command will generate a patch file under `patch` folder.
+
+```console
+    $ tree patch/
+
+    patch/
+    └── github.com
+        └── kubepack
+            └── test-kubed
+                └── deployment.yaml
+
+    3 directories, 1 file
+```
+
+
+Then, run `$ pack up`, which will combine original and patch file and place under `_outlook` folder.
+
+```console
+    $ tree _outlook/
+
+    _outlook/
+    └── github.com
+        └── kubepack
+            └── test-kubed
+                ├── deployment.yaml
+                ├── kubed-config.yaml
+                └── service.yaml
+
+    3 directories, 3 files
+```
+
+Now, last step, commit the whole thing and push it git repository.
+
+
+
+Now, see below [this](https://raw.githubusercontent.com/kubepack/pack/test-mount/_testdata/test-8/pod.yaml) yaml file.
+
+```console
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: server
+    spec:
+      containers:
+      - image: a8uhnf/git-mount:1.0.0
+        imagePullPolicy: Always
+        name: git-mount
+        resources: {}
+        volumeMounts:
+        - mountPath: /mypath
+          name: git-volume
+      volumes:
+      - gitRepo:
+          repository: YOUR_GIT_REPO_LOCATION # https://github.com/kubepack/kube-a.git
+          revision: GIT_REPO_REVISION_NUMBER # c90e98d6c0a6143c19a6e3a575befbdfa170fa00
+        name: git-volume
+    status: {}
+```
+
+change the above yaml file's `gitRepo.Repository` and `gitRepo.revision` to your repository location and revision.
+
+```console
+    $ kc apply -f https://raw.githubusercontent.com/kubepack/pack/test-mount/_testdata/test-10/pod.yaml
+    pod "server" created
+```
+
+This pod mount your git repository in /mypath in the container and if their is exist any `_outlook` folder, then it'll `$ kubeclt apply -R -f <outlook filepath>`.
+You can check actual implementation [here](https://github.com/a8uhnf/git-mount/blob/master/main.go).
+
+Now, you can see the all the desired kubernetes object in your cluster.
 
 
 ## Next Steps

@@ -3,7 +3,7 @@ title: Scenarios | Kubepack
 menu:
   docs_0.1.0-alpha.0:
     identifier: s1-guides
-    name: Schenario 1
+    name: Scenario 1
     parent: guides
     weight: 70
 menu_name: docs_0.1.0-alpha.0
@@ -20,6 +20,7 @@ section_menu_id: guides
 This section explain [test-1](https://github.com/kubepack/pack/tree/master/_testdata/test-1).
 
 If you look into this test's `manifest.yaml` file.
+
 ```console
 $ cat manifest.yaml
 
@@ -29,27 +30,24 @@ owners:
   email: team@appscode.com
 dependencies:
 - package: github.com/kubepack/kube-a
-  branch: test-1
+  branch: test-6
 ```
-You'll see it depends on repository [kube-a](https://kubepack/kube-a) of branch `test-1`.
 
-You can see the whole dependencies in below image.
-
+See image below, which describe whole dependency.
 ![alt text](/_testdata/test-1/test-1.jpg)
 
-### Explanation
+Explanation of image:
 
-1. [test-1](https://github.com/kubepack/pack/tree/master/_testdata/test-1) directly depends on [kube-a](https://kubepack/kube-a) of branch `test-1`.
-2. [kube-a](https://kubepack/kube-a) depends on  [kube-b](https://kubepack/kube-b) of branch `test-1`.
-`kube-a` contains the patch patch of `kube-b`'s `nginx-deployment.yaml` file.
-3. [kube-b](https://kubepack/kube-b) depends on [kube-c](https://kubepack/kube-c) of branch `test-1`.
-`kube-b` contains the patch patch of `kube-c`'s `nginx-deployment.yaml` file.
+1. This test directly depends on `kube-a` of branch `test-6`.
+2. `kube-a`'s depends on `kube-b` of branch `test-6`.
+See this manifest.yaml file [here](https://github.com/kubepack/kube-a/blob/test-6/manifest.yaml)
+3. `kube-b`'s depends on `kube-c` of branch `test-6`.
+See this manifest.yaml file [here](https://github.com/kubepack/kube-b/blob/test-6/manifest.yaml)
+4. `kube-c`'s depends on none.
+See this manifest.yaml file [here](https://github.com/kubepack/kube-c/blob/test-6/manifest.yaml)
 
-When run `pack dep` in `test-1`, following things happen.
 
-1. Get all the dependencies, reading `manifest.yaml` file.
-2. `kube-b`'s `nginx-deployment.yaml` file is combination of patch (exists in `kube-a` repository) and original file (exists in `kube-b` repository).
-3. `kube-c`'s `nginx-deployment.yaml` file is combination of patch (exists in `kube-b` repository) and original file (exists in `kube-c` repository).
+Now, `$ pack dep` command will get all the dependencies and place it under `_vendor` folder.
 
 ## Next Steps
 

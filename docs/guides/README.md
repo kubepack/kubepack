@@ -17,11 +17,11 @@ aliases:
 
 Guides show you how to perform tasks with Kubepack.
 
-- [Scenario-1](/docs/guides/scenario-1.md)
-- [Scenario-2](/docs/guides/scenario-2.md)
-- [Scenario-3](/docs/guides/scenario-3.md)
-- [Scenario-6](/docs/guides/scenario-6.md)
-- [Scenario-7](/docs/guides/scenario-7.md)
-- [Scenario-8](/docs/guides/scenario-8.md)
-- [Scenario-9](/docs/guides/scenario-9.md)
-- [Scenario-10](/docs/guides/scenario-10.md)
+- [Scenario-1](/docs/guides/scenario-1.md) How Kubepack dependency works.
+- [Scenario-2](/docs/guides/scenario-2.md) Get the dependency and how intermediate patch works.
+- [Scenario-3](/docs/guides/scenario-3.md) Get the dependency and intermediate repository has patch in same repository. 
+- [Scenario-4](/docs/guides/scenario-4.md) Main `manifest.yaml` file has double dependency and they are depend on two different contradictory branch. 
+- [Scenario-5](/docs/guides/scenario-5.md) Main `manifest.yaml` file has double dependency. Both of them have patch of same repository.
+- [Scenario-6](/docs/guides/scenario-6.md) How kubepack fork works. 
+- [Scenario-7](/docs/guides/scenario-7.md) How to deploy some application with kubepack.
+- [Scenario-8](/docs/guides/scenario-8.md) Deploy some application from cluster.

@@ -3,7 +3,7 @@ title: Scenarios | Kubepack
 menu:
   docs_0.1.0-alpha.0:
     identifier: s6-guides
-    name: Schenario 6
+    name: Scenario 6
     parent: guides
     weight: 70
 menu_name: docs_0.1.0-alpha.0
@@ -14,7 +14,7 @@ section_menu_id: guides
 
 # Scenario-6
 
-**This docs trying to explain the behavior of Pack**
+**This docs explain how Pack's fork works.**
 ***
 
 This section explain [test-6](https://github.com/kubepack/pack/tree/master/_testdata/test-6).
@@ -30,7 +30,11 @@ owners:
   email: team@appscode.com
 dependencies:
 - package: github.com/kubepack/kube-a
-  branch: test-6
+  branch: test-8
+  fork: https://github.com/kubepack/kube-d.git
+- package: github.com/kubepack/kube-b
+  branch: test-8
+  fork: github.com/kubepack/kube-c
 ```
 
 See image below, which describe whole dependency.
@@ -38,16 +42,14 @@ See image below, which describe whole dependency.
 
 Explanation of image:
 
-1. This test directly depends on `kube-a` of branch `test-6`.
-2. `kube-a`'s depends on `kube-b` of branch `test-6`.
-See this manifest.yaml file [here](https://github.com/kubepack/kube-a/blob/test-6/manifest.yaml)
-3. `kube-b`'s depends on `kube-c` of branch `test-6`.
-See this manifest.yaml file [here](https://github.com/kubepack/kube-b/blob/test-6/manifest.yaml)
-4. `kube-c`'s depends on none.
-See this manifest.yaml file [here](https://github.com/kubepack/kube-c/blob/test-6/manifest.yaml)
+1. `kube-c` and `kube-d` both has patch of both `kube-a` and `kube-b`.
+2. This test depends on two repository.
+  - `kube-a` from fork `kube-d`. Means `kube-a` is which exist in `_vendor` folder in `kube-d` repository. Also, applied the patch.
+  - `kube-b` from fork `kube-c`. Means `kube-b` is which exist in `_vendor` folder in `kube-c` repository. Also, applied the patch.
 
+Now, `$ pack dep` command get the dependencies and place under `_vendor` folder.
+Here, `kube-a` from fork `kube-d` and `kube-b` from fork `kube-c`.
 
-Now, `$ pack dep` command will get all the dependencies and place it under `_vendor` folder.
 
 ## Next Steps
 

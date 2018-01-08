@@ -1,9 +1,9 @@
-package: github.com/kubepack/pack/_testdata/test-4
+package: github.com/kubepack/pack/_testdata/test-5
 owners:
 - name: Appscode
   email: team@appscode.com
 dependencies:
 - package: github.com/kubepack/kube-a
-  branch: test-3
+  branch: test-2
 - package: github.com/kubepack/kube-b
-  branch: test-3
+  branch: test-2
