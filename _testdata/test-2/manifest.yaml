@@ -5,5 +5,3 @@ owners:
 dependencies:
 - package: github.com/kubepack/kube-a
   branch: test-2
-- package: github.com/kubepack/kube-b
-  branch: test-2

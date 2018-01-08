@@ -3,7 +3,7 @@ title: Scenarios | Kubepack
 menu:
   docs_0.1.0-alpha.0:
     identifier: s3-guides
-    name: Schenario 3
+    name: Scenario 3
     parent: guides
     weight: 70
 menu_name: docs_0.1.0-alpha.0
@@ -31,36 +31,32 @@ owners:
 dependencies:
 - package: github.com/kubepack/kube-a
   branch: test-3
-- package: github.com/kubepack/kube-b
-  branch: test-3
+
 ```
 
-Here, [test-3](https://github.com/kubepack/kubepack/tree/master/_testdata/test-3) depends on two repositories.
-1. [kube-a](https://github.com/kubepack/kube-a) of branch `test-3`.
-2. [kube-b](https://github.com/kubepack/kube-b) of branch `test-3`.
+See image below, which describe whole dependency.
+![alt text](/_testdata/test-3/test-3.jpg)
 
-Both of the above repository(kube-a and kube-b) require dependency of
- [kube-c](https://github.com/kubepack/kube-c) but two different branch.
- `kube-a` depends on `kube-c` of branch `test-1` and `kube-b` depends on `kube-c` of branch `master`.
 
- To clarify, see image.
- ![alt text](/_testdata/test-3/test-3.jpg)
+Explanation of image:
 
- Now, when run `$ pack dep --v=10` command, `pack` could not resolve dependencies. As, this dependencies contradict with each other.
-  Give below error.
+1. This test directly depends on `kube-a` of branch `test-3`.
+2. `kube-a`'s depends on `kube-b` of branch `test-3`.
+See this manifest.yaml file [here](https://github.com/kubepack/kube-a/blob/test-3/manifest.yaml).
+3. `kube-b`'s depends on `kube-c` of branch `test-3`.
+See this manifest.yaml file [here](https://github.com/kubepack/kube-b/blob/test-3/manifest.yaml).
+4. `kube-c`'s depends on none.
+See this manifest.yaml file [here](https://github.com/kubepack/kube-c/blob/test-3/manifest.yaml).
 
-  ```console
-  $ pack dep --v=10
-  I0103 15:46:39.430663    5923 logs.go:19] No versions of github.com/kubepack/kube-b met constraints:
-          master: Could not introduce github.com/kubepack/kube-b@master, as it is not allowed by constraint test-3 from project github.com/a8uhnf/pack/_testdata/test-3.
-          dep-c: Could not introduce github.com/kubepack/kube-b@dep-c, as it is not allowed by constraint test-3 from project github.com/a8uhnf/pack/_testdata/test-3.
-          test-1: Could not introduce github.com/kubepack/kube-b@test-1, as it is not allowed by constraint test-3 from project github.com/a8uhnf/pack/_testdata/test-3.
-          test-2: Could not introduce github.com/kubepack/kube-b@test-2, as it is not allowed by constraint test-3 from project github.com/a8uhnf/pack/_testdata/test-3.
-          test-3: Could not introduce github.com/kubepack/kube-b@test-3, as it has a dependency on github.com/kubepack/kube-c with constraint master, which has no overlap with existing constraint test-1 from github.com/kubepack/kube-a@test-3
-          test-6: Could not introduce github.com/kubepack/kube-b@test-6, as it is not allowed by constraint test-3 from project github.com/a8uhnf/pack/_testdata/test-3.
-          test-7: Could not introduce github.com/kubepack/kube-b@test-7, as it is not allowed by constraint test-3 from project github.com/a8uhnf/pack/_testdata/test-3.
-          test-8: Could not introduce github.com/kubepack/kube-b@test-8, as it is not allowed by constraint test-3 from project github.com/a8uhnf/pack/_testdata/test-3.
-```
+Here, both `kube-a` and `kube-b` has patch of repository `kube-c`'s [nginx-deployment.yaml file](https://github.com/kubepack/kube-c/blob/test-3/nginx-deployment.yaml).
+You can check these patch here:
+[kube-a](https://github.com/kubepack/kube-a/blob/test-3/patch/github.com/kubepack/kube-c/nginx-deployment.yaml) and
+ [kube-b](https://github.com/kubepack/kube-b/blob/test-3/patch/github.com/kubepack/kube-c/nginx-deployment.yaml).
+
+
+Now, run `$ pack dep` command, get all the dependencies `kube-a`, `kube-b` and  `kube-c` of branch `test-3`.
+As, `kube-a` and `kube-b` both contain patch of `kube-c`'s [nginx-deployment.yaml file](https://github.com/kubepack/kube-c/blob/test-3/nginx-deployment.yaml).
+This file is the combination of both patch and original file.
 
 ## Next Steps
 

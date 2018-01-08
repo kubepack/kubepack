@@ -1,7 +1,0 @@
-package: github.com/kubepack/kubepack/_testdata/test-7
-owners:
-- name: Appscode
-  email: team@appscode.com
-dependencies:
-- package: github.com/kubepack/test-kubed
-  branch: master
