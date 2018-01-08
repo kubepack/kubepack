@@ -10,7 +10,7 @@ import (
 	"github.com/Masterminds/vcs"
 	"github.com/evanphx/json-patch"
 	"github.com/ghodss/yaml"
-	typ "github.com/kubepack/pack/type"
+	typ "github.com/kubepack/kubepack/type"
 	"github.com/spf13/cobra"
 )
 

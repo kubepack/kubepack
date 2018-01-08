@@ -4,7 +4,7 @@ import (
 	"os"
 
 	logs "github.com/appscode/go/log/golog"
-	"github.com/kubepack/pack/cmds"
+	"github.com/kubepack/kubepack/cmds"
 )
 
 func main() {

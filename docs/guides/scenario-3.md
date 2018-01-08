@@ -17,14 +17,14 @@ section_menu_id: guides
 **This docs trying to explain the behavior of Pack**
 ***
 
-This section explain [test-3](https://github.com/kubepack/pack/tree/master/_testdata/test-3).
+This section explain [test-3](https://github.com/kubepack/kubepack/tree/master/_testdata/test-3).
 
 If you look into this test's `manifest.yaml` file.
 
 ```console
 $ cat manifest.yaml
 
-package: github.com/kubepack/pack/_testdata/test-3
+package: github.com/kubepack/kubepack/_testdata/test-3
 owners:
 - name: Appscode
   email: team@appscode.com
@@ -35,7 +35,7 @@ dependencies:
   branch: test-3
 ```
 
-Here, [test-3](https://github.com/kubepack/pack/tree/master/_testdata/test-3) depends on two repositories.
+Here, [test-3](https://github.com/kubepack/kubepack/tree/master/_testdata/test-3) depends on two repositories.
 1. [kube-a](https://github.com/kubepack/kube-a) of branch `test-3`.
 2. [kube-b](https://github.com/kubepack/kube-b) of branch `test-3`.
 

@@ -1,4 +1,4 @@
-package: github.com/kubepack/pack
+package: github.com/kubepack/kubepack
 owners:
 - name: Appscode Inc.
   email: admin@appscode.com

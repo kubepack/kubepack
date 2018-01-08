@@ -17,13 +17,13 @@ section_menu_id: guides
 **This docs trying to explain the behavior of Pack**
 ***
 
-This section explain [test-1](https://github.com/kubepack/pack/tree/master/_testdata/test-1).
+This section explain [test-1](https://github.com/kubepack/kubepack/tree/master/_testdata/test-1).
 
 If you look into this test's `manifest.yaml` file.
 ```console
 $ cat manifest.yaml
 
-package: github.com/kubepack/pack/_testdata/test-1
+package: github.com/kubepack/kubepack/_testdata/test-1
 owners:
 - name: Appscode
   email: team@appscode.com
@@ -39,7 +39,7 @@ You can see the whole dependencies in below image.
 
 ### Explanation
 
-1. [test-1](https://github.com/kubepack/pack/tree/master/_testdata/test-1) directly depends on [kube-a](https://kubepack/kube-a) of branch `test-1`.
+1. [test-1](https://github.com/kubepack/kubepack/tree/master/_testdata/test-1) directly depends on [kube-a](https://kubepack/kube-a) of branch `test-1`.
 2. [kube-a](https://kubepack/kube-a) depends on  [kube-b](https://kubepack/kube-b) of branch `test-1`.
 `kube-a` contains the patch patch of `kube-b`'s `nginx-deployment.yaml` file.
 3. [kube-b](https://kubepack/kube-b) depends on [kube-c](https://kubepack/kube-c) of branch `test-1`.
