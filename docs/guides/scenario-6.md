@@ -40,6 +40,7 @@ dependencies:
 See image below, which describe whole dependency.
 ![alt text](/_testdata/test-6/test-6.jpg)
 
+
 Explanation of image:
 
 1. `kube-c` and `kube-d` both has patch of both `kube-a` and `kube-b`.

@@ -21,12 +21,12 @@ section_menu_id: guides
 In this scenario, we'll do following things.
 
 1. Create a git repository.
-   - In this repository, require [test-kubed](https://github.com/kubepack/test-kubed) through manifest.yaml file.
+   - In this repository, require [test-kubed](https://github.com/kubepack/test-kubed) through `manifest.yaml` file.
    - Run `$ pack dep` to get the dependencies and `$ pack edit -s <filepath>` to make desired changes.
    - Then, run `$ pack up` to final version under `_outlook` folder.
    - Last, commit our changes to git repository.
 
-2.  Now, I write a pod yaml, you can see it [here](https://raw.githubusercontent.com/kubepack/kubepack/test-mount/_testdata/test-10/pod.yaml).
+2.  Now, I write a pod yaml, you can see it [here](https://raw.githubusercontent.com/kubepack/kubepack/master/_testdata/test-8/pod.yaml).
 In this pod, our above git repository mounted as volume path and
  image [a8uhnf/git-mount:1.0.0](https://cloud.docker.com/swarm/a8uhnf/repository/docker/a8uhnf/git-mount/tags),
 is checking the mounted path if their is `_outlook` folder then it'll apply `$ kubectl apply -R -f <_outlook folder path>`.
@@ -50,7 +50,7 @@ dependencies:
    branch: master
 ```
 
-It depends on [test-kubed](github.com/kubepack/test-kubed)'s master branch.
+It depends on [test-kubed](https://github.com/kubepack/test-kubed)'s master branch.
 
 Now, run `$ pack dep`. This command will get all the dependencies and place under `_vendor` folder.
 
@@ -114,7 +114,7 @@ Now, last step, commit the whole thing and push it git repository.
 
 
 
-Now, see below [this](https://raw.githubusercontent.com/kubepack/kubepack/test-mount/_testdata/test-8/pod.yaml) yaml file.
+Now, see below [this](https://raw.githubusercontent.com/kubepack/kubepack/master/_testdata/test-8/pod.yaml) yaml file.
 
 ```console
     apiVersion: v1
@@ -141,7 +141,7 @@ Now, see below [this](https://raw.githubusercontent.com/kubepack/kubepack/test-m
 change the above yaml file's `gitRepo.Repository` and `gitRepo.revision` to your repository location and revision.
 
 ```console
-    $ kc apply -f https://raw.githubusercontent.com/kubepack/kubepack/test-mount/_testdata/test-10/pod.yaml
+    $ kubectl apply -f https://raw.githubusercontent.com/kubepack/kubepack/test-mount/_testdata/test-10/pod.yaml
     pod "server" created
 ```
 

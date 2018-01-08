@@ -17,7 +17,7 @@ section_menu_id: guides
 **This docs trying to explain the behavior of Pack**
 ***
 
-This section explain [test-1](https://github.com/kubepack/pack/tree/master/_testdata/test-1).
+This section explain [test-1](https://github.com/kubepack/kubepack/tree/master/_testdata/test-1).
 
 If you look into this test's `manifest.yaml` file.
 

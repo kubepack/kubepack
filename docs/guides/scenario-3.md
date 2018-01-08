@@ -12,7 +12,7 @@ section_menu_id: guides
 
 > New to Kubepack? Please start [here](/docs/concepts/README.md).
 
-# Scenario-7
+# Scenario-3
 
 **This docs trying to explain the behavior of Pack**
 ***
@@ -35,6 +35,7 @@ dependencies:
 
 See image below, which describe whole dependency.
 ![alt text](/_testdata/test-3/test-3.jpg)
+
 
 Explanation of image:
 
