@@ -28,8 +28,8 @@ Pack is written in Google's GO programming language. Currently, Pack is develope
 #### Download Source
 
 ```console
-$ go get github.com/kubepack/pack
-$ cd $(go env GOPATH)/src/github.com/kubepack/pack
+$ go get github.com/kubepack/kubepack
+$ cd $(go env GOPATH)/src/github.com/kubepack/kubepack
 ```
 
 #### Install Dev tools

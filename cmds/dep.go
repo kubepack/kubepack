@@ -16,7 +16,7 @@ import (
 	"github.com/golang/dep/gps"
 	"github.com/golang/dep/gps/pkgtree"
 	"github.com/golang/glog"
-	typ "github.com/kubepack/pack/type"
+	typ "github.com/kubepack/kubepack/type"
 	"github.com/spf13/cobra"
 )
 

@@ -17,14 +17,14 @@ section_menu_id: guides
 **This docs explain how Pack's fork works.**
 ***
 
-This section explain [test-6](https://github.com/kubepack/pack/tree/master/_testdata/test-6).
+This section explain [test-6](https://github.com/kubepack/kubepack/tree/master/_testdata/test-6).
 
 If you look into this test's `manifest.yaml` file.
 
 ```console
 $ cat manifest.yaml
 
-package: github.com/kubepack/pack/_testdata/test-6
+package: github.com/kubepack/kubepack/_testdata/test-6
 owners:
 - name: Appscode
   email: team@appscode.com

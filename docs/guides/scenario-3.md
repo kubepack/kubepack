@@ -17,14 +17,14 @@ section_menu_id: guides
 **This docs trying to explain the behavior of Pack**
 ***
 
-This section explain [test-3](https://github.com/kubepack/pack/tree/master/_testdata/test-3).
+This section explain [test-3](https://github.com/kubepack/kubepack/tree/master/_testdata/test-3).
 
 If you look into this test's `manifest.yaml` file.
 
 ```console
 $ cat manifest.yaml
 
-package: github.com/kubepack/pack/_testdata/test-3
+package: github.com/kubepack/kubepack/_testdata/test-3
 owners:
 - name: Appscode
   email: team@appscode.com

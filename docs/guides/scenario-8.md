@@ -26,7 +26,7 @@ In this scenario, we'll do following things.
    - Then, run `$ pack up` to final version under `_outlook` folder.
    - Last, commit our changes to git repository.
 
-2.  Now, I write a pod yaml, you can see it [here](https://raw.githubusercontent.com/kubepack/pack/test-mount/_testdata/test-10/pod.yaml).
+2.  Now, I write a pod yaml, you can see it [here](https://raw.githubusercontent.com/kubepack/kubepack/test-mount/_testdata/test-10/pod.yaml).
 In this pod, our above git repository mounted as volume path and
  image [a8uhnf/git-mount:1.0.0](https://cloud.docker.com/swarm/a8uhnf/repository/docker/a8uhnf/git-mount/tags),
 is checking the mounted path if their is `_outlook` folder then it'll apply `$ kubectl apply -R -f <_outlook folder path>`.
@@ -114,7 +114,7 @@ Now, last step, commit the whole thing and push it git repository.
 
 
 
-Now, see below [this](https://raw.githubusercontent.com/kubepack/pack/test-mount/_testdata/test-8/pod.yaml) yaml file.
+Now, see below [this](https://raw.githubusercontent.com/kubepack/kubepack/test-mount/_testdata/test-8/pod.yaml) yaml file.
 
 ```console
     apiVersion: v1
@@ -141,7 +141,7 @@ Now, see below [this](https://raw.githubusercontent.com/kubepack/pack/test-mount
 change the above yaml file's `gitRepo.Repository` and `gitRepo.revision` to your repository location and revision.
 
 ```console
-    $ kc apply -f https://raw.githubusercontent.com/kubepack/pack/test-mount/_testdata/test-10/pod.yaml
+    $ kc apply -f https://raw.githubusercontent.com/kubepack/kubepack/test-mount/_testdata/test-10/pod.yaml
     pod "server" created
 ```
 

@@ -20,4 +20,4 @@ We use Slack for public discussions. To chit chat with us or the rest of the com
 
 To receive product announcements, please join our [mailing list](https://groups.google.com/forum/#!forum/kubepack) or follow us on [Twitter](https://twitter.com/Kubepack). Our mailing list is also used to share design docs shared via Google docs.
 
-If you have found a bug with Kubepack or want to request for new features, please [file an issue](https://github.com/kubepack/pack/issues/new).
+If you have found a bug with Kubepack or want to request for new features, please [file an issue](https://github.com/kubepack/kubepack/issues/new).

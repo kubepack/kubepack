@@ -37,10 +37,10 @@ import time
 import yaml
 from os.path import expandvars, join, dirname
 
-libbuild.REPO_ROOT = expandvars('$GOPATH') + '/src/github.com/kubepack/pack'
+libbuild.REPO_ROOT = expandvars('$GOPATH') + '/src/github.com/kubepack/kubepack'
 BUILD_METADATA = libbuild.metadata(libbuild.REPO_ROOT)
 libbuild.BIN_MATRIX = {
-    'pack': {
+    'kubepack': {
         'type': 'go',
         'go_version': True,
         'release': True,
@@ -51,7 +51,7 @@ libbuild.BIN_MATRIX = {
     }
 }
 if libbuild.ENV not in ['prod']:
-    libbuild.BIN_MATRIX['pack']['distro'] = {
+    libbuild.BIN_MATRIX['kubepack']['distro'] = {
         libbuild.GOHOSTOS: [libbuild.GOHOSTARCH]
     }
 
@@ -150,9 +150,9 @@ def push(name=None):
 
 
 def update_registry():
-    vf = libbuild.REPO_ROOT + '/dist/pack/versions.json'
+    vf = libbuild.REPO_ROOT + '/dist/kubepack/versions.json'
     bucket = libbuild.BUCKET_MATRIX.get(libbuild.ENV, libbuild.BUCKET_MATRIX['dev'])
-    call('gsutil cp {0}/binaries/pack/versions.json {1}'.format(bucket, vf))
+    call('gsutil cp {0}/binaries/kubepack/versions.json {1}'.format(bucket, vf))
     vj = {}
     if os.path.isfile(vf):
         vj = libbuild.read_json(vf)
@@ -161,13 +161,13 @@ def update_registry():
         'release_date': int(time.time())
     }
     libbuild.write_json(vj, vf)
-    call("gsutil cp {1} {0}/binaries/pack/versions.json".format(bucket, vf))
-    call('gsutil acl ch -u AllUsers:R -r {0}/binaries/pack/versions.json'.format(bucket))
+    call("gsutil cp {1} {0}/binaries/kubepack/versions.json".format(bucket, vf))
+    call('gsutil acl ch -u AllUsers:R -r {0}/binaries/kubepack/versions.json'.format(bucket))
 
-    lf = libbuild.REPO_ROOT + '/dist/pack/latest.txt'
+    lf = libbuild.REPO_ROOT + '/dist/kubepack/latest.txt'
     libbuild.write_file(lf, BUILD_METADATA['version'])
-    call("gsutil cp {1} {0}/binaries/pack/latest.txt".format(bucket, lf))
-    call('gsutil acl ch -u AllUsers:R -r {0}/binaries/pack/latest.txt'.format(bucket))
+    call("gsutil cp {1} {0}/binaries/kubepack/latest.txt".format(bucket, lf))
+    call('gsutil acl ch -u AllUsers:R -r {0}/binaries/kubepack/latest.txt'.format(bucket))
 
 
 def install():
