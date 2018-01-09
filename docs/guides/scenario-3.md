@@ -17,14 +17,14 @@ section_menu_id: guides
 **This docs trying to explain the behavior of Pack**
 ***
 
-This section explain [test-3](https://github.com/kubepack/kubepack/tree/master/_testdata/test-3).
+This section explain [test-3](https://github.com/kubepack/kubepack/tree/master/docs/_testdata/test-3).
 
 If you look into this test's `manifest.yaml` file.
 
 ```console
 $ cat manifest.yaml
 
-package: github.com/kubepack/kubepack/_testdata/test-3
+package: github.com/kubepack/kubepack/docs/_testdata/test-3
 owners:
 - name: Appscode
   email: team@appscode.com
@@ -35,7 +35,7 @@ dependencies:
 ```
 
 See image below, which describe whole dependency.
-![alt text](/_testdata/test-3/test-3.jpg)
+![alt text](/docs/_testdata/test-3/test-3.jpg)
 
 
 Explanation of image:

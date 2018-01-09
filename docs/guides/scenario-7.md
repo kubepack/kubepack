@@ -20,12 +20,12 @@ section_menu_id: guides
 In this example, you'll see how to deploy [AppsCode kubed](https://github.com/appscode/kubed)
  in minikube using `Pack`.
 
-In this example, we're using [this](https://github.com/kubepack/kubepack/tree/master/_testdata/test-7) test-case.
+In this example, we're using [this](https://github.com/kubepack/kubepack/tree/master/docs/_testdata/test-7) test-case.
 
 Below command show the `manifest.yaml` file.
 ```console
 $ cat manifest.yaml
-package: github.com/kubepack/kubepack/_testdata/test-7
+package: github.com/kubepack/kubepack/docs/_testdata/test-7
 owners:
 - name: Appscode
   email: team@appscode.com

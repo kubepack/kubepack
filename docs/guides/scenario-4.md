@@ -17,14 +17,14 @@ section_menu_id: guides
 **This docs trying to explain the behavior of Pack**
 ***
 
-This section explain [test-4](https://github.com/kubepack/kubepack/tree/master/_testdata/test-4).
+This section explain [test-4](https://github.com/kubepack/kubepack/tree/master/docs/_testdata/test-4).
 
 If you look into this test's `manifest.yaml` file.
 
 ```console
 $ cat manifest.yaml
 
-package: github.com/kubepack/kubepack/_testdata/test-4
+package: github.com/kubepack/kubepack/docs/_testdata/test-4
 owners:
 - name: Appscode
   email: team@appscode.com
@@ -35,7 +35,7 @@ dependencies:
   branch: test-4
 ```
 
-Here, [test-4](https://github.com/kubepack/kubepack/tree/master/_testdata/test-4) depends on two repositories.
+Here, [test-4](https://github.com/kubepack/kubepack/tree/master/docs/_testdata/test-4) depends on two repositories.
 1. [kube-a](https://github.com/kubepack/kube-a) of branch `test-4`.
 2. [kube-b](https://github.com/kubepack/kube-b) of branch `test-4`.
 
@@ -44,7 +44,7 @@ Both of the above repository(kube-a and kube-b) require dependency of
  `kube-a` depends on `kube-c` of branch `test-1` and `kube-b` depends on `kube-c` of branch `master`.
 
  To clarify, see image.
- ![alt text](/_testdata/test-4/test-4.jpg)
+ ![alt text](/docs/_testdata/test-4/test-4.jpg)
 
  Now, when run `$ pack dep --v=10` command, `pack` could not resolve dependencies. As, this dependencies contradict with each other.
   Give below error.
