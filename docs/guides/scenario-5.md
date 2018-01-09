@@ -36,6 +36,7 @@ dependencies:
 ```
 
 Here, [test-5](https://github.com/kubepack/kubepack/tree/master/docs/_testdata/test-5) depends on two repositories.
+
 1. [kube-a](https://github.com/kubepack/kube-a) of branch `test-5`.
 2. [kube-b](https://github.com/kubepack/kube-b) of branch `test-5`.
 
@@ -43,7 +44,8 @@ Both of the above repository contains the patch of repository [kube-c](https://g
  branch `test-5` in same file (nginx-deployment.yaml).
 
  See the image.
- ![alt text](/docs/_testdata/test-5/test-5.jpg)
+ 
+![alt text](/docs/_testdata/test-5/test-5.jpg)
 
 You can see the both patch below
 

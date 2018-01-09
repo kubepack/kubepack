@@ -37,7 +37,9 @@ dependencies:
   fork: github.com/kubepack/kube-c
 ```
 
+
 See image below, which describe whole dependency.
+
 ![alt text](/docs/_testdata/test-6/test-6.jpg)
 
 
