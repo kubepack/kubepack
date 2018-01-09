@@ -19,14 +19,14 @@ Kubepack provides a CLI to work with database objects. Download pre-built binari
 
 ```console
 # Linux amd 64-bit
-wget -O kubepack https://github.com/kubepack/kubepack/releases/download/0.1.0-alpha.0/kubepack-linux-amd64 \
-  && chmod +x kubepack \
-  && sudo mv kubepack /usr/local/bin/
+wget -O pack https://github.com/kubepack/kubepack/releases/download/0.1.0-alpha.0/kubepack-linux-amd64 \
+  && chmod +x pack \
+  && sudo mv pack /usr/local/bin
 
 # Mac 64-bit
-wget -O kubepack https://github.com/kubepack/kubepack/releases/download/0.1.0-alpha.0/kubepack-darwin-amd64 \
-  && chmod +x kubepack \
-  && sudo mv kubepack /usr/local/bin/
+wget -O pack https://github.com/kubepack/kubepack/releases/download/0.1.0-alpha.0/kubepack-darwin-amd64 \
+  && chmod +x pack \
+  && sudo mv pack /usr/local/bin
 ```
 
 If you prefer to install Kubepack cli from source code, you will need to set up a GO development environment following [these instructions](https://golang.org/doc/code.html). Then, install `kubepack` CLI using `go get` from source code.
