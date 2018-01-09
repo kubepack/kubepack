@@ -35,8 +35,9 @@ dependencies:
   branch: test-4
 ```
 
-Here, [test-4](https://github.com/kubepack/kubepack/tree/master/docs/_testdata/test-4) depends on two repositories.
-1. [kube-a](https://github.com/kubepack/kube-a) of branch `test-4`.
+Here, [test-4](https://github.com/kubepack/kubepack/tree/master/docs/_testdata/test-4) depends on two repositories.  
+  
+1. [kube-a](https://github.com/kubepack/kube-a) of branch `test-4`.  
 2. [kube-b](https://github.com/kubepack/kube-b) of branch `test-4`.
 
 Both of the above repository(kube-a and kube-b) require dependency of
@@ -44,7 +45,8 @@ Both of the above repository(kube-a and kube-b) require dependency of
  `kube-a` depends on `kube-c` of branch `test-1` and `kube-b` depends on `kube-c` of branch `master`.
 
  To clarify, see image.
- ![alt text](/docs/_testdata/test-4/test-4.jpg)
+ 
+![alt text](/docs/_testdata/test-4/test-4.jpg)
 
  Now, when run `$ pack dep --v=10` command, `pack` could not resolve dependencies. As, this dependencies contradict with each other.
   Give below error.
