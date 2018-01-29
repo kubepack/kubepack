@@ -14,8 +14,8 @@ import (
 	"github.com/spf13/cobra"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/strategicpatch"
-	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/kubectl/cmd/util/editor"
+	"k8s.io/kubernetes/pkg/kubectl/scheme"
 )
 
 const defaultEditor = "nano"
@@ -89,7 +89,7 @@ func GetPatch(src, dst []byte) error {
 		return err
 	}
 	kind := ro.GetObjectKind().GroupVersionKind()
-	versionedObject, err := api.Scheme.New(kind)
+	versionedObject, err := scheme.Scheme.New(kind)
 
 	switch {
 	case runtime.IsNotRegisteredError(err):
