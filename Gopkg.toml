@@ -58,32 +58,32 @@
   version = "1.0.0"
 
 [[override]]
-  revision = "kubernetes-1.8.5"
   name = "k8s.io/apimachinery"
+  version = "kubernetes-1.9.0"
 
 [[override]]
   name = "k8s.io/api"
-  version = "kubernetes-1.8.5"
+  version = "kubernetes-1.9.0"
 
 [[override]]
   name = "k8s.io/apiextensions-apiserver"
-  version = "kubernetes-1.8.5"
+  version = "kubernetes-1.9.0"
 
 [[override]]
   name = "k8s.io/client-go"
-  version = "kubernetes-1.8.5"
+  version = "v6.0.0"
 
 [[override]]
   name = "k8s.io/apiserver"
-  version = "kubernetes-1.8.5"
+  version = "kubernetes-1.9.0"
 
 [[override]]
   name = "k8s.io/metrics"
-  version = "kubernetes-1.8.5"
+  version = "kubernetes-1.9.0"
 
 [[override]]
   name = "k8s.io/kubernetes"
-  version = "v1.8.5"
+  version = "v1.9.0"
 
 [[override]]
   name = "github.com/docker/docker"
@@ -97,3 +97,7 @@
   branch = "parse-constraints-with-dash-in-pre"
   name = "github.com/Masterminds/semver"
   source = "https://github.com/carolynvs/semver.git"
+
+[prune]
+  unused-packages = true
+  go-tests = true
