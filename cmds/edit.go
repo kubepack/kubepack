@@ -46,6 +46,10 @@ func NewEditCommand() *cobra.Command {
 }
 
 func RunEdit() error {
+	/*fmt.Println("--------------------------")
+	f := cmdutil.Factory()
+	fmt.Println()
+	fmt.Println("--------------------------")*/
 	root, err := os.Getwd()
 	if err != nil {
 		return err

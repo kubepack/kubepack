@@ -2,7 +2,7 @@ package cmds
 
 import (
 	"io/ioutil"
-	"log"
+	"github.com/appscode/go/log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -12,6 +12,7 @@ import (
 	"github.com/ghodss/yaml"
 	typ "github.com/kubepack/kubepack/type"
 	"github.com/spf13/cobra"
+	"fmt"
 )
 
 var (
@@ -32,6 +33,7 @@ func NewUpCommand() *cobra.Command {
 			}
 
 			err = filepath.Walk(filepath.Join(rootPath, _VendorFolder), visitPatchAndDump)
+			fmt.Println(err)
 			if err != nil {
 				log.Fatalln(err)
 			}
@@ -45,6 +47,9 @@ func NewUpCommand() *cobra.Command {
 }
 
 func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
+	fmt.Println("-------------------")
+	fmt.Println(path)
+	fmt.Println("-------------------")
 	if ferr != nil {
 		return ferr
 	}
@@ -65,8 +70,11 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 
 	patchFilePath := strings.Replace(path, _VendorFolder, PatchFolder, 1)
 	if _, err := os.Stat(patchFilePath); err != nil {
+		fmt.Println("++++++++++++++++++++++", srcFilepath)
 		err = DumpCompiledFile(srcYamlByte, strings.Replace(path, _VendorFolder, CompileDirectory, 1))
 		if err != nil {
+			fmt.Println("Error detected ****************************")
+			fmt.Println(err)
 			return err
 		}
 		return nil
@@ -118,6 +126,8 @@ func CompileWithPatch(srcByte, patchByte []byte) ([]byte, error) {
 }
 
 func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
+	fmt.Println("9999999999999999999999")
+	fmt.Println(string(compiledYaml))
 	root, err := os.Getwd()
 	if err != nil {
 		return err
