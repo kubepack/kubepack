@@ -1,17 +1,3 @@
-// Copyright 2017 Microsoft Corporation
-//
-//  Licensed under the Apache License, Version 2.0 (the "License");
-//  you may not use this file except in compliance with the License.
-//  You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-//  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an "AS IS" BASIS,
-//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//  See the License for the specific language governing permissions and
-//  limitations under the License.
-
 package azure
 
 import (
@@ -44,7 +30,7 @@ func DoRetryWithRegistration(client autorest.Client) autorest.SendDecorator {
 					return resp, err
 				}
 
-				if resp.StatusCode != http.StatusConflict || client.SkipResourceProviderRegistration {
+				if resp.StatusCode != http.StatusConflict {
 					return resp, err
 				}
 				var re RequestError
@@ -55,16 +41,15 @@ func DoRetryWithRegistration(client autorest.Client) autorest.SendDecorator {
 				if err != nil {
 					return resp, err
 				}
-				err = re
 
 				if re.ServiceError != nil && re.ServiceError.Code == "MissingSubscriptionRegistration" {
-					regErr := register(client, r, re)
-					if regErr != nil {
-						return resp, fmt.Errorf("failed auto registering Resource Provider: %s. Original error: %s", regErr, err)
+					err = register(client, r, re)
+					if err != nil {
+						return resp, fmt.Errorf("failed auto registering Resource Provider: %s", err)
 					}
 				}
 			}
-			return resp, fmt.Errorf("failed request: %s", err)
+			return resp, errors.New("failed request and resource provider registration")
 		})
 	}
 }
@@ -159,7 +144,7 @@ func register(client autorest.Client, originalReq *http.Request, re RequestError
 		}
 		req.Cancel = originalReq.Cancel
 
-		resp, err := autorest.SendWithSender(client, req,
+		resp, err := autorest.SendWithSender(client.Sender, req,
 			autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...),
 		)
 		if err != nil {

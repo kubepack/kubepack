@@ -24,8 +24,7 @@
     "autorest/azure",
     "autorest/date"
   ]
-  revision = "c2a68353555b68de3ee8455a4fd3e890a0ac6d99"
-  version = "v9.8.1"
+  revision = "e14a70c556c8e0db173358d1a903dca345a8e75e"
 
 [[projects]]
   branch = "master"
@@ -63,13 +62,15 @@
   name = "github.com/appscode/go"
   packages = [
     "analytics",
+    "context",
     "crypto/rand",
     "homedir",
+    "log",
     "log/golog",
     "runtime",
     "version"
   ]
-  revision = "99dbf420807d9459b63d1d0bf702537bb7aa976f"
+  revision = "1be9b0441d73831aaa93df76e42a751caa5dba88"
 
 [[projects]]
   branch = "master"
@@ -113,8 +114,8 @@
     "service/kms",
     "service/sts"
   ]
-  revision = "1b176c5c6b57adb03bb982c21930e708ebca5a77"
-  version = "v1.12.70"
+  revision = "82eadef012f77590875babb177c60878727821c0"
+  version = "v1.12.74"
 
 [[projects]]
   branch = "master"
@@ -131,8 +132,8 @@
 [[projects]]
   name = "github.com/cpuguy83/go-md2man"
   packages = ["md2man"]
-  revision = "1d903dcb749992f3741d744c0f8376b4bd7eb3e1"
-  version = "v1.0.7"
+  revision = "20f5889cbdc3c73dbd2862796665e7c465ade7d1"
+  version = "v1.0.8"
 
 [[projects]]
   name = "github.com/davecgh/go-spew"
@@ -200,8 +201,8 @@
     ".",
     "log"
   ]
-  revision = "2dd44038f0b95ae693b266c5f87593b5d2fdd78d"
-  version = "v2.5.0"
+  revision = "26b41036311f2da8242db402557a0dbd09dc83da"
+  version = "v2.6.0"
 
 [[projects]]
   branch = "master"
@@ -249,7 +250,7 @@
   branch = "master"
   name = "github.com/go-openapi/spec"
   packages = ["."]
-  revision = "fa03337d7da5735229ee8f5e9d5d0b996014b7f8"
+  revision = "e5cac0107f33264c59bcfe43d12a0e19eba644f0"
 
 [[projects]]
   branch = "master"
@@ -263,8 +264,8 @@
     "proto",
     "sortkeys"
   ]
-  revision = "342cbe0a04158f6dcb03ca0079991a51a4248c02"
-  version = "v0.5"
+  revision = "1adfc126b41513cc696b209667c8656ea7aac67c"
+  version = "v1.0.0"
 
 [[projects]]
   branch = "dep-bypass"
@@ -289,7 +290,7 @@
   branch = "master"
   name = "github.com/golang/groupcache"
   packages = ["lru"]
-  revision = "84a468cf14b4376def5d68c722b139b881c450a4"
+  revision = "66deaeb636dff1ac7d938ce666d090556056a4b0"
 
 [[projects]]
   branch = "master"
@@ -301,7 +302,7 @@
     "ptypes/duration",
     "ptypes/timestamp"
   ]
-  revision = "925541529c1fa6821df4e44ce2723319eb2be768"
+  revision = "bbd03ef6da3a115852eaf24c8a1c46aeb39aa175"
 
 [[projects]]
   branch = "master"
@@ -343,7 +344,7 @@
     "openstack/utils",
     "pagination"
   ]
-  revision = "e6eebf4bc729a74c834d96d950a804ab61015b0a"
+  revision = "6da026c32e2d622cc242d32984259c77237aefe1"
 
 [[projects]]
   branch = "master"
@@ -361,7 +362,7 @@
     ".",
     "simplelru"
   ]
-  revision = "0a025b7e63adc15a622f29b0b2c4c3848243bbf6"
+  revision = "0fb14efe8c47ae851c0034ed7a448854d3d34cf3"
 
 [[projects]]
   branch = "master"
@@ -372,8 +373,7 @@
 [[projects]]
   name = "github.com/imdario/mergo"
   packages = ["."]
-  revision = "163f41321a19dd09362d4c63cc2489db2015f1f4"
-  version = "0.3.2"
+  revision = "6633656539c1639d9d78127b7d47c622b5d7b6dc"
 
 [[projects]]
   name = "github.com/inconshreveable/mousetrap"
@@ -513,14 +513,19 @@
 [[projects]]
   name = "github.com/russross/blackfriday"
   packages = ["."]
-  revision = "4048872b16cc0fc2c5fd9eacf0ed2c2fedaa0c8c"
-  version = "v1.5"
+  revision = "300106c228d52c8941d4b3de6054a6062a86dda3"
 
 [[projects]]
   branch = "master"
   name = "github.com/sdboyer/constext"
   packages = ["."]
   revision = "836a144573533ea4da4e6929c235fd348aed1c80"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/shurcooL/sanitized_anchor_name"
+  packages = ["."]
+  revision = "86672fcb3f950f35f2e675df2240550f2a50762f"
 
 [[projects]]
   name = "github.com/sirupsen/logrus"
@@ -535,7 +540,7 @@
     ".",
     "doc"
   ]
-  revision = "f91529fc609202eededff4de2dc0ba2f662240a3"
+  revision = "be77323fc05148ef091e83b3866c0d47c8e74a8b"
 
 [[projects]]
   name = "github.com/spf13/pflag"
@@ -547,7 +552,7 @@
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["ssh/terminal"]
-  revision = "1875d0a70c90e57f11972aefd42276df65e895b9"
+  revision = "9de5f2eaf759b4c4550b3db39fed2e9e5f86f45c"
 
 [[projects]]
   branch = "master"
@@ -560,7 +565,7 @@
     "idna",
     "lex/httplex"
   ]
-  revision = "0ed95abb35c445290478a5348a7b38bb154135fd"
+  revision = "f5dfe339be1d06f81b22525fe34671ee7d2c8904"
 
 [[projects]]
   branch = "master"
@@ -572,7 +577,7 @@
     "jws",
     "jwt"
   ]
-  revision = "a032972e28060ca4f5644acffae3dfc268cc09db"
+  revision = "543e37812f10c46c622c9575afd7ad22f22a12ba"
 
 [[projects]]
   branch = "master"
@@ -587,7 +592,7 @@
     "unix",
     "windows"
   ]
-  revision = "ff2a66f350cefa5c93a634eadb5d25bb60c85a9c"
+  revision = "37707fdb30a5b38865cfb95e5aab41707daec7fd"
 
 [[projects]]
   branch = "master"
@@ -615,7 +620,7 @@
     "unicode/rangetable",
     "width"
   ]
-  revision = "e19ae1496984b1c655b8044a65c0300a3c878dd3"
+  revision = "4e4a3210bb54bb31f6ab2cdca2edcc0b50c420c1"
 
 [[projects]]
   name = "google.golang.org/appengine"
@@ -763,8 +768,7 @@
     "third_party/forked/golang/netutil",
     "third_party/forked/golang/reflect"
   ]
-  revision = "180eddb345a5be3a157cea1c624700ad5bd27b8f"
-  version = "kubernetes-1.9.0"
+  revision = "kubernetes-1.9.0"
 
 [[projects]]
   name = "k8s.io/apiserver"
@@ -923,7 +927,7 @@
     "pkg/util/proto",
     "pkg/util/proto/validation"
   ]
-  revision = "a07b7bbb58e7fdc5144f8d7046331d29fc9ad3b3"
+  revision = "275e2ce91dec4c05a4094a7b1daee5560b555ac9"
 
 [[projects]]
   name = "k8s.io/kubernetes"
@@ -1092,14 +1096,14 @@
     "plugin/pkg/scheduler/util",
     "plugin/pkg/scheduler/volumebinder"
   ]
-  revision = "5fa2db2bd46ac79e5e00a4e6ed24191080aa463b"
-  version = "v1.9.2"
+  revision = "925c127ec6b946659ad0fd596fa959be43f0cc05"
+  version = "v1.9.0"
 
 [[projects]]
   branch = "master"
   name = "k8s.io/utils"
   packages = ["exec"]
-  revision = "a99a3e11a96751670db62ba77c6d278d1136931e"
+  revision = "258e2a2fa64568210fbd6267cf1d8fd87c3cb86e"
 
 [[projects]]
   branch = "master"
@@ -1110,6 +1114,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "04073878e0f00bfef5fbe911db88b9b55fba2388b85745710cb19ec76c3deacf"
+  inputs-digest = "8bb17cd213a549e513a31e99ea4f0972c34478cda0d76b0859fb1676315fb9b9"
   solver-name = "gps-cdcl"
   solver-version = 1
