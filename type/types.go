@@ -1,10 +1,13 @@
 package types
 
-const ManifestFile = "manifest.yaml"
+const (
+	ManifestFile = "manifest.yaml"
+	KubepackOpenapiPath = ".kubepack"
+)
 
 type ManifestDefinition struct {
 	Package string `json:"package"`
-	Owners  []struct {
+	Owners []struct {
 		Name  string `json:"name"`
 		Email string `json:"email"`
 	} `json:"owners"`

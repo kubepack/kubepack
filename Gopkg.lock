@@ -114,8 +114,8 @@
     "service/kms",
     "service/sts"
   ]
-  revision = "82eadef012f77590875babb177c60878727821c0"
-  version = "v1.12.74"
+  revision = "ebc8a649dc2a7c78c9237c2575a63b3efd6d0a2d"
+  version = "v1.12.75"
 
 [[projects]]
   branch = "master"
@@ -250,7 +250,7 @@
   branch = "master"
   name = "github.com/go-openapi/spec"
   packages = ["."]
-  revision = "e5cac0107f33264c59bcfe43d12a0e19eba644f0"
+  revision = "a7c696777f29fd0998254e1bceb37275f0cc59b6"
 
 [[projects]]
   branch = "master"
@@ -508,7 +508,7 @@
     "nfs",
     "xfs"
   ]
-  revision = "cb4147076ac75738c9a7d279075a253c0cc5acbd"
+  revision = "282c8707aa210456a825798969cc27edda34992a"
 
 [[projects]]
   name = "github.com/russross/blackfriday"
@@ -1114,6 +1114,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "8bb17cd213a549e513a31e99ea4f0972c34478cda0d76b0859fb1676315fb9b9"
+  inputs-digest = "5221aea05c08c810f105d55893dedf74c1afb17dfa2763b8cbec9d25c0946f96"
   solver-name = "gps-cdcl"
   solver-version = 1
