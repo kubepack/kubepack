@@ -20,7 +20,7 @@ import (
 	"k8s.io/kubernetes/pkg/kubectl/cmd/util/openapi"
 )
 
-const OpenapiSpecDloadPath = "https://raw.githubusercontent.com/kubernetes/kubernetes/master/api/openapi-spec/swagger.json"
+const OpenapiSpecDloadPath = "https://raw.githubusercontent.com/kubernetes/kubernetes/%s/api/openapi-spec/swagger.json"
 
 var validator *validation.SchemaValidation
 
@@ -35,6 +35,7 @@ func NewValidateCommand() *cobra.Command {
 			}
 		},
 	}
+	cmd.PersistentFlags().String("kube-version", "", "name of the kubeconfig context to use")
 	return cmd
 }
 
@@ -43,7 +44,7 @@ func validateOutlook(cmd *cobra.Command) error {
 	if err != nil {
 		return err
 	}
-	validator, err = GetOpenapiValidator()
+	validator, err = GetOpenapiValidator(cmd)
 	if err != nil {
 		return err
 	}
@@ -134,10 +135,9 @@ func downloadOpenApiSwagger(url string, file *os.File) error {
 	return nil
 }
 
-func GetOpenapiValidator() (*validation.SchemaValidation, error) {
-	swaggerJsonPath, err := GetSwaggerJsonpath()
+func GetOpenapiValidator(cmd *cobra.Command) (*validation.SchemaValidation, error) {
+	swaggerJsonPath, err := GetSwaggerJsonpath(cmd)
 	if err != nil {
-		panic(err)
 		return nil, err
 	}
 	apiSchema := ApiSchema{Path: swaggerJsonPath}
@@ -149,7 +149,7 @@ func GetOpenapiValidator() (*validation.SchemaValidation, error) {
 	return validation.NewSchemaValidation(resources), nil
 }
 
-func GetSwaggerJsonpath() (string, error) {
+func GetSwaggerJsonpath(cmd *cobra.Command) (string, error) {
 	kubepackPath := filepath.Join(os.Getenv("HOME"), types.KubepackOpenapiPath)
 	_, err := os.Stat(kubepackPath)
 	if os.IsNotExist(err) {
@@ -159,9 +159,17 @@ func GetSwaggerJsonpath() (string, error) {
 		}
 	}
 
-	version, err := GetKubernetesVersion()
+	var version string
+	version, err = cmd.Flags().GetString("kube-version")
 	if err != nil {
 		return "", err
+	}
+
+	if version == "" {
+		version, err = GetKubernetesVersion()
+		if err != nil {
+			return "", err
+		}
 	}
 
 	oApiPath := filepath.Join(kubepackPath, version, "openapi-spec")
@@ -182,7 +190,7 @@ func GetSwaggerJsonpath() (string, error) {
 		}
 		defer file.Close()
 
-		err = downloadOpenApiSwagger(OpenapiSpecDloadPath, file)
+		err = downloadOpenApiSwagger(fmt.Sprintf(OpenapiSpecDloadPath, version), file)
 		if err != nil {
 			return "", err
 		}
