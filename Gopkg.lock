@@ -70,7 +70,7 @@
     "runtime",
     "version"
   ]
-  revision = "1be9b0441d73831aaa93df76e42a751caa5dba88"
+  revision = "6adb909e2aa54fff1642dbe6cbe518fa0c64d987"
 
 [[projects]]
   branch = "master"
@@ -114,8 +114,8 @@
     "service/kms",
     "service/sts"
   ]
-  revision = "ebc8a649dc2a7c78c9237c2575a63b3efd6d0a2d"
-  version = "v1.12.75"
+  revision = "c9b25d6bfa986ab6d195479871a96e81b8882536"
+  version = "v1.12.77"
 
 [[projects]]
   branch = "master"
@@ -250,7 +250,7 @@
   branch = "master"
   name = "github.com/go-openapi/spec"
   packages = ["."]
-  revision = "a7c696777f29fd0998254e1bceb37275f0cc59b6"
+  revision = "1de3e0542de65ad8d75452a595886fdd0befb363"
 
 [[projects]]
   branch = "master"
@@ -312,6 +312,16 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/google/go-jsonnet"
+  packages = [
+    ".",
+    "ast",
+    "parser"
+  ]
+  revision = "f46dea2835bc4d5138d279753643c970250ef683"
+
+[[projects]]
+  branch = "master"
   name = "github.com/google/gofuzz"
   packages = ["."]
   revision = "24818f796faf91cd76ec7bddd72458fbced7a6c1"
@@ -344,7 +354,7 @@
     "openstack/utils",
     "pagination"
   ]
-  revision = "6da026c32e2d622cc242d32984259c77237aefe1"
+  revision = "cf2bbaa52ab69d063466a3c46a5918d05d752625"
 
 [[projects]]
   branch = "master"
@@ -552,7 +562,7 @@
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["ssh/terminal"]
-  revision = "9de5f2eaf759b4c4550b3db39fed2e9e5f86f45c"
+  revision = "650f4a345ab4e5b245a3034b110ebc7299e68186"
 
 [[projects]]
   branch = "master"
@@ -1114,6 +1124,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "5221aea05c08c810f105d55893dedf74c1afb17dfa2763b8cbec9d25c0946f96"
+  inputs-digest = "8b06a56ed76f72f51177a023c074ba73e164632e81a2c16da9f2c4ba6363d42d"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -45,4 +45,4 @@ command combine files from `patch` and `_vendor` folder. This combination of `pa
     $ kubepack validate
 ```
 This command will validate the `_outlook` folder yaml files using `openapi-spec`.
-If some file is not a valid yaml then throws errors.
+If some file is not a valid yaml then throws errors. `--kube-version` flag is used specify kubernetes version, which you want to validate against.
