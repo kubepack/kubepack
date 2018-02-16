@@ -18,6 +18,7 @@ import (
 	"gopkg.in/yaml.v2"
 	"github.com/googleapis/gnostic/compiler"
 	"k8s.io/kubernetes/pkg/kubectl/cmd/util/openapi"
+	"github.com/pkg/errors"
 )
 
 const OpenapiSpecDloadPath = "https://raw.githubusercontent.com/kubernetes/kubernetes/%s/api/openapi-spec/swagger.json"
@@ -35,7 +36,6 @@ func NewValidateCommand() *cobra.Command {
 			}
 		},
 	}
-	cmd.PersistentFlags().String("kube-version", "", "name of the kubeconfig context to use")
 	return cmd
 }
 
@@ -81,7 +81,7 @@ func configForContext(context string) clientcmd.ClientConfig {
 
 func visitOutlookFolder(path string, fileInfo os.FileInfo, ferr error) error {
 	if ferr != nil {
-		return ferr
+		return errors.WithStack(ferr)
 	}
 	if fileInfo.IsDir() {
 		return nil
@@ -89,12 +89,12 @@ func visitOutlookFolder(path string, fileInfo os.FileInfo, ferr error) error {
 
 	srcBytes, err := ioutil.ReadFile(path)
 	if err != nil {
-		return err
+		return errors.WithStack(ferr)
 	}
 
 	err = validator.ValidateBytes(srcBytes)
 	if err != nil {
-		return err
+		return errors.WithStack(ferr)
 	}
 	fmt.Printf("%s is a valid yaml\n", path)
 	return nil

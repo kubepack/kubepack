@@ -18,6 +18,7 @@ import (
 	"github.com/golang/glog"
 	typ "github.com/kubepack/kubepack/type"
 	"github.com/spf13/cobra"
+	"github.com/pkg/errors"
 )
 
 var (
@@ -388,7 +389,7 @@ func (a InternalLock) InputsDigest() []byte {
 func (a NaiveAnalyzer) lookForManifest(root string) (gps.Manifest, gps.Lock, error) {
 	mpath := filepath.Join(root, typ.ManifestFile)
 	if _, err := os.Lstat(mpath); err != nil {
-		return nil, nil, err
+		return nil, nil, errors.Wrap(err, "Unable to read manifest.yaml")
 	}
 	man := &InternalManifest{}
 	man.root = root

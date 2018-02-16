@@ -70,7 +70,7 @@
     "runtime",
     "version"
   ]
-  revision = "6adb909e2aa54fff1642dbe6cbe518fa0c64d987"
+  revision = "8367769380cf93a12b381d957941ddf2a19d0356"
 
 [[projects]]
   branch = "master"
@@ -114,8 +114,8 @@
     "service/kms",
     "service/sts"
   ]
-  revision = "c9b25d6bfa986ab6d195479871a96e81b8882536"
-  version = "v1.12.77"
+  revision = "788eb15477cf129a45d8e1d0af5f533348f4125d"
+  version = "v1.12.78"
 
 [[projects]]
   branch = "master"
@@ -575,7 +575,7 @@
     "idna",
     "lex/httplex"
   ]
-  revision = "f5dfe339be1d06f81b22525fe34671ee7d2c8904"
+  revision = "dc948dff8834a7fe1ca525f8d04e261c2b56e70d"
 
 [[projects]]
   branch = "master"
@@ -1124,6 +1124,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "8b06a56ed76f72f51177a023c074ba73e164632e81a2c16da9f2c4ba6363d42d"
+  inputs-digest = "2e0996bb8322de6fb2cd0fae9b8c535a37566ab569c111b26ef52b6abea26ff9"
   solver-name = "gps-cdcl"
   solver-version = 1

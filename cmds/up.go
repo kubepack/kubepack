@@ -12,7 +12,8 @@ import (
 	"github.com/ghodss/yaml"
 	typ "github.com/kubepack/kubepack/type"
 	"github.com/spf13/cobra"
-	"fmt"
+	"github.com/pkg/errors"
+	"github.com/google/go-jsonnet"
 )
 
 var (
@@ -21,6 +22,8 @@ var (
 )
 
 const CompileDirectory = "_outlook"
+
+// var validator *validation.SchemaValidation
 
 func NewUpCommand() *cobra.Command {
 	cmd := &cobra.Command{
@@ -31,9 +34,11 @@ func NewUpCommand() *cobra.Command {
 			if err != nil {
 				log.Fatalln(err)
 			}
-
+			validator, err = GetOpenapiValidator(cmd)
+			if err != nil {
+				log.Fatalln(err)
+			}
 			err = filepath.Walk(filepath.Join(rootPath, _VendorFolder), visitPatchAndDump)
-			fmt.Println(err)
 			if err != nil {
 				log.Fatalln(err)
 			}
@@ -47,9 +52,12 @@ func NewUpCommand() *cobra.Command {
 }
 
 func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
-	fmt.Println("-------------------")
-	fmt.Println(path)
-	fmt.Println("-------------------")
+	if fileInfo.Name() == ".gitignore" || fileInfo.Name() == "README.md" {
+		return nil
+	}
+	if strings.HasSuffix(path, "jsonnet.TEMPLATE") {
+		return nil
+	}
 	if ferr != nil {
 		return ferr
 	}
@@ -70,19 +78,29 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 
 	patchFilePath := strings.Replace(path, _VendorFolder, PatchFolder, 1)
 	if _, err := os.Stat(patchFilePath); err != nil {
-		fmt.Println("++++++++++++++++++++++", srcFilepath)
+		err = validator.ValidateBytes(srcYamlByte)
+		if err != nil {
+			vm := jsonnet.MakeVM()
+			j, err := vm.EvaluateSnippet(path, string(srcYamlByte))
+			if err != nil {
+				return errors.Wrap(err, "Error to evaluate jsonet")
+			}
+			yml, err := yaml.JSONToYAML([]byte(j))
+			if err != nil {
+				errors.Wrap(err, "error to convert json to yaml")
+			}
+			srcYamlByte = yml
+		}
 		err = DumpCompiledFile(srcYamlByte, strings.Replace(path, _VendorFolder, CompileDirectory, 1))
 		if err != nil {
-			fmt.Println("Error detected ****************************")
-			fmt.Println(err)
-			return err
+			return errors.Wrap(err, "Error dump compiled file")
 		}
 		return nil
 	}
 
 	patchByte, err := ioutil.ReadFile(strings.Replace(path, _VendorFolder, PatchFolder, 1))
 	if err != nil {
-		return err
+		return errors.Wrap(err, "Error to read patch file")
 	}
 
 	splitWithVendor := strings.Split(path, _VendorFolder)
@@ -92,12 +110,12 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 
 	mergedPatchYaml, err := CompileWithPatch(srcYamlByte, patchByte)
 	if err != nil {
-		return err
+		return errors.Wrap(err, "Error to merge patch")
 	}
 
 	err = DumpCompiledFile(mergedPatchYaml, strings.Replace(path, _VendorFolder, CompileDirectory, 1))
 	if err != nil {
-		return err
+		return errors.Wrap(err, "Error to dump compiled file")
 	}
 	return nil
 }
@@ -105,36 +123,34 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 func CompileWithPatch(srcByte, patchByte []byte) ([]byte, error) {
 	jsonSrc, err := yaml.YAMLToJSON(srcByte)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "Error to convert source yaml to json.")
 	}
 
 	jsonPatch, err := yaml.YAMLToJSON(patchByte)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "Error to convert patch yaml to json.")
 	}
 
 	compiled, err := jsonpatch.MergePatch(jsonSrc, jsonPatch)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "Error to marge patch with source.")
 	}
 
 	compiledYaml, err := yaml.JSONToYAML(compiled)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "Error to convert compiled yaml to json.")
 	}
-	return compiledYaml, err
+	return compiledYaml, nil
 }
 
 func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
-	fmt.Println("9999999999999999999999")
-	fmt.Println(string(compiledYaml))
 	root, err := os.Getwd()
 	if err != nil {
-		return err
+		return errors.Wrap(err, "Error to get wd(os.Getwd()).")
 	}
 	annotateYaml, err := getAnnotatedWithCommitHash(compiledYaml, root)
 	if err != nil {
-		return err
+		return errors.Wrap(err, "error to annotated with git-commit-hash")
 	}
 
 	// If not exists mkdir all the folder
@@ -143,19 +159,19 @@ func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
 		if os.IsNotExist(err) {
 			err := os.MkdirAll(outlookDir, 0755)
 			if err != nil {
-				return err
+				return errors.Wrap(err, "Error to mkdir.")
 			}
 		}
 	}
 
 	_, err = os.Create(outlookPath)
 	if err != nil {
-		return err
+		return errors.Wrap(err, "Error to create outlook.")
 	}
 
 	err = ioutil.WriteFile(outlookPath, annotateYaml, 0755)
 	if err != nil {
-		return err
+		return errors.Wrap(err, "Error to write file in outlook folder.")
 	}
 
 	return nil
