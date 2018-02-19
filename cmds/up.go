@@ -23,8 +23,6 @@ var (
 
 const CompileDirectory = "_outlook"
 
-// var validator *validation.SchemaValidation
-
 func NewUpCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "up",
