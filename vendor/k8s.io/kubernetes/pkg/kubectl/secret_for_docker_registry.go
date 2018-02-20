@@ -85,15 +85,15 @@ func (s SecretForDockerRegistryGeneratorV1) StructuredGenerate() (runtime.Object
 	if err := s.validate(); err != nil {
 		return nil, err
 	}
-	dockercfgJsonContent, err := handleDockerCfgJsonContent(s.Username, s.Password, s.Email, s.Server)
+	dockercfgContent, err := handleDockercfgContent(s.Username, s.Password, s.Email, s.Server)
 	if err != nil {
 		return nil, err
 	}
 	secret := &v1.Secret{}
 	secret.Name = s.Name
-	secret.Type = v1.SecretTypeDockerConfigJson
+	secret.Type = v1.SecretTypeDockercfg
 	secret.Data = map[string][]byte{}
-	secret.Data[v1.DockerConfigJsonKey] = dockercfgJsonContent
+	secret.Data[v1.DockerConfigKey] = dockercfgContent
 	if s.AppendHash {
 		h, err := hash.SecretHash(secret)
 		if err != nil {
@@ -133,17 +133,17 @@ func (s SecretForDockerRegistryGeneratorV1) validate() error {
 	return nil
 }
 
-// handleDockerCfgJsonContent serializes a ~/.docker/config.json file
-func handleDockerCfgJsonContent(username, password, email, server string) ([]byte, error) {
+// handleDockercfgContent serializes a dockercfg json file
+func handleDockercfgContent(username, password, email, server string) ([]byte, error) {
 	dockercfgAuth := credentialprovider.DockerConfigEntry{
 		Username: username,
 		Password: password,
 		Email:    email,
 	}
 
-	dockerCfgJson := credentialprovider.DockerConfigJson{
+	dockerCfg := credentialprovider.DockerConfigJson{
 		Auths: map[string]credentialprovider.DockerConfigEntry{server: dockercfgAuth},
 	}
 
-	return json.Marshal(dockerCfgJson)
+	return json.Marshal(dockerCfg)
 }

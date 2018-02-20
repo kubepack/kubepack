@@ -18,6 +18,8 @@ import (
 	"github.com/golang/glog"
 	typ "github.com/kubepack/kubepack/type"
 	"github.com/spf13/cobra"
+	"github.com/pkg/errors"
+	"github.com/google/go-jsonnet"
 )
 
 var (
@@ -155,7 +157,17 @@ func runDeps() error {
 
 func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 	if err != nil {
-		return err
+		return errors.WithStack(err)
+	}
+	if strings.HasSuffix(path, "jsonnet.TEMPLATE") {
+		return nil
+	}
+	if strings.HasSuffix(path, ".jsonnet") {
+		err := convertJsonnetfileToYamlfile(path)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		return nil
 	}
 	if !strings.Contains(path, PatchFolder) {
 		return nil
@@ -210,6 +222,31 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 	return err
 }
 
+func convertJsonnetfileToYamlfile(path string) error {
+	vm := jsonnet.MakeVM()
+	byt, err := ioutil.ReadFile(path)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	j, err := vm.EvaluateSnippet(path, string(byt))
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	f, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	yml, err := convertJsonnetToYamlByFilepath(path, []byte(j))
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	_, err = f.Write([]byte(yml))
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	return nil
+}
+
 func findImportInSlice(r string, repos []string) bool {
 	for _, val := range repos {
 		if r == val {
@@ -245,7 +282,7 @@ func (a NaiveAnalyzer) DeriveManifestAndLock(path string, n gps.ProjectRoot) (gp
 // of gps' hashing memoization scheme.
 func (a NaiveAnalyzer) Info() gps.ProjectAnalyzerInfo {
 	return gps.ProjectAnalyzerInfo{
-		Name:    "kubernetes-dependency-mngr",
+		Name:    "kubepack",
 		Version: 1,
 	}
 }
@@ -388,7 +425,7 @@ func (a InternalLock) InputsDigest() []byte {
 func (a NaiveAnalyzer) lookForManifest(root string) (gps.Manifest, gps.Lock, error) {
 	mpath := filepath.Join(root, typ.ManifestFile)
 	if _, err := os.Lstat(mpath); err != nil {
-		return nil, nil, err
+		return nil, nil, errors.Wrap(err, "Unable to read manifest.yaml")
 	}
 	man := &InternalManifest{}
 	man.root = root

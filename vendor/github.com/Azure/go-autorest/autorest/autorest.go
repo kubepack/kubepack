@@ -87,9 +87,6 @@ const (
 // ResponseHasStatusCode returns true if the status code in the HTTP Response is in the passed set
 // and false otherwise.
 func ResponseHasStatusCode(resp *http.Response, codes ...int) bool {
-	if resp == nil {
-		return false
-	}
 	return containsInt(codes, resp.StatusCode)
 }
 
