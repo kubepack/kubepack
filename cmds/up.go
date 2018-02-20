@@ -228,3 +228,16 @@ func getRootDir(path string) (vcs.Repo, error) {
 
 	return nil, err
 }
+
+func convertJsonnetToYamlByFilepath(path string, srcYamlByte []byte) ([]byte, error) {
+	vm := jsonnet.MakeVM()
+	j, err := vm.EvaluateSnippet(path, string(srcYamlByte))
+	if err != nil {
+		return nil, errors.WithStack(errors.Wrap(err, "Error to evaluate jsonet"))
+	}
+	yml, err := yaml.JSONToYAML([]byte(j))
+	if err != nil {
+		return nil, errors.WithStack(errors.Wrap(err, "Error to evaluate jsonet"))
+	}
+	return yml, nil
+}

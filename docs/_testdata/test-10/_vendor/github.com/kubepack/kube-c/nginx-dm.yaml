@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: nginx-dm
+  namespace: default
+  labels:
+    app: nginx-dm
+spec:
+  template:
+    metadata:
+      labels:
+        name: busy-dm
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: '10m'
