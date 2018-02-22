@@ -142,7 +142,7 @@ change the above yaml file's `gitRepo.Repository` and `gitRepo.revision` to your
     pod "server" created
 ```
 
-This pod mount your git repository in /mypath in the container and if their is exist any `_outlook` folder, then it'll `$ kubeclt apply -R -f <outlook filepath>`.
+This pod mount your git repository in /mypath in the container and if their is exist any `_outlook` folder, then it'll `$ kubectl apply -R -f <outlook filepath>`.
 You can check actual implementation [here](https://github.com/a8uhnf/git-mount/blob/master/main.go).
 
 Now, you can see the all the desired kubernetes object in your cluster.
