@@ -16,10 +16,10 @@ import (
 	"github.com/golang/dep/gps"
 	"github.com/golang/dep/gps/pkgtree"
 	"github.com/golang/glog"
-	typ "github.com/kubepack/kubepack/type"
-	"github.com/spf13/cobra"
-	"github.com/pkg/errors"
 	"github.com/google/go-jsonnet"
+	typ "github.com/kubepack/kubepack/type"
+	"github.com/pkg/errors"
+	"github.com/spf13/cobra"
 )
 
 var (

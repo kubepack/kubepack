@@ -1,24 +1,25 @@
 package cmds
 
 import (
-	cmdutil "k8s.io/kubernetes/pkg/kubectl/cmd/util"
-	"github.com/googleapis/gnostic/OpenAPIv2"
 	"fmt"
-	"github.com/spf13/cobra"
-	"k8s.io/client-go/tools/clientcmd"
-	"k8s.io/kubernetes/pkg/kubectl/cmd/util/openapi/validation"
-	"os"
-	"io/ioutil"
-	"path/filepath"
-	"github.com/kubepack/kubepack/type"
-	"net/http"
-	"strings"
 	"io"
+	"io/ioutil"
+	"net/http"
+	"os"
+	"path/filepath"
+	"strings"
 	"sync"
-	"gopkg.in/yaml.v2"
+
+	"github.com/googleapis/gnostic/OpenAPIv2"
 	"github.com/googleapis/gnostic/compiler"
-	"k8s.io/kubernetes/pkg/kubectl/cmd/util/openapi"
+	"github.com/kubepack/kubepack/type"
 	"github.com/pkg/errors"
+	"github.com/spf13/cobra"
+	"gopkg.in/yaml.v2"
+	"k8s.io/client-go/tools/clientcmd"
+	cmdutil "k8s.io/kubernetes/pkg/kubectl/cmd/util"
+	"k8s.io/kubernetes/pkg/kubectl/cmd/util/openapi"
+	"k8s.io/kubernetes/pkg/kubectl/cmd/util/openapi/validation"
 )
 
 const OpenapiSpecDloadPath = "https://raw.githubusercontent.com/kubernetes/kubernetes/%s/api/openapi-spec/swagger.json"

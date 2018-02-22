@@ -1,12 +1,13 @@
 package cmds
 
 import (
-	"github.com/spf13/cobra"
-	"os"
-	"github.com/pkg/errors"
-	"path/filepath"
-	"github.com/kubepack/kubepack/type"
 	"log"
+	"os"
+	"path/filepath"
+
+	"github.com/kubepack/kubepack/type"
+	"github.com/pkg/errors"
+	"github.com/spf13/cobra"
 )
 
 func NewKubepackInitializeCmd() *cobra.Command {

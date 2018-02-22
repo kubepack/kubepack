@@ -2,18 +2,18 @@ package cmds
 
 import (
 	"io/ioutil"
-	"github.com/appscode/go/log"
 	"os"
 	"path/filepath"
 	"strings"
 
 	"github.com/Masterminds/vcs"
+	"github.com/appscode/go/log"
 	"github.com/evanphx/json-patch"
 	"github.com/ghodss/yaml"
-	typ "github.com/kubepack/kubepack/type"
-	"github.com/spf13/cobra"
-	"github.com/pkg/errors"
 	"github.com/google/go-jsonnet"
+	typ "github.com/kubepack/kubepack/type"
+	"github.com/pkg/errors"
+	"github.com/spf13/cobra"
 )
 
 var (
