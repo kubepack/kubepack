@@ -32,7 +32,7 @@ dependencies:
   branch: test-2
 
 ```
-You'll see it depends on repository [kube-a](https://kubepack/kube-a) of branch `test-2`.
+You'll see it depends on branch `test-2` of repository [kube-a](https://kubepack/kube-a).
 
 You can see the whole dependencies in below image.
 

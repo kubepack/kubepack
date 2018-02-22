@@ -1,0 +1,29 @@
+apiVersion: kubedb.com/v1alpha1
+kind: Postgres
+metadata:
+  annotations:
+  creationTimestamp: 2017-09-20T07:19:17Z
+  deletionGracePeriodSeconds: null
+  deletionTimestamp: null
+  generation: 0
+  name: p1
+  namespace: demo
+  resourceVersion: "3637"
+  selfLink: /apis/kubedb.com/v1alpha1/namespaces/demo/postgreses/p1
+  uid: 039baa9d-9dd4-11e7-8b3f-08002709c846
+spec:
+  doNotPause: false
+  init:
+    scriptSource:
+      gitRepo:
+        repository: https://github.com/k8sdb/postgres-init-scripts.git
+      scriptPath: postgres-init-scripts/run.sh
+  storage:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 50Mi
+    storageClassName: standard
+  version: 9.5
+
