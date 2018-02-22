@@ -37,8 +37,8 @@ dependencies:
 
 Here, [test-5](https://github.com/kubepack/kubepack/tree/master/docs/_testdata/test-5) depends on two repositories.
 
-1. [kube-a](https://github.com/kubepack/kube-a) of branch `test-5`.
-2. [kube-b](https://github.com/kubepack/kube-b) of branch `test-5`.
+1. branch `test-5` of [kube-a](https://github.com/kubepack/kube-a/tree/test-5).
+2. branch `test-5` of [kube-b](https://github.com/kubepack/kube-b/tree/test-5).
 
 Both of the above repository contains the patch of repository [kube-c](https://github.com/kubepack/kube-c/tree/test-5)'s
  branch `test-5` in same file (nginx-deployment.yaml).
@@ -66,7 +66,7 @@ When run `pack dep` command, following things happen.
 
 1. Get all the dependencies, reading `manifest.yaml` file.
 2. As, `kube-a` and `kube-b` both contains patch of repository `kube-c`,
-`kube-c` in `_vendor` folder is combination of both of this patch and original file.
+`kube-c` in `_vendor` folder is combination of both patches and original file.
 
 
 ## Next Steps

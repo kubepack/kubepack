@@ -41,7 +41,7 @@ dependencies:
   revison: 443d58e40a195d826b8f1fd91f8b5a54653c2f3d
 ```
 
-  - package: The top level package is the location in the `GOPATH`.
+  - package: The top level package is the identifier of the package.
   This is used for things such as making sure an import isn't also importing the top level package.
   - owners: The owners is a list of one or more owners for the project. This can be a person or organization and is useful for things like notifying the owners of a security issue without filing a public bug.
   - dependencies: A list of external package needs to import. Each package can include:

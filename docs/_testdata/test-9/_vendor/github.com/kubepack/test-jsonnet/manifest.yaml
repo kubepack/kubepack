@@ -1,0 +1,5 @@
+package: github.com/kubepack/test-jsonnet
+owners:
+- name: Appscode
+  email: team@appscode.com
+dependencies:

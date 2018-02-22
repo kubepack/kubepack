@@ -45,13 +45,12 @@ See image below, which describe whole dependency.
 
 Explanation of image:
 
-1. `kube-c` and `kube-d` both has patch of both `kube-a` and `kube-b`.
+1. `kube-c` and `kube-d` both patch repository `kube-a` and `kube-b`.
 2. This test depends on two repository.
-  - `kube-a` from fork `kube-d`. Means `kube-a` is which exist in `_vendor` folder in `kube-d` repository. Also, applied the patch.
-  - `kube-b` from fork `kube-c`. Means `kube-b` is which exist in `_vendor` folder in `kube-c` repository. Also, applied the patch.
+  - fork `kube-d` of `kube-a` repo.
+  - fork `kube-c` of `kube-b` repo.
 
-Now, `$ pack dep` command get the dependencies and place under `_vendor` folder.
-Here, `kube-a` from fork `kube-d` and `kube-b` from fork `kube-c`.
+Now, `$ pack dep` command get the dependencies and place under `_vendor` folder. `pack` pulls `kube-a` from fork `kube-d` and `kube-b` from fork `kube-c`.
 
 
 ## Next Steps

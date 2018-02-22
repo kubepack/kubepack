@@ -33,11 +33,10 @@ dependencies:
 - package: github.com/kubepack/test-kubed
   branch: master
 ```
-`manifest.yaml` file contain [test-kubed](https://github.com/kubepack/test-kubed) as `dependencies`. `test-kubed` contains
+`manifest.yaml` file contain [test-kubed](https://github.com/kubepack/test-kubed) as a dependency. `test-kubed` contains
  all the necessary yaml file needs to deploy kubed in minikube cluster.
 
- Now, `$ pack dep` command will pull all the dependencies and place it in `_vendor` folder.
-  If `test-kubed` repository also depend on some other repository then `pack` will get that too.
+Now, `$ pack dep` command will pull all the dependencies and place it in `_vendor` folder. If `test-kubed` repository also depend on some other repository then `pack` will get those too.
 
   ```console
   $ pack dep
@@ -76,6 +75,7 @@ We'll change `config.yaml` under `data` field. `config.yaml` value will be `YXBp
 ```console
 $ pack edit -s _vendor/github.com/kubepack/test-kubed/kubed-config.yaml
 ```
+
 Above command will open file in editor.
  Then, change `config.yaml` to above value. This will generate a patch in `patch` folder.
 

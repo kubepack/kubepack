@@ -126,7 +126,6 @@ func GetPatch(src, dst []byte) error {
 	if err != nil {
 		return err
 	}
-
 	err = ioutil.WriteFile(patchFilePath, yamlPatch, 0755)
 	if err != nil {
 		return err

@@ -70,7 +70,7 @@
     "runtime",
     "version"
   ]
-  revision = "1be9b0441d73831aaa93df76e42a751caa5dba88"
+  revision = "8367769380cf93a12b381d957941ddf2a19d0356"
 
 [[projects]]
   branch = "master"
@@ -114,8 +114,8 @@
     "service/kms",
     "service/sts"
   ]
-  revision = "82eadef012f77590875babb177c60878727821c0"
-  version = "v1.12.74"
+  revision = "788eb15477cf129a45d8e1d0af5f533348f4125d"
+  version = "v1.12.78"
 
 [[projects]]
   branch = "master"
@@ -250,7 +250,7 @@
   branch = "master"
   name = "github.com/go-openapi/spec"
   packages = ["."]
-  revision = "e5cac0107f33264c59bcfe43d12a0e19eba644f0"
+  revision = "1de3e0542de65ad8d75452a595886fdd0befb363"
 
 [[projects]]
   branch = "master"
@@ -312,6 +312,16 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/google/go-jsonnet"
+  packages = [
+    ".",
+    "ast",
+    "parser"
+  ]
+  revision = "f46dea2835bc4d5138d279753643c970250ef683"
+
+[[projects]]
+  branch = "master"
   name = "github.com/google/gofuzz"
   packages = ["."]
   revision = "24818f796faf91cd76ec7bddd72458fbced7a6c1"
@@ -344,7 +354,7 @@
     "openstack/utils",
     "pagination"
   ]
-  revision = "6da026c32e2d622cc242d32984259c77237aefe1"
+  revision = "cf2bbaa52ab69d063466a3c46a5918d05d752625"
 
 [[projects]]
   branch = "master"
@@ -508,7 +518,7 @@
     "nfs",
     "xfs"
   ]
-  revision = "cb4147076ac75738c9a7d279075a253c0cc5acbd"
+  revision = "282c8707aa210456a825798969cc27edda34992a"
 
 [[projects]]
   name = "github.com/russross/blackfriday"
@@ -552,7 +562,7 @@
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["ssh/terminal"]
-  revision = "9de5f2eaf759b4c4550b3db39fed2e9e5f86f45c"
+  revision = "650f4a345ab4e5b245a3034b110ebc7299e68186"
 
 [[projects]]
   branch = "master"
@@ -565,7 +575,7 @@
     "idna",
     "lex/httplex"
   ]
-  revision = "f5dfe339be1d06f81b22525fe34671ee7d2c8904"
+  revision = "dc948dff8834a7fe1ca525f8d04e261c2b56e70d"
 
 [[projects]]
   branch = "master"
@@ -1114,6 +1124,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "8bb17cd213a549e513a31e99ea4f0972c34478cda0d76b0859fb1676315fb9b9"
+  inputs-digest = "2e0996bb8322de6fb2cd0fae9b8c535a37566ab569c111b26ef52b6abea26ff9"
   solver-name = "gps-cdcl"
   solver-version = 1

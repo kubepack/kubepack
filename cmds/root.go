@@ -41,13 +41,14 @@ func NewPackCmd(version string) *cobra.Command {
 	// ref: https://github.com/kubernetes/kubernetes/issues/17162#issuecomment-225596212
 	flag.CommandLine.Parse([]string{})
 
-	cmd.PersistentFlags().String("kube-context", "", "name of the kubeconfig context to use")
+	cmd.PersistentFlags().String("kube-version", "", "name of the kubeconfig context to use")
 	cmd.PersistentFlags().BoolVar(&enableAnalytics, "analytics", enableAnalytics, "Send analytical events to Google Guard")
 
 	cmd.AddCommand(NewDepCommand())
 	cmd.AddCommand(NewEditCommand())
 	cmd.AddCommand(NewUpCommand())
 	cmd.AddCommand(NewValidateCommand())
+	cmd.AddCommand(NewKubepackInitializeCmd())
 	cmd.AddCommand(v.NewCmdVersion())
 	return cmd
 }
