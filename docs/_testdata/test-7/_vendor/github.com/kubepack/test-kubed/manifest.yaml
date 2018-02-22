@@ -1,0 +1,5 @@
+package: github.com/kubepack/test-kubed
+owners:
+- name: Appscode
+  email: team@appscode.com
+dependencies:

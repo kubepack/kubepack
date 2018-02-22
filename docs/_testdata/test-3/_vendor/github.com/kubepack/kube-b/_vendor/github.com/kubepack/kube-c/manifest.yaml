@@ -1,0 +1,5 @@
+package: github.com/packsh/tasty-kube
+owners:
+- name: Appscode
+  email: team@appscode.com
+dependencies:

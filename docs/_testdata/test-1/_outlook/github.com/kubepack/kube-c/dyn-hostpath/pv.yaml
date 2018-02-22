@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    git-commit-hash: b1216d2df51f7f5cd87a2df4b2896cdb50646d98
+    volume.beta.kubernetes.io/storage-class: slow
+  name: pv0003
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 5Gi
+  hostPath:
+    path: /tmp
+  persistentVolumeReclaimPolicy: Recycle

@@ -33,7 +33,12 @@ func NewDepCommand() *cobra.Command {
 		Use:   "dep",
 		Short: "Pulls dependent app manifests",
 		Run: func(cmd *cobra.Command, args []string) {
-			err := runDeps()
+			var err error
+			validator, err = GetOpenapiValidator(cmd)
+			if err != nil {
+				log.Fatalln(err)
+			}
+			err = runDeps()
 			if err != nil {
 				log.Fatalln(err)
 			}
@@ -126,6 +131,11 @@ func runDeps() error {
 			return err
 		}
 
+		err = filepath.Walk(filepath.Join(root, _VendorFolder), findJsonnetFiles)
+		if err != nil {
+			return err
+		}
+
 		err = filepath.Walk(filepath.Join(root, _VendorFolder), findPatchFolder)
 		if err != nil {
 			return err
@@ -158,16 +168,6 @@ func runDeps() error {
 func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 	if err != nil {
 		return errors.WithStack(err)
-	}
-	if strings.HasSuffix(path, "jsonnet.TEMPLATE") {
-		return nil
-	}
-	if strings.HasSuffix(path, ".jsonnet") {
-		err := convertJsonnetfileToYamlfile(path)
-		if err != nil {
-			return errors.WithStack(err)
-		}
-		return nil
 	}
 	if !strings.Contains(path, PatchFolder) {
 		return nil
@@ -220,6 +220,37 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 	}
 
 	return err
+}
+
+func findJsonnetFiles(path string, fileInfo os.FileInfo, err error) error {
+	if err != nil {
+		 return errors.WithStack(err)
+	}
+	if strings.Contains(path, PatchFolder) {
+		return nil
+	}
+	if fileInfo.IsDir() {
+		return nil
+	}
+	if strings.HasSuffix(path, "jsonnet.TEMPLATE") {
+		return nil
+	}
+	if strings.HasSuffix(path, ".jsonnet") {
+		srcYaml, err := ioutil.ReadFile(path)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		err = validator.ValidateBytes(srcYaml)
+		if err != nil {
+			err = convertJsonnetfileToYamlfile(path)
+			if err != nil {
+				return errors.WithStack(err)
+			}
+		}
+		return nil
+	}
+
+	return nil
 }
 
 func convertJsonnetfileToYamlfile(path string) error {

@@ -68,30 +68,34 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 		return nil
 	}
 
+	if strings.Contains(path, PatchFolder) {
+		return nil
+	}
+
 	srcFilepath := path
 	srcYamlByte, err := ioutil.ReadFile(srcFilepath)
 	if err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 
 	patchFilePath := strings.Replace(path, _VendorFolder, PatchFolder, 1)
 	if _, err := os.Stat(patchFilePath); err != nil {
 		err = validator.ValidateBytes(srcYamlByte)
-		if err != nil {
+		if err != nil && !strings.Contains(path, PatchFolder) && strings.HasSuffix(path, ".jsonnet") {
 			vm := jsonnet.MakeVM()
 			j, err := vm.EvaluateSnippet(path, string(srcYamlByte))
 			if err != nil {
-				return errors.Wrap(err, "Error to evaluate jsonet")
+				return errors.WithStack(errors.Wrap(err, "Error to evaluate jsonet"))
 			}
 			yml, err := yaml.JSONToYAML([]byte(j))
 			if err != nil {
-				errors.Wrap(err, "error to convert json to yaml")
+				return errors.WithStack(errors.Wrap(err, "Error to evaluate jsonet: convert JSONToYAML"))
 			}
 			srcYamlByte = yml
 		}
 		err = DumpCompiledFile(srcYamlByte, strings.Replace(path, _VendorFolder, CompileDirectory, 1))
 		if err != nil {
-			return errors.Wrap(err, "Error dump compiled file")
+			return errors.WithStack(errors.Wrap(err, "Error to evaluate jsonet: DumpCompiledFile"))
 		}
 		return nil
 	}
@@ -193,10 +197,6 @@ func getAnnotatedWithCommitHash(yamlByte []byte, dir string) ([]byte, error) {
 
 	annotatedMap := map[string]interface{}{}
 	err = yaml.Unmarshal(yamlByte, &annotatedMap)
-	if err != nil {
-		return nil, err
-	}
-
 	if err != nil {
 		return nil, err
 	}

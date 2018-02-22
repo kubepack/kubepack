@@ -3,5 +3,5 @@ owners:
 - name: Appscode
   email: team@appscode.com
 dependencies:
-- package: github.com/kubepack/test-jsonnet
-  branch: master
+- package: github.com/kubepack/kube-a
+  branch: test-9

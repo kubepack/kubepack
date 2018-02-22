@@ -1,0 +1,7 @@
+package: github.com/kubepack/kube-a
+owners:
+- name: Appscode
+  email: team@appscode.com
+dependencies:
+- package: github.com/kubepack/kube-b
+  branch: test-1
