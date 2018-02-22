@@ -104,6 +104,7 @@ Above command will open file in editor.
 
 ## Next Steps
 
+- Take a look at how Kubepack handles various scenarios [here](/docs/guides).
 - Want to publish apps using Kubepack? Please visit [here](/docs/concepts/how/publisher.md).
 - To learn about `manifest.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
 - Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).
