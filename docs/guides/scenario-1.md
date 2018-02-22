@@ -41,11 +41,14 @@ See image below, which describe whole dependency.
 Explanation of image:
 
 1. This test directly depends on `kube-a` of branch `test-1`.
-2. `kube-a`'s depends on `kube-b` of branch `test-1`.
+
+2. `kube-a`'s depends on branch `test-1` of `kube-b`.
 See this manifest.yaml file [here](https://github.com/kubepack/kube-a/blob/test-1/manifest.yaml)
-3. `kube-b`'s depends on `kube-c` of branch `test-1`.
+
+3. `kube-b`'s depends on branch `test-1` of `kube-c`.
 See this manifest.yaml file [here](https://github.com/kubepack/kube-b/blob/test-1/manifest.yaml)
-4. `kube-c`'s depends on none.
+
+4. `kube-c` has no dependency.
 See this manifest.yaml file [here](https://github.com/kubepack/kube-c/blob/test-1/manifest.yaml)
 
 
