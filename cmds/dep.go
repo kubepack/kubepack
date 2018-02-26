@@ -61,7 +61,7 @@ func runDeps() error {
 	manStruc := typ.ManifestDefinition{}
 	err = yaml.Unmarshal(byt, &manStruc)
 	if err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 
 	imports = make([]string, len(manStruc.Dependencies))
@@ -97,7 +97,7 @@ func runDeps() error {
 	// Set up a SourceManager. This manages interaction with sources (repositories).
 	tempdir, err := ioutil.TempDir("", "gps-repocache")
 	if err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 	srcManagerConfig := gps.SourceManagerConfig{
 		Cachedir:       filepath.Join(tempdir),
@@ -113,22 +113,27 @@ func runDeps() error {
 	// Prep and run the solver
 	solver, err := gps.Prepare(params, sourcemgr)
 	if err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 	solution, err := solver.Solve(ctx)
 	if err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 	if err == nil {
 		// If no failure, blow away the vendor dir and write a new one out,
 		// stripping nested vendor directories as we go.
 		err = os.RemoveAll(filepath.Join(root, _VendorFolder))
 		if err != nil {
-			return err
+			return errors.WithStack(err)
 		}
 		err = gps.WriteDepTree(filepath.Join(root, _VendorFolder), solution, sourcemgr, true, logger)
 		if err != nil {
-			return err
+			return errors.WithStack(err)
+		}
+
+		err = filepath.Walk(filepath.Join(root, _VendorFolder), findJsonnetFiles)
+		if err != nil {
+			return errors.WithStack(err)
 		}
 
 		err = filepath.Walk(filepath.Join(root, _VendorFolder), findJsonnetFiles)
@@ -138,7 +143,7 @@ func runDeps() error {
 
 		err = filepath.Walk(filepath.Join(root, _VendorFolder), findPatchFolder)
 		if err != nil {
-			return err
+			return errors.WithStack(err)
 		}
 
 		for _, val := range forkRepo {
@@ -149,17 +154,20 @@ func runDeps() error {
 			tmpDir := filepath.Join(root, _VendorFolder, rand.WithUniqSuffix("hello"))
 			err = os.Rename(srcPath, tmpDir)
 			if err != nil {
-				return err
+				return errors.WithStack(err)
 			}
 
 			dstPath := filepath.Join(root, _VendorFolder, val)
 
 			err = os.RemoveAll(dstPath)
 			if err != nil {
-				return err
+				return errors.WithStack(err)
 			}
 
 			err = os.Rename(tmpDir, dstPath)
+			if err != nil {
+				return errors.WithStack(err)
+			}
 		}
 	}
 	return nil
@@ -202,24 +210,24 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 	if _, err := os.Stat(srcDir); err == nil {
 		srcYaml, err := ioutil.ReadFile(srcDir)
 		if err != nil {
-			return err
+			return errors.WithStack(err)
 		}
 
 		patchYaml, err := ioutil.ReadFile(path)
 		if err != nil {
-			return err
+			return errors.WithStack(err)
 		}
 		mergedYaml, err := CompileWithPatch(srcYaml, patchYaml)
 		if err != nil {
-			return err
+			return errors.WithStack(err)
 		}
 		err = ioutil.WriteFile(srcDir, mergedYaml, 0755)
 		if err != nil {
-			return err
+			return errors.WithStack(err)
 		}
 	}
 
-	return err
+	return nil
 }
 
 func findJsonnetFiles(path string, fileInfo os.FileInfo, err error) error {
@@ -297,7 +305,7 @@ type NaiveAnalyzer struct {
 func (a NaiveAnalyzer) DeriveManifestAndLock(path string, n gps.ProjectRoot) (gps.Manifest, gps.Lock, error) {
 	// this check should be unnecessary, but keeping it for now as a canary
 	if _, err := os.Lstat(path); err != nil {
-		return nil, nil, fmt.Errorf("No directory exists at %s; cannot produce ProjectInfo", path)
+		return nil, nil, errors.Errorf("No directory exists at %s; cannot produce ProjectInfo", path)
 	}
 
 	m, l, err := a.lookForManifest(path)
@@ -377,7 +385,7 @@ func (a ManifestYaml) DependencyConstraints() gps.ProjectConstraints {
 			properties.Source = value.Repo
 		} else if value.Fork != "" {
 			if _, ok := packagePatches[value.Package]; ok {
-				log.Fatal(fmt.Errorf("%s defined in multiple packages.", value.Package))
+				log.Fatal(errors.Errorf("%s defined in multiple packages.", value.Package))
 			}
 			packagePatches[value.Package] = value.Fork
 			properties.Source = value.Fork

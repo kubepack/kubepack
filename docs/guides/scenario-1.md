@@ -40,7 +40,7 @@ See image below, which describe whole dependency.
 
 Explanation of image:
 
-1. This test directly depends on `kube-a` of branch `test-1`.
+1. This test directly depends on branch `test-1` of `kube-a` repository.
 
 2. `kube-a`'s depends on branch `test-1` of `kube-b`.
 See this manifest.yaml file [here](https://github.com/kubepack/kube-a/blob/test-1/manifest.yaml)

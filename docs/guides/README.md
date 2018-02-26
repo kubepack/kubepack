@@ -25,3 +25,5 @@ Guides show you how to perform tasks with Kubepack.
 - [Scenario-6](/docs/guides/scenario-6.md) How kubepack fork works. 
 - [Scenario-7](/docs/guides/scenario-7.md) How to deploy some application with kubepack.
 - [Scenario-8](/docs/guides/scenario-8.md) Deploy some application from cluster.
+- [Scenario-9](/docs/guides/scenario-9.md) How jsonnet works in **Pack** and appears in `_vendor` folder.
+- [Scenario-10](/docs/guides/scenario-10.md) How jsonnet works in **Pack**, in more complex scenario than scenario-9.

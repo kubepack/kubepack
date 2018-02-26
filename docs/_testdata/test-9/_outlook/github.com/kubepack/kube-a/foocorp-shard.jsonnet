@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    git-commit-hash: e69be3069044bf99611ca7fe07d26515b3a1ead1
+    git-commit-hash: f9f5aa2e1e4d8c8868b3d9a69b484b9c75946912
   name: foocorp
   namespace: default
 spec:

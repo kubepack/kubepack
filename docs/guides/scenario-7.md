@@ -24,7 +24,9 @@ In this example, we're using [this](https://github.com/kubepack/kubepack/tree/ma
 
 Below command show the `manifest.yaml` file.
 ```console
+
 $ cat manifest.yaml
+
 package: github.com/kubepack/kubepack/docs/_testdata/test-7
 owners:
 - name: Appscode

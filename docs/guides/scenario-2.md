@@ -40,17 +40,18 @@ You can see the whole dependencies in below image.
 
 ### Explanation
 
-1. [test-2](https://github.com/kubepack/kubepack/tree/master/docs/_testdata/test-2) directly depends on branch `test-2` of [kube-a](https://github.com/kubepack/kube-a/blob/test-2/manifest.yaml).
+1. [test-2](https://github.com/kubepack/kubepack/tree/master/docs/_testdata/test-2) directly depends on branch `test-2` of [kube-a](https://github.com/kubepack/kube-a/tree/test-2).
 
-2. [kube-a](https://github.com/kubepack/kube-a/tree/test-2) depends on  [kube-b](https://github.com/kubepack/kube-b/blob/test-2/manifest.yaml) of branch `test-2`. `kube-a` contains the patch patch of `kube-b`'s `nginx-deployment.yaml` file.
+2. [kube-a](https://github.com/kubepack/kube-a/tree/test-2) depends on branch `test-2` of [kube-b](https://github.com/kubepack/kube-b/tree/test-2) repository. `kube-a` contains the patch of `kube-b`'s `nginx-deployment.yaml` file.
 
-3. [kube-b](https://github.com/kubepack/kube-b/tree/test-2) depends on branch `test-2` of [kube-c](https://github.com/kubepack/kube-c/blob/test-2/manifest.yaml). `kube-b` contains the patch patch of `kube-c`'s `nginx-deployment.yaml` file.
+3. [kube-b](https://github.com/kubepack/kube-b/tree/test-2) depends on branch `test-2` of [kube-c](https://github.com/kubepack/kube-c/tree/test-2) repository. `kube-b` contains the patch of `kube-c`'s `nginx-deployment.yaml` file.
 
 When run `$ pack dep` in `test-2`, following things happen.
 
 1. Get all the dependencies, reading `manifest.yaml` file.
 2. `kube-b`'s `nginx-deployment.yaml` file is combination of patch (exists in `kube-a` repository) and original file (exists in `kube-b` repository).
 3. `kube-c`'s `nginx-deployment.yaml` file is combination of patch (exists in `kube-b` repository) and original file (exists in `kube-c` repository).
+
 
 ## Next Steps
 

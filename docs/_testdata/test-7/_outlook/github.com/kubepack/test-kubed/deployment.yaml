@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   annotations:
-    git-commit-hash: 4d50fb1fb752cc6e583d90c38ffc17d4c8585497
+    git-commit-hash: f9f5aa2e1e4d8c8868b3d9a69b484b9c75946912
   labels:
     app: kubed
   name: kubed-operator

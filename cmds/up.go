@@ -85,17 +85,17 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 			vm := jsonnet.MakeVM()
 			j, err := vm.EvaluateSnippet(path, string(srcYamlByte))
 			if err != nil {
-				return errors.WithStack(errors.Wrap(err, "Error to evaluate jsonet"))
+				return errors.Wrap(err, "Error to evaluate jsonet")
 			}
 			yml, err := yaml.JSONToYAML([]byte(j))
 			if err != nil {
-				return errors.WithStack(errors.Wrap(err, "Error to evaluate jsonet: convert JSONToYAML"))
+				return errors.Wrap(err, "Error to evaluate jsonet: convert JSONToYAML")
 			}
 			srcYamlByte = yml
 		}
 		err = DumpCompiledFile(srcYamlByte, strings.Replace(path, _VendorFolder, CompileDirectory, 1))
 		if err != nil {
-			return errors.WithStack(errors.Wrap(err, "Error to evaluate jsonet: DumpCompiledFile"))
+			return errors.Wrap(err, "Error to evaluate jsonet: DumpCompiledFile")
 		}
 		return nil
 	}
@@ -146,6 +146,9 @@ func CompileWithPatch(srcByte, patchByte []byte) ([]byte, error) {
 }
 
 func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
+	if strings.Count(outlookPath, _VendorFolder) > 0 || strings.Count(outlookPath, CompileDirectory) > 1 {
+		return nil
+	}
 	root, err := os.Getwd()
 	if err != nil {
 		return errors.Wrap(err, "Error to get wd(os.Getwd()).")
@@ -233,11 +236,11 @@ func convertJsonnetToYamlByFilepath(path string, srcYamlByte []byte) ([]byte, er
 	vm := jsonnet.MakeVM()
 	j, err := vm.EvaluateSnippet(path, string(srcYamlByte))
 	if err != nil {
-		return nil, errors.WithStack(errors.Wrap(err, "Error to evaluate jsonet"))
+		return nil, errors.Wrap(err, "Error to evaluate jsonet")
 	}
 	yml, err := yaml.JSONToYAML([]byte(j))
 	if err != nil {
-		return nil, errors.WithStack(errors.Wrap(err, "Error to evaluate jsonet"))
+		return nil, errors.Wrap(err, "Error to evaluate jsonet")
 	}
 	return yml, nil
 }
