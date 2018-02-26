@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   annotations:
-    git-commit-hash: cc134cd159447ecf1b10f9793de4a2588ac0fc2c
+    git-commit-hash: d8b4cd1e8e3ef2db940d1daff9695dad42cc005b
   labels:
     app: nginx-dm
   name: nginx-dm
