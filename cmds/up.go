@@ -21,7 +21,7 @@ var (
 	patch string
 )
 
-const CompileDirectory = "_outlook"
+const CompileDirectory = "output"
 
 func NewUpCommand() *cobra.Command {
 	cmd := &cobra.Command{
@@ -36,7 +36,7 @@ func NewUpCommand() *cobra.Command {
 			if err != nil {
 				log.Fatalln(err)
 			}
-			err = filepath.Walk(filepath.Join(rootPath, _VendorFolder), visitPatchAndDump)
+			err = filepath.Walk(filepath.Join(rootPath, typ.ManifestDirectory, _VendorFolder), visitPatchAndDump)
 			if err != nil {
 				log.Fatalln(err)
 			}
@@ -146,7 +146,7 @@ func CompileWithPatch(srcByte, patchByte []byte) ([]byte, error) {
 }
 
 func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
-	if strings.Count(outlookPath, _VendorFolder) > 0 || strings.Count(outlookPath, CompileDirectory) > 1 {
+	if strings.Count(outlookPath, _VendorFolder) > 0 || strings.Count(outlookPath, CompileDirectory) > 1 || strings.Count(outlookPath, PatchFolder) > 0 {
 		return nil
 	}
 	root, err := os.Getwd()

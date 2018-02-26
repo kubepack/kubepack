@@ -20,7 +20,7 @@ import (
 )
 
 const defaultEditor = "nano"
-const _VendorFolder = "_vendor"
+const _VendorFolder = "vendor"
 const PatchFolder = "patch"
 
 var (
