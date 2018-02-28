@@ -38,28 +38,31 @@ dependencies:
 `manifest.yaml` file contain [test-kubed](https://github.com/kubepack/test-kubed) as a dependency. `test-kubed` contains
  all the necessary yaml file needs to deploy kubed in minikube cluster.
 
-Now, `$ pack dep` command will pull all the dependencies and place it in `_vendor` folder. If `test-kubed` repository also depend on some other repository then `pack` will get those too.
+Now, `$ pack dep` command will pull all the dependencies and place it in `manifests/vendor` folder. If `test-kubed` repository also depend on some other repository then `pack` will get those too.
 
   ```console
   $ pack dep
-  $ tree _vendor/
-  _vendor/
+  
+  $ tree manifests/vendor/
+  manifests/vendor/
   └── github.com
       └── kubepack
           └── test-kubed
-              ├── deployment.yaml
-              ├── kubed-config.yaml
-              ├── manifest.yaml
-              └── service.yaml
-
-  3 directories, 4 files
+              ├── manifests
+              │   └── app
+              │       ├── deployment.yaml
+              │       ├── kubed-config.yaml
+              │       └── service.yaml
+              └── manifest.yaml
+  
+  5 directories, 4 files
   ```
-  Now, all the dependencies in place. Now, we can edit `_vendor` and this will generate patch.
+  Now, all the dependencies in place. Now, we can edit `manifests/vendor` and this will generate patch.
 
   We're want to change `kubed-config.yaml` file, which is a secret yaml file.
 
   ```console
-    $ cat _vendor/github.com/kubepack/test-kubed/kubed-config.yaml
+    $ cat manifests/vendor/github.com/kubepack/test-kubed/manifests/app/kubed-config.yaml
     apiVersion: v1
     data:
       config.yaml: YXBpU2VydmVyOgogIGFkZHJlc3M6IDo4MDgwCiAgZW5hYmxlUmV2ZXJzZUluZGV4OiB0cnVlCiAgZW5hYmxlU2VhcmNoSW5kZXg6IHRydWUKY2x1c3Rlck5hbWU6IHVuaWNvcm4KZW5hYmxlQ29uZmlnU3luY2VyOiB0cnVlCmV2ZW50Rm9yd2FyZGVyOgogIGNzckV2ZW50czoKICAgIGhhbmRsZTogZmFsc2UKICBpbmdyZXNzQWRkZWQ6CiAgICBoYW5kbGU6IHRydWUKICBub2RlQWRkZWQ6CiAgICBoYW5kbGU6IHRydWUKICByZWNlaXZlcnM6CiAgLSBub3RpZmllcjogTWFpbGd1bgogICAgdG86CiAgICAtIG9wc0BleGFtcGxlLmNvbQogIHN0b3JhZ2VBZGRlZDoKICAgIGhhbmRsZTogdHJ1ZQogIHdhcm5pbmdFdmVudHM6CiAgICBoYW5kbGU6IHRydWUKICAgIG5hbWVzcGFjZXM6CiAgICAtIGt1YmUtc3lzdGVtCmphbml0b3JzOgotIGVsYXN0aWNzZWFyY2g6CiAgICBlbmRwb2ludDogaHR0cHM6Ly9lbGFzdGljc2VhcmNoLWxvZ2dpbmcua3ViZS1zeXN0ZW06OTIwMAogICAgbG9nSW5kZXhQcmVmaXg6IGxvZ3N0YXNoLQogICAgc2VjcmV0TmFtZTogZWxhc3RpY3NlYXJjaC1sb2dnaW5nLWNlcnQKICBraW5kOiBFbGFzdGljc2VhcmNoCiAgdHRsOiAyMTYwaDBtMHMKLSBpbmZsdXhkYjoKICAgIGVuZHBvaW50OiBodHRwczovL21vbml0b3JpbmctaW5mbHV4ZGIua3ViZS1zeXN0ZW06ODA4NgogIGtpbmQ6IEluZmx1eERCCiAgdHRsOiAyMTYwaDBtMHMKbm90aWZpZXJTZWNyZXROYW1lOiBub3RpZmllci1jb25maWcKcmVjeWNsZUJpbjoKICBoYW5kbGVVcGRhdGVzOiBmYWxzZQogIHBhdGg6IC90bXAva3ViZWQvdHJhc2gKICByZWNlaXZlcnM6CiAgLSBub3RpZmllcjogTWFpbGd1bgogICAgdG86CiAgICAtIG9wc0BleGFtcGxlLmNvbQogIHR0bDogMTY4aDBtMHMKc25hcHNob3R0ZXI6CiAgZ2NzOgogICAgYnVja2V0OiByZXN0aWMKICAgIHByZWZpeDogbWluaWt1YmUKICBzYW5pdGl6ZTogdHJ1ZQogIHNjaGVkdWxlOiAnQGV2ZXJ5IDZoJwogIHN0b3JhZ2VTZWNyZXROYW1lOiBzbmFwLXNlY3JldAo=
@@ -75,19 +78,19 @@ Now, `$ pack dep` command will pull all the dependencies and place it in `_vendo
 We'll change `config.yaml` under `data` field. `config.yaml` value will be `YXBpU2VydmVyOgogIGFkZHJlc3M6IDo4MDgwCiAgZW5hYmxlUmV2ZXJzZUluZGV4OiB0cnVlCiAgZW5hYmxlU2VhcmNoSW5kZXg6IHRydWUKY2x1c3Rlck5hbWU6IHVuaWNvcm4KZW5hYmxlQ29uZmlnU3luY2VyOiB0cnVlCg==`
 
 ```console
-$ pack edit -s _vendor/github.com/kubepack/test-kubed/kubed-config.yaml
+$ pack edit -s manifests/vendor/github.com/kubepack/test-kubed/manifests/app/kubed-config.yaml
 ```
 
 Above command will open file in editor.
  Then, change `config.yaml` to above value. This will generate a patch in `patch` folder.
 
- Below `$ pack up` command will combine `patch` and `_vendor` folder files and dump in `_outlook` folder.
+ Below `$ pack up` command will combine `patch` and `manifests/vendor` folder files and dump in `manifests/output` folder.
 
  ```console
  $ pack up
- $ kubectl apply -R -f _outlook/
+ $ kubectl apply -R -f manifests/output/
  ```
- `$ kubectl apply -R -f _outlook/` command will deploy kubed in minikube cluster.
+ `$ kubectl apply -R -f manifests/output/` command will deploy kubed in minikube cluster.
 
 
 

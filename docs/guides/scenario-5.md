@@ -66,7 +66,7 @@ When run `pack dep` command, following things happen.
 
 1. Get all the dependencies, reading `manifest.yaml` file.
 2. As, `kube-a` and `kube-b` both contains patch of repository `kube-c`,
-`kube-c` in `_vendor` folder is combination of both patches and original file.
+`kube-c` in `manifests/vendor` folder is combination of both patches and original file.
 
 
 ## Next Steps

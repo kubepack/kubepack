@@ -52,7 +52,7 @@ See this manifest.yaml file [here](https://github.com/kubepack/kube-b/blob/test-
 See this manifest.yaml file [here](https://github.com/kubepack/kube-c/blob/test-1/manifest.yaml)
 
 
-Now, `$ pack dep` command will get all the dependencies and place it under `_vendor` folder.
+Now, `$ pack dep` command will get all the dependencies and place it under `manifests/vendor` folder.
 
 ## Next Steps
 

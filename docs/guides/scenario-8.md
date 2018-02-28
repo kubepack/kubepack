@@ -23,7 +23,7 @@ In this scenario, we'll do following things.
 1. Create a git repository.
    - This repository requires [test-kubed](https://github.com/kubepack/test-kubed) through `manifest.yaml` file.
    - Run `$ pack dep` to get the dependencies and `$ pack edit -s <filepath>` to make desired changes.
-   - Then, run `$ pack up` to final version under `_outlook` folder.
+   - Then, run `$ pack up` to final version under `manifests/output` folder.
    - Last, commit our changes to git repository.
 
 2.  Now, I write a pod yaml, you can see it [here](https://raw.githubusercontent.com/kubepack/kubepack/master/docs/_testdata/test-8/pod.yaml).
@@ -50,10 +50,10 @@ dependencies:
 
 It depends on [test-kubed](https://github.com/kubepack/test-kubed)'s master branch.
 
-Now, run `$ pack dep`. This command will get all the dependencies and place under `_vendor` folder.
+Now, run `$ pack dep`. This command will get all the dependencies and place under `manifests/vendor` folder.
 
 ```console
-    $ tree _vendor/
+    $ tree manifests/vendor/
 
     _vendor/
     └── github.com
@@ -92,12 +92,12 @@ This command will generate a patch file under `patch` folder.
 ```
 
 
-Then, run `$ pack up`, which will combine original and patch file and place under `_outlook` folder.
+Then, run `$ pack up`, which will combine original and patch file and place under `manifests/output` folder.
 
 ```console
-    $ tree _outlook/
+    $ tree manifests/output/
 
-    _outlook/
+    manifests/output/
     └── github.com
         └── kubepack
             └── test-kubed
