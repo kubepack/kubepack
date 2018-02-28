@@ -126,7 +126,7 @@ func runDeps() error {
 		if err != nil {
 			return errors.WithStack(err)
 		}
-		err = gps.WriteDepTree(filepath.Join(root, typ.ManifestDirectory, _VendorFolder), solution, sourcemgr, true, logger)
+		err = gps.WriteDepTree(filepath.Join(root, typ.ManifestDirectory, _VendorFolder), solution, sourcemgr, false, logger)
 		if err != nil {
 			return errors.WithStack(err)
 		}
@@ -140,7 +140,6 @@ func runDeps() error {
 		if err != nil {
 			return errors.WithStack(err)
 		}
-
 		for _, val := range forkRepo {
 			srcPath := filepath.Join(root, typ.ManifestDirectory, _VendorFolder, val, typ.ManifestDirectory, _VendorFolder, val)
 			if _, err = os.Stat(srcPath); err != nil {
@@ -193,12 +192,13 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 	splitPatch := strings.Split(path, PatchFolder)
 	patchFilePath := strings.TrimPrefix(splitPatch[1], "/")
 	srcDir := filepath.Join(splitVendor[0], _VendorFolder, patchFilePath)
+	manifestsPath := strings.Join([]string{"/", "/"}, typ.ManifestDirectory)
 	if val, ok := packagePatches[patchFilePath]; ok {
-		if val != strings.TrimSuffix(strings.TrimPrefix(forkDir, "/"), "/") {
+		if val != strings.TrimSuffix(strings.TrimPrefix(forkDir, "/"), manifestsPath) {
 			return nil
 		}
 	}
-	pkg := strings.TrimSuffix(forkDir, "/")
+	pkg := strings.TrimSuffix(forkDir, manifestsPath)
 	if _, ok := packagePatches[pkg]; ok {
 		src := strings.Replace(path, PatchFolder, _VendorFolder, 1)
 		srcDir = src

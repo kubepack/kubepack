@@ -1,0 +1,24 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    git-commit-hash: de53e301b2cbc0e991f2cf609eef099c91a7fcfe
+  name: nginx-a
+spec:
+  replicas: 2
+  template:
+    metadata:
+      annotations:
+        app: nginx
+      labels:
+        app: nginx
+      name: nginx
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 10m
