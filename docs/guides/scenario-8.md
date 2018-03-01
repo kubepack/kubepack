@@ -27,14 +27,14 @@ In this scenario, we'll do following things.
    - Last, commit our changes to git repository.
 
 2.  Now, I write a pod yaml, you can see it [here](https://raw.githubusercontent.com/kubepack/kubepack/master/docs/_testdata/test-8/pod.yaml).
-In this pod, our above git repository mounted as volume path. Image [a8uhnf/git-mount:1.0.0](https://hub.docker.com/r/a8uhnf/git-mount/tags/) checks the mounted path. If there is an `_outlook` folder then it'll apply `$ kubectl apply -R -f <_outlook folder path>`.
+In this pod, our above git repository mounted as volume path. Image [a8uhnf/git-mount:1.0.0](https://hub.docker.com/r/a8uhnf/git-mount/tags/) checks the mounted path. If there is an `manifest/output` folder then it'll apply `$ kubectl apply -R -f <manifest/output folder path>`.
 
 
 ## Step by Step Guide
 
 First, create a git repository
 
-Create a `manifest.yaml` file in your git repository. Your manifest.yaml file will look like below.
+Create a `manifest.yaml` file in your git repository. Your `manifest.yaml` file will look like below.
 
 ```console
     $ cat manifest.yaml
@@ -55,16 +55,18 @@ Now, run `$ pack dep`. This command will get all the dependencies and place unde
 ```console
     $ tree manifests/vendor/
 
-    _vendor/
+    manifests/vendor/
     └── github.com
         └── kubepack
             └── test-kubed
-                ├── deployment.yaml
-                ├── kubed-config.yaml
-                ├── manifest.yaml
-                └── service.yaml
-
-    3 directories, 4 files
+                ├── manifests
+                │   └── app
+                │       ├── deployment.yaml
+                │       ├── kubed-config.yaml
+                │       └── service.yaml
+                └── manifest.yaml
+    
+    5 directories, 4 files
 ```
 
 Now, you have all the dependencies.
@@ -74,21 +76,23 @@ Now, suppose you want to edit `deployment.yaml` file and make the replicas from 
 
 Below command will open the `deployment.yaml` file in editor. Then made the changes.
 ```console
-    $ pack edit -s _vendor/github.com/kubepack/test-kubed/deployment.yaml
+    $ kubepack edit -s manifests/vendor/github.com/kubepack/test-kubed/manifests/app/deployment.yaml
 ```
 
 This command will generate a patch file under `patch` folder.
 
 ```console
-    $ tree patch/
+    $ tree manifests/patch/
 
-    patch/
+    manifests/patch/
     └── github.com
         └── kubepack
             └── test-kubed
-                └── deployment.yaml
-
-    3 directories, 1 file
+                └── manifests
+                    └── app
+                        └── deployment.yaml
+    
+    5 directories, 1 file
 ```
 
 
@@ -135,15 +139,15 @@ Now, see below [this](https://raw.githubusercontent.com/kubepack/kubepack/master
     status: {}
 ```
 
-change the above yaml file's `gitRepo.Repository` and `gitRepo.revision` to your repository location and revision.
+change the above yaml file's `gitRepo.repository` and `gitRepo.revision` to your repository location and revision.
 
 ```console
-    $ kubectl apply -f https://raw.githubusercontent.com/kubepack/kubepack/test-mount/_testdata/test-10/pod.yaml
+    $ kubectl apply -f https://raw.githubusercontent.com/kubepack/kubepack/master/docs/_testdata/test-8/pod.yaml
     pod "server" created
 ```
 
-This pod mount your git repository in /mypath in the container and if their is exist any `_outlook` folder, then it'll `$ kubectl apply -R -f <outlook filepath>`.
-You can check actual implementation [here](https://github.com/a8uhnf/git-mount/blob/master/main.go).
+This pod mount your git repository in /mypath in the container and if their is exist any `manifests/output` folder, then it'll `$ kubectl apply -R -f <output filepath>`.
+You can check actual implementation [here](https://github.com/kubepack/git-mount/blob/master/main.go).
 
 Now, you can see the all the desired kubernetes object in your cluster.
 

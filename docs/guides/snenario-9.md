@@ -33,8 +33,8 @@ If you look into `manifest.yaml` file:
       branch: test-9
 
 ```
-You see, this test-case depend on branch `test-9` of repository [kube-a](https://kubepack/kube-a). 
-In branch `test-9` of [kube-a](https://kubepack/kube-a) contains a jsonnet file.
+You see, this test-case depend on branch `test-9` of repository [kube-a](https://github.com/kubepack/kube-a). 
+In branch `test-9` of [kube-a](https://github.com/kubepack/kube-a) contains a jsonnet file.
 
 ![alt text](/docs/_testdata/test-9/test-9.jpg)
 
@@ -53,11 +53,11 @@ will see as below
     }
 ```
 
-After `$ pack dep`, if you checkout `_vendor`'s `foocorp-shard.jsonnet` file,
+After `$ pack dep`, if you checkout `manifests/vendor`'s `foocorp-shard.jsonnet` file,
  you'll see as below
  
  ```console
-    $ cat _vendor/github.com/kubepack/kube-a/foocorp-shard.jsonnet
+    $ cat manifests/vendor/github.com/kubepack/kube-a/manifests/app/foocorp-shard.jsonnet
     
     apiVersion: v1
     kind: Service
@@ -69,20 +69,22 @@ After `$ pack dep`, if you checkout `_vendor`'s `foocorp-shard.jsonnet` file,
         serviceName: foocorp
  ```
 
-Now, `$ pack dep` will generate final outcome in `_outlook` folder.
+Now, `$ pack up` will generate final outcome in `manifests/output` folder.
 
 ```console
-    $ tree _outlook/
+    $ tree manifests/output/
     
-    _outlook/
+    manifests/output/
     └── github.com
         └── kubepack
             └── kube-a
-                ├── foocorp-shard.jsonnet
-                ├── nginx-deployment.yaml
-                └── nginx-dm.yaml
+                └── manifests
+                    └── app
+                        ├── foocorp-shard.jsonnet
+                        ├── nginx-deployment.yaml
+                        └── nginx-dm.yaml
     
-    3 directories, 3 files
+    5 directories, 3 files
 ```
 
 
