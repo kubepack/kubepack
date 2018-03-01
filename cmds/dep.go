@@ -283,6 +283,11 @@ func convertJsonnetfileToYamlfile(path string) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
+	// filepath.Ext()
+	err = os.Rename(path, path+".yaml")
+	if err != nil {
+		return errors.WithStack(err)
+	}
 	return nil
 }
 
