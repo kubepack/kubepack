@@ -48,57 +48,44 @@ See `manifest.yaml` file below:
 
 #### Get Dependencies
 
-`$ pack dep` command gets all the dependencies and place it under `_vendor` folder.
+`$ pack dep` command gets all the dependencies and place it under `manifests/vendor` folder.
  In this scenario, following things happen:
  
   - `kube-b` repository contains patch of jsonnet file's yaml,
    so `kube-c`'s jsonnet will be yaml. This yaml is combination of 
    **jsonnet's yaml and this yaml's patch which exists in kube-b repository.**
   -  `kube-a` contains a jsonnet file. 
-  In `_vendor` folder, this `jsonnet` file will be converted into yaml file.
+  In `manifests/vendor` folder, this `jsonnet` file will be converted into yaml file.
   
 
-Now, `$ pack up` command will generate the final output in `_outlook` folder.
+Now, `$ pack up` command will generate the final output in `manifests/output` folder.
 
 ```console
-    $ tree _outlook/
+    $ tree manifests/output/
     
     
-    _outlook/
+    manifests/output/
     └── github.com
         └── kubepack
             ├── kube-a
-            │   ├── foocorp-shard.jsonnet
-            │   ├── nginx-deployment.yaml
-            │   └── nginx-dm.yaml
+            │   └── manifests
+            │       └── app
+            │           ├── foocorp-shard.jsonnet
+            │           ├── nginx-deployment.yaml
+            │           └── nginx-dm.yaml
             ├── kube-b
-            │   ├── nginx-deployment.yaml
-            │   ├── nginx-dm.yaml
-            │   ├── _outlook
-            │   │   └── github.com
-            │   │       └── kubepack
-            │   │           └── kube-c
-            │   │               ├── foocorp-shard.jsonnet
-            │   │               ├── nginx-deployment.yaml
-            │   │               └── nginx-dm.yaml
-            │   ├── patch
-            │   │   └── github.com
-            │   │       └── kubepack
-            │   │           └── kube-c
-            │   │               └── foocorp-shard.jsonnet
-            │   └── _vendor
-            │       └── github.com
-            │           └── kubepack
-            │               └── kube-c
-            │                   ├── foocorp-shard.jsonnet
-            │                   ├── nginx-deployment.yaml
-            │                   └── nginx-dm.yaml
+            │   └── manifests
+            │       └── app
+            │           ├── nginx-deployment.yaml
+            │           └── nginx-dm.yaml
             └── kube-c
-                ├── foocorp-shard.jsonnet
-                ├── nginx-deployment.yaml
-                └── nginx-dm.yaml
+                └── manifests
+                    └── app
+                        ├── foocorp-shard.jsonnet
+                        ├── nginx-deployment.yaml
+                        └── nginx-dm.yaml
     
-    17 directories, 15 files
+    11 directories, 8 files
 ```
 
 ## Next Steps
