@@ -16,10 +16,11 @@ import (
 	"k8s.io/apimachinery/pkg/util/strategicpatch"
 	"k8s.io/kubernetes/pkg/kubectl/cmd/util/editor"
 	"k8s.io/kubernetes/pkg/kubectl/scheme"
+	"github.com/pkg/errors"
 )
 
 const defaultEditor = "nano"
-const _VendorFolder = "_vendor"
+const _VendorFolder = "vendor"
 const PatchFolder = "patch"
 
 var (
@@ -48,16 +49,19 @@ func NewEditCommand() *cobra.Command {
 func RunEdit() error {
 	root, err := os.Getwd()
 	if err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 	path := filepath.Join(root, srcPath)
 
 	fileInfo, err = os.Stat(path)
 	if err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 
 	srcFile, err := ioutil.ReadFile(path)
+	if err != nil {
+		return errors.WithStack(err)
+	}
 
 	buf := &bytes.Buffer{}
 	buf.Write(srcFile)
@@ -67,12 +71,12 @@ func RunEdit() error {
 
 	srcJson, err := yaml.YAMLToJSON(srcFile)
 	if err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 
 	dstJson, err := yaml.YAMLToJSON(edited)
 	if err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 
 	return GetPatch(srcJson, dstJson)
@@ -86,7 +90,7 @@ func GetPatch(src, dst []byte) error {
 
 	var ro runtime.TypeMeta
 	if err := yaml.Unmarshal(src, &ro); err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 	kind := ro.GetObjectKind().GroupVersionKind()
 	versionedObject, err := scheme.Scheme.New(kind)
@@ -95,19 +99,19 @@ func GetPatch(src, dst []byte) error {
 	case runtime.IsNotRegisteredError(err):
 		patch, err = jsonpatch.CreateMergePatch(src, dst)
 	case err != nil:
-		return err
+		return errors.WithStack(err)
 	default:
 		patch, err = strategicpatch.CreateTwoWayMergePatch(src, dst, versionedObject)
 	}
 
 	yamlPatch, err := yaml.JSONToYAML(patch)
 	if err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 
 	root, err := os.Getwd()
 	if err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 	patchFolderDir := strings.Replace(srcPath, _VendorFolder, PatchFolder, 1)
 	lstIndexSlash := strings.LastIndex(patchFolderDir, "/")
@@ -115,16 +119,16 @@ func GetPatch(src, dst []byte) error {
 
 	err = os.MkdirAll(dstPath, 0755)
 	if err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 	patchFilePath := filepath.Join(dstPath, fileInfo.Name())
 	_, err = os.Create(patchFilePath)
 	if err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 	err = ioutil.WriteFile(patchFilePath, yamlPatch, 0755)
 	if err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 
 	return nil

@@ -113,3 +113,5 @@ So that, others can use it through pack cli.
 - Want to consume apps published using Kubepack? Please visit [here](/docs/concepts/how/user.md).
 - To learn about `manifest.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
 - Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).
+- Learn more about **Pack** jsonnet-support [here](/docs/concepts/how/jsonnet-support.md).
+- Learn more about **Pack** validation [here](/docs/concepts/how/validation.md).

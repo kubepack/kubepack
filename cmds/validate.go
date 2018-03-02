@@ -43,21 +43,21 @@ func NewValidateCommand() *cobra.Command {
 func validateOutlook(cmd *cobra.Command) error {
 	path, err := os.Getwd()
 	if err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 	validator, err = GetOpenapiValidator(cmd)
 	if err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 
 	outlookFolderpath := filepath.Join(path, CompileDirectory)
 	_, err = os.Stat(outlookFolderpath)
 	if os.IsNotExist(err) {
-		return err
+		return errors.WithStack(err)
 	}
 	err = filepath.Walk(outlookFolderpath, visitOutlookFolder)
 	if err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 	return nil
 }
@@ -105,15 +105,15 @@ func GetKubernetesVersion() (string, error) {
 	url := "https://dl.k8s.io/release/stable.txt"
 	resp, err := http.Get(url)
 	if err != nil {
-		return "", fmt.Errorf("unable to get URL %q: %s", url, err.Error())
+		return "", errors.Wrapf(err, "unable to get URL %q: %s", url, err.Error())
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
-		return "", fmt.Errorf("unable to fetch file. URL: %q Status: %v", url, resp.Status)
+		return "", errors.Errorf("unable to fetch file. URL: %q Status: %v", url, resp.Status)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return "", fmt.Errorf("unable to read content of URL %q: %s", url, err.Error())
+		return "", errors.Wrapf(err, "unable to read content of URL %q: %s", url, err.Error())
 	}
 	return strings.TrimSpace(string(body)), nil
 }
@@ -122,14 +122,14 @@ func downloadOpenApiSwagger(url string, file *os.File) error {
 	response, err := http.Get(url)
 	if err != nil {
 		fmt.Println("Error while downloading", url, "-", err)
-		return err
+		return errors.WithStack(err)
 	}
 	defer response.Body.Close()
 
 	n, err := io.Copy(file, response.Body)
 	if err != nil {
 		fmt.Println("Error while downloading", url, "-", err)
-		return err
+		return errors.WithStack(err)
 	}
 
 	fmt.Println(n, "bytes downloaded.")
@@ -139,14 +139,17 @@ func downloadOpenApiSwagger(url string, file *os.File) error {
 func GetOpenapiValidator(cmd *cobra.Command) (*validation.SchemaValidation, error) {
 	swaggerJsonPath, err := GetSwaggerJsonpath(cmd)
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 	apiSchema := ApiSchema{Path: swaggerJsonPath}
 	doc, err := apiSchema.OpenApiSchema()
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 	resources, err := openapi.NewOpenAPIData(doc)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
 	return validation.NewSchemaValidation(resources), nil
 }
 
@@ -156,20 +159,20 @@ func GetSwaggerJsonpath(cmd *cobra.Command) (string, error) {
 	if os.IsNotExist(err) {
 		err := os.MkdirAll(kubepackPath, 0755)
 		if err != nil {
-			return "", err
+			return "", errors.WithStack(err)
 		}
 	}
 
 	var version string
 	version, err = cmd.Flags().GetString("kube-version")
 	if err != nil {
-		return "", err
+		return "", errors.WithStack(err)
 	}
 
 	if version == "" {
 		version, err = GetKubernetesVersion()
 		if err != nil {
-			return "", err
+			return "", errors.WithStack(err)
 		}
 	}
 
@@ -178,7 +181,7 @@ func GetSwaggerJsonpath(cmd *cobra.Command) (string, error) {
 	if os.IsNotExist(err) {
 		err = os.MkdirAll(oApiPath, 0755)
 		if err != nil {
-			return "", err
+			return "", errors.WithStack(err)
 		}
 	}
 
@@ -187,13 +190,13 @@ func GetSwaggerJsonpath(cmd *cobra.Command) (string, error) {
 	if os.IsNotExist(err) {
 		file, err := os.Create(swaggerpath)
 		if err != nil {
-			return "", err
+			return "", errors.WithStack(err)
 		}
 		defer file.Close()
 
 		err = downloadOpenApiSwagger(fmt.Sprintf(OpenapiSpecDloadPath, version), file)
 		if err != nil {
-			return "", err
+			return "", errors.WithStack(err)
 		}
 	}
 
@@ -211,18 +214,18 @@ func (f *ApiSchema) OpenApiSchema() (*openapi_v2.Document, error) {
 	_, err := os.Stat(f.Path)
 	if err != nil {
 		f.err = err
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 	spec, err := ioutil.ReadFile(f.Path)
 	if err != nil {
 		f.err = err
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 	var info yaml.MapSlice
 	err = yaml.Unmarshal(spec, &info)
 	if err != nil {
 		f.err = err
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 	f.document, f.err = openapi_v2.NewDocument(info, compiler.NewContext("$root", nil))
 	return f.document, f.err

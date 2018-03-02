@@ -1,0 +1,48 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    git-commit-hash: 8706a2dcea961dbc4714b9237de4c323c3834923
+  labels:
+    app: kubed
+  name: kubed-operator
+  namespace: kube-system
+spec:
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        scheduler.alpha.kubernetes.io/critical-pod: ""
+      labels:
+        app: kubed
+    spec:
+      containers:
+      - args:
+        - run
+        - --v=3
+        - --api.address=:8080
+        - --web.address=:56790
+        image: appscode/kubed:0.3.0
+        imagePullPolicy: IfNotPresent
+        name: kubed
+        ports:
+        - containerPort: 8080
+          name: api
+          protocol: TCP
+        - containerPort: 56790
+          name: web
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /srv/kubed
+          name: config
+        - mountPath: /tmp
+          name: scratch
+      tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+      volumes:
+      - name: config
+        secret:
+          secretName: kubed-config
+      - emptyDir: {}
+        name: scratch

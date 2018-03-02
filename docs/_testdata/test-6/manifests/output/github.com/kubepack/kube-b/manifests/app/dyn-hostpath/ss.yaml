@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    git-commit-hash: de53e301b2cbc0e991f2cf609eef099c91a7fcfe
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  clusterIP: None
+  ports:
+  - name: web
+    port: 80
+  selector:
+    app: nginx

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    git-commit-hash: de53e301b2cbc0e991f2cf609eef099c91a7fcfe
+  name: test-ebs
+spec:
+  containers:
+  - image: gcr.io/google_containers/test-webserver
+    name: test-container
+    volumeMounts:
+    - mountPath: /test-ebs
+      name: test-volume
+  volumes:
+  - awsElasticBlockStore:
+      fsType: ext4
+      volumeID: vol-02dcd863d6b09b41c
+    name: test-volume

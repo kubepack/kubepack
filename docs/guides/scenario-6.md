@@ -50,7 +50,7 @@ Explanation of image:
   - fork `kube-d` of `kube-a` repo.
   - fork `kube-c` of `kube-b` repo.
 
-Now, `$ pack dep` command get the dependencies and place under `_vendor` folder. `pack` pulls `kube-a` from fork `kube-d` and `kube-b` from fork `kube-c`.
+Now, `$ pack dep` command get the dependencies and place under `manifests/vendor` folder. `pack` pulls `kube-a` from fork `kube-d` and `kube-b` from fork `kube-c`.
 
 
 ## Next Steps

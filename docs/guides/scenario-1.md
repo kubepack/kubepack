@@ -40,7 +40,7 @@ See image below, which describe whole dependency.
 
 Explanation of image:
 
-1. This test directly depends on `kube-a` of branch `test-1`.
+1. This test directly depends on branch `test-1` of `kube-a` repository.
 
 2. `kube-a`'s depends on branch `test-1` of `kube-b`.
 See this manifest.yaml file [here](https://github.com/kubepack/kube-a/blob/test-1/manifest.yaml)
@@ -52,7 +52,7 @@ See this manifest.yaml file [here](https://github.com/kubepack/kube-b/blob/test-
 See this manifest.yaml file [here](https://github.com/kubepack/kube-c/blob/test-1/manifest.yaml)
 
 
-Now, `$ pack dep` command will get all the dependencies and place it under `_vendor` folder.
+Now, `$ pack dep` command will get all the dependencies and place it under `manifests/vendor` folder.
 
 ## Next Steps
 
