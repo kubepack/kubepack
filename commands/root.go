@@ -7,6 +7,7 @@ import (
 
 	"github.com/appscode/go/analytics"
 	v "github.com/appscode/go/version"
+	"github.com/appscode/kutil/tools/plugin_installer"
 	"github.com/jpillora/go-ogle-analytics"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
@@ -16,7 +17,7 @@ const (
 	gaTrackingCode = "UA-62096468-20"
 )
 
-func NewPackCmd(version string) *cobra.Command {
+func NewPackCmd(version string, plugin bool) *cobra.Command {
 	var (
 		enableAnalytics = true
 	)
@@ -37,18 +38,21 @@ func NewPackCmd(version string) *cobra.Command {
 			}
 		},
 	}
-	cmd.PersistentFlags().AddGoFlagSet(flag.CommandLine)
+
+	flags := cmd.PersistentFlags()
+	plugin_installer.BindFlags(flags, plugin)
 	// ref: https://github.com/kubernetes/kubernetes/issues/17162#issuecomment-225596212
 	flag.CommandLine.Parse([]string{})
 
-	cmd.PersistentFlags().String("kube-version", "", "name of the kubeconfig context to use")
-	cmd.PersistentFlags().BoolVar(&enableAnalytics, "analytics", enableAnalytics, "Send analytical events to Google Guard")
+	flags.String("kube-version", "", "name of the kubeconfig context to use")
+	flags.BoolVar(&enableAnalytics, "analytics", enableAnalytics, "Send analytical events to Google Guard")
 
 	cmd.AddCommand(NewDepCommand())
 	cmd.AddCommand(NewEditCommand())
 	cmd.AddCommand(NewUpCommand())
 	cmd.AddCommand(NewValidateCommand())
 	cmd.AddCommand(NewKubepackInitializeCmd())
+	cmd.AddCommand(plugin_installer.NewCmdInstall(cmd))
 	cmd.AddCommand(v.NewCmdVersion())
 	return cmd
 }

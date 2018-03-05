@@ -54,7 +54,7 @@ aliases:
 
 // ref: https://github.com/spf13/cobra/blob/master/doc/md_docs.md
 func main() {
-	rootCmd := commands.NewPackCmd("")
+	rootCmd := commands.NewPackCmd("", false)
 	dir := runtime.GOPath() + "/src/github.com/kubepack/pack/docs/reference"
 	fmt.Printf("Generating cli markdown tree in: %v\n", dir)
 	err := os.RemoveAll(dir)

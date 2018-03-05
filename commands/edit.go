@@ -41,7 +41,7 @@ func NewEditCommand() *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&srcPath, "src", "s", "", "File want to edit")
+	cmd.Flags().StringVar(&srcPath, "src", "", "File want to edit")
 
 	return cmd
 }

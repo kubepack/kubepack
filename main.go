@@ -11,7 +11,8 @@ func main() {
 	logs.InitLogs()
 	defer logs.FlushLogs()
 
-	if err := commands.NewPackCmd(Version).Execute(); err != nil {
+	_, plugin := os.LookupEnv("KUBECTL_PLUGINS_CALLER")
+	if err := commands.NewPackCmd(Version, plugin).Execute(); err != nil {
 		os.Exit(1)
 	}
 	os.Exit(0)

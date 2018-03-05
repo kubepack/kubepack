@@ -29,6 +29,10 @@
   name = "github.com/appscode/go"
 
 [[constraint]]
+  branch = "release-6.0"
+  name = "github.com/appscode/kutil"
+
+[[constraint]]
   branch = "master"
   name = "github.com/evanphx/json-patch"
 

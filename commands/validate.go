@@ -16,8 +16,6 @@ import (
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
-	"k8s.io/client-go/tools/clientcmd"
-	cmdutil "k8s.io/kubernetes/pkg/kubectl/cmd/util"
 	"k8s.io/kubernetes/pkg/kubectl/cmd/util/openapi"
 	"k8s.io/kubernetes/pkg/kubectl/cmd/util/openapi/validation"
 )
@@ -60,24 +58,6 @@ func validateOutlook(cmd *cobra.Command) error {
 		return errors.WithStack(err)
 	}
 	return nil
-}
-
-func NewFactory(cmd *cobra.Command) cmdutil.Factory {
-	context := cmdutil.GetFlagString(cmd, "kube-context")
-	config := configForContext(context)
-	return cmdutil.NewFactory(config)
-}
-
-func configForContext(context string) clientcmd.ClientConfig {
-	rules := clientcmd.NewDefaultClientConfigLoadingRules()
-	rules.DefaultClientConfig = &clientcmd.DefaultClientConfig
-
-	overrides := &clientcmd.ConfigOverrides{ClusterDefaults: clientcmd.ClusterDefaults}
-
-	if context != "" {
-		overrides.CurrentContext = context
-	}
-	return clientcmd.NewNonInteractiveDeferredLoadingClientConfig(rules, overrides)
 }
 
 func visitOutlookFolder(path string, fileInfo os.FileInfo, ferr error) error {
