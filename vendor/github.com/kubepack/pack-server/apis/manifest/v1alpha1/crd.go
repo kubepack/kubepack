@@ -1,7 +1,7 @@
 package v1alpha1
 
 import (
-	"github.com/kubepack/packserver/apis/apps"
+	"github.com/kubepack/pack-server/apis/manifest"
 	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -13,7 +13,7 @@ func (c Manifest) CustomResourceDefinition() *apiextensions.CustomResourceDefini
 			Labels: map[string]string{"app": "kubepack"},
 		},
 		Spec: apiextensions.CustomResourceDefinitionSpec{
-			Group:   apps.GroupName,
+			Group:   manifest.GroupName,
 			Version: SchemeGroupVersion.Version,
 			Scope:   apiextensions.NamespaceScoped,
 			Names: apiextensions.CustomResourceDefinitionNames{
@@ -33,7 +33,7 @@ func (c Release) CustomResourceDefinition() *apiextensions.CustomResourceDefinit
 			Labels: map[string]string{"app": "kubepack"},
 		},
 		Spec: apiextensions.CustomResourceDefinitionSpec{
-			Group:   apps.GroupName,
+			Group:   manifest.GroupName,
 			Version: SchemeGroupVersion.Version,
 			Scope:   apiextensions.NamespaceScoped,
 			Names: apiextensions.CustomResourceDefinitionNames{

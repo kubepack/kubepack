@@ -17,14 +17,14 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"github.com/kubepack/packserver/apis/apps"
+	"github.com/kubepack/pack-server/apis/manifest"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 )
 
 // SchemeGroupVersion is group version used to register these objects
-var SchemeGroupVersion = schema.GroupVersion{Group: apps.GroupName, Version: "v1alpha1"}
+var SchemeGroupVersion = schema.GroupVersion{Group: manifest.GroupName, Version: "v1alpha1"}
 
 var (
 	// TODO: move SchemeBuilder with zz_generated.deepcopy.go to k8s.io/api.

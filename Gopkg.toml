@@ -59,7 +59,7 @@
   name = "github.com/kubepack/pack-server"
 
 [[constraint]]
-  branch = "plugin"
+  branch = "master"
   name = "github.com/kubepack/onessl"
 
 [[constraint]]
