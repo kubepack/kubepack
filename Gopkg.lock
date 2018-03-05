@@ -69,8 +69,10 @@
     "ioutil",
     "log",
     "log/golog",
+    "net",
     "runtime",
     "sets",
+    "types",
     "version"
   ]
   revision = "c312c0a1fe0d4988480073287b8633fc5a244647"
@@ -78,8 +80,11 @@
 [[projects]]
   branch = "master"
   name = "github.com/appscode/kutil"
-  packages = ["tools/plugin_installer"]
-  revision = "9b3dfbd1d10e0687fe518521891b23bc4f4fd9e2"
+  packages = [
+    "tools/certstore",
+    "tools/plugin_installer"
+  ]
+  revision = "53ea956d44dd41e34f35254a9ed08d68fce7b8cb"
 
 [[projects]]
   branch = "master"
@@ -204,6 +209,15 @@
     "spdy"
   ]
   revision = "bc6354cbbc295e925e4c611ffe90c1f287ee54db"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/drone/envsubst"
+  packages = [
+    ".",
+    "parse"
+  ]
+  revision = "f4d1a8ef8670afc9eea1fb95ee09a979fd2763a3"
 
 [[projects]]
   name = "github.com/emicklei/go-restful"
@@ -383,6 +397,13 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/hashicorp/go-version"
+  packages = ["."]
+  revision = "53932f80ddea12bea96be074f9fb2dc545806aba"
+  source = "https://github.com/appscode/go-version.git"
+
+[[projects]]
+  branch = "master"
   name = "github.com/hashicorp/golang-lru"
   packages = [
     ".",
@@ -443,13 +464,19 @@
   revision = "ae77be60afb1dcacde03767a8c37337fad28ac14"
 
 [[projects]]
+  branch = "plugin"
+  name = "github.com/kubepack/onessl"
+  packages = ["cmds"]
+  revision = "990b94faf28224a24af1b759ce54b40c5d9dbec2"
+
+[[projects]]
   branch = "master"
   name = "github.com/kubepack/pack-server"
   packages = [
     "apis/manifest/v1alpha1",
     "client/clientset/versioned/scheme"
   ]
-  revision = "0bbb8b9875d834ef7e6530fe229718601c6e8ad6"
+  revision = "9491336d3beb563bc18e97eb8b835af386cecde4"
 
 [[projects]]
   branch = "master"
@@ -591,6 +618,15 @@
   packages = ["."]
   revision = "d682213848ed68c0a260ca37d6dd5ace8423f5ba"
   version = "v1.0.4"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/spf13/afero"
+  packages = [
+    ".",
+    "mem"
+  ]
+  revision = "bbf41cb36dffe15dff5bf7e18c447801e7ffe163"
 
 [[projects]]
   branch = "master"
@@ -769,6 +805,8 @@
   packages = [
     "pkg/apis/apiextensions",
     "pkg/apis/apiextensions/v1beta1",
+    "pkg/client/clientset/clientset/scheme",
+    "pkg/client/clientset/clientset/typed/apiextensions/v1beta1",
     "pkg/features"
   ]
   revision = "98ecf7bbd60f9f11a72000e4f05203f542136219"
@@ -984,6 +1022,20 @@
 
 [[projects]]
   branch = "master"
+  name = "k8s.io/kube-aggregator"
+  packages = [
+    "pkg/apis/apiregistration",
+    "pkg/apis/apiregistration/v1",
+    "pkg/apis/apiregistration/v1beta1",
+    "pkg/client/clientset_generated/clientset",
+    "pkg/client/clientset_generated/clientset/scheme",
+    "pkg/client/clientset_generated/clientset/typed/apiregistration/v1",
+    "pkg/client/clientset_generated/clientset/typed/apiregistration/v1beta1"
+  ]
+  revision = "5cfc5c4c8c903e1886b9a54678d0837d9cdd9e2f"
+
+[[projects]]
+  branch = "master"
   name = "k8s.io/kube-openapi"
   packages = [
     "pkg/common",
@@ -1177,6 +1229,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "7c224c3d0f7c014b3866b81069c415af107ba72b4f0c45c0d1408ebde16409ef"
+  inputs-digest = "c58cf81b834c9d640ef498a500502d268bde6450c41d27d885560c306fcd3a38"
   solver-name = "gps-cdcl"
   solver-version = 1

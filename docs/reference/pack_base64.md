@@ -1,27 +1,33 @@
 ---
-title: Pack
+title: Pack Base64
 menu:
   docs_0.1.0-alpha.0:
-    identifier: pack
-    name: Pack
+    identifier: pack-base64
+    name: Pack Base64
     parent: reference
-    weight: 0
-
 menu_name: docs_0.1.0-alpha.0
 section_menu_id: reference
-aliases:
-  - /docs/0.1.0-alpha.0/reference/
-
 ---
-## pack
+## pack base64
 
-Secure Lightweight Kubernetes Package Manager
+Base64 encode/decode input text
 
 ### Synopsis
 
-Secure Lightweight Kubernetes Package Manager
+Base64 encode/decode input text
+
+```
+pack base64 [flags]
+```
 
 ### Options
+
+```
+      --decode   Decode input text
+  -h, --help     help for base64
+```
+
+### Options inherited from parent commands
 
 ```
       --alsologtostderr                  log to standard error as well as files
@@ -33,7 +39,6 @@ Secure Lightweight Kubernetes Package Manager
       --client-key string                Path to a client key file for TLS
       --cluster string                   The name of the kubeconfig cluster to use
       --context string                   The name of the kubeconfig context to use
-  -h, --help                             help for pack
       --insecure-skip-tls-verify         If true, the server's certificate will not be checked for validity. This will make your HTTPS connections insecure
       --kube-version string              name of the kubeconfig context to use
       --kubeconfig string                Path to the kubeconfig file to use for CLI requests.
@@ -54,18 +59,5 @@ Secure Lightweight Kubernetes Package Manager
 
 ### SEE ALSO
 
-* [pack base64](/docs/reference/pack_base64.md)	 - Base64 encode/decode input text
-* [pack dep](/docs/reference/pack_dep.md)	 - Pulls dependent app manifests
-* [pack edit](/docs/reference/pack_edit.md)	 - Edit resource definition
-* [pack envsubst](/docs/reference/pack_envsubst.md)	 - Emulates bash environment variable substitution for input text
-* [pack has-keys](/docs/reference/pack_has-keys.md)	 - Checks configmap/secret has a set of given keys
-* [pack init](/docs/reference/pack_init.md)	 - Initialize kubepack and create manifest.yaml file
-* [pack install](/docs/reference/pack_install.md)	 - Install as kubectl plugin
-* [pack jsonpath](/docs/reference/pack_jsonpath.md)	 - Print value of jsonpath for input text
-* [pack semver](/docs/reference/pack_semver.md)	 - Print sanitized semver version
-* [pack ssl](/docs/reference/pack_ssl.md)	 - Utility commands for SSL certificates
-* [pack up](/docs/reference/pack_up.md)	 - Compiles patches and vendored manifests into final resource definitions
-* [pack validate](/docs/reference/pack_validate.md)	 - Validate _outlook folder
-* [pack version](/docs/reference/pack_version.md)	 - Prints binary version number.
-* [pack wait-until-ready](/docs/reference/pack_wait-until-ready.md)	 - Wait until resource is ready
+* [pack](/docs/reference/pack.md)	 - Secure Lightweight Kubernetes Package Manager
 
