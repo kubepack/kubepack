@@ -34,7 +34,9 @@ func NewPackCmd(version string, plugin bool) *cobra.Command {
 				}
 			}
 			scheme.AddToScheme(clientsetscheme.Scheme)
-			plugin_installer.LoadFlags(c.LocalFlags())
+			if plugin {
+				plugin_installer.LoadFlags(c.LocalFlags())
+			}
 		},
 	}
 
