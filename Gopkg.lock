@@ -65,12 +65,20 @@
     "context",
     "crypto/rand",
     "homedir",
+    "ioutil",
     "log",
     "log/golog",
     "runtime",
+    "sets",
     "version"
   ]
   revision = "8367769380cf93a12b381d957941ddf2a19d0356"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/appscode/kutil"
+  packages = ["tools/plugin_installer"]
+  revision = "82945dee39e46ef6427092003aa2dc78c2b563ab"
 
 [[projects]]
   branch = "master"
@@ -221,6 +229,12 @@
   name = "github.com/fatih/camelcase"
   packages = ["."]
   revision = "44e46d280b43ec1531bb25252440e34f1b800b65"
+
+[[projects]]
+  name = "github.com/fsnotify/fsnotify"
+  packages = ["."]
+  revision = "c2828203cd70a50dcccfb2761f8b1f8ceef9a8e9"
+  version = "v1.4.7"
 
 [[projects]]
   name = "github.com/ghodss/yaml"
@@ -419,6 +433,12 @@
   packages = ["."]
   revision = "59fac5042749a5afb9af70e813da1dd5474f0167"
   version = "1.0.1"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/kardianos/osext"
+  packages = ["."]
+  revision = "ae77be60afb1dcacde03767a8c37337fad28ac14"
 
 [[projects]]
   branch = "master"
@@ -1124,6 +1144,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "2e0996bb8322de6fb2cd0fae9b8c535a37566ab569c111b26ef52b6abea26ff9"
+  inputs-digest = "b83cb76b705ab0512842379743599d31e17633f20ccf8ba4bc63334ebe2e3700"
   solver-name = "gps-cdcl"
   solver-version = 1

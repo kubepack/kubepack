@@ -43,8 +43,8 @@ func NewUpCommand() *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&src, "src", "s", src, "Compile patch and source.")
-	cmd.Flags().StringVarP(&patch, "patch", "p", patch, "Compile patch and source.")
+	cmd.Flags().StringVar(&src, "src", src, "Compile patch and source.")
+	cmd.Flags().StringVar(&patch, "patch", patch, "Compile patch and source.")
 
 	return cmd
 }

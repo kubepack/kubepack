@@ -1,31 +1,29 @@
 ---
-title: Pack Up
+title: Pack Install
 menu:
   docs_0.1.0-alpha.0:
-    identifier: pack-up
-    name: Pack Up
+    identifier: pack-install
+    name: Pack Install
     parent: reference
 menu_name: docs_0.1.0-alpha.0
 section_menu_id: reference
 ---
-## pack up
+## pack install
 
-Compiles patches and vendored manifests into final resource definitions
+Install as kubectl plugin
 
 ### Synopsis
 
-Compiles patches and vendored manifests into final resource definitions
+Install as kubectl plugin
 
 ```
-pack up [flags]
+pack install [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help           help for up
-      --patch string   Compile patch and source.
-      --src string     Compile patch and source.
+  -h, --help   help for install
 ```
 
 ### Options inherited from parent commands
