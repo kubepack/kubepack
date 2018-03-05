@@ -10,7 +10,7 @@ menu_name: docs_0.1.0-alpha.1
 section_menu_id: setup
 ---
 
-> New to Kubepack? Please start [here](/docs/guides/README.md).
+> New to Kubepack? Please start [here](/docs/concepts/README.md).
 
 # Installation Guide
 
