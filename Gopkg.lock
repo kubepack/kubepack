@@ -84,7 +84,7 @@
     "tools/certstore",
     "tools/plugin_installer"
   ]
-  revision = "53ea956d44dd41e34f35254a9ed08d68fce7b8cb"
+  revision = "a90b40b3406eaf81c146e6f6eca672bdf7957770"
 
 [[projects]]
   branch = "master"
@@ -464,25 +464,20 @@
   revision = "ae77be60afb1dcacde03767a8c37337fad28ac14"
 
 [[projects]]
-  branch = "plugin"
+  branch = "master"
   name = "github.com/kubepack/onessl"
   packages = ["cmds"]
-  revision = "990b94faf28224a24af1b759ce54b40c5d9dbec2"
+  revision = "a4ca8adca54529237e5519869ddbab026a574e79"
 
 [[projects]]
   branch = "master"
   name = "github.com/kubepack/pack-server"
   packages = [
+    "apis/manifest",
     "apis/manifest/v1alpha1",
     "client/clientset/versioned/scheme"
   ]
-  revision = "9491336d3beb563bc18e97eb8b835af386cecde4"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/kubepack/packserver"
-  packages = ["apis/apps"]
-  revision = "a052cf56e55be455dd995a6900a3f6f5c39a7e09"
+  revision = "a86ff3142d58a715e67d865b974b93a8d774a479"
 
 [[projects]]
   branch = "master"
@@ -1229,6 +1224,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "c58cf81b834c9d640ef498a500502d268bde6450c41d27d885560c306fcd3a38"
+  inputs-digest = "ba8cb14b5a2fdb55f0751ea755fc17b9057f7eda07d374b4f993b3558fb02d8f"
   solver-name = "gps-cdcl"
   solver-version = 1
