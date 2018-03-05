@@ -1,12 +1,12 @@
 ---
 title: Scenarios | Kubepack
 menu:
-  docs_0.1.0-alpha.0:
+  docs_0.1.0-alpha.1:
     identifier: s8-guides
     name: Scenario 8
     parent: guides
     weight: 75
-menu_name: docs_0.1.0-alpha.0
+menu_name: docs_0.1.0-alpha.1
 section_menu_id: guides
 ---
 
@@ -22,8 +22,8 @@ In this scenario, we'll do following things.
 
 1. Create a git repository.
    - This repository requires [test-kubed](https://github.com/kubepack/test-kubed) through `manifest.yaml` file.
-   - Run `$ pack dep` to get the dependencies and `$ pack edit -s <filepath>` to make desired changes.
-   - Then, run `$ pack up` to final version under `manifests/output` folder.
+   - Run `$ kubectl plugin pack dep` to get the dependencies and `$ kubectl plugin pack edit -s <filepath>` to make desired changes.
+   - Then, run `$ kubectl plugin pack up` to final version under `manifests/output` folder.
    - Last, commit our changes to git repository.
 
 2.  Now, I write a pod yaml, you can see it [here](https://raw.githubusercontent.com/kubepack/kubepack/master/docs/_testdata/test-8/pod.yaml).
@@ -50,7 +50,7 @@ dependencies:
 
 It depends on [test-kubed](https://github.com/kubepack/test-kubed)'s master branch.
 
-Now, run `$ pack dep`. This command will get all the dependencies and place under `manifests/vendor` folder.
+Now, run `$ kubectl plugin pack dep`. This command will get all the dependencies and place under `manifests/vendor` folder.
 
 ```console
     $ tree manifests/vendor/
@@ -76,7 +76,7 @@ Now, suppose you want to edit `deployment.yaml` file and make the replicas from 
 
 Below command will open the `deployment.yaml` file in editor. Then made the changes.
 ```console
-    $ kubepack edit -s manifests/vendor/github.com/kubepack/test-kubed/manifests/app/deployment.yaml
+    $ kubectl plugin pack edit -s manifests/vendor/github.com/kubepack/test-kubed/manifests/app/deployment.yaml
 ```
 
 This command will generate a patch file under `patch` folder.
@@ -96,7 +96,7 @@ This command will generate a patch file under `patch` folder.
 ```
 
 
-Then, run `$ pack up`, which will combine original and patch file and place under `manifests/output` folder.
+Then, run `$ kubectl plugin pack up`, which will combine original and patch file and place under `manifests/output` folder.
 
 ```console
     $ tree manifests/output/

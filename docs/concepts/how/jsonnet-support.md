@@ -1,12 +1,12 @@
 ---
 title: How Kubepack support jsonnet
 menu:
-  docs_0.1.0-alpha.0:
+  docs_0.1.0-alpha.1:
     identifier: jsonnet-support
     name: Jsonnet Support
     parent: how-concepts
     weight: 30
-menu_name: docs_0.1.0-alpha.0
+menu_name: docs_0.1.0-alpha.1
 section_menu_id: concepts
 ---
 
@@ -17,7 +17,7 @@ section_menu_id: concepts
 Pack support jsonnet. 
 Pack [publisher](/docs/concepts/how/publisher.md) can write kubernetes resource's definition in jsonnet format.
 
-Then dependant users can require that repository via [manifest.yaml](/docs/concepts/how/manifest.md) and simply `$ pack dep` command. 
+Then dependant users can require that repository via [manifest.yaml](/docs/concepts/how/manifest.md) and simply `$ kubectl plugin pack dep` command. 
 
 This will bring all the dependencies in `_vendor` folder. Remainder, publisher's repository may contains jsonnet file, but it'll appear in kubernetes resource's yaml format under user's `_vendor` folder.
 

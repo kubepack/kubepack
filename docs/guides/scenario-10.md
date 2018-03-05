@@ -1,12 +1,12 @@
 ---
 title: Scenarios | Kubepack
 menu:
-  docs_0.1.0-alpha.0:
+  docs_0.1.0-alpha.1:
     identifier: s10-guides
     name: Scenario 10
     parent: guides
     weight: 70
-menu_name: docs_0.1.0-alpha.0
+menu_name: docs_0.1.0-alpha.1
 section_menu_id: guides
 ---
 
@@ -48,7 +48,7 @@ See `manifest.yaml` file below:
 
 #### Get Dependencies
 
-`$ pack dep` command gets all the dependencies and place it under `manifests/vendor` folder.
+`$ kubectl plugin pack dep` command gets all the dependencies and place it under `manifests/vendor` folder.
  In this scenario, following things happen:
  
   - `kube-b` repository contains patch of jsonnet file's yaml,
@@ -58,7 +58,7 @@ See `manifest.yaml` file below:
   In `manifests/vendor` folder, this `jsonnet` file will be converted into yaml file.
   
 
-Now, `$ pack up` command will generate the final output in `manifests/output` folder.
+Now, `$ kubectl plugin pack up` command will generate the final output in `manifests/output` folder.
 
 ```console
     $ tree manifests/output/

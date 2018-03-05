@@ -1,15 +1,15 @@
 ---
 title: Developer Guide
 menu:
-  docs_0.1.0-alpha.0:
+  docs_0.1.0-alpha.1:
     identifier: developer-guide-readme
     name: Overview
     parent: developer-guide
     weight: 10
-menu_name: docs_0.1.0-alpha.0
+menu_name: docs_0.1.0-alpha.1
 section_menu_id: setup
 aliases:
-  - /docs/0.1.0-alpha.0/setup/developer-guide/
+  - /docs/0.1.0-alpha.1/setup/developer-guide/
 ---
 
 # Development Guide

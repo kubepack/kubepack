@@ -1,11 +1,11 @@
 ---
 title: Pack Ssl Get Ca-Cert
 menu:
-  docs_0.1.0-alpha.0:
+  docs_0.1.0-alpha.1:
     identifier: pack-ssl-get-ca-cert
     name: Pack Ssl Get Ca-Cert
     parent: reference
-menu_name: docs_0.1.0-alpha.0
+menu_name: docs_0.1.0-alpha.1
 section_menu_id: reference
 ---
 ## pack ssl get ca-cert

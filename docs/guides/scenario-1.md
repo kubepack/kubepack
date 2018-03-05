@@ -1,12 +1,12 @@
 ---
 title: Scenarios | Kubepack
 menu:
-  docs_0.1.0-alpha.0:
+  docs_0.1.0-alpha.1:
     identifier: s1-guides
     name: Scenario 1
     parent: guides
     weight: 70
-menu_name: docs_0.1.0-alpha.0
+menu_name: docs_0.1.0-alpha.1
 section_menu_id: guides
 ---
 
@@ -52,7 +52,7 @@ See this manifest.yaml file [here](https://github.com/kubepack/kube-b/blob/test-
 See this manifest.yaml file [here](https://github.com/kubepack/kube-c/blob/test-1/manifest.yaml)
 
 
-Now, `$ pack dep` command will get all the dependencies and place it under `manifests/vendor` folder.
+Now, `$ kubectl plugin pack dep` command will get all the dependencies and place it under `manifests/vendor` folder.
 
 ## Next Steps
 

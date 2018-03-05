@@ -1,12 +1,12 @@
 ---
 title: Kubepack Manifest
 menu:
-  docs_0.1.0-alpha.0:
+  docs_0.1.0-alpha.1:
     identifier: manifest-how
     name: Manifest
     parent: how-concepts
     weight: 20
-menu_name: docs_0.1.0-alpha.0
+menu_name: docs_0.1.0-alpha.1
 section_menu_id: concepts
 ---
 

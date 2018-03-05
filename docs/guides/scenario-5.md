@@ -1,12 +1,12 @@
 ---
 title: Scenarios | Kubepack
 menu:
-  docs_0.1.0-alpha.0:
+  docs_0.1.0-alpha.1:
     identifier: s5-guides
     name: Scenario 5
     parent: guides
     weight: 70
-menu_name: docs_0.1.0-alpha.0
+menu_name: docs_0.1.0-alpha.1
 section_menu_id: guides
 ---
 
@@ -62,7 +62,7 @@ spec:
 apiVersion: apps/v1beta2
 ```
 
-When run `pack dep` command, following things happen.
+When run `kubectl plugin pack dep` command, following things happen.
 
 1. Get all the dependencies, reading `manifest.yaml` file.
 2. As, `kube-a` and `kube-b` both contains patch of repository `kube-c`,

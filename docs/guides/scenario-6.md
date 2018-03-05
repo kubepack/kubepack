@@ -1,12 +1,12 @@
 ---
 title: Scenarios | Kubepack
 menu:
-  docs_0.1.0-alpha.0:
+  docs_0.1.0-alpha.1:
     identifier: s6-guides
     name: Scenario 6
     parent: guides
     weight: 70
-menu_name: docs_0.1.0-alpha.0
+menu_name: docs_0.1.0-alpha.1
 section_menu_id: guides
 ---
 
@@ -50,7 +50,7 @@ Explanation of image:
   - fork `kube-d` of `kube-a` repo.
   - fork `kube-c` of `kube-b` repo.
 
-Now, `$ pack dep` command get the dependencies and place under `manifests/vendor` folder. `pack` pulls `kube-a` from fork `kube-d` and `kube-b` from fork `kube-c`.
+Now, `$ kubectl plugin pack dep` command get the dependencies and place under `manifests/vendor` folder. `pack` pulls `kube-a` from fork `kube-d` and `kube-b` from fork `kube-c`.
 
 
 ## Next Steps

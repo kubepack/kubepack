@@ -1,12 +1,12 @@
 ---
 title: Using Kubepack as an App User
 menu:
-  docs_0.1.0-alpha.0:
+  docs_0.1.0-alpha.1:
     identifier: user-how
     name: App Users
     parent: how-concepts
     weight: 15
-menu_name: docs_0.1.0-alpha.0
+menu_name: docs_0.1.0-alpha.1
 section_menu_id: concepts
 ---
 
@@ -21,10 +21,10 @@ If you want to use others application with pack, then follow below instruction:
 1. Create a git repository.
 2. Create manifest.yaml file in the repository. See [manifest.yaml](/docs/concepts/how/manifest.md) doc
 3. Add all the dependencies under `dependencies` in manifest.yaml file.
-4. Run `pack dep -v 10` to get all the dependencies in `_vendor` folder.
-5. Run `pack edit -s <filepath>`, if you want to change some file from `_vendor` folder.
+4. Run `kubectl plugin pack dep -v 10` to get all the dependencies in `_vendor` folder.
+5. Run `kubectl plugin pack edit -s <filepath>`, if you want to change some file from `_vendor` folder.
 This command will generate a patch under `patch` folder. `_vendor` will be unchanged.
-6. Run `pack up` to combine `patch` and `_vendor` folder files.
+6. Run `kubectl plugin pack up` to combine `patch` and `_vendor` folder files.
 And final combination will be under `_outlook` folder.
 7. Now, all is need to do `kubectl apply -R -f _outlook/`.
  Then, your desired application will be deployed in kubernetes cluster.
@@ -50,11 +50,11 @@ dependencies:
 `manifest.yaml` file contain [test-kubed](https://github.com/kubepack/test-kubed) as `dependencies`. `test-kubed` contains
  all the necessary yaml file needs to deploy kubed in minikube cluster.
 
- Now, `pack dep` command will pull all the dependencies and place it in `_vendor` folder.
+ Now, `kubectl plugin pack dep` command will pull all the dependencies and place it in `_vendor` folder.
   If `test-kubed` repository also depend on some other repository then `pack` will get that too.
 
   ```console
-  $ pack dep
+  $ kubectl plugin pack dep
   $ tree _vendor/
   _vendor/
   └── github.com
@@ -88,15 +88,15 @@ dependencies:
 We'll change `config.yaml` under `data` field. `config.yaml` value will be `YXBpU2VydmVyOgogIGFkZHJlc3M6IDo4MDgwCiAgZW5hYmxlUmV2ZXJzZUluZGV4OiB0cnVlCiAgZW5hYmxlU2VhcmNoSW5kZXg6IHRydWUKY2x1c3Rlck5hbWU6IHVuaWNvcm4KZW5hYmxlQ29uZmlnU3luY2VyOiB0cnVlCg==`
 
 ```console
-$ pack edit -s _vendor/github.com/kubepack/test-kubed/kubed-config.yaml
+$ kubectl plugin pack edit -s _vendor/github.com/kubepack/test-kubed/kubed-config.yaml
 ```
 Above command will open file in editor.
  Then, change `config.yaml` to above value. This will generate a patch in `patch` folder.
 
- Below `$ pack up` command will combine `patch` and `_vendor` folder files and dump in `_outlook` folder.
+ Below `$ kubectl plugin pack up` command will combine `patch` and `_vendor` folder files and dump in `_outlook` folder.
 
  ```console
- $ pack up
+ $ kubectl plugin pack up
  $ kubectl apply -R -f _outlook/
  ```
  `$ kubectl apply -R -f _outlook/` command will deploy kubed in minikube cluster.
