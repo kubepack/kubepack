@@ -4,14 +4,14 @@ import (
 	"os"
 
 	logs "github.com/appscode/go/log/golog"
-	"github.com/kubepack/kubepack/cmds"
+	"github.com/kubepack/kubepack/commands"
 )
 
 func main() {
 	logs.InitLogs()
 	defer logs.FlushLogs()
 
-	if err := cmds.NewPackCmd(Version).Execute(); err != nil {
+	if err := commands.NewPackCmd(Version).Execute(); err != nil {
 		os.Exit(1)
 	}
 	os.Exit(0)

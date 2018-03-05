@@ -8,7 +8,7 @@ const (
 
 type ManifestDefinition struct {
 	Package string `json:"package"`
-	Owners []struct {
+	Owners  []struct {
 		Name  string `json:"name"`
 		Email string `json:"email"`
 	} `json:"owners"`

@@ -1,4 +1,4 @@
-package cmds
+package commands
 
 import (
 	"bytes"
@@ -11,12 +11,12 @@ import (
 
 	"github.com/evanphx/json-patch"
 	"github.com/ghodss/yaml"
+	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/strategicpatch"
 	"k8s.io/kubernetes/pkg/kubectl/cmd/util/editor"
 	"k8s.io/kubernetes/pkg/kubectl/scheme"
-	"github.com/pkg/errors"
 )
 
 const defaultEditor = "nano"
