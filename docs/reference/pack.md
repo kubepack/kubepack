@@ -65,7 +65,7 @@ Secure Lightweight Kubernetes Package Manager
 * [pack semver](/docs/reference/pack_semver.md)	 - Print sanitized semver version
 * [pack ssl](/docs/reference/pack_ssl.md)	 - Utility commands for SSL certificates
 * [pack up](/docs/reference/pack_up.md)	 - Compiles patches and vendored manifests into final resource definitions
-* [pack validate](/docs/reference/pack_validate.md)	 - Validate _outlook folder
+* [pack validate](/docs/reference/pack_validate.md)	 - Validate manifests/output folder
 * [pack version](/docs/reference/pack_version.md)	 - Prints binary version number.
 * [pack wait-until-ready](/docs/reference/pack_wait-until-ready.md)	 - Wait until resource is ready
 
