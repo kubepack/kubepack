@@ -1,0 +1,35 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: manifests.manifest.kubepack.com
+  labels:
+    app: kubepack
+spec:
+  group: manifest.kubepack.com
+  names:
+    kind: Manifest
+    listKind: ManifestList
+    plural: manifests
+    shortNames:
+    - mfs
+    singular: manifest
+  scope: Namespaced
+  version: v1alpha1
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: releases.manifest.kubepack.com
+  labels:
+    app: kubepack
+spec:
+  group: manifest.kubepack.com
+  names:
+    kind: Release
+    listKind: ReleaseList
+    plural: releases
+    shortNames:
+    - rl
+    singular: release
+  scope: Namespaced
+  version: v1alpha1

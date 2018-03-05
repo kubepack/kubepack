@@ -12,7 +12,7 @@ import (
 
 	"github.com/googleapis/gnostic/OpenAPIv2"
 	"github.com/googleapis/gnostic/compiler"
-	"github.com/kubepack/pack/type"
+	api "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
@@ -134,7 +134,7 @@ func GetOpenapiValidator(cmd *cobra.Command) (*validation.SchemaValidation, erro
 }
 
 func GetSwaggerJsonpath(cmd *cobra.Command) (string, error) {
-	kubepackPath := filepath.Join(os.Getenv("HOME"), types.KubepackOpenapiPath)
+	kubepackPath := filepath.Join(os.Getenv("HOME"), api.KubepackOpenapiPath)
 	_, err := os.Stat(kubepackPath)
 	if os.IsNotExist(err) {
 		err := os.MkdirAll(kubepackPath, 0755)

@@ -11,7 +11,7 @@ import (
 	"github.com/evanphx/json-patch"
 	"github.com/ghodss/yaml"
 	"github.com/google/go-jsonnet"
-	typ "github.com/kubepack/pack/type"
+	api "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )
@@ -36,7 +36,7 @@ func NewUpCommand() *cobra.Command {
 			if err != nil {
 				log.Fatalln(err)
 			}
-			err = filepath.Walk(filepath.Join(rootPath, typ.ManifestDirectory, _VendorFolder), visitPatchAndDump)
+			err = filepath.Walk(filepath.Join(rootPath, api.ManifestDirectory, _VendorFolder), visitPatchAndDump)
 			if err != nil {
 				log.Fatalln(err)
 			}
@@ -64,7 +64,7 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 		return nil
 	}
 
-	if fileInfo.Name() == typ.ManifestFile {
+	if fileInfo.Name() == api.ManifestFile {
 		return nil
 	}
 
