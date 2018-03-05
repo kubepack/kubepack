@@ -16,7 +16,7 @@ aliases:
 
 # Setup
 
-Setup contains instructions for installing the Kubepack to work with database objects.
+Setup contains instructions for installing the Kubepack to work with Kubernetes manifests.
 
 - [Install Kubepack](/docs/setup/install.md). Installation instructions for Kubepack.
 - Developer Guide

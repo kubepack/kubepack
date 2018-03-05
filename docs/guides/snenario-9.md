@@ -38,7 +38,7 @@ In branch `test-9` of [kube-a](https://github.com/kubepack/kube-a) contains a js
 
 ![alt text](/docs/_testdata/test-9/test-9.jpg)
 
-When execute `$ pack dep` to get the dependencies, it'll get all the dependencies and 
+When execute `$ kubectl plugin pack dep` to get the dependencies, it'll get all the dependencies and 
 convert `jsonnet` file into yaml file.
 
 If you see, jsonnet file of [kube-a](https://github.com/kubepack/kube-a/blob/test-9/foocorp-shard.jsonnet), 
@@ -53,7 +53,7 @@ will see as below
     }
 ```
 
-After `$ pack dep`, if you checkout `manifests/vendor`'s `foocorp-shard.jsonnet` file,
+After `$ kubectl plugin pack dep`, if you checkout `manifests/vendor`'s `foocorp-shard.jsonnet` file,
  you'll see as below
  
  ```console
@@ -69,7 +69,7 @@ After `$ pack dep`, if you checkout `manifests/vendor`'s `foocorp-shard.jsonnet`
         serviceName: foocorp
  ```
 
-Now, `$ pack up` will generate final outcome in `manifests/output` folder.
+Now, `$ kubectl plugin pack up` will generate final outcome in `manifests/output` folder.
 
 ```console
     $ tree manifests/output/

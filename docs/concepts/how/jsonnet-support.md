@@ -17,7 +17,7 @@ section_menu_id: concepts
 Pack support jsonnet. 
 Pack [publisher](/docs/concepts/how/publisher.md) can write kubernetes resource's definition in jsonnet format.
 
-Then dependant users can require that repository via [manifest.yaml](/docs/concepts/how/manifest.md) and simply `$ pack dep` command. 
+Then dependant users can require that repository via [manifest.yaml](/docs/concepts/how/manifest.md) and simply `$ kubectl plugin pack dep` command. 
 
 This will bring all the dependencies in `_vendor` folder. Remainder, publisher's repository may contains jsonnet file, but it'll appear in kubernetes resource's yaml format under user's `_vendor` folder.
 

@@ -46,7 +46,7 @@ You can see the whole dependencies in below image.
 
 3. [kube-b](https://github.com/kubepack/kube-b/tree/test-2) depends on branch `test-2` of [kube-c](https://github.com/kubepack/kube-c/tree/test-2) repository. `kube-b` contains the patch of `kube-c`'s `nginx-deployment.yaml` file.
 
-When run `$ pack dep` in `test-2`, following things happen.
+When run `$ kubectl plugin pack dep` in `test-2`, following things happen.
 
 1. Get all the dependencies, reading `manifest.yaml` file.
 2. `kube-b`'s `nginx-deployment.yaml` file is combination of patch (exists in `kube-a` repository) and original file (exists in `kube-b` repository).

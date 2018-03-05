@@ -48,7 +48,7 @@ See `manifest.yaml` file below:
 
 #### Get Dependencies
 
-`$ pack dep` command gets all the dependencies and place it under `manifests/vendor` folder.
+`$ kubectl plugin pack dep` command gets all the dependencies and place it under `manifests/vendor` folder.
  In this scenario, following things happen:
  
   - `kube-b` repository contains patch of jsonnet file's yaml,
@@ -58,7 +58,7 @@ See `manifest.yaml` file below:
   In `manifests/vendor` folder, this `jsonnet` file will be converted into yaml file.
   
 
-Now, `$ pack up` command will generate the final output in `manifests/output` folder.
+Now, `$ kubectl plugin pack up` command will generate the final output in `manifests/output` folder.
 
 ```console
     $ tree manifests/output/

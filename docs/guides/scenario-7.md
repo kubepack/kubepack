@@ -38,10 +38,10 @@ dependencies:
 `manifest.yaml` file contain [test-kubed](https://github.com/kubepack/test-kubed) as a dependency. `test-kubed` contains
  all the necessary yaml file needs to deploy kubed in minikube cluster.
 
-Now, `$ pack dep` command will pull all the dependencies and place it in `manifests/vendor` folder. If `test-kubed` repository also depend on some other repository then `pack` will get those too.
+Now, `$ kubectl plugin pack dep` command will pull all the dependencies and place it in `manifests/vendor` folder. If `test-kubed` repository also depend on some other repository then `pack` will get those too.
 
   ```console
-  $ pack dep
+  $ kubectl plugin pack dep
   
   $ tree manifests/vendor/
   manifests/vendor/
@@ -78,16 +78,16 @@ Now, `$ pack dep` command will pull all the dependencies and place it in `manife
 We'll change `config.yaml` under `data` field. `config.yaml` value will be `YXBpU2VydmVyOgogIGFkZHJlc3M6IDo4MDgwCiAgZW5hYmxlUmV2ZXJzZUluZGV4OiB0cnVlCiAgZW5hYmxlU2VhcmNoSW5kZXg6IHRydWUKY2x1c3Rlck5hbWU6IHVuaWNvcm4KZW5hYmxlQ29uZmlnU3luY2VyOiB0cnVlCg==`
 
 ```console
-$ pack edit -s manifests/vendor/github.com/kubepack/test-kubed/manifests/app/kubed-config.yaml
+$ kubectl plugin pack edit -s manifests/vendor/github.com/kubepack/test-kubed/manifests/app/kubed-config.yaml
 ```
 
 Above command will open file in editor.
  Then, change `config.yaml` to above value. This will generate a patch in `patch` folder.
 
- Below `$ pack up` command will combine `patch` and `manifests/vendor` folder files and dump in `manifests/output` folder.
+ Below `$ kubectl plugin pack up` command will combine `patch` and `manifests/vendor` folder files and dump in `manifests/output` folder.
 
  ```console
- $ pack up
+ $ kubectl plugin pack up
  $ kubectl apply -R -f manifests/output/
  ```
  `$ kubectl apply -R -f manifests/output/` command will deploy kubed in minikube cluster.

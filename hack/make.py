@@ -40,7 +40,7 @@ from os.path import expandvars, join, dirname
 libbuild.REPO_ROOT = expandvars('$GOPATH') + '/src/github.com/kubepack/pack'
 BUILD_METADATA = libbuild.metadata(libbuild.REPO_ROOT)
 libbuild.BIN_MATRIX = {
-    'kubepack': {
+    'pack': {
         'type': 'go',
         'go_version': True,
         'release': True,
@@ -51,7 +51,7 @@ libbuild.BIN_MATRIX = {
     }
 }
 if libbuild.ENV not in ['prod']:
-    libbuild.BIN_MATRIX['kubepack']['distro'] = {
+    libbuild.BIN_MATRIX['pack']['distro'] = {
         libbuild.GOHOSTOS: [libbuild.GOHOSTARCH]
     }
 

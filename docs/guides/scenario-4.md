@@ -46,11 +46,11 @@ Both repositories(kube-a and kube-b) depends on two different branch of [kube-c]
  
 ![alt text](/docs/_testdata/test-4/test-4.jpg)
 
- Now, when run `$ pack dep --v=10` command, `pack` could not resolve dependencies. As, this dependencies contradict with each other.
+ Now, when run `$ kubectl plugin pack dep --v=10` command, `pack` could not resolve dependencies. As, this dependencies contradict with each other.
   Give below error.
 
   ```console
-  $ pack dep --v=10
+  $ kubectl plugin pack dep --v=10
   
   
   

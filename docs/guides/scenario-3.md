@@ -54,7 +54,7 @@ Here, both `kube-a` and `kube-b` has patch of repository `kube-c`'s [nginx-deplo
 - [kube-a](https://github.com/kubepack/kube-a/blob/test-3/patch/github.com/kubepack/kube-c/nginx-deployment.yaml)
 - [kube-b](https://github.com/kubepack/kube-b/blob/test-3/patch/github.com/kubepack/kube-c/nginx-deployment.yaml)
 
-Now, run `$ pack dep` command. This will vendor branch `test-3` of all the dependencies `kube-a`, `kube-b` and `kube-c`.
+Now, run `$ kubectl plugin pack dep` command. This will vendor branch `test-3` of all the dependencies `kube-a`, `kube-b` and `kube-c`.
 As, `kube-a` and `kube-b` both contain patch of `kube-c`'s [nginx-deployment.yaml file](https://github.com/kubepack/kube-c/blob/test-3/nginx-deployment.yaml).
 This file is the combination of both patch and original file.
 
