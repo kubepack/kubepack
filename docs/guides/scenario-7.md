@@ -82,7 +82,7 @@ $ kubectl plugin pack edit -s manifests/vendor/github.com/kubepack/test-kubed/ma
 ```
 
 Above command will open file in editor.
- Then, change `config.yaml` to above value. This will generate a patch in `patch` folder.
+ Then, change `config.yaml` to above value. This will generate a patch in `manifests/patch` folder.
 
  Below `$ kubectl plugin pack up` command will combine `patch` and `manifests/vendor` folder files and dump in `manifests/output` folder.
 

@@ -79,7 +79,7 @@ Below command will open the `deployment.yaml` file in editor. Then made the chan
     $ kubectl plugin pack edit -s manifests/vendor/github.com/kubepack/test-kubed/manifests/app/deployment.yaml
 ```
 
-This command will generate a patch file under `patch` folder.
+This command will generate a patch file under `manifests/patch` folder.
 
 ```console
     $ tree manifests/patch/
