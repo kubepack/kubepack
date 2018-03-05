@@ -1,12 +1,12 @@
 ---
 title: Scenarios | Kubepack
 menu:
-  docs_0.1.0-alpha.0:
+  docs_0.1.0-alpha.1:
     identifier: s9-guides
     name: Scenario 9
     parent: guides
     weight: 80
-menu_name: docs_0.1.0-alpha.0
+menu_name: docs_0.1.0-alpha.1
 section_menu_id: guides
 ---
 

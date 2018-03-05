@@ -1,12 +1,12 @@
 ---
 title: Using Kubepack as an App User
 menu:
-  docs_0.1.0-alpha.0:
+  docs_0.1.0-alpha.1:
     identifier: user-how
     name: App Users
     parent: how-concepts
     weight: 15
-menu_name: docs_0.1.0-alpha.0
+menu_name: docs_0.1.0-alpha.1
 section_menu_id: concepts
 ---
 

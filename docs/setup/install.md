@@ -1,12 +1,12 @@
 ---
 title: Install
 menu:
-  docs_0.1.0-alpha.0:
+  docs_0.1.0-alpha.1:
     identifier: install-kubepack
     name: Install
     parent: setup
     weight: 10
-menu_name: docs_0.1.0-alpha.0
+menu_name: docs_0.1.0-alpha.1
 section_menu_id: setup
 ---
 
@@ -19,12 +19,12 @@ Kubepack provides a CLI to work with database objects. Download pre-built binari
 
 ```console
 # Linux amd 64-bit
-wget -O pack https://github.com/kubepack/pack/releases/download/0.1.0-alpha.0/kubepack-linux-amd64 \
+wget -O pack https://github.com/kubepack/pack/releases/download/0.1.0-alpha.1/kubepack-linux-amd64 \
   && chmod +x pack \
   && sudo mv pack /usr/local/bin
 
 # Mac 64-bit
-wget -O pack https://github.com/kubepack/pack/releases/download/0.1.0-alpha.0/kubepack-darwin-amd64 \
+wget -O pack https://github.com/kubepack/pack/releases/download/0.1.0-alpha.1/kubepack-darwin-amd64 \
   && chmod +x pack \
   && sudo mv pack /usr/local/bin
 ```

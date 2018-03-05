@@ -2,16 +2,16 @@
 title: Support | Kubepack
 description: Support
 menu:
-  docs_0.1.0-alpha.0:
+  docs_0.1.0-alpha.1:
     identifier: support-cli
     name: Support
     parent: welcome
     weight: 10
-menu_name: docs_0.1.0-alpha.0
+menu_name: docs_0.1.0-alpha.1
 section_menu_id: welcome
-url: /docs/0.1.0-alpha.0/welcome/support/
+url: /docs/0.1.0-alpha.1/welcome/support/
 aliases:
-  - /docs/0.1.0-alpha.0/support/
+  - /docs/0.1.0-alpha.1/support/
 ---
 
 # Support

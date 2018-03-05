@@ -1,12 +1,12 @@
 ---
 title: Using Kubepack CLI
 menu:
-  docs_0.1.0-alpha.0:
+  docs_0.1.0-alpha.1:
     identifier: cli-how
     name: CLI
     parent: how-concepts
     weight: 25
-menu_name: docs_0.1.0-alpha.0
+menu_name: docs_0.1.0-alpha.1
 section_menu_id: concepts
 ---
 

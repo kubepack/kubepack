@@ -1,11 +1,11 @@
 ---
 title: Pack Init
 menu:
-  docs_0.1.0-alpha.0:
+  docs_0.1.0-alpha.1:
     identifier: pack-init
     name: Pack Init
     parent: reference
-menu_name: docs_0.1.0-alpha.0
+menu_name: docs_0.1.0-alpha.1
 section_menu_id: reference
 ---
 ## pack init
