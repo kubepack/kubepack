@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/kubepack/kubepack/type"
+	"github.com/kubepack/pack/type"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )

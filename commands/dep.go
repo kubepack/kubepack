@@ -17,7 +17,7 @@ import (
 	"github.com/golang/dep/gps/pkgtree"
 	"github.com/golang/glog"
 	"github.com/google/go-jsonnet"
-	typ "github.com/kubepack/kubepack/type"
+	typ "github.com/kubepack/pack/type"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )

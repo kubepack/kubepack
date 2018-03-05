@@ -27,7 +27,7 @@ From here you can learn all about Kubepack's architecture and how to deploy and 
 
 - [Reference](/docs/reference/). Detailed exhaustive lists of command-line options, configuration options, API definitions, and procedures.
 
-We're always looking for help improving our documentation, so please don't hesitate to [file an issue](https://github.com/kubepack/kubepack/issues/new) if you see some problem. Or better yet, submit your own [contributions](/docs/CONTRIBUTING.md) to help make our docs better.
+We're always looking for help improving our documentation, so please don't hesitate to [file an issue](https://github.com/kubepack/pack/issues/new) if you see some problem. Or better yet, submit your own [contributions](/docs/CONTRIBUTING.md) to help make our docs better.
 
 ---
 

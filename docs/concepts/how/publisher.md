@@ -14,7 +14,7 @@ section_menu_id: concepts
 
 # Using Kubepack as an App Publisher
 
-This section contains tutorial on how app developer can use [Pack](https://github.com/kubepack/kubepack) to expose
+This section contains tutorial on how app developer can use [Pack](https://github.com/kubepack/pack) to expose
 theirs app and deploy in kubernetes cluster.
 
 Developer creates a git repo which contains all required yamls and manifest.yaml file.

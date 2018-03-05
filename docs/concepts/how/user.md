@@ -34,12 +34,12 @@ And final combination will be under `_outlook` folder.
 In this example, you'll see how to deploy [AppsCode kubed](https://github.com/appscode/kubed)
  in minikube using `Pack`.
 
-In this example, we're using [this](https://github.com/kubepack/kubepack/tree/master/docs/_testdata/test-7/manifest.yaml) test-case.
+In this example, we're using [this](https://github.com/kubepack/pack/tree/master/docs/_testdata/test-7/manifest.yaml) test-case.
 
 Below command show the `manifest.yaml` file.
 ```console
 $ cat manifest.yaml
-package: github.com/kubepack/kubepack/docs/_testdata/test-7/manifest.yaml
+package: github.com/kubepack/pack/docs/_testdata/test-7/manifest.yaml
 owners:
 - name: Appscode
   email: team@appscode.com

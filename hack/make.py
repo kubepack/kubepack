@@ -37,7 +37,7 @@ import time
 import yaml
 from os.path import expandvars, join, dirname
 
-libbuild.REPO_ROOT = expandvars('$GOPATH') + '/src/github.com/kubepack/kubepack'
+libbuild.REPO_ROOT = expandvars('$GOPATH') + '/src/github.com/kubepack/pack'
 BUILD_METADATA = libbuild.metadata(libbuild.REPO_ROOT)
 libbuild.BIN_MATRIX = {
     'kubepack': {
