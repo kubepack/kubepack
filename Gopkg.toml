@@ -61,7 +61,7 @@
   branch = "master"
   name = "github.com/spf13/cobra"
 
-[[constraint]]
+[[override]]
   name = "github.com/spf13/pflag"
   version = "1.0.0"
 

@@ -79,7 +79,7 @@
   branch = "master"
   name = "github.com/appscode/kutil"
   packages = ["tools/plugin_installer"]
-  revision = "82945dee39e46ef6427092003aa2dc78c2b563ab"
+  revision = "9b3dfbd1d10e0687fe518521891b23bc4f4fd9e2"
 
 [[projects]]
   branch = "master"
@@ -1177,6 +1177,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "40c5c32d5daca054cc11d9dbb15e220d75639f3de3bf173602fe8bce6d4398d8"
+  inputs-digest = "7c224c3d0f7c014b3866b81069c415af107ba72b4f0c45c0d1408ebde16409ef"
   solver-name = "gps-cdcl"
   solver-version = 1
