@@ -64,6 +64,7 @@
     "analytics",
     "context",
     "crypto/rand",
+    "encoding/yaml",
     "homedir",
     "ioutil",
     "log",
@@ -442,6 +443,18 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/kubepack/pack-server"
+  packages = ["apis/manifest/v1alpha1"]
+  revision = "0bbb8b9875d834ef7e6530fe229718601c6e8ad6"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/kubepack/packserver"
+  packages = ["apis/apps"]
+  revision = "a052cf56e55be455dd995a6900a3f6f5c39a7e09"
+
+[[projects]]
+  branch = "master"
   name = "github.com/mailru/easyjson"
   packages = [
     "buffer",
@@ -737,7 +750,11 @@
 
 [[projects]]
   name = "k8s.io/apiextensions-apiserver"
-  packages = ["pkg/features"]
+  packages = [
+    "pkg/apis/apiextensions",
+    "pkg/apis/apiextensions/v1beta1",
+    "pkg/features"
+  ]
   revision = "98ecf7bbd60f9f11a72000e4f05203f542136219"
   version = "kubernetes-1.9.0"
 
@@ -1144,6 +1161,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "b83cb76b705ab0512842379743599d31e17633f20ccf8ba4bc63334ebe2e3700"
+  inputs-digest = "6f65b32ab0a04a2847bd4a930b80fdaea0eeeb8d346394ea31b4a0b96ec5a8b0"
   solver-name = "gps-cdcl"
   solver-version = 1

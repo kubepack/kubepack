@@ -83,17 +83,18 @@ def version():
 
 
 def fmt():
-    libbuild.ungroup_go_imports('*.go', 'commands', 'type')
-    die(call('goimports -w *.go commands type'))
-    call('gofmt -s -w *.go commands type')
+    libbuild.ungroup_go_imports('*.go', 'commands')
+    die(call('goimports -w *.go commands'))
+    call('gofmt -s -w *.go commands')
 
 
 def vet():
-    call('go vet *.go ./commands/... ./type/...')
+    call('go vet *.go ./commands/...')
 
 
 def lint():
-    call('golint *.go ./commands/... ./type/...')
+    call('golint *.go')
+    call('golint ./commands/...')
 
 
 def gen():
@@ -174,7 +175,7 @@ def update_registry():
 
 
 def install():
-    die(call(libbuild.GOC + ' install ./...'))
+    die(call(libbuild.GOC + ' install .'))
 
 
 def default():

@@ -17,7 +17,7 @@ import (
 	"github.com/golang/dep/gps/pkgtree"
 	"github.com/golang/glog"
 	"github.com/google/go-jsonnet"
-	typ "github.com/kubepack/pack/type"
+	api "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )
@@ -56,9 +56,9 @@ func runDeps() error {
 		logger = log.New(os.Stdout, "", 0)
 	}
 	root, _ := os.Getwd()
-	manifestPath := filepath.Join(root, typ.ManifestFile)
+	manifestPath := filepath.Join(root, api.ManifestFile)
 	byt, err := ioutil.ReadFile(manifestPath)
-	manStruc := typ.ManifestDefinition{}
+	manStruc := api.Manifest{}
 	err = yaml.Unmarshal(byt, &manStruc)
 	if err != nil {
 		return errors.WithStack(err)
@@ -122,36 +122,36 @@ func runDeps() error {
 	if err == nil {
 		// If no failure, blow away the vendor dir and write a new one out,
 		// stripping nested vendor directories as we go.
-		err = os.RemoveAll(filepath.Join(root, typ.ManifestDirectory, _VendorFolder))
+		err = os.RemoveAll(filepath.Join(root, api.ManifestDirectory, _VendorFolder))
 		if err != nil {
 			return errors.WithStack(err)
 		}
-		err = gps.WriteDepTree(filepath.Join(root, typ.ManifestDirectory, _VendorFolder), solution, sourcemgr, false, logger)
-		if err != nil {
-			return errors.WithStack(err)
-		}
-
-		err = filepath.Walk(filepath.Join(root, typ.ManifestDirectory, _VendorFolder), findJsonnetFiles)
+		err = gps.WriteDepTree(filepath.Join(root, api.ManifestDirectory, _VendorFolder), solution, sourcemgr, false, logger)
 		if err != nil {
 			return errors.WithStack(err)
 		}
 
-		err = filepath.Walk(filepath.Join(root, typ.ManifestDirectory, _VendorFolder), findPatchFolder)
+		err = filepath.Walk(filepath.Join(root, api.ManifestDirectory, _VendorFolder), findJsonnetFiles)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+
+		err = filepath.Walk(filepath.Join(root, api.ManifestDirectory, _VendorFolder), findPatchFolder)
 		if err != nil {
 			return errors.WithStack(err)
 		}
 		for _, val := range forkRepo {
-			srcPath := filepath.Join(root, typ.ManifestDirectory, _VendorFolder, val, typ.ManifestDirectory, _VendorFolder, val)
+			srcPath := filepath.Join(root, api.ManifestDirectory, _VendorFolder, val, api.ManifestDirectory, _VendorFolder, val)
 			if _, err = os.Stat(srcPath); err != nil {
 				return nil
 			}
-			tmpDir := filepath.Join(root, typ.ManifestDirectory, _VendorFolder, rand.WithUniqSuffix("hello"))
+			tmpDir := filepath.Join(root, api.ManifestDirectory, _VendorFolder, rand.WithUniqSuffix("hello"))
 			err = os.Rename(srcPath, tmpDir)
 			if err != nil {
 				return errors.WithStack(err)
 			}
 
-			dstPath := filepath.Join(root, typ.ManifestDirectory, _VendorFolder, val)
+			dstPath := filepath.Join(root, api.ManifestDirectory, _VendorFolder, val)
 
 			err = os.RemoveAll(dstPath)
 			if err != nil {
@@ -192,7 +192,7 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 	splitPatch := strings.Split(path, PatchFolder)
 	patchFilePath := strings.TrimPrefix(splitPatch[1], "/")
 	srcDir := filepath.Join(splitVendor[0], _VendorFolder, patchFilePath)
-	manifestsPath := strings.Join([]string{"/", "/"}, typ.ManifestDirectory)
+	manifestsPath := strings.Join([]string{"/", "/"}, api.ManifestDirectory)
 	if val, ok := packagePatches[patchFilePath]; ok {
 		if val != strings.TrimSuffix(strings.TrimPrefix(forkDir, "/"), manifestsPath) {
 			return nil
@@ -346,9 +346,9 @@ func (a ManifestYaml) RequiredPackages() map[string]bool {
 func (a ManifestYaml) Overrides() gps.ProjectConstraints {
 	ovrr := gps.ProjectConstraints{}
 
-	mpath := filepath.Join(a.root, typ.ManifestFile)
+	mpath := filepath.Join(a.root, api.ManifestFile)
 	byt, err := ioutil.ReadFile(mpath)
-	manStruc := typ.ManifestDefinition{}
+	manStruc := api.Manifest{}
 	err = yaml.Unmarshal(byt, &manStruc)
 	if err != nil {
 		log.Fatalln("Error Occuered-----", err)
@@ -376,9 +376,9 @@ func (a ManifestYaml) Overrides() gps.ProjectConstraints {
 func (a ManifestYaml) DependencyConstraints() gps.ProjectConstraints {
 	projectConstraints := make(gps.ProjectConstraints)
 
-	man := filepath.Join(a.root, typ.ManifestFile)
+	man := filepath.Join(a.root, api.ManifestFile)
 	byt, err := ioutil.ReadFile(man)
-	manStruc := typ.ManifestDefinition{}
+	manStruc := api.Manifest{}
 	err = yaml.Unmarshal(byt, &manStruc)
 	if err != nil {
 		log.Fatalln(err)
@@ -429,9 +429,9 @@ type InternalManifest struct {
 func (a InternalManifest) DependencyConstraints() gps.ProjectConstraints {
 	projectConstraints := make(gps.ProjectConstraints)
 
-	man := filepath.Join(a.root, typ.ManifestFile)
+	man := filepath.Join(a.root, api.ManifestFile)
 	byt, err := ioutil.ReadFile(man)
-	manStruc := typ.ManifestDefinition{}
+	manStruc := api.Manifest{}
 	err = yaml.Unmarshal(byt, &manStruc)
 	if err != nil {
 		log.Fatalln("Error Occuered-----", err)
@@ -467,7 +467,7 @@ func (a InternalLock) InputsDigest() []byte {
 }
 
 func (a NaiveAnalyzer) lookForManifest(root string) (gps.Manifest, gps.Lock, error) {
-	mpath := filepath.Join(root, typ.ManifestFile)
+	mpath := filepath.Join(root, api.ManifestFile)
 	if _, err := os.Lstat(mpath); err != nil {
 		return nil, nil, errors.Wrap(err, "Unable to read manifest.yaml")
 	}

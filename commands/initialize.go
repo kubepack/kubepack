@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/kubepack/pack/type"
+	api "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )
@@ -29,7 +29,7 @@ func createManifestFile() error {
 	if err != nil {
 		errors.WithStack(err)
 	}
-	mPath := filepath.Join(wd, types.ManifestFile)
+	mPath := filepath.Join(wd, api.ManifestFile)
 	if _, err := os.Stat(mPath); err != nil {
 		if os.IsNotExist(err) {
 			_, err = os.Create(mPath)
