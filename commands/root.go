@@ -34,11 +34,14 @@ func NewPackCmd(version string, plugin bool) *cobra.Command {
 				}
 			}
 			scheme.AddToScheme(clientsetscheme.Scheme)
+			if plugin {
+				plugin_installer.LoadFlags(c.LocalFlags())
+			}
 		},
 	}
 
 	flags := cmd.PersistentFlags()
-	plugin_installer.BindFlags(flags, plugin)
+	plugin_installer.BindGlobalFlags(flags, plugin)
 	// ref: https://github.com/kubernetes/kubernetes/issues/17162#issuecomment-225596212
 	flag.CommandLine.Parse([]string{})
 
@@ -51,6 +54,7 @@ func NewPackCmd(version string, plugin bool) *cobra.Command {
 	cmd.AddCommand(NewValidateCommand())
 	cmd.AddCommand(NewKubepackInitializeCmd())
 	cmd.AddCommand(plugin_installer.NewCmdInstall(cmd))
+	// cmd.AddCommand(plugin_installer.NewCmdEnv())
 	cmd.AddCommand(v.NewCmdVersion())
 	return cmd
 }
