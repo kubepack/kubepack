@@ -445,7 +445,10 @@
 [[projects]]
   branch = "master"
   name = "github.com/kubepack/pack-server"
-  packages = ["apis/manifest/v1alpha1"]
+  packages = [
+    "apis/manifest/v1alpha1",
+    "client/clientset/versioned/scheme"
+  ]
   revision = "0bbb8b9875d834ef7e6530fe229718601c6e8ad6"
 
 [[projects]]
@@ -1174,6 +1177,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6f65b32ab0a04a2847bd4a930b80fdaea0eeeb8d346394ea31b4a0b96ec5a8b0"
+  inputs-digest = "40c5c32d5daca054cc11d9dbb15e220d75639f3de3bf173602fe8bce6d4398d8"
   solver-name = "gps-cdcl"
   solver-version = 1
