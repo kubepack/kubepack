@@ -12,7 +12,7 @@ import (
 
 	"github.com/googleapis/gnostic/OpenAPIv2"
 	"github.com/googleapis/gnostic/compiler"
-	"github.com/kubepack/kubepack/type"
+	"github.com/kubepack/pack/type"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"

@@ -11,7 +11,7 @@ import (
 	"github.com/evanphx/json-patch"
 	"github.com/ghodss/yaml"
 	"github.com/google/go-jsonnet"
-	typ "github.com/kubepack/kubepack/type"
+	typ "github.com/kubepack/pack/type"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )

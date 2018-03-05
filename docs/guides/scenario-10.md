@@ -36,7 +36,7 @@ See `manifest.yaml` file below:
 ```console
     $ cat manifest.yaml
     
-    package: github.com/kubepack/kubepack/_testdata/test-10
+    package: github.com/kubepack/pack/_testdata/test-10
     owners:
     - name: Appscode
       email: team@appscode.com

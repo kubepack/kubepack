@@ -26,7 +26,7 @@ section_menu_id: concepts
  A brief `manifest.yaml` file looks like this:
 
  ```yaml
-package: github.com/kubepack/kubepack
+package: github.com/kubepack/pack
 owners:
 - name: AppsCode
   email: team@appscode.com
