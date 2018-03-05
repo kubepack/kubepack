@@ -1,4 +1,4 @@
-package cmds
+package commands
 
 import (
 	"context"
@@ -232,7 +232,7 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 
 func findJsonnetFiles(path string, fileInfo os.FileInfo, err error) error {
 	if err != nil {
-		 return errors.WithStack(err)
+		return errors.WithStack(err)
 	}
 	if strings.Contains(path, PatchFolder) {
 		return nil
