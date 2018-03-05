@@ -10,11 +10,11 @@ section_menu_id: reference
 ---
 ## pack validate
 
-Validate manifests/output folder
+Validate _outlook folder
 
 ### Synopsis
 
-Validate manifests/output folder
+Validate _outlook folder
 
 ```
 pack validate [flags]
