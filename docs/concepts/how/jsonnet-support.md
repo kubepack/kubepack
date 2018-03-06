@@ -21,6 +21,11 @@ Then dependant users can require that repository via [manifest.yaml](/docs/conce
 
 This will bring all the dependencies in `manifests/vendor` folder. Remainder, publisher's repository may contains jsonnet file,
  but it'll appear in kubernetes resource's yaml format under user's `manifests/vendor` folder.
+ 
+## Learn More About jsonnet Support
+
+- [Here](/docs/guides/scenario-9.md) How jsonnet works in **Pack** and appears in `manifests/vendor` folder.
+- [Here](/docs/guides/scenario-10.md) How jsonnet works in **Pack**, in more complex scenario than previous one.
 
 
 ## Next Steps
