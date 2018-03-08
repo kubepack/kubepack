@@ -29,7 +29,7 @@ var (
 	forkRepo       []string
 )
 
-func NewDepCommand() *cobra.Command {
+func NewDepCommand(plugin bool) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "dep",
 		Short: "Pulls dependent app manifests",
@@ -61,6 +61,10 @@ func runDeps(cmd *cobra.Command) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
+	if !filepath.IsAbs(root) {
+		return errors.Errorf("Need to provide Absolute path. Here is the issue: https://github.com/kubernetes/kubectl/issues/346")
+	}
+
 	manifestPath := filepath.Join(root, api.DependencyFile)
 	byt, err := ioutil.ReadFile(manifestPath)
 	manStruc := api.DependencyList{}

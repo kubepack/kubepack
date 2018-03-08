@@ -34,6 +34,9 @@ func NewUpCommand() *cobra.Command {
 			if err != nil {
 				log.Fatalln(err)
 			}
+			if !filepath.IsAbs(rootPath) {
+				log.Fatalln(errors.Errorf("Need to provide Absolute path. Here is the issue: https://github.com/kubernetes/kubectl/issues/346"))
+			}
 			validator, err = GetOpenapiValidator(cmd)
 			if err != nil {
 				log.Fatalln(err)

@@ -54,7 +54,7 @@ func NewPackCmd(version string, plugin bool) *cobra.Command {
 
 	flags.BoolVar(&enableAnalytics, "analytics", enableAnalytics, "Send analytical events to Google Guard")
 
-	cmd.AddCommand(NewDepCommand())
+	cmd.AddCommand(NewDepCommand(plugin))
 	cmd.AddCommand(NewEditCommand(plugin))
 	cmd.AddCommand(NewUpCommand())
 	cmd.AddCommand(NewValidateCommand())

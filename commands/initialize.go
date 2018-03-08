@@ -29,6 +29,9 @@ func createManifestFile(cmd *cobra.Command) error {
 	if err != nil {
 		errors.WithStack(err)
 	}
+	if !filepath.IsAbs(wd) {
+		return errors.Errorf("Need to provide Absolute path. Here is the issue: https://github.com/kubernetes/kubectl/issues/346")
+	}
 	mPath := filepath.Join(wd, api.DependencyFile)
 	if _, err := os.Stat(mPath); err != nil {
 		if os.IsNotExist(err) {

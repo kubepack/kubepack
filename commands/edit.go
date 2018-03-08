@@ -33,7 +33,6 @@ func NewEditCommand(plugin bool) *cobra.Command {
 		Use:   "edit (filename)",
 		Short: "Edit resource definition",
 		Long:  "Generates patch via edit command",
-
 		Run: func(cmd *cobra.Command, args []string) {
 			var err error
 			srcPath, err = cmd.Flags().GetString("src")
@@ -54,6 +53,9 @@ func RunEdit(cmd *cobra.Command) error {
 	root, err := cmd.Flags().GetString("file")
 	if err != nil {
 		return errors.WithStack(err)
+	}
+	if !filepath.IsAbs(root) {
+		return errors.Errorf("Need to provide Absolute path. Here is the issue: https://github.com/kubernetes/kubectl/issues/346")
 	}
 	path := filepath.Join(root, srcPath)
 
@@ -115,6 +117,9 @@ func GetPatch(src, dst []byte, cmd *cobra.Command) error {
 	root, err := cmd.Flags().GetString("file")
 	if err != nil {
 		return errors.WithStack(err)
+	}
+	if !filepath.IsAbs(root) {
+		return errors.Errorf("Need to provide Absolute path. Here is the issue: https://github.com/kubernetes/kubectl/issues/346")
 	}
 	patchFolderDir := strings.Replace(srcPath, _VendorFolder, PatchFolder, 1)
 	lstIndexSlash := strings.LastIndex(patchFolderDir, "/")
