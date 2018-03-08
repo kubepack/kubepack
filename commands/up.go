@@ -42,7 +42,7 @@ func NewUpCommand(plugin bool) *cobra.Command {
 				rootPath = filepath.Join(wd, rootPath)
 			}
 			if !filepath.IsAbs(rootPath) {
-				log.Fatalln(errors.Errorf("Need to provide Absolute path. Here is the issue: https://github.com/kubernetes/kubectl/issues/346"))
+				log.Fatalln(errors.Errorf("Duh! we need an absolute path when used as a kubectl plugin. For more info, see here: https://github.com/kubernetes/kubectl/issues/346"))
 			}
 			validator, err = GetOpenapiValidator(cmd)
 			if err != nil {

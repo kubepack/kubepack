@@ -51,7 +51,7 @@ func validateOutlook(cmd *cobra.Command, plugin bool) error {
 		path = filepath.Join(wd, path)
 	}
 	if !filepath.IsAbs(path) {
-		return errors.Errorf("Need to provide Absolute path. Here is the issue: https://github.com/kubernetes/kubectl/issues/346")
+		return errors.Errorf("Duh! we need an absolute path when used as a kubectl plugin. For more info, see here: https://github.com/kubernetes/kubectl/issues/346")
 	}
 	validator, err = GetOpenapiValidator(cmd)
 	if err != nil {

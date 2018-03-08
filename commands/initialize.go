@@ -37,7 +37,7 @@ func createManifestFile(cmd *cobra.Command, plugin bool) error {
 		root = filepath.Join(wd, root)
 	}
 	if !filepath.IsAbs(root) {
-		return errors.Errorf("Need to provide Absolute path. Here is the issue: https://github.com/kubernetes/kubectl/issues/346")
+		return errors.Errorf("Duh! we need an absolute path when used as a kubectl plugin. For more info, see here: https://github.com/kubernetes/kubectl/issues/346")
 	}
 	mPath := filepath.Join(root, api.DependencyFile)
 	if _, err := os.Stat(mPath); err != nil {
