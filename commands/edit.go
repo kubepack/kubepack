@@ -39,7 +39,7 @@ func NewEditCommand(plugin bool) *cobra.Command {
 			if err != nil {
 				log.Println(err)
 			}
-			err = RunEdit(cmd)
+			err = RunEdit(cmd, plugin)
 			if err != nil {
 				log.Println(err)
 			}
@@ -49,10 +49,17 @@ func NewEditCommand(plugin bool) *cobra.Command {
 	return cmd
 }
 
-func RunEdit(cmd *cobra.Command) error {
+func RunEdit(cmd *cobra.Command, plugin bool) error {
 	root, err := cmd.Flags().GetString("file")
 	if err != nil {
 		return errors.WithStack(err)
+	}
+	if !plugin && !filepath.IsAbs(root) {
+		wd, err := os.Getwd()
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		root = filepath.Join(wd, root)
 	}
 	if !filepath.IsAbs(root) {
 		return errors.Errorf("Need to provide Absolute path. Here is the issue: https://github.com/kubernetes/kubectl/issues/346")
@@ -85,10 +92,10 @@ func RunEdit(cmd *cobra.Command) error {
 		return errors.WithStack(err)
 	}
 
-	return GetPatch(srcJson, dstJson, cmd)
+	return GetPatch(srcJson, dstJson, cmd, plugin)
 }
 
-func GetPatch(src, dst []byte, cmd *cobra.Command) error {
+func GetPatch(src, dst []byte, cmd *cobra.Command, plugin bool) error {
 	var err error
 	var patch []byte
 
@@ -117,6 +124,13 @@ func GetPatch(src, dst []byte, cmd *cobra.Command) error {
 	root, err := cmd.Flags().GetString("file")
 	if err != nil {
 		return errors.WithStack(err)
+	}
+	if !plugin && !filepath.IsAbs(root) {
+		wd, err := os.Getwd()
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		root = filepath.Join(wd, root)
 	}
 	if !filepath.IsAbs(root) {
 		return errors.Errorf("Need to provide Absolute path. Here is the issue: https://github.com/kubernetes/kubectl/issues/346")

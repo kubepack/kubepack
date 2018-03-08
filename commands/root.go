@@ -56,9 +56,9 @@ func NewPackCmd(version string, plugin bool) *cobra.Command {
 
 	cmd.AddCommand(NewDepCommand(plugin))
 	cmd.AddCommand(NewEditCommand(plugin))
-	cmd.AddCommand(NewUpCommand())
-	cmd.AddCommand(NewValidateCommand())
-	cmd.AddCommand(NewKubepackInitializeCmd())
+	cmd.AddCommand(NewUpCommand(plugin))
+	cmd.AddCommand(NewValidateCommand(plugin))
+	cmd.AddCommand(NewKubepackInitializeCmd(plugin))
 
 	// onessl commands
 	cmd.AddCommand(utilcmds.NewCmdBase64())

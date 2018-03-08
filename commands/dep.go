@@ -39,7 +39,7 @@ func NewDepCommand(plugin bool) *cobra.Command {
 			if err != nil {
 				log.Fatalln(err)
 			}
-			err = runDeps(cmd)
+			err = runDeps(cmd, plugin)
 			if err != nil {
 				log.Fatalln(err)
 			}
@@ -49,7 +49,7 @@ func NewDepCommand(plugin bool) *cobra.Command {
 	return cmd
 }
 
-func runDeps(cmd *cobra.Command) error {
+func runDeps(cmd *cobra.Command, plugin bool) error {
 	// Assume the current directory is correctly placed on a GOPATH, and that it's the
 	// root of the project.
 	packagePatches = make(map[string]string)
@@ -60,6 +60,13 @@ func runDeps(cmd *cobra.Command) error {
 	root, err := cmd.Flags().GetString("file")
 	if err != nil {
 		return errors.WithStack(err)
+	}
+	if !plugin && !filepath.IsAbs(root) {
+		wd, err := os.Getwd()
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		root = filepath.Join(wd, root)
 	}
 	if !filepath.IsAbs(root) {
 		return errors.Errorf("Need to provide Absolute path. Here is the issue: https://github.com/kubernetes/kubectl/issues/346")

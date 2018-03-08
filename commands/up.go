@@ -24,7 +24,7 @@ var (
 
 const CompileDirectory = "output"
 
-func NewUpCommand() *cobra.Command {
+func NewUpCommand(plugin bool) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "up",
 		Short: "Compiles patches and vendored manifests into final resource definitions",
@@ -33,6 +33,13 @@ func NewUpCommand() *cobra.Command {
 			rootPath, err = cmd.Flags().GetString("file")
 			if err != nil {
 				log.Fatalln(err)
+			}
+			if !plugin && !filepath.IsAbs(rootPath) {
+				wd, err := os.Getwd()
+				if err != nil {
+					log.Fatalln(errors.WithStack(err))
+				}
+				rootPath = filepath.Join(wd, rootPath)
 			}
 			if !filepath.IsAbs(rootPath) {
 				log.Fatalln(errors.Errorf("Need to provide Absolute path. Here is the issue: https://github.com/kubernetes/kubectl/issues/346"))
