@@ -15,7 +15,7 @@ func NewKubepackInitializeCmd() *cobra.Command {
 		Use:   "init",
 		Short: "Initialize kubepack and create manifest.yaml file",
 		Run: func(cmd *cobra.Command, args []string) {
-			err := createManifestFile()
+			err := createManifestFile(cmd)
 			if err != nil {
 				log.Fatalln(err)
 			}
@@ -24,12 +24,12 @@ func NewKubepackInitializeCmd() *cobra.Command {
 	return cmd
 }
 
-func createManifestFile() error {
-	wd, err := os.Getwd()
+func createManifestFile(cmd *cobra.Command) error {
+	wd, err := cmd.Flags().GetString("file")
 	if err != nil {
 		errors.WithStack(err)
 	}
-	mPath := filepath.Join(wd, api.ManifestFile)
+	mPath := filepath.Join(wd, api.DependencyFile)
 	if _, err := os.Stat(mPath); err != nil {
 		if os.IsNotExist(err) {
 			_, err = os.Create(mPath)

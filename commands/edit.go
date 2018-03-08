@@ -28,26 +28,30 @@ var (
 	fileInfo os.FileInfo
 )
 
-func NewEditCommand() *cobra.Command {
+func NewEditCommand(plugin bool) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "edit (filename)",
 		Short: "Edit resource definition",
 		Long:  "Generates patch via edit command",
+
 		Run: func(cmd *cobra.Command, args []string) {
-			err := RunEdit()
+			var err error
+			srcPath, err = cmd.Flags().GetString("src")
+			if err != nil {
+				log.Println(err)
+			}
+			err = RunEdit(cmd)
 			if err != nil {
 				log.Println(err)
 			}
 		},
 	}
 
-	cmd.Flags().StringVar(&srcPath, "src", "", "File want to edit")
-
 	return cmd
 }
 
-func RunEdit() error {
-	root, err := os.Getwd()
+func RunEdit(cmd *cobra.Command) error {
+	root, err := cmd.Flags().GetString("file")
 	if err != nil {
 		return errors.WithStack(err)
 	}
@@ -79,10 +83,10 @@ func RunEdit() error {
 		return errors.WithStack(err)
 	}
 
-	return GetPatch(srcJson, dstJson)
+	return GetPatch(srcJson, dstJson, cmd)
 }
 
-func GetPatch(src, dst []byte) error {
+func GetPatch(src, dst []byte, cmd *cobra.Command) error {
 	var err error
 	var patch []byte
 
@@ -108,8 +112,7 @@ func GetPatch(src, dst []byte) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-
-	root, err := os.Getwd()
+	root, err := cmd.Flags().GetString("file")
 	if err != nil {
 		return errors.WithStack(err)
 	}

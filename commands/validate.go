@@ -39,7 +39,7 @@ func NewValidateCommand() *cobra.Command {
 }
 
 func validateOutlook(cmd *cobra.Command) error {
-	path, err := os.Getwd()
+	path, err := cmd.Flags().GetString("file")
 	if err != nil {
 		return errors.WithStack(err)
 	}
