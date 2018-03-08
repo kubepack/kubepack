@@ -24,12 +24,12 @@ const OpenapiSpecDloadPath = "https://raw.githubusercontent.com/kubernetes/kuber
 
 var validator *validation.SchemaValidation
 
-func NewValidateCommand() *cobra.Command {
+func NewValidateCommand(plugin bool) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "validate",
 		Short: "Validate _outlook folder",
 		Run: func(cmd *cobra.Command, args []string) {
-			err := validateOutlook(cmd)
+			err := validateOutlook(cmd, plugin)
 			if err != nil {
 				panic(err)
 			}
@@ -38,10 +38,20 @@ func NewValidateCommand() *cobra.Command {
 	return cmd
 }
 
-func validateOutlook(cmd *cobra.Command) error {
-	path, err := os.Getwd()
+func validateOutlook(cmd *cobra.Command, plugin bool) error {
+	path, err := cmd.Flags().GetString("file")
 	if err != nil {
 		return errors.WithStack(err)
+	}
+	if !plugin && !filepath.IsAbs(path) {
+		wd, err := os.Getwd()
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		path = filepath.Join(wd, path)
+	}
+	if !filepath.IsAbs(path) {
+		return errors.Errorf("Duh! we need an absolute path when used as a kubectl plugin. For more info, see here: https://github.com/kubernetes/kubectl/issues/346")
 	}
 	validator, err = GetOpenapiValidator(cmd)
 	if err != nil {

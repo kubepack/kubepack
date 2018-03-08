@@ -3,6 +3,7 @@ package commands
 import (
 	"context"
 	"fmt"
+	"flag"
 	"go/build"
 	"io/ioutil"
 	"log"
@@ -28,7 +29,7 @@ var (
 	forkRepo       []string
 )
 
-func NewDepCommand() *cobra.Command {
+func NewDepCommand(plugin bool) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "dep",
 		Short: "Pulls dependent app manifests",
@@ -38,16 +39,17 @@ func NewDepCommand() *cobra.Command {
 			if err != nil {
 				log.Fatalln(err)
 			}
-			err = runDeps()
+			err = runDeps(cmd, plugin)
 			if err != nil {
 				log.Fatalln(err)
 			}
 		},
 	}
+	flag.CommandLine.Parse([]string{})
 	return cmd
 }
 
-func runDeps() error {
+func runDeps(cmd *cobra.Command, plugin bool) error {
 	// Assume the current directory is correctly placed on a GOPATH, and that it's the
 	// root of the project.
 	packagePatches = make(map[string]string)
@@ -55,18 +57,31 @@ func runDeps() error {
 	if glog.V(glog.Level(1)) {
 		logger = log.New(os.Stdout, "", 0)
 	}
-	root, _ := os.Getwd()
-	manifestPath := filepath.Join(root, api.ManifestFile)
+	root, err := cmd.Flags().GetString("file")
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	if !plugin && !filepath.IsAbs(root) {
+		wd, err := os.Getwd()
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		root = filepath.Join(wd, root)
+	}
+	if !filepath.IsAbs(root) {
+		return errors.Errorf("Duh! we need an absolute path when used as a kubectl plugin. For more info, see here: https://github.com/kubernetes/kubectl/issues/346")
+	}
+
+	manifestPath := filepath.Join(root, api.DependencyFile)
 	byt, err := ioutil.ReadFile(manifestPath)
-	manStruc := api.Manifest{}
+	manStruc := api.DependencyList{}
 	err = yaml.Unmarshal(byt, &manStruc)
 	if err != nil {
 		return errors.WithStack(err)
 	}
 
-	imports = make([]string, len(manStruc.Dependencies))
-
-	for key, value := range manStruc.Dependencies {
+	imports = make([]string, len(manStruc.Items))
+	for key, value := range manStruc.Items {
 		imports[key] = value.Package
 	}
 
@@ -283,7 +298,7 @@ func convertJsonnetfileToYamlfile(path string) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	// filepath.Ext()
+
 	err = os.Rename(path, path+".yaml")
 	if err != nil {
 		return errors.WithStack(err)
@@ -346,15 +361,15 @@ func (a ManifestYaml) RequiredPackages() map[string]bool {
 func (a ManifestYaml) Overrides() gps.ProjectConstraints {
 	ovrr := gps.ProjectConstraints{}
 
-	mpath := filepath.Join(a.root, api.ManifestFile)
+	mpath := filepath.Join(a.root, api.DependencyFile)
 	byt, err := ioutil.ReadFile(mpath)
-	manStruc := api.Manifest{}
+	manStruc := api.DependencyList{}
 	err = yaml.Unmarshal(byt, &manStruc)
 	if err != nil {
 		log.Fatalln("Error Occuered-----", err)
 	}
 
-	for _, value := range manStruc.Dependencies {
+	for _, value := range manStruc.Items {
 		properties := gps.ProjectProperties{}
 		if value.Repo != "" {
 			properties.Source = value.Repo
@@ -376,15 +391,15 @@ func (a ManifestYaml) Overrides() gps.ProjectConstraints {
 func (a ManifestYaml) DependencyConstraints() gps.ProjectConstraints {
 	projectConstraints := make(gps.ProjectConstraints)
 
-	man := filepath.Join(a.root, api.ManifestFile)
+	man := filepath.Join(a.root, api.DependencyFile)
 	byt, err := ioutil.ReadFile(man)
-	manStruc := api.Manifest{}
+	manStruc := api.DependencyList{}
 	err = yaml.Unmarshal(byt, &manStruc)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	for _, value := range manStruc.Dependencies {
+	for _, value := range manStruc.Items {
 		properties := gps.ProjectProperties{}
 		if value.Repo != "" {
 			properties.Source = value.Repo
@@ -429,15 +444,15 @@ type InternalManifest struct {
 func (a InternalManifest) DependencyConstraints() gps.ProjectConstraints {
 	projectConstraints := make(gps.ProjectConstraints)
 
-	man := filepath.Join(a.root, api.ManifestFile)
+	man := filepath.Join(a.root, api.DependencyFile)
 	byt, err := ioutil.ReadFile(man)
-	manStruc := api.Manifest{}
+	manStruc := api.DependencyList{}
 	err = yaml.Unmarshal(byt, &manStruc)
 	if err != nil {
 		log.Fatalln("Error Occuered-----", err)
 	}
 
-	for _, value := range manStruc.Dependencies {
+	for _, value := range manStruc.Items {
 		properties := gps.ProjectProperties{}
 		if value.Repo != "" {
 			properties.Source = value.Repo
@@ -467,7 +482,7 @@ func (a InternalLock) InputsDigest() []byte {
 }
 
 func (a NaiveAnalyzer) lookForManifest(root string) (gps.Manifest, gps.Lock, error) {
-	mpath := filepath.Join(root, api.ManifestFile)
+	mpath := filepath.Join(root, api.DependencyFile)
 	if _, err := os.Lstat(mpath); err != nil {
 		return nil, nil, errors.Wrap(err, "Unable to read manifest.yaml")
 	}

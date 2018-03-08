@@ -17,20 +17,32 @@ import (
 )
 
 var (
-	src   string
-	patch string
+	src      string
+	patch    string
+	rootPath string
 )
 
 const CompileDirectory = "output"
 
-func NewUpCommand() *cobra.Command {
+func NewUpCommand(plugin bool) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "up",
 		Short: "Compiles patches and vendored manifests into final resource definitions",
 		Run: func(cmd *cobra.Command, args []string) {
-			rootPath, err := os.Getwd()
+			var err error
+			rootPath, err = cmd.Flags().GetString("file")
 			if err != nil {
 				log.Fatalln(err)
+			}
+			if !plugin && !filepath.IsAbs(rootPath) {
+				wd, err := os.Getwd()
+				if err != nil {
+					log.Fatalln(errors.WithStack(err))
+				}
+				rootPath = filepath.Join(wd, rootPath)
+			}
+			if !filepath.IsAbs(rootPath) {
+				log.Fatalln(errors.Errorf("Duh! we need an absolute path when used as a kubectl plugin. For more info, see here: https://github.com/kubernetes/kubectl/issues/346"))
 			}
 			validator, err = GetOpenapiValidator(cmd)
 			if err != nil {
@@ -64,7 +76,7 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 		return nil
 	}
 
-	if fileInfo.Name() == api.ManifestFile {
+	if fileInfo.Name() == api.DependencyFile {
 		return nil
 	}
 
@@ -149,10 +161,7 @@ func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
 	if strings.Count(outlookPath, _VendorFolder) > 0 || strings.Count(outlookPath, CompileDirectory) > 1 || strings.Count(outlookPath, PatchFolder) > 0 {
 		return nil
 	}
-	root, err := os.Getwd()
-	if err != nil {
-		return errors.Wrap(err, "Error to get wd(os.Getwd()).")
-	}
+	root := rootPath
 	annotateYaml, err := getAnnotatedWithCommitHash(compiledYaml, root)
 	if err != nil {
 		return errors.Wrap(err, "error to annotated with git-commit-hash")

@@ -28,28 +28,41 @@ var (
 	fileInfo os.FileInfo
 )
 
-func NewEditCommand() *cobra.Command {
+func NewEditCommand(plugin bool) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "edit (filename)",
 		Short: "Edit resource definition",
 		Long:  "Generates patch via edit command",
 		Run: func(cmd *cobra.Command, args []string) {
-			err := RunEdit()
+			var err error
+			srcPath, err = cmd.Flags().GetString("src")
+			if err != nil {
+				log.Println(err)
+			}
+			err = RunEdit(cmd, plugin)
 			if err != nil {
 				log.Println(err)
 			}
 		},
 	}
 
-	cmd.Flags().StringVar(&srcPath, "src", "", "File want to edit")
-
 	return cmd
 }
 
-func RunEdit() error {
-	root, err := os.Getwd()
+func RunEdit(cmd *cobra.Command, plugin bool) error {
+	root, err := cmd.Flags().GetString("file")
 	if err != nil {
 		return errors.WithStack(err)
+	}
+	if !plugin && !filepath.IsAbs(root) {
+		wd, err := os.Getwd()
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		root = filepath.Join(wd, root)
+	}
+	if !filepath.IsAbs(root) {
+		return errors.Errorf("Duh! we need an absolute path when used as a kubectl plugin. For more info, see here: https://github.com/kubernetes/kubectl/issues/346")
 	}
 	path := filepath.Join(root, srcPath)
 
@@ -79,10 +92,10 @@ func RunEdit() error {
 		return errors.WithStack(err)
 	}
 
-	return GetPatch(srcJson, dstJson)
+	return GetPatch(srcJson, dstJson, cmd, plugin)
 }
 
-func GetPatch(src, dst []byte) error {
+func GetPatch(src, dst []byte, cmd *cobra.Command, plugin bool) error {
 	var err error
 	var patch []byte
 
@@ -108,10 +121,19 @@ func GetPatch(src, dst []byte) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-
-	root, err := os.Getwd()
+	root, err := cmd.Flags().GetString("file")
 	if err != nil {
 		return errors.WithStack(err)
+	}
+	if !plugin && !filepath.IsAbs(root) {
+		wd, err := os.Getwd()
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		root = filepath.Join(wd, root)
+	}
+	if !filepath.IsAbs(root) {
+		return errors.Errorf("Duh! we need an absolute path when used as a kubectl plugin. For more info, see here: https://github.com/kubernetes/kubectl/issues/346")
 	}
 	patchFolderDir := strings.Replace(srcPath, _VendorFolder, PatchFolder, 1)
 	lstIndexSlash := strings.LastIndex(patchFolderDir, "/")

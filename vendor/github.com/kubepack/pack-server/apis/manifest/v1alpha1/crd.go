@@ -6,10 +6,10 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-func (c Manifest) CustomResourceDefinition() *apiextensions.CustomResourceDefinition {
+func (c Dependency) CustomResourceDefinition() *apiextensions.CustomResourceDefinition {
 	return &apiextensions.CustomResourceDefinition{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:   ResourceTypeManifest + "." + SchemeGroupVersion.Group,
+			Name:   ResourceTypeDependency + "." + SchemeGroupVersion.Group,
 			Labels: map[string]string{"app": "kubepack"},
 		},
 		Spec: apiextensions.CustomResourceDefinitionSpec{
@@ -17,9 +17,9 @@ func (c Manifest) CustomResourceDefinition() *apiextensions.CustomResourceDefini
 			Version: SchemeGroupVersion.Version,
 			Scope:   apiextensions.NamespaceScoped,
 			Names: apiextensions.CustomResourceDefinitionNames{
-				Singular:   ResourceNameManifest,
-				Plural:     ResourceTypeManifest,
-				Kind:       ResourceKindManifest,
+				Singular:   ResourceNameDependency,
+				Plural:     ResourceTypeDependency,
+				Kind:       ResourceKindDependency,
 				ShortNames: []string{"mfs"},
 			},
 		},

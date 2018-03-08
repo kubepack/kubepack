@@ -10,12 +10,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func NewKubepackInitializeCmd() *cobra.Command {
+func NewKubepackInitializeCmd(plugin bool) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "init",
 		Short: "Initialize kubepack and create manifest.yaml file",
 		Run: func(cmd *cobra.Command, args []string) {
-			err := createManifestFile()
+			err := createManifestFile(cmd, plugin)
 			if err != nil {
 				log.Fatalln(err)
 			}
@@ -24,12 +24,22 @@ func NewKubepackInitializeCmd() *cobra.Command {
 	return cmd
 }
 
-func createManifestFile() error {
-	wd, err := os.Getwd()
+func createManifestFile(cmd *cobra.Command, plugin bool) error {
+	root, err := cmd.Flags().GetString("file")
 	if err != nil {
 		errors.WithStack(err)
 	}
-	mPath := filepath.Join(wd, api.ManifestFile)
+	if !plugin && !filepath.IsAbs(root) {
+		wd, err := os.Getwd()
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		root = filepath.Join(wd, root)
+	}
+	if !filepath.IsAbs(root) {
+		return errors.Errorf("Duh! we need an absolute path when used as a kubectl plugin. For more info, see here: https://github.com/kubernetes/kubectl/issues/346")
+	}
+	mPath := filepath.Join(root, api.DependencyFile)
 	if _, err := os.Stat(mPath); err != nil {
 		if os.IsNotExist(err) {
 			_, err = os.Create(mPath)

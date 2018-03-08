@@ -16,6 +16,7 @@ import (
 
 const (
 	gaTrackingCode = "UA-62096468-20"
+
 )
 
 func NewPackCmd(version string, plugin bool) *cobra.Command {
@@ -37,23 +38,27 @@ func NewPackCmd(version string, plugin bool) *cobra.Command {
 			scheme.AddToScheme(clientsetscheme.Scheme)
 			if plugin {
 				plugin_installer.LoadFlags(c.LocalFlags())
+				plugin_installer.LoadFromEnv(c.Flags(), "file", "KUBECTL_PLUGINS_LOCAL_FLAG_")
+				plugin_installer.LoadFromEnv(c.Flags(), "src", "KUBECTL_PLUGINS_LOCAL_FLAG_")
 			}
 		},
 	}
-
 	flags := cmd.PersistentFlags()
 	clientConfig := plugin_installer.BindGlobalFlags(flags, plugin)
 	// ref: https://github.com/kubernetes/kubernetes/issues/17162#issuecomment-225596212
 	flag.CommandLine.Parse([]string{})
 
 	flags.String("kube-version", "", "name of the kubeconfig context to use")
+	flags.StringP("file", "f", "", "filepath")
+	flags.StringP("src", "","", "File want to edit")
+
 	flags.BoolVar(&enableAnalytics, "analytics", enableAnalytics, "Send analytical events to Google Guard")
 
-	cmd.AddCommand(NewDepCommand())
-	cmd.AddCommand(NewEditCommand())
-	cmd.AddCommand(NewUpCommand())
-	cmd.AddCommand(NewValidateCommand())
-	cmd.AddCommand(NewKubepackInitializeCmd())
+	cmd.AddCommand(NewDepCommand(plugin))
+	cmd.AddCommand(NewEditCommand(plugin))
+	cmd.AddCommand(NewUpCommand(plugin))
+	cmd.AddCommand(NewValidateCommand(plugin))
+	cmd.AddCommand(NewKubepackInitializeCmd(plugin))
 
 	// onessl commands
 	cmd.AddCommand(utilcmds.NewCmdBase64())
@@ -66,7 +71,7 @@ func NewPackCmd(version string, plugin bool) *cobra.Command {
 
 	// cli management commands
 	cmd.AddCommand(plugin_installer.NewCmdInstall(cmd))
-	// cmd.AddCommand(plugin_installer.NewCmdEnv())
+	cmd.AddCommand(plugin_installer.NewCmdEnv())
 	cmd.AddCommand(v.NewCmdVersion())
 	return cmd
 }
