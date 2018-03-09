@@ -12,6 +12,9 @@ import (
 	"github.com/ghodss/yaml"
 	"github.com/google/go-jsonnet"
 	api "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/kubernetes/pkg/kubectl/scheme"
+	"k8s.io/apimachinery/pkg/util/strategicpatch"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )
@@ -145,7 +148,21 @@ func CompileWithPatch(srcByte, patchByte []byte) ([]byte, error) {
 		return nil, errors.Wrap(err, "Error to convert patch yaml to json.")
 	}
 
-	compiled, err := jsonpatch.MergePatch(jsonSrc, jsonPatch)
+	var ro runtime.TypeMeta
+	if err := yaml.Unmarshal(srcByte, &ro); err != nil {
+		return nil, errors.WithStack(err)
+	}
+	kind := ro.GetObjectKind().GroupVersionKind()
+	versionedObject, err := scheme.Scheme.New(kind)
+	var compiled []byte
+	switch {
+	case runtime.IsNotRegisteredError(err):
+		compiled, err = jsonpatch.MergePatch(jsonSrc, jsonPatch)
+	case err != nil:
+		return nil, errors.WithStack(err)
+	default:
+		compiled, err = strategicpatch.StrategicMergePatch(jsonSrc, jsonPatch, versionedObject)
+	}
 	if err != nil {
 		return nil, errors.Wrap(err, "Error to marge patch with source.")
 	}
@@ -212,7 +229,6 @@ func getAnnotatedWithCommitHash(yamlByte []byte, dir string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	metadata := annotatedMap["metadata"]
 	annotations, ok := metadata.(map[string]interface{})["annotations"]
 	if !ok || annotations == nil {

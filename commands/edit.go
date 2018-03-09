@@ -17,6 +17,8 @@ import (
 	"k8s.io/apimachinery/pkg/util/strategicpatch"
 	"k8s.io/kubernetes/pkg/kubectl/cmd/util/editor"
 	"k8s.io/kubernetes/pkg/kubectl/scheme"
+	"encoding/json"
+	api "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
 )
 
 const defaultEditor = "nano"
@@ -100,7 +102,6 @@ func GetPatch(src, dst []byte, cmd *cobra.Command, plugin bool) error {
 	var patch []byte
 
 	// ref: https://github.com/kubernetes/kubernetes/blob/master/pkg/kubectl/cmd/util/editor/editoptions.go#L549
-
 	var ro runtime.TypeMeta
 	if err := yaml.Unmarshal(src, &ro); err != nil {
 		return errors.WithStack(err)
@@ -116,8 +117,16 @@ func GetPatch(src, dst []byte, cmd *cobra.Command, plugin bool) error {
 	default:
 		patch, err = strategicpatch.CreateTwoWayMergePatch(src, dst, versionedObject)
 	}
+	if err != nil {
+		return errors.WithStack(err)
+	}
 
-	yamlPatch, err := yaml.JSONToYAML(patch)
+	finalPatch, err := appendHeaderToPatch(src, patch)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+
+	yamlPatch, err := yaml.JSONToYAML(finalPatch)
 	if err != nil {
 		return errors.WithStack(err)
 	}
@@ -152,8 +161,36 @@ func GetPatch(src, dst []byte, cmd *cobra.Command, plugin bool) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-
+	err = appendPatchToDependencies(filepath.Join(root, api.DependencyFile), patchFilePath)
+	if err != nil {
+		return errors.WithStack(err)
+	}
 	return nil
+}
+
+// append apiVersion, kind and metadata.name with generated patch
+func appendHeaderToPatch(src, patch []byte) ([]byte, error) {
+	srcMap := map[string]interface{}{}
+	err := json.Unmarshal(src, &srcMap)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	patchMap := map[string]interface{}{}
+	err = json.Unmarshal(patch, &patchMap)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	patchMap["apiVersion"] = srcMap["apiVersion"]
+	patchMap["kind"] = srcMap["kind"]
+	patchMap["metadata"] = map[string]interface{}{}
+	patchMap["metadata"].(map[string]interface{})["name"] = srcMap["metadata"].(map[string]interface{})["name"]
+
+	finalPatch, err := json.Marshal(patchMap)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	return finalPatch, nil
 }
 
 func NewDefaultEditor() editor.Editor {
@@ -161,4 +198,31 @@ func NewDefaultEditor() editor.Editor {
 		Args:  []string{defaultEditor},
 		Shell: false,
 	}
+}
+
+func appendPatchToDependencies(path, patchPath string) error {
+	dep, err := ioutil.ReadFile(path)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	depList := api.DependencyList{}
+	err = yaml.Unmarshal(dep, &depList)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	for key, val := range depList.Items {
+		if strings.Contains(patchPath, val.Package) {
+			depList.Items[key].Patches = append(val.Patches, patchPath)
+			break
+		}
+	}
+	depByte, err:= yaml.Marshal(depList)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	err = ioutil.WriteFile(path, depByte, 0755)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	return nil
 }
