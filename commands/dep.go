@@ -29,6 +29,8 @@ var (
 	forkRepo       []string
 )
 
+var depPatchFiles map[string]string
+
 func NewDepCommand(plugin bool) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "dep",
@@ -150,7 +152,7 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 		if err != nil {
 			return errors.WithStack(err)
 		}
-
+		depPatchFiles = make(map[string]string)
 		err = filepath.Walk(filepath.Join(root, api.ManifestDirectory, _VendorFolder), findPatchFolder)
 		if err != nil {
 			return errors.WithStack(err)
@@ -202,7 +204,7 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 
 	// e.g:  _vendor/github.com/kubepack/kube-a/patch/github.com/kubepack/kube-a/nginx-deployment.yaml
 	// forkDir = github.com/kubepack/kube-a
-	// patchFilePath = github.com/kubepack/kube-a/nginx-deployment.yaml
+	// patchFilePath = github.com/kubepack/kube-a/<name>.<kind>.<group>.yaml
 
 	splitPatch := strings.Split(path, PatchFolder)
 	patchFilePath := strings.TrimPrefix(splitPatch[1], "/")
