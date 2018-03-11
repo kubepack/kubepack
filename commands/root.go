@@ -12,6 +12,7 @@ import (
 	"github.com/kubepack/pack-server/client/clientset/versioned/scheme"
 	"github.com/spf13/cobra"
 	clientsetscheme "k8s.io/client-go/kubernetes/scheme"
+	kinflate "k8s.io/kubectl/pkg/kinflate/commands"
 )
 
 const (
@@ -59,6 +60,9 @@ func NewPackCmd(version string, plugin bool) *cobra.Command {
 	cmd.AddCommand(NewUpCommand(plugin))
 	cmd.AddCommand(NewValidateCommand(plugin))
 	cmd.AddCommand(NewKubepackInitializeCmd(plugin))
+
+	// kinflate commands
+	cmd.AddCommand(kinflate.NewDefaultCommand())
 
 	// onessl commands
 	cmd.AddCommand(utilcmds.NewCmdBase64())

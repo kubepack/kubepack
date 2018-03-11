@@ -17,6 +17,8 @@ import (
 	"k8s.io/apimachinery/pkg/util/strategicpatch"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
+	kutil "k8s.io/kubectl/pkg/kinflate/util"
+	"k8s.io/kubectl/pkg/kinflate/resource"
 )
 
 var (
@@ -148,6 +150,14 @@ func CompileWithPatch(srcByte, patchByte []byte) ([]byte, error) {
 		return nil, errors.Wrap(err, "Error to convert patch yaml to json.")
 	}
 
+	match, err := checkGVKN(jsonSrc, jsonPatch)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	if !match {
+		return nil, nil
+	}
+
 	var ro runtime.TypeMeta
 	if err := yaml.Unmarshal(srcByte, &ro); err != nil {
 		return nil, errors.WithStack(err)
@@ -268,4 +278,31 @@ func convertJsonnetToYamlByFilepath(path string, srcYamlByte []byte) ([]byte, er
 		return nil, errors.Wrap(err, "Error to evaluate jsonet")
 	}
 	return yml, nil
+}
+
+func checkGVKN(srcJson, patchJson []byte) (bool, error) {
+	src, err := kutil.Decode(srcJson)
+	if err != nil {
+		return false, errors.WithStack(err)
+	}
+
+	patch, err := kutil.Decode(patchJson)
+	if err != nil {
+		return false, errors.WithStack(err)
+	}
+
+	srcResource := &resource.Resource{
+		Data:src[0],
+	}
+	patchResource := resource.Resource{
+		Data: patch[0],
+	}
+
+	srcGvkn := srcResource.GVKN()
+	patchGvkn := patchResource.GVKN()
+
+	if srcGvkn == patchGvkn {
+		return true, nil
+	}
+	return false, nil
 }
