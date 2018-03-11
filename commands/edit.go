@@ -19,6 +19,8 @@ import (
 	"k8s.io/kubernetes/pkg/kubectl/scheme"
 	"encoding/json"
 	api "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
+	packapi "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
+	ro_schema "k8s.io/apimachinery/pkg/runtime/schema"
 )
 
 const defaultEditor = "nano"
@@ -29,7 +31,7 @@ var (
 	srcPath  string
 	fileInfo os.FileInfo
 )
-
+// Local directory path needs to be absolute path. Patch filepath needs to be either absolute path or relative path.
 func NewEditCommand(plugin bool) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "edit (filename)",
@@ -67,7 +69,9 @@ func RunEdit(cmd *cobra.Command, plugin bool) error {
 		return errors.Errorf("Duh! we need an absolute path when used as a kubectl plugin. For more info, see here: https://github.com/kubernetes/kubectl/issues/346")
 	}
 	path := filepath.Join(root, srcPath)
-
+	if filepath.IsAbs(srcPath) {
+		path = srcPath
+	}
 	fileInfo, err = os.Stat(path)
 	if err != nil {
 		return errors.WithStack(err)
@@ -145,14 +149,18 @@ func GetPatch(src, dst []byte, cmd *cobra.Command, plugin bool) error {
 		return errors.Errorf("Duh! we need an absolute path when used as a kubectl plugin. For more info, see here: https://github.com/kubernetes/kubectl/issues/346")
 	}
 	patchFolderDir := strings.Replace(srcPath, _VendorFolder, PatchFolder, 1)
-	lstIndexSlash := strings.LastIndex(patchFolderDir, "/")
-	dstPath := filepath.Join(root, patchFolderDir[0:lstIndexSlash])
 
+	repoDir := getRepositoryPath(patchFolderDir)
+	dstPath := filepath.Join(root, api.ManifestDirectory, PatchFolder, repoDir)
+	patchFileName, err := getPatchFileName(finalPatch)
+	if err != nil {
+		return errors.WithStack(err)
+	}
 	err = os.MkdirAll(dstPath, 0755)
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	patchFilePath := filepath.Join(dstPath, fileInfo.Name())
+	patchFilePath := filepath.Join(dstPath, patchFileName)
 	_, err = os.Create(patchFilePath)
 	if err != nil {
 		return errors.WithStack(err)
@@ -200,8 +208,8 @@ func NewDefaultEditor() editor.Editor {
 	}
 }
 
-func appendPatchToDependencies(path, patchPath string) error {
-	dep, err := ioutil.ReadFile(path)
+func appendPatchToDependencies(manifestPath, patchPath string) error {
+	dep, err := ioutil.ReadFile(manifestPath)
 	if err != nil {
 		return errors.WithStack(err)
 	}
@@ -220,9 +228,33 @@ func appendPatchToDependencies(path, patchPath string) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	err = ioutil.WriteFile(path, depByte, 0755)
+	err = ioutil.WriteFile(manifestPath, depByte, 0755)
 	if err != nil {
 		return errors.WithStack(err)
 	}
 	return nil
+}
+
+func getRepositoryPath(path string) string {
+	splitFirst := strings.Split(path, filepath.Join(api.ManifestDirectory, PatchFolder))[1]
+	spliFinal := strings.Split(splitFirst, filepath.Join(api.ManifestDirectory, "app"))[0]
+	return strings.Trim(spliFinal, "/")
+}
+
+func getPatchFileName(patch []byte) (string, error) {
+	patchStruct := &packapi.Dependency{}
+	err := yaml.Unmarshal(patch, patchStruct)
+	if err != nil {
+		return "", errors.WithStack(err)
+	}
+	var ro runtime.TypeMeta
+	if err := yaml.Unmarshal(patch, &ro); err != nil {
+		return "", errors.WithStack(err)
+	}
+	gvk, err := ro_schema.ParseGroupVersion(patchStruct.APIVersion)
+	if err != nil {
+		return "", errors.WithStack(err)
+	}
+	name := strings.Join([]string{patchStruct.Name, patchStruct.Kind, gvk.Group, "yaml"}, ".")
+	return name, nil
 }

@@ -12,7 +12,7 @@ import (
 	"github.com/kubepack/pack-server/client/clientset/versioned/scheme"
 	"github.com/spf13/cobra"
 	clientsetscheme "k8s.io/client-go/kubernetes/scheme"
-	kinflate "k8s.io/kubectl/pkg/kinflate/commands"
+	// kinflate "k8s.io/kubectl/pkg/kinflate/commands"
 )
 
 const (
@@ -51,7 +51,7 @@ func NewPackCmd(version string, plugin bool) *cobra.Command {
 
 	flags.String("kube-version", "", "name of the kubeconfig context to use")
 	flags.StringP("file", "f", "", "filepath")
-	flags.StringP("src", "","", "File want to edit")
+	flags.StringP("patch", "p","", "File want to edit")
 
 	flags.BoolVar(&enableAnalytics, "analytics", enableAnalytics, "Send analytical events to Google Guard")
 
@@ -62,7 +62,7 @@ func NewPackCmd(version string, plugin bool) *cobra.Command {
 	cmd.AddCommand(NewKubepackInitializeCmd(plugin))
 
 	// kinflate commands
-	cmd.AddCommand(kinflate.NewDefaultCommand())
+	// cmd.AddCommand(kinflate.NewDefaultCommand())
 
 	// onessl commands
 	cmd.AddCommand(utilcmds.NewCmdBase64())

@@ -22,9 +22,10 @@ import (
 )
 
 var (
-	src      string
-	patch    string
-	rootPath string
+	src        string
+	patch      string
+	rootPath   string
+	patchFiles map[string]string
 )
 
 const CompileDirectory = "output"
@@ -37,7 +38,7 @@ func NewUpCommand(plugin bool) *cobra.Command {
 			var err error
 			rootPath, err = cmd.Flags().GetString("file")
 			if err != nil {
-				log.Fatalln(err)
+				log.Fatalln(errors.WithStack(err))
 			}
 			if !plugin && !filepath.IsAbs(rootPath) {
 				wd, err := os.Getwd()
@@ -51,11 +52,16 @@ func NewUpCommand(plugin bool) *cobra.Command {
 			}
 			validator, err = GetOpenapiValidator(cmd)
 			if err != nil {
-				log.Fatalln(err)
+				log.Fatalln(errors.WithStack(err))
+			}
+			patchFiles = make(map[string]string)
+			err = filepath.Walk(filepath.Join(rootPath, api.ManifestDirectory, PatchFolder), visitPatchFolder)
+			if err != nil {
+				log.Fatalln(errors.WithStack(err))
 			}
 			err = filepath.Walk(filepath.Join(rootPath, api.ManifestDirectory, _VendorFolder), visitPatchAndDump)
 			if err != nil {
-				log.Fatalln(err)
+				log.Fatalln(errors.WithStack(err))
 			}
 		},
 	}
@@ -94,8 +100,9 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
+	patchFileName, err := getPatchFileName(srcYamlByte)
 
-	patchFilePath := strings.Replace(path, _VendorFolder, PatchFolder, 1)
+	patchFilePath := patchFiles[patchFileName]
 	if _, err := os.Stat(patchFilePath); err != nil {
 		err = validator.ValidateBytes(srcYamlByte)
 		if err != nil && !strings.Contains(path, PatchFolder) && strings.HasSuffix(path, ".jsonnet") {
@@ -117,7 +124,7 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 		return nil
 	}
 
-	patchByte, err := ioutil.ReadFile(strings.Replace(path, _VendorFolder, PatchFolder, 1))
+	patchByte, err := ioutil.ReadFile(patchFilePath)
 	if err != nil {
 		return errors.Wrap(err, "Error to read patch file")
 	}
@@ -136,6 +143,20 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 	if err != nil {
 		return errors.Wrap(err, "Error to dump compiled file")
 	}
+	return nil
+}
+
+func visitPatchFolder(path string, fileInfo os.FileInfo, ferr error) error {
+	if ferr != nil {
+		return ferr
+	}
+	if fileInfo.IsDir() {
+		return nil
+	}
+	if !strings.Contains(path, PatchFolder) {
+		return nil
+	}
+	patchFiles[fileInfo.Name()] = path
 	return nil
 }
 
@@ -292,7 +313,7 @@ func checkGVKN(srcJson, patchJson []byte) (bool, error) {
 	}
 
 	srcResource := &resource.Resource{
-		Data:src[0],
+		Data: src[0],
 	}
 	patchResource := resource.Resource{
 		Data: patch[0],
