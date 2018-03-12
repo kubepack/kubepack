@@ -2,8 +2,8 @@ apiVersion: kubedb.com/v1alpha1
 kind: Postgres
 metadata:
   annotations:
-    git-commit-hash: 3172d8b517d6db58ce72859b6aef0f623c8a2729
-  creationTimestamp: 2017-09-20T07:19:17Z
+    git-commit-hash: 04961944119d512abe7e10d332024abb98515cdc
+  creationTimestamp: "2017-09-20T07:19:17Z"
   deletionGracePeriodSeconds: null
   deletionTimestamp: null
   generation: 0

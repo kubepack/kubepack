@@ -1,8 +1,4 @@
-package: github.com/kubepack/pack/_testdata/test-6
-owners:
-- name: Appscode
-  email: team@appscode.com
-dependencies:
+items:
 - package: github.com/kubepack/kube-a
   branch: test-6
   fork: https://github.com/kubepack/kube-d.git
