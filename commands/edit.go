@@ -39,7 +39,7 @@ func NewEditCommand(plugin bool) *cobra.Command {
 		Long:  "Generates patch via edit command",
 		Run: func(cmd *cobra.Command, args []string) {
 			var err error
-			srcPath, err = cmd.Flags().GetString("src")
+			srcPath, err = cmd.Flags().GetString("patch")
 			if err != nil {
 				log.Println(err)
 			}

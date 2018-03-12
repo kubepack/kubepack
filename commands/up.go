@@ -55,9 +55,12 @@ func NewUpCommand(plugin bool) *cobra.Command {
 				log.Fatalln(errors.WithStack(err))
 			}
 			patchFiles = make(map[string]string)
-			err = filepath.Walk(filepath.Join(rootPath, api.ManifestDirectory, PatchFolder), visitPatchFolder)
-			if err != nil {
-				log.Fatalln(errors.WithStack(err))
+			patchPath := filepath.Join(rootPath, api.ManifestDirectory, PatchFolder)
+			if _, err := os.Stat(patchPath); os.IsExist(err) {
+				err = filepath.Walk(patchPath, visitPatchFolder)
+				if err != nil {
+					log.Fatalln(errors.WithStack(err))
+				}
 			}
 			err = filepath.Walk(filepath.Join(rootPath, api.ManifestDirectory, _VendorFolder), visitPatchAndDump)
 			if err != nil {
@@ -214,7 +217,6 @@ func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
 	if err != nil {
 		return errors.Wrap(err, "error to annotated with git-commit-hash")
 	}
-
 	// If not exists mkdir all the folder
 	outlookDir := filepath.Dir(outlookPath)
 	if _, err := os.Stat(outlookDir); err != nil {
@@ -236,6 +238,19 @@ func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
 		return errors.Wrap(err, "Error to write file in outlook folder.")
 	}
 
+	return nil
+}
+
+func WriteCompiledFileToDest(path string, compiledYaml []byte) error {
+	_, err := os.Create(path)
+	if err != nil {
+		return errors.Wrap(err, "Error to create outlook.")
+	}
+
+	err = ioutil.WriteFile(path, compiledYaml, 0755)
+	if err != nil {
+		return errors.Wrap(err, "Error to write file in outlook folder.")
+	}
 	return nil
 }
 
