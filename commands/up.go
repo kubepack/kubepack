@@ -12,14 +12,20 @@ import (
 	"github.com/ghodss/yaml"
 	"github.com/google/go-jsonnet"
 	api "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/kubernetes/pkg/kubectl/scheme"
+	"k8s.io/apimachinery/pkg/util/strategicpatch"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
+	kutil "k8s.io/kubectl/pkg/kinflate/util"
+	"k8s.io/kubectl/pkg/kinflate/resource"
 )
 
 var (
-	src      string
-	patch    string
-	rootPath string
+	src        string
+	patch      string
+	rootPath   string
+	patchFiles map[string]string
 )
 
 const CompileDirectory = "output"
@@ -32,7 +38,7 @@ func NewUpCommand(plugin bool) *cobra.Command {
 			var err error
 			rootPath, err = cmd.Flags().GetString("file")
 			if err != nil {
-				log.Fatalln(err)
+				log.Fatalln(errors.WithStack(err))
 			}
 			if !plugin && !filepath.IsAbs(rootPath) {
 				wd, err := os.Getwd()
@@ -46,11 +52,19 @@ func NewUpCommand(plugin bool) *cobra.Command {
 			}
 			validator, err = GetOpenapiValidator(cmd)
 			if err != nil {
-				log.Fatalln(err)
+				log.Fatalln(errors.WithStack(err))
+			}
+			patchFiles = make(map[string]string)
+			patchPath := filepath.Join(rootPath, api.ManifestDirectory, PatchFolder)
+			if _, err := os.Stat(patchPath); os.IsExist(err) {
+				err = filepath.Walk(patchPath, visitPatchFolder)
+				if err != nil {
+					log.Fatalln(errors.WithStack(err))
+				}
 			}
 			err = filepath.Walk(filepath.Join(rootPath, api.ManifestDirectory, _VendorFolder), visitPatchAndDump)
 			if err != nil {
-				log.Fatalln(err)
+				log.Fatalln(errors.WithStack(err))
 			}
 		},
 	}
@@ -89,8 +103,9 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
+	patchFileName, err := getPatchFileName(srcYamlByte)
 
-	patchFilePath := strings.Replace(path, _VendorFolder, PatchFolder, 1)
+	patchFilePath := patchFiles[patchFileName]
 	if _, err := os.Stat(patchFilePath); err != nil {
 		err = validator.ValidateBytes(srcYamlByte)
 		if err != nil && !strings.Contains(path, PatchFolder) && strings.HasSuffix(path, ".jsonnet") {
@@ -112,7 +127,7 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 		return nil
 	}
 
-	patchByte, err := ioutil.ReadFile(strings.Replace(path, _VendorFolder, PatchFolder, 1))
+	patchByte, err := ioutil.ReadFile(patchFilePath)
 	if err != nil {
 		return errors.Wrap(err, "Error to read patch file")
 	}
@@ -134,6 +149,20 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 	return nil
 }
 
+func visitPatchFolder(path string, fileInfo os.FileInfo, ferr error) error {
+	if ferr != nil {
+		return ferr
+	}
+	if fileInfo.IsDir() {
+		return nil
+	}
+	if !strings.Contains(path, PatchFolder) {
+		return nil
+	}
+	patchFiles[fileInfo.Name()] = path
+	return nil
+}
+
 func CompileWithPatch(srcByte, patchByte []byte) ([]byte, error) {
 	jsonSrc, err := yaml.YAMLToJSON(srcByte)
 	if err != nil {
@@ -145,7 +174,29 @@ func CompileWithPatch(srcByte, patchByte []byte) ([]byte, error) {
 		return nil, errors.Wrap(err, "Error to convert patch yaml to json.")
 	}
 
-	compiled, err := jsonpatch.MergePatch(jsonSrc, jsonPatch)
+	match, err := checkGVKN(jsonSrc, jsonPatch)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	if !match {
+		return nil, nil
+	}
+
+	var ro runtime.TypeMeta
+	if err := yaml.Unmarshal(srcByte, &ro); err != nil {
+		return nil, errors.WithStack(err)
+	}
+	kind := ro.GetObjectKind().GroupVersionKind()
+	versionedObject, err := scheme.Scheme.New(kind)
+	var compiled []byte
+	switch {
+	case runtime.IsNotRegisteredError(err):
+		compiled, err = jsonpatch.MergePatch(jsonSrc, jsonPatch)
+	case err != nil:
+		return nil, errors.WithStack(err)
+	default:
+		compiled, err = strategicpatch.StrategicMergePatch(jsonSrc, jsonPatch, versionedObject)
+	}
 	if err != nil {
 		return nil, errors.Wrap(err, "Error to marge patch with source.")
 	}
@@ -166,7 +217,6 @@ func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
 	if err != nil {
 		return errors.Wrap(err, "error to annotated with git-commit-hash")
 	}
-
 	// If not exists mkdir all the folder
 	outlookDir := filepath.Dir(outlookPath)
 	if _, err := os.Stat(outlookDir); err != nil {
@@ -191,6 +241,19 @@ func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
 	return nil
 }
 
+func WriteCompiledFileToDest(path string, compiledYaml []byte) error {
+	_, err := os.Create(path)
+	if err != nil {
+		return errors.Wrap(err, "Error to create outlook.")
+	}
+
+	err = ioutil.WriteFile(path, compiledYaml, 0755)
+	if err != nil {
+		return errors.Wrap(err, "Error to write file in outlook folder.")
+	}
+	return nil
+}
+
 func getAnnotatedWithCommitHash(yamlByte []byte, dir string) ([]byte, error) {
 	repo, err := getRootDir(dir)
 	if err != nil {
@@ -212,7 +275,6 @@ func getAnnotatedWithCommitHash(yamlByte []byte, dir string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	metadata := annotatedMap["metadata"]
 	annotations, ok := metadata.(map[string]interface{})["annotations"]
 	if !ok || annotations == nil {
@@ -252,4 +314,31 @@ func convertJsonnetToYamlByFilepath(path string, srcYamlByte []byte) ([]byte, er
 		return nil, errors.Wrap(err, "Error to evaluate jsonet")
 	}
 	return yml, nil
+}
+
+func checkGVKN(srcJson, patchJson []byte) (bool, error) {
+	src, err := kutil.Decode(srcJson)
+	if err != nil {
+		return false, errors.WithStack(err)
+	}
+
+	patch, err := kutil.Decode(patchJson)
+	if err != nil {
+		return false, errors.WithStack(err)
+	}
+
+	srcResource := &resource.Resource{
+		Data: src[0],
+	}
+	patchResource := resource.Resource{
+		Data: patch[0],
+	}
+
+	srcGvkn := srcResource.GVKN()
+	patchGvkn := patchResource.GVKN()
+
+	if srcGvkn == patchGvkn {
+		return true, nil
+	}
+	return false, nil
 }

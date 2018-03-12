@@ -12,7 +12,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/appscode/go/crypto/rand"
 	"github.com/ghodss/yaml"
 	"github.com/golang/dep/gps"
 	"github.com/golang/dep/gps/pkgtree"
@@ -28,6 +27,15 @@ var (
 	packagePatches map[string]string
 	forkRepo       []string
 )
+
+const PackTempDirectory = ".pack"
+
+var depPatchFiles map[string][]string
+
+type ApplyPatchToForkRepo struct {
+	repo     string
+	rootPath string
+}
 
 func NewDepCommand(plugin bool) *cobra.Command {
 	cmd := &cobra.Command{
@@ -53,6 +61,7 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 	// Assume the current directory is correctly placed on a GOPATH, and that it's the
 	// root of the project.
 	packagePatches = make(map[string]string)
+	depPatchFiles = make(map[string][]string)
 	logger := log.New(ioutil.Discard, "", 0)
 	if glog.V(glog.Level(1)) {
 		logger = log.New(os.Stdout, "", 0)
@@ -151,28 +160,31 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 			return errors.WithStack(err)
 		}
 
+		// fork repository handling
+		err = moveForkedDirectory(root)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+
 		err = filepath.Walk(filepath.Join(root, api.ManifestDirectory, _VendorFolder), findPatchFolder)
 		if err != nil {
 			return errors.WithStack(err)
 		}
 		for _, val := range forkRepo {
-			srcPath := filepath.Join(root, api.ManifestDirectory, _VendorFolder, val, api.ManifestDirectory, _VendorFolder, val)
-			if _, err = os.Stat(srcPath); err != nil {
-				return nil
+			tmpDir := filepath.Join(os.Getenv("HOME"), PackTempDirectory, val)
+			applypatch := &ApplyPatchToForkRepo{
+				repo:     val,
+				rootPath: root,
 			}
-			tmpDir := filepath.Join(root, api.ManifestDirectory, _VendorFolder, rand.WithUniqSuffix("hello"))
-			err = os.Rename(srcPath, tmpDir)
+			err = filepath.Walk(filepath.Join(tmpDir, api.ManifestDirectory), applypatch.applyPatchToFork)
 			if err != nil {
 				return errors.WithStack(err)
 			}
-
 			dstPath := filepath.Join(root, api.ManifestDirectory, _VendorFolder, val)
-
 			err = os.RemoveAll(dstPath)
 			if err != nil {
 				return errors.WithStack(err)
 			}
-
 			err = os.Rename(tmpDir, dstPath)
 			if err != nil {
 				return errors.WithStack(err)
@@ -182,9 +194,9 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 	return nil
 }
 
-func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
-	if err != nil {
-		return errors.WithStack(err)
+func findPatchFolder(path string, fileInfo os.FileInfo, ferr error) error {
+	if ferr != nil {
+		return errors.WithStack(ferr)
 	}
 	if !strings.Contains(path, PatchFolder) {
 		return nil
@@ -196,17 +208,15 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 	if strings.Index(path, _VendorFolder) != strings.LastIndex(path, _VendorFolder) {
 		return nil
 	}
-
 	splitVendor := strings.Split(path, _VendorFolder)
 	forkDir := strings.TrimPrefix(strings.Split(splitVendor[1], PatchFolder)[0], "/")
 
 	// e.g:  _vendor/github.com/kubepack/kube-a/patch/github.com/kubepack/kube-a/nginx-deployment.yaml
 	// forkDir = github.com/kubepack/kube-a
-	// patchFilePath = github.com/kubepack/kube-a/nginx-deployment.yaml
+	// patchFilePath = github.com/kubepack/kube-a/<name>.<kind>.<group>.yaml
 
 	splitPatch := strings.Split(path, PatchFolder)
 	patchFilePath := strings.TrimPrefix(splitPatch[1], "/")
-	srcDir := filepath.Join(splitVendor[0], _VendorFolder, patchFilePath)
 	manifestsPath := strings.Join([]string{"/", "/"}, api.ManifestDirectory)
 	if val, ok := packagePatches[patchFilePath]; ok {
 		if val != strings.TrimSuffix(strings.TrimPrefix(forkDir, "/"), manifestsPath) {
@@ -215,33 +225,93 @@ func findPatchFolder(path string, fileInfo os.FileInfo, err error) error {
 	}
 	pkg := strings.TrimSuffix(forkDir, manifestsPath)
 	if _, ok := packagePatches[pkg]; ok {
-		src := strings.Replace(path, PatchFolder, _VendorFolder, 1)
-		srcDir = src
 		if !findImportInSlice(pkg, forkRepo) {
 			forkRepo = append(forkRepo, pkg)
 		}
 	}
+	depPatchFiles[pkg] = append(depPatchFiles[pkg], path)
+	return nil
+}
 
-	if _, err := os.Stat(srcDir); err == nil {
-		srcYaml, err := ioutil.ReadFile(srcDir)
+func (tmp *ApplyPatchToForkRepo) applyPatchToFork(path string, fileInfo os.FileInfo, ferr error) error {
+	if ferr != nil {
+		return ferr
+	}
+	if strings.Contains(path, PatchFolder) {
+		return nil
+	}
+	if fileInfo.IsDir() {
+		return nil
+	}
+	if fileInfo.Name() == api.DependencyFile {
+		return nil
+	}
+	repoName := tmp.repo
+	srcYaml, err := ioutil.ReadFile(path)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	patchFileName, err := getPatchFileName(srcYaml)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	if _, ok := depPatchFiles[repoName]; !ok {
+		return nil
+	}
+	for _, val := range depPatchFiles[repoName] {
+		patchFile, err := os.Stat(val)
 		if err != nil {
 			return errors.WithStack(err)
 		}
+		if patchFileName == patchFile.Name() {
+			patchYaml, err := ioutil.ReadFile(val)
+			if err != nil {
+				return errors.WithStack(err)
+			}
+			cmpldYaml, err := CompileWithPatch(srcYaml, patchYaml)
+			if err != nil {
+				return errors.WithStack(err)
+			}
+			err = WriteCompiledFileToDest(path, cmpldYaml)
+			if err != nil {
+				return errors.WithStack(err)
+			}
+			return nil
+		}
+	}
+	return nil
+}
 
-		patchYaml, err := ioutil.ReadFile(path)
-		if err != nil {
-			return errors.WithStack(err)
-		}
-		mergedYaml, err := CompileWithPatch(srcYaml, patchYaml)
-		if err != nil {
-			return errors.WithStack(err)
-		}
-		err = ioutil.WriteFile(srcDir, mergedYaml, 0755)
+func moveForkedDirectory(root string) error {
+	packTmpDir := filepath.Join(os.Getenv("HOME"), ".pack")
+	if _, err := os.Stat(packTmpDir); err == nil {
+		err := os.RemoveAll(packTmpDir)
 		if err != nil {
 			return errors.WithStack(err)
 		}
 	}
-
+	err := os.MkdirAll(packTmpDir, 0755)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	for key := range packagePatches {
+		forkPath := filepath.Join(root, api.ManifestDirectory, _VendorFolder, key, api.ManifestDirectory, _VendorFolder, key)
+		fileInfo, err := os.Stat(forkPath)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		if !fileInfo.IsDir() {
+			return errors.Errorf("Forked repository isn't a directory!!")
+		}
+		err = os.MkdirAll(filepath.Join(packTmpDir, filepath.Dir(key)), 0755)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		err = os.Rename(forkPath, filepath.Join(packTmpDir, key))
+		if err != nil {
+			return errors.WithStack(err)
+		}
+	}
 	return nil
 }
 
