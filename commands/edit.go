@@ -218,12 +218,15 @@ func appendPatchToDependencies(manifestPath, patchPath string) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	for key, val := range depList.Items {
+	if !isPathAlreadyExist(depList.Patches, patchPath) {
+		depList.Patches = append(depList.Patches, patchPath)
+	}
+	/*for key, val := range depList.Items {
 		if strings.Contains(patchPath, val.Package) {
-			depList.Items[key].Patches = append(val.Patches, patchPath)
+			// depList.Items[key].Patches = append(val.Patches, patchPath)
 			break
 		}
-	}
+	}*/
 	depByte, err:= yaml.Marshal(depList)
 	if err != nil {
 		return errors.WithStack(err)
