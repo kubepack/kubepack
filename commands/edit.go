@@ -20,12 +20,16 @@ import (
 	"encoding/json"
 	api "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
 	packapi "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
+	kin_api "k8s.io/kubectl/pkg/apis/manifest/v1alpha1"
 	ro_schema "k8s.io/apimachinery/pkg/runtime/schema"
 )
 
-const defaultEditor = "nano"
-const _VendorFolder = "vendor"
-const PatchFolder = "patch"
+const (
+	defaultEditor = "nano"
+	_VendorFolder = "vendor"
+	PatchFolder   = "patch"
+	KinflateManifestName = "Kube-manifest.yaml"
+)
 
 var (
 	srcPath  string
@@ -173,6 +177,11 @@ func GetPatch(src, dst []byte, cmd *cobra.Command, plugin bool) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
+
+	err = appendPatchToKubeManifests(filepath.Join(root, KinflateManifestName), patchFilePath)
+	if err != nil {
+		return errors.WithStack(err)
+	}
 	return nil
 }
 
@@ -221,13 +230,31 @@ func appendPatchToDependencies(manifestPath, patchPath string) error {
 	if !isPathAlreadyExist(depList.Patches, patchPath) {
 		depList.Patches = append(depList.Patches, patchPath)
 	}
-	/*for key, val := range depList.Items {
-		if strings.Contains(patchPath, val.Package) {
-			// depList.Items[key].Patches = append(val.Patches, patchPath)
-			break
-		}
-	}*/
-	depByte, err:= yaml.Marshal(depList)
+	depByte, err := yaml.Marshal(depList)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	err = ioutil.WriteFile(manifestPath, depByte, 0755)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	return nil
+}
+
+func appendPatchToKubeManifests(manifestPath, patchPath string) error {
+	dep, err := ioutil.ReadFile(manifestPath)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	depList := kin_api.Manifest{}
+	err = yaml.Unmarshal(dep, &depList)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	if !isPathAlreadyExist(depList.Patches, patchPath) {
+		depList.Patches = append(depList.Patches, patchPath)
+	}
+	depByte, err := yaml.Marshal(depList)
 	if err != nil {
 		return errors.WithStack(err)
 	}
