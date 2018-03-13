@@ -228,15 +228,7 @@ func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
 		}
 	}
 
-	_, err = os.Create(outlookPath)
-	if err != nil {
-		return errors.Wrap(err, "Error to create outlook.")
-	}
-
-	err = ioutil.WriteFile(outlookPath, annotateYaml, 0755)
-	if err != nil {
-		return errors.Wrap(err, "Error to write file in outlook folder.")
-	}
+	err = WriteCompiledFileToDest(outlookPath, annotateYaml)
 
 	return nil
 }

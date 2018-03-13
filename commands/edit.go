@@ -235,6 +235,16 @@ func appendPatchToDependencies(manifestPath, patchPath string) error {
 	return nil
 }
 
+func isPathAlreadyExist(s []string, path string) bool {
+	for val := range s {
+		if path == s[val] {
+			return true
+		}
+	}
+
+	return false
+}
+
 func getRepositoryPath(path string) string {
 	splitFirst := strings.Split(path, filepath.Join(api.ManifestDirectory, PatchFolder))[1]
 	spliFinal := strings.Split(splitFirst, filepath.Join(api.ManifestDirectory, "app"))[0]
@@ -255,6 +265,6 @@ func getPatchFileName(patch []byte) (string, error) {
 	if err != nil {
 		return "", errors.WithStack(err)
 	}
-	name := strings.Join([]string{patchStruct.Name, patchStruct.Kind, gvk.Group, "yaml"}, ".")
+	name := strings.Join([]string{patchStruct.Name, strings.ToLower(patchStruct.Kind), gvk.Group, "yaml"}, ".")
 	return name, nil
 }
