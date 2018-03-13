@@ -38,6 +38,7 @@ func NewRootCmd(version string, plugin bool) *cobra.Command {
 			}
 			if plugin {
 				plugin_installer.LoadFlags(c.LocalFlags())
+				plugin_installer.LoadFromEnv(c.Flags(), "analytics", "KUBECTL_PLUGINS_LOCAL_FLAG_")
 			}
 		},
 	}

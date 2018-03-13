@@ -29,7 +29,7 @@
   name = "github.com/appscode/go"
 
 [[constraint]]
-  branch = "release-6.0"
+  branch = "master"
   name = "github.com/appscode/kutil"
 
 [[constraint]]
@@ -55,7 +55,7 @@
   source = "https://github.com/appscode/go-version.git"
 
 [[constraint]]
-  branch = "master"
+  branch = "mod-t"
   name = "github.com/kubepack/pack-server"
 
 [[constraint]]
@@ -88,7 +88,7 @@
 
 [[override]]
   name = "github.com/russross/blackfriday"
-  revision = "300106c228d52c8941d4b3de6054a6062a86dda3"
+  branch = "master"
 
 [[override]]
   name = "k8s.io/api"
@@ -131,6 +131,14 @@
   branch = "master"
   name = "golang.org/x/sync"
   source = "https://github.com/golang/sync.git"
+
+[[override]]
+  branch = "master"
+  name = "github.com/shurcooL/sanitized_anchor_name"
+
+[[override]]
+  revision = "c312c0a1fe0d4988480073287b8633fc5a244647"
+  name = "github.com/appscode/go"
 
 [prune]
   unused-packages = true
