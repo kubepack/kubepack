@@ -127,6 +127,11 @@
   name = "github.com/Masterminds/semver"
   source = "https://github.com/carolynvs/semver.git"
 
+[[override]]
+  branch = "master"
+  name = "golang.org/x/sync"
+  source = "https://github.com/golang/sync.git"
+
 [prune]
   unused-packages = true
   go-tests = true
