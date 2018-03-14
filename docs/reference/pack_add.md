@@ -1,30 +1,40 @@
 ---
-title: Pack Up
+title: Pack Add
 menu:
   docs_0.1.0-alpha.2:
-    identifier: pack-up
-    name: Pack Up
+    identifier: pack-add
+    name: Pack Add
     parent: reference
 menu_name: docs_0.1.0-alpha.2
 section_menu_id: reference
 ---
-## pack up
+## pack add
 
-Compiles patches and vendored manifests into final resource definitions
+Adds configmap/resource/secret to the manifest.
 
 ### Synopsis
 
-Compiles patches and vendored manifests into final resource definitions
+Adds configmap/resource/secret to the manifest.
+
+### Examples
 
 ```
-pack up [flags]
+
+	# Adds a configmap to the manifest
+	kinflate add configmap NAME --from-literal=k=v
+
+	# Adds a secret to the manifest
+	kinflate add secret NAME --from-literal=k=v
+
+	# Adds a resource to the manifest
+	kinflate add resource <filepath>
+
 ```
 
 ### Options
 
 ```
-  -h, --help         help for up
-      --src string   Compile patch and source.
+  -h, --help   help for add
 ```
 
 ### Options inherited from parent commands
@@ -62,4 +72,6 @@ pack up [flags]
 ### SEE ALSO
 
 * [pack](/docs/reference/pack.md)	 - Secure Lightweight Kubernetes Package Manager
+* [pack add configmap](/docs/reference/pack_add_configmap.md)	 - Adds a configmap to the manifest.
+* [pack add resource](/docs/reference/pack_add_resource.md)	 - Add the name of a file containing a resource to the manifest.
 

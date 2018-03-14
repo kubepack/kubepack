@@ -1,30 +1,40 @@
 ---
-title: Pack Up
+title: Pack Set Nameprefix
 menu:
   docs_0.1.0-alpha.2:
-    identifier: pack-up
-    name: Pack Up
+    identifier: pack-set-nameprefix
+    name: Pack Set Nameprefix
     parent: reference
 menu_name: docs_0.1.0-alpha.2
 section_menu_id: reference
 ---
-## pack up
+## pack set nameprefix
 
-Compiles patches and vendored manifests into final resource definitions
+Sets the value of the namePrefix field in the manifest.
 
 ### Synopsis
 
-Compiles patches and vendored manifests into final resource definitions
+Sets the value of the namePrefix field in the manifest.
 
 ```
-pack up [flags]
+pack set nameprefix [flags]
+```
+
+### Examples
+
+```
+
+The command
+  set nameprefix acme-
+will add the field "namePrefix: acme-" to the manifest file if it doesn't exist,
+and overwrite the value with "acme-" if the field does exist.
+
 ```
 
 ### Options
 
 ```
-  -h, --help         help for up
-      --src string   Compile patch and source.
+  -h, --help   help for nameprefix
 ```
 
 ### Options inherited from parent commands
@@ -61,5 +71,5 @@ pack up [flags]
 
 ### SEE ALSO
 
-* [pack](/docs/reference/pack.md)	 - Secure Lightweight Kubernetes Package Manager
+* [pack set](/docs/reference/pack_set.md)	 - Sets the value of different fields in manifest.
 

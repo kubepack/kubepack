@@ -1,11 +1,11 @@
 ---
 title: Pack Base64
 menu:
-  docs_0.1.0-alpha.1:
+  docs_0.1.0-alpha.2:
     identifier: pack-base64
     name: Pack Base64
     parent: reference
-menu_name: docs_0.1.0-alpha.1
+menu_name: docs_0.1.0-alpha.2
 section_menu_id: reference
 ---
 ## pack base64
@@ -39,6 +39,7 @@ pack base64 [flags]
       --client-key string                Path to a client key file for TLS
       --cluster string                   The name of the kubeconfig cluster to use
       --context string                   The name of the kubeconfig context to use
+  -f, --file string                      filepath
       --insecure-skip-tls-verify         If true, the server's certificate will not be checked for validity. This will make your HTTPS connections insecure
       --kube-version string              name of the kubeconfig context to use
       --kubeconfig string                Path to the kubeconfig file to use for CLI requests.
@@ -47,6 +48,7 @@ pack base64 [flags]
       --logtostderr                      log to standard error instead of files
   -n, --namespace string                 If present, the namespace scope for this CLI request
       --password string                  Password for basic authentication to the API server
+  -p, --patch string                     File want to edit
       --request-timeout string           The length of time to wait before giving up on a single server request. Non-zero values should contain a corresponding time unit (e.g. 1s, 2m, 3h). A value of zero means don't timeout requests. (default "0")
   -s, --server string                    The address and port of the Kubernetes API server
       --stderrthreshold severity         logs at or above this threshold go to stderr (default 2)

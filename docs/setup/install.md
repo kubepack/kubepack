@@ -1,12 +1,12 @@
 ---
 title: Install
 menu:
-  docs_0.1.0-alpha.1:
+  docs_0.1.0-alpha.2:
     identifier: install-kubepack
     name: Install
     parent: setup
     weight: 10
-menu_name: docs_0.1.0-alpha.1
+menu_name: docs_0.1.0-alpha.2
 section_menu_id: setup
 ---
 
@@ -19,13 +19,13 @@ Kubepack provides a CLI to work with Kubernetes objects. Download pre-built bina
 
 ```console
 # Linux amd 64-bit
-wget -O pack https://github.com/kubepack/pack/releases/download/0.1.0-alpha.1/pack-linux-amd64 \
+wget -O pack https://github.com/kubepack/pack/releases/download/0.1.0-alpha.2/pack-linux-amd64 \
   && chmod +x pack \
   && ./pack install \
   && rm -rf pack
 
 # Mac 64-bit
-wget -O pack https://github.com/kubepack/pack/releases/download/0.1.0-alpha.1/pack-darwin-amd64 \
+wget -O pack https://github.com/kubepack/pack/releases/download/0.1.0-alpha.2/pack-darwin-amd64 \
   && chmod +x pack \
   && ./pack install \
   && rm -rf pack

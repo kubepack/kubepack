@@ -2,16 +2,16 @@
 title: Contributing | Kubepack
 description: Contributing
 menu:
-  docs_0.1.0-alpha.1:
+  docs_0.1.0-alpha.2:
     identifier: contributing-cli
     name: Contributing
     parent: welcome
     weight: 10
-menu_name: docs_0.1.0-alpha.1
+menu_name: docs_0.1.0-alpha.2
 section_menu_id: welcome
-url: /docs/0.1.0-alpha.1/welcome/contributing/
+url: /docs/0.1.0-alpha.2/welcome/contributing/
 aliases:
-  - /docs/0.1.0-alpha.1/CONTRIBUTING/
+  - /docs/0.1.0-alpha.2/CONTRIBUTING/
 ---
 
 # Contribution Guidelines
