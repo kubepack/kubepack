@@ -60,7 +60,7 @@
   source = "https://github.com/appscode/go-version.git"
 
 [[constraint]]
-  branch = "mod-t"
+  branch = "master"
   name = "github.com/kubepack/pack-server"
 
 [[constraint]]

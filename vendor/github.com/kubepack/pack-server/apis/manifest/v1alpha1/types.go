@@ -39,7 +39,6 @@ type Dependency struct {
 type DependencyList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Patches         []string `json:"patches,omitempty"`
 
 	Items []Dependency `json:"items"`
 }

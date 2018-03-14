@@ -82,11 +82,6 @@ func (in *DependencyList) DeepCopyInto(out *DependencyList) {
 	*out = *in
 	out.TypeMeta = in.TypeMeta
 	out.ListMeta = in.ListMeta
-	if in.Patches != nil {
-		in, out := &in.Patches, &out.Patches
-		*out = make([]string, len(*in))
-		copy(*out, *in)
-	}
 	if in.Items != nil {
 		in, out := &in.Items, &out.Items
 		*out = make([]Dependency, len(*in))

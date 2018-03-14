@@ -1,6 +1,8 @@
 package commands
 
 import (
+	"bytes"
+	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -11,17 +13,15 @@ import (
 	"github.com/evanphx/json-patch"
 	"github.com/ghodss/yaml"
 	"github.com/google/go-jsonnet"
-	k8syaml "k8s.io/apimachinery/pkg/util/yaml"
 	api "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
-	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/kubernetes/pkg/kubectl/scheme"
-	"k8s.io/apimachinery/pkg/util/strategicpatch"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
-	"k8s.io/kubectl/pkg/kinflate/resource"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	"bytes"
-	"io"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/util/strategicpatch"
+	k8syaml "k8s.io/apimachinery/pkg/util/yaml"
+	"k8s.io/kubectl/pkg/kinflate/resource"
+	"k8s.io/kubernetes/pkg/kubectl/scheme"
 )
 
 var (

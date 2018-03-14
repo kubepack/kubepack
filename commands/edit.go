@@ -2,6 +2,7 @@ package commands
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -11,23 +12,22 @@ import (
 
 	"github.com/evanphx/json-patch"
 	"github.com/ghodss/yaml"
+	api "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
+	packapi "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"k8s.io/apimachinery/pkg/runtime"
+	ro_schema "k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/util/strategicpatch"
+	kin_api "k8s.io/kubectl/pkg/apis/manifest/v1alpha1"
 	"k8s.io/kubernetes/pkg/kubectl/cmd/util/editor"
 	"k8s.io/kubernetes/pkg/kubectl/scheme"
-	"encoding/json"
-	api "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
-	packapi "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
-	kin_api "k8s.io/kubectl/pkg/apis/manifest/v1alpha1"
-	ro_schema "k8s.io/apimachinery/pkg/runtime/schema"
 )
 
 const (
-	defaultEditor = "nano"
-	_VendorFolder = "vendor"
-	PatchFolder   = "patch"
+	defaultEditor        = "nano"
+	_VendorFolder        = "vendor"
+	PatchFolder          = "patch"
 	KinflateManifestName = "Kube-manifest.yaml"
 )
 
@@ -35,6 +35,7 @@ var (
 	srcPath  string
 	fileInfo os.FileInfo
 )
+
 // Local directory path needs to be absolute path. Patch filepath needs to be either absolute path or relative path.
 func NewEditCommand(plugin bool) *cobra.Command {
 	cmd := &cobra.Command{
@@ -173,7 +174,7 @@ func GetPatch(src, dst []byte, cmd *cobra.Command, plugin bool) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	err = appendPatchToDependencies(filepath.Join(root, api.DependencyFile), patchFilePath)
+	err = appendPatchToDependencies(filepath.Join(root, KinflateManifestName), patchFilePath)
 	if err != nil {
 		return errors.WithStack(err)
 	}
@@ -218,23 +219,23 @@ func NewDefaultEditor() editor.Editor {
 }
 
 func appendPatchToDependencies(manifestPath, patchPath string) error {
-	dep, err := ioutil.ReadFile(manifestPath)
+	data, err := ioutil.ReadFile(manifestPath)
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	depList := api.DependencyList{}
-	err = yaml.Unmarshal(dep, &depList)
+	manifest := kin_api.Manifest{}
+	err = yaml.Unmarshal(data, &manifest)
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	if !isPathAlreadyExist(depList.Patches, patchPath) {
-		depList.Patches = append(depList.Patches, patchPath)
+	if !isPathAlreadyExist(manifest.Patches, patchPath) {
+		manifest.Patches = append(manifest.Patches, patchPath)
 	}
-	depByte, err := yaml.Marshal(depList)
+	data, err = yaml.Marshal(manifest)
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	err = ioutil.WriteFile(manifestPath, depByte, 0755)
+	err = ioutil.WriteFile(manifestPath, data, 0755)
 	if err != nil {
 		return errors.WithStack(err)
 	}
@@ -242,23 +243,23 @@ func appendPatchToDependencies(manifestPath, patchPath string) error {
 }
 
 func appendPatchToKubeManifests(manifestPath, patchPath string) error {
-	dep, err := ioutil.ReadFile(manifestPath)
+	data, err := ioutil.ReadFile(manifestPath)
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	depList := kin_api.Manifest{}
-	err = yaml.Unmarshal(dep, &depList)
+	manifest := kin_api.Manifest{}
+	err = yaml.Unmarshal(data, &manifest)
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	if !isPathAlreadyExist(depList.Patches, patchPath) {
-		depList.Patches = append(depList.Patches, patchPath)
+	if !isPathAlreadyExist(manifest.Patches, patchPath) {
+		manifest.Patches = append(manifest.Patches, patchPath)
 	}
-	depByte, err := yaml.Marshal(depList)
+	data, err = yaml.Marshal(manifest)
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	err = ioutil.WriteFile(manifestPath, depByte, 0755)
+	err = ioutil.WriteFile(manifestPath, data, 0755)
 	if err != nil {
 		return errors.WithStack(err)
 	}
