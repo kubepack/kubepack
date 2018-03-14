@@ -1,7 +1,15 @@
 # Change Log
 
+## [Unreleased](https://github.com/kubepack/pack/tree/HEAD)
+
+[Full Changelog](https://github.com/kubepack/pack/compare/0.1.0-alpha.2...HEAD)
+
+**Merged pull requests:**
+
+- Prepare docs for 0.1.0-alpha.2 [\#59](https://github.com/kubepack/pack/pull/59) ([tamalsaha](https://github.com/tamalsaha))
+
 ## [0.1.0-alpha.2](https://github.com/kubepack/pack/tree/0.1.0-alpha.2) (2018-03-14)
-[Full Changelog](https://github.com/kubepack/pack/compare/0.1.0-alpha.2...0.1.0-alpha.2)
+[Full Changelog](https://github.com/kubepack/pack/compare/0.1.0-alpha.1...0.1.0-alpha.2)
 
 **Merged pull requests:**
 
@@ -11,14 +19,14 @@
 - Change manifest file and add filepath flag [\#55](https://github.com/kubepack/pack/pull/55) ([a8uhnf](https://github.com/a8uhnf))
 - Update jsonnet support doc [\#54](https://github.com/kubepack/pack/pull/54) ([a8uhnf](https://github.com/a8uhnf))
 
-## [0.1.0-alpha.2](https://github.com/kubepack/pack/tree/0.1.0-alpha.2) (2018-03-05)
-[Full Changelog](https://github.com/kubepack/pack/compare/0.1.0-alpha.0...0.1.0-alpha.2)
+## [0.1.0-alpha.1](https://github.com/kubepack/pack/tree/0.1.0-alpha.1) (2018-03-05)
+[Full Changelog](https://github.com/kubepack/pack/compare/0.1.0-alpha.0...0.1.0-alpha.1)
 
 **Merged pull requests:**
 
 - Update api [\#53](https://github.com/kubepack/pack/pull/53) ([tamalsaha](https://github.com/tamalsaha))
 - Update documentation  [\#52](https://github.com/kubepack/pack/pull/52) ([a8uhnf](https://github.com/a8uhnf))
-- Prepare docs for 0.1.0-alpha.2 [\#51](https://github.com/kubepack/pack/pull/51) ([tamalsaha](https://github.com/tamalsaha))
+- Prepare docs for 0.1.0-alpha.1 [\#51](https://github.com/kubepack/pack/pull/51) ([tamalsaha](https://github.com/tamalsaha))
 - Bundle onessl commands [\#50](https://github.com/kubepack/pack/pull/50) ([tamalsaha](https://github.com/tamalsaha))
 - Handle local flags [\#49](https://github.com/kubepack/pack/pull/49) ([tamalsaha](https://github.com/tamalsaha))
 - Register crd types to scheme [\#48](https://github.com/kubepack/pack/pull/48) ([tamalsaha](https://github.com/tamalsaha))
