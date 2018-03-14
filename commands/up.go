@@ -18,7 +18,6 @@ import (
 	"k8s.io/apimachinery/pkg/util/strategicpatch"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
-	// kutil "k8s.io/kubectl/pkg/kinflate/util"
 	"k8s.io/kubectl/pkg/kinflate/resource"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"bytes"
@@ -314,23 +313,23 @@ func convertJsonnetToYamlByFilepath(path string, srcYamlByte []byte) ([]byte, er
 
 // Decode decodes a list of objects in byte array format
 func Decode(in []byte) ([]*unstructured.Unstructured, error) {
-		decoder := k8syaml.NewYAMLOrJSONDecoder(bytes.NewReader(in), 1024)
-		objs := []*unstructured.Unstructured{}
+	decoder := k8syaml.NewYAMLOrJSONDecoder(bytes.NewReader(in), 1024)
+	objs := []*unstructured.Unstructured{}
 
-			var err error
-		for {
-				var out unstructured.Unstructured
-				err = decoder.Decode(&out)
-				if err != nil {
-						break
-					}
-				objs = append(objs, &out)
-			}
-		if err != io.EOF {
-				return nil, err
-			}
-		return objs, nil
+	var err error
+	for {
+		var out unstructured.Unstructured
+		err = decoder.Decode(&out)
+		if err != nil {
+			break
+		}
+		objs = append(objs, &out)
 	}
+	if err != io.EOF {
+		return nil, err
+	}
+	return objs, nil
+}
 
 func checkGVKN(srcJson, patchJson []byte) (bool, error) {
 	src, err := Decode(srcJson)
