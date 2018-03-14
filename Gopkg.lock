@@ -261,8 +261,8 @@
 [[projects]]
   name = "github.com/go-ini/ini"
   packages = ["."]
-  revision = "32e4c1e6bc4e7d0d8451aa6b75200d19e37a536a"
-  version = "v1.32.0"
+  revision = "6333e38ac20b8949a8dd68baa3650f4dee8f39f0"
+  version = "v1.33.0"
 
 [[projects]]
   branch = "master"
@@ -470,14 +470,14 @@
   version = "0.2.0"
 
 [[projects]]
-  branch = "mod-t"
+  branch = "master"
   name = "github.com/kubepack/pack-server"
   packages = [
     "apis/manifest",
     "apis/manifest/v1alpha1",
     "client/clientset/versioned/scheme"
   ]
-  revision = "c41d503d3e0961dad19e7642dcf267467514c98f"
+  revision = "c2fe677eb3b730d264886c2b3177644dcb4d5039"
 
 [[projects]]
   branch = "master"
@@ -678,7 +678,7 @@
     "unix",
     "windows"
   ]
-  revision = "8c0ece68c28377f4c326d85b94f8df0dace46f80"
+  revision = "932fb2287bee613f2a65e71685c9d9c0020da979"
 
 [[projects]]
   name = "golang.org/x/text"
@@ -1243,6 +1243,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "f27c609c830506344fc04c6c2aab2c7ae4e50933c421dd0fbd2abf6a8c40d45f"
+  inputs-digest = "55cff9a82f4c1d4ca8e84e10a3deee97e1c79ca09cc54ac931af67228114a376"
   solver-name = "gps-cdcl"
   solver-version = 1

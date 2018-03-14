@@ -2,8 +2,8 @@ package commands
 
 import (
 	"context"
-	"fmt"
 	"flag"
+	"fmt"
 	"go/build"
 	"io/ioutil"
 	"log"

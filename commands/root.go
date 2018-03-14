@@ -2,6 +2,7 @@ package commands
 
 import (
 	"flag"
+	"os"
 	"strings"
 
 	"github.com/appscode/go/analytics"
@@ -14,12 +15,10 @@ import (
 	clientsetscheme "k8s.io/client-go/kubernetes/scheme"
 	kinflate "k8s.io/kubectl/pkg/kinflate/commands"
 	"k8s.io/kubectl/pkg/kinflate/util/fs"
-	"os"
 )
 
 const (
 	gaTrackingCode = "UA-62096468-20"
-
 )
 
 func NewPackCmd(version string, plugin bool) *cobra.Command {
@@ -55,7 +54,7 @@ func NewPackCmd(version string, plugin bool) *cobra.Command {
 
 	flags.String("kube-version", "", "name of the kubeconfig context to use")
 	flags.StringP("file", "f", "", "filepath")
-	flags.StringP("patch", "p","", "File want to edit")
+	flags.StringP("patch", "p", "", "File want to edit")
 
 	flags.BoolVar(&enableAnalytics, "analytics", enableAnalytics, "Send analytical events to Google Guard")
 
