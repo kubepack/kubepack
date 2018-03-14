@@ -2,17 +2,17 @@
 title: Weclome | Kubepack
 description: Welcome to Kubepack
 menu:
-  docs_0.1.0-alpha.1:
+  docs_0.1.0-alpha.2:
     identifier: readme-cli
     name: Readme
     parent: welcome
     weight: -1
-menu_name: docs_0.1.0-alpha.1
+menu_name: docs_0.1.0-alpha.2
 section_menu_id: welcome
-url: /docs/0.1.0-alpha.1/welcome/
+url: /docs/0.1.0-alpha.2/welcome/
 aliases:
-  - /docs/0.1.0-alpha.1/
-  - /docs/0.1.0-alpha.1/README/
+  - /docs/0.1.0-alpha.2/
+  - /docs/0.1.0-alpha.2/README/
 ---
 
 # Welcome

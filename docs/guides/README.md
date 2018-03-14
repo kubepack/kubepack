@@ -1,16 +1,16 @@
 ---
 title: Guides | Kubepack
 menu:
-  docs_0.1.0-alpha.1:
+  docs_0.1.0-alpha.2:
     identifier: guides-overview
     name: Overview
     parent: guides
     weight: -1
-menu_name: docs_0.1.0-alpha.1
+menu_name: docs_0.1.0-alpha.2
 section_menu_id: guides
-url: /docs/0.1.0-alpha.1/guides/
+url: /docs/0.1.0-alpha.2/guides/
 aliases:
-  - /docs/0.1.0-alpha.1/guides/README/
+  - /docs/0.1.0-alpha.2/guides/README/
 ---
 
 # Guides

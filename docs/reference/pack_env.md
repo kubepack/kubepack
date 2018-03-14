@@ -1,30 +1,29 @@
 ---
-title: Pack Up
+title: Pack Env
 menu:
   docs_0.1.0-alpha.2:
-    identifier: pack-up
-    name: Pack Up
+    identifier: pack-env
+    name: Pack Env
     parent: reference
 menu_name: docs_0.1.0-alpha.2
 section_menu_id: reference
 ---
-## pack up
+## pack env
 
-Compiles patches and vendored manifests into final resource definitions
+List environment variables
 
 ### Synopsis
 
-Compiles patches and vendored manifests into final resource definitions
+List environment variables
 
 ```
-pack up [flags]
+pack env [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help         help for up
-      --src string   Compile patch and source.
+  -h, --help   help for env
 ```
 
 ### Options inherited from parent commands

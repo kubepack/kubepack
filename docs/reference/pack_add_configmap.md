@@ -1,30 +1,47 @@
 ---
-title: Pack Up
+title: Pack Add Configmap
 menu:
   docs_0.1.0-alpha.2:
-    identifier: pack-up
-    name: Pack Up
+    identifier: pack-add-configmap
+    name: Pack Add Configmap
     parent: reference
 menu_name: docs_0.1.0-alpha.2
 section_menu_id: reference
 ---
-## pack up
+## pack add configmap
 
-Compiles patches and vendored manifests into final resource definitions
+Adds a configmap to the manifest.
 
 ### Synopsis
 
-Compiles patches and vendored manifests into final resource definitions
+Adds a configmap to the manifest.
 
 ```
-pack up [flags]
+pack add configmap NAME [--from-file=[key=]source] [--from-literal=key1=value1] [flags]
+```
+
+### Examples
+
+```
+
+	# Adds a configmap to the Manifest (with a specified key)
+	kinflate add configmap my-configmap --from-file=my-key=file/path --from-literal=my-literal=12345
+
+	# Adds a configmap to the Manifest (key is the filename)
+	kinflate add configmap my-configmap --from-file=file/path
+
+	# Adds a configmap from env-file
+	kinflate add configmap my-configmap --from-env-file=env/path.env
+
 ```
 
 ### Options
 
 ```
-  -h, --help         help for up
-      --src string   Compile patch and source.
+      --from-env-file string       Specify the path to a file to read lines of key=val pairs to create a configmap (i.e. a Docker .env file).
+      --from-file stringSlice      Key file can be specified using its file path, in which case file basename will be used as configmap key, or optionally with a key and file path, in which case the given key will be used.  Specifying a directory will iterate each named file in the directory whose basename is a valid configmap key.
+      --from-literal stringArray   Specify a key and literal value to insert in configmap (i.e. mykey=somevalue)
+  -h, --help                       help for configmap
 ```
 
 ### Options inherited from parent commands
@@ -61,5 +78,5 @@ pack up [flags]
 
 ### SEE ALSO
 
-* [pack](/docs/reference/pack.md)	 - Secure Lightweight Kubernetes Package Manager
+* [pack add](/docs/reference/pack_add.md)	 - Adds configmap/resource/secret to the manifest.
 
