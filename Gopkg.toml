@@ -29,7 +29,7 @@
   name = "github.com/appscode/go"
 
 [[constraint]]
-  branch = "release-6.0"
+  branch = "master"
   name = "github.com/appscode/kutil"
 
 [[constraint]]
@@ -46,6 +46,11 @@
   branch = "dep-bypass"
 
 [[constraint]]
+  name = "k8s.io/kubectl"
+  source = "https://github.com/kubepack/kubectl.git"
+  branch = "up-kin"
+
+[[constraint]]
   branch = "master"
   name = "github.com/golang/glog"
 
@@ -55,7 +60,7 @@
   source = "https://github.com/appscode/go-version.git"
 
 [[constraint]]
-  branch = "master"
+  branch = "mod-t"
   name = "github.com/kubepack/pack-server"
 
 [[constraint]]
@@ -88,7 +93,7 @@
 
 [[override]]
   name = "github.com/russross/blackfriday"
-  revision = "300106c228d52c8941d4b3de6054a6062a86dda3"
+  branch = "master"
 
 [[override]]
   name = "k8s.io/api"
@@ -126,6 +131,15 @@
   branch = "parse-constraints-with-dash-in-pre"
   name = "github.com/Masterminds/semver"
   source = "https://github.com/carolynvs/semver.git"
+
+[[override]]
+  branch = "master"
+  name = "golang.org/x/sync"
+  source = "https://github.com/golang/sync.git"
+
+[[override]]
+  branch = "master"
+  name = "github.com/shurcooL/sanitized_anchor_name"
 
 [prune]
   unused-packages = true

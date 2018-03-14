@@ -25,13 +25,12 @@ type Dependency struct {
 	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	metav1.ObjectMeta `json:"metadata,omitempty" yaml:"metadata,omitempty"`
 
-	Package string   `json:"package"`
-	Version string   `json:"version,omitempty"`
-	Branch  string   `json:"branch,omitempty"`
-	Folder  string   `json:"folder,omitempty"`
-	Repo    string   `json:"repo,omitempty"`
-	Fork    string   `json:"fork,omitempty"`
-	Patches []string `json:"patches,omitempty"`
+	Package string `json:"package"`
+	Version string `json:"version,omitempty"`
+	Branch  string `json:"branch,omitempty"`
+	Folder  string `json:"folder,omitempty"`
+	Repo    string `json:"repo,omitempty"`
+	Fork    string `json:"fork,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
@@ -40,6 +39,7 @@ type Dependency struct {
 type DependencyList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
+	Patches         []string `json:"patches,omitempty"`
 
 	Items []Dependency `json:"items"`
 }

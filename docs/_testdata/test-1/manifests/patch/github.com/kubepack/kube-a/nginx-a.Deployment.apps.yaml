@@ -1,0 +1,17 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-a
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: nginx
+      containers:
+      - $setElementOrder/ports:
+        - containerPort: 8
+        name: nginx
+        ports:
+        - containerPort: 8
+        - $patch: delete
+          containerPort: 80

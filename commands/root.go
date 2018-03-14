@@ -12,7 +12,9 @@ import (
 	"github.com/kubepack/pack-server/client/clientset/versioned/scheme"
 	"github.com/spf13/cobra"
 	clientsetscheme "k8s.io/client-go/kubernetes/scheme"
-	// kinflate "k8s.io/kubectl/pkg/kinflate/commands"
+	kinflate "k8s.io/kubectl/pkg/kinflate/commands"
+	"k8s.io/kubectl/pkg/kinflate/util/fs"
+	"os"
 )
 
 const (
@@ -24,6 +26,8 @@ func NewPackCmd(version string, plugin bool) *cobra.Command {
 	var (
 		enableAnalytics = true
 	)
+	fsys := fs.MakeRealFS()
+	stdOut, stdErr := os.Stdout, os.Stderr
 	cmd := &cobra.Command{
 		Use:               "pack [command]",
 		Short:             `Secure Lightweight Kubernetes Package Manager`,
@@ -62,7 +66,9 @@ func NewPackCmd(version string, plugin bool) *cobra.Command {
 	cmd.AddCommand(NewKubepackInitializeCmd(plugin))
 
 	// kinflate commands
-	// cmd.AddCommand(kinflate.NewDefaultCommand())
+	cmd.AddCommand(kinflate.NewCmdInit(stdOut, stdErr, fsys))
+	cmd.AddCommand(kinflate.NewCmdAdd(stdOut, stdErr, fsys))
+	cmd.AddCommand(kinflate.NewCmdSet(stdOut, stdErr, fsys))
 
 	// onessl commands
 	cmd.AddCommand(utilcmds.NewCmdBase64())

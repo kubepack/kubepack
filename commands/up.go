@@ -11,14 +11,17 @@ import (
 	"github.com/evanphx/json-patch"
 	"github.com/ghodss/yaml"
 	"github.com/google/go-jsonnet"
+	k8syaml "k8s.io/apimachinery/pkg/util/yaml"
 	api "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/kubernetes/pkg/kubectl/scheme"
 	"k8s.io/apimachinery/pkg/util/strategicpatch"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
-	kutil "k8s.io/kubectl/pkg/kinflate/util"
 	"k8s.io/kubectl/pkg/kinflate/resource"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"bytes"
+	"io"
 )
 
 var (
@@ -228,15 +231,7 @@ func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
 		}
 	}
 
-	_, err = os.Create(outlookPath)
-	if err != nil {
-		return errors.Wrap(err, "Error to create outlook.")
-	}
-
-	err = ioutil.WriteFile(outlookPath, annotateYaml, 0755)
-	if err != nil {
-		return errors.Wrap(err, "Error to write file in outlook folder.")
-	}
+	err = WriteCompiledFileToDest(outlookPath, annotateYaml)
 
 	return nil
 }
@@ -316,13 +311,33 @@ func convertJsonnetToYamlByFilepath(path string, srcYamlByte []byte) ([]byte, er
 	return yml, nil
 }
 
+// Decode decodes a list of objects in byte array format
+func Decode(in []byte) ([]*unstructured.Unstructured, error) {
+	decoder := k8syaml.NewYAMLOrJSONDecoder(bytes.NewReader(in), 1024)
+	objs := []*unstructured.Unstructured{}
+
+	var err error
+	for {
+		var out unstructured.Unstructured
+		err = decoder.Decode(&out)
+		if err != nil {
+			break
+		}
+		objs = append(objs, &out)
+	}
+	if err != io.EOF {
+		return nil, err
+	}
+	return objs, nil
+}
+
 func checkGVKN(srcJson, patchJson []byte) (bool, error) {
-	src, err := kutil.Decode(srcJson)
+	src, err := Decode(srcJson)
 	if err != nil {
 		return false, errors.WithStack(err)
 	}
 
-	patch, err := kutil.Decode(patchJson)
+	patch, err := Decode(patchJson)
 	if err != nil {
 		return false, errors.WithStack(err)
 	}

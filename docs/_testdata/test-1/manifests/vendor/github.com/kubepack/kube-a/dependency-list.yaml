@@ -1,0 +1,3 @@
+items:
+- package: github.com/kubepack/kube-b
+  branch: test-1
