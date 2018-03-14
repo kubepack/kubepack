@@ -14,22 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package types
+package transformers
 
-import (
-	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	"k8s.io/apimachinery/pkg/runtime/schema"
-)
+import "k8s.io/kubectl/pkg/kinflate/types"
 
-// GroupVersionKindName contains GroupVersionKind and original name of the resource.
-type GroupVersionKindName struct {
-	// GroupVersionKind of the resource.
-	GVK schema.GroupVersionKind
-	// original name of the resource before transformation.
-	Name string
+// noOpTransformer contains a no-op transformer.
+type noOpTransformer struct{}
+
+var _ Transformer = &noOpTransformer{}
+
+// NewNoOpTransformer constructs a noOpTransformer.
+func NewNoOpTransformer() Transformer {
+	return &noOpTransformer{}
 }
 
-// KObject is a map from GroupVersionKindName to unstructured objects
-type KObject map[GroupVersionKindName]*unstructured.Unstructured
-
-type ResourceCollection KObject
+// Transform does nothing.
+func (o *noOpTransformer) Transform(_ types.KObject) error {
+	return nil
+}

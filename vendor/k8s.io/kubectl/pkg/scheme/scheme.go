@@ -1,5 +1,5 @@
 /*
-Copyright 2018 The Kubernetes Authors.
+Copyright 2017 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,22 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package types
+package scheme
 
 import (
-	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/client-go/kubernetes/scheme"
 )
 
-// GroupVersionKindName contains GroupVersionKind and original name of the resource.
-type GroupVersionKindName struct {
-	// GroupVersionKind of the resource.
-	GVK schema.GroupVersionKind
-	// original name of the resource before transformation.
-	Name string
+// Scheme is the default instance of runtime.Scheme to which types in the Kubernetes API are already registered.
+var Scheme = runtime.NewScheme()
+
+func init() {
+	// Register external types for Scheme
+	v1.AddToGroupVersion(Scheme, schema.GroupVersion{Version: "v1"})
+	scheme.AddToScheme(Scheme)
 }
-
-// KObject is a map from GroupVersionKindName to unstructured objects
-type KObject map[GroupVersionKindName]*unstructured.Unstructured
-
-type ResourceCollection KObject

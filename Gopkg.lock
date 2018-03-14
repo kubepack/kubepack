@@ -58,6 +58,7 @@
   revision = "de5bf2ad457846296e2031421a34e2568e304e35"
 
 [[projects]]
+  branch = "master"
   name = "github.com/appscode/go"
   packages = [
     "analytics",
@@ -73,7 +74,7 @@
     "types",
     "version"
   ]
-  revision = "c312c0a1fe0d4988480073287b8633fc5a244647"
+  revision = "f8f2e1c7d2d10789cdd0540468b487d14421dbf9"
 
 [[projects]]
   branch = "master"
@@ -82,7 +83,7 @@
     "tools/certstore",
     "tools/plugin_installer"
   ]
-  revision = "036e6c1d6a6278b51e3a653cc4d8f881f3c80528"
+  revision = "985c87c4359c8372b334e9d5697425b3b13ce84c"
 
 [[projects]]
   branch = "master"
@@ -128,8 +129,8 @@
     "service/kms",
     "service/sts"
   ]
-  revision = "1f8fb9d0919e5a58992207db9512a03f76ab0274"
-  version = "v1.13.12"
+  revision = "4c9c8e98642a1a5e7c27d7a644cf9140809d49ee"
+  version = "v1.13.13"
 
 [[projects]]
   branch = "master"
@@ -356,10 +357,10 @@
   revision = "24818f796faf91cd76ec7bddd72458fbced7a6c1"
 
 [[projects]]
+  branch = "master"
   name = "github.com/google/uuid"
   packages = ["."]
-  revision = "064e2069ce9c359c118179501254f67d7d37ba24"
-  version = "0.2"
+  revision = "dec09d789f3dba190787f8b4454c7d3c936fed9e"
 
 [[projects]]
   name = "github.com/googleapis/gnostic"
@@ -383,7 +384,7 @@
     "openstack/utils",
     "pagination"
   ]
-  revision = "d2fe5bf4e65410df3bcca179f80aa84a3fc7fb98"
+  revision = "bc0882a09253c768051d9201257640794415c5a9"
 
 [[projects]]
   branch = "master"
@@ -636,7 +637,7 @@
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["ssh/terminal"]
-  revision = "182114d582623c1caa54f73de9c7224e23a48487"
+  revision = "c4a91bd4f524f10d064139674cf55852e055ad01"
 
 [[projects]]
   branch = "master"
@@ -649,7 +650,7 @@
     "idna",
     "lex/httplex"
   ]
-  revision = "803fdb99c0f72e493c28ef2099d250a9c989d8ff"
+  revision = "892bf7b0c6e2f93b51166bf3882e50277fa5afc6"
 
 [[projects]]
   branch = "master"
@@ -1035,18 +1036,27 @@
   revision = "50ae88d24ede7b8bad68e23c805b5d3da5c8abaf"
 
 [[projects]]
-  branch = "master"
+  branch = "up-kin"
   name = "k8s.io/kubectl"
   packages = [
     "pkg/apis/manifest/v1alpha1",
+    "pkg/kinflate/app",
+    "pkg/kinflate/commands",
+    "pkg/kinflate/configmapandsecret",
     "pkg/kinflate/configmapandsecret/util",
+    "pkg/kinflate/constants",
+    "pkg/kinflate/hash",
+    "pkg/kinflate/internal/error",
     "pkg/kinflate/resource",
+    "pkg/kinflate/transformers",
     "pkg/kinflate/types",
     "pkg/kinflate/util",
     "pkg/kinflate/util/fs",
-    "pkg/loader"
+    "pkg/loader",
+    "pkg/scheme"
   ]
-  revision = "4914f7f6625ab2170ac154341d4eb0c35bad3590"
+  revision = "b81d5be9aae2f3c96548e275412a604721fcba3c"
+  source = "https://github.com/kubepack/kubectl.git"
 
 [[projects]]
   name = "k8s.io/kubernetes"
@@ -1233,6 +1243,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "b3694269572ec009b539065ef4f97045089ccdab1d5427c925a228a3eb6a3406"
+  inputs-digest = "f27c609c830506344fc04c6c2aab2c7ae4e50933c421dd0fbd2abf6a8c40d45f"
   solver-name = "gps-cdcl"
   solver-version = 1

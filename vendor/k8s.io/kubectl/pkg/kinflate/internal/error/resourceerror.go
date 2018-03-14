@@ -14,22 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package types
+package error
 
-import (
-	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	"k8s.io/apimachinery/pkg/runtime/schema"
-)
+import "fmt"
 
-// GroupVersionKindName contains GroupVersionKind and original name of the resource.
-type GroupVersionKindName struct {
-	// GroupVersionKind of the resource.
-	GVK schema.GroupVersionKind
-	// original name of the resource before transformation.
-	Name string
+// First pass to encapsulate fields for more informative error messages.
+type ResourceError struct {
+	ManifestFilepath string
+	ResourceFilepath string
+	ErrorMsg         string
 }
 
-// KObject is a map from GroupVersionKindName to unstructured objects
-type KObject map[GroupVersionKindName]*unstructured.Unstructured
-
-type ResourceCollection KObject
+func (e ResourceError) Error() string {
+	return fmt.Sprintf("Manifest file [%s] encounters a resource error for [%s]: %s\n", e.ManifestFilepath, e.ResourceFilepath, e.ErrorMsg)
+}

@@ -46,6 +46,11 @@
   branch = "dep-bypass"
 
 [[constraint]]
+  name = "k8s.io/kubectl"
+  source = "https://github.com/kubepack/kubectl.git"
+  branch = "up-kin"
+
+[[constraint]]
   branch = "master"
   name = "github.com/golang/glog"
 
@@ -135,10 +140,6 @@
 [[override]]
   branch = "master"
   name = "github.com/shurcooL/sanitized_anchor_name"
-
-[[override]]
-  revision = "c312c0a1fe0d4988480073287b8633fc5a244647"
-  name = "github.com/appscode/go"
 
 [prune]
   unused-packages = true

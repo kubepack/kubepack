@@ -70,7 +70,7 @@ func createSecretKey(wd string, command string) ([]byte, error) {
 
 // NewFromSecretGenerators takes a SecretGenerator slice and executes its command in directory p
 // then writes the output to a Resource slice and return it.
-func NewFromSecretGenerators(p string, secretList []manifest.SecretGenerator) (ResourceCollection, error) {
+func NewFromSecretGenerators(p string, secretList []manifest.SecretGenerator) ([]*Resource, error) {
 	allResources := []*Resource{}
 	for _, secret := range secretList {
 		res, err := newFromSecretGenerator(p, secret)
@@ -79,5 +79,5 @@ func NewFromSecretGenerators(p string, secretList []manifest.SecretGenerator) (R
 		}
 		allResources = append(allResources, res)
 	}
-	return resourceCollectionFromResources(allResources)
+	return allResources, nil
 }

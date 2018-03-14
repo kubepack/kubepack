@@ -17,8 +17,10 @@ limitations under the License.
 package types
 
 import (
+	"fmt"
 	"strings"
 
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 )
 
@@ -56,4 +58,16 @@ func SelectByGVK(in schema.GroupVersionKind, selector *schema.GroupVersionKind) 
 		}
 	}
 	return true
+}
+
+// Merge will merge all the entries in m2 to m1.
+func Merge(m1, m2 map[GroupVersionKindName]*unstructured.Unstructured,
+) error {
+	for gvkn, obj := range m2 {
+		if _, found := m1[gvkn]; found {
+			return fmt.Errorf("there is already an entry: %q", gvkn)
+		}
+		m1[gvkn] = obj
+	}
+	return nil
 }
