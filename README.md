@@ -4,8 +4,6 @@
 [![Slack](http://slack.kubernetes.io/badge.svg)](http://slack.kubernetes.io)
 [![Twitter](https://img.shields.io/twitter/follow/kubepack.svg?style=social&logo=twitter&label=Follow)](https://twitter.com/intent/follow?screen_name=kubepack)
 
-[Website](https://kubepack.com) • [Slack](http://slack.kubernetes.io) • [Twitter](https://twitter.com/Kubepack)
-
 # Kubepack
 Kubepack by AppsCode is a  Secure Lightweight Kubernetes Package Manager.
 
