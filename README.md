@@ -1,9 +1,8 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/kubepack/pack)](https://goreportcard.com/report/github.com/kubepack/pack)
 [![Build Status](https://travis-ci.org/kubepack/pack.svg?branch=master)](https://travis-ci.org/kubepack/pack)
 [![codecov](https://codecov.io/gh/kubepack/pack/branch/master/graph/badge.svg)](https://codecov.io/gh/kubepack/pack)
-[![Docker Pulls](https://img.shields.io/docker/pulls/kubepack/pack.svg)](https://hub.docker.com/r/kubepack/pack/)
-[![Slack](https://slack.appscode.com/badge.svg)](https://slack.appscode.com)
-[![Twitter](https://img.shields.io/twitter/follow/appscodehq.svg?style=social&logo=twitter&label=Follow)](https://twitter.com/intent/follow?screen_name=AppsCodeHQ)
+[![Slack](http://slack.kubernetes.io/badge.svg)](http://slack.kubernetes.io)
+[![Twitter](https://img.shields.io/twitter/follow/kubepack.svg?style=social&logo=twitter&label=Follow)](https://twitter.com/intent/follow?screen_name=kubepack)
 
 [Website](https://kubepack.com) • [Slack](http://slack.kubernetes.io) • [Twitter](https://twitter.com/Kubepack)
 
