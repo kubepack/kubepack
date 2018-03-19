@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    git-commit-hash: 1864889c0748d8a79ea40c7d2406128a9646b19c
+  name: foocorp
+  namespace: default
+spec:
+  selector:
+    serviceName: foocorp2

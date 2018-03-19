@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    git-commit-hash: 1864889c0748d8a79ea40c7d2406128a9646b19c
+  labels:
+    app: kubed
+  name: kubed-operator
+  namespace: kube-system
+spec:
+  ports:
+  - name: api
+    port: 8080
+    targetPort: api
+  - name: web
+    port: 56790
+    targetPort: web
+  selector:
+    app: kubed

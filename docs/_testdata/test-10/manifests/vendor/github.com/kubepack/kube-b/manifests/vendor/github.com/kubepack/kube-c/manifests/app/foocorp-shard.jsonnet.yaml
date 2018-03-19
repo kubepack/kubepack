@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: foocorp
+  namespace: default
+spec:
+  selector:
+    serviceName: foocorp
