@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   annotations:
-    git-commit-hash: 47a3d5bb07c9c7968518ae35210ea45256ae74c7
+    git-commit-hash: 1864889c0748d8a79ea40c7d2406128a9646b19c
     volume.beta.kubernetes.io/storage-class: slow
   name: pv0003
 spec:

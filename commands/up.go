@@ -59,7 +59,7 @@ func NewUpCommand(plugin bool) *cobra.Command {
 			}
 			patchFiles = make(map[string]string)
 			patchPath := filepath.Join(rootPath, api.ManifestDirectory, PatchFolder)
-			if _, err := os.Stat(patchPath); os.IsExist(err) {
+			if _, err := os.Stat(patchPath); !os.IsNotExist(err) {
 				err = filepath.Walk(patchPath, visitPatchFolder)
 				if err != nil {
 					log.Fatalln(errors.WithStack(err))
@@ -164,6 +164,22 @@ func visitPatchFolder(path string, fileInfo os.FileInfo, ferr error) error {
 	}
 	patchFiles[fileInfo.Name()] = path
 	return nil
+}
+
+func CompileWithpatchByPath(src, patch string) ([]byte, error) {
+	srcYml, err := ioutil.ReadFile(src)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	patchYml, err := ioutil.ReadFile(patch)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	compiledYml, err := CompileWithPatch(srcYml, patchYml)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	return compiledYml, nil
 }
 
 func CompileWithPatch(srcByte, patchByte []byte) ([]byte, error) {

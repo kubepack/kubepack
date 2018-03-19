@@ -282,6 +282,13 @@ func getRepositoryPath(path string) string {
 	return strings.Trim(spliFinal, "/")
 }
 
+func getPatchFileNameByPath(path string) (string, error) {
+	srcYml, err := ioutil.ReadFile(path)
+	if err != nil {
+		return "", errors.WithStack(err)
+	}
+	return getPatchFileName(srcYml)
+}
 func getPatchFileName(patch []byte) (string, error) {
 	patchStruct := &packapi.Dependency{}
 	err := yaml.Unmarshal(patch, patchStruct)

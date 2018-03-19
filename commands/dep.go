@@ -165,8 +165,11 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 		if err != nil {
 			return errors.WithStack(err)
 		}
-
 		err = filepath.Walk(filepath.Join(root, api.ManifestDirectory, _VendorFolder), findPatchFolder)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		err = filepath.Walk(filepath.Join(root, api.ManifestDirectory, _VendorFolder), visitVendorAndApplyPatch)
 		if err != nil {
 			return errors.WithStack(err)
 		}
@@ -383,6 +386,53 @@ func findImportInSlice(r string, repos []string) bool {
 		}
 	}
 	return false
+}
+
+func visitVendorAndApplyPatch(path string, fileInfo os.FileInfo, ferr error) error {
+	if ferr != nil {
+		return ferr
+	}
+	if strings.Contains(path, PatchFolder) {
+		return nil
+	}
+	if fileInfo.IsDir() {
+		return nil
+	}
+	if !strings.Contains(path, filepath.Join(api.ManifestDirectory, _VendorFolder)) {
+		return nil
+	}
+	if fileInfo.Name() == ".gitignore" || strings.HasSuffix(fileInfo.Name(), "jsonnet.TEMPLATE") {
+		return nil
+	}
+	repoName := strings.Split(path, filepath.Join(api.ManifestDirectory, _VendorFolder))[1]
+	repoName = strings.Split(repoName, api.ManifestDirectory)[0]
+	pkg := strings.Trim(repoName, "/")
+	if _, ok := depPatchFiles[pkg]; !ok {
+		return nil
+	}
+	patches := depPatchFiles[pkg]
+	for _, val := range patches {
+		patchFile, err := os.Stat(val)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		patchName, err := getPatchFileNameByPath(path)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		if patchFile.Name() == patchName {
+			destpath := strings.Split(path, filepath.Join(pkg, api.ManifestDirectory, _VendorFolder))
+			if err != nil {
+				return errors.WithStack(err)
+			}
+			mergedYml, err := CompileWithpatchByPath(filepath.Join(destpath...), val)
+			err = WriteCompiledFileToDest(filepath.Join(destpath...), mergedYml)
+			if err != nil {
+				return errors.WithStack(err)
+			}
+		}
+	}
+	return nil
 }
 
 type NaiveAnalyzer struct {
