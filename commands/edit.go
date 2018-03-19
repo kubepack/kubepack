@@ -174,10 +174,6 @@ func GetPatch(src, dst []byte, cmd *cobra.Command, plugin bool) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	err = appendPatchToDependencies(filepath.Join(root, KinflateManifestName), patchFilePath)
-	if err != nil {
-		return errors.WithStack(err)
-	}
 
 	err = appendPatchToKubeManifests(filepath.Join(root, KinflateManifestName), patchFilePath)
 	if err != nil {
@@ -216,30 +212,6 @@ func NewDefaultEditor() editor.Editor {
 		Args:  []string{defaultEditor},
 		Shell: false,
 	}
-}
-
-func appendPatchToDependencies(manifestPath, patchPath string) error {
-	data, err := ioutil.ReadFile(manifestPath)
-	if err != nil {
-		return errors.WithStack(err)
-	}
-	manifest := kin_api.Manifest{}
-	err = yaml.Unmarshal(data, &manifest)
-	if err != nil {
-		return errors.WithStack(err)
-	}
-	if !isPathAlreadyExist(manifest.Patches, patchPath) {
-		manifest.Patches = append(manifest.Patches, patchPath)
-	}
-	data, err = yaml.Marshal(manifest)
-	if err != nil {
-		return errors.WithStack(err)
-	}
-	err = ioutil.WriteFile(manifestPath, data, 0755)
-	if err != nil {
-		return errors.WithStack(err)
-	}
-	return nil
 }
 
 func appendPatchToKubeManifests(manifestPath, patchPath string) error {

@@ -214,7 +214,7 @@ func findPatchFolder(path string, fileInfo os.FileInfo, ferr error) error {
 	splitVendor := strings.Split(path, _VendorFolder)
 	forkDir := strings.TrimPrefix(strings.Split(splitVendor[1], PatchFolder)[0], "/")
 
-	// e.g:  _vendor/github.com/kubepack/kube-a/patch/github.com/kubepack/kube-a/nginx-deployment.yaml
+	// e.g:  _vendor/github.com/kubepack/kube-a/patch/github.com/kubepack/kube-a/nginx-b.deployment.apps.yaml
 	// forkDir = github.com/kubepack/kube-a
 	// patchFilePath = github.com/kubepack/kube-a/<name>.<kind>.<group>.yaml
 
@@ -226,7 +226,7 @@ func findPatchFolder(path string, fileInfo os.FileInfo, ferr error) error {
 			return nil
 		}
 	}
-	pkg := strings.TrimSuffix(forkDir, manifestsPath)
+	pkg := filepath.Dir(patchFilePath)
 	if _, ok := packagePatches[pkg]; ok {
 		if !findImportInSlice(pkg, forkRepo) {
 			forkRepo = append(forkRepo, pkg)
@@ -401,9 +401,18 @@ func visitVendorAndApplyPatch(path string, fileInfo os.FileInfo, ferr error) err
 	if !strings.Contains(path, filepath.Join(api.ManifestDirectory, _VendorFolder)) {
 		return nil
 	}
+	if strings.Count(path, filepath.Join(api.ManifestDirectory, _VendorFolder)) > 1 {
+		return nil
+	}
 	if fileInfo.Name() == ".gitignore" || strings.HasSuffix(fileInfo.Name(), "jsonnet.TEMPLATE") {
 		return nil
 	}
+
+	// e.g. path: /home/tigerworks/go/src/github.com/kubepack/pack/docs/_testdata/test-2/manifests/vendor/github.com/kubepack/kube-c/manifests/app/nginx-deployment.yaml
+	// repoName := /github.com/kubepack/kube-c/manifests/app/nginx-deployment.yaml
+	// repoName = /github.com/kubepack/kube-c/
+	// pkg := github.com/kubepack/kube-c
+
 	repoName := strings.Split(path, filepath.Join(api.ManifestDirectory, _VendorFolder))[1]
 	repoName = strings.Split(repoName, api.ManifestDirectory)[0]
 	pkg := strings.Trim(repoName, "/")
@@ -421,12 +430,8 @@ func visitVendorAndApplyPatch(path string, fileInfo os.FileInfo, ferr error) err
 			return errors.WithStack(err)
 		}
 		if patchFile.Name() == patchName {
-			destpath := strings.Split(path, filepath.Join(pkg, api.ManifestDirectory, _VendorFolder))
-			if err != nil {
-				return errors.WithStack(err)
-			}
-			mergedYml, err := CompileWithpatchByPath(filepath.Join(destpath...), val)
-			err = WriteCompiledFileToDest(filepath.Join(destpath...), mergedYml)
+			mergedYml, err := CompileWithpatchByPath(path, val)
+			err = WriteCompiledFileToDest(path, mergedYml)
 			if err != nil {
 				return errors.WithStack(err)
 			}
