@@ -1,0 +1,9 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-c
+spec:
+  template:
+    metadata:
+      annotations:
+        app: nginx1

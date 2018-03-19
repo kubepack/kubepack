@@ -1,0 +1,41 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  creationTimestamp: 2017-09-20T06:38:18Z
+  labels:
+    app: kubedb
+  name: postgreses.kubedb.com
+  resourceVersion: "193"
+  selfLink: /apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/postgreses.kubedb.com
+  uid: 49ce4e1a-9dce-11e7-8b3f-08002709c846
+spec:
+  group: kubedb.com
+  names:
+    kind: Postgres
+    listKind: PostgresList
+    plural: postgreses
+    shortNames:
+    - pg
+    singular: postgres
+  scope: Namespaced
+  version: v1alpha1
+status:
+  acceptedNames:
+    kind: Postgres
+    listKind: PostgresList
+    plural: postgreses
+    shortNames:
+    - pg
+    singular: postgres
+  conditions:
+  - lastTransitionTime: null
+    message: no conflicts found
+    reason: NoConflicts
+    status: "True"
+    type: NamesAccepted
+  - lastTransitionTime: 2017-09-20T06:38:18Z
+    message: the initial names have been accepted
+    reason: InitialNamesAccepted
+    status: "True"
+    type: Established
+

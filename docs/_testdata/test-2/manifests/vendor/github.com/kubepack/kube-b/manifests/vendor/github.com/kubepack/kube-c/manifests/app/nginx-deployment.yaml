@@ -1,22 +1,22 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: nginx-b
+  name: nginx-c
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
-      annotations:
-        app: nginx
+      name: nginx
       labels:
         app: nginx
-      name: nginx
+      annotations:
+        app: nginx
     spec:
       containers:
-      - image: nginx
-        name: nginx
+      - name: nginx
+        image: nginx
         ports:
         - containerPort: 80
         resources:
           limits:
-            cpu: 10m
+            cpu: '10m'

@@ -1,22 +1,13 @@
 apiVersion: manifest.k8s.io/v1alpha1
 kind: Manifest
 metadata:
+  creationTimestamp: null
   name: helloworld
-description: helloworld does useful stuff.
 namePrefix: some-prefix
-# Labels to add to all objects and selectors.
-# These labels would also be used to form the selector for apply --prune
-# Named differently than “labels” to avoid confusion with metadata for this object
-objectLabels:
-  app: helloworld
 objectAnnotations:
   note: This is an example annotation
-# Add Resources to inflate below. List of directories/file-paths to add.
-resources: []
-#- service.yaml
-#- ../some-dir/
-# There could also be configmaps in Base, which would make these overlays
-configmaps: []
-# There could be secrets in Base, if just using a fork/rebase workflow
-secrets: []
-recursive: true
+objectLabels:
+  app: helloworld
+patches:
+- /home/tigerworks/go/src/github.com/kubepack/pack/docs/_testdata/test-1/manifests/patch/github.com/kubepack/kube-a/nginx-a.deployment.apps.yaml
+- /home/tigerworks/go/src/github.com/kubepack/pack/docs/_testdata/test-1/manifests/patch/github.com/kubepack/kube-b/nginx-b.deployment.apps.yaml
