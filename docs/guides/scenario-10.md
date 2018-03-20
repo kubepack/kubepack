@@ -18,7 +18,7 @@ section_menu_id: guides
 ***
 
 This section explain how `jsonnet` appears *Pack*,
-more complex situation than [scenario-9](./snenario-9.md)
+more complex situation than [scenario-9](scenario-9.md)
 
 ![alt text](/docs/_testdata/test-10/test-10.jpg)
 
@@ -31,16 +31,12 @@ Above diagram shows the dependency chain. Here,
  This yaml is generated from jsonnet file.
  - `kube-c` depend on nothing.
 
-See `manifest.yaml` file below:
+See `dependency-list.yaml` file below:
 
 ```console
-    $ cat manifest.yaml
+    $ cat dependency-list.yaml
 
-    package: github.com/kubepack/pack/_testdata/test-10
-    owners:
-    - name: Appscode
-      email: team@appscode.com
-    dependencies:
+    items:
     - package: github.com/kubepack/kube-a
       branch: test-10
 
@@ -48,7 +44,7 @@ See `manifest.yaml` file below:
 
 #### Get Dependencies
 
-`$ kubectl plugin pack dep` command gets all the dependencies and place it under `manifests/vendor` folder.
+`$ pack dep -f .` command gets all the dependencies and place it under `manifests/vendor` folder.
  In this scenario, following things happen:
 
   - `kube-b` repository contains patch of jsonnet file's yaml,
@@ -58,7 +54,7 @@ See `manifest.yaml` file below:
   In `manifests/vendor` folder, this `jsonnet` file will be converted into yaml file.
 
 
-Now, `$ kubectl plugin pack up` command will generate the final output in `manifests/output` folder.
+Now, `$ pack up -f .` command will generate the final output in `manifests/output` folder.
 
 ```console
     $ tree manifests/output/
@@ -92,5 +88,5 @@ Now, `$ kubectl plugin pack up` command will generate the final output in `manif
 
 - Want to publish apps using Kubepack? Please visit [here](/docs/concepts/how/publisher.md).
 - Want to consume apps published using Kubepack? Please visit [here](/docs/concepts/how/user.md).
-- To learn about `manifest.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
+- To learn about `dependency-list.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
 - Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).

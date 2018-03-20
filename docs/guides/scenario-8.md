@@ -21,9 +21,9 @@ section_menu_id: guides
 In this scenario, we'll do following things.
 
 1. Create a git repository.
-   - This repository requires [test-kubed](https://github.com/kubepack/test-kubed) through `manifest.yaml` file.
-   - Run `$ kubectl plugin pack dep` to get the dependencies and `$ kubectl plugin pack edit -s <filepath>` to make desired changes.
-   - Then, run `$ kubectl plugin pack up` to final version under `manifests/output` folder.
+   - This repository requires [test-kubed](https://github.com/kubepack/test-kubed) through `dependency-list.yaml` file.
+   - Run `$ pack dep -f .` to get the dependencies and `$ pack edit -f . -p <filepath>` to make desired changes.
+   - Then, run `$ pack up -f .` to final version under `manifests/output` folder.
    - Last, commit our changes to git repository.
 
 2.  Now, I write a pod yaml, you can see it [here](https://raw.githubusercontent.com/kubepack/kubepack/master/docs/_testdata/test-8/pod.yaml).
@@ -34,23 +34,19 @@ In this pod, our above git repository mounted as volume path. Image [a8uhnf/git-
 
 First, create a git repository
 
-Create a `manifest.yaml` file in your git repository. Your `manifest.yaml` file will look like below.
+Create a `dependency-list.yaml` file in your git repository. Your `dependency-list.yaml` file will look like below.
 
 ```console
-    $ cat manifest.yaml
+    $ cat dependency-list.yaml
 
-package: YOUR_REPO_LOCATION # github.com/packsh/tasty-kube
-owners:
-- name: # Appscode
-  email: # team@appscode.com
-dependencies:
+items:
  - package: github.com/kubepack/test-kubed
    branch: master
 ```
 
 It depends on [test-kubed](https://github.com/kubepack/test-kubed)'s master branch.
 
-Now, run `$ kubectl plugin pack dep`. This command will get all the dependencies and place under `manifests/vendor` folder.
+Now, run `$ pack dep -f .`. This command will get all the dependencies and place under `manifests/vendor` folder.
 
 ```console
     $ tree manifests/vendor/
@@ -59,12 +55,12 @@ Now, run `$ kubectl plugin pack dep`. This command will get all the dependencies
     └── github.com
         └── kubepack
             └── test-kubed
-                ├── manifests
-                │   └── app
-                │       ├── deployment.yaml
-                │       ├── kubed-config.yaml
-                │       └── service.yaml
-                └── manifest.yaml
+                ├── dependency-list.yaml
+                └── manifests
+                    └── app
+                        ├── deployment.yaml
+                        ├── kubed-config.yaml
+                        └── service.yaml
     
     5 directories, 4 files
 ```
@@ -76,7 +72,7 @@ Now, suppose you want to edit `deployment.yaml` file and make the replicas from 
 
 Below command will open the `deployment.yaml` file in editor. Then made the changes.
 ```console
-    $ kubectl plugin pack edit -s manifests/vendor/github.com/kubepack/test-kubed/manifests/app/deployment.yaml
+    $ pack edit -f . -p manifests/vendor/github.com/kubepack/test-kubed/manifests/app/deployment.yaml
 ```
 
 This command will generate a patch file under `manifests/patch` folder.
@@ -88,15 +84,13 @@ This command will generate a patch file under `manifests/patch` folder.
     └── github.com
         └── kubepack
             └── test-kubed
-                └── manifests
-                    └── app
-                        └── deployment.yaml
+                └── kubed-operator.deployment.extensions.yaml
     
-    5 directories, 1 file
+    3 directories, 1 file
 ```
 
 
-Then, run `$ kubectl plugin pack up`, which will combine original and patch file and place under `manifests/output` folder.
+Then, run `$ pack up -f .`, which will combine original and patch file and place under `manifests/output` folder.
 
 ```console
     $ tree manifests/output/
@@ -105,11 +99,13 @@ Then, run `$ kubectl plugin pack up`, which will combine original and patch file
     └── github.com
         └── kubepack
             └── test-kubed
-                ├── deployment.yaml
-                ├── kubed-config.yaml
-                └── service.yaml
-
-    3 directories, 3 files
+                └── manifests
+                    └── app
+                        ├── deployment.yaml
+                        ├── kubed-config.yaml
+                        └── service.yaml
+    
+    5 directories, 3 files
 ```
 
 Now, last step, commit the whole thing and push it git repository.
@@ -156,5 +152,5 @@ Now, you can see the all the desired kubernetes object in your cluster.
 
 - Want to publish apps using Kubepack? Please visit [here](/docs/concepts/how/publisher.md).
 - Want to consume apps published using Kubepack? Please visit [here](/docs/concepts/how/user.md).
-- To learn about `manifest.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
+- To learn about `dependency-list.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
 - Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).

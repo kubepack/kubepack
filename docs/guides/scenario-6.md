@@ -19,16 +19,12 @@ section_menu_id: guides
 
 This section explain [test-6](https://github.com/kubepack/pack/tree/master/docs/_testdata/test-6).
 
-If you look into this test's `manifest.yaml` file.
+If you look into this test's `dependency-list.yaml` file.
 
 ```console
-$ cat manifest.yaml
+$ cat dependency-list.yaml
 
-package: github.com/kubepack/pack/docs/_testdata/test-6
-owners:
-- name: Appscode
-  email: team@appscode.com
-dependencies:
+items:
 - package: github.com/kubepack/kube-a
   branch: test-6
   fork: https://github.com/kubepack/kube-d.git
@@ -50,12 +46,12 @@ Explanation of image:
   - fork `kube-d` of `kube-a` repo.
   - fork `kube-c` of `kube-b` repo.
 
-Now, `$ kubectl plugin pack dep` command get the dependencies and place under `manifests/vendor` folder. `pack` pulls `kube-a` from fork `kube-d` and `kube-b` from fork `kube-c`.
+Now, `$ pack dep -f .` command get the dependencies and place under `manifests/vendor` folder. `pack` pulls `kube-a` from fork `kube-d` and `kube-b` from fork `kube-c`.
 
 
 ## Next Steps
 
 - Want to publish apps using Kubepack? Please visit [here](/docs/concepts/how/publisher.md).
 - Want to consume apps published using Kubepack? Please visit [here](/docs/concepts/how/user.md).
-- To learn about `manifest.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
+- To learn about `dependency-list.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
 - Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).

@@ -9,5 +9,4 @@ objectAnnotations:
 objectLabels:
   app: helloworld
 patches:
-- /home/tigerworks/go/src/github.com/kubepack/pack/docs/_testdata/test-1/manifests/patch/github.com/kubepack/kube-a/nginx-a.deployment.apps.yaml
-- /home/tigerworks/go/src/github.com/kubepack/pack/docs/_testdata/test-1/manifests/patch/github.com/kubepack/kube-b/nginx-b.deployment.apps.yaml
+- manifests/patch/github.com/kubepack/kube-b/nginx-b.deployment.apps.yaml

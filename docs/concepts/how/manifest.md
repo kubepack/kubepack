@@ -14,23 +14,19 @@ section_menu_id: concepts
 
 # Kubepack Manifest
 
-### manifest.yaml
+### dependency-list.yaml
 
-`manifest.yaml` is metadata file for pack like [dep](https://github.com/golang/dep)'s Gopkg.toml and [glide](https://github.com/Masterminds/glide)'s glide.yaml.
+`dependency-list.yaml` is metadata file for pack like [dep](https://github.com/golang/dep)'s Gopkg.toml and [glide](https://github.com/Masterminds/glide)'s glide.yaml.
 
- The `manifest.yaml` contains below element:
+ The `dependency-list.yaml` contains below element:
 
  1. It names the current package.
  2. It declares the external dependencies
 
- A brief `manifest.yaml` file looks like this:
+ A brief `dependency-list.yaml` file looks like this:
 
  ```yaml
-package: github.com/kubepack/pack
-owners:
-- name: AppsCode
-  email: team@appscode.com
-dependencies:
+items:
 - package: github.com/kubepack/kube-a
 - package: github.com/kubepack/kube-b
   version: ^1.2.0
@@ -50,3 +46,11 @@ dependencies:
     - branch: A git repository branch name.
     - fork: If the package name isn't the repo location or this is a private repository it can go here. The package will be checked out from the repo and put where the package name specifies. This allows using forks.
     - revision: A commit hash number of the package.
+
+## Next Steps
+
+- Want to consume apps published using Kubepack? Please visit [here](/docs/concepts/how/user.md).
+- Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).
+- Learn more about **Pack** jsonnet-support [here](/docs/concepts/how/jsonnet-support.md).
+- Learn more about **Pack** validation [here](/docs/concepts/how/validation.md).
+

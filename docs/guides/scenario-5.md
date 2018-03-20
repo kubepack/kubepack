@@ -19,16 +19,12 @@ section_menu_id: guides
 
 This section explain [test-5](https://github.com/kubepack/pack/tree/master/docs/_testdata/test-5).
 
-If you look into this test's `manifest.yaml` file.
+If you look into this test's `dependency-list.yaml` file.
 
 ```console
-$ cat manifest.yaml
+$ cat dependency-list.yaml
 
-package: github.com/kubepack/pack/docs/_testdata/test-5
-owners:
-- name: Appscode
-  email: team@appscode.com
-dependencies:
+items:
 - package: github.com/kubepack/kube-a
   branch: test-5
 - package: github.com/kubepack/kube-b
@@ -52,19 +48,33 @@ You can see the both patch below
 ```console
 # kube-a contains this patch of kube-c
 
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-c
 spec:
-  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx1
+
 ```
 
 ```console
 # kube-b contains this patch of kube-c
 
-apiVersion: apps/v1beta2
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-c
+spec:
+  replicas: 2
+
 ```
 
-When run `kubectl plugin pack dep` command, following things happen.
+When run `pack dep -f .` command, following things happen.
 
-1. Get all the dependencies, reading `manifest.yaml` file.
+1. Get all the dependencies, reading `dependency-list.yaml` file.
 2. As, `kube-a` and `kube-b` both contains patch of repository `kube-c`,
 `kube-c` in `manifests/vendor` folder is combination of both patches and original file.
 
@@ -73,5 +83,5 @@ When run `kubectl plugin pack dep` command, following things happen.
 
 - Want to publish apps using Kubepack? Please visit [here](/docs/concepts/how/publisher.md).
 - Want to consume apps published using Kubepack? Please visit [here](/docs/concepts/how/user.md).
-- To learn about `manifest.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
+- To learn about `dependency-list.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
 - Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).

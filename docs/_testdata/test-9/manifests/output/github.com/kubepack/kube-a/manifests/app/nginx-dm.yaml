@@ -1,18 +1,17 @@
-apiVersion: apps/v1beta1
-kind: Deployment
+apiVersion: extensions/v1beta1
+kind: DaemonSet
 metadata:
   annotations:
-    git-commit-hash: 753ccba353db842e75efaa752b863edbaa2b10fb
-  name: nginx-b
+    git-commit-hash: db8d579a4a359d47d3126d45e4b0b6157806871f
+  labels:
+    app: nginx-dm
+  name: nginx-dm
+  namespace: default
 spec:
-  replicas: 1
   template:
     metadata:
-      annotations:
-        app: nginx
       labels:
-        app: nginx
-      name: nginx
+        name: busy-dm
     spec:
       containers:
       - image: nginx

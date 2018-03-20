@@ -17,16 +17,16 @@ section_menu_id: concepts
 ### How to Get Dependencies
 
 ```console
-$ kubectl plugin pack dep
+$ pack dep -f .
 ```
-command will get dependencies defined under `dependencies` field in `manifest.yaml` file. You can get specific version, branch or revision.
-See tutorial of [manifest.yaml](/docs/guides/manifest.md). All the dependencies will appear in `manifests/vendor` folder.
+command will get dependencies defined under `items` field in `dependency-list.yaml` file. You can get specific version, branch or revision.
+See tutorial of [dependency-list.yaml](/docs/guides/manifest.md). All the dependencies will appear in `manifests/vendor` folder.
 You can get verbose output with `--v=10` or `-v 10` flag.
 
 ### Edit File from manifests/vendor Folder
 
 ```console
-$ kubectl plugin pack edit -s <filepath>
+$ pack edit -p <filepath>
 ```
 
 command edit file, exists in `manifests/vendor` folder and generate patch in `manifests/patch` folder.
@@ -37,7 +37,7 @@ This patch file-path will be same as `manifests/vendor` folder.
 ### Combine manifests/vendor and manifests/patch files
 
 ```console
-$ kubectl plugin pack up
+$ pack up -f .
 ```
 
 command combine files from `manifests/patch` and `manifests/vendor` folder. This combination of `manifests/patch` and `manifests/vendor` files appear in `manifests/output` folder.
@@ -45,8 +45,16 @@ command combine files from `manifests/patch` and `manifests/vendor` folder. This
 ### Validate manifests/output folder
 
 ```console
-$ kubectl plugin pack validate
+$ pack validate -f .
 ```
 
 This command will validate the `manifests/output` folder yaml files using `openapi-spec`.
 If some file is not a valid yaml then throws errors. `--kube-version` flag is used specify kubernetes version, which you want to validate against.
+
+
+## Next Steps
+
+- Want to consume apps published using Kubepack? Please visit [here](/docs/concepts/how/user.md).
+- To learn about `dependency-list.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
+- Learn more about **Pack** jsonnet-support [here](/docs/concepts/how/jsonnet-support.md).
+- Learn more about **Pack** validation [here](/docs/concepts/how/validation.md).

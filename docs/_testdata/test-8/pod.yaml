@@ -14,6 +14,6 @@ spec:
   volumes:
   - gitRepo:
       repository: https://github.com/kubepack/kube-a.git
-      revision: 86d736d57f0c936dd8bcd63471c6c631aceb3b95
+      revision: b4174d78bc6f39bf68dd63a39de23366c3903b44
     name: git-volume
 status: {}

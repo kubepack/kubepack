@@ -102,6 +102,9 @@ func RunEdit(cmd *cobra.Command, plugin bool) error {
 		return errors.WithStack(err)
 	}
 
+	if string(srcJson)== string(dstJson) {
+		return errors.Errorf("No edit has been made")
+	}
 	return GetPatch(srcJson, dstJson, cmd, plugin)
 }
 

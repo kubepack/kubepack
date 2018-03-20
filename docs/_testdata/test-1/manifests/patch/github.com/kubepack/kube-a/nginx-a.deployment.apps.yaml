@@ -1,6 +1,0 @@
-apiVersion: apps/v1beta1
-kind: Deployment
-metadata:
-  name: nginx-a
-spec:
-  replicas: 2

@@ -19,16 +19,12 @@ section_menu_id: guides
 
 This section explain, how `jsonnet` appears in Pack.
 
-If you look into `manifest.yaml` file:
+If you look into `dependency-list.yaml` file:
 
 ```console
-    $ cat manifest.yaml
+    $ cat dependency-list.yaml
     
-    package: github.com/kubepack/pack/_testdata/test-9
-    owners:
-    - name: Appscode
-      email: team@appscode.com
-    dependencies:
+    items:
     - package: github.com/kubepack/kube-a
       branch: test-9
 
@@ -38,10 +34,10 @@ In branch `test-9` of [kube-a](https://github.com/kubepack/kube-a) contains a js
 
 ![alt text](/docs/_testdata/test-9/test-9.jpg)
 
-When execute `$ kubectl plugin pack dep` to get the dependencies, it'll get all the dependencies and 
+When execute `$ pack dep -f .` to get the dependencies, it'll get all the dependencies and 
 convert `jsonnet` file into yaml file.
 
-If you see, jsonnet file of [kube-a](https://github.com/kubepack/kube-a/blob/test-9/foocorp-shard.jsonnet), 
+If you see, jsonnet file of [kube-a](https://github.com/kubepack/kube-a/blob/test-9/manifests/app/foocorp-shard.jsonnet), 
 will see as below
 
 ```json
@@ -53,7 +49,7 @@ will see as below
     }
 ```
 
-After `$ kubectl plugin pack dep`, if you checkout `manifests/vendor`'s `foocorp-shard.jsonnet` file,
+After `$ pack dep -f .`, if you checkout `manifests/vendor`'s `foocorp-shard.jsonnet` file,
  you'll see as below
  
  ```console
@@ -69,7 +65,7 @@ After `$ kubectl plugin pack dep`, if you checkout `manifests/vendor`'s `foocorp
         serviceName: foocorp
  ```
 
-Now, `$ kubectl plugin pack up` will generate final outcome in `manifests/output` folder.
+Now, `$ pack up -f .` will generate final outcome in `manifests/output` folder.
 
 ```console
     $ tree manifests/output/
@@ -93,6 +89,6 @@ Now, `$ kubectl plugin pack up` will generate final outcome in `manifests/output
 
 - Want to publish apps using Kubepack? Please visit [here](/docs/concepts/how/publisher.md).
 - Want to consume apps published using Kubepack? Please visit [here](/docs/concepts/how/user.md).
-- To learn about `manifest.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
+- To learn about `dependency-list.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
 - Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).
 
