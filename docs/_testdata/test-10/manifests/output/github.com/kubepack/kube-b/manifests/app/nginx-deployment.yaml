@@ -2,7 +2,7 @@ apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   annotations:
-    git-commit-hash: b95463eed1cac9ceb2e1ccccd0a6a32bdac13275
+    git-commit-hash: 8039665219e8186fb30aff6f82e2f8cdf9bad4f6
   name: nginx
 spec:
   replicas: 1

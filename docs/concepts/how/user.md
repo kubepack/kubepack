@@ -19,12 +19,12 @@ section_menu_id: concepts
 If you want to use others application with pack, then follow below instruction:
 
 1. Create a git repository.
-2. Create manifest.yaml file in the repository. See [manifest.yaml](/docs/concepts/how/manifest.md) doc.
-3. Add all the dependencies under `dependencies` in manifest.yaml file.
-4. Run `kubectl plugin pack dep -v 10` to get all the dependencies in `manifests/vendor` folder.
-5. Run `kubectl plugin pack edit -s <filepath>`, if you want to change some file from `manifests/vendor` folder.
+2. Create dependency-list.yaml file in the repository. See [dependency-list.yaml](/docs/concepts/how/manifest.md) doc.
+3. Add all the dependencies under `dependencies` in dependency-list.yaml file.
+4. Run `pack dep -f . -v 10` to get all the dependencies in `manifests/vendor` folder.
+5. Run `pack edit -f . -p <filepath>`, if you want to change some file from `manifests/vendor` folder.
 This command will generate a patch under `manifests/patch` folder. `manifests/vendor` will be unchanged.
-6. Run `kubectl plugin pack up` to combine `manifests/patch` and `manifests/vendor` folder files.
+6. Run `pack up -f .` to combine `manifests/patch` and `manifests/vendor` folder files.
 And final combination will be under `manifests/output` folder.
 7. Now, all is need to do `kubectl apply -R -f manifests/output/`.
  Then, your desired application will be deployed in kubernetes cluster.
@@ -34,27 +34,24 @@ And final combination will be under `manifests/output` folder.
 In this example, you'll see how to deploy [AppsCode kubed](https://github.com/appscode/kubed)
  in minikube using `Pack`.
 
-In this example, we're using [this](https://github.com/kubepack/pack/tree/master/docs/_testdata/test-7/manifest.yaml) test-case.
+In this example, we're using [this](https://github.com/kubepack/pack/tree/master/docs/_testdata/test-7/dependency-list.yaml) test-case.
 
-Below command show the `manifest.yaml` file.
+Below command show the `dependency-list.yaml` file.
 ```console
-$ cat manifest.yaml
-package: github.com/kubepack/pack/_testdata/test-7
-owners:
-- name: Appscode
-  email: team@appscode.com
-dependencies:
+$ cat dependency-list.yaml
+
+items:
 - package: github.com/kubepack/test-kubed
   branch: master
 ```
-`manifest.yaml` file contain [test-kubed](https://github.com/kubepack/test-kubed) as `dependencies`. `test-kubed` contains
+`dependency-list.yaml` file contain [test-kubed](https://github.com/kubepack/test-kubed) as `dependencies`. `test-kubed` contains
  all the necessary yaml file needs to deploy kubed in minikube cluster.
 
- Now, `kubectl plugin pack dep` command will pull all the dependencies and place it in `manifests/vendor` folder.
+ Now, `pack dep -f .` command will pull all the dependencies and place it in `manifests/vendor` folder.
   If `test-kubed` repository also depend on some other repository then `pack` will get that too.
 
   ```console
-  $ kubectl plugin pack dep
+  $ pack dep -f .
   $ tree manifests/vendor/
   
   manifests/vendor/
@@ -66,7 +63,7 @@ dependencies:
               │       ├── deployment.yaml
               │       ├── kubed-config.yaml
               │       └── service.yaml
-              └── manifest.yaml
+              └── dependency-list.yaml
   
   5 directories, 4 files
   ```
@@ -92,15 +89,15 @@ dependencies:
 We'll change `config.yaml` under `data` field. `config.yaml` value will be `YXBpU2VydmVyOgogIGFkZHJlc3M6IDo4MDgwCiAgZW5hYmxlUmV2ZXJzZUluZGV4OiB0cnVlCiAgZW5hYmxlU2VhcmNoSW5kZXg6IHRydWUKY2x1c3Rlck5hbWU6IHVuaWNvcm4KZW5hYmxlQ29uZmlnU3luY2VyOiB0cnVlCg==`
 
 ```console
-$ kubectl plugin pack edit -s manifests/vendor/github.com/kubepack/test-kubed/manifests/app/kubed-config.yaml
+$ pack edit -s manifests/vendor/github.com/kubepack/test-kubed/manifests/app/kubed-config.yaml
 ```
 Above command will open file in editor.
  Then, change `config.yaml` to above value. This will generate a patch in `manifests/patch` folder.
 
- Below `$ kubectl plugin pack up` command will combine `manifests/patch` and `manifests/vendor` folder files and dump in `manifests/output` folder.
+ Below `$ pack up -f .` command will combine `manifests/patch` and `manifests/vendor` folder files and dump in `manifests/output` folder.
 
  ```console
- $ kubectl plugin pack up
+ $ pack up -f .
  $ kubectl apply -R -f manifests/output/
  ```
  `$ kubectl apply -R -f manifests/output/` command will deploy kubed in minikube cluster.
@@ -110,5 +107,5 @@ Above command will open file in editor.
 
 - Take a look at how Kubepack handles various scenarios [here](/docs/guides).
 - Want to publish apps using Kubepack? Please visit [here](/docs/concepts/how/publisher.md).
-- To learn about `manifest.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
+- To learn about `dependency-list.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
 - Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).

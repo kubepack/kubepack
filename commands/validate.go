@@ -58,7 +58,7 @@ func validateOutlook(cmd *cobra.Command, plugin bool) error {
 		return errors.WithStack(err)
 	}
 
-	outlookFolderpath := filepath.Join(path, CompileDirectory)
+	outlookFolderpath := filepath.Join(path, api.ManifestDirectory, CompileDirectory)
 	_, err = os.Stat(outlookFolderpath)
 	if os.IsNotExist(err) {
 		return errors.WithStack(err)

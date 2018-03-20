@@ -1,7 +1,0 @@
-package: github.com/kubepack/pack/_testdata/test-3
-owners:
-- name: Appscode
-  email: team@appscode.com
-dependencies:
-- package: github.com/kubepack/kube-a
-  branch: test-3

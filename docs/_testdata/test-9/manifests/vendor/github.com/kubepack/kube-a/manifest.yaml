@@ -1,5 +1,0 @@
-package: github.com/kubepack/kube-a
-owners:
-- name: Appscode
-  email: team@appscode.com
-dependencies:

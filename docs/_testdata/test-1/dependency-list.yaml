@@ -3,8 +3,4 @@ items:
   metadata:
     creationTimestamp: null
   package: github.com/kubepack/kube-a
-  patches:
-  - /home/tigerworks/go/src/github.com/kubepack/pack/docs/_testdata/test-1/manifests/patch/github.com/kubepack/kube-a/nginx-a.Deployment.apps.yaml
-  - /home/tigerworks/go/src/github.com/kubepack/pack/docs/_testdata/test-1/manifests/patch/github.com/kubepack/kube-a/nginx-a.Deployment.apps.yaml
-  - /home/tigerworks/go/src/github.com/kubepack/pack/docs/_testdata/test-1/manifests/patch/github.com/kubepack/kube-a/nginx-a.Deployment.apps.yaml
 metadata: {}

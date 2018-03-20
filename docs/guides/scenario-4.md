@@ -19,16 +19,12 @@ section_menu_id: guides
 
 This section explain [test-4](https://github.com/kubepack/pack/tree/master/docs/_testdata/test-4).
 
-If you look into this test's `manifest.yaml` file.
+If you look into this test's `dependency-list.yaml` file.
 
 ```console
-$ cat manifest.yaml
+$ cat dependency-list.yaml
 
-package: github.com/kubepack/pack/docs/_testdata/test-4
-owners:
-- name: Appscode
-  email: team@appscode.com
-dependencies:
+items:
 - package: github.com/kubepack/kube-a
   branch: test-4
 - package: github.com/kubepack/kube-b
@@ -46,11 +42,11 @@ Both repositories(kube-a and kube-b) depends on two different branch of [kube-c]
  
 ![alt text](/docs/_testdata/test-4/test-4.jpg)
 
- Now, when run `$ kubectl plugin pack dep --v=10` command, `pack` could not resolve dependencies. As, this dependencies contradict with each other.
+ Now, when run `$ pack dep -f . --v=10` command, `pack` could not resolve dependencies. As, this dependencies contradict with each other.
   Give below error.
 
   ```console
-  $ kubectl plugin pack dep --v=10
+  $ pack dep -f . --v=10
   
   
   
@@ -71,5 +67,5 @@ Both repositories(kube-a and kube-b) depends on two different branch of [kube-c]
 
 - Want to publish apps using Kubepack? Please visit [here](/docs/concepts/how/publisher.md).
 - Want to consume apps published using Kubepack? Please visit [here](/docs/concepts/how/user.md).
-- To learn about `manifest.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
+- To learn about `dependency-list.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
 - Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).

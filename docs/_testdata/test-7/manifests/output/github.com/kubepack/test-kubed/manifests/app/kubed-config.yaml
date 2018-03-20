@@ -4,7 +4,7 @@ data:
 kind: Secret
 metadata:
   annotations:
-    git-commit-hash: 8706a2dcea961dbc4714b9237de4c323c3834923
+    git-commit-hash: 1864889c0748d8a79ea40c7d2406128a9646b19c
   creationTimestamp: null
   labels:
     app: kubed

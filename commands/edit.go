@@ -33,7 +33,6 @@ const (
 
 var (
 	srcPath  string
-	fileInfo os.FileInfo
 )
 
 // Local directory path needs to be absolute path. Patch filepath needs to be either absolute path or relative path.
@@ -77,7 +76,7 @@ func RunEdit(cmd *cobra.Command, plugin bool) error {
 	if filepath.IsAbs(srcPath) {
 		path = srcPath
 	}
-	fileInfo, err = os.Stat(path)
+	_, err = os.Stat(path)
 	if err != nil {
 		return errors.WithStack(err)
 	}
@@ -103,6 +102,9 @@ func RunEdit(cmd *cobra.Command, plugin bool) error {
 		return errors.WithStack(err)
 	}
 
+	if string(srcJson)== string(dstJson) {
+		return errors.Errorf("No edit has been made")
+	}
 	return GetPatch(srcJson, dstJson, cmd, plugin)
 }
 
@@ -174,12 +176,7 @@ func GetPatch(src, dst []byte, cmd *cobra.Command, plugin bool) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	err = appendPatchToDependencies(filepath.Join(root, KinflateManifestName), patchFilePath)
-	if err != nil {
-		return errors.WithStack(err)
-	}
-
-	err = appendPatchToKubeManifests(filepath.Join(root, KinflateManifestName), patchFilePath)
+	err = appendPatchToKubeManifests(filepath.Join(root, KinflateManifestName), strings.Split(patchFilePath, root)[1])
 	if err != nil {
 		return errors.WithStack(err)
 	}
@@ -218,30 +215,6 @@ func NewDefaultEditor() editor.Editor {
 	}
 }
 
-func appendPatchToDependencies(manifestPath, patchPath string) error {
-	data, err := ioutil.ReadFile(manifestPath)
-	if err != nil {
-		return errors.WithStack(err)
-	}
-	manifest := kin_api.Manifest{}
-	err = yaml.Unmarshal(data, &manifest)
-	if err != nil {
-		return errors.WithStack(err)
-	}
-	if !isPathAlreadyExist(manifest.Patches, patchPath) {
-		manifest.Patches = append(manifest.Patches, patchPath)
-	}
-	data, err = yaml.Marshal(manifest)
-	if err != nil {
-		return errors.WithStack(err)
-	}
-	err = ioutil.WriteFile(manifestPath, data, 0755)
-	if err != nil {
-		return errors.WithStack(err)
-	}
-	return nil
-}
-
 func appendPatchToKubeManifests(manifestPath, patchPath string) error {
 	data, err := ioutil.ReadFile(manifestPath)
 	if err != nil {
@@ -252,8 +225,9 @@ func appendPatchToKubeManifests(manifestPath, patchPath string) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	if !isPathAlreadyExist(manifest.Patches, patchPath) {
-		manifest.Patches = append(manifest.Patches, patchPath)
+	trimmedPath := strings.Trim(patchPath, "/")
+	if !isPathAlreadyExist(manifest.Patches, trimmedPath) {
+		manifest.Patches = append(manifest.Patches, trimmedPath)
 	}
 	data, err = yaml.Marshal(manifest)
 	if err != nil {
@@ -282,6 +256,13 @@ func getRepositoryPath(path string) string {
 	return strings.Trim(spliFinal, "/")
 }
 
+func getPatchFileNameByPath(path string) (string, error) {
+	srcYml, err := ioutil.ReadFile(path)
+	if err != nil {
+		return "", errors.WithStack(err)
+	}
+	return getPatchFileName(srcYml)
+}
 func getPatchFileName(patch []byte) (string, error) {
 	patchStruct := &packapi.Dependency{}
 	err := yaml.Unmarshal(patch, patchStruct)

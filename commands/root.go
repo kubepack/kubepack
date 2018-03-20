@@ -65,7 +65,7 @@ func NewPackCmd(version string, plugin bool) *cobra.Command {
 	cmd.AddCommand(NewKubepackInitializeCmd(plugin))
 
 	// kinflate commands
-	cmd.AddCommand(kinflate.NewCmdInit(stdOut, stdErr, fsys))
+	// cmd.AddCommand(kinflate.NewCmdInit(stdOut, stdErr, fsys))
 	cmd.AddCommand(kinflate.NewCmdAdd(stdOut, stdErr, fsys))
 	cmd.AddCommand(kinflate.NewCmdSet(stdOut, stdErr, fsys))
 

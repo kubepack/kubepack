@@ -3,20 +3,20 @@ kind: Deployment
 metadata:
   name: nginx-b
 spec:
-  replicas: 1
+  replicas: 2
   template:
     metadata:
-      name: nginx
-      labels:
-        app: nginx
       annotations:
         app: nginx
+      labels:
+        app: nginx
+      name: nginx
     spec:
       containers:
-      - name: nginx
-        image: nginx
+      - image: nginx
+        name: nginx
         ports:
         - containerPort: 80
         resources:
           limits:
-            cpu: '10m'
+            cpu: 10m

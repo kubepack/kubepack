@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta2
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: nginx-c
@@ -9,7 +9,7 @@ spec:
       annotations:
         app: nginx
       labels:
-        app: nginx
+        app: nginx1
       name: nginx
     spec:
       containers:

@@ -1,0 +1,6 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-c
+spec:
+  replicas: 2

@@ -13,7 +13,7 @@ section_menu_id: concepts
 
 # Kubepack Validation
 
-Users can validate their `manifests/output` folder through `$ pack validate`. 
+Users can validate their `manifests/output` folder through `$ pack validate -f .`. 
 Pack uses `openapi spec` for validation. 
 
 Users can provider specific kubernetes version through `kube-version` flag.
@@ -25,6 +25,6 @@ By default, **Pack** uses  latest stable version of kubernetes.
 
 - Want to publish apps using Kubepack? Please visit [here](/docs/concepts/how/publisher.md).
 - Want to consume apps published using Kubepack? Please visit [here](/docs/concepts/how/user.md).
-- To learn about `manifest.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
+- To learn about `dependency-list.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
 - Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).
 - Learn more about **Pack** jsonnet-support [here](/docs/concepts/how/jsonnet-support.md).

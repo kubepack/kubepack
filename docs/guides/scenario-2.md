@@ -19,15 +19,11 @@ section_menu_id: guides
 
 This section explain [test-2](https://github.com/kubepack/pack/tree/master/docs/_testdata/test-2).
 
-If you look into this test's `manifest.yaml` file.
+If you look into this test's `dependency-list.yaml` file.
 ```console
-$ cat manifest.yaml
+$ cat dependency-list.yaml
 
-package: github.com/kubepack/pack/docs/_testdata/test-2
-owners:
-- name: Appscode
-  email: team@appscode.com
-dependencies:
+items:
 - package: github.com/kubepack/kube-a
   branch: test-2
 
@@ -46,9 +42,9 @@ You can see the whole dependencies in below image.
 
 3. [kube-b](https://github.com/kubepack/kube-b/tree/test-2) depends on branch `test-2` of [kube-c](https://github.com/kubepack/kube-c/tree/test-2) repository. `kube-b` contains the patch of `kube-c`'s `nginx-deployment.yaml` file.
 
-When run `$ kubectl plugin pack dep` in `test-2`, following things happen.
+When run `$ pack dep -f .` in `test-2`, following things happen.
 
-1. Get all the dependencies, reading `manifest.yaml` file.
+1. Get all the dependencies, reading `dependency-list.yaml` file.
 2. `kube-b`'s `nginx-deployment.yaml` file is combination of patch (exists in `kube-a` repository) and original file (exists in `kube-b` repository).
 3. `kube-c`'s `nginx-deployment.yaml` file is combination of patch (exists in `kube-b` repository) and original file (exists in `kube-c` repository).
 
@@ -57,5 +53,5 @@ When run `$ kubectl plugin pack dep` in `test-2`, following things happen.
 
 - Want to publish apps using Kubepack? Please visit [here](/docs/concepts/how/publisher.md).
 - Want to consume apps published using Kubepack? Please visit [here](/docs/concepts/how/user.md).
-- To learn about `manifest.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
+- To learn about `dependency-list.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
 - Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).

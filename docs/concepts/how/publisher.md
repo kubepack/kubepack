@@ -17,11 +17,11 @@ section_menu_id: concepts
 This section contains tutorial on how app developer can use [Pack](https://github.com/kubepack/pack) to expose
 theirs app and deploy in kubernetes cluster.
 
-Developer creates a git repo which contains all required yamls and manifest.yaml file.
+Developer creates a git repo which contains all required yamls and dependency-list.yaml file.
 
 ## Before You Begin
 
-Get the overview and what various fields means, read [manifest.yaml](/docs/concepts/how/manifest.md) tutorial.
+Get the overview and what various fields means, read [dependency-list.yaml](/docs/concepts/how/manifest.md) tutorial.
 
 
 ## Deploy with Pack
@@ -32,7 +32,7 @@ Needs to follow below instruction:
 
  - First, create a git repository
  - Add all the required yaml to repository
- - Add manifest.yaml file. This is mandatory file to Pack
+ - Add dependency-list.yaml file. This is mandatory file to Pack
 
 Now, anyone can use this repository to deploy your application in their cluster.
 
@@ -103,15 +103,15 @@ spec:
     app: kubepack
 ```
 
-You need to create a repository and put all the [deployment](/docs/examples/publisher/deployment.yaml), [service](/docs/examples/publisher/service.yaml) and [secret](/docs/examples/publisher/secret.yaml) yaml in the repository.
-Also, need to create manifest.yaml file in the repository.
+You need to create a repository and put all the [deployment](/docs/examples/publisher/deployment.yaml), [service](/docs/examples/publisher/service.yaml) and [secret](/docs/examples/publisher/secret.yaml) yaml in the repository under `manifests/app` folder.
+Also, need to create dependency-list.yaml file in the repository.
 
 So that, others can use it through pack cli.
 
 ## Next Steps
 
 - Want to consume apps published using Kubepack? Please visit [here](/docs/concepts/how/user.md).
-- To learn about `manifest.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
+- To learn about `dependency-list.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
 - Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).
 - Learn more about **Pack** jsonnet-support [here](/docs/concepts/how/jsonnet-support.md).
 - Learn more about **Pack** validation [here](/docs/concepts/how/validation.md).
