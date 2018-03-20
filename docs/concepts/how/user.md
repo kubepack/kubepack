@@ -47,11 +47,11 @@ items:
 `dependency-list.yaml` file contain [test-kubed](https://github.com/kubepack/test-kubed) as `dependencies`. `test-kubed` contains
  all the necessary yaml file needs to deploy kubed in minikube cluster.
 
- Now, `pack dep` command will pull all the dependencies and place it in `manifests/vendor` folder.
+ Now, `pack dep -f .` command will pull all the dependencies and place it in `manifests/vendor` folder.
   If `test-kubed` repository also depend on some other repository then `pack` will get that too.
 
   ```console
-  $ pack dep
+  $ pack dep -f .
   $ tree manifests/vendor/
   
   manifests/vendor/
@@ -94,7 +94,7 @@ $ pack edit -s manifests/vendor/github.com/kubepack/test-kubed/manifests/app/kub
 Above command will open file in editor.
  Then, change `config.yaml` to above value. This will generate a patch in `manifests/patch` folder.
 
- Below `$ pack up` command will combine `manifests/patch` and `manifests/vendor` folder files and dump in `manifests/output` folder.
+ Below `$ pack up -f .` command will combine `manifests/patch` and `manifests/vendor` folder files and dump in `manifests/output` folder.
 
  ```console
  $ pack up -f .

@@ -103,7 +103,7 @@ spec:
     app: kubepack
 ```
 
-You need to create a repository and put all the [deployment](/docs/examples/publisher/deployment.yaml), [service](/docs/examples/publisher/service.yaml) and [secret](/docs/examples/publisher/secret.yaml) yaml in the repository.
+You need to create a repository and put all the [deployment](/docs/examples/publisher/deployment.yaml), [service](/docs/examples/publisher/service.yaml) and [secret](/docs/examples/publisher/secret.yaml) yaml in the repository under `manifests/app` folder.
 Also, need to create dependency-list.yaml file in the repository.
 
 So that, others can use it through pack cli.

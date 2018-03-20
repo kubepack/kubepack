@@ -13,7 +13,7 @@ section_menu_id: concepts
 
 # Kubepack Validation
 
-Users can validate their `manifests/output` folder through `$ pack validate`. 
+Users can validate their `manifests/output` folder through `$ pack validate -f .`. 
 Pack uses `openapi spec` for validation. 
 
 Users can provider specific kubernetes version through `kube-version` flag.
