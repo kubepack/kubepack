@@ -33,7 +33,6 @@ const (
 
 var (
 	srcPath  string
-	fileInfo os.FileInfo
 )
 
 // Local directory path needs to be absolute path. Patch filepath needs to be either absolute path or relative path.
@@ -77,7 +76,7 @@ func RunEdit(cmd *cobra.Command, plugin bool) error {
 	if filepath.IsAbs(srcPath) {
 		path = srcPath
 	}
-	fileInfo, err = os.Stat(path)
+	_, err = os.Stat(path)
 	if err != nil {
 		return errors.WithStack(err)
 	}
@@ -174,8 +173,7 @@ func GetPatch(src, dst []byte, cmd *cobra.Command, plugin bool) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-
-	err = appendPatchToKubeManifests(filepath.Join(root, KinflateManifestName), patchFilePath)
+	err = appendPatchToKubeManifests(filepath.Join(root, KinflateManifestName), strings.Split(patchFilePath, root)[1])
 	if err != nil {
 		return errors.WithStack(err)
 	}
@@ -224,8 +222,9 @@ func appendPatchToKubeManifests(manifestPath, patchPath string) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	if !isPathAlreadyExist(manifest.Patches, patchPath) {
-		manifest.Patches = append(manifest.Patches, patchPath)
+	trimmedPath := strings.Trim(patchPath, "/")
+	if !isPathAlreadyExist(manifest.Patches, trimmedPath) {
+		manifest.Patches = append(manifest.Patches, trimmedPath)
 	}
 	data, err = yaml.Marshal(manifest)
 	if err != nil {
