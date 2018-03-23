@@ -26,6 +26,7 @@ var (
 	imports        []string
 	packagePatches map[string]string
 	forkRepo       []string
+	finalFork map[string]string
 )
 
 const PackTempDirectory = ".pack"
@@ -62,6 +63,7 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 	// root of the project.
 	packagePatches = make(map[string]string)
 	depPatchFiles = make(map[string][]string)
+	finalFork = make(map[string]string)
 	logger := log.New(ioutil.Discard, "", 0)
 	if glog.V(glog.Level(1)) {
 		logger = log.New(os.Stdout, "", 0)
@@ -89,13 +91,12 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 		return errors.WithStack(err)
 	}
 
+	srcprefix := filepath.Join(build.Default.GOPATH, "src") + string(filepath.Separator)
+	importroot := filepath.ToSlash(strings.TrimPrefix(root, srcprefix))
 	imports = make([]string, len(manStruc.Items))
 	for key, value := range manStruc.Items {
 		imports[key] = value.Package
 	}
-
-	srcprefix := filepath.Join(build.Default.GOPATH, "src") + string(filepath.Separator)
-	importroot := filepath.ToSlash(strings.TrimPrefix(root, srcprefix))
 
 	manifestYaml := ManifestYaml{}
 	manifestYaml.root = root
@@ -146,16 +147,17 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 	if err == nil {
 		// If no failure, blow away the vendor dir and write a new one out,
 		// stripping nested vendor directories as we go.
-		err = os.RemoveAll(filepath.Join(root, api.ManifestDirectory, _VendorFolder))
+		vendorPath := filepath.Join(root, api.ManifestDirectory, _VendorFolder)
+		err = os.RemoveAll(vendorPath)
 		if err != nil {
 			return errors.WithStack(err)
 		}
-		err = gps.WriteDepTree(filepath.Join(root, api.ManifestDirectory, _VendorFolder), solution, sourcemgr, false, logger)
+		err = gps.WriteDepTree(vendorPath, solution, sourcemgr, false, logger)
 		if err != nil {
 			return errors.WithStack(err)
 		}
 
-		err = filepath.Walk(filepath.Join(root, api.ManifestDirectory, _VendorFolder), findJsonnetFiles)
+		err = filepath.Walk(vendorPath, findJsonnetFiles)
 		if err != nil {
 			return errors.WithStack(err)
 		}
@@ -165,11 +167,11 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 		if err != nil {
 			return errors.WithStack(err)
 		}
-		err = filepath.Walk(filepath.Join(root, api.ManifestDirectory, _VendorFolder), findPatchFolder)
+		err = filepath.Walk(vendorPath, findPatchFolder)
 		if err != nil {
 			return errors.WithStack(err)
 		}
-		err = filepath.Walk(filepath.Join(root, api.ManifestDirectory, _VendorFolder), visitVendorAndApplyPatch)
+		err = filepath.Walk(vendorPath, visitVendorAndApplyPatch)
 		if err != nil {
 			return errors.WithStack(err)
 		}
@@ -184,11 +186,14 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 				return errors.WithStack(err)
 			}
 			dstPath := filepath.Join(root, api.ManifestDirectory, _VendorFolder, val)
-			err = os.RemoveAll(dstPath)
+			finalFork[dstPath] = tmpDir
+		}
+		for key, val := range finalFork {
+			err = os.RemoveAll(key)
 			if err != nil {
 				return errors.WithStack(err)
 			}
-			err = os.Rename(tmpDir, dstPath)
+			err = os.Rename(val, key)
 			if err != nil {
 				return errors.WithStack(err)
 			}
@@ -491,7 +496,7 @@ func (a ManifestYaml) Overrides() gps.ProjectConstraints {
 	manStruc := api.DependencyList{}
 	err = yaml.Unmarshal(byt, &manStruc)
 	if err != nil {
-		log.Fatalln("Error Occuered-----", err)
+		log.Fatalln("Error Occuered", err)
 	}
 
 	for _, value := range manStruc.Items {
@@ -563,7 +568,8 @@ func (a ManifestYaml) TestDependencyConstraints() gps.ProjectConstraints {
 }
 
 type InternalManifest struct {
-	root string
+	root        string
+	projectRoot gps.ProjectRoot
 }
 
 func (a InternalManifest) DependencyConstraints() gps.ProjectConstraints {
