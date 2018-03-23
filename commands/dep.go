@@ -569,7 +569,6 @@ func (a ManifestYaml) TestDependencyConstraints() gps.ProjectConstraints {
 
 type InternalManifest struct {
 	root        string
-	projectRoot gps.ProjectRoot
 }
 
 func (a InternalManifest) DependencyConstraints() gps.ProjectConstraints {
