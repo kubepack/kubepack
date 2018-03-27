@@ -91,20 +91,18 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 		return errors.WithStack(err)
 	}
 
-	srcprefix := filepath.Join(build.Default.GOPATH, "src") + string(filepath.Separator)
-	importroot := filepath.ToSlash(strings.TrimPrefix(root, srcprefix))
+	importroot := GetImportRoot(root)
 	imports = make([]string, len(manStruc.Items))
 	for key, value := range manStruc.Items {
 		imports[key] = value.Package
 	}
-
 	manifestYaml := ManifestYaml{}
 	manifestYaml.root = root
 	pkgTree := map[string]pkgtree.PackageOrErr{
 		"github.com/sdboyer/gps": {
 			P: pkgtree.Package{
-				// Name:       "github.com/a8uhnf/go_stack",
-				// ImportPath: "github.com/packsh/demo-dep",
+				Name:       "main",
+				ImportPath: importroot,
 				Imports: imports,
 			},
 		},
@@ -130,7 +128,10 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 		DisableLocking: true,
 	}
 	log.Println("Tempdir: ", tempdir)
-	sourcemgr, _ := gps.NewSourceManager(srcManagerConfig)
+	sourcemgr, err := gps.NewSourceManager(srcManagerConfig)
+	if err != nil {
+		return errors.WithStack(err)
+	}
 	defer sourcemgr.Release()
 
 	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Minute)
@@ -573,7 +574,6 @@ type InternalManifest struct {
 
 func (a InternalManifest) DependencyConstraints() gps.ProjectConstraints {
 	projectConstraints := make(gps.ProjectConstraints)
-
 	man := filepath.Join(a.root, api.DependencyFile)
 	byt, err := ioutil.ReadFile(man)
 	manStruc := api.DependencyList{}
@@ -621,4 +621,10 @@ func (a NaiveAnalyzer) lookForManifest(root string) (gps.Manifest, gps.Lock, err
 	lck := &InternalLock{}
 	lck.root = root
 	return man, lck, nil
+}
+
+func GetImportRoot(root string) string {
+	srcprefix := filepath.Join(build.Default.GOPATH, "src") + string(filepath.Separator)
+	importroot := filepath.ToSlash(strings.TrimPrefix(root, srcprefix))
+	return importroot
 }

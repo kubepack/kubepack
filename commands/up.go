@@ -7,7 +7,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-
 	"github.com/Masterminds/vcs"
 	"github.com/appscode/go/log"
 	"github.com/evanphx/json-patch"
@@ -78,6 +77,15 @@ func NewUpCommand(plugin bool) *cobra.Command {
 				log.Fatalln(errors.WithStack(err))
 			}
 			err = generateDag(rootPath)
+			if err != nil {
+				log.Fatalln(err)
+			}
+
+			importroot := GetImportRoot(rootPath)
+			err = CopyDir(filepath.Join(rootPath, api.ManifestDirectory, "app"), filepath.Join(rootPath, api.ManifestDirectory, CompileDirectory, importroot))
+			if err != nil {
+				log.Fatalln(err)
+			}
 		},
 	}
 
@@ -511,4 +519,71 @@ func getManifestStruct(path string) (*api.DependencyList, error) {
 	}
 
 	return &depList, nil
+}
+
+// Copies file source to destination dest.
+func CopyFile(source string, dest string) (err error) {
+	sf, err := os.Open(source)
+	if err != nil {
+		return err
+	}
+	defer sf.Close()
+	df, err := os.Create(dest)
+	if err != nil {
+		return err
+	}
+	defer df.Close()
+	_, err = io.Copy(df, sf)
+	if err == nil {
+		si, err := os.Stat(source)
+		if err == nil {
+			err = os.Chmod(dest, si.Mode())
+		}
+
+	}
+
+	return
+}
+
+// Recursively copies a directory tree, attempting to preserve permissions.
+// Source directory must exist, destination directory must *not* exist.
+func CopyDir(source string, dest string) (err error) {
+	// get properties of source dir
+	fi, err := os.Stat(source)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+
+	if !fi.IsDir() {
+		return errors.Errorf("Destination already exists")
+	}
+
+	// ensure dest dir does not already exist
+
+	err = os.MkdirAll(dest, fi.Mode())
+	if err != nil {
+		return errors.WithStack(err)
+	}
+
+	entries, err := ioutil.ReadDir(source)
+
+	for _, entry := range entries {
+
+		sfp := source + "/" + entry.Name()
+		dfp := dest + "/" + entry.Name()
+		if entry.IsDir() {
+			err = CopyDir(sfp, dfp)
+			if err != nil {
+				return errors.WithStack(err)
+			}
+		} else {
+			// perform copy
+			err = CopyFile(sfp, dfp)
+			if err != nil {
+				return errors.WithStack(err)
+			}
+		}
+
+	}
+	return
 }
