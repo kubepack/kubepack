@@ -21,6 +21,7 @@ import (
 	k8syaml "k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/kubectl/pkg/kinflate/resource"
 	"k8s.io/kubernetes/pkg/kubectl/scheme"
+	ioutil_x "github.com/appscode/go/ioutil"
 	"sync"
 	"fmt"
 )
@@ -84,12 +85,26 @@ func NewUpCommand(plugin bool) *cobra.Command {
 			importroot := GetImportRoot(rootPath)
 			source := filepath.Join(rootPath, api.ManifestDirectory, "app")
 			dest := filepath.Join(rootPath, api.ManifestDirectory, CompileDirectory, importroot, api.ManifestDirectory, "app")
-			err = CopyDir(source, dest)
+			_, err = os.Stat(dest)
+			if os.IsNotExist(err) {
+				err = os.MkdirAll(filepath.Dir(dest), 0755)
+				if err != nil {
+					log.Fatalln(err)
+				}
+			}
+			if err == nil {
+				err = os.RemoveAll(dest)
+				if err != nil {
+					log.Fatalln(err)
+				}
+			}
+
+			err = ioutil_x.CopyDir(dest, source)
 			if err != nil {
 				log.Fatalln(err)
 			}
 
-			installPath := filepath.Join(rootPath, api.ManifestDirectory, "app", InstallSHName)
+			installPath := filepath.Join(rootPath, api.ManifestDirectory, CompileDirectory, InstallSHName)
 			installTemplate := `
 pushd %s
 %s
@@ -102,9 +117,13 @@ popd
 			}
 			defer f.Close()
 			outputPath := filepath.Join(api.ManifestDirectory, CompileDirectory, importroot)
-			c := getCmdForScript(rootPath, importroot)
+			c := getCmdForInstallScript(rootPath, importroot)
 			installShContent := fmt.Sprintf(installTemplate, outputPath, c)
 			_, err = f.Write([]byte(installShContent))
+			if err != nil {
+				log.Fatalln(err)
+			}
+			err = os.Chmod(installPath, 0777)
 			if err != nil {
 				log.Fatalln(err)
 			}
@@ -119,17 +138,6 @@ popd
 
 func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 	if fileInfo.Name() == ".gitignore" || fileInfo.Name() == "README.md" {
-		return nil
-	}
-	if fileInfo.Name() == InstallSHName {
-		installYaml, err := ioutil.ReadFile(path)
-		if err != nil {
-			return errors.WithStack(err)
-		}
-		err = WriteCompiledFileToDest(strings.Replace(path, _VendorFolder, CompileDirectory, 1), installYaml)
-		if err != nil {
-			return errors.WithStack(err)
-		}
 		return nil
 	}
 	if strings.HasSuffix(path, "jsonnet.TEMPLATE") {
@@ -148,6 +156,13 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 	}
 
 	if strings.Contains(path, PatchFolder) {
+		return nil
+	}
+	if fileInfo.Name() == InstallSHName {
+		err := ioutil_x.CopyFile(strings.Replace(path, _VendorFolder, CompileDirectory, 1), path)
+		if err != nil {
+			return errors.WithStack(err)
+		}
 		return nil
 	}
 
@@ -460,7 +475,7 @@ func generateDag(root string) error {
 	var res []string
 	var check map[string]int
 	check = make(map[string]int)
-	installPath := filepath.Join(root, api.ManifestDirectory, "app", InstallSHName)
+	installPath := filepath.Join(root, api.ManifestDirectory, CompileDirectory, InstallSHName)
 	installTemplate := `
 pushd %s
 %s
@@ -499,7 +514,7 @@ popd
 		res = append(res, val.Package)
 		check[val.Package] = 1
 		outputPath := filepath.Join(api.ManifestDirectory, CompileDirectory, val.Package)
-		cmd := getCmdForScript(root, val.Package)
+		cmd := getCmdForInstallScript(root, val.Package)
 		installShContent := fmt.Sprintf(installTemplate, outputPath, cmd)
 		_, err = f.Write([]byte(installShContent))
 		if err != nil {
@@ -521,7 +536,7 @@ popd
 				st.Push(val.Package)
 				res = append(res, val.Package)
 				check[val.Package] = 1
-				cmd := getCmdForScript(root, val.Package)
+				cmd := getCmdForInstallScript(root, val.Package)
 
 				kcPath := fmt.Sprintf(installTemplate, filepath.Join(api.ManifestDirectory, CompileDirectory, val.Package), cmd)
 				_, err = f.Write([]byte(kcPath))
@@ -534,8 +549,8 @@ popd
 	return nil
 }
 
-func getCmdForScript(root, pkg string) string {
-	outputPath := filepath.Join(api.ManifestDirectory, _VendorFolder, pkg)
+func getCmdForInstallScript(root, pkg string) string {
+	outputPath := filepath.Join(api.ManifestDirectory, CompileDirectory, pkg)
 	cmd := "kubectl apply -R -f ."
 	path := filepath.Join(root, outputPath, api.ManifestDirectory, "app", InstallSHName)
 	if _, err := os.Stat(path); err == nil {
@@ -559,77 +574,4 @@ func getManifestStruct(path string) (*api.DependencyList, error) {
 	}
 
 	return &depList, nil
-}
-
-// Copies file source to destination dest.
-func CopyFile(source string, dest string) error {
-	sf, err := os.Open(source)
-	if err != nil {
-		return errors.WithStack(err)
-	}
-	if filepath.Base(source) == InstallSHName {
-		return nil
-	}
-	defer sf.Close()
-	df, err := os.Create(dest)
-	if err != nil {
-		return errors.WithStack(err)
-	}
-	defer df.Close()
-	_, err = io.Copy(df, sf)
-	if err == nil {
-		si, err := os.Stat(source)
-		if err == nil {
-			err = os.Chmod(dest, si.Mode())
-			if err != nil {
-				return errors.WithStack(err)
-			}
-		}
-
-	}
-
-	return err
-}
-
-// Recursively copies a directory tree, attempting to preserve permissions.
-// Source directory must exist, destination directory must *not* exist.
-func CopyDir(source string, dest string) error {
-	// get properties of source dir
-	fi, err := os.Stat(source)
-	if err != nil {
-		return errors.WithStack(err)
-	}
-
-	if !fi.IsDir() {
-		return errors.Errorf("Destination already exists")
-	}
-
-	// ensure dest dir does not already exist
-
-	err = os.MkdirAll(dest, fi.Mode())
-	if err != nil {
-		return errors.WithStack(err)
-	}
-
-	entries, err := ioutil.ReadDir(source)
-
-	for _, entry := range entries {
-
-		sfp := source + "/" + entry.Name()
-		dfp := dest + "/" + entry.Name()
-		if entry.IsDir() {
-			err = CopyDir(sfp, dfp)
-			if err != nil {
-				return errors.WithStack(err)
-			}
-		} else {
-			// perform copy
-			err = CopyFile(sfp, dfp)
-			if err != nil {
-				return errors.WithStack(err)
-			}
-		}
-
-	}
-	return nil
 }
