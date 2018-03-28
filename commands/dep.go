@@ -3,7 +3,6 @@ package commands
 import (
 	"context"
 	"flag"
-	"fmt"
 	"go/build"
 	"io/ioutil"
 	"log"
@@ -552,16 +551,6 @@ func (a ManifestYaml) DependencyConstraints() gps.ProjectConstraints {
 		projectConstraints[gps.ProjectRoot(value.Package)] = properties
 	}
 	return projectConstraints
-}
-
-func mapPatches(repo string, patches []string) error {
-	for _, val := range patches {
-		if _, ok := packagePatches[val]; ok {
-			return fmt.Errorf("%s defined in multiple packages.", val)
-		}
-		packagePatches[val] = repo
-	}
-	return nil
 }
 
 func (a ManifestYaml) TestDependencyConstraints() gps.ProjectConstraints {
