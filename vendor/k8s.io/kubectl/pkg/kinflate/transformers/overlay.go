@@ -24,19 +24,19 @@ import (
 
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/strategicpatch"
-	"k8s.io/kubectl/pkg/kinflate/types"
+	"k8s.io/kubectl/pkg/kinflate/resource"
 	"k8s.io/kubectl/pkg/scheme"
 )
 
 // overlayTransformer contains a map of overlay objects
 type overlayTransformer struct {
-	overlay types.KObject
+	overlay []*resource.Resource
 }
 
 var _ Transformer = &overlayTransformer{}
 
 // NewOverlayTransformer constructs a overlayTransformer.
-func NewOverlayTransformer(overlay types.KObject) (Transformer, error) {
+func NewOverlayTransformer(overlay []*resource.Resource) (Transformer, error) {
 	if len(overlay) == 0 {
 		return NewNoOpTransformer(), nil
 	}
@@ -44,25 +44,26 @@ func NewOverlayTransformer(overlay types.KObject) (Transformer, error) {
 }
 
 // Transform apply the overlay on top of the base resources.
-func (o *overlayTransformer) Transform(baseResourceMap types.KObject) error {
+func (o *overlayTransformer) Transform(baseResourceMap resource.ResourceCollection) error {
 	// Strategic merge the resources exist in both base and overlay.
-	for gvkn, overlay := range o.overlay {
+	for _, overlay := range o.overlay {
 		// Merge overlay with base resource.
+		gvkn := overlay.GVKN()
 		base, found := baseResourceMap[gvkn]
 		if !found {
 			return fmt.Errorf("failed to find an object with %#v to apply the patch", gvkn.GVK)
 		}
 		merged := map[string]interface{}{}
 		versionedObj, err := scheme.Scheme.New(gvkn.GVK)
-		baseName := base.GetName()
+		baseName := base.Data.GetName()
 		switch {
 		case runtime.IsNotRegisteredError(err):
 			// Use JSON merge patch to handle types w/o schema
-			baseBytes, err := json.Marshal(base)
+			baseBytes, err := json.Marshal(base.Data)
 			if err != nil {
 				return err
 			}
-			patchBytes, err := json.Marshal(overlay)
+			patchBytes, err := json.Marshal(overlay.Data)
 			if err != nil {
 				return err
 			}
@@ -82,15 +83,15 @@ func (o *overlayTransformer) Transform(baseResourceMap types.KObject) error {
 			// Store the name of the base object, because this name may have been munged.
 			// Apply this name to the StrategicMergePatched object.
 			merged, err = strategicpatch.StrategicMergeMapPatch(
-				base.UnstructuredContent(),
-				overlay.UnstructuredContent(),
+				base.Data.UnstructuredContent(),
+				overlay.Data.UnstructuredContent(),
 				versionedObj)
 			if err != nil {
 				return err
 			}
 		}
-		base.SetName(baseName)
-		baseResourceMap[gvkn].Object = merged
+		base.Data.SetName(baseName)
+		baseResourceMap[gvkn].Data.Object = merged
 	}
 	return nil
 }

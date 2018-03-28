@@ -17,7 +17,6 @@ limitations under the License.
 package types
 
 import (
-	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 )
 
@@ -28,8 +27,3 @@ type GroupVersionKindName struct {
 	// original name of the resource before transformation.
 	Name string
 }
-
-// KObject is a map from GroupVersionKindName to unstructured objects
-type KObject map[GroupVersionKindName]*unstructured.Unstructured
-
-type ResourceCollection KObject

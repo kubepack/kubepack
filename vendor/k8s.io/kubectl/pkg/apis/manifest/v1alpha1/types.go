@@ -55,6 +55,10 @@ type Descriptor struct {
 	PackageVersion string `json:"packageVersion,omitempty" yaml:"packageVersion,omitempty"`
 }
 
+// +genclient
+// +genclient:skipVerbs=updateStatus
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
 // Manifest has all the information to expand of generate the k8s api resources.
 // It can be used by kubectl or some other tooling.
 // A manifest could be either a Base or an Overlay.
@@ -178,4 +182,14 @@ type DataSources struct {
 	// pairs to create a configmap.
 	// i.e. a Docker .env file or a .ini file.
 	EnvSource string `json:"env,omitempty" yaml:"env,omitempty"`
+}
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// ManifestList is a list of Manifest objects.
+type ManifestList struct {
+	metav1.TypeMeta `json:",inline"`
+	metav1.ListMeta `json:"metadata,omitempty"`
+
+	Items []Manifest `json:"items"`
 }

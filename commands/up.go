@@ -7,7 +7,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-
 	"github.com/Masterminds/vcs"
 	"github.com/appscode/go/log"
 	"github.com/evanphx/json-patch"
@@ -22,6 +21,9 @@ import (
 	k8syaml "k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/kubectl/pkg/kinflate/resource"
 	"k8s.io/kubernetes/pkg/kubectl/scheme"
+	ioutil_x "github.com/appscode/go/ioutil"
+	"sync"
+	"fmt"
 )
 
 var (
@@ -31,7 +33,13 @@ var (
 	patchFiles map[string]string
 )
 
-const CompileDirectory = "output"
+const (
+	CompileDirectory = "output"
+	InstallSHName    = "install.sh"
+	InstallSHDefault = `#!/bin/bash
+
+`
+)
 
 func NewUpCommand(plugin bool) *cobra.Command {
 	cmd := &cobra.Command{
@@ -69,6 +77,56 @@ func NewUpCommand(plugin bool) *cobra.Command {
 			if err != nil {
 				log.Fatalln(errors.WithStack(err))
 			}
+			err = generateDag(rootPath)
+			if err != nil {
+				log.Fatalln(err)
+			}
+
+			importroot := GetImportRoot(rootPath)
+			source := filepath.Join(rootPath, api.ManifestDirectory, "app")
+			dest := filepath.Join(rootPath, api.ManifestDirectory, CompileDirectory, importroot, api.ManifestDirectory, "app")
+			_, err = os.Stat(dest)
+			if os.IsNotExist(err) {
+				err = os.MkdirAll(filepath.Dir(dest), 0755)
+				if err != nil {
+					log.Fatalln(err)
+				}
+			}
+			if err == nil {
+				err = os.RemoveAll(dest)
+				if err != nil {
+					log.Fatalln(err)
+				}
+			}
+
+			err = ioutil_x.CopyDir(dest, source)
+			if err != nil {
+				log.Fatalln(err)
+			}
+
+			installPath := filepath.Join(rootPath, api.ManifestDirectory, CompileDirectory, InstallSHName)
+			installTemplate := `
+pushd %s
+%s
+popd
+			
+`
+			f, err := os.OpenFile(installPath, os.O_APPEND|os.O_WRONLY, 0755)
+			if err != nil {
+				log.Fatalln(err)
+			}
+			defer f.Close()
+			outputPath := filepath.Join(api.ManifestDirectory, CompileDirectory, importroot)
+			c := getCmdForInstallScript(rootPath, importroot)
+			installShContent := fmt.Sprintf(installTemplate, outputPath, c)
+			_, err = f.Write([]byte(installShContent))
+			if err != nil {
+				log.Fatalln(err)
+			}
+			err = os.Chmod(installPath, 0777)
+			if err != nil {
+				log.Fatalln(err)
+			}
 		},
 	}
 
@@ -98,6 +156,13 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 	}
 
 	if strings.Contains(path, PatchFolder) {
+		return nil
+	}
+	if fileInfo.Name() == InstallSHName {
+		err := ioutil_x.CopyFile(strings.Replace(path, _VendorFolder, CompileDirectory, 1), path)
+		if err != nil {
+			return errors.WithStack(err)
+		}
 		return nil
 	}
 
@@ -236,8 +301,14 @@ func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
 	if err != nil {
 		return errors.Wrap(err, "error to annotated with git-commit-hash")
 	}
+	err = WriteCompiledFileToDest(outlookPath, annotateYaml)
+
+	return nil
+}
+
+func WriteCompiledFileToDest(path string, compiledYaml []byte) error {
 	// If not exists mkdir all the folder
-	outlookDir := filepath.Dir(outlookPath)
+	outlookDir := filepath.Dir(path)
 	if _, err := os.Stat(outlookDir); err != nil {
 		if os.IsNotExist(err) {
 			err := os.MkdirAll(outlookDir, 0755)
@@ -246,13 +317,6 @@ func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
 			}
 		}
 	}
-
-	err = WriteCompiledFileToDest(outlookPath, annotateYaml)
-
-	return nil
-}
-
-func WriteCompiledFileToDest(path string, compiledYaml []byte) error {
 	_, err := os.Create(path)
 	if err != nil {
 		return errors.Wrap(err, "Error to create outlook.")
@@ -372,4 +436,142 @@ func checkGVKN(srcJson, patchJson []byte) (bool, error) {
 		return true, nil
 	}
 	return false, nil
+}
+
+type stack struct {
+	lock sync.Mutex
+	s    []string
+}
+
+func NewStack() *stack {
+	return &stack{
+		sync.Mutex{},
+		[]string{},
+	}
+}
+
+func (s *stack) Push(v string) {
+	s.lock.Lock()
+	defer s.lock.Unlock()
+
+	s.s = append(s.s, v)
+}
+
+func (s *stack) Pop() (string, error) {
+	s.lock.Lock()
+	defer s.lock.Unlock()
+
+	l := len(s.s)
+	if l == 0 {
+		return "", errors.New("Empty Stack")
+	}
+
+	res := s.s[l-1]
+	s.s = s.s[:l-1]
+	return res, nil
+}
+
+func generateDag(root string) error {
+	var res []string
+	var check map[string]int
+	check = make(map[string]int)
+	installPath := filepath.Join(root, api.ManifestDirectory, CompileDirectory, InstallSHName)
+	installTemplate := `
+pushd %s
+%s
+popd
+			
+`
+	if _, err := os.Stat(installPath); err == nil {
+		err = os.Remove(installPath)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+	}
+	err := os.MkdirAll(filepath.Dir(installPath), 0755)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	err = WriteCompiledFileToDest(installPath, []byte(InstallSHDefault))
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	f, err := os.OpenFile(installPath, os.O_APPEND|os.O_WRONLY, 0755)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	defer f.Close()
+
+	manifestPath := filepath.Join(root, api.DependencyFile)
+	manVendorDir := filepath.Join(root, api.ManifestDirectory, _VendorFolder)
+	depList, err := getManifestStruct(manifestPath)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	st := NewStack()
+	for _, val := range depList.Items {
+		st.Push(val.Package)
+		res = append(res, val.Package)
+		check[val.Package] = 1
+		outputPath := filepath.Join(api.ManifestDirectory, CompileDirectory, val.Package)
+		cmd := getCmdForInstallScript(root, val.Package)
+		installShContent := fmt.Sprintf(installTemplate, outputPath, cmd)
+		_, err = f.Write([]byte(installShContent))
+		if err != nil {
+			return errors.WithStack(err)
+		}
+	}
+	for ; len(st.s) > 0; {
+		n, err := st.Pop()
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		manifestPath = filepath.Join(manVendorDir, n, api.DependencyFile)
+		data, err := getManifestStruct(manifestPath)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		for _, val := range data.Items {
+			if _, ok := check[val.Package]; !ok {
+				st.Push(val.Package)
+				res = append(res, val.Package)
+				check[val.Package] = 1
+				cmd := getCmdForInstallScript(root, val.Package)
+
+				kcPath := fmt.Sprintf(installTemplate, filepath.Join(api.ManifestDirectory, CompileDirectory, val.Package), cmd)
+				_, err = f.Write([]byte(kcPath))
+				if err != nil {
+					return errors.WithStack(err)
+				}
+			}
+		}
+	}
+	return nil
+}
+
+func getCmdForInstallScript(root, pkg string) string {
+	outputPath := filepath.Join(api.ManifestDirectory, CompileDirectory, pkg)
+	cmd := "kubectl apply -R -f ."
+	path := filepath.Join(root, outputPath, api.ManifestDirectory, "app", InstallSHName)
+	if _, err := os.Stat(path); err == nil {
+		cmd = "./" + filepath.Join(api.ManifestDirectory, "app", InstallSHName)
+	}
+	return cmd
+}
+
+func getManifestStruct(path string) (*api.DependencyList, error) {
+	if _, err := os.Stat(path); err != nil {
+		return nil, errors.WithStack(err)
+	}
+	data, err := ioutil.ReadFile(path)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	depList := api.DependencyList{}
+	err = yaml.Unmarshal(data, &depList)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	return &depList, nil
 }

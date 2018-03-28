@@ -3,7 +3,6 @@ package commands
 import (
 	"context"
 	"flag"
-	"fmt"
 	"go/build"
 	"io/ioutil"
 	"log"
@@ -26,6 +25,7 @@ var (
 	imports        []string
 	packagePatches map[string]string
 	forkRepo       []string
+	finalFork map[string]string
 )
 
 const PackTempDirectory = ".pack"
@@ -62,6 +62,7 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 	// root of the project.
 	packagePatches = make(map[string]string)
 	depPatchFiles = make(map[string][]string)
+	finalFork = make(map[string]string)
 	logger := log.New(ioutil.Discard, "", 0)
 	if glog.V(glog.Level(1)) {
 		logger = log.New(os.Stdout, "", 0)
@@ -89,21 +90,18 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 		return errors.WithStack(err)
 	}
 
+	importroot := GetImportRoot(root)
 	imports = make([]string, len(manStruc.Items))
 	for key, value := range manStruc.Items {
 		imports[key] = value.Package
 	}
-
-	srcprefix := filepath.Join(build.Default.GOPATH, "src") + string(filepath.Separator)
-	importroot := filepath.ToSlash(strings.TrimPrefix(root, srcprefix))
-
 	manifestYaml := ManifestYaml{}
 	manifestYaml.root = root
 	pkgTree := map[string]pkgtree.PackageOrErr{
 		"github.com/sdboyer/gps": {
 			P: pkgtree.Package{
-				// Name:       "github.com/a8uhnf/go_stack",
-				// ImportPath: "github.com/packsh/demo-dep",
+				Name:       "main",
+				ImportPath: importroot,
 				Imports: imports,
 			},
 		},
@@ -129,7 +127,10 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 		DisableLocking: true,
 	}
 	log.Println("Tempdir: ", tempdir)
-	sourcemgr, _ := gps.NewSourceManager(srcManagerConfig)
+	sourcemgr, err := gps.NewSourceManager(srcManagerConfig)
+	if err != nil {
+		return errors.WithStack(err)
+	}
 	defer sourcemgr.Release()
 
 	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Minute)
@@ -146,16 +147,17 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 	if err == nil {
 		// If no failure, blow away the vendor dir and write a new one out,
 		// stripping nested vendor directories as we go.
-		err = os.RemoveAll(filepath.Join(root, api.ManifestDirectory, _VendorFolder))
+		vendorPath := filepath.Join(root, api.ManifestDirectory, _VendorFolder)
+		err = os.RemoveAll(vendorPath)
 		if err != nil {
 			return errors.WithStack(err)
 		}
-		err = gps.WriteDepTree(filepath.Join(root, api.ManifestDirectory, _VendorFolder), solution, sourcemgr, false, logger)
+		err = gps.WriteDepTree(vendorPath, solution, sourcemgr, false, logger)
 		if err != nil {
 			return errors.WithStack(err)
 		}
 
-		err = filepath.Walk(filepath.Join(root, api.ManifestDirectory, _VendorFolder), findJsonnetFiles)
+		err = filepath.Walk(vendorPath, findJsonnetFiles)
 		if err != nil {
 			return errors.WithStack(err)
 		}
@@ -165,11 +167,11 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 		if err != nil {
 			return errors.WithStack(err)
 		}
-		err = filepath.Walk(filepath.Join(root, api.ManifestDirectory, _VendorFolder), findPatchFolder)
+		err = filepath.Walk(vendorPath, findPatchFolder)
 		if err != nil {
 			return errors.WithStack(err)
 		}
-		err = filepath.Walk(filepath.Join(root, api.ManifestDirectory, _VendorFolder), visitVendorAndApplyPatch)
+		err = filepath.Walk(vendorPath, visitVendorAndApplyPatch)
 		if err != nil {
 			return errors.WithStack(err)
 		}
@@ -184,11 +186,14 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 				return errors.WithStack(err)
 			}
 			dstPath := filepath.Join(root, api.ManifestDirectory, _VendorFolder, val)
-			err = os.RemoveAll(dstPath)
+			finalFork[dstPath] = tmpDir
+		}
+		for key, val := range finalFork {
+			err = os.RemoveAll(key)
 			if err != nil {
 				return errors.WithStack(err)
 			}
-			err = os.Rename(tmpDir, dstPath)
+			err = os.Rename(val, key)
 			if err != nil {
 				return errors.WithStack(err)
 			}
@@ -491,7 +496,7 @@ func (a ManifestYaml) Overrides() gps.ProjectConstraints {
 	manStruc := api.DependencyList{}
 	err = yaml.Unmarshal(byt, &manStruc)
 	if err != nil {
-		log.Fatalln("Error Occuered-----", err)
+		log.Fatalln("Error Occuered", err)
 	}
 
 	for _, value := range manStruc.Items {
@@ -548,27 +553,16 @@ func (a ManifestYaml) DependencyConstraints() gps.ProjectConstraints {
 	return projectConstraints
 }
 
-func mapPatches(repo string, patches []string) error {
-	for _, val := range patches {
-		if _, ok := packagePatches[val]; ok {
-			return fmt.Errorf("%s defined in multiple packages.", val)
-		}
-		packagePatches[val] = repo
-	}
-	return nil
-}
-
 func (a ManifestYaml) TestDependencyConstraints() gps.ProjectConstraints {
 	return nil
 }
 
 type InternalManifest struct {
-	root string
+	root        string
 }
 
 func (a InternalManifest) DependencyConstraints() gps.ProjectConstraints {
 	projectConstraints := make(gps.ProjectConstraints)
-
 	man := filepath.Join(a.root, api.DependencyFile)
 	byt, err := ioutil.ReadFile(man)
 	manStruc := api.DependencyList{}
@@ -616,4 +610,10 @@ func (a NaiveAnalyzer) lookForManifest(root string) (gps.Manifest, gps.Lock, err
 	lck := &InternalLock{}
 	lck.root = root
 	return man, lck, nil
+}
+
+func GetImportRoot(root string) string {
+	srcprefix := filepath.Join(build.Default.GOPATH, "src") + string(filepath.Separator)
+	importroot := filepath.ToSlash(strings.TrimPrefix(root, srcprefix))
+	return importroot
 }

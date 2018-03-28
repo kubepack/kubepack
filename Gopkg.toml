@@ -48,7 +48,7 @@
 [[constraint]]
   name = "k8s.io/kubectl"
   source = "https://github.com/kubepack/kubectl.git"
-  branch = "up-kin"
+  branch = "crd"
 
 [[constraint]]
   branch = "master"
