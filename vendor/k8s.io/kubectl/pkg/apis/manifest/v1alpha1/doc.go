@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// +k8s:deepcopy-gen=package
+// +k8s:conversion-gen=k8s.io/kubectl/pkg/apis/manifest
+
 // Package v1alpha1 contains the type definition for Manifest and Descriptor.
 // It is not an official kubernetes API, but in a kubernetes API style.
+// +groupName=manifest.k8s.io
 package v1alpha1 // import "k8s.io/kubectl/pkg/apis/manifest/v1alpha1"

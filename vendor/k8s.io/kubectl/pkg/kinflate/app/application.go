@@ -17,8 +17,6 @@ limitations under the License.
 package app
 
 import (
-	"fmt"
-
 	"github.com/ghodss/yaml"
 
 	manifest "k8s.io/kubectl/pkg/apis/manifest/v1alpha1"
@@ -26,16 +24,15 @@ import (
 	interror "k8s.io/kubectl/pkg/kinflate/internal/error"
 	"k8s.io/kubectl/pkg/kinflate/resource"
 	"k8s.io/kubectl/pkg/kinflate/transformers"
-	"k8s.io/kubectl/pkg/kinflate/types"
 	"k8s.io/kubectl/pkg/loader"
 )
 
 type Application interface {
 	// Resources computes and returns the resources for the app.
-	Resources() (types.ResourceCollection, error)
+	Resources() (resource.ResourceCollection, error)
 	// RawResources computes and returns the raw resources from the manifest.
 	// It contains resources from 1) untransformed resources from current manifest 2) transformed resources from sub packages
-	RawResources() (types.ResourceCollection, error)
+	RawResources() (resource.ResourceCollection, error)
 }
 
 var _ Application = &applicationImpl{}
@@ -63,33 +60,33 @@ func New(loader loader.Loader) (Application, error) {
 }
 
 // Resources computes and returns the resources from the manifest.
-func (a *applicationImpl) Resources() (types.ResourceCollection, error) {
+func (a *applicationImpl) Resources() (resource.ResourceCollection, error) {
 	errs := &interror.ManifestErrors{}
 	raw, err := a.RawResources()
 	if err != nil {
 		errs.Append(err)
 	}
 
-	resources := []*resource.Resource{}
 	cms, err := resource.NewFromConfigMaps(a.loader, a.manifest.Configmaps)
 	if err != nil {
 		errs.Append(err)
-	} else {
-		resources = append(resources, cms...)
 	}
 	secrets, err := resource.NewFromSecretGenerators(a.loader.Root(), a.manifest.SecretGenerators)
 	if err != nil {
 		errs.Append(err)
-	} else {
-		resources = append(resources, secrets...)
+	}
+	res, err := resource.Merge(cms, secrets)
+	if err != nil {
+		return nil, err
+	}
+	// Only append hash for generated configmaps and secrets.
+	nht := transformers.NewNameHashTransformer()
+	err = nht.Transform(res)
+	if err != nil {
+		return nil, err
 	}
 
-	ps, err := resource.NewFromPaths(a.loader, a.manifest.Patches)
-	if err != nil {
-		errs.Append(err)
-	}
-	// TODO: remove this func after migrating to ResourceCollection
-	patches, err := resourceCollectionFromResources(ps)
+	patches, err := resource.NewFromPatches(a.loader, a.manifest.Patches)
 	if err != nil {
 		errs.Append(err)
 	}
@@ -98,48 +95,61 @@ func (a *applicationImpl) Resources() (types.ResourceCollection, error) {
 		return nil, errs
 	}
 
-	allResources, err := resourceCollectionFromResources(resources)
+	// Reindex the Raw Resources (resources from sub package and resources field of this package).
+	// raw is a ResourceCollection (map) from <GVK, original name> to object with the transformed name.
+	// transRaw is a ResourceCollection (map) from <GVK, transformed name> to object with the transformed name.
+	transRaw := reindexResourceCollection(raw)
+	// allRes contains the resources that are indexed by the original names (old names).
+	// allTransRes contains the resources that are indexed by the transformed names (new names).
+	// allRes and allTransRes point to the same set of objects with new names.
+	allTransRes, err := resource.Merge(res, transRaw)
 	if err != nil {
 		return nil, err
 	}
-	err = types.Merge(allResources, raw)
+	allRes, err := resource.Merge(res, raw)
 	if err != nil {
 		return nil, err
 	}
 
-	t, err := a.getTransformer(patches)
+	ot, err := transformers.NewOverlayTransformer(patches)
 	if err != nil {
 		return nil, err
 	}
-	err = t.Transform(types.KObject(allResources))
+	// Overlay transformer uses the ResourceCollection indexed by the original names.
+	err = ot.Transform(allRes)
 	if err != nil {
 		return nil, err
 	}
-	return allResources, nil
+
+	t, err := a.getTransformer()
+	if err != nil {
+		return nil, err
+	}
+	err = t.Transform(allTransRes)
+	if err != nil {
+		return nil, err
+	}
+
+	return allRes, nil
 }
 
 // RawResources computes and returns the raw resources from the manifest.
-func (a *applicationImpl) RawResources() (types.ResourceCollection, error) {
+func (a *applicationImpl) RawResources() (resource.ResourceCollection, error) {
 	subAppResources, errs := a.subAppResources()
-	allRes, err := resource.NewFromPaths(a.loader, a.manifest.Resources)
+	resources, err := resource.NewFromResources(a.loader, a.manifest.Resources)
 	if err != nil {
 		errs.Append(err)
 	}
-	// TODO: remove this func after migrating to ResourceCollection
-	allResources, err := resourceCollectionFromResources(allRes)
-	if err != nil {
-		errs.Append(err)
-	}
+
 	if len(errs.Get()) > 0 {
 		return nil, errs
 	}
 
-	err = types.Merge(allResources, subAppResources)
-	return allResources, err
+	return resource.Merge(resources, subAppResources)
 }
 
-func (a *applicationImpl) subAppResources() (types.ResourceCollection, *interror.ManifestErrors) {
-	allResources := types.ResourceCollection{}
+func (a *applicationImpl) subAppResources() (resource.ResourceCollection, *interror.ManifestErrors) {
+	sliceOfSubAppResources := []resource.ResourceCollection{}
 	errs := &interror.ManifestErrors{}
 	for _, pkgPath := range a.manifest.Packages {
 		subloader, err := a.loader.New(pkgPath)
@@ -158,29 +168,22 @@ func (a *applicationImpl) subAppResources() (types.ResourceCollection, *interror
 			errs.Append(err)
 			continue
 		}
-		types.Merge(allResources, subAppResources)
+		sliceOfSubAppResources = append(sliceOfSubAppResources, subAppResources)
+	}
+	allResources, err := resource.Merge(sliceOfSubAppResources...)
+	if err != nil {
+		errs.Append(err)
 	}
 	return allResources, errs
 }
 
 // getTransformer generates the following transformers:
-// 1) append hash for configmaps ans secrets
-// 2) apply overlay
-// 3) name prefix
-// 4) apply labels
-// 5) apply annotations
-// 6) update name reference
-func (a *applicationImpl) getTransformer(patches types.ResourceCollection) (transformers.Transformer, error) {
+// 1) name prefix
+// 2) apply labels
+// 3) apply annotations
+// 4) update name reference
+func (a *applicationImpl) getTransformer() (transformers.Transformer, error) {
 	ts := []transformers.Transformer{}
-
-	nht := transformers.NewNameHashTransformer()
-	ts = append(ts, nht)
-
-	ot, err := transformers.NewOverlayTransformer(types.KObject(patches))
-	if err != nil {
-		return nil, err
-	}
-	ts = append(ts, ot)
 
 	npt, err := transformers.NewDefaultingNamePrefixTransformer(string(a.manifest.NamePrefix))
 	if err != nil {
@@ -208,14 +211,13 @@ func (a *applicationImpl) getTransformer(patches types.ResourceCollection) (tran
 	return transformers.NewMultiTransformer(ts), nil
 }
 
-func resourceCollectionFromResources(res []*resource.Resource) (types.ResourceCollection, error) {
-	out := types.ResourceCollection{}
-	for _, res := range res {
-		gvkn := res.GVKN()
-		if _, found := out[gvkn]; found {
-			return nil, fmt.Errorf("duplicated %#v is not allowed", gvkn)
-		}
-		out[gvkn] = res.Data
+// reindexResourceCollection returns a new instance of ResourceCollection which
+// is indexed using the new name in the object.
+func reindexResourceCollection(rc resource.ResourceCollection) resource.ResourceCollection {
+	result := resource.ResourceCollection{}
+	for gvkn, res := range rc {
+		gvkn.Name = res.Data.GetName()
+		result[gvkn] = res
 	}
-	return out, nil
+	return result
 }

@@ -5,9 +5,9 @@ import (
 )
 
 const (
-	ResourceKindDependency = "Dependency"
-	ResourceNameDependency = "dependency"
-	ResourceTypeDependency = "dependencies"
+	ResourceKindDependency     = "Dependency"
+	ResourceSingularDependency = "dependency"
+	ResourcePluralDependency   = "dependencies"
 )
 
 const (
@@ -17,6 +17,7 @@ const (
 )
 
 // +genclient
+// +genclient:skipVerbs=updateStatus
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 type Dependency struct {
@@ -44,12 +45,13 @@ type DependencyList struct {
 }
 
 const (
-	ResourceKindRelease = "Release"
-	ResourceNameRelease = "release"
-	ResourceTypeRelease = "releases"
+	ResourceKindRelease     = "Release"
+	ResourceSingularRelease = "release"
+	ResourcePluralRelease   = "releases"
 )
 
 // +genclient
+// +genclient:skipVerbs=updateStatus
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 type Release struct {
@@ -81,7 +83,6 @@ type ReleaseList struct {
 type ComponentConfig struct {
 	metav1.TypeMeta `json:",inline"`
 
-	ClusterName          string `json:"clusterName,omitempty"`
-	EnableEventForwarder bool   `json:"enableEventForwarder"`
-	ExtractDockerLabel   bool   `json:"extractDockerLabel"`
+	ClusterName        string `json:"clusterName,omitempty"`
+	ExtractDockerLabel bool   `json:"extractDockerLabel"`
 }

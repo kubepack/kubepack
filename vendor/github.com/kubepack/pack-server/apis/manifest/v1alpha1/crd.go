@@ -9,7 +9,7 @@ import (
 func (c Dependency) CustomResourceDefinition() *apiextensions.CustomResourceDefinition {
 	return &apiextensions.CustomResourceDefinition{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:   ResourceTypeDependency + "." + SchemeGroupVersion.Group,
+			Name:   ResourcePluralDependency + "." + SchemeGroupVersion.Group,
 			Labels: map[string]string{"app": "kubepack"},
 		},
 		Spec: apiextensions.CustomResourceDefinitionSpec{
@@ -17,10 +17,10 @@ func (c Dependency) CustomResourceDefinition() *apiextensions.CustomResourceDefi
 			Version: SchemeGroupVersion.Version,
 			Scope:   apiextensions.NamespaceScoped,
 			Names: apiextensions.CustomResourceDefinitionNames{
-				Singular:   ResourceNameDependency,
-				Plural:     ResourceTypeDependency,
+				Plural:     ResourcePluralDependency,
+				Singular:   ResourceSingularDependency,
 				Kind:       ResourceKindDependency,
-				ShortNames: []string{"mfs"},
+				ShortNames: []string{"dep"},
 			},
 		},
 	}
@@ -29,7 +29,7 @@ func (c Dependency) CustomResourceDefinition() *apiextensions.CustomResourceDefi
 func (c Release) CustomResourceDefinition() *apiextensions.CustomResourceDefinition {
 	return &apiextensions.CustomResourceDefinition{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:   ResourceTypeRelease + "." + SchemeGroupVersion.Group,
+			Name:   ResourcePluralRelease + "." + SchemeGroupVersion.Group,
 			Labels: map[string]string{"app": "kubepack"},
 		},
 		Spec: apiextensions.CustomResourceDefinitionSpec{
@@ -37,10 +37,36 @@ func (c Release) CustomResourceDefinition() *apiextensions.CustomResourceDefinit
 			Version: SchemeGroupVersion.Version,
 			Scope:   apiextensions.NamespaceScoped,
 			Names: apiextensions.CustomResourceDefinitionNames{
-				Singular:   ResourceNameRelease,
-				Plural:     ResourceTypeRelease,
+				Plural:     ResourcePluralRelease,
+				Singular:   ResourceSingularRelease,
 				Kind:       ResourceKindRelease,
 				ShortNames: []string{"rl"},
+			},
+		},
+	}
+}
+
+const (
+	ResourceKindManifest     = "Manifest"
+	ResourcePluralManifest   = "manifests"
+	ResourceSingularManifest = "manifest"
+)
+
+func ManifestResourceDefinition() *apiextensions.CustomResourceDefinition {
+	return &apiextensions.CustomResourceDefinition{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:   ResourcePluralManifest + "." + SchemeGroupVersion.Group,
+			Labels: map[string]string{"app": "kubepack"},
+		},
+		Spec: apiextensions.CustomResourceDefinitionSpec{
+			Group:   manifest.GroupName,
+			Version: SchemeGroupVersion.Version,
+			Scope:   apiextensions.NamespaceScoped,
+			Names: apiextensions.CustomResourceDefinitionNames{
+				Plural:     ResourcePluralManifest,
+				Singular:   ResourceSingularManifest,
+				Kind:       ResourceKindManifest,
+				ShortNames: []string{"mfs"},
 			},
 		},
 	}
