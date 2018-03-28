@@ -121,6 +121,17 @@ func visitPatchAndDump(path string, fileInfo os.FileInfo, ferr error) error {
 	if fileInfo.Name() == ".gitignore" || fileInfo.Name() == "README.md" {
 		return nil
 	}
+	if fileInfo.Name() == InstallSHName {
+		installYaml, err := ioutil.ReadFile(path)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		err = WriteCompiledFileToDest(strings.Replace(path, _VendorFolder, CompileDirectory, 1), installYaml)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		return nil
+	}
 	if strings.HasSuffix(path, "jsonnet.TEMPLATE") {
 		return nil
 	}
@@ -275,8 +286,14 @@ func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
 	if err != nil {
 		return errors.Wrap(err, "error to annotated with git-commit-hash")
 	}
+	err = WriteCompiledFileToDest(outlookPath, annotateYaml)
+
+	return nil
+}
+
+func WriteCompiledFileToDest(path string, compiledYaml []byte) error {
 	// If not exists mkdir all the folder
-	outlookDir := filepath.Dir(outlookPath)
+	outlookDir := filepath.Dir(path)
 	if _, err := os.Stat(outlookDir); err != nil {
 		if os.IsNotExist(err) {
 			err := os.MkdirAll(outlookDir, 0755)
@@ -285,13 +302,6 @@ func DumpCompiledFile(compiledYaml []byte, outlookPath string) error {
 			}
 		}
 	}
-
-	err = WriteCompiledFileToDest(outlookPath, annotateYaml)
-
-	return nil
-}
-
-func WriteCompiledFileToDest(path string, compiledYaml []byte) error {
 	_, err := os.Create(path)
 	if err != nil {
 		return errors.Wrap(err, "Error to create outlook.")
@@ -525,9 +535,10 @@ popd
 }
 
 func getCmdForScript(root, pkg string) string {
-	outputPath := filepath.Join(api.ManifestDirectory, CompileDirectory, pkg)
+	outputPath := filepath.Join(api.ManifestDirectory, _VendorFolder, pkg)
 	cmd := "kubectl apply -R -f ."
-	if _, err := os.Stat(filepath.Join(root, outputPath, api.ManifestDirectory, "app", InstallSHName)); err == nil {
+	path := filepath.Join(root, outputPath, api.ManifestDirectory, "app", InstallSHName)
+	if _, err := os.Stat(path); err == nil {
 		cmd = "./" + filepath.Join(api.ManifestDirectory, "app", InstallSHName)
 	}
 	return cmd
