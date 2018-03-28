@@ -82,7 +82,29 @@ func NewUpCommand(plugin bool) *cobra.Command {
 			}
 
 			importroot := GetImportRoot(rootPath)
-			err = CopyDir(filepath.Join(rootPath, api.ManifestDirectory, "app"), filepath.Join(rootPath, api.ManifestDirectory, CompileDirectory, importroot))
+			source := filepath.Join(rootPath, api.ManifestDirectory, "app")
+			dest := filepath.Join(rootPath, api.ManifestDirectory, CompileDirectory, importroot, api.ManifestDirectory, "app")
+			err = CopyDir(source, dest)
+			if err != nil {
+				log.Fatalln(err)
+			}
+
+			installPath := filepath.Join(rootPath, api.ManifestDirectory, "app", InstallSHName)
+			installTemplate := `
+pushd %s
+%s
+popd
+			
+`
+			f, err := os.OpenFile(installPath, os.O_APPEND|os.O_WRONLY, 0755)
+			if err != nil {
+				log.Fatalln(err)
+			}
+			defer f.Close()
+			outputPath := filepath.Join(api.ManifestDirectory, CompileDirectory, importroot)
+			c := getCmdForScript(rootPath, importroot)
+			installShContent := fmt.Sprintf(installTemplate, outputPath, c)
+			_, err = f.Write([]byte(installShContent))
 			if err != nil {
 				log.Fatalln(err)
 			}
@@ -467,10 +489,7 @@ popd
 		res = append(res, val.Package)
 		check[val.Package] = 1
 		outputPath := filepath.Join(api.ManifestDirectory, CompileDirectory, val.Package)
-		cmd := "kubectl apply -f ."
-		if _, err := os.Stat(filepath.Join(root, outputPath, api.ManifestDirectory, "app", InstallSHName)); err == nil {
-			cmd = "./" + filepath.Join(api.ManifestDirectory, "app", InstallSHName)
-		}
+		cmd := getCmdForScript(root, val.Package)
 		installShContent := fmt.Sprintf(installTemplate, outputPath, cmd)
 		_, err = f.Write([]byte(installShContent))
 		if err != nil {
@@ -492,8 +511,9 @@ popd
 				st.Push(val.Package)
 				res = append(res, val.Package)
 				check[val.Package] = 1
+				cmd := getCmdForScript(root, val.Package)
 
-				kcPath := fmt.Sprintf(installTemplate, filepath.Join(api.ManifestDirectory, CompileDirectory, val.Package))
+				kcPath := fmt.Sprintf(installTemplate, filepath.Join(api.ManifestDirectory, CompileDirectory, val.Package), cmd)
 				_, err = f.Write([]byte(kcPath))
 				if err != nil {
 					return errors.WithStack(err)
@@ -502,6 +522,15 @@ popd
 		}
 	}
 	return nil
+}
+
+func getCmdForScript(root, pkg string) string {
+	outputPath := filepath.Join(api.ManifestDirectory, CompileDirectory, pkg)
+	cmd := "kubectl apply -R -f ."
+	if _, err := os.Stat(filepath.Join(root, outputPath, api.ManifestDirectory, "app", InstallSHName)); err == nil {
+		cmd = "./" + filepath.Join(api.ManifestDirectory, "app", InstallSHName)
+	}
+	return cmd
 }
 
 func getManifestStruct(path string) (*api.DependencyList, error) {
@@ -522,15 +551,18 @@ func getManifestStruct(path string) (*api.DependencyList, error) {
 }
 
 // Copies file source to destination dest.
-func CopyFile(source string, dest string) (err error) {
+func CopyFile(source string, dest string) error {
 	sf, err := os.Open(source)
 	if err != nil {
-		return err
+		return errors.WithStack(err)
+	}
+	if filepath.Base(source) == InstallSHName {
+		return nil
 	}
 	defer sf.Close()
 	df, err := os.Create(dest)
 	if err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 	defer df.Close()
 	_, err = io.Copy(df, sf)
@@ -538,16 +570,19 @@ func CopyFile(source string, dest string) (err error) {
 		si, err := os.Stat(source)
 		if err == nil {
 			err = os.Chmod(dest, si.Mode())
+			if err != nil {
+				return errors.WithStack(err)
+			}
 		}
 
 	}
 
-	return
+	return err
 }
 
 // Recursively copies a directory tree, attempting to preserve permissions.
 // Source directory must exist, destination directory must *not* exist.
-func CopyDir(source string, dest string) (err error) {
+func CopyDir(source string, dest string) error {
 	// get properties of source dir
 	fi, err := os.Stat(source)
 	if err != nil {
@@ -585,5 +620,5 @@ func CopyDir(source string, dest string) (err error) {
 		}
 
 	}
-	return
+	return nil
 }
