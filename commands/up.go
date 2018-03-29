@@ -103,26 +103,11 @@ func NewUpCommand(plugin bool) *cobra.Command {
 			if err != nil {
 				log.Fatalln(err)
 			}
-
+			err = writeCommandToInstallSH(importroot, rootPath)
+			if err != nil {
+				log.Fatalln(err)
+			}
 			installPath := filepath.Join(rootPath, api.ManifestDirectory, CompileDirectory, InstallSHName)
-			installTemplate := `
-pushd %s
-%s
-popd
-			
-`
-			f, err := os.OpenFile(installPath, os.O_APPEND|os.O_WRONLY, 0755)
-			if err != nil {
-				log.Fatalln(err)
-			}
-			defer f.Close()
-			outputPath := filepath.Join(api.ManifestDirectory, CompileDirectory, importroot)
-			c := getCmdForInstallScript(rootPath, importroot)
-			installShContent := fmt.Sprintf(installTemplate, outputPath, c)
-			_, err = f.Write([]byte(installShContent))
-			if err != nil {
-				log.Fatalln(err)
-			}
 			err = os.Chmod(installPath, 0777)
 			if err != nil {
 				log.Fatalln(err)
@@ -476,12 +461,6 @@ func generateDag(root string) error {
 	var check map[string]int
 	check = make(map[string]int)
 	installPath := filepath.Join(root, api.ManifestDirectory, CompileDirectory, InstallSHName)
-	installTemplate := `
-pushd %s
-%s
-popd
-			
-`
 	if _, err := os.Stat(installPath); err == nil {
 		err = os.Remove(installPath)
 		if err != nil {
@@ -513,16 +492,13 @@ popd
 		st.Push(val.Package)
 		res = append(res, val.Package)
 		check[val.Package] = 1
-		outputPath := filepath.Join(api.ManifestDirectory, CompileDirectory, val.Package)
-		cmd := getCmdForInstallScript(root, val.Package)
-		installShContent := fmt.Sprintf(installTemplate, outputPath, cmd)
-		_, err = f.Write([]byte(installShContent))
-		if err != nil {
-			return errors.WithStack(err)
-		}
 	}
 	for ; len(st.s) > 0; {
 		n, err := st.Pop()
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		err = writeCommandToInstallSH(n, root)
 		if err != nil {
 			return errors.WithStack(err)
 		}
@@ -536,13 +512,6 @@ popd
 				st.Push(val.Package)
 				res = append(res, val.Package)
 				check[val.Package] = 1
-				cmd := getCmdForInstallScript(root, val.Package)
-
-				kcPath := fmt.Sprintf(installTemplate, filepath.Join(api.ManifestDirectory, CompileDirectory, val.Package), cmd)
-				_, err = f.Write([]byte(kcPath))
-				if err != nil {
-					return errors.WithStack(err)
-				}
 			}
 		}
 	}
@@ -574,4 +543,27 @@ func getManifestStruct(path string) (*api.DependencyList, error) {
 	}
 
 	return &depList, nil
+}
+
+func writeCommandToInstallSH(pkg, root string) error {
+	installTemplate := `
+pushd %s
+%s
+popd
+			
+`
+	installPath := filepath.Join(root, api.ManifestDirectory, CompileDirectory, InstallSHName)
+	f, err := os.OpenFile(installPath, os.O_APPEND|os.O_WRONLY, 0755)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	defer f.Close()
+	outputPath := filepath.Join(api.ManifestDirectory, CompileDirectory, pkg)
+	cmd := getCmdForInstallScript(root, pkg)
+	installShContent := fmt.Sprintf(installTemplate, outputPath, cmd)
+	_, err = f.Write([]byte(installShContent))
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	return nil
 }
