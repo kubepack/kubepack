@@ -40,7 +40,7 @@ This patch file-path will be same as `manifests/vendor` folder.
 $ pack up -f .
 ```
 
-command combine files from `manifests/patch` and `manifests/vendor` folder. This combination of `manifests/patch` and `manifests/vendor` files appear in `manifests/output` folder.
+command combine files from `manifests/patch` and `manifests/vendor` folder. This combination of `manifests/patch` and `manifests/vendor` files appear in `manifests/output` folder. [Read more](/docs/concepts/how/cli.md)
 
 ### Validate manifests/output folder
 
