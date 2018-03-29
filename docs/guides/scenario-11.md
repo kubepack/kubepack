@@ -12,9 +12,9 @@ section_menu_id: guides
 
 > New to Kubepack? Please start [here](/docs/concepts/README.md).
 
-#Scenario-10
+# Scenario-11
 
-**This doc is trying to explain how pack up command works and how someone can write user-defined install.sh file.**
+**This doc is trying to explain how pack up command works and how install.sh file is generated.**
 
 ![alt text](/docs/_testdata/test-11/test-11.jpg)
 
@@ -32,11 +32,11 @@ You can see `dependency-list.yaml` file in project root.
 
 
 
-When users execute `pack up -f .` command in this project root, following things happen.
+When users execute `$ pack up -f .` command in this project root, following things happen.
 
  - Combine `manifests/vendor` and `manifests/patch` to `manifests/output` folder.
  - Generates a DAG(Directed Acyclic Graph), discovers who depend on who, From `dependency-list.yaml`.
- - With generation of DAG, also generate a install.sh file, contains commands to deploy final `manifests/output` folder.
+ - With generation of DAG, also generate a `install.sh` file, contains commands to deploy final `manifests/output` folder.
   There could be separate deploy script for some repository, then that script will run instead of default `kubectl apply -R -f .`
 
  
@@ -87,7 +87,7 @@ If you see `manifests/output/install.sh`
  
 P.S. If any repository's `manifests/app` folder contain their own `install.sh` file, then instead of default `kubectl apply`, `install.sh` script will run.
 
-Users can use their customize commands for deploy, these customize commands should be in `manifests/app/install.sh` file.
+Users can use their customize commands for deploy, these customize commands should be in `manifests/app/install.sh` file of that repository.
 
 
 ## Next Steps

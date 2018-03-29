@@ -27,4 +27,11 @@ It works in couples of step.
  There could be separate deploy script for some repository, then that script will run instead of default `kubectl apply -R -f .`
  
  
-## [Example]()  
+- [Example](/docs/_testdata/test-11)
+
+## Next Steps
+
+- Want to publish apps using Kubepack? Please visit [here](/docs/concepts/how/publisher.md).
+- Want to consume apps published using Kubepack? Please visit [here](/docs/concepts/how/user.md).
+- To learn about `dependency-list.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
+- Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).  

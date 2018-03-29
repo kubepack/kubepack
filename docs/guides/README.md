@@ -27,3 +27,4 @@ Guides show you how to perform tasks with Kubepack.
 - [Scenario-8](/docs/guides/scenario-8.md) Deploy some application from cluster.
 - [Scenario-9](/docs/guides/scenario-9.md) How jsonnet works in **Pack** and appears in `manifests/vendor` folder.
 - [Scenario-10](/docs/guides/scenario-10.md) How jsonnet works in **Pack**, in more complex scenario than scenario-9.
+- [Scenario-11](/docs/guides/scenario-11.md) How `install.sh` script generate during `pack up` command.

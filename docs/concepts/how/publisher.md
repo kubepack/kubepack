@@ -115,3 +115,4 @@ So that, others can use it through pack cli.
 - Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).
 - Learn more about **Pack** jsonnet-support [here](/docs/concepts/how/jsonnet-support.md).
 - Learn more about **Pack** validation [here](/docs/concepts/how/validation.md).
+- Learn more about **pack up** command [here](/docs/concepts/how/up.md)
