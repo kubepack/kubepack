@@ -438,36 +438,36 @@ func checkGVKN(srcJson, patchJson []byte) (bool, error) {
 	return false, nil
 }
 
-type stack struct {
+type queue struct {
 	lock sync.Mutex
 	s    []string
 }
 
-func NewStack() *stack {
-	return &stack{
+func NewQueue() *queue {
+	return &queue{
 		sync.Mutex{},
 		[]string{},
 	}
 }
 
-func (s *stack) Push(v string) {
+func (s *queue) Push(v string) {
 	s.lock.Lock()
 	defer s.lock.Unlock()
 
 	s.s = append(s.s, v)
 }
 
-func (s *stack) Pop() (string, error) {
+func (s *queue) Pop() (string, error) {
 	s.lock.Lock()
 	defer s.lock.Unlock()
 
 	l := len(s.s)
 	if l == 0 {
-		return "", errors.New("Empty Stack")
+		return "", errors.New("Empty Queue")
 	}
 
-	res := s.s[l-1]
-	s.s = s.s[:l-1]
+	res := s.s[0]
+	s.s = s.s[1:]
 	return res, nil
 }
 
@@ -508,7 +508,7 @@ popd
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	st := NewStack()
+	st := NewQueue()
 	for _, val := range depList.Items {
 		st.Push(val.Package)
 		res = append(res, val.Package)
