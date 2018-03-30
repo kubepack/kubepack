@@ -4,6 +4,7 @@
 [![Slack](http://slack.kubernetes.io/badge.svg)](http://slack.kubernetes.io/#kubepack)
 [![mailing list](https://img.shields.io/badge/mailing_list-join-blue.svg)](https://groups.google.com/forum/#!forum/kubepack)
 [![Twitter](https://img.shields.io/twitter/follow/kubepack.svg?style=social&logo=twitter&label=Follow)](https://twitter.com/intent/follow?screen_name=kubepack)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fkubepack%2Fpack.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkubepack%2Fpack?ref=badge_shield)
 
 # Kubepack
 Kubepack by AppsCode is a  Secure Lightweight Kubernetes Package Manager.
@@ -33,3 +34,7 @@ We use Slack for public discussions. To chit chat with us or the rest of the com
 To receive product announcements, please join our [mailing list](https://groups.google.com/forum/#!forum/kubepack) or follow us on [Twitter](https://twitter.com/Kubepack). Our mailing list is also used to share design docs shared via Google docs.
 
 If you have found a bug with Kubepack or want to request for new features, please [file an issue](https://github.com/kubepack/pack/issues/new).
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fkubepack%2Fpack.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkubepack%2Fpack?ref=badge_large)
