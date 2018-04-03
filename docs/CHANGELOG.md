@@ -2,14 +2,14 @@
 
 ## [Unreleased](https://github.com/kubepack/pack/tree/HEAD)
 
-[Full Changelog](https://github.com/kubepack/pack/compare/0.1.0-alpha.2...HEAD)
+[Full Changelog](https://github.com/kubepack/pack/compare/0.1.0...HEAD)
 
 **Merged pull requests:**
 
-- Prepare docs for 0.1.0-alpha.2 [\#59](https://github.com/kubepack/pack/pull/59) ([tamalsaha](https://github.com/tamalsaha))
+- Prepare docs for 0.1.0 [\#59](https://github.com/kubepack/pack/pull/59) ([tamalsaha](https://github.com/tamalsaha))
 
-## [0.1.0-alpha.2](https://github.com/kubepack/pack/tree/0.1.0-alpha.2) (2018-03-14)
-[Full Changelog](https://github.com/kubepack/pack/compare/0.1.0-alpha.1...0.1.0-alpha.2)
+## [0.1.0](https://github.com/kubepack/pack/tree/0.1.0) (2018-03-14)
+[Full Changelog](https://github.com/kubepack/pack/compare/0.1.0-alpha.1...0.1.0)
 
 **Merged pull requests:**
 

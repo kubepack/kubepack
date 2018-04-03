@@ -1,11 +1,11 @@
 ---
 title: Pack Set Nameprefix
 menu:
-  docs_0.1.0-alpha.2:
+  docs_0.1.0:
     identifier: pack-set-nameprefix
     name: Pack Set Nameprefix
     parent: reference
-menu_name: docs_0.1.0-alpha.2
+menu_name: docs_0.1.0
 section_menu_id: reference
 ---
 ## pack set nameprefix

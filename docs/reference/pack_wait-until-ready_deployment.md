@@ -1,11 +1,11 @@
 ---
 title: Pack Wait-Until-Ready Deployment
 menu:
-  docs_0.1.0-alpha.2:
+  docs_0.1.0:
     identifier: pack-wait-until-ready-deployment
     name: Pack Wait-Until-Ready Deployment
     parent: reference
-menu_name: docs_0.1.0-alpha.2
+menu_name: docs_0.1.0
 section_menu_id: reference
 ---
 ## pack wait-until-ready deployment
