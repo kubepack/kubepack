@@ -14,19 +14,11 @@ section_menu_id: concepts
 
 # How up command works
 
-`pack up -f .` command combine `manifests/vendor` and `manifests/patch` folder and generate `manifests/output` folder. In this command, it generates a DAG(Directed Acyclic Graph) 
-from `dependency-list.yaml` file. 
+`pack up -f .` command combines `manifests/vendor` and `manifests/patch` folders and generates `manifests/output` folder. It works in couples of step.
 
-It describes how dependency chain exists. 
+ - Combines `manifests/vendor` and `manifests/patch` to `manifests/output` folder.
+ - Generates a DAG(Directed Acyclic Graph) from `dependency-list.yaml`. From this dependency graph, it generates a `install.sh` file. This installer script contains commands to deploy `manifests/output` folder. Each parent package can provide their own `install.sh` script. If no script is provided, `kubectl apply -R -f .` command will be used to install a package.
 
-It works in couples of step.
-
- - Combine `manifests/vendor` and `manifests/patch` to `manifests/output` folder.
- - Generates a DAG(Directed Acyclic Graph), discovers who depend on who, From `dependency-list.yaml`.
- - With generation of DAG, also generate a install.sh file, contains commands to deploy final `manifests/output` folder.
- There could be separate deploy script for some repository, then that script will run instead of default `kubectl apply -R -f .`
- 
- 
 - [Example](/docs/_testdata/test-11)
 
 ## Next Steps
@@ -34,4 +26,4 @@ It works in couples of step.
 - Want to publish apps using Kubepack? Please visit [here](/docs/concepts/how/publisher.md).
 - Want to consume apps published using Kubepack? Please visit [here](/docs/concepts/how/user.md).
 - To learn about `dependency-list.yaml` file, please visit [here](/docs/concepts/how/manifest.md).
-- Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).  
+- Learn more about `pack` cli from [here](/docs/concepts/how/cli.md).
