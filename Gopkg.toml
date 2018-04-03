@@ -43,7 +43,7 @@
 [[constraint]]
   name = "github.com/golang/dep"
   source = "https://github.com/kubepack/dep.git"
-  branch = "dep-bypass"
+  branch = "master"
 
 [[constraint]]
   name = "k8s.io/kubectl"
@@ -128,9 +128,8 @@
   revision = "edc3ab29cdff8694dd6feb85cfeb4b5f1b38ed9c"
 
 [[override]]
-  branch = "parse-constraints-with-dash-in-pre"
+  branch = "2.x"
   name = "github.com/Masterminds/semver"
-  source = "https://github.com/carolynvs/semver.git"
 
 [[override]]
   branch = "master"

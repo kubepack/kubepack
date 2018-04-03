@@ -1,15 +1,15 @@
 package commands
 
 import (
+	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 
 	api "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
-	kin_const "k8s.io/kubectl/pkg/kinflate/constants"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
-	"io/ioutil"
+	kin_const "k8s.io/kubectl/pkg/kinflate/constants"
 )
 
 type initOptions struct{}

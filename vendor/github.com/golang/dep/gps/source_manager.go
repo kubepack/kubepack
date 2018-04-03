@@ -20,6 +20,7 @@ import (
 	"time"
 
 	"github.com/golang/dep/gps/pkgtree"
+	"github.com/golang/dep/internal/fs"
 	"github.com/nightlyone/lockfile"
 	"github.com/pkg/errors"
 	"github.com/sdboyer/constext"
@@ -197,7 +198,7 @@ func NewSourceManager(c SourceManagerConfig) (*SourceMgr, error) {
 		c.Logger = log.New(ioutil.Discard, "", 0)
 	}
 
-	err := os.MkdirAll(filepath.Join(c.Cachedir, "sources"), 0777)
+	err := fs.EnsureDir(filepath.Join(c.Cachedir, "sources"), 0777)
 	if err != nil {
 		return nil, err
 	}
@@ -289,6 +290,11 @@ func NewSourceManager(c SourceManagerConfig) (*SourceMgr, error) {
 	}
 
 	return sm, nil
+}
+
+// Cachedir returns the location of the cache directory.
+func (sm *SourceMgr) Cachedir() string {
+	return sm.cachedir
 }
 
 // UseDefaultSignalHandling sets up typical os.Interrupt signal handling for a
@@ -486,7 +492,13 @@ func (sm *SourceMgr) SourceExists(id ProjectIdentifier) (bool, error) {
 	}
 
 	ctx := context.TODO()
-	return srcg.existsInCache(ctx) || srcg.existsUpstream(ctx), nil
+	if err := srcg.existsInCache(ctx); err == nil {
+		return true, nil
+	}
+	if err := srcg.existsUpstream(ctx); err != nil {
+		return false, err
+	}
+	return true, nil
 }
 
 // SyncSourceFor will ensure that all local caches and information about a
@@ -531,6 +543,12 @@ func (sm *SourceMgr) ExportProject(ctx context.Context, id ProjectIdentifier, v 
 func (sm *SourceMgr) DeduceProjectRoot(ip string) (ProjectRoot, error) {
 	if atomic.LoadInt32(&sm.releasing) == 1 {
 		return "", ErrSourceManagerIsReleased
+	}
+
+	// TODO(sdboyer) refactor deduceRootPath() so that this validation can move
+	// back down below a cache point, rather than executing on every call.
+	if !pathvld.MatchString(ip) {
+		return "", errors.Errorf("%q is not a valid import path", ip)
 	}
 
 	pd, err := sm.deduceCoord.deduceRootPath(context.TODO(), ip)

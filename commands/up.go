@@ -2,12 +2,17 @@ package commands
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
+	"sync"
+
 	"github.com/Masterminds/vcs"
+	ioutil_x "github.com/appscode/go/ioutil"
 	"github.com/appscode/go/log"
 	"github.com/evanphx/json-patch"
 	"github.com/ghodss/yaml"
@@ -21,9 +26,6 @@ import (
 	k8syaml "k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/kubectl/pkg/kinflate/resource"
 	"k8s.io/kubernetes/pkg/kubectl/scheme"
-	ioutil_x "github.com/appscode/go/ioutil"
-	"sync"
-	"fmt"
 )
 
 var (
@@ -103,26 +105,11 @@ func NewUpCommand(plugin bool) *cobra.Command {
 			if err != nil {
 				log.Fatalln(err)
 			}
-
+			err = writeCommandToInstallSH(importroot, rootPath)
+			if err != nil {
+				log.Fatalln(err)
+			}
 			installPath := filepath.Join(rootPath, api.ManifestDirectory, CompileDirectory, InstallSHName)
-			installTemplate := `
-pushd %s
-%s
-popd
-			
-`
-			f, err := os.OpenFile(installPath, os.O_APPEND|os.O_WRONLY, 0755)
-			if err != nil {
-				log.Fatalln(err)
-			}
-			defer f.Close()
-			outputPath := filepath.Join(api.ManifestDirectory, CompileDirectory, importroot)
-			c := getCmdForInstallScript(rootPath, importroot)
-			installShContent := fmt.Sprintf(installTemplate, outputPath, c)
-			_, err = f.Write([]byte(installShContent))
-			if err != nil {
-				log.Fatalln(err)
-			}
 			err = os.Chmod(installPath, 0777)
 			if err != nil {
 				log.Fatalln(err)
@@ -438,6 +425,11 @@ func checkGVKN(srcJson, patchJson []byte) (bool, error) {
 	return false, nil
 }
 
+type node struct {
+	node  string
+	count int
+}
+
 type stack struct {
 	lock sync.Mutex
 	s    []string
@@ -463,7 +455,7 @@ func (s *stack) Pop() (string, error) {
 
 	l := len(s.s)
 	if l == 0 {
-		return "", errors.New("Empty Stack")
+		return "", errors.New("Empty Queue")
 	}
 
 	res := s.s[l-1]
@@ -471,17 +463,20 @@ func (s *stack) Pop() (string, error) {
 	return res, nil
 }
 
+func (s *stack) Top() (string, error) {
+	l := len(s.s)
+	if l == 0 {
+		return "", errors.New("Empty Queue")
+	}
+	res := s.s[l-1]
+	return res, nil
+}
+
 func generateDag(root string) error {
-	var res []string
+	var res []node
 	var check map[string]int
 	check = make(map[string]int)
 	installPath := filepath.Join(root, api.ManifestDirectory, CompileDirectory, InstallSHName)
-	installTemplate := `
-pushd %s
-%s
-popd
-			
-`
 	if _, err := os.Stat(installPath); err == nil {
 		err = os.Remove(installPath)
 		if err != nil {
@@ -509,23 +504,21 @@ popd
 		return errors.WithStack(err)
 	}
 	st := NewStack()
+	// check
 	for _, val := range depList.Items {
 		st.Push(val.Package)
-		res = append(res, val.Package)
+		// res = append(res, val.Package)
 		check[val.Package] = 1
-		outputPath := filepath.Join(api.ManifestDirectory, CompileDirectory, val.Package)
-		cmd := getCmdForInstallScript(root, val.Package)
-		installShContent := fmt.Sprintf(installTemplate, outputPath, cmd)
-		_, err = f.Write([]byte(installShContent))
-		if err != nil {
-			return errors.WithStack(err)
-		}
 	}
-	for ; len(st.s) > 0; {
+	for len(st.s) > 0 {
 		n, err := st.Pop()
 		if err != nil {
 			return errors.WithStack(err)
 		}
+		/*err = writeCommandToInstallSH(n, root)
+		if err != nil {
+			return errors.WithStack(err)
+		}*/
 		manifestPath = filepath.Join(manVendorDir, n, api.DependencyFile)
 		data, err := getManifestStruct(manifestPath)
 		if err != nil {
@@ -534,16 +527,25 @@ popd
 		for _, val := range data.Items {
 			if _, ok := check[val.Package]; !ok {
 				st.Push(val.Package)
-				res = append(res, val.Package)
-				check[val.Package] = 1
-				cmd := getCmdForInstallScript(root, val.Package)
-
-				kcPath := fmt.Sprintf(installTemplate, filepath.Join(api.ManifestDirectory, CompileDirectory, val.Package), cmd)
-				_, err = f.Write([]byte(kcPath))
-				if err != nil {
-					return errors.WithStack(err)
-				}
 			}
+
+			check[val.Package] = max(check[n]+1, check[val.Package])
+		}
+	}
+	for key, val := range check {
+		n := node{
+			node:  key,
+			count: val,
+		}
+		res = append(res, n)
+	}
+	sort.Slice(res, func(i, j int) bool {
+		return res[i].count > res[j].count
+	})
+	for _, val := range res {
+		err = writeCommandToInstallSH(val.node, root)
+		if err != nil {
+			return errors.WithStack(err)
 		}
 	}
 	return nil
@@ -574,4 +576,34 @@ func getManifestStruct(path string) (*api.DependencyList, error) {
 	}
 
 	return &depList, nil
+}
+
+func writeCommandToInstallSH(pkg, root string) error {
+	installTemplate := `
+pushd %s
+%s
+popd
+			
+`
+	installPath := filepath.Join(root, api.ManifestDirectory, CompileDirectory, InstallSHName)
+	f, err := os.OpenFile(installPath, os.O_APPEND|os.O_WRONLY, 0755)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	defer f.Close()
+	outputPath := filepath.Join(api.ManifestDirectory, CompileDirectory, pkg)
+	cmd := getCmdForInstallScript(root, pkg)
+	installShContent := fmt.Sprintf(installTemplate, outputPath, cmd)
+	_, err = f.Write([]byte(installShContent))
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	return nil
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
 }
