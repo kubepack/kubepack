@@ -3,6 +3,7 @@ package commands
 import (
 	"context"
 	"flag"
+	"fmt"
 	"go/build"
 	"io/ioutil"
 	"log"
@@ -25,7 +26,7 @@ var (
 	imports        []string
 	packagePatches map[string]string
 	forkRepo       []string
-	finalFork map[string]string
+	finalFork      map[string]string
 )
 
 const PackTempDirectory = ".pack"
@@ -102,7 +103,7 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 			P: pkgtree.Package{
 				Name:       "main",
 				ImportPath: importroot,
-				Imports: imports,
+				Imports:    imports,
 			},
 		},
 	}
@@ -152,7 +153,8 @@ func runDeps(cmd *cobra.Command, plugin bool) error {
 		if err != nil {
 			return errors.WithStack(err)
 		}
-		err = gps.WriteDepTree(vendorPath, solution, sourcemgr, false, logger)
+		cascadingPruneOptions := gps.CascadingPruneOptions{}
+		err = gps.WriteDepTree(vendorPath, solution, sourcemgr, cascadingPruneOptions, writeProgressLogger)
 		if err != nil {
 			return errors.WithStack(err)
 		}
@@ -558,7 +560,7 @@ func (a ManifestYaml) TestDependencyConstraints() gps.ProjectConstraints {
 }
 
 type InternalManifest struct {
-	root        string
+	root string
 }
 
 func (a InternalManifest) DependencyConstraints() gps.ProjectConstraints {
@@ -616,4 +618,8 @@ func GetImportRoot(root string) string {
 	srcprefix := filepath.Join(build.Default.GOPATH, "src") + string(filepath.Separator)
 	importroot := filepath.ToSlash(strings.TrimPrefix(root, srcprefix))
 	return importroot
+}
+
+func writeProgressLogger(progress gps.WriteProgress) {
+	fmt.Printf("repo(%d/%d):  %s\n", progress.Count, progress.Total, progress.LP)
 }

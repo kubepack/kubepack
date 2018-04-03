@@ -2,12 +2,16 @@ package commands
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
+
 	"github.com/Masterminds/vcs"
+	ioutil_x "github.com/appscode/go/ioutil"
 	"github.com/appscode/go/log"
 	"github.com/evanphx/json-patch"
 	"github.com/ghodss/yaml"
@@ -21,9 +25,6 @@ import (
 	k8syaml "k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/kubectl/pkg/kinflate/resource"
 	"k8s.io/kubernetes/pkg/kubectl/scheme"
-	ioutil_x "github.com/appscode/go/ioutil"
-	"sync"
-	"fmt"
 )
 
 var (
@@ -493,7 +494,7 @@ func generateDag(root string) error {
 		res = append(res, val.Package)
 		check[val.Package] = 1
 	}
-	for ; len(st.s) > 0; {
+	for len(st.s) > 0 {
 		n, err := st.Pop()
 		if err != nil {
 			return errors.WithStack(err)

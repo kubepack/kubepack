@@ -33,11 +33,10 @@
   revision = "e9091a26100e9cfb2b6a8f470085bfa541931a91"
 
 [[projects]]
-  branch = "parse-constraints-with-dash-in-pre"
+  branch = "2.x"
   name = "github.com/Masterminds/semver"
   packages = ["."]
-  revision = "a93e51b5a57ef416dac8bb02d11407b6f55d8929"
-  source = "https://github.com/carolynvs/semver.git"
+  revision = "24642bd0573145a5ee04f9be773641695289be46"
 
 [[projects]]
   name = "github.com/Masterminds/vcs"
@@ -229,10 +228,10 @@
   version = "v2.6.0"
 
 [[projects]]
+  branch = "master"
   name = "github.com/evanphx/json-patch"
   packages = ["."]
-  revision = "afac545df32f2287a079e2dfb7ba2745a643747e"
-  version = "v3.0.0"
+  revision = "9fa11df836c7537e8ad3d1639fa0d396559a7bab"
 
 [[projects]]
   branch = "master"
@@ -298,7 +297,7 @@
   version = "v1.0.0"
 
 [[projects]]
-  branch = "dep-bypass"
+  branch = "master"
   name = "github.com/golang/dep"
   packages = [
     "gps",
@@ -307,7 +306,7 @@
     "gps/pkgtree",
     "internal/fs"
   ]
-  revision = "19731f27e8cb7ac7b567a19413be0b9a44bf9a82"
+  revision = "09d5356fac121f8b4bbc288e732b84146034f4c8"
   source = "https://github.com/kubepack/dep.git"
 
 [[projects]]
@@ -431,8 +430,8 @@
 [[projects]]
   name = "github.com/jmank88/nuts"
   packages = ["."]
-  revision = "a1e02c788669d022c325a8ee674f15360d7104f4"
-  version = "v0.2.0"
+  revision = "8b28145dffc87104e66d074f62ea8080edfad7c8"
+  version = "v0.3.0"
 
 [[projects]]
   name = "github.com/jmespath/go-jmespath"
@@ -1244,6 +1243,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "dfc91967dadf1d3aa0b25383e6d250f29df8fd21b41adab0a08e46119195cebc"
+  inputs-digest = "c9d20ca9a8890dbffad428757afbb7471e56c9d213ee799a2d3258dafc33409a"
   solver-name = "gps-cdcl"
   solver-version = 1

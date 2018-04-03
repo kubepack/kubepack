@@ -32,7 +32,7 @@ const (
 )
 
 var (
-	srcPath  string
+	srcPath string
 )
 
 // Local directory path needs to be absolute path. Patch filepath needs to be either absolute path or relative path.
@@ -102,7 +102,7 @@ func RunEdit(cmd *cobra.Command, plugin bool) error {
 		return errors.WithStack(err)
 	}
 
-	if string(srcJson)== string(dstJson) {
+	if string(srcJson) == string(dstJson) {
 		return errors.Errorf("No edit has been made")
 	}
 	return GetPatch(srcJson, dstJson, cmd, plugin)
