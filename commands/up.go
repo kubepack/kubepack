@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 	"sync"
 
@@ -424,26 +425,31 @@ func checkGVKN(srcJson, patchJson []byte) (bool, error) {
 	return false, nil
 }
 
-type queue struct {
+type node struct {
+	node  string
+	count int
+}
+
+type stack struct {
 	lock sync.Mutex
 	s    []string
 }
 
-func NewQueue() *queue {
-	return &queue{
+func NewStack() *stack {
+	return &stack{
 		sync.Mutex{},
 		[]string{},
 	}
 }
 
-func (s *queue) Push(v string) {
+func (s *stack) Push(v string) {
 	s.lock.Lock()
 	defer s.lock.Unlock()
 
 	s.s = append(s.s, v)
 }
 
-func (s *queue) Pop() (string, error) {
+func (s *stack) Pop() (string, error) {
 	s.lock.Lock()
 	defer s.lock.Unlock()
 
@@ -452,13 +458,22 @@ func (s *queue) Pop() (string, error) {
 		return "", errors.New("Empty Queue")
 	}
 
-	res := s.s[0]
-	s.s = s.s[1:]
+	res := s.s[l-1]
+	s.s = s.s[:l-1]
+	return res, nil
+}
+
+func (s *stack) Top() (string, error) {
+	l := len(s.s)
+	if l == 0 {
+		return "", errors.New("Empty Queue")
+	}
+	res := s.s[l-1]
 	return res, nil
 }
 
 func generateDag(root string) error {
-	var res []string
+	var res []node
 	var check map[string]int
 	check = make(map[string]int)
 	installPath := filepath.Join(root, api.ManifestDirectory, CompileDirectory, InstallSHName)
@@ -488,10 +503,11 @@ func generateDag(root string) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	st := NewQueue()
+	st := NewStack()
+	// check
 	for _, val := range depList.Items {
 		st.Push(val.Package)
-		res = append(res, val.Package)
+		// res = append(res, val.Package)
 		check[val.Package] = 1
 	}
 	for len(st.s) > 0 {
@@ -499,10 +515,10 @@ func generateDag(root string) error {
 		if err != nil {
 			return errors.WithStack(err)
 		}
-		err = writeCommandToInstallSH(n, root)
+		/*err = writeCommandToInstallSH(n, root)
 		if err != nil {
 			return errors.WithStack(err)
-		}
+		}*/
 		manifestPath = filepath.Join(manVendorDir, n, api.DependencyFile)
 		data, err := getManifestStruct(manifestPath)
 		if err != nil {
@@ -511,9 +527,25 @@ func generateDag(root string) error {
 		for _, val := range data.Items {
 			if _, ok := check[val.Package]; !ok {
 				st.Push(val.Package)
-				res = append(res, val.Package)
-				check[val.Package] = 1
 			}
+
+			check[val.Package] = max(check[n]+1, check[val.Package])
+		}
+	}
+	for key, val := range check {
+		n := node{
+			node:  key,
+			count: val,
+		}
+		res = append(res, n)
+	}
+	sort.Slice(res, func(i, j int) bool {
+		return res[i].count > res[j].count
+	})
+	for _, val := range res {
+		err = writeCommandToInstallSH(val.node, root)
+		if err != nil {
+			return errors.WithStack(err)
 		}
 	}
 	return nil
@@ -567,4 +599,11 @@ popd
 		return errors.WithStack(err)
 	}
 	return nil
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
 }

@@ -20,7 +20,7 @@ section_menu_id: guides
 
 To observe, how everything works, needs to clone [this repository](https://kubepack/kube-a). And checkout to `test-11` branch.
 
-You can see `dependency-list.yaml` file in project root.
+You can see `dependency-list.yaml` file in project's root.
 ```console
     $ cat dependency-list.yaml 
     items:
@@ -46,44 +46,43 @@ If you see `manifests/output/install.sh`
      
      
      #!/bin/bash
-     
-     
-     pushd manifests/output/github.com/kubepack/kube-b
-     kubectl apply -R -f .
-     popd
-     			
-     
-     pushd manifests/output/github.com/kubepack/kube-c
-     kubectl apply -R -f .
-     popd
-     			
-     
-     pushd manifests/output/github.com/kubepack/kube-d
-     kubectl apply -R -f .
-     popd
-     			
-     
-     pushd manifests/output/github.com/kubepack/kube-e
-     kubectl apply -R -f .
-     popd
-     			
-     
+
+
      pushd manifests/output/github.com/kubepack/kube-f
      kubectl apply -R -f .
      popd
-     			
-     
+
+
+     pushd manifests/output/github.com/kubepack/kube-e
+     kubectl apply -R -f .
+     popd
+
+
+     pushd manifests/output/github.com/kubepack/kube-d
+     kubectl apply -R -f .
+     popd
+
+
+     pushd manifests/output/github.com/kubepack/kube-b
+     kubectl apply -R -f .
+     popd
+
+
+     pushd manifests/output/github.com/kubepack/kube-c
+     kubectl apply -R -f .
+     popd
+
+
      pushd manifests/output/github.com/kubepack/kube-a
      kubectl apply -R -f .
      popd
      	
  ```
 
- - At first there will be `kubectl apply` command for `kube-b` or `kube-c`, whichever comes first in `dependency-list.yaml`.
- As `kube-b` appears first in `dependency-list.yaml`, `kube-b` will be first, `kube-c` second.
- - `kube-b` will be process first. That's why `kube-d` will appear before `kube-e`. 
- After `kube-d`, `kube-e` will appear.
- - Then `kube-f` and at last, root repo.
+ - At first there will be `kubectl apply` command for `kube-f`, as `kube-f` is independent in dependency chain.
+ - After, `kube-f`, there will be `kube-e` or `kube-d`. As, these two is least dependent after `kube-f`.
+ - Then, `kube-b` or `kube-c`,
+ - At last `kube-a` as this is most dependent repo.
  
 P.S. If any repository's `manifests/app` folder contain their own `install.sh` file, then instead of default `kubectl apply`, `install.sh` script will run.
 
