@@ -1,11 +1,11 @@
 ---
 title: Pack Wait-Until-Ready Crd
 menu:
-  docs_0.1.0-alpha.2:
+  docs_0.1.0:
     identifier: pack-wait-until-ready-crd
     name: Pack Wait-Until-Ready Crd
     parent: reference
-menu_name: docs_0.1.0-alpha.2
+menu_name: docs_0.1.0
 section_menu_id: reference
 ---
 ## pack wait-until-ready crd

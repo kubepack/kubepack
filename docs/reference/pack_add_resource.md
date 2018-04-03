@@ -1,11 +1,11 @@
 ---
 title: Pack Add Resource
 menu:
-  docs_0.1.0-alpha.2:
+  docs_0.1.0:
     identifier: pack-add-resource
     name: Pack Add Resource
     parent: reference
-menu_name: docs_0.1.0-alpha.2
+menu_name: docs_0.1.0
 section_menu_id: reference
 ---
 ## pack add resource

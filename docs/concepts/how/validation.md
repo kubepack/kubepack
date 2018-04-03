@@ -1,12 +1,12 @@
 ---
 title: How Kubepack Validate
 menu:
-  docs_0.1.0-alpha.2:
+  docs_0.1.0:
     identifier: kubepack-validation
     name: Kubepack Validation
     parent: how-concepts
     weight: 35
-menu_name: docs_0.1.0-alpha.2
+menu_name: docs_0.1.0
 section_menu_id: concepts
 ---
 > New to Kubepack? Please start [here](/docs/concepts/README.md).

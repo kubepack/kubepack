@@ -1,18 +1,43 @@
+---
+title: ChangeLog | Kubepack
+description: ChangeLog
+menu:
+  docs_0.1.0:
+    identifier: changelog-cli
+    name: ChangeLog
+    parent: welcome
+    weight: 10
+menu_name: docs_0.1.0
+section_menu_id: welcome
+url: /docs/0.1.0/welcome/contributing/
+aliases:
+  - /docs/0.1.0/CHANGELOG/
+---
+
 # Change Log
 
 ## [Unreleased](https://github.com/kubepack/pack/tree/HEAD)
 
 [Full Changelog](https://github.com/kubepack/pack/compare/0.1.0-alpha.2...HEAD)
 
+**Closed issues:**
+
+- kubepack validate should work under root folder [\#42](https://github.com/kubepack/pack/issues/42)
+
 **Merged pull requests:**
 
-- Prepare docs for 0.1.0-alpha.2 [\#59](https://github.com/kubepack/pack/pull/59) ([tamalsaha](https://github.com/tamalsaha))
+- Add docs for install.sh [\#65](https://github.com/kubepack/pack/pull/65) ([a8uhnf](https://github.com/a8uhnf))
+- Generate install.sh script based on DAG [\#64](https://github.com/kubepack/pack/pull/64) ([a8uhnf](https://github.com/a8uhnf))
+- Update cmd and testcases [\#62](https://github.com/kubepack/pack/pull/62) ([a8uhnf](https://github.com/a8uhnf))
+- Update travis to use dep [\#61](https://github.com/kubepack/pack/pull/61) ([tamalsaha](https://github.com/tamalsaha))
+- Add travis yaml [\#60](https://github.com/kubepack/pack/pull/60) ([tahsinrahman](https://github.com/tahsinrahman))
 
 ## [0.1.0-alpha.2](https://github.com/kubepack/pack/tree/0.1.0-alpha.2) (2018-03-14)
 [Full Changelog](https://github.com/kubepack/pack/compare/0.1.0-alpha.1...0.1.0-alpha.2)
 
 **Merged pull requests:**
 
+- Prepare docs for 0.1.0-alpha.2 [\#59](https://github.com/kubepack/pack/pull/59) ([tamalsaha](https://github.com/tamalsaha))
 - Store patch list in manifest yaml [\#58](https://github.com/kubepack/pack/pull/58) ([tamalsaha](https://github.com/tamalsaha))
 - Add kinflate commands, update vendor folder [\#57](https://github.com/kubepack/pack/pull/57) ([a8uhnf](https://github.com/a8uhnf))
 - Update patch [\#56](https://github.com/kubepack/pack/pull/56) ([a8uhnf](https://github.com/a8uhnf))
