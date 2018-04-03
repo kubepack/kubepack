@@ -14,79 +14,70 @@ section_menu_id: guides
 
 # Scenario-11
 
-**This doc is trying to explain how pack up command works and how install.sh file is generated.**
+**This doc explains how `pack up` command works and how install.sh file is generated.**
 
 ![alt text](/docs/_testdata/test-11/test-11.jpg)
 
-To observe, how everything works, needs to clone [this repository](https://kubepack/kube-a). And checkout to `test-11` branch.
+To learn how this works, clone [this repository](https://kubepack/kube-a) and checkout branch `test-11`. You will find `dependency-list.yaml` file in the project root.
 
-You can see `dependency-list.yaml` file in project's root.
 ```console
-    $ cat dependency-list.yaml 
-    items:
-      - package: github.com/kubepack/kube-b
-        branch: test-11
-      - package: github.com/kubepack/kube-c
-        branch: test-11
+$ cat dependency-list.yaml
+items:
+  - package: github.com/kubepack/kube-b
+    branch: test-11
+  - package: github.com/kubepack/kube-c
+    branch: test-11
 ```
 
+Now, run `pack up -f .` command in this project root. This executes the following steps.
+
+ - Combines `manifests/vendor` and `manifests/patch` to `manifests/output` folder.
+ - Generates a DAG(Directed Acyclic Graph) from `dependency-list.yaml`. From this dependency graph, it generates a `install.sh` file. This installer script contains commands to deploy `manifests/output` folder. Each parent package can provide their own `install.sh` script. If no script is provided, `kubectl apply -R -f .` command will be used to install a package.
+
+This is what the auto-generated installer script looks like:
+
+```console
+cat manifests/output/install.sh
+
+#!/bin/bash
 
 
-When users execute `$ pack up -f .` command in this project root, following things happen.
-
- - Combine `manifests/vendor` and `manifests/patch` to `manifests/output` folder.
- - Generates a DAG(Directed Acyclic Graph), discovers who depend on who, From `dependency-list.yaml`.
- - With generation of DAG, also generate a `install.sh` file, contains commands to deploy final `manifests/output` folder.
-  There could be separate deploy script for some repository, then that script will run instead of default `kubectl apply -R -f .`
-
- 
-If you see `manifests/output/install.sh`
- ```console
-     cat manifests/output/install.sh
-     
-     
-     #!/bin/bash
+pushd manifests/output/github.com/kubepack/kube-f
+kubectl apply -R -f .
+popd
 
 
-     pushd manifests/output/github.com/kubepack/kube-f
-     kubectl apply -R -f .
-     popd
+pushd manifests/output/github.com/kubepack/kube-e
+kubectl apply -R -f .
+popd
 
 
-     pushd manifests/output/github.com/kubepack/kube-e
-     kubectl apply -R -f .
-     popd
+pushd manifests/output/github.com/kubepack/kube-d
+kubectl apply -R -f .
+popd
 
 
-     pushd manifests/output/github.com/kubepack/kube-d
-     kubectl apply -R -f .
-     popd
+pushd manifests/output/github.com/kubepack/kube-b
+kubectl apply -R -f .
+popd
 
 
-     pushd manifests/output/github.com/kubepack/kube-b
-     kubectl apply -R -f .
-     popd
+pushd manifests/output/github.com/kubepack/kube-c
+kubectl apply -R -f .
+popd
 
 
-     pushd manifests/output/github.com/kubepack/kube-c
-     kubectl apply -R -f .
-     popd
+pushd manifests/output/github.com/kubepack/kube-a
+kubectl apply -R -f .
+popd
+```
 
+  - At first there will be `kubectl apply` command for `kube-f`, as `kube-f` is independent in dependency chain.
+  - After, `kube-f`, there will be `kube-e` or `kube-d`. As, these two is least dependent after `kube-f`.
+  - Then, `kube-b` or `kube-c`,
+  - At last `kube-a` as this is most dependent repo.
 
-     pushd manifests/output/github.com/kubepack/kube-a
-     kubectl apply -R -f .
-     popd
-     	
- ```
-
- - At first there will be `kubectl apply` command for `kube-f`, as `kube-f` is independent in dependency chain.
- - After, `kube-f`, there will be `kube-e` or `kube-d`. As, these two is least dependent after `kube-f`.
- - Then, `kube-b` or `kube-c`,
- - At last `kube-a` as this is most dependent repo.
- 
-P.S. If any repository's `manifests/app` folder contain their own `install.sh` file, then instead of default `kubectl apply`, `install.sh` script will run.
-
-Users can use their customize commands for deploy, these customize commands should be in `manifests/app/install.sh` file of that repository.
+If any repository's `manifests/app` folder contain an `install.sh` file, then it will be used instead. Users can use their customize commands for deploy, these customize commands should be in `manifests/app/install.sh` file of that repository.
 
 
 ## Next Steps
