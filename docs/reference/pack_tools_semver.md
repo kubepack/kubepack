@@ -1,31 +1,31 @@
 ---
-title: Pack Wait-Until-Ready Crd
+title: Pack Tools Semver
 menu:
   docs_0.1.0:
-    identifier: pack-wait-until-ready-crd
-    name: Pack Wait-Until-Ready Crd
+    identifier: pack-tools-semver
+    name: Pack Tools Semver
     parent: reference
 menu_name: docs_0.1.0
 section_menu_id: reference
 ---
-## pack wait-until-ready crd
+## pack tools semver
 
-Wait until a CRD is ready
+Print sanitized semver version
 
 ### Synopsis
 
-Wait until a CRD is ready
+Print sanitized semver version
 
 ```
-pack wait-until-ready crd [flags]
+pack tools semver [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help                help for crd
-      --interval duration   Interval between checks (default 2s)
-      --timeout duration    Timeout (default 3m0s)
+      --check string   check constraint
+  -h, --help           help for semver
+      --minor          print major.minor.0 version
 ```
 
 ### Options inherited from parent commands
@@ -62,5 +62,5 @@ pack wait-until-ready crd [flags]
 
 ### SEE ALSO
 
-* [pack wait-until-ready](/docs/reference/pack_wait-until-ready.md)	 - Wait until resource is ready
+* [pack tools](/docs/reference/pack_tools.md)	 - Tools for managing package life-cycle
 

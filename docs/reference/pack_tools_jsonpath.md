@@ -1,25 +1,30 @@
 ---
-title: Pack Wait-Until-Ready
+title: Pack Tools Jsonpath
 menu:
   docs_0.1.0:
-    identifier: pack-wait-until-ready
-    name: Pack Wait-Until-Ready
+    identifier: pack-tools-jsonpath
+    name: Pack Tools Jsonpath
     parent: reference
 menu_name: docs_0.1.0
 section_menu_id: reference
 ---
-## pack wait-until-ready
+## pack tools jsonpath
 
-Wait until resource is ready
+Print value of jsonpath for input text
 
 ### Synopsis
 
-Wait until resource is ready
+Print value of jsonpath for input text
+
+```
+pack tools jsonpath [flags]
+```
 
 ### Options
 
 ```
-  -h, --help   help for wait-until-ready
+      --allowMissingKeys   Allow missing keys
+  -h, --help               help for jsonpath
 ```
 
 ### Options inherited from parent commands
@@ -56,8 +61,5 @@ Wait until resource is ready
 
 ### SEE ALSO
 
-* [pack](/docs/reference/pack.md)	 - Secure Lightweight Kubernetes Package Manager
-* [pack wait-until-ready apiservice](/docs/reference/pack_wait-until-ready_apiservice.md)	 - Wait until an apiservice is ready
-* [pack wait-until-ready crd](/docs/reference/pack_wait-until-ready_crd.md)	 - Wait until a CRD is ready
-* [pack wait-until-ready deployment](/docs/reference/pack_wait-until-ready_deployment.md)	 - Wait until a deployment is ready
+* [pack tools](/docs/reference/pack_tools.md)	 - Tools for managing package life-cycle
 

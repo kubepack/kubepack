@@ -1,30 +1,30 @@
 ---
-title: Pack Jsonpath
+title: Pack Tools Ssl Get Ca-Cert
 menu:
   docs_0.1.0:
-    identifier: pack-jsonpath
-    name: Pack Jsonpath
+    identifier: pack-tools-ssl-get-ca-cert
+    name: Pack Tools Ssl Get Ca-Cert
     parent: reference
 menu_name: docs_0.1.0
 section_menu_id: reference
 ---
-## pack jsonpath
+## pack tools ssl get ca-cert
 
-Print value of jsonpath for input text
+Prints self-sgned CA certificate from PEM encoded RSA private key
 
 ### Synopsis
 
-Print value of jsonpath for input text
+Prints self-sgned CA certificate from PEM encoded RSA private key
 
 ```
-pack jsonpath [flags]
+pack tools ssl get ca-cert [flags]
 ```
 
 ### Options
 
 ```
-      --allowMissingKeys   Allow missing keys
-  -h, --help               help for jsonpath
+      --common-name string   Common Name used in CA certificate.
+  -h, --help                 help for ca-cert
 ```
 
 ### Options inherited from parent commands
@@ -61,5 +61,5 @@ pack jsonpath [flags]
 
 ### SEE ALSO
 
-* [pack](/docs/reference/pack.md)	 - Secure Lightweight Kubernetes Package Manager
+* [pack tools ssl get](/docs/reference/pack_tools_ssl_get.md)	 - Get stuff
 

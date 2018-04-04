@@ -1,30 +1,25 @@
 ---
-title: Pack Base64
+title: Pack Tools Wait-Until-Ready
 menu:
   docs_0.1.0:
-    identifier: pack-base64
-    name: Pack Base64
+    identifier: pack-tools-wait-until-ready
+    name: Pack Tools Wait-Until-Ready
     parent: reference
 menu_name: docs_0.1.0
 section_menu_id: reference
 ---
-## pack base64
+## pack tools wait-until-ready
 
-Base64 encode/decode input text
+Wait until resource is ready
 
 ### Synopsis
 
-Base64 encode/decode input text
-
-```
-pack base64 [flags]
-```
+Wait until resource is ready
 
 ### Options
 
 ```
-      --decode   Decode input text
-  -h, --help     help for base64
+  -h, --help   help for wait-until-ready
 ```
 
 ### Options inherited from parent commands
@@ -61,5 +56,8 @@ pack base64 [flags]
 
 ### SEE ALSO
 
-* [pack](/docs/reference/pack.md)	 - Secure Lightweight Kubernetes Package Manager
+* [pack tools](/docs/reference/pack_tools.md)	 - Tools for managing package life-cycle
+* [pack tools wait-until-ready apiservice](/docs/reference/pack_tools_wait-until-ready_apiservice.md)	 - Wait until an apiservice is ready
+* [pack tools wait-until-ready crd](/docs/reference/pack_tools_wait-until-ready_crd.md)	 - Wait until a CRD is ready
+* [pack tools wait-until-ready deployment](/docs/reference/pack_tools_wait-until-ready_deployment.md)	 - Wait until a deployment is ready
 

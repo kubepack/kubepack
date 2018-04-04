@@ -1,29 +1,30 @@
 ---
-title: Pack Ssl Get Kube-Ca
+title: Pack Tools Base64
 menu:
   docs_0.1.0:
-    identifier: pack-ssl-get-kube-ca
-    name: Pack Ssl Get Kube-Ca
+    identifier: pack-tools-base64
+    name: Pack Tools Base64
     parent: reference
 menu_name: docs_0.1.0
 section_menu_id: reference
 ---
-## pack ssl get kube-ca
+## pack tools base64
 
-Prints CA certificate for Kubernetes cluster from Kubeconfig
+Base64 encode/decode input text
 
 ### Synopsis
 
-Prints CA certificate for Kubernetes cluster from Kubeconfig
+Base64 encode/decode input text
 
 ```
-pack ssl get kube-ca [flags]
+pack tools base64 [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for kube-ca
+      --decode   Decode input text
+  -h, --help     help for base64
 ```
 
 ### Options inherited from parent commands
@@ -60,5 +61,5 @@ pack ssl get kube-ca [flags]
 
 ### SEE ALSO
 
-* [pack ssl get](/docs/reference/pack_ssl_get.md)	 - Get stuff
+* [pack tools](/docs/reference/pack_tools.md)	 - Tools for managing package life-cycle
 

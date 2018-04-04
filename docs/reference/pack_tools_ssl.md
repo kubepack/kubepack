@@ -1,14 +1,14 @@
 ---
-title: Pack Ssl
+title: Pack Tools Ssl
 menu:
   docs_0.1.0:
-    identifier: pack-ssl
-    name: Pack Ssl
+    identifier: pack-tools-ssl
+    name: Pack Tools Ssl
     parent: reference
 menu_name: docs_0.1.0
 section_menu_id: reference
 ---
-## pack ssl
+## pack tools ssl
 
 Utility commands for SSL certificates
 
@@ -56,7 +56,7 @@ Utility commands for SSL certificates
 
 ### SEE ALSO
 
-* [pack](/docs/reference/pack.md)	 - Secure Lightweight Kubernetes Package Manager
-* [pack ssl create](/docs/reference/pack_ssl_create.md)	 - create PKI
-* [pack ssl get](/docs/reference/pack_ssl_get.md)	 - Get stuff
+* [pack tools](/docs/reference/pack_tools.md)	 - Tools for managing package life-cycle
+* [pack tools ssl create](/docs/reference/pack_tools_ssl_create.md)	 - create PKI
+* [pack tools ssl get](/docs/reference/pack_tools_ssl_get.md)	 - Get stuff
 

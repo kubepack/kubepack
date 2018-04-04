@@ -1,30 +1,31 @@
 ---
-title: Pack Ssl Get Ca-Cert
+title: Pack Tools Wait-Until-Ready Crd
 menu:
   docs_0.1.0:
-    identifier: pack-ssl-get-ca-cert
-    name: Pack Ssl Get Ca-Cert
+    identifier: pack-tools-wait-until-ready-crd
+    name: Pack Tools Wait-Until-Ready Crd
     parent: reference
 menu_name: docs_0.1.0
 section_menu_id: reference
 ---
-## pack ssl get ca-cert
+## pack tools wait-until-ready crd
 
-Prints self-sgned CA certificate from PEM encoded RSA private key
+Wait until a CRD is ready
 
 ### Synopsis
 
-Prints self-sgned CA certificate from PEM encoded RSA private key
+Wait until a CRD is ready
 
 ```
-pack ssl get ca-cert [flags]
+pack tools wait-until-ready crd [flags]
 ```
 
 ### Options
 
 ```
-      --common-name string   Common Name used in CA certificate.
-  -h, --help                 help for ca-cert
+  -h, --help                help for crd
+      --interval duration   Interval between checks (default 2s)
+      --timeout duration    Timeout (default 3m0s)
 ```
 
 ### Options inherited from parent commands
@@ -61,5 +62,5 @@ pack ssl get ca-cert [flags]
 
 ### SEE ALSO
 
-* [pack ssl get](/docs/reference/pack_ssl_get.md)	 - Get stuff
+* [pack tools wait-until-ready](/docs/reference/pack_tools_wait-until-ready.md)	 - Wait until resource is ready
 

@@ -1,25 +1,32 @@
 ---
-title: Pack Ssl Get
+title: Pack Tools Ssl Create Client-Cert
 menu:
   docs_0.1.0:
-    identifier: pack-ssl-get
-    name: Pack Ssl Get
+    identifier: pack-tools-ssl-create-client-cert
+    name: Pack Tools Ssl Create Client-Cert
     parent: reference
 menu_name: docs_0.1.0
 section_menu_id: reference
 ---
-## pack ssl get
+## pack tools ssl create client-cert
 
-Get stuff
+Generate client certificate pair
 
 ### Synopsis
 
-Get stuff
+Generate client certificate pair
+
+```
+pack tools ssl create client-cert [flags]
+```
 
 ### Options
 
 ```
-  -h, --help   help for get
+      --cert-dir string       Path to directory where pki files are stored. (default "/home/tamal/go/src/github.com/kubepack/pack/hack/gendocs")
+  -h, --help                  help for client-cert
+  -o, --organization string   Name of client organizations.
+      --overwrite             Overwrite existing cert/key pair
 ```
 
 ### Options inherited from parent commands
@@ -56,7 +63,5 @@ Get stuff
 
 ### SEE ALSO
 
-* [pack ssl](/docs/reference/pack_ssl.md)	 - Utility commands for SSL certificates
-* [pack ssl get ca-cert](/docs/reference/pack_ssl_get_ca-cert.md)	 - Prints self-sgned CA certificate from PEM encoded RSA private key
-* [pack ssl get kube-ca](/docs/reference/pack_ssl_get_kube-ca.md)	 - Prints CA certificate for Kubernetes cluster from Kubeconfig
+* [pack tools ssl create](/docs/reference/pack_tools_ssl_create.md)	 - create PKI
 

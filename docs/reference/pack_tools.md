@@ -1,29 +1,25 @@
 ---
-title: Pack Envsubst
+title: Pack Tools
 menu:
   docs_0.1.0:
-    identifier: pack-envsubst
-    name: Pack Envsubst
+    identifier: pack-tools
+    name: Pack Tools
     parent: reference
 menu_name: docs_0.1.0
 section_menu_id: reference
 ---
-## pack envsubst
+## pack tools
 
-Emulates bash environment variable substitution for input text
+Tools for managing package life-cycle
 
 ### Synopsis
 
-Emulates bash environment variable substitution for input text
-
-```
-pack envsubst [flags]
-```
+Tools for managing package life-cycle
 
 ### Options
 
 ```
-  -h, --help   help for envsubst
+  -h, --help   help for tools
 ```
 
 ### Options inherited from parent commands
@@ -61,4 +57,11 @@ pack envsubst [flags]
 ### SEE ALSO
 
 * [pack](/docs/reference/pack.md)	 - Secure Lightweight Kubernetes Package Manager
+* [pack tools base64](/docs/reference/pack_tools_base64.md)	 - Base64 encode/decode input text
+* [pack tools envsubst](/docs/reference/pack_tools_envsubst.md)	 - Emulates bash environment variable substitution for input text
+* [pack tools has-keys](/docs/reference/pack_tools_has-keys.md)	 - Checks configmap/secret has a set of given keys
+* [pack tools jsonpath](/docs/reference/pack_tools_jsonpath.md)	 - Print value of jsonpath for input text
+* [pack tools semver](/docs/reference/pack_tools_semver.md)	 - Print sanitized semver version
+* [pack tools ssl](/docs/reference/pack_tools_ssl.md)	 - Utility commands for SSL certificates
+* [pack tools wait-until-ready](/docs/reference/pack_tools_wait-until-ready.md)	 - Wait until resource is ready
 

@@ -1,32 +1,29 @@
 ---
-title: Pack Ssl Create Client-Cert
+title: Pack Tools Ssl Get Kube-Ca
 menu:
   docs_0.1.0:
-    identifier: pack-ssl-create-client-cert
-    name: Pack Ssl Create Client-Cert
+    identifier: pack-tools-ssl-get-kube-ca
+    name: Pack Tools Ssl Get Kube-Ca
     parent: reference
 menu_name: docs_0.1.0
 section_menu_id: reference
 ---
-## pack ssl create client-cert
+## pack tools ssl get kube-ca
 
-Generate client certificate pair
+Prints CA certificate for Kubernetes cluster from Kubeconfig
 
 ### Synopsis
 
-Generate client certificate pair
+Prints CA certificate for Kubernetes cluster from Kubeconfig
 
 ```
-pack ssl create client-cert [flags]
+pack tools ssl get kube-ca [flags]
 ```
 
 ### Options
 
 ```
-      --cert-dir string       Path to directory where pki files are stored. (default "/home/tamal/go/src/github.com/kubepack/pack/hack/gendocs")
-  -h, --help                  help for client-cert
-  -o, --organization string   Name of client organizations.
-      --overwrite             Overwrite existing cert/key pair
+  -h, --help   help for kube-ca
 ```
 
 ### Options inherited from parent commands
@@ -63,5 +60,5 @@ pack ssl create client-cert [flags]
 
 ### SEE ALSO
 
-* [pack ssl create](/docs/reference/pack_ssl_create.md)	 - create PKI
+* [pack tools ssl get](/docs/reference/pack_tools_ssl_get.md)	 - Get stuff
 

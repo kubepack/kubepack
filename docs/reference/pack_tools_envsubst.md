@@ -1,30 +1,29 @@
 ---
-title: Pack Has-Keys Configmap
+title: Pack Tools Envsubst
 menu:
   docs_0.1.0:
-    identifier: pack-has-keys-configmap
-    name: Pack Has-Keys Configmap
+    identifier: pack-tools-envsubst
+    name: Pack Tools Envsubst
     parent: reference
 menu_name: docs_0.1.0
 section_menu_id: reference
 ---
-## pack has-keys configmap
+## pack tools envsubst
 
-Check a configmap has a set of given keys
+Emulates bash environment variable substitution for input text
 
 ### Synopsis
 
-Check a configmap has a set of given keys
+Emulates bash environment variable substitution for input text
 
 ```
-pack has-keys configmap [flags]
+pack tools envsubst [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help               help for configmap
-      --keys stringSlice   Keys to search for
+  -h, --help   help for envsubst
 ```
 
 ### Options inherited from parent commands
@@ -61,5 +60,5 @@ pack has-keys configmap [flags]
 
 ### SEE ALSO
 
-* [pack has-keys](/docs/reference/pack_has-keys.md)	 - Checks configmap/secret has a set of given keys
+* [pack tools](/docs/reference/pack_tools.md)	 - Tools for managing package life-cycle
 

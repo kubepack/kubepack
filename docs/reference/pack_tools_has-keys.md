@@ -1,31 +1,25 @@
 ---
-title: Pack Ssl Create Ca-Cert
+title: Pack Tools Has-Keys
 menu:
   docs_0.1.0:
-    identifier: pack-ssl-create-ca-cert
-    name: Pack Ssl Create Ca-Cert
+    identifier: pack-tools-has-keys
+    name: Pack Tools Has-Keys
     parent: reference
 menu_name: docs_0.1.0
 section_menu_id: reference
 ---
-## pack ssl create ca-cert
+## pack tools has-keys
 
-Create CA cert/key pair
+Checks configmap/secret has a set of given keys
 
 ### Synopsis
 
-Create CA cert/key pair
-
-```
-pack ssl create ca-cert [flags]
-```
+Checks configmap/secret has a set of given keys
 
 ### Options
 
 ```
-      --cert-dir string   Path to directory where pki files are stored. (default "/home/tamal/go/src/github.com/kubepack/pack/hack/gendocs")
-  -h, --help              help for ca-cert
-      --overwrite         Overwrite existing cert/key pair
+  -h, --help   help for has-keys
 ```
 
 ### Options inherited from parent commands
@@ -62,5 +56,7 @@ pack ssl create ca-cert [flags]
 
 ### SEE ALSO
 
-* [pack ssl create](/docs/reference/pack_ssl_create.md)	 - create PKI
+* [pack tools](/docs/reference/pack_tools.md)	 - Tools for managing package life-cycle
+* [pack tools has-keys configmap](/docs/reference/pack_tools_has-keys_configmap.md)	 - Check a configmap has a set of given keys
+* [pack tools has-keys secret](/docs/reference/pack_tools_has-keys_secret.md)	 - Check a secret has a set of given keys
 
