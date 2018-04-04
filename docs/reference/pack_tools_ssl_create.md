@@ -1,27 +1,28 @@
 ---
-title: Pack
+title: Pack Tools Ssl Create
 menu:
   docs_0.1.0:
-    identifier: pack
-    name: Pack
+    identifier: pack-tools-ssl-create
+    name: Pack Tools Ssl Create
     parent: reference
-    weight: 0
-
 menu_name: docs_0.1.0
 section_menu_id: reference
-aliases:
-  - /docs/0.1.0/reference/
-
 ---
-## pack
+## pack tools ssl create
 
-Secure Lightweight Kubernetes Package Manager
+create PKI
 
 ### Synopsis
 
-Secure Lightweight Kubernetes Package Manager
+create PKI
 
 ### Options
+
+```
+  -h, --help   help for create
+```
+
+### Options inherited from parent commands
 
 ```
       --alsologtostderr                  log to standard error as well as files
@@ -34,7 +35,6 @@ Secure Lightweight Kubernetes Package Manager
       --cluster string                   The name of the kubeconfig cluster to use
       --context string                   The name of the kubeconfig context to use
   -f, --file string                      filepath
-  -h, --help                             help for pack
       --insecure-skip-tls-verify         If true, the server's certificate will not be checked for validity. This will make your HTTPS connections insecure
       --kube-version string              name of the kubeconfig context to use
       --kubeconfig string                Path to the kubeconfig file to use for CLI requests.
@@ -56,15 +56,8 @@ Secure Lightweight Kubernetes Package Manager
 
 ### SEE ALSO
 
-* [pack add](/docs/reference/pack_add.md)	 - Adds configmap/resource/secret to the manifest.
-* [pack dep](/docs/reference/pack_dep.md)	 - Pulls dependent app manifests
-* [pack edit](/docs/reference/pack_edit.md)	 - Edit resource definition
-* [pack env](/docs/reference/pack_env.md)	 - List environment variables
-* [pack init](/docs/reference/pack_init.md)	 - Initialize kubepack and create manifest.yaml file
-* [pack install](/docs/reference/pack_install.md)	 - Install as kubectl plugin
-* [pack set](/docs/reference/pack_set.md)	 - Sets the value of different fields in manifest.
-* [pack tools](/docs/reference/pack_tools.md)	 - Tools for managing package life-cycle
-* [pack up](/docs/reference/pack_up.md)	 - Compiles patches and vendored manifests into final resource definitions
-* [pack validate](/docs/reference/pack_validate.md)	 - Validate _outlook folder
-* [pack version](/docs/reference/pack_version.md)	 - Prints binary version number.
+* [pack tools ssl](/docs/reference/pack_tools_ssl.md)	 - Utility commands for SSL certificates
+* [pack tools ssl create ca-cert](/docs/reference/pack_tools_ssl_create_ca-cert.md)	 - Create CA cert/key pair
+* [pack tools ssl create client-cert](/docs/reference/pack_tools_ssl_create_client-cert.md)	 - Generate client certificate pair
+* [pack tools ssl create server-cert](/docs/reference/pack_tools_ssl_create_server-cert.md)	 - Generate server certificate pair
 

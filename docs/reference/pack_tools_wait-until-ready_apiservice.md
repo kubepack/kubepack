@@ -1,29 +1,29 @@
 ---
-title: Pack Wait-Until-Ready Deployment
+title: Pack Tools Wait-Until-Ready Apiservice
 menu:
   docs_0.1.0:
-    identifier: pack-wait-until-ready-deployment
-    name: Pack Wait-Until-Ready Deployment
+    identifier: pack-tools-wait-until-ready-apiservice
+    name: Pack Tools Wait-Until-Ready Apiservice
     parent: reference
 menu_name: docs_0.1.0
 section_menu_id: reference
 ---
-## pack wait-until-ready deployment
+## pack tools wait-until-ready apiservice
 
-Wait until a deployment is ready
+Wait until an apiservice is ready
 
 ### Synopsis
 
-Wait until a deployment is ready
+Wait until an apiservice is ready
 
 ```
-pack wait-until-ready deployment [flags]
+pack tools wait-until-ready apiservice [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help                help for deployment
+  -h, --help                help for apiservice
       --interval duration   Interval between checks (default 2s)
       --timeout duration    Timeout (default 3m0s)
 ```
@@ -62,5 +62,5 @@ pack wait-until-ready deployment [flags]
 
 ### SEE ALSO
 
-* [pack wait-until-ready](/docs/reference/pack_wait-until-ready.md)	 - Wait until resource is ready
+* [pack tools wait-until-ready](/docs/reference/pack_tools_wait-until-ready.md)	 - Wait until resource is ready
 

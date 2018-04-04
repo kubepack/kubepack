@@ -9,7 +9,6 @@ import (
 	v "github.com/appscode/go/version"
 	"github.com/appscode/kutil/tools/plugin_installer"
 	"github.com/jpillora/go-ogle-analytics"
-	utilcmds "github.com/kubepack/onessl/cmds"
 	"github.com/kubepack/pack-server/client/clientset/versioned/scheme"
 	"github.com/spf13/cobra"
 	clientsetscheme "k8s.io/client-go/kubernetes/scheme"
@@ -70,13 +69,7 @@ func NewPackCmd(version string, plugin bool) *cobra.Command {
 	cmd.AddCommand(kinflate.NewCmdSet(stdOut, stdErr, fsys))
 
 	// onessl commands
-	cmd.AddCommand(utilcmds.NewCmdBase64())
-	cmd.AddCommand(utilcmds.NewCmdEnvsubst())
-	cmd.AddCommand(utilcmds.NewCmdSSL(clientConfig))
-	cmd.AddCommand(utilcmds.NewCmdJsonpath())
-	cmd.AddCommand(utilcmds.NewCmdSemver())
-	cmd.AddCommand(utilcmds.NewCmdHasKeys(clientConfig))
-	cmd.AddCommand(utilcmds.NewCmdWaitUntilReady(clientConfig))
+	cmd.AddCommand(NewCmdTools(clientConfig))
 
 	// cli management commands
 	cmd.AddCommand(plugin_installer.NewCmdInstall(cmd))

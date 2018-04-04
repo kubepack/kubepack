@@ -1,31 +1,25 @@
 ---
-title: Pack Wait-Until-Ready Apiservice
+title: Pack Tools Ssl Get
 menu:
   docs_0.1.0:
-    identifier: pack-wait-until-ready-apiservice
-    name: Pack Wait-Until-Ready Apiservice
+    identifier: pack-tools-ssl-get
+    name: Pack Tools Ssl Get
     parent: reference
 menu_name: docs_0.1.0
 section_menu_id: reference
 ---
-## pack wait-until-ready apiservice
+## pack tools ssl get
 
-Wait until an apiservice is ready
+Get stuff
 
 ### Synopsis
 
-Wait until an apiservice is ready
-
-```
-pack wait-until-ready apiservice [flags]
-```
+Get stuff
 
 ### Options
 
 ```
-  -h, --help                help for apiservice
-      --interval duration   Interval between checks (default 2s)
-      --timeout duration    Timeout (default 3m0s)
+  -h, --help   help for get
 ```
 
 ### Options inherited from parent commands
@@ -62,5 +56,7 @@ pack wait-until-ready apiservice [flags]
 
 ### SEE ALSO
 
-* [pack wait-until-ready](/docs/reference/pack_wait-until-ready.md)	 - Wait until resource is ready
+* [pack tools ssl](/docs/reference/pack_tools_ssl.md)	 - Utility commands for SSL certificates
+* [pack tools ssl get ca-cert](/docs/reference/pack_tools_ssl_get_ca-cert.md)	 - Prints self-sgned CA certificate from PEM encoded RSA private key
+* [pack tools ssl get kube-ca](/docs/reference/pack_tools_ssl_get_kube-ca.md)	 - Prints CA certificate for Kubernetes cluster from Kubeconfig
 

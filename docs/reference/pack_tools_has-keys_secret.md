@@ -1,25 +1,30 @@
 ---
-title: Pack Ssl Create
+title: Pack Tools Has-Keys Secret
 menu:
   docs_0.1.0:
-    identifier: pack-ssl-create
-    name: Pack Ssl Create
+    identifier: pack-tools-has-keys-secret
+    name: Pack Tools Has-Keys Secret
     parent: reference
 menu_name: docs_0.1.0
 section_menu_id: reference
 ---
-## pack ssl create
+## pack tools has-keys secret
 
-create PKI
+Check a secret has a set of given keys
 
 ### Synopsis
 
-create PKI
+Check a secret has a set of given keys
+
+```
+pack tools has-keys secret [flags]
+```
 
 ### Options
 
 ```
-  -h, --help   help for create
+  -h, --help               help for secret
+      --keys stringSlice   Keys to search for
 ```
 
 ### Options inherited from parent commands
@@ -56,8 +61,5 @@ create PKI
 
 ### SEE ALSO
 
-* [pack ssl](/docs/reference/pack_ssl.md)	 - Utility commands for SSL certificates
-* [pack ssl create ca-cert](/docs/reference/pack_ssl_create_ca-cert.md)	 - Create CA cert/key pair
-* [pack ssl create client-cert](/docs/reference/pack_ssl_create_client-cert.md)	 - Generate client certificate pair
-* [pack ssl create server-cert](/docs/reference/pack_ssl_create_server-cert.md)	 - Generate server certificate pair
+* [pack tools has-keys](/docs/reference/pack_tools_has-keys.md)	 - Checks configmap/secret has a set of given keys
 

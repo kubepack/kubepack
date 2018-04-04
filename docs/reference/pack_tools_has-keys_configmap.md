@@ -1,31 +1,30 @@
 ---
-title: Pack Semver
+title: Pack Tools Has-Keys Configmap
 menu:
   docs_0.1.0:
-    identifier: pack-semver
-    name: Pack Semver
+    identifier: pack-tools-has-keys-configmap
+    name: Pack Tools Has-Keys Configmap
     parent: reference
 menu_name: docs_0.1.0
 section_menu_id: reference
 ---
-## pack semver
+## pack tools has-keys configmap
 
-Print sanitized semver version
+Check a configmap has a set of given keys
 
 ### Synopsis
 
-Print sanitized semver version
+Check a configmap has a set of given keys
 
 ```
-pack semver [flags]
+pack tools has-keys configmap [flags]
 ```
 
 ### Options
 
 ```
-      --check string   check constraint
-  -h, --help           help for semver
-      --minor          print major.minor.0 version
+  -h, --help               help for configmap
+      --keys stringSlice   Keys to search for
 ```
 
 ### Options inherited from parent commands
@@ -62,5 +61,5 @@ pack semver [flags]
 
 ### SEE ALSO
 
-* [pack](/docs/reference/pack.md)	 - Secure Lightweight Kubernetes Package Manager
+* [pack tools has-keys](/docs/reference/pack_tools_has-keys.md)	 - Checks configmap/secret has a set of given keys
 

@@ -1,33 +1,31 @@
 ---
-title: Pack Ssl Create Server-Cert
+title: Pack Tools Wait-Until-Ready Deployment
 menu:
   docs_0.1.0:
-    identifier: pack-ssl-create-server-cert
-    name: Pack Ssl Create Server-Cert
+    identifier: pack-tools-wait-until-ready-deployment
+    name: Pack Tools Wait-Until-Ready Deployment
     parent: reference
 menu_name: docs_0.1.0
 section_menu_id: reference
 ---
-## pack ssl create server-cert
+## pack tools wait-until-ready deployment
 
-Generate server certificate pair
+Wait until a deployment is ready
 
 ### Synopsis
 
-Generate server certificate pair
+Wait until a deployment is ready
 
 ```
-pack ssl create server-cert [flags]
+pack tools wait-until-ready deployment [flags]
 ```
 
 ### Options
 
 ```
-      --cert-dir string       Path to directory where pki files are stored. (default "/home/tamal/go/src/github.com/kubepack/pack/hack/gendocs")
-      --domains stringSlice   Alternative Domain names
-  -h, --help                  help for server-cert
-      --ips ipSlice           Alternative IP addresses (default [127.0.0.1])
-      --overwrite             Overwrite existing cert/key pair
+  -h, --help                help for deployment
+      --interval duration   Interval between checks (default 2s)
+      --timeout duration    Timeout (default 3m0s)
 ```
 
 ### Options inherited from parent commands
@@ -64,5 +62,5 @@ pack ssl create server-cert [flags]
 
 ### SEE ALSO
 
-* [pack ssl create](/docs/reference/pack_ssl_create.md)	 - create PKI
+* [pack tools wait-until-ready](/docs/reference/pack_tools_wait-until-ready.md)	 - Wait until resource is ready
 

@@ -1,25 +1,33 @@
 ---
-title: Pack Has-Keys
+title: Pack Tools Ssl Create Server-Cert
 menu:
   docs_0.1.0:
-    identifier: pack-has-keys
-    name: Pack Has-Keys
+    identifier: pack-tools-ssl-create-server-cert
+    name: Pack Tools Ssl Create Server-Cert
     parent: reference
 menu_name: docs_0.1.0
 section_menu_id: reference
 ---
-## pack has-keys
+## pack tools ssl create server-cert
 
-Checks configmap/secret has a set of given keys
+Generate server certificate pair
 
 ### Synopsis
 
-Checks configmap/secret has a set of given keys
+Generate server certificate pair
+
+```
+pack tools ssl create server-cert [flags]
+```
 
 ### Options
 
 ```
-  -h, --help   help for has-keys
+      --cert-dir string       Path to directory where pki files are stored. (default "/home/tamal/go/src/github.com/kubepack/pack/hack/gendocs")
+      --domains stringSlice   Alternative Domain names
+  -h, --help                  help for server-cert
+      --ips ipSlice           Alternative IP addresses (default [127.0.0.1])
+      --overwrite             Overwrite existing cert/key pair
 ```
 
 ### Options inherited from parent commands
@@ -56,7 +64,5 @@ Checks configmap/secret has a set of given keys
 
 ### SEE ALSO
 
-* [pack](/docs/reference/pack.md)	 - Secure Lightweight Kubernetes Package Manager
-* [pack has-keys configmap](/docs/reference/pack_has-keys_configmap.md)	 - Check a configmap has a set of given keys
-* [pack has-keys secret](/docs/reference/pack_has-keys_secret.md)	 - Check a secret has a set of given keys
+* [pack tools ssl create](/docs/reference/pack_tools_ssl_create.md)	 - create PKI
 
