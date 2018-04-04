@@ -55,7 +55,7 @@ func NewPackCmd(version string, plugin bool) *cobra.Command {
 	flags.StringP("file", "f", "", "filepath")
 	flags.StringP("patch", "p", "", "File want to edit")
 
-	flags.BoolVar(&enableAnalytics, "analytics", enableAnalytics, "Send analytical events to Google Guard")
+	flags.BoolVar(&enableAnalytics, "enable-analytics", enableAnalytics, "Send analytical events to Google Guard")
 
 	cmd.AddCommand(NewDepCommand(plugin))
 	cmd.AddCommand(NewEditCommand(plugin))

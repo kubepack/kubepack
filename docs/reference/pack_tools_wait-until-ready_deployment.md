@@ -32,7 +32,6 @@ pack tools wait-until-ready deployment [flags]
 
 ```
       --alsologtostderr                  log to standard error as well as files
-      --analytics                        Send analytical events to Google Guard (default true)
       --as string                        Username to impersonate for the operation
       --as-group stringArray             Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
       --certificate-authority string     Path to a cert file for the certificate authority
@@ -40,6 +39,7 @@ pack tools wait-until-ready deployment [flags]
       --client-key string                Path to a client key file for TLS
       --cluster string                   The name of the kubeconfig cluster to use
       --context string                   The name of the kubeconfig context to use
+      --enable-analytics                 Send analytical events to Google Guard (default true)
   -f, --file string                      filepath
       --insecure-skip-tls-verify         If true, the server's certificate will not be checked for validity. This will make your HTTPS connections insecure
       --kube-version string              name of the kubeconfig context to use
