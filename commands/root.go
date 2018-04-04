@@ -73,7 +73,6 @@ func NewPackCmd(version string, plugin bool) *cobra.Command {
 
 	// cli management commands
 	cmd.AddCommand(plugin_installer.NewCmdInstall(cmd))
-	cmd.AddCommand(plugin_installer.NewCmdEnv())
 	cmd.AddCommand(v.NewCmdVersion())
 	return cmd
 }

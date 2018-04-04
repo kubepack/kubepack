@@ -27,7 +27,7 @@ var validator *validation.SchemaValidation
 func NewValidateCommand(plugin bool) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "validate",
-		Short: "Validate _outlook folder",
+		Short: "Validate output folder",
 		Run: func(cmd *cobra.Command, args []string) {
 			err := validateOutlook(cmd, plugin)
 			if err != nil {
