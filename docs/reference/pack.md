@@ -59,12 +59,11 @@ Secure Lightweight Kubernetes Package Manager
 * [pack add](/docs/reference/pack_add.md)	 - Adds configmap/resource/secret to the manifest.
 * [pack dep](/docs/reference/pack_dep.md)	 - Pulls dependent app manifests
 * [pack edit](/docs/reference/pack_edit.md)	 - Edit resource definition
-* [pack env](/docs/reference/pack_env.md)	 - List environment variables
 * [pack init](/docs/reference/pack_init.md)	 - Initialize kubepack and create manifest.yaml file
 * [pack install](/docs/reference/pack_install.md)	 - Install as kubectl plugin
 * [pack set](/docs/reference/pack_set.md)	 - Sets the value of different fields in manifest.
 * [pack tools](/docs/reference/pack_tools.md)	 - Tools for managing package life-cycle
 * [pack up](/docs/reference/pack_up.md)	 - Compiles patches and vendored manifests into final resource definitions
-* [pack validate](/docs/reference/pack_validate.md)	 - Validate _outlook folder
+* [pack validate](/docs/reference/pack_validate.md)	 - Validate output folder
 * [pack version](/docs/reference/pack_version.md)	 - Prints binary version number.
 
