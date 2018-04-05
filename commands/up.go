@@ -85,8 +85,8 @@ func NewUpCommand(plugin bool) *cobra.Command {
 			}
 
 			importroot := GetImportRoot(rootPath)
-			source := filepath.Join(rootPath, api.ManifestDirectory, "app")
-			dest := filepath.Join(rootPath, api.ManifestDirectory, CompileDirectory, importroot, api.ManifestDirectory, "app")
+			source := filepath.Join(rootPath, api.ManifestDirectory, AppDirectoryName)
+			dest := filepath.Join(rootPath, api.ManifestDirectory, CompileDirectory, importroot, api.ManifestDirectory, AppDirectoryName)
 			_, err = os.Stat(dest)
 			if os.IsNotExist(err) {
 				err = os.MkdirAll(filepath.Dir(dest), 0755)
@@ -554,9 +554,9 @@ func generateDag(root string) error {
 func getCmdForInstallScript(root, pkg string) string {
 	outputPath := filepath.Join(api.ManifestDirectory, CompileDirectory, pkg)
 	cmd := "kubectl apply -R -f ."
-	path := filepath.Join(root, outputPath, api.ManifestDirectory, "app", InstallSHName)
+	path := filepath.Join(root, outputPath, api.ManifestDirectory, AppDirectoryName, InstallSHName)
 	if _, err := os.Stat(path); err == nil {
-		cmd = "./" + filepath.Join(api.ManifestDirectory, "app", InstallSHName)
+		cmd = "./" + filepath.Join(api.ManifestDirectory, AppDirectoryName, InstallSHName)
 	}
 	return cmd
 }

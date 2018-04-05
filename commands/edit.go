@@ -252,7 +252,7 @@ func isPathAlreadyExist(s []string, path string) bool {
 
 func getRepositoryPath(path string) string {
 	splitFirst := strings.Split(path, filepath.Join(api.ManifestDirectory, PatchFolder))[1]
-	spliFinal := strings.Split(splitFirst, filepath.Join(api.ManifestDirectory, "app"))[0]
+	spliFinal := strings.Split(splitFirst, filepath.Join(api.ManifestDirectory, AppDirectoryName))[0]
 	return strings.Trim(spliFinal, "/")
 }
 

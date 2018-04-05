@@ -17,7 +17,8 @@ import (
 )
 
 const (
-	gaTrackingCode = "UA-62096468-20"
+	gaTrackingCode   = "UA-62096468-20"
+	AppDirectoryName = "app"
 )
 
 func NewPackCmd(version string, plugin bool) *cobra.Command {
