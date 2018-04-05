@@ -19,12 +19,12 @@ Kubepack provides a CLI to work with Kubernetes objects. Download pre-built bina
 
 ```console
 # Linux amd 64-bit
-wget -O kubepack https://github.com/kubepack/kubepack/releases/download/0.1.0/kubepack-linux-amd64 \
+wget -O kubepack https://github.com/kubepack/kubepack/releases/download/0.1.0/pack-linux-amd64 \
   && chmod +x kubepack \
   && sudo mv kubepack /usr/local/bin/
 
 # Mac 64-bit
-wget -O kubepack https://github.com/kubepack/kubepack/releases/download/0.1.0/kubepack-darwin-amd64 \
+wget -O kubepack https://github.com/kubepack/kubepack/releases/download/0.1.0/pack-darwin-amd64 \
   && chmod +x kubepack \
   && sudo mv kubepack /usr/local/bin/
 ```
