@@ -28,7 +28,7 @@ const (
 	defaultEditor        = "nano"
 	_VendorFolder        = "vendor"
 	PatchFolder          = "patch"
-	KinflateManifestName = "Kube-manifest.yaml"
+	KinflateManifestName = "kube-manifest.yaml"
 )
 
 var (
