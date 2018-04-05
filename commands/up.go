@@ -75,9 +75,12 @@ func NewUpCommand(plugin bool) *cobra.Command {
 					glog.Fatalln(errors.WithStack(err))
 				}
 			}
-			err = filepath.Walk(filepath.Join(rootPath, api.ManifestDirectory, _VendorFolder), visitPatchAndDump)
-			if err != nil {
-				glog.Fatalln(errors.WithStack(err))
+			vendorPath := filepath.Join(rootPath, api.ManifestDirectory, _VendorFolder)
+			if _, ok := os.Stat(vendorPath); !os.IsNotExist(ok) {
+				err = filepath.Walk(vendorPath, visitPatchAndDump)
+				if err != nil {
+					glog.Fatalln(errors.WithStack(err))
+				}
 			}
 			err = generateDag(rootPath)
 			if err != nil {
