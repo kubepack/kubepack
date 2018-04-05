@@ -14,7 +14,7 @@ import (
 
 type initOptions struct{}
 
-const manifestTemplate = `apiVersion: manifest.k8s.io/v1alpha1
+const kubeManifestTemplate = `apiVersion: manifest.k8s.io/v1alpha1
 kind: Manifest
 metadata:
   name: helloworld
@@ -36,6 +36,11 @@ configmaps: []
 # There could be secrets in Base, if just using a fork/rebase workflow
 secrets: []
 recursive: true
+`
+
+const dependencyListTemplate = `apiVersion: manifest.k8s.io/v1alpha1
+kind: Manifest
+item: []
 `
 
 func NewKubepackInitializeCmd(plugin bool) *cobra.Command {
@@ -94,7 +99,7 @@ func createManifestFiles(cmd *cobra.Command, plugin bool) error {
 	}
 	if err != nil {
 		if os.IsNotExist(err) {
-			_, err = os.Create(mPath)
+			err = initializeDependencyList(root)
 			if err != nil {
 				return errors.WithStack(err)
 			}
@@ -114,5 +119,14 @@ func initializeKubeManifests(root string) error {
 		return errors.Errorf("%s already exists.", kin_const.KubeManifestFileName)
 	}
 
-	return ioutil.WriteFile(mPath, []byte(manifestTemplate), 0666)
+	return ioutil.WriteFile(mPath, []byte(kubeManifestTemplate), 0666)
+}
+
+func initializeDependencyList(root string) error {
+	mPath := filepath.Join(root, api.DependencyFile)
+	_, err := os.Stat(mPath)
+	if err == nil {
+		return errors.Errorf("%s already exists.", api.DependencyFile)
+	}
+	return ioutil.WriteFile(mPath, []byte(dependencyListTemplate), 0666)
 }
