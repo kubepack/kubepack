@@ -3,7 +3,6 @@ package commands
 import (
 	"context"
 	"flag"
-	"fmt"
 	"go/build"
 	"io/ioutil"
 	"log"
@@ -621,5 +620,5 @@ func GetImportRoot(root string) string {
 }
 
 func writeProgressLogger(progress gps.WriteProgress) {
-	fmt.Printf("repo(%d/%d):  %s\n", progress.Count, progress.Total, progress.LP)
+	glog.Infof("repo(%d/%d):  %s\n", progress.Count, progress.Total, progress.LP)
 }
