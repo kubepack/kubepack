@@ -13,9 +13,9 @@ import (
 
 	"github.com/Masterminds/vcs"
 	ioutil_x "github.com/appscode/go/ioutil"
-	"github.com/appscode/go/log"
 	"github.com/evanphx/json-patch"
 	"github.com/ghodss/yaml"
+	"github.com/golang/glog"
 	"github.com/google/go-jsonnet"
 	api "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
 	"github.com/pkg/errors"
@@ -51,37 +51,37 @@ func NewUpCommand(plugin bool) *cobra.Command {
 			var err error
 			rootPath, err = cmd.Flags().GetString("file")
 			if err != nil {
-				log.Fatalln(errors.WithStack(err))
+				glog.Fatalln(errors.WithStack(err))
 			}
 			if !plugin && !filepath.IsAbs(rootPath) {
 				wd, err := os.Getwd()
 				if err != nil {
-					log.Fatalln(errors.WithStack(err))
+					glog.Fatalln(errors.WithStack(err))
 				}
 				rootPath = filepath.Join(wd, rootPath)
 			}
 			if !filepath.IsAbs(rootPath) {
-				log.Fatalln(errors.Errorf("Duh! we need an absolute path when used as a kubectl plugin. For more info, see here: https://github.com/kubernetes/kubectl/issues/346"))
+				glog.Fatalln(errors.Errorf("Duh! we need an absolute path when used as a kubectl plugin. For more info, see here: https://github.com/kubernetes/kubectl/issues/346"))
 			}
 			validator, err = GetOpenapiValidator(cmd)
 			if err != nil {
-				log.Fatalln(errors.WithStack(err))
+				glog.Fatalln(errors.WithStack(err))
 			}
 			patchFiles = make(map[string]string)
 			patchPath := filepath.Join(rootPath, api.ManifestDirectory, PatchFolder)
 			if _, err := os.Stat(patchPath); !os.IsNotExist(err) {
 				err = filepath.Walk(patchPath, visitPatchFolder)
 				if err != nil {
-					log.Fatalln(errors.WithStack(err))
+					glog.Fatalln(errors.WithStack(err))
 				}
 			}
 			err = filepath.Walk(filepath.Join(rootPath, api.ManifestDirectory, _VendorFolder), visitPatchAndDump)
 			if err != nil {
-				log.Fatalln(errors.WithStack(err))
+				glog.Fatalln(errors.WithStack(err))
 			}
 			err = generateDag(rootPath)
 			if err != nil {
-				log.Fatalln(err)
+				glog.Fatalln(err)
 			}
 
 			importroot := GetImportRoot(rootPath)
@@ -91,28 +91,28 @@ func NewUpCommand(plugin bool) *cobra.Command {
 			if os.IsNotExist(err) {
 				err = os.MkdirAll(filepath.Dir(dest), 0755)
 				if err != nil {
-					log.Fatalln(err)
+					glog.Fatalln(err)
 				}
 			}
 			if err == nil {
 				err = os.RemoveAll(dest)
 				if err != nil {
-					log.Fatalln(err)
+					glog.Fatalln(err)
 				}
 			}
 
 			err = ioutil_x.CopyDir(dest, source)
 			if err != nil {
-				log.Fatalln(err)
+				glog.Fatalln(err)
 			}
 			err = writeCommandToInstallSH(importroot, rootPath)
 			if err != nil {
-				log.Fatalln(err)
+				glog.Fatalln(err)
 			}
 			installPath := filepath.Join(rootPath, api.ManifestDirectory, CompileDirectory, InstallSHName)
 			err = os.Chmod(installPath, 0777)
 			if err != nil {
-				log.Fatalln(err)
+				glog.Fatalln(err)
 			}
 		},
 	}

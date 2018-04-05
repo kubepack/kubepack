@@ -10,6 +10,7 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/golang/glog"
 	"github.com/googleapis/gnostic/OpenAPIv2"
 	"github.com/googleapis/gnostic/compiler"
 	api "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
@@ -87,7 +88,7 @@ func visitOutlookFolder(path string, fileInfo os.FileInfo, ferr error) error {
 	if err != nil {
 		return errors.WithStack(ferr)
 	}
-	fmt.Printf("%s is a valid yaml\n", path)
+	glog.Infof("%s is a valid yaml\n", path)
 	return nil
 }
 
@@ -111,18 +112,18 @@ func GetKubernetesVersion() (string, error) {
 func downloadOpenApiSwagger(url string, file *os.File) error {
 	response, err := http.Get(url)
 	if err != nil {
-		fmt.Println("Error while downloading", url, "-", err)
+		glog.Infoln("Error while downloading", url, "-", err)
 		return errors.WithStack(err)
 	}
 	defer response.Body.Close()
 
 	n, err := io.Copy(file, response.Body)
 	if err != nil {
-		fmt.Println("Error while downloading", url, "-", err)
+		glog.Infoln("Error while downloading", url, "-", err)
 		return errors.WithStack(err)
 	}
 
-	fmt.Println(n, "bytes downloaded.")
+	glog.Infoln(n, "bytes downloaded.")
 	return nil
 }
 

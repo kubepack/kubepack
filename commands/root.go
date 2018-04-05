@@ -50,6 +50,7 @@ func NewPackCmd(version string, plugin bool) *cobra.Command {
 	clientConfig := plugin_installer.BindGlobalFlags(flags, plugin)
 	// ref: https://github.com/kubernetes/kubernetes/issues/17162#issuecomment-225596212
 	flag.CommandLine.Parse([]string{})
+	flag.Set("stderrthreshold", "ERROR")
 
 	flags.String("kube-version", "", "name of the kubeconfig context to use")
 	flags.StringP("file", "f", "", "filepath")
