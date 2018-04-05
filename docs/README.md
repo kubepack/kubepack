@@ -31,6 +31,6 @@ We're always looking for help improving our documentation, so please don't hesit
 
 ---
 
-**Kubepack binaries collects anonymous usage statistics to help us learn how the software is being used and how we can improve it. To disable stats collection, run the operator with the flag** `--analytics=false`.
+**Kubepack binaries collects anonymous usage statistics to help us learn how the software is being used and how we can improve it. To disable stats collection, run the operator with the flag** `--enable-analytics=false`.
 
 ---

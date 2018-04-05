@@ -23,7 +23,7 @@ Want to help improve Kubepack? Please start [here](https://kubepack.com/docs/0.1
 ---
 
 **Kubepack binaries collects anonymous usage statistics to help us learn how the software is being used and how we can improve it.
-To disable stats collection, run the operator with the flag** `--analytics=false`.
+To disable stats collection, run the operator with the flag** `--enable-analytics=false`.
 
 ---
 
