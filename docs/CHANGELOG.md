@@ -16,9 +16,8 @@ aliases:
 
 # Change Log
 
-## [Unreleased](https://github.com/kubepack/pack/tree/HEAD)
-
-[Full Changelog](https://github.com/kubepack/pack/compare/0.1.0-alpha.2...HEAD)
+## [0.1.0](https://github.com/kubepack/pack/tree/0.1.0) (2018-04-05)
+[Full Changelog](https://github.com/kubepack/pack/compare/0.1.0-alpha.2...0.1.0)
 
 **Closed issues:**
 
@@ -26,6 +25,12 @@ aliases:
 
 **Merged pull requests:**
 
+- Use glog instead of fmt for logging [\#72](https://github.com/kubepack/pack/pull/72) ([tamalsaha](https://github.com/tamalsaha))
+- Various fixes [\#71](https://github.com/kubepack/pack/pull/71) ([tamalsaha](https://github.com/tamalsaha))
+- Rename analytics flag. [\#70](https://github.com/kubepack/pack/pull/70) ([tamalsaha](https://github.com/tamalsaha))
+- Remove env command [\#69](https://github.com/kubepack/pack/pull/69) ([tamalsaha](https://github.com/tamalsaha))
+- Move onessl commands under tools [\#68](https://github.com/kubepack/pack/pull/68) ([tamalsaha](https://github.com/tamalsaha))
+- Update docs for 0.1.0 [\#67](https://github.com/kubepack/pack/pull/67) ([tamalsaha](https://github.com/tamalsaha))
 - Add docs for install.sh [\#65](https://github.com/kubepack/pack/pull/65) ([a8uhnf](https://github.com/a8uhnf))
 - Generate install.sh script based on DAG [\#64](https://github.com/kubepack/pack/pull/64) ([a8uhnf](https://github.com/a8uhnf))
 - Update cmd and testcases [\#62](https://github.com/kubepack/pack/pull/62) ([a8uhnf](https://github.com/a8uhnf))
