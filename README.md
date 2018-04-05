@@ -12,13 +12,13 @@ Kubepack by AppsCode is a  Secure Lightweight Kubernetes Package Manager.
 Kubernetes 1.8+
 
 ## Installation
-To install Pack, please follow the guide [here](/docs/setup/install.md).
+To install Pack, please follow the guide [here](https://kubepack.com/docs/0.1.0/setup/install/).
 
 ## Using Pack
-Want to learn how to use Pack? Please start [here](/docs/guides/README.md).
+Want to learn how to use Pack? Please start [here](https://kubepack.com/docs/0.1.0/guides/).
 
 ## Contribution guidelines
-Want to help improve Kubepack? Please start [here](/docs/CONTRIBUTING.md).
+Want to help improve Kubepack? Please start [here](https://kubepack.com/docs/0.1.0/welcome/contributing/).
 
 ---
 
