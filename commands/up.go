@@ -104,9 +104,11 @@ func NewUpCommand(plugin bool) *cobra.Command {
 				}
 			}
 
-			err = ioutil_x.CopyDir(dest, source)
-			if err != nil {
-				glog.Fatalln(err)
+			if _, err = os.Stat(source); err == nil {
+				err = ioutil_x.CopyDir(dest, source)
+				if err != nil {
+					glog.Fatalln(err)
+				}
 			}
 			err = writeCommandToInstallSH(importroot, rootPath)
 			if err != nil {
@@ -507,7 +509,6 @@ func generateDag(root string) error {
 		return errors.WithStack(err)
 	}
 	st := NewStack()
-	// check
 	for _, val := range depList.Items {
 		st.Push(val.Package)
 		check[val.Package] = 1

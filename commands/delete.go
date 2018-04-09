@@ -1,13 +1,15 @@
 package commands
 
 import (
-	"github.com/spf13/cobra"
-	"log"
-	"github.com/pkg/errors"
-	"path/filepath"
-	"os"
-	api "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
 	"fmt"
+	"log"
+	"os"
+	"path/filepath"
+	"sort"
+
+	api "github.com/kubepack/pack-server/apis/manifest/v1alpha1"
+	"github.com/pkg/errors"
+	"github.com/spf13/cobra"
 )
 
 type deleteOptions struct{}
@@ -24,9 +26,12 @@ func NewDeleteCommand(plugin bool) *cobra.Command {
 			if err != nil {
 				log.Fatalln(err)
 			}
+			err = d.generateDeleteShScript(cmd, plugin)
+			if err != nil {
+				log.Fatalln(err)
+			}
 		},
 	}
-
 	return cmd
 }
 
@@ -56,11 +61,15 @@ func (d deleteOptions) generateDeleteShScript(cmd *cobra.Command, plugin bool) e
 	if !filepath.IsAbs(root) {
 		return errors.Errorf("Duh! we need an absolute path when used as a kubectl plugin. For more info, see here: https://github.com/kubernetes/kubectl/issues/346")
 	}
-
+	err = generateDeleteDag(root)
+	if err != nil {
+		return errors.WithStack(err)
+	}
 	return nil
 }
 
 func generateDeleteDag(root string) error {
+	var res []node
 	var check map[string]int
 	check = make(map[string]int)
 	deleteShPath := filepath.Join(root, api.ManifestDirectory, CompileDirectory, DeleteShScriptName)
@@ -92,11 +101,6 @@ func generateDeleteDag(root string) error {
 		return errors.WithStack(err)
 	}
 	st := NewStack()
-	// check
-	for _, val := range depList.Items {
-		st.Push(val.Package)
-		check[val.Package] = 1
-	}
 	for _, val := range depList.Items {
 		st.Push(val.Package)
 		check[val.Package] = 1
@@ -108,6 +112,9 @@ func generateDeleteDag(root string) error {
 		}
 		manifestPath = filepath.Join(manVendorDir, n, api.DependencyFile)
 		data, err := getManifestStruct(manifestPath)
+		fmt.Println(nil)
+		fmt.Println(data)
+		fmt.Println(err)
 		if err != nil {
 			return errors.WithStack(err)
 		}
@@ -115,9 +122,48 @@ func generateDeleteDag(root string) error {
 			if _, ok := check[val.Package]; !ok {
 				st.Push(val.Package)
 			}
-
 			check[val.Package] = max(check[n]+1, check[val.Package])
 		}
+	}
+	for key, val := range check {
+		n := node{
+			node:  key,
+			count: val,
+		}
+		res = append(res, n)
+	}
+	sort.Slice(res, func(i, j int) bool {
+		return res[i].count < res[j].count
+	})
+	for _, val := range res {
+		err = writeCommandToInstallSH(val.node, root)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+	}
+	fmt.Println(check)
+	return nil
+}
+
+func writeCommandToDeleteSH(pkg, root string) error {
+	installTemplate := `
+pushd %s
+%s
+popd
+			
+`
+	installPath := filepath.Join(root, api.ManifestDirectory, CompileDirectory, DeleteShScriptName)
+	f, err := os.OpenFile(installPath, os.O_APPEND|os.O_WRONLY, 0755)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	defer f.Close()
+	outputPath := filepath.Join(api.ManifestDirectory, CompileDirectory, pkg)
+	cmd := ``
+	installShContent := fmt.Sprintf(installTemplate, outputPath, cmd)
+	_, err = f.Write([]byte(installShContent))
+	if err != nil {
+		return errors.WithStack(err)
 	}
 	return nil
 }

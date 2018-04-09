@@ -40,7 +40,7 @@ recursive: true
 
 const dependencyListTemplate = `apiVersion: manifest.k8s.io/v1alpha1
 kind: Manifest
-item: []
+items: []
 `
 
 func NewKubepackInitializeCmd(plugin bool) *cobra.Command {
