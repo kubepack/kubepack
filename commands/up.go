@@ -510,7 +510,6 @@ func generateDag(root string) error {
 	// check
 	for _, val := range depList.Items {
 		st.Push(val.Package)
-		// res = append(res, val.Package)
 		check[val.Package] = 1
 	}
 	for len(st.s) > 0 {
@@ -518,10 +517,6 @@ func generateDag(root string) error {
 		if err != nil {
 			return errors.WithStack(err)
 		}
-		/*err = writeCommandToInstallSH(n, root)
-		if err != nil {
-			return errors.WithStack(err)
-		}*/
 		manifestPath = filepath.Join(manVendorDir, n, api.DependencyFile)
 		data, err := getManifestStruct(manifestPath)
 		if err != nil {
