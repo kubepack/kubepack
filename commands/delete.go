@@ -14,7 +14,7 @@ import (
 
 type deleteOptions struct{}
 
-const DeleteShScriptName = "delete.sh"
+const DeleteShScriptName = "uninstall.sh"
 
 func NewDeleteCommand(plugin bool) *cobra.Command {
 	var d deleteOptions
@@ -69,18 +69,18 @@ func (d deleteOptions) generateDeleteShScript(cmd *cobra.Command, plugin bool) e
 }
 
 func generateDeleteDag(root string) error {
-	var res []node
-	var check map[string]int
-	check = make(map[string]int)
+	dag, err := generateDAG(root, DeleteShScriptName)
+	if err != nil {
+		return errors.WithStack(err)
+	}
 	deleteShPath := filepath.Join(root, api.ManifestDirectory, CompileDirectory, DeleteShScriptName)
-	fmt.Println(deleteShPath)
 	if _, err := os.Stat(deleteShPath); err == nil {
 		err = os.Remove(deleteShPath)
 		if err != nil {
 			return errors.WithStack(err)
 		}
 	}
-	err := os.MkdirAll(filepath.Dir(deleteShPath), 0755)
+	err = os.MkdirAll(filepath.Dir(deleteShPath), 0755)
 	if err != nil {
 		return errors.WithStack(err)
 	}
@@ -88,65 +88,26 @@ func generateDeleteDag(root string) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	f, err := os.OpenFile(deleteShPath, os.O_APPEND|os.O_WRONLY, 0755)
-	if err != nil {
-		return errors.WithStack(err)
-	}
-	defer f.Close()
-
-	manifestPath := filepath.Join(root, api.DependencyFile)
-	manVendorDir := filepath.Join(root, api.ManifestDirectory, _VendorFolder)
-	depList, err := getManifestStruct(manifestPath)
-	if err != nil {
-		return errors.WithStack(err)
-	}
-	st := NewStack()
-	for _, val := range depList.Items {
-		st.Push(val.Package)
-		check[val.Package] = 1
-	}
-	for len(st.s) > 0 {
-		n, err := st.Pop()
-		if err != nil {
-			return errors.WithStack(err)
-		}
-		manifestPath = filepath.Join(manVendorDir, n, api.DependencyFile)
-		data, err := getManifestStruct(manifestPath)
-		fmt.Println(nil)
-		fmt.Println(data)
-		fmt.Println(err)
-		if err != nil {
-			return errors.WithStack(err)
-		}
-		for _, val := range data.Items {
-			if _, ok := check[val.Package]; !ok {
-				st.Push(val.Package)
-			}
-			check[val.Package] = max(check[n]+1, check[val.Package])
-		}
-	}
-	for key, val := range check {
-		n := node{
-			node:  key,
-			count: val,
-		}
-		res = append(res, n)
-	}
-	sort.Slice(res, func(i, j int) bool {
-		return res[i].count < res[j].count
+	dag = append(dag, node{GetImportRoot(root), 0})
+	sort.Slice(dag, func(i, j int) bool {
+		return dag[i].count < dag[j].count
 	})
-	for _, val := range res {
-		err = writeCommandToInstallSH(val.node, root)
+	for _, p := range dag {
+		err = writeCommandToDeleteSH(p.node, root)
 		if err != nil {
 			return errors.WithStack(err)
 		}
 	}
-	fmt.Println(check)
+	uninstallPath := filepath.Join(rootPath, api.ManifestDirectory, CompileDirectory, DeleteShScriptName)
+	err = os.Chmod(uninstallPath, 0777)
+	if err != nil {
+		return errors.WithStack(err)
+	}
 	return nil
 }
 
 func writeCommandToDeleteSH(pkg, root string) error {
-	installTemplate := `
+	deleteTemplate := `
 pushd %s
 %s
 popd
@@ -159,8 +120,11 @@ popd
 	}
 	defer f.Close()
 	outputPath := filepath.Join(api.ManifestDirectory, CompileDirectory, pkg)
-	cmd := ``
-	installShContent := fmt.Sprintf(installTemplate, outputPath, cmd)
+	if _, err := os.Stat(outputPath); os.IsNotExist(err) {
+		return nil
+	}
+	cmd := `kubectl delete -R -f .`
+	installShContent := fmt.Sprintf(deleteTemplate, outputPath, cmd)
 	_, err = f.Write([]byte(installShContent))
 	if err != nil {
 		return errors.WithStack(err)

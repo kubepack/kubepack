@@ -82,7 +82,7 @@ func NewUpCommand(plugin bool) *cobra.Command {
 					glog.Fatalln(errors.WithStack(err))
 				}
 			}
-			err = generateDag(rootPath)
+			err = generateInstallDag(rootPath)
 			if err != nil {
 				glog.Fatalln(err)
 			}
@@ -116,6 +116,10 @@ func NewUpCommand(plugin bool) *cobra.Command {
 			}
 			installPath := filepath.Join(rootPath, api.ManifestDirectory, CompileDirectory, InstallSHName)
 			err = os.Chmod(installPath, 0777)
+			if err != nil {
+				glog.Fatalln(err)
+			}
+			err = generateDeleteDag(rootPath)
 			if err != nil {
 				glog.Fatalln(err)
 			}
@@ -477,10 +481,8 @@ func (s *stack) Top() (string, error) {
 	return res, nil
 }
 
-func generateDag(root string) error {
+func generateInstallDag(root string) error {
 	var res []node
-	var check map[string]int
-	check = make(map[string]int)
 	installPath := filepath.Join(root, api.ManifestDirectory, CompileDirectory, InstallSHName)
 	if _, err := os.Stat(installPath); err == nil {
 		err = os.Remove(installPath)
@@ -502,41 +504,9 @@ func generateDag(root string) error {
 	}
 	defer f.Close()
 
-	manifestPath := filepath.Join(root, api.DependencyFile)
-	manVendorDir := filepath.Join(root, api.ManifestDirectory, _VendorFolder)
-	depList, err := getManifestStruct(manifestPath)
+	res, err = generateDAG(root, InstallSHName)
 	if err != nil {
 		return errors.WithStack(err)
-	}
-	st := NewStack()
-	for _, val := range depList.Items {
-		st.Push(val.Package)
-		check[val.Package] = 1
-	}
-	for len(st.s) > 0 {
-		n, err := st.Pop()
-		if err != nil {
-			return errors.WithStack(err)
-		}
-		manifestPath = filepath.Join(manVendorDir, n, api.DependencyFile)
-		data, err := getManifestStruct(manifestPath)
-		if err != nil {
-			return errors.WithStack(err)
-		}
-		for _, val := range data.Items {
-			if _, ok := check[val.Package]; !ok {
-				st.Push(val.Package)
-			}
-
-			check[val.Package] = max(check[n]+1, check[val.Package])
-		}
-	}
-	for key, val := range check {
-		n := node{
-			node:  key,
-			count: val,
-		}
-		res = append(res, n)
 	}
 	sort.Slice(res, func(i, j int) bool {
 		return res[i].count > res[j].count
@@ -585,7 +555,7 @@ popd
 			
 `
 	installPath := filepath.Join(root, api.ManifestDirectory, CompileDirectory, InstallSHName)
-	f, err := os.OpenFile(installPath, os.O_APPEND|os.O_WRONLY, 0755)
+	f, err := os.OpenFile(installPath, os.O_APPEND|os.O_WRONLY, 0777)
 	if err != nil {
 		return errors.WithStack(err)
 	}
@@ -605,4 +575,63 @@ func max(a, b int) int {
 		return a
 	}
 	return b
+}
+
+func generateDAG(root, scriptName string) ([]node, error) {
+	var res []node
+	var check map[string]int
+	check = make(map[string]int)
+	installPath := filepath.Join(root, api.ManifestDirectory, CompileDirectory, scriptName)
+	if _, err := os.Stat(installPath); err == nil {
+		err = os.Remove(installPath)
+		if err != nil {
+			return nil, errors.WithStack(err)
+		}
+	}
+	err := os.MkdirAll(filepath.Dir(installPath), 0755)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	err = WriteCompiledFileToDest(installPath, []byte(InstallSHDefault))
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	manifestPath := filepath.Join(root, api.DependencyFile)
+	manVendorDir := filepath.Join(root, api.ManifestDirectory, _VendorFolder)
+	depList, err := getManifestStruct(manifestPath)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	st := NewStack()
+	for _, val := range depList.Items {
+		st.Push(val.Package)
+		check[val.Package] = 1
+	}
+	for len(st.s) > 0 {
+		n, err := st.Pop()
+		if err != nil {
+			return nil, errors.WithStack(err)
+		}
+		manifestPath = filepath.Join(manVendorDir, n, api.DependencyFile)
+		data, err := getManifestStruct(manifestPath)
+		if err != nil {
+			return nil, errors.WithStack(err)
+		}
+		for _, val := range data.Items {
+			if _, ok := check[val.Package]; !ok {
+				st.Push(val.Package)
+			}
+
+			check[val.Package] = max(check[n]+1, check[val.Package])
+		}
+	}
+	for key, val := range check {
+		n := node{
+			node:  key,
+			count: val,
+		}
+		res = append(res, n)
+	}
+	return res, nil
 }
