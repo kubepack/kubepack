@@ -1,11 +1,11 @@
 ---
-title: Using Kubepack CLI
+title: Using Kubepack up command
 menu:
   docs_0.1.0:
-    identifier: cli-how
-    name: CLI
+    identifier: up-how
+    name: Up Command
     parent: how-concepts
-    weight: 25
+    weight: 28
 menu_name: docs_0.1.0
 section_menu_id: concepts
 ---
