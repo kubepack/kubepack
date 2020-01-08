@@ -1,0 +1,298 @@
+/*
+Copyright The Kmodules Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+package v1
+
+import (
+	"github.com/imdario/mergo"
+	jsoniter "github.com/json-iterator/go"
+	core "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime/schema"
+)
+
+var json = jsoniter.ConfigFastest
+
+func AddFinalizer(m metav1.ObjectMeta, finalizer string) metav1.ObjectMeta {
+	for _, name := range m.Finalizers {
+		if name == finalizer {
+			return m
+		}
+	}
+	m.Finalizers = append(m.Finalizers, finalizer)
+	return m
+}
+
+func HasFinalizer(m metav1.ObjectMeta, finalizer string) bool {
+	for _, name := range m.Finalizers {
+		if name == finalizer {
+			return true
+		}
+	}
+	return false
+}
+
+func RemoveFinalizer(m metav1.ObjectMeta, finalizer string) metav1.ObjectMeta {
+	// https://github.com/golang/go/wiki/SliceTricks#filtering-without-allocating
+	r := m.Finalizers[:0]
+	for _, name := range m.Finalizers {
+		if name != finalizer {
+			r = append(r, name)
+		}
+	}
+	m.Finalizers = r
+	return m
+}
+
+func EnsureContainerDeleted(containers []core.Container, name string) []core.Container {
+	for i, c := range containers {
+		if c.Name == name {
+			return append(containers[:i], containers[i+1:]...)
+		}
+	}
+	return containers
+}
+
+func UpsertContainer(containers []core.Container, upsert core.Container) []core.Container {
+	for i, container := range containers {
+		if container.Name == upsert.Name {
+			err := mergo.MergeWithOverwrite(&container, upsert)
+			if err != nil {
+				panic(err)
+			}
+			containers[i] = container
+			return containers
+		}
+	}
+	return append(containers, upsert)
+}
+
+func UpsertContainers(containers []core.Container, addons []core.Container) []core.Container {
+	var out = containers
+	for _, c := range addons {
+		out = UpsertContainer(out, c)
+	}
+	return out
+}
+
+func UpsertVolume(volumes []core.Volume, nv ...core.Volume) []core.Volume {
+	upsert := func(v core.Volume) {
+		for i, vol := range volumes {
+			if vol.Name == v.Name {
+				volumes[i] = v
+				return
+			}
+		}
+		volumes = append(volumes, v)
+	}
+
+	for _, volume := range nv {
+		upsert(volume)
+	}
+	return volumes
+
+}
+
+func UpsertVolumeClaim(volumeClaims []core.PersistentVolumeClaim, upsert core.PersistentVolumeClaim) []core.PersistentVolumeClaim {
+	for i, vc := range volumeClaims {
+		if vc.Name == upsert.Name {
+			volumeClaims[i] = upsert
+			return volumeClaims
+		}
+	}
+	return append(volumeClaims, upsert)
+}
+
+func EnsureVolumeDeleted(volumes []core.Volume, name string) []core.Volume {
+	for i, v := range volumes {
+		if v.Name == name {
+			return append(volumes[:i], volumes[i+1:]...)
+		}
+	}
+	return volumes
+}
+
+func UpsertVolumeMount(mounts []core.VolumeMount, nv ...core.VolumeMount) []core.VolumeMount {
+	upsert := func(m core.VolumeMount) {
+		for i, vol := range mounts {
+			if vol.Name == m.Name {
+				mounts[i] = m
+				return
+			}
+		}
+		mounts = append(mounts, m)
+	}
+
+	for _, mount := range nv {
+		upsert(mount)
+	}
+	return mounts
+}
+
+func EnsureVolumeMountDeleted(mounts []core.VolumeMount, name string) []core.VolumeMount {
+	for i, v := range mounts {
+		if v.Name == name {
+			return append(mounts[:i], mounts[i+1:]...)
+		}
+	}
+	return mounts
+}
+
+func UpsertVolumeMountByPath(mounts []core.VolumeMount, nv core.VolumeMount) []core.VolumeMount {
+	for i, vol := range mounts {
+		if vol.MountPath == nv.MountPath {
+			mounts[i] = nv
+			return mounts
+		}
+	}
+	return append(mounts, nv)
+}
+
+func EnsureVolumeMountDeletedByPath(mounts []core.VolumeMount, mountPath string) []core.VolumeMount {
+	for i, v := range mounts {
+		if v.MountPath == mountPath {
+			return append(mounts[:i], mounts[i+1:]...)
+		}
+	}
+	return mounts
+}
+
+func UpsertEnvVars(vars []core.EnvVar, nv ...core.EnvVar) []core.EnvVar {
+	upsert := func(env core.EnvVar) {
+		for i, v := range vars {
+			if v.Name == env.Name {
+				vars[i] = env
+				return
+			}
+		}
+		vars = append(vars, env)
+	}
+
+	for _, env := range nv {
+		upsert(env)
+	}
+	return vars
+}
+
+func EnsureEnvVarDeleted(vars []core.EnvVar, name string) []core.EnvVar {
+	for i, v := range vars {
+		if v.Name == name {
+			return append(vars[:i], vars[i+1:]...)
+		}
+	}
+	return vars
+}
+
+func UpsertMap(maps, upsert map[string]string) map[string]string {
+	if maps == nil {
+		maps = make(map[string]string)
+	}
+	for k, v := range upsert {
+		maps[k] = v
+	}
+	return maps
+}
+
+func MergeLocalObjectReferences(l1, l2 []core.LocalObjectReference) []core.LocalObjectReference {
+	result := make([]core.LocalObjectReference, 0, len(l1)+len(l2))
+	m := make(map[string]core.LocalObjectReference)
+	for _, ref := range l1 {
+		m[ref.Name] = ref
+		result = append(result, ref)
+	}
+	for _, ref := range l2 {
+		if _, found := m[ref.Name]; !found {
+			result = append(result, ref)
+		}
+	}
+	return result
+}
+
+// NewOwnerRef creates an OwnerReference pointing to the given owner.
+func NewOwnerRef(owner metav1.Object, gvk schema.GroupVersionKind) *metav1.OwnerReference {
+	blockOwnerDeletion := false
+	isController := false
+	return &metav1.OwnerReference{
+		APIVersion:         gvk.GroupVersion().String(),
+		Kind:               gvk.Kind,
+		Name:               owner.GetName(),
+		UID:                owner.GetUID(),
+		BlockOwnerDeletion: &blockOwnerDeletion,
+		Controller:         &isController,
+	}
+}
+
+// EnsureOwnerReference adds owner if absent or syncs owner if already present.
+//
+// If you are writing a controller or an operator, use the following code snippet for dependent objects.
+// Here, `controller = true` and `blockOwnerDeletion = true`
+//
+// owner := metav1.NewControllerRef(foo, samplev1alpha1.SchemeGroupVersion.WithKind("Foo"))
+// EnsureOwnerReference(dependent, owner)
+//
+// If our CRD is not a controller but just want to be a owner, use the following code snippet.
+// Here, `controller = false` and `blockOwnerDeletion = false`
+//
+// owner := NewOwnerRef(foo, samplev1alpha1.SchemeGroupVersion.WithKind("Foo"))
+// EnsureOwnerReference(dependent, owner)
+//
+// To understand the impact of `blockOwnerDeletion`, read:
+// - https://kubernetes.io/docs/concepts/workloads/controllers/garbage-collection/#foreground-cascading-deletion
+// - https://github.com/kubernetes/apimachinery/blob/v0.17.0/pkg/apis/meta/v1/types.go#L297-L323
+func EnsureOwnerReference(dependent metav1.Object, owner *metav1.OwnerReference) {
+	if owner == nil {
+		return
+	}
+
+	refs := dependent.GetOwnerReferences()
+
+	fi := -1
+	for i := range refs {
+		if refs[i].UID == owner.UID {
+			fi = i
+			break
+		}
+	}
+	if fi == -1 {
+		refs = append(refs, *owner)
+	} else {
+		refs[fi] = *owner
+	}
+
+	dependent.SetOwnerReferences(refs)
+}
+
+func RemoveOwnerReference(dependent metav1.Object, owner metav1.Object) {
+	refs := dependent.GetOwnerReferences()
+	for i := range refs {
+		if refs[i].UID == owner.GetUID() {
+			refs = append(refs[:i], refs[i+1:]...)
+			break
+		}
+	}
+	dependent.SetOwnerReferences(refs)
+}
+
+// IsOwnedBy checks if the dependent has a owner reference to the given owner
+func IsOwnedBy(dependent metav1.Object, owner metav1.Object) (owned bool, controller bool) {
+	refs := dependent.GetOwnerReferences()
+	for i := range refs {
+		if refs[i].UID == owner.GetUID() {
+			return true, refs[i].Controller != nil && *refs[i].Controller
+		}
+	}
+	return false, false
+}

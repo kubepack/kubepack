@@ -1,0 +1,19 @@
+kind: Cluster
+apiVersion: kind.sigs.k8s.io/v1alpha3
+nodes:
+# the control ordere node
+- role: control-ordere
+  extraMounts:
+    - containerPath: /opt/local-path-provisioner
+      hostPath: /mnt
+      readOnly: false
+- role: worker
+  extraMounts:
+    - containerPath: /opt/local-path-provisioner
+      hostPath: /mnt
+      readOnly: false
+- role: worker
+  extraMounts:
+    - containerPath: /opt/local-path-provisioner
+      hostPath: /mnt
+      readOnly: false
