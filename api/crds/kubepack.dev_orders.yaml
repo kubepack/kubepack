@@ -35,6 +35,48 @@ spec:
         metadata:
           type: object
         spec:
+          properties:
+            items:
+              items:
+                properties:
+                  bundle:
+                    properties:
+                      name:
+                        type: string
+                      url:
+                        type: string
+                      versions:
+                        items:
+                          type: string
+                        type: array
+                    required:
+                    - name
+                    - url
+                    - versions
+                    type: object
+                  chart:
+                    properties:
+                      name:
+                        type: string
+                      url:
+                        type: string
+                      versions:
+                        items:
+                          type: string
+                        type: array
+                    required:
+                    - name
+                    - url
+                    - versions
+                    type: object
+                  parameters:
+                    type: object
+                    x-kubernetes-embedded-resource: true
+                    x-kubernetes-preserve-unknown-fields: true
+                type: object
+              type: array
+          required:
+          - items
           type: object
         status:
           properties:

@@ -18,6 +18,7 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
 const (
@@ -34,13 +35,23 @@ const (
 // +kubebuilder:resource:path=orders,singular=order,categories={kubepack,appscode}
 // +kubebuilder:subresource:status
 type Order struct {
-	metav1.TypeMeta   `json:",inline,omitempty"`
+	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
 	Spec              OrderSpec   `json:"spec,omitempty" protobuf:"bytes,2,opt,name=spec"`
 	Status            OrderStatus `json:"status,omitempty" protobuf:"bytes,3,opt,name=status"`
 }
 
 type OrderSpec struct {
+	Items []ItemRef `json:"items" protobuf:"bytes,1,rep,name=items"`
+}
+
+type ItemRef struct {
+	Chart  *ChartVersionRef  `json:"chart,omitempty" protobuf:"bytes,1,opt,name=chart"`
+	Bundle *BundleVersionRef `json:"bundle,omitempty" protobuf:"bytes,2,opt,name=bundle"`
+	// +optional
+	// +kubebuilder:validation:EmbeddedResource
+	// +kubebuilder:pruning:PreserveUnknownFields
+	Parameters *runtime.RawExtension `json:"parameters,omitempty" protobuf:"bytes,3,opt,name=parameters"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

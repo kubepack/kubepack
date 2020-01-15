@@ -35,6 +35,52 @@ spec:
         metadata:
           type: object
         spec:
+          properties:
+            addons:
+              items:
+                properties:
+                  name:
+                    type: string
+                  url:
+                    type: string
+                  versions:
+                    items:
+                      type: string
+                    type: array
+                required:
+                - name
+                - url
+                - versions
+                type: object
+              type: array
+            packages:
+              items:
+                properties:
+                  chart:
+                    properties:
+                      name:
+                        type: string
+                      url:
+                        type: string
+                      versions:
+                        items:
+                          type: string
+                        type: array
+                    required:
+                    - name
+                    - url
+                    - versions
+                    type: object
+                  required:
+                    type: boolean
+                required:
+                - chart
+                - required
+                type: object
+              type: array
+          required:
+          - addons
+          - packages
           type: object
         status:
           properties:

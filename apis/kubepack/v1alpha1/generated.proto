@@ -105,7 +105,16 @@ message BundleList {
   repeated Bundle items = 2;
 }
 
+message BundleRef {
+  optional string url = 1;
+
+  optional string name = 2;
+}
+
 message BundleSpec {
+  repeated PacakeRef packages = 1;
+
+  repeated BundleVersionRef addons = 2;
 }
 
 message BundleStatus {
@@ -113,6 +122,24 @@ message BundleStatus {
   // resource's generation, which is updated on mutation by the API Server.
   // +optional
   optional int64 observedGeneration = 1;
+}
+
+message BundleVersionRef {
+  optional BundleRef bundleRef = 1;
+
+  repeated string versions = 2;
+}
+
+message ChartRef {
+  optional string url = 1;
+
+  optional string name = 2;
+}
+
+message ChartVersionRef {
+  optional ChartRef chartRef = 1;
+
+  repeated string versions = 2;
 }
 
 // ComponentList is a generic status holder for the top level resource
@@ -203,6 +230,14 @@ message Descriptor {
   optional string notes = 9;
 }
 
+message GroupVersionResource {
+  optional string group = 1;
+
+  optional string version = 2;
+
+  optional string resource = 3;
+}
+
 // ImageSpec contains information about an image used as an icon.
 message ImageSpec {
   // The source for image represented as either an absolute URL to the image or a Data URL containing
@@ -261,6 +296,17 @@ message IngressSelector {
   optional string path = 3;
 }
 
+message ItemRef {
+  optional ChartVersionRef chart = 1;
+
+  optional BundleVersionRef bundle = 2;
+
+  // +optional
+  // +kubebuilder:validation:EmbeddedResource
+  // +kubebuilder:pruning:PreserveUnknownFields
+  optional k8s.io.apimachinery.pkg.runtime.RawExtension parameters = 3;
+}
+
 // Link contains information about an URL to surface documentation, dashboards, etc.
 message Link {
   // Description is human readable content explaining the purpose of the link.
@@ -307,6 +353,7 @@ message OrderList {
 }
 
 message OrderSpec {
+  repeated ItemRef items = 1;
 }
 
 message OrderStatus {
@@ -314,6 +361,12 @@ message OrderStatus {
   // resource's generation, which is updated on mutation by the API Server.
   // +optional
   optional int64 observedGeneration = 1;
+}
+
+message PacakeRef {
+  optional ChartVersionRef chart = 1;
+
+  optional bool required = 2;
 }
 
 // +kubebuilder:object:root=true
@@ -334,6 +387,11 @@ message PackList {
 }
 
 message PackSpec {
+  optional ChartRef chart = 1;
+
+  optional ResourceDefinitions resources = 2;
+
+  repeated WaitOptions waitFors = 3;
 }
 
 message PackStatus {
@@ -341,6 +399,35 @@ message PackStatus {
   // resource's generation, which is updated on mutation by the API Server.
   // +optional
   optional int64 observedGeneration = 1;
+}
+
+// Repo contains the name in monocular the url for the repository
+message Repo {
+  optional string name = 1;
+
+  optional string url = 2;
+}
+
+message ResourceDefinitions {
+  repeated ResourceID owned = 1;
+
+  repeated ResourceID required = 2;
+}
+
+// ResourceID identifies a resource
+message ResourceID {
+  optional string group = 1;
+
+  optional string version = 2;
+
+  // Name is the plural name of the resource to serve.  It must match the name of the CustomResourceDefinition-registration
+  // too: plural.group and it must be all lowercase.
+  optional string name = 3;
+
+  // Kind is the serialized kind of the resource.  It is normally CamelCase and singular.
+  optional string kind = 4;
+
+  optional string scope = 5;
 }
 
 // SecretKeySelector selects a key from a Secret.
@@ -362,5 +449,19 @@ message ServiceSelector {
 
   // The optional HTTP path.
   optional string path = 3;
+}
+
+message WaitOptions {
+  optional GroupVersionResource resource = 1;
+
+  optional string name = 2;
+
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelector labels = 3;
+
+  optional bool all = 4;
+
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.Duration timeout = 5;
+
+  optional string for = 6;
 }
 

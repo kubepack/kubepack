@@ -35,13 +35,40 @@ const (
 // +kubebuilder:resource:path=bundles,singular=bundle,scope=Cluster,categories={kubepack,appscode}
 // +kubebuilder:subresource:status
 type Bundle struct {
-	metav1.TypeMeta   `json:",inline,omitempty"`
+	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
 	Spec              BundleSpec   `json:"spec,omitempty" protobuf:"bytes,2,opt,name=spec"`
 	Status            BundleStatus `json:"status,omitempty" protobuf:"bytes,3,opt,name=status"`
 }
 
 type BundleSpec struct {
+	Packages []PacakeRef        `json:"packages" protobuf:"bytes,1,rep,name=packages"`
+	Addons   []BundleVersionRef `json:"addons" protobuf:"bytes,2,rep,name=addons"`
+}
+
+type PacakeRef struct {
+	Chart    ChartVersionRef `json:"chart" protobuf:"bytes,1,opt,name=chart"`
+	Required bool            `json:"required" protobuf:"varint,2,opt,name=required"`
+}
+
+type ChartRef struct {
+	URL  string `json:"url" protobuf:"bytes,1,opt,name=url"`
+	Name string `json:"name" protobuf:"bytes,2,opt,name=name"`
+}
+
+type ChartVersionRef struct {
+	ChartRef `json:",inline" protobuf:"bytes,1,opt,name=chartRef"`
+	Versions []string `json:"versions" protobuf:"bytes,2,rep,name=versions"`
+}
+
+type BundleRef struct {
+	URL  string `json:"url" protobuf:"bytes,1,opt,name=url"`
+	Name string `json:"name" protobuf:"bytes,2,opt,name=name"`
+}
+
+type BundleVersionRef struct {
+	BundleRef `json:",inline" protobuf:"bytes,1,opt,name=bundleRef"`
+	Versions  []string `json:"versions" protobuf:"bytes,2,rep,name=versions"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
