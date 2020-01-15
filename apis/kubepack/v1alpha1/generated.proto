@@ -22,12 +22,29 @@ syntax = 'proto2';
 package kubepack.dev.kubepack.apis.kubepack.v1alpha1;
 
 import "k8s.io/api/core/v1/generated.proto";
+import "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1/generated.proto";
 import "k8s.io/apimachinery/pkg/apis/meta/v1/generated.proto";
 import "k8s.io/apimachinery/pkg/runtime/generated.proto";
 import "k8s.io/apimachinery/pkg/runtime/schema/generated.proto";
 
 // Package-wide variables from generator "generated".
 option go_package = "v1alpha1";
+
+message Addon {
+  optional string feature = 1;
+
+  optional BundleOption bundle = 2;
+
+  repeated BundleOption oneOf = 3;
+}
+
+message AddonView {
+  optional string feature = 1;
+
+  optional BundleOptionView bundle = 2;
+
+  repeated BundleOptionView oneOf = 3;
+}
 
 // Application is the Schema for the applications API
 message Application {
@@ -99,22 +116,43 @@ message Bundle {
   optional BundleStatus status = 3;
 }
 
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+message BundleCard {
+  optional PackageMeta packageMeta = 1;
+}
+
 message BundleList {
   optional k8s.io.apimachinery.pkg.apis.meta.v1.ListMeta metadata = 1;
 
   repeated Bundle items = 2;
 }
 
+message BundleOption {
+  optional BundleRef bundleRef = 1;
+
+  repeated VersionOption versions = 2;
+}
+
+message BundleOptionView {
+  optional BundleView bundleView = 1;
+
+  repeated VersionOption versions = 2;
+}
+
 message BundleRef {
   optional string url = 1;
 
   optional string name = 2;
+
+  // One sentence description of feature provided by this addon
+  // TODO: Move to a different struct instead of ref
+  optional string feature = 3;
 }
 
 message BundleSpec {
   repeated PacakeRef packages = 1;
 
-  repeated BundleVersionRef addons = 2;
+  repeated Addon addons = 2;
 }
 
 message BundleStatus {
@@ -130,10 +168,29 @@ message BundleVersionRef {
   repeated string versions = 2;
 }
 
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+message BundleView {
+  optional PackageMeta packageMeta = 1;
+
+  repeated PackageCard packages = 2;
+
+  repeated AddonView addons = 3;
+}
+
+message ChartOptions {
+  optional ChartRef chartRef = 1;
+
+  repeated VersionOption versions = 2;
+}
+
 message ChartRef {
   optional string url = 1;
 
   optional string name = 2;
+
+  // One sentence description of feature provided by this addon
+  // TODO: Move to a different struct instead of ref
+  optional string feature = 3;
 }
 
 message ChartVersionRef {
@@ -364,7 +421,7 @@ message OrderStatus {
 }
 
 message PacakeRef {
-  optional ChartVersionRef chart = 1;
+  optional ChartOptions chart = 1;
 
   optional bool required = 2;
 }
@@ -399,6 +456,59 @@ message PackStatus {
   // resource's generation, which is updated on mutation by the API Server.
   // +optional
   optional int64 observedGeneration = 1;
+}
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+message PackageCard {
+  optional PackageMeta packageMeta = 1;
+
+  repeated VersionOption versions = 2;
+}
+
+message PackageMeta {
+  optional string type = 1;
+
+  optional string name = 2;
+
+  optional string url = 3;
+
+  // Version is an optional version indicator for the Application.
+  optional string version = 4;
+
+  // Description is a brief string description of the Application.
+  optional string description = 5;
+
+  // Icons is an optional list of icons for an application. Icon information includes the source, size,
+  // and mime type.
+  repeated ImageSpec icons = 6;
+
+  // Maintainers is an optional list of maintainers of the application. The maintainers in this list maintain the
+  // the source code, images, and package for the application.
+  repeated ContactData maintainers = 7;
+
+  // Owners is an optional list of the owners of the installed application. The owners of the application should be
+  // contacted in the event of a orderned or unorderned disruption affecting the application.
+  repeated ContactData owners = 8;
+
+  // Keywords is an optional list of key words associated with the application (e.g. MySQL, RDBMS, database).
+  repeated string keywords = 9;
+
+  // Links are a list of descriptive URLs intended to be used to surface additional documentation, dashboards, etc.
+  repeated Link links = 10;
+}
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+message PackageView {
+  optional PackageMeta packageMeta = 1;
+
+  // Default chart values
+  optional k8s.io.apimachinery.pkg.runtime.RawExtension parameters = 2;
+
+  // validation describes the schema used for validation and pruning of the custom resource.
+  // If present, this validation schema is used to validate all versions.
+  // Top-level and per-version schemas are mutually exclusive.
+  // +optional
+  optional k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceValidation validation = 3;
 }
 
 // Repo contains the name in monocular the url for the repository
@@ -449,6 +559,12 @@ message ServiceSelector {
 
   // The optional HTTP path.
   optional string path = 3;
+}
+
+message VersionOption {
+  optional string version = 1;
+
+  optional bool defaultSelected = 2;
 }
 
 message WaitOptions {

@@ -39,18 +39,72 @@ spec:
             addons:
               items:
                 properties:
-                  name:
+                  bundle:
+                    properties:
+                      feature:
+                        description: 'One sentence description of feature provided
+                          by this addon TODO: Move to a different struct instead of
+                          ref'
+                        type: string
+                      name:
+                        type: string
+                      url:
+                        type: string
+                      versions:
+                        items:
+                          properties:
+                            defaultSelected:
+                              type: boolean
+                            version:
+                              type: string
+                          required:
+                          - defaultSelected
+                          - version
+                          type: object
+                        type: array
+                    required:
+                    - feature
+                    - name
+                    - url
+                    - versions
+                    type: object
+                  feature:
                     type: string
-                  url:
-                    type: string
-                  versions:
+                  oneOf:
                     items:
-                      type: string
+                      properties:
+                        feature:
+                          description: 'One sentence description of feature provided
+                            by this addon TODO: Move to a different struct instead
+                            of ref'
+                          type: string
+                        name:
+                          type: string
+                        url:
+                          type: string
+                        versions:
+                          items:
+                            properties:
+                              defaultSelected:
+                                type: boolean
+                              version:
+                                type: string
+                            required:
+                            - defaultSelected
+                            - version
+                            type: object
+                          type: array
+                      required:
+                      - feature
+                      - name
+                      - url
+                      - versions
+                      type: object
                     type: array
                 required:
-                - name
-                - url
-                - versions
+                - bundle
+                - feature
+                - oneOf
                 type: object
               type: array
             packages:
@@ -58,15 +112,29 @@ spec:
                 properties:
                   chart:
                     properties:
+                      feature:
+                        description: 'One sentence description of feature provided
+                          by this addon TODO: Move to a different struct instead of
+                          ref'
+                        type: string
                       name:
                         type: string
                       url:
                         type: string
                       versions:
                         items:
-                          type: string
+                          properties:
+                            defaultSelected:
+                              type: boolean
+                            version:
+                              type: string
+                          required:
+                          - defaultSelected
+                          - version
+                          type: object
                         type: array
                     required:
+                    - feature
                     - name
                     - url
                     - versions

@@ -41,6 +41,11 @@ spec:
                 properties:
                   bundle:
                     properties:
+                      feature:
+                        description: 'One sentence description of feature provided
+                          by this addon TODO: Move to a different struct instead of
+                          ref'
+                        type: string
                       name:
                         type: string
                       url:
@@ -50,12 +55,18 @@ spec:
                           type: string
                         type: array
                     required:
+                    - feature
                     - name
                     - url
                     - versions
                     type: object
                   chart:
                     properties:
+                      feature:
+                        description: 'One sentence description of feature provided
+                          by this addon TODO: Move to a different struct instead of
+                          ref'
+                        type: string
                       name:
                         type: string
                       url:
@@ -65,6 +76,7 @@ spec:
                           type: string
                         type: array
                     required:
+                    - feature
                     - name
                     - url
                     - versions
