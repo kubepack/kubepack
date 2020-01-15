@@ -1,0 +1,33 @@
+apiVersion: kubepack.dev/v1alpha1
+kind: Bundle
+metadata:
+  creationTimestamp: null
+  name: '{{ include "vault-operator-bundle.fullname" . }}'
+spec:
+  addons:
+  - bundle:
+      feature: ""
+      name: csi-vault-bundle
+      url: https://kubepack-testcharts.storage.googleapis.com
+      versions:
+      - selected: true
+        version: v0.3.0
+    feature: A Helm chart for Kubernetes
+  packages:
+  - chart:
+      feature: Vault Operator by AppsCode - HashiCorp Vault Operator for Kubernetes
+      multiSelect: false
+      name: vault-operator
+      url: https://charts.appscode.com/stable/
+      versions:
+      - version: v0.3.0
+    required: true
+  - chart:
+      feature: Vault Catalog by AppsCode - Catalog for Vault versions
+      multiSelect: false
+      name: vault-catalog
+      url: https://charts.appscode.com/stable/
+      versions:
+      - version: v0.3.0
+    required: true
+status: {}

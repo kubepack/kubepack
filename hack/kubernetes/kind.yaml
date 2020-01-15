@@ -2,7 +2,7 @@ kind: Cluster
 apiVersion: kind.sigs.k8s.io/v1alpha3
 nodes:
 # the control ordere node
-- role: control-ordere
+- role: control-plane
   extraMounts:
     - containerPath: /opt/local-path-provisioner
       hostPath: /mnt

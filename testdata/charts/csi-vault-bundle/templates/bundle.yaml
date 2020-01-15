@@ -1,0 +1,16 @@
+apiVersion: kubepack.dev/v1alpha1
+kind: Bundle
+metadata:
+  creationTimestamp: null
+  name: '{{ include "csi-vault-bundle.fullname" . }}'
+spec:
+  packages:
+  - chart:
+      feature: HashiCorp Vault CSI Driver for Kubernetes
+      multiSelect: false
+      name: csi-vault
+      url: https://charts.appscode.com/stable/
+      versions:
+      - version: v0.3.0
+    required: true
+status: {}

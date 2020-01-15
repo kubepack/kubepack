@@ -42,13 +42,13 @@ type Bundle struct {
 }
 
 type BundleSpec struct {
-	Packages []PacakeRef `json:"packages" protobuf:"bytes,1,rep,name=packages"`
-	Addons   []Addon     `json:"addons" protobuf:"bytes,2,rep,name=addons"`
+	Packages []PackageRef `json:"packages" protobuf:"bytes,1,rep,name=packages"`
+	Addons   []Addon      `json:"addons,omitempty" protobuf:"bytes,2,rep,name=addons"`
 }
 
-type PacakeRef struct {
-	Chart    ChartOptions `json:"chart" protobuf:"bytes,1,opt,name=chart"`
-	Required bool         `json:"required" protobuf:"varint,2,opt,name=required"`
+type PackageRef struct {
+	Chart    ChartOption `json:"chart" protobuf:"bytes,1,opt,name=chart"`
+	Required bool        `json:"required,omitempty" protobuf:"varint,2,opt,name=required"`
 }
 
 type ChartRef struct {
@@ -60,9 +60,12 @@ type ChartRef struct {
 	Feature string `json:"feature" protobuf:"bytes,3,opt,name=feature"`
 }
 
-type ChartOptions struct {
-	ChartRef `json:",inline" protobuf:"bytes,1,opt,name=chartRef"`
-	Versions []VersionOption `json:"versions" protobuf:"bytes,2,rep,name=versions"`
+type SelectionMode string
+
+type ChartOption struct {
+	ChartRef    `json:",inline" protobuf:"bytes,1,opt,name=chartRef"`
+	Versions    []VersionOption `json:"versions" protobuf:"bytes,2,rep,name=versions"`
+	MultiSelect bool            `json:"multiSelect,omitempty" protobuf:"varint,3,opt,name=multiSelect"`
 }
 
 type ChartVersionRef struct {
@@ -86,8 +89,8 @@ type BundleVersionRef struct {
 
 type Addon struct {
 	Feature string         `json:"feature" protobuf:"bytes,1,opt,name=feature"`
-	Bundle  *BundleOption  `json:"bundle" protobuf:"bytes,2,opt,name=bundle"`
-	OneOf   []BundleOption `json:"oneOf" protobuf:"bytes,3,rep,name=oneOf"`
+	Bundle  *BundleOption  `json:"bundle,omitempty" protobuf:"bytes,2,opt,name=bundle"`
+	OneOf   []BundleOption `json:"oneOf,omitempty" protobuf:"bytes,3,rep,name=oneOf"`
 }
 
 type BundleOption struct {
@@ -96,8 +99,8 @@ type BundleOption struct {
 }
 
 type VersionOption struct {
-	Version         string `json:"version" protobuf:"bytes,1,opt,name=version"`
-	DefaultSelected bool   `json:"defaultSelected" protobuf:"varint,2,opt,name=defaultSelected"`
+	Version  string `json:"version" protobuf:"bytes,1,opt,name=version"`
+	Selected bool   `json:"selected,omitempty" protobuf:"varint,2,opt,name=selected"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

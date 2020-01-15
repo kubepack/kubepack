@@ -1,0 +1,14 @@
+apiVersion: kubepack.dev/v1alpha1
+kind: Bundle
+metadata:
+  creationTimestamp: null
+  name: '{{ include "cert-manager-bundle.fullname" . }}'
+spec:
+  packages:
+  - chart:
+      feature: A Helm chart for cert-manager
+      name: cert-manager
+      url: https://charts.jetstack.io
+      version: v0.12.0
+    required: true
+status: {}

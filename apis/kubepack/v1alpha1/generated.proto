@@ -150,7 +150,7 @@ message BundleRef {
 }
 
 message BundleSpec {
-  repeated PacakeRef packages = 1;
+  repeated PackageRef packages = 1;
 
   repeated Addon addons = 2;
 }
@@ -177,10 +177,12 @@ message BundleView {
   repeated AddonView addons = 3;
 }
 
-message ChartOptions {
+message ChartOption {
   optional ChartRef chartRef = 1;
 
   repeated VersionOption versions = 2;
+
+  optional bool multiSelect = 3;
 }
 
 message ChartRef {
@@ -420,12 +422,6 @@ message OrderStatus {
   optional int64 observedGeneration = 1;
 }
 
-message PacakeRef {
-  optional ChartOptions chart = 1;
-
-  optional bool required = 2;
-}
-
 // +kubebuilder:object:root=true
 // +kubebuilder:resource:path=packages,singular=package,scope=Cluster,shortName=pkg,categories={kubepack,appscode}
 // +kubebuilder:subresource:status
@@ -497,6 +493,12 @@ message PackageMeta {
   repeated Link links = 10;
 }
 
+message PackageRef {
+  optional ChartOption chart = 1;
+
+  optional bool required = 2;
+}
+
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 message PackageView {
   optional PackageMeta packageMeta = 1;
@@ -564,7 +566,7 @@ message ServiceSelector {
 message VersionOption {
   optional string version = 1;
 
-  optional bool defaultSelected = 2;
+  optional bool selected = 2;
 }
 
 message WaitOptions {

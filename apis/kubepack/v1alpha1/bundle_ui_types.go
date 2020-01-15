@@ -31,8 +31,8 @@ type BundleView struct {
 
 type AddonView struct {
 	Feature string             `json:"feature" protobuf:"bytes,1,opt,name=feature"`
-	Bundle  *BundleOptionView  `json:"bundle" protobuf:"bytes,2,opt,name=bundle"`
-	OneOf   []BundleOptionView `json:"oneOf" protobuf:"bytes,3,rep,name=oneOf"`
+	Bundle  *BundleOptionView  `json:"bundle,omitempty" protobuf:"bytes,2,opt,name=bundle"`
+	OneOf   []BundleOptionView `json:"oneOf,omitempty" protobuf:"bytes,3,rep,name=oneOf"`
 }
 
 type BundleOptionView struct {

@@ -24,7 +24,7 @@ import (
 	"math"
 	"sync"
 
-	"github.com/golang/protobuf/proto"
+	"github.com/gogo/protobuf/proto"
 	"google.golang.org/grpc/encoding"
 )
 

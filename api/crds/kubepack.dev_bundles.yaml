@@ -53,12 +53,11 @@ spec:
                       versions:
                         items:
                           properties:
-                            defaultSelected:
+                            selected:
                               type: boolean
                             version:
                               type: string
                           required:
-                          - defaultSelected
                           - version
                           type: object
                         type: array
@@ -85,12 +84,11 @@ spec:
                         versions:
                           items:
                             properties:
-                              defaultSelected:
+                              selected:
                                 type: boolean
                               version:
                                 type: string
                             required:
-                            - defaultSelected
                             - version
                             type: object
                           type: array
@@ -102,9 +100,7 @@ spec:
                       type: object
                     type: array
                 required:
-                - bundle
                 - feature
-                - oneOf
                 type: object
               type: array
             packages:
@@ -117,6 +113,8 @@ spec:
                           by this addon TODO: Move to a different struct instead of
                           ref'
                         type: string
+                      multiSelect:
+                        type: boolean
                       name:
                         type: string
                       url:
@@ -124,12 +122,11 @@ spec:
                       versions:
                         items:
                           properties:
-                            defaultSelected:
+                            selected:
                               type: boolean
                             version:
                               type: string
                           required:
-                          - defaultSelected
                           - version
                           type: object
                         type: array
@@ -143,11 +140,9 @@ spec:
                     type: boolean
                 required:
                 - chart
-                - required
                 type: object
               type: array
           required:
-          - addons
           - packages
           type: object
         status:

@@ -331,7 +331,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleStatus":                                       schema_kubepack_apis_kubepack_v1alpha1_BundleStatus(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleVersionRef":                                   schema_kubepack_apis_kubepack_v1alpha1_BundleVersionRef(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleView":                                         schema_kubepack_apis_kubepack_v1alpha1_BundleView(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartOptions":                                       schema_kubepack_apis_kubepack_v1alpha1_ChartOptions(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartOption":                                        schema_kubepack_apis_kubepack_v1alpha1_ChartOption(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRef":                                           schema_kubepack_apis_kubepack_v1alpha1_ChartRef(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartVersionRef":                                    schema_kubepack_apis_kubepack_v1alpha1_ChartVersionRef(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ComponentList":                                      schema_kubepack_apis_kubepack_v1alpha1_ComponentList(ref),
@@ -351,13 +351,13 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.OrderList":                                          schema_kubepack_apis_kubepack_v1alpha1_OrderList(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.OrderSpec":                                          schema_kubepack_apis_kubepack_v1alpha1_OrderSpec(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.OrderStatus":                                        schema_kubepack_apis_kubepack_v1alpha1_OrderStatus(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PacakeRef":                                          schema_kubepack_apis_kubepack_v1alpha1_PacakeRef(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Pack":                                               schema_kubepack_apis_kubepack_v1alpha1_Pack(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackList":                                           schema_kubepack_apis_kubepack_v1alpha1_PackList(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackSpec":                                           schema_kubepack_apis_kubepack_v1alpha1_PackSpec(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackStatus":                                         schema_kubepack_apis_kubepack_v1alpha1_PackStatus(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageCard":                                        schema_kubepack_apis_kubepack_v1alpha1_PackageCard(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageMeta":                                        schema_kubepack_apis_kubepack_v1alpha1_PackageMeta(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageRef":                                         schema_kubepack_apis_kubepack_v1alpha1_PackageRef(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageView":                                        schema_kubepack_apis_kubepack_v1alpha1_PackageView(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Repo":                                               schema_kubepack_apis_kubepack_v1alpha1_Repo(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions":                                schema_kubepack_apis_kubepack_v1alpha1_ResourceDefinitions(ref),
@@ -14732,7 +14732,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_Addon(ref common.ReferenceCallback) 
 						},
 					},
 				},
-				Required: []string{"feature", "bundle", "oneOf"},
+				Required: []string{"feature"},
 			},
 		},
 		Dependencies: []string{
@@ -14770,7 +14770,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_AddonView(ref common.ReferenceCallba
 						},
 					},
 				},
-				Required: []string{"feature", "bundle", "oneOf"},
+				Required: []string{"feature"},
 			},
 		},
 		Dependencies: []string{
@@ -15458,7 +15458,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleSpec(ref common.ReferenceCallb
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.PacakeRef"),
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageRef"),
 									},
 								},
 							},
@@ -15477,11 +15477,11 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleSpec(ref common.ReferenceCallb
 						},
 					},
 				},
-				Required: []string{"packages", "addons"},
+				Required: []string{"packages"},
 			},
 		},
 		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Addon", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PacakeRef"},
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Addon", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageRef"},
 	}
 }
 
@@ -15700,7 +15700,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleView(ref common.ReferenceCallb
 	}
 }
 
-func schema_kubepack_apis_kubepack_v1alpha1_ChartOptions(ref common.ReferenceCallback) common.OpenAPIDefinition {
+func schema_kubepack_apis_kubepack_v1alpha1_ChartOption(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
 			SchemaProps: spec.SchemaProps{
@@ -15735,6 +15735,12 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartOptions(ref common.ReferenceCal
 									},
 								},
 							},
+						},
+					},
+					"multiSelect": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"boolean"},
+							Format: "",
 						},
 					},
 				},
@@ -16587,32 +16593,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_OrderStatus(ref common.ReferenceCall
 	}
 }
 
-func schema_kubepack_apis_kubepack_v1alpha1_PacakeRef(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Type: []string{"object"},
-				Properties: map[string]spec.Schema{
-					"chart": {
-						SchemaProps: spec.SchemaProps{
-							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartOptions"),
-						},
-					},
-					"required": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"boolean"},
-							Format: "",
-						},
-					},
-				},
-				Required: []string{"chart", "required"},
-			},
-		},
-		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartOptions"},
-	}
-}
-
 func schema_kubepack_apis_kubepack_v1alpha1_Pack(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -17006,6 +16986,32 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageMeta(ref common.ReferenceCall
 		},
 		Dependencies: []string{
 			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link"},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_PackageRef(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"chart": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartOption"),
+						},
+					},
+					"required": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"boolean"},
+							Format: "",
+						},
+					},
+				},
+				Required: []string{"chart"},
+			},
+		},
+		Dependencies: []string{
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartOption"},
 	}
 }
 
@@ -17416,14 +17422,14 @@ func schema_kubepack_apis_kubepack_v1alpha1_VersionOption(ref common.ReferenceCa
 							Format: "",
 						},
 					},
-					"defaultSelected": {
+					"selected": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"boolean"},
 							Format: "",
 						},
 					},
 				},
-				Required: []string{"version", "defaultSelected"},
+				Required: []string{"version"},
 			},
 		},
 	}

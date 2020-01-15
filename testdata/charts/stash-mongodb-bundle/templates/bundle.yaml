@@ -1,0 +1,24 @@
+apiVersion: kubepack.dev/v1alpha1
+kind: Bundle
+metadata:
+  creationTimestamp: null
+  name: '{{ include "stash-mongodb-bundle.fullname" . }}'
+spec:
+  packages:
+  - chart:
+      feature: stash-mongodb - MongoDB database backup and restore plugin for Stash  by
+        AppsCode
+      multiSelect: true
+      name: stash-mongodb
+      url: https://charts.appscode.com/stable/
+      versions:
+      - selected: true
+        version: 3.4.22
+      - selected: true
+        version: 3.6.13
+      - selected: true
+        version: 4.0.11
+      - selected: true
+        version: 4.1.13
+    required: true
+status: {}
