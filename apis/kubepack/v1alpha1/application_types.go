@@ -171,7 +171,7 @@ type ImageSpec struct {
 	Source string `json:"src" protobuf:"bytes,1,opt,name=src"`
 
 	// (optional) The size of the image in pixels (e.g., 25x25).
-	TotalSize string `json:"size,omitempty" protobuf:"bytes,4,opt,name=size"`
+	TotalSize string `json:"size,omitempty" protobuf:"bytes,2,opt,name=size"`
 
 	// (optional) The mine type of the image (e.g., "image/png").
 	Type string `json:"type,omitempty" protobuf:"bytes,3,opt,name=type"`

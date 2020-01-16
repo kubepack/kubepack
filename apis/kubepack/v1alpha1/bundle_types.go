@@ -42,8 +42,9 @@ type Bundle struct {
 }
 
 type BundleSpec struct {
-	Packages []PackageRef `json:"packages" protobuf:"bytes,1,rep,name=packages"`
-	Addons   []Addon      `json:"addons,omitempty" protobuf:"bytes,2,rep,name=addons"`
+	PackageDescriptor `json:",inline" protobuf:"bytes,3,opt,name=packageDescriptor"`
+	Packages          []PackageRef `json:"packages" protobuf:"bytes,1,rep,name=packages"`
+	Addons            []Addon      `json:"addons,omitempty" protobuf:"bytes,2,rep,name=addons"`
 }
 
 type PackageRef struct {

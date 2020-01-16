@@ -13,10 +13,16 @@ spec:
       - selected: true
         version: v0.3.0
     feature: A Helm chart for Kubernetes
+  description: Vault Operator by AppsCode - HashiCorp Vault Operator for Kubernetes
+  icons:
+  - src: https://cdn.appscode.com/images/products/kubevault/icons/android-icon-192x192.png
+    type: image/png
+  maintainers:
+  - email: support@appscode.com
+    name: appscode
   packages:
   - chart:
       feature: Vault Operator by AppsCode - HashiCorp Vault Operator for Kubernetes
-      multiSelect: false
       name: vault-operator
       url: https://charts.appscode.com/stable/
       versions:
@@ -24,7 +30,6 @@ spec:
     required: true
   - chart:
       feature: Vault Catalog by AppsCode - Catalog for Vault versions
-      multiSelect: false
       name: vault-catalog
       url: https://charts.appscode.com/stable/
       versions:

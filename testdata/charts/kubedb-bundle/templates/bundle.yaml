@@ -13,6 +13,13 @@ spec:
       - selected: true
         version: v0.9.0-rc.2
     feature: A Helm chart for Kubernetes
+  description: KubeDB by AppsCode - Production ready databases on Kubernetes
+  icons:
+  - src: https://cdn.appscode.com/images/icon/kubedb.png
+    type: image/png
+  maintainers:
+  - email: kubedb@appscode.com
+    name: appscode
   packages:
   - chart:
       feature: KubeDB by AppsCode - Production ready databases on Kubernetes

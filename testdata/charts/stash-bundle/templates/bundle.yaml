@@ -13,6 +13,13 @@ spec:
       - selected: true
         version: v0.9.0-rc.2
     feature: A Helm chart for Kubernetes
+  description: Stash by AppsCode - Backup your Kubernetes Volumes
+  icons:
+  - src: https://cdn.appscode.com/images/icon/stash.png
+    type: image/png
+  maintainers:
+  - email: support@appscode.com
+    name: appscode
   packages:
   - chart:
       feature: Stash by AppsCode - Backup your Kubernetes Volumes

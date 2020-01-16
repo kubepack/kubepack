@@ -24,15 +24,7 @@ import (
 
 // TODO: Map chart metadata to PackageCard
 
-type PackageMeta struct {
-	Type string `json:"type" protobuf:"bytes,1,opt,name=type"` // chart v1, chart v2, kustomize bundle
-
-	Name string `json:"name" protobuf:"bytes,2,opt,name=name"`
-	URL  string `json:"url" protobuf:"bytes,3,opt,name=url"`
-
-	// Version is an optional version indicator for the Application.
-	Version string `json:"version,omitempty" protobuf:"bytes,4,opt,name=version"`
-
+type PackageDescriptor struct {
 	// Description is a brief string description of the Application.
 	Description string `json:"description,omitempty" protobuf:"bytes,5,opt,name=description"`
 
@@ -53,6 +45,18 @@ type PackageMeta struct {
 
 	// Links are a list of descriptive URLs intended to be used to surface additional documentation, dashboards, etc.
 	Links []Link `json:"links,omitempty" protobuf:"bytes,10,rep,name=links"`
+}
+
+type PackageMeta struct {
+	Type string `json:"type" protobuf:"bytes,1,opt,name=type"` // chart v1, chart v2, kustomize bundle
+
+	Name string `json:"name" protobuf:"bytes,2,opt,name=name"`
+	URL  string `json:"url" protobuf:"bytes,3,opt,name=url"`
+
+	// Version is an optional version indicator for the Application.
+	Version string `json:"version,omitempty" protobuf:"bytes,4,opt,name=version"`
+
+	PackageDescriptor `json:",inline" protobuf:"bytes,5,opt,name=packageDescriptor"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

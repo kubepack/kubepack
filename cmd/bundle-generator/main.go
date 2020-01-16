@@ -17,28 +17,24 @@ limitations under the License.
 package main
 
 import (
-	"context"
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
-	"time"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 
-	"github.com/gofrs/flock"
-	"github.com/pkg/errors"
+	"github.com/gabriel-vasile/mimetype"
 	flag "github.com/spf13/pflag"
 	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chart/loader"
 	"helm.sh/helm/v3/pkg/cli"
-	"helm.sh/helm/v3/pkg/getter"
 	"helm.sh/helm/v3/pkg/helmpath/xdg"
-	"helm.sh/helm/v3/pkg/repo"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/yaml"
 )
@@ -54,14 +50,6 @@ var charts = []string{
 }
 var addons = []string{}
 
-/*
-$ go run cmd/bundle-generator/main.go --name=stash-bundle --charts https://charts.appscode.com/stable/@stash@v0.9.0-rc.2
-
-$ go run cmd/bundle-generator/main.go --name=kubedb \
-  --charts https://charts.appscode.com/stable/@kubedb@v0.9.0-rc.2 \
-  --charts https://charts.appscode.com/stable/@kubedb-catalog@v0.9.0-rc.2
-  --addons https://kubepack-testcharts.storage.googleapis.com@stash-bundle@v0.1.0
-*/
 func main() {
 	flag.StringVar(&name, "name", name, "Name of bundle, example: stash-bundle")
 	flag.StringArrayVar(&charts, "charts", charts, "Provide list charts in this bundle. format --charts url=chart_name@version --charts url=chart_name@version")
@@ -85,7 +73,7 @@ func main() {
 		},
 	}
 
-	for _, val := range charts {
+	for idx, val := range charts {
 		parts := strings.Split(val, "@")
 		url := parts[0]
 		chartName := parts[1]
@@ -114,6 +102,35 @@ func main() {
 			},
 			Required: required,
 		}
+
+		if idx == 0 {
+			b.Spec.PackageDescriptor.Description = pkgChart.Metadata.Description
+			if pkgChart.Metadata.Icon != "" {
+				var imgType string
+				if resp, err := http.Get(pkgChart.Metadata.Icon); err == nil {
+					if mime, err := mimetype.DetectReader(resp.Body); err == nil {
+						imgType = mime.String()
+					}
+					resp.Body.Close()
+				}
+				b.Spec.Icons = []v1alpha1.ImageSpec{
+					{
+						Source: pkgChart.Metadata.Icon,
+						// TotalSize: "",
+						Type: imgType,
+					},
+				}
+			}
+			for _, maintainer := range pkgChart.Metadata.Maintainers {
+				b.Spec.Maintainers = append(b.Spec.Maintainers, v1alpha1.ContactData{
+					Name:  maintainer.Name,
+					URL:   maintainer.URL,
+					Email: maintainer.Email,
+				})
+			}
+			b.Spec.PackageDescriptor.Keywords = pkgChart.Metadata.Keywords
+		}
+
 		for _, versionInfo := range versions {
 			vparts := strings.SplitN(versionInfo, ":", 2)
 			version := vparts[0]
@@ -191,11 +208,6 @@ func GetChart(chartName, version, repoName, url string) (*chart.Chart, error) {
 	defer unsetEnv()
 
 	settings := cli.New()
-	//err = getRepo(repoName, url)
-	//if err != nil {
-	//	return nil, err
-	//}
-
 	cp, err := client.LocateChart(chartName, settings)
 	if err != nil {
 		return nil, err
@@ -207,67 +219,6 @@ func GetChart(chartName, version, repoName, url string) (*chart.Chart, error) {
 	}
 
 	return chartRequested, nil
-}
-
-func getRepo(name string, url string) error {
-	settings := cli.New()
-
-	repofile := settings.RepositoryConfig
-	err := os.MkdirAll(filepath.Dir(repofile), os.ModePerm)
-	if err != nil && !os.IsExist(err) {
-		return err
-	}
-
-	fileLock := flock.New(strings.Replace(repofile, filepath.Ext(repofile), ".lock", 1))
-	lockCtx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
-	locked, err := fileLock.TryLockContext(lockCtx, time.Second)
-	if err == nil && locked {
-		defer fileLock.Unlock()
-	}
-	if err != nil {
-		return err
-	}
-
-	b, err := ioutil.ReadFile(repofile)
-	if err != nil && !os.IsNotExist(err) {
-		return err
-	}
-
-	var f repo.File
-	if err := yaml.Unmarshal(b, &f); err != nil {
-		return err
-	}
-
-	if f.Has(name) {
-		return errors.Errorf("repository name (%s) already exists, please specify a different name", name)
-	}
-
-	c := repo.Entry{
-		Name: name,
-		URL:  url,
-	}
-	f.Update(&c)
-
-	r, err := repo.NewChartRepository(&c, getter.All(settings))
-	if err != nil {
-		return err
-	}
-
-	if err := f.WriteFile(repofile, 0644); err != nil {
-		return err
-	}
-
-	if _, err := r.DownloadIndexFile(); err != nil {
-		return errors.Wrapf(err, "looks like %q is not a valid chart repository or cannot be reached", url)
-	}
-
-	return nil
-}
-
-func debug(format string, v ...interface{}) {
-	format = fmt.Sprintf("[debug] %s\n", format)
-	log.Output(2, fmt.Sprintf(format, v...))
 }
 
 func setEnv(chartDir string) error {

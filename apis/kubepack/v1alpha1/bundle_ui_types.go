@@ -39,9 +39,3 @@ type BundleOptionView struct {
 	BundleView `json:",inline" protobuf:"bytes,1,opt,name=bundleView"`
 	Versions   []VersionOption `json:"versions" protobuf:"bytes,2,rep,name=versions"`
 }
-
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
-type BundleCard struct {
-	metav1.TypeMeta `json:",inline"`
-	PackageMeta     `json:",inline" protobuf:"bytes,1,opt,name=packageMeta"`
-}

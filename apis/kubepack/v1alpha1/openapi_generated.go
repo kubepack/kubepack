@@ -322,7 +322,6 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ApplicationSpec":                                    schema_kubepack_apis_kubepack_v1alpha1_ApplicationSpec(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ApplicationStatus":                                  schema_kubepack_apis_kubepack_v1alpha1_ApplicationStatus(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Bundle":                                             schema_kubepack_apis_kubepack_v1alpha1_Bundle(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleCard":                                         schema_kubepack_apis_kubepack_v1alpha1_BundleCard(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleList":                                         schema_kubepack_apis_kubepack_v1alpha1_BundleList(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleOption":                                       schema_kubepack_apis_kubepack_v1alpha1_BundleOption(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleOptionView":                                   schema_kubepack_apis_kubepack_v1alpha1_BundleOptionView(ref),
@@ -356,6 +355,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackSpec":                                           schema_kubepack_apis_kubepack_v1alpha1_PackSpec(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackStatus":                                         schema_kubepack_apis_kubepack_v1alpha1_PackStatus(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageCard":                                        schema_kubepack_apis_kubepack_v1alpha1_PackageCard(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageDescriptor":                                  schema_kubepack_apis_kubepack_v1alpha1_PackageDescriptor(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageMeta":                                        schema_kubepack_apis_kubepack_v1alpha1_PackageMeta(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageRef":                                         schema_kubepack_apis_kubepack_v1alpha1_PackageRef(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageView":                                        schema_kubepack_apis_kubepack_v1alpha1_PackageView(ref),
@@ -15033,133 +15033,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_Bundle(ref common.ReferenceCallback)
 	}
 }
 
-func schema_kubepack_apis_kubepack_v1alpha1_BundleCard(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Type: []string{"object"},
-				Properties: map[string]spec.Schema{
-					"kind": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"apiVersion": {
-						SchemaProps: spec.SchemaProps{
-							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"type": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
-					"name": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
-					"url": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
-					"version": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Version is an optional version indicator for the Application.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"description": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Description is a brief string description of the Application.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"icons": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Icons is an optional list of icons for an application. Icon information includes the source, size, and mime type.",
-							Type:        []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec"),
-									},
-								},
-							},
-						},
-					},
-					"maintainers": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Maintainers is an optional list of maintainers of the application. The maintainers in this list maintain the the source code, images, and package for the application.",
-							Type:        []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData"),
-									},
-								},
-							},
-						},
-					},
-					"owners": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Owners is an optional list of the owners of the installed application. The owners of the application should be contacted in the event of a orderned or unorderned disruption affecting the application.",
-							Type:        []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData"),
-									},
-								},
-							},
-						},
-					},
-					"keywords": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Keywords is an optional list of key words associated with the application (e.g. MySQL, RDBMS, database).",
-							Type:        []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Type:   []string{"string"},
-										Format: "",
-									},
-								},
-							},
-						},
-					},
-					"links": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Links are a list of descriptive URLs intended to be used to surface additional documentation, dashboards, etc.",
-							Type:        []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link"),
-									},
-								},
-							},
-						},
-					},
-				},
-				Required: []string{"type", "name", "url"},
-			},
-		},
-		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link"},
-	}
-}
-
 func schema_kubepack_apis_kubepack_v1alpha1_BundleList(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -15452,6 +15325,79 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleSpec(ref common.ReferenceCallb
 			SchemaProps: spec.SchemaProps{
 				Type: []string{"object"},
 				Properties: map[string]spec.Schema{
+					"description": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Description is a brief string description of the Application.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"icons": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Icons is an optional list of icons for an application. Icon information includes the source, size, and mime type.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec"),
+									},
+								},
+							},
+						},
+					},
+					"maintainers": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Maintainers is an optional list of maintainers of the application. The maintainers in this list maintain the the source code, images, and package for the application.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData"),
+									},
+								},
+							},
+						},
+					},
+					"owners": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Owners is an optional list of the owners of the installed application. The owners of the application should be contacted in the event of a orderned or unorderned disruption affecting the application.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData"),
+									},
+								},
+							},
+						},
+					},
+					"keywords": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Keywords is an optional list of key words associated with the application (e.g. MySQL, RDBMS, database).",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
+						},
+					},
+					"links": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Links are a list of descriptive URLs intended to be used to surface additional documentation, dashboards, etc.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link"),
+									},
+								},
+							},
+						},
+					},
 					"packages": {
 						SchemaProps: spec.SchemaProps{
 							Type: []string{"array"},
@@ -15481,7 +15427,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleSpec(ref common.ReferenceCallb
 			},
 		},
 		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Addon", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageRef"},
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Addon", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageRef"},
 	}
 }
 
@@ -16873,6 +16819,93 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageCard(ref common.ReferenceCall
 		},
 		Dependencies: []string{
 			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.VersionOption"},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_PackageDescriptor(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"description": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Description is a brief string description of the Application.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"icons": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Icons is an optional list of icons for an application. Icon information includes the source, size, and mime type.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec"),
+									},
+								},
+							},
+						},
+					},
+					"maintainers": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Maintainers is an optional list of maintainers of the application. The maintainers in this list maintain the the source code, images, and package for the application.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData"),
+									},
+								},
+							},
+						},
+					},
+					"owners": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Owners is an optional list of the owners of the installed application. The owners of the application should be contacted in the event of a orderned or unorderned disruption affecting the application.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData"),
+									},
+								},
+							},
+						},
+					},
+					"keywords": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Keywords is an optional list of key words associated with the application (e.g. MySQL, RDBMS, database).",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
+						},
+					},
+					"links": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Links are a list of descriptive URLs intended to be used to surface additional documentation, dashboards, etc.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link"),
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link"},
 	}
 }
 

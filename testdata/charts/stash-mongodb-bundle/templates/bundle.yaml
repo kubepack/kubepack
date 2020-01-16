@@ -4,6 +4,14 @@ metadata:
   creationTimestamp: null
   name: '{{ include "stash-mongodb-bundle.fullname" . }}'
 spec:
+  description: stash-mongodb - MongoDB database backup and restore plugin for Stash  by
+    AppsCode
+  icons:
+  - src: https://cdn.appscode.com/images/icon/stash.png
+    type: image/png
+  maintainers:
+  - email: support@appscode.com
+    name: appscode
   packages:
   - chart:
       feature: stash-mongodb - MongoDB database backup and restore plugin for Stash  by

@@ -6,8 +6,8 @@ require (
 	github.com/appscode/go v0.0.0-20191119085241-0887d8ec2ecc
 	github.com/coreos/prometheus-operator v0.34.0
 	github.com/evanphx/json-patch v4.5.0+incompatible
+	github.com/gabriel-vasile/mimetype v1.0.2
 	github.com/go-openapi/spec v0.19.4
-	github.com/gofrs/flock v0.7.1
 	github.com/gogo/protobuf v1.3.1
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/google/gofuzz v1.0.0
