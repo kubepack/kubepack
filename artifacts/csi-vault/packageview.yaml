@@ -1,0 +1,77 @@
+apiVersion: kubepack.dev/v1alpha1
+description: HashiCorp Vault CSI Driver for Kubernetes
+icons:
+- src: https://cdn.appscode.com/images/products/kubevault/icons/android-icon-192x192.png
+  type: image/png
+kind: PackageView
+links:
+- description: Homepage
+  url: https://github.com/kubevault/csi-driver
+maintainers:
+- email: support@appscode.com
+  name: appscode
+name: csi-vault
+parameters:
+  affinity: {}
+  annotations: {}
+  apiserver:
+    healthcheck:
+      enabled: true
+    useKubeapiserverFqdnForAks: true
+  appbinding:
+    create: true
+  attachRequired: false
+  attacher:
+    name: attacher
+    pullPolicy: IfNotPresent
+    registry: quay.io/k8scsi
+    repository: csi-attacher
+    tag: v1.2.0
+  controllerPlugin:
+    name: controller
+  criticalAddon: true
+  driverName: secrets.csi.kubevault.com
+  enableAnalytics: true
+  fullnameOverride: ""
+  imagePullSecrets: []
+  logLevel: 3
+  monitoring:
+    agent: none
+    controller: false
+    node: false
+    prometheus:
+      namespace: ""
+    serviceMonitor:
+      labels: {}
+  nameOverride: ""
+  nodePlugin:
+    name: node
+  nodeRegistrar:
+    name: node-registrar
+    pullPolicy: IfNotPresent
+    registry: quay.io/k8scsi
+    repository: csi-node-driver-registrar
+    tag: v1.1.0
+  nodeSelector: {}
+  plugin:
+    name: plugin
+    pullPolicy: IfNotPresent
+    registry: kubevault
+    repository: csi-vault
+    tag: v0.3.0
+  pluginAddress: /csi/csi.sock
+  pluginDir: /csi
+  provisioner:
+    name: provisioner
+    pullPolicy: IfNotPresent
+    registry: quay.io/k8scsi
+    repository: csi-provisioner
+    tag: v1.3.0
+  rbac:
+    create: true
+  replicaCount: 1
+  resources: {}
+  tolerations: {}
+type: FIX_IT
+url: https://charts.appscode.com/stable/
+version: v0.3.0

@@ -36,73 +36,6 @@ spec:
           type: object
         spec:
           properties:
-            addons:
-              items:
-                properties:
-                  bundle:
-                    properties:
-                      feature:
-                        description: 'One sentence description of feature provided
-                          by this addon TODO: Move to a different struct instead of
-                          ref'
-                        type: string
-                      name:
-                        type: string
-                      url:
-                        type: string
-                      versions:
-                        items:
-                          properties:
-                            selected:
-                              type: boolean
-                            version:
-                              type: string
-                          required:
-                          - version
-                          type: object
-                        type: array
-                    required:
-                    - feature
-                    - name
-                    - url
-                    - versions
-                    type: object
-                  feature:
-                    type: string
-                  oneOf:
-                    items:
-                      properties:
-                        feature:
-                          description: 'One sentence description of feature provided
-                            by this addon TODO: Move to a different struct instead
-                            of ref'
-                          type: string
-                        name:
-                          type: string
-                        url:
-                          type: string
-                        versions:
-                          items:
-                            properties:
-                              selected:
-                                type: boolean
-                              version:
-                                type: string
-                            required:
-                            - version
-                            type: object
-                          type: array
-                      required:
-                      - feature
-                      - name
-                      - url
-                      - versions
-                      type: object
-                    type: array
-                required:
-                - feature
-                type: object
-              type: array
             description:
               description: Description is a brief string description of the Application.
               type: string
@@ -192,13 +125,28 @@ spec:
             packages:
               items:
                 properties:
+                  bundle:
+                    properties:
+                      name:
+                        type: string
+                      url:
+                        type: string
+                      version:
+                        type: string
+                    required:
+                    - name
+                    - url
+                    - version
+                    type: object
                   chart:
                     properties:
-                      feature:
+                      features:
                         description: 'One sentence description of feature provided
                           by this addon TODO: Move to a different struct instead of
                           ref'
-                        type: string
+                        items:
+                          type: string
+                        type: array
                       multiSelect:
                         type: boolean
                       name:
@@ -217,15 +165,27 @@ spec:
                           type: object
                         type: array
                     required:
-                    - feature
                     - name
                     - url
                     - versions
                     type: object
+                  oneOf:
+                    items:
+                      properties:
+                        name:
+                          type: string
+                        url:
+                          type: string
+                        version:
+                          type: string
+                      required:
+                      - name
+                      - url
+                      - version
+                      type: object
+                    type: array
                   required:
                     type: boolean
-                required:
-                - chart
                 type: object
               type: array
           required:

@@ -40,16 +40,17 @@ spec:
           properties:
             chart:
               properties:
-                feature:
+                features:
                   description: 'One sentence description of feature provided by this
                     addon TODO: Move to a different struct instead of ref'
-                  type: string
+                  items:
+                    type: string
+                  type: array
                 name:
                   type: string
                 url:
                   type: string
               required:
-              - feature
               - name
               - url
               type: object

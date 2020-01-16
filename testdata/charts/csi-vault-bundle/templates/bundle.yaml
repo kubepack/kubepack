@@ -8,12 +8,16 @@ spec:
   icons:
   - src: https://cdn.appscode.com/images/products/kubevault/icons/android-icon-192x192.png
     type: image/png
+  links:
+  - description: Homepage
+    url: https://github.com/kubevault/csi-driver
   maintainers:
   - email: support@appscode.com
     name: appscode
   packages:
   - chart:
-      feature: HashiCorp Vault CSI Driver for Kubernetes
+      features:
+      - HashiCorp Vault CSI Driver for Kubernetes
       name: csi-vault
       url: https://charts.appscode.com/stable/
       versions:

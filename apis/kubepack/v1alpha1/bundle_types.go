@@ -44,12 +44,13 @@ type Bundle struct {
 type BundleSpec struct {
 	PackageDescriptor `json:",inline" protobuf:"bytes,3,opt,name=packageDescriptor"`
 	Packages          []PackageRef `json:"packages" protobuf:"bytes,1,rep,name=packages"`
-	Addons            []Addon      `json:"addons,omitempty" protobuf:"bytes,2,rep,name=addons"`
 }
 
 type PackageRef struct {
-	Chart    ChartOption `json:"chart" protobuf:"bytes,1,opt,name=chart"`
-	Required bool        `json:"required,omitempty" protobuf:"varint,2,opt,name=required"`
+	Chart    *ChartOption   `json:"chart,omitempty" protobuf:"bytes,1,opt,name=chart"`
+	Bundle   *BundleOption  `json:"bundle,omitempty" protobuf:"bytes,2,opt,name=bundle"`
+	OneOf    []BundleOption `json:"oneOf,omitempty" protobuf:"bytes,3,rep,name=oneOf"`
+	Required bool           `json:"required,omitempty" protobuf:"varint,4,opt,name=required"`
 }
 
 type ChartRef struct {
@@ -58,7 +59,7 @@ type ChartRef struct {
 
 	// One sentence description of feature provided by this addon
 	// TODO: Move to a different struct instead of ref
-	Feature string `json:"feature" protobuf:"bytes,3,opt,name=feature"`
+	Features []string `json:"features,omitempty" protobuf:"bytes,3,rep,name=features"`
 }
 
 type SelectionMode string
@@ -77,10 +78,6 @@ type ChartVersionRef struct {
 type BundleRef struct {
 	URL  string `json:"url" protobuf:"bytes,1,opt,name=url"`
 	Name string `json:"name" protobuf:"bytes,2,opt,name=name"`
-
-	// One sentence description of feature provided by this addon
-	// TODO: Move to a different struct instead of ref
-	Feature string `json:"feature" protobuf:"bytes,3,opt,name=feature"`
 }
 
 type BundleVersionRef struct {
@@ -88,15 +85,9 @@ type BundleVersionRef struct {
 	Versions  []string `json:"versions" protobuf:"bytes,2,rep,name=versions"`
 }
 
-type Addon struct {
-	Feature string         `json:"feature" protobuf:"bytes,1,opt,name=feature"`
-	Bundle  *BundleOption  `json:"bundle,omitempty" protobuf:"bytes,2,opt,name=bundle"`
-	OneOf   []BundleOption `json:"oneOf,omitempty" protobuf:"bytes,3,rep,name=oneOf"`
-}
-
 type BundleOption struct {
 	BundleRef `json:",inline" protobuf:"bytes,1,opt,name=bundleRef"`
-	Versions  []VersionOption `json:"versions" protobuf:"bytes,2,rep,name=versions"`
+	Version   string `json:"version" protobuf:"bytes,2,opt,name=version"`
 }
 
 type VersionOption struct {

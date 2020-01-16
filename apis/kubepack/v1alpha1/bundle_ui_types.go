@@ -26,16 +26,22 @@ type BundleView struct {
 	PackageMeta     `json:",inline" protobuf:"bytes,1,opt,name=packageMeta"`
 
 	Packages []PackageCard `json:"packages" protobuf:"bytes,2,rep,name=packages"`
-	Addons   []AddonView   `json:"addons" protobuf:"bytes,3,rep,name=addons"`
 }
 
-type AddonView struct {
-	Feature string             `json:"feature" protobuf:"bytes,1,opt,name=feature"`
-	Bundle  *BundleOptionView  `json:"bundle,omitempty" protobuf:"bytes,2,opt,name=bundle"`
-	OneOf   []BundleOptionView `json:"oneOf,omitempty" protobuf:"bytes,3,rep,name=oneOf"`
+type PackageCard struct {
+	Chart    *ChartCard         `json:"chart,omitempty" protobuf:"bytes,1,opt,name=chart"`
+	Bundle   *BundleOptionView  `json:"bundle,omitempty" protobuf:"bytes,2,opt,name=bundle"`
+	OneOf    []BundleOptionView `json:"oneOf,omitempty" protobuf:"bytes,3,rep,name=oneOf"`
+	Required bool               `json:"required,omitempty" protobuf:"varint,4,opt,name=required"`
+}
+
+type ChartCard struct {
+	PackageMeta `json:",inline" protobuf:"bytes,1,opt,name=packageMeta"`
+	Versions    []VersionOption `json:"versions" protobuf:"bytes,2,rep,name=versions"`
+	MultiSelect bool            `json:"multiSelect,omitempty" protobuf:"varint,3,opt,name=multiSelect"`
 }
 
 type BundleOptionView struct {
-	BundleView `json:",inline" protobuf:"bytes,1,opt,name=bundleView"`
-	Versions   []VersionOption `json:"versions" protobuf:"bytes,2,rep,name=versions"`
+	PackageMeta `json:",inline" protobuf:"bytes,1,opt,name=packageMeta"`
+	Packages    []PackageCard `json:"packages" protobuf:"bytes,2,rep,name=packages"`
 }

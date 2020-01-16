@@ -30,22 +30,6 @@ import "k8s.io/apimachinery/pkg/runtime/schema/generated.proto";
 // Package-wide variables from generator "generated".
 option go_package = "v1alpha1";
 
-message Addon {
-  optional string feature = 1;
-
-  optional BundleOption bundle = 2;
-
-  repeated BundleOption oneOf = 3;
-}
-
-message AddonView {
-  optional string feature = 1;
-
-  optional BundleOptionView bundle = 2;
-
-  repeated BundleOptionView oneOf = 3;
-}
-
 // Application is the Schema for the applications API
 message Application {
   optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
@@ -125,31 +109,25 @@ message BundleList {
 message BundleOption {
   optional BundleRef bundleRef = 1;
 
-  repeated VersionOption versions = 2;
+  optional string version = 2;
 }
 
 message BundleOptionView {
-  optional BundleView bundleView = 1;
+  optional PackageMeta packageMeta = 1;
 
-  repeated VersionOption versions = 2;
+  repeated PackageCard packages = 2;
 }
 
 message BundleRef {
   optional string url = 1;
 
   optional string name = 2;
-
-  // One sentence description of feature provided by this addon
-  // TODO: Move to a different struct instead of ref
-  optional string feature = 3;
 }
 
 message BundleSpec {
   optional PackageDescriptor packageDescriptor = 3;
 
   repeated PackageRef packages = 1;
-
-  repeated Addon addons = 2;
 }
 
 message BundleStatus {
@@ -170,8 +148,14 @@ message BundleView {
   optional PackageMeta packageMeta = 1;
 
   repeated PackageCard packages = 2;
+}
 
-  repeated AddonView addons = 3;
+message ChartCard {
+  optional PackageMeta packageMeta = 1;
+
+  repeated VersionOption versions = 2;
+
+  optional bool multiSelect = 3;
 }
 
 message ChartOption {
@@ -189,7 +173,7 @@ message ChartRef {
 
   // One sentence description of feature provided by this addon
   // TODO: Move to a different struct instead of ref
-  optional string feature = 3;
+  repeated string features = 3;
 }
 
 message ChartVersionRef {
@@ -451,11 +435,14 @@ message PackStatus {
   optional int64 observedGeneration = 1;
 }
 
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 message PackageCard {
-  optional PackageMeta packageMeta = 1;
+  optional ChartCard chart = 1;
 
-  repeated VersionOption versions = 2;
+  optional BundleOptionView bundle = 2;
+
+  repeated BundleOptionView oneOf = 3;
+
+  optional bool required = 4;
 }
 
 message PackageDescriptor {
@@ -497,7 +484,11 @@ message PackageMeta {
 message PackageRef {
   optional ChartOption chart = 1;
 
-  optional bool required = 2;
+  optional BundleOption bundle = 2;
+
+  repeated BundleOption oneOf = 3;
+
+  optional bool required = 4;
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

@@ -60,13 +60,6 @@ type PackageMeta struct {
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
-type PackageCard struct {
-	metav1.TypeMeta `json:",inline"`
-	PackageMeta     `json:",inline" protobuf:"bytes,1,opt,name=packageMeta"`
-	Versions        []VersionOption `json:"versions" protobuf:"bytes,2,rep,name=versions"`
-}
-
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type PackageView struct {
 	metav1.TypeMeta `json:",inline"`
 	PackageMeta     `json:",inline" protobuf:"bytes,1,opt,name=packageMeta"`

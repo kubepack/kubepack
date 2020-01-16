@@ -20,40 +20,28 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"net/http"
 	"os"
-	"path/filepath"
 	"strconv"
 	"strings"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+	"kubepack.dev/kubepack/pkg/util"
 
-	"github.com/gabriel-vasile/mimetype"
 	flag "github.com/spf13/pflag"
-	"helm.sh/helm/v3/pkg/action"
-	"helm.sh/helm/v3/pkg/chart"
-	"helm.sh/helm/v3/pkg/chart/loader"
-	"helm.sh/helm/v3/pkg/cli"
-	"helm.sh/helm/v3/pkg/helmpath/xdg"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/yaml"
-)
-
-const (
-	TmpDir    = "/tmp"
-	DirPrefix = "helm"
 )
 
 var name = "stash-bundle"
 var charts = []string{
 	"https://charts.appscode.com/stable/@stash@v0.9.0-rc.2",
 }
-var addons = []string{}
+var bundles = []string{}
 
 func main() {
 	flag.StringVar(&name, "name", name, "Name of bundle, example: stash-bundle")
 	flag.StringArrayVar(&charts, "charts", charts, "Provide list charts in this bundle. format --charts url=chart_name@version --charts url=chart_name@version")
-	flag.StringArrayVar(&addons, "addons", addons, "Provide list of addons in this bundle. format --addons url=bundle_chart_name@v1,v2 --addons url=bundle_chart_name@v1,v2")
+	flag.StringArrayVar(&bundles, "bundles", bundles, "Provide list of bundles in this bundle. format --bundles url=bundle_chart_name@v1,v2 --bundles url=bundle_chart_name@v1,v2")
 	flag.Parse()
 
 	fmt.Println(charts)
@@ -88,47 +76,23 @@ func main() {
 			multiSelect = true
 		}
 
-		pkgChart, err := GetChart(chartName, primaryVersion, "myrepo", url)
+		pkgChart, err := util.GetChart(chartName, primaryVersion, "myrepo", url)
 		if err != nil {
 			log.Fatalln(err)
 		}
 		ref := v1alpha1.PackageRef{
-			Chart: v1alpha1.ChartOption{
+			Chart: &v1alpha1.ChartOption{
 				ChartRef: v1alpha1.ChartRef{
-					URL:     url,
-					Name:    pkgChart.Name(),
-					Feature: pkgChart.Metadata.Description,
+					URL:      url,
+					Name:     pkgChart.Name(),
+					Features: []string{pkgChart.Metadata.Description},
 				},
 			},
 			Required: required,
 		}
 
 		if idx == 0 {
-			b.Spec.PackageDescriptor.Description = pkgChart.Metadata.Description
-			if pkgChart.Metadata.Icon != "" {
-				var imgType string
-				if resp, err := http.Get(pkgChart.Metadata.Icon); err == nil {
-					if mime, err := mimetype.DetectReader(resp.Body); err == nil {
-						imgType = mime.String()
-					}
-					resp.Body.Close()
-				}
-				b.Spec.Icons = []v1alpha1.ImageSpec{
-					{
-						Source: pkgChart.Metadata.Icon,
-						// TotalSize: "",
-						Type: imgType,
-					},
-				}
-			}
-			for _, maintainer := range pkgChart.Metadata.Maintainers {
-				b.Spec.Maintainers = append(b.Spec.Maintainers, v1alpha1.ContactData{
-					Name:  maintainer.Name,
-					URL:   maintainer.URL,
-					Email: maintainer.Email,
-				})
-			}
-			b.Spec.PackageDescriptor.Keywords = pkgChart.Metadata.Keywords
+			b.Spec.PackageDescriptor = util.GetPackageDescriptor(pkgChart)
 		}
 
 		for _, versionInfo := range versions {
@@ -147,32 +111,26 @@ func main() {
 		b.Spec.Packages = append(b.Spec.Packages, ref)
 	}
 
-	for _, val := range addons {
+	for _, val := range bundles {
 		parts := strings.SplitN(val, "@", 3)
 		url := parts[0]
 		bundleName := parts[1]
-		versions := strings.Split(parts[2], ",")
+		version := parts[2]
 
-		chart, err := GetChart(bundleName, versions[0], "myrepo", url)
+		chart, err := util.GetChart(bundleName, version, "myrepo", url)
 		if err != nil {
 			log.Fatalln(err)
 		}
-		addon := v1alpha1.Addon{
-			Feature: chart.Metadata.Description,
+		ref := v1alpha1.PackageRef{
 			Bundle: &v1alpha1.BundleOption{
 				BundleRef: v1alpha1.BundleRef{
 					URL:  url,
 					Name: chart.Name(),
 				},
+				Version: version,
 			},
 		}
-		for idx, v := range versions {
-			addon.Bundle.Versions = append(addon.Bundle.Versions, v1alpha1.VersionOption{
-				Version:  v,
-				Selected: idx == 0,
-			})
-		}
-		b.Spec.Addons = append(b.Spec.Addons, addon)
+		b.Spec.Packages = append(b.Spec.Packages, ref)
 	}
 
 	data, err := yaml.Marshal(b)
@@ -187,64 +145,4 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-}
-
-func GetChart(chartName, version, repoName, url string) (*chart.Chart, error) {
-	cfg := new(action.Configuration)
-	client := action.NewInstall(cfg)
-	client.Version = version
-	client.RepoURL = url
-
-	chartDir, err := ioutil.TempDir(TmpDir, DirPrefix)
-	if err != nil {
-		return nil, err
-	}
-	defer os.RemoveAll(chartDir)
-
-	err = setEnv(chartDir)
-	if err != nil {
-		return nil, err
-	}
-	defer unsetEnv()
-
-	settings := cli.New()
-	cp, err := client.LocateChart(chartName, settings)
-	if err != nil {
-		return nil, err
-	}
-
-	chartRequested, err := loader.Load(cp)
-	if err != nil {
-		return nil, err
-	}
-
-	return chartRequested, nil
-}
-
-func setEnv(chartDir string) error {
-	err := os.Setenv(xdg.CacheHomeEnvVar, filepath.Join(chartDir, "cache"))
-	if err != nil {
-		return err
-	}
-
-	err = os.Setenv(xdg.ConfigHomeEnvVar, filepath.Join(chartDir, "config"))
-	if err != nil {
-		return err
-	}
-
-	return os.Setenv(xdg.DataHomeEnvVar, filepath.Join(chartDir, "data"))
-}
-
-func unsetEnv() error {
-	err := os.Unsetenv(xdg.CacheHomeEnvVar)
-	if err != nil {
-		return err
-	}
-
-	err = os.Unsetenv(xdg.ConfigHomeEnvVar)
-	if err != nil {
-		return err
-	}
-
-	return os.Unsetenv(xdg.DataHomeEnvVar)
 }

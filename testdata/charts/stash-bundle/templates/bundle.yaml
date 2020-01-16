@@ -4,28 +4,27 @@ metadata:
   creationTimestamp: null
   name: '{{ include "stash-bundle.fullname" . }}'
 spec:
-  addons:
-  - bundle:
-      feature: ""
-      name: stash-mongodb-bundle
-      url: https://kubepack-testcharts.storage.googleapis.com
-      versions:
-      - selected: true
-        version: v0.9.0-rc.2
-    feature: A Helm chart for Kubernetes
   description: Stash by AppsCode - Backup your Kubernetes Volumes
   icons:
   - src: https://cdn.appscode.com/images/icon/stash.png
     type: image/png
+  links:
+  - description: Homepage
+    url: https://github.com/stashed/stash
   maintainers:
   - email: support@appscode.com
     name: appscode
   packages:
   - chart:
-      feature: Stash by AppsCode - Backup your Kubernetes Volumes
+      features:
+      - Stash by AppsCode - Backup your Kubernetes Volumes
       name: stash
       url: https://charts.appscode.com/stable/
       versions:
       - version: v0.9.0-rc.2
     required: true
+  - bundle:
+      name: stash-mongodb-bundle
+      url: https://kubepack-testcharts.storage.googleapis.com
+      version: v0.9.0-rc.2
 status: {}
