@@ -48,8 +48,6 @@ type PackageDescriptor struct {
 }
 
 type PackageMeta struct {
-	Type string `json:"type" protobuf:"bytes,1,opt,name=type"` // chart v1, chart v2, kustomize bundle
-
 	Name string `json:"name" protobuf:"bytes,2,opt,name=name"`
 	URL  string `json:"url" protobuf:"bytes,3,opt,name=url"`
 
@@ -65,11 +63,13 @@ type PackageView struct {
 	PackageMeta     `json:",inline" protobuf:"bytes,1,opt,name=packageMeta"`
 
 	// Default chart values
-	Parameters *runtime.RawExtension `json:"parameters,omitempty" protobuf:"bytes,2,opt,name=parameters"`
+	Values *runtime.RawExtension `json:"values,omitempty" protobuf:"bytes,2,opt,name=values"`
+	// Parameters
+	Parameters *runtime.RawExtension `json:"parameters,omitempty" protobuf:"bytes,3,opt,name=parameters"`
 
 	// validation describes the schema used for validation and pruning of the custom resource.
 	// If present, this validation schema is used to validate all versions.
 	// Top-level and per-version schemas are mutually exclusive.
 	// +optional
-	Validation *crdv1beta1.CustomResourceValidation `json:"validation,omitempty" protobuf:"bytes,3,opt,name=validation"`
+	Validation *crdv1beta1.CustomResourceValidation `json:"validation,omitempty" protobuf:"bytes,4,opt,name=validation"`
 }

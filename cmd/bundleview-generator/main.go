@@ -17,15 +17,17 @@ limitations under the License.
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
+	"strings"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/pkg/util"
 
 	flag "github.com/spf13/pflag"
+	"helm.sh/helm/v3/pkg/chartutil"
+	"helm.sh/helm/v3/pkg/engine"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/yaml"
 )
@@ -42,28 +44,22 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	pkgChart, err := util.GetChart(name, version, "myrepo", url)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	fmt.Println(pkgChart.Metadata.Description)
-
-	b := v1alpha1.BundleView{
+	view := toBundleOptionView(&v1alpha1.BundleOption{
+		BundleRef: v1alpha1.BundleRef{
+			URL:  url,
+			Name: name,
+		},
+		Version: version,
+	})
+	bv := v1alpha1.BundleView{
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: v1alpha1.SchemeGroupVersion.String(),
 			Kind:       "BundleView",
 		},
-		PackageMeta: v1alpha1.PackageMeta{
-			Type:              "FIX_IT",
-			Name:              pkgChart.Name(),
-			URL:               url,
-			Version:           pkgChart.Metadata.Version,
-			PackageDescriptor: util.GetPackageDescriptor(pkgChart),
-		},
+		BundleOptionView: *view,
 	}
 
-	data, err := yaml.Marshal(b)
+	data, err := yaml.Marshal(bv)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -75,4 +71,106 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func toBundleOptionView(in *v1alpha1.BundleOption) *v1alpha1.BundleOptionView {
+	chrt, err := util.GetChart(in.Name, in.Version, "myrepo", in.URL)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	bv := v1alpha1.BundleOptionView{
+		PackageMeta: v1alpha1.PackageMeta{
+			Name:              chrt.Name(),
+			URL:               url,
+			Version:           chrt.Metadata.Version,
+			PackageDescriptor: util.GetPackageDescriptor(chrt),
+		},
+	}
+
+	options := chartutil.ReleaseOptions{
+		Name:      chrt.Name(),
+		Namespace: "",
+		Revision:  1,
+		IsInstall: true,
+	}
+	values, err := chartutil.ToRenderValues(chrt, chrt.Values, options, chartutil.DefaultCapabilities)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	files, err := engine.Render(chrt, values)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	for filename, data := range files {
+		if strings.HasSuffix(filename, chartutil.NotesName) {
+			continue
+		}
+
+		var tm metav1.TypeMeta
+		err := yaml.Unmarshal([]byte(data), &tm)
+		if err != nil {
+			continue // Not a json file, ignore
+		}
+		if tm.APIVersion == v1alpha1.SchemeGroupVersion.String() &&
+			tm.Kind == v1alpha1.ResourceKindBundle {
+
+			var bundle v1alpha1.Bundle
+			err = yaml.Unmarshal([]byte(data), &bundle)
+			if err != nil {
+				log.Fatalln(err)
+			}
+
+			for _, pkg := range bundle.Spec.Packages {
+				if pkg.Chart != nil {
+					var chartVersion string
+					for _, v := range pkg.Chart.Versions {
+						if v.Selected {
+							chartVersion = v.Version
+							break
+						}
+					}
+					if chartVersion == "" {
+						chartVersion = pkg.Chart.Versions[0].Version
+					}
+					pkgChart, err := util.GetChart(pkg.Chart.Name, chartVersion, "myrepo", pkg.Chart.URL)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					card := v1alpha1.PackageCard{
+						Chart: &v1alpha1.ChartCard{
+							ChartRef: v1alpha1.ChartRef{
+								Name:     pkg.Chart.Name,
+								URL:      pkg.Chart.URL,
+								Features: pkg.Chart.Features,
+							},
+							PackageDescriptor: util.GetPackageDescriptor(pkgChart),
+							Versions:          pkg.Chart.Versions,
+							MultiSelect:       pkg.Chart.MultiSelect,
+						},
+						Required: pkg.Required,
+					}
+					if len(card.Chart.Versions) == 1 {
+						card.Chart.Versions[0].Selected = true
+					}
+					bv.Packages = append(bv.Packages, card)
+				} else if pkg.Bundle != nil {
+					bv.Packages = append(bv.Packages, v1alpha1.PackageCard{
+						Bundle:   toBundleOptionView(pkg.Bundle),
+						Required: pkg.Required,
+					})
+				} else if len(pkg.OneOf) > 0 {
+					bovs := make([]*v1alpha1.BundleOptionView, 0, len(pkg.OneOf))
+					for _, bo := range pkg.OneOf {
+						bovs = append(bovs, toBundleOptionView(bo))
+					}
+					bv.Packages = append(bv.Packages, v1alpha1.PackageCard{
+						OneOf:    bovs,
+						Required: pkg.Required,
+					})
+				}
+			}
+		}
+	}
+	return &bv
 }

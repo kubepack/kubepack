@@ -11,7 +11,8 @@ maintainers:
 - email: support@appscode.com
   name: appscode
 name: csi-vault
-parameters:
+url: https://charts.appscode.com/stable/
+values:
   affinity: {}
   annotations: {}
   apiserver:
@@ -72,6 +73,4 @@ parameters:
   replicaCount: 1
   resources: {}
   tolerations: {}
-type: FIX_IT
-url: https://charts.appscode.com/stable/
 version: v0.3.0

@@ -170,7 +170,6 @@ API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alph
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,BundleOptionView,Packages
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,BundleSpec,Packages
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,BundleVersionRef,Versions
-API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,BundleView,Packages
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ChartCard,Versions
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ChartOption,Versions
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ChartRef,Features

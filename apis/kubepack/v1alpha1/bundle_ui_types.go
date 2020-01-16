@@ -22,23 +22,22 @@ import (
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type BundleView struct {
-	metav1.TypeMeta `json:",inline"`
-	PackageMeta     `json:",inline" protobuf:"bytes,1,opt,name=packageMeta"`
-
-	Packages []PackageCard `json:"packages" protobuf:"bytes,2,rep,name=packages"`
+	metav1.TypeMeta  `json:",inline"`
+	BundleOptionView `json:",inline" protobuf:"bytes,1,opt,name=bundleOptionView"`
 }
 
 type PackageCard struct {
-	Chart    *ChartCard         `json:"chart,omitempty" protobuf:"bytes,1,opt,name=chart"`
-	Bundle   *BundleOptionView  `json:"bundle,omitempty" protobuf:"bytes,2,opt,name=bundle"`
-	OneOf    []BundleOptionView `json:"oneOf,omitempty" protobuf:"bytes,3,rep,name=oneOf"`
-	Required bool               `json:"required,omitempty" protobuf:"varint,4,opt,name=required"`
+	Chart    *ChartCard          `json:"chart,omitempty" protobuf:"bytes,1,opt,name=chart"`
+	Bundle   *BundleOptionView   `json:"bundle,omitempty" protobuf:"bytes,2,opt,name=bundle"`
+	OneOf    []*BundleOptionView `json:"oneOf,omitempty" protobuf:"bytes,3,rep,name=oneOf"`
+	Required bool                `json:"required,omitempty" protobuf:"varint,4,opt,name=required"`
 }
 
 type ChartCard struct {
-	PackageMeta `json:",inline" protobuf:"bytes,1,opt,name=packageMeta"`
-	Versions    []VersionOption `json:"versions" protobuf:"bytes,2,rep,name=versions"`
-	MultiSelect bool            `json:"multiSelect,omitempty" protobuf:"varint,3,opt,name=multiSelect"`
+	ChartRef          `json:",inline" protobuf:"bytes,1,opt,name=chartRef"`
+	PackageDescriptor `json:",inline" protobuf:"bytes,2,opt,name=packageDescriptor"`
+	Versions          []VersionOption `json:"versions" protobuf:"bytes,3,rep,name=versions"`
+	MultiSelect       bool            `json:"multiSelect,omitempty" protobuf:"varint,4,opt,name=multiSelect"`
 }
 
 type BundleOptionView struct {

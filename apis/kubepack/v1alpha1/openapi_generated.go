@@ -15038,12 +15038,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleOptionView(ref common.Referenc
 			SchemaProps: spec.SchemaProps{
 				Type: []string{"object"},
 				Properties: map[string]spec.Schema{
-					"type": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
 					"name": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
@@ -15149,7 +15143,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleOptionView(ref common.Referenc
 						},
 					},
 				},
-				Required: []string{"type", "name", "url", "packages"},
+				Required: []string{"name", "url", "packages"},
 			},
 		},
 		Dependencies: []string{
@@ -15359,12 +15353,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleView(ref common.ReferenceCallb
 							Format:      "",
 						},
 					},
-					"type": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
 					"name": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
@@ -15470,7 +15458,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleView(ref common.ReferenceCallb
 						},
 					},
 				},
-				Required: []string{"type", "name", "url", "packages"},
+				Required: []string{"name", "url", "packages"},
 			},
 		},
 		Dependencies: []string{
@@ -15484,7 +15472,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartCard(ref common.ReferenceCallba
 			SchemaProps: spec.SchemaProps{
 				Type: []string{"object"},
 				Properties: map[string]spec.Schema{
-					"type": {
+					"url": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
@@ -15496,17 +15484,18 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartCard(ref common.ReferenceCallba
 							Format: "",
 						},
 					},
-					"url": {
+					"features": {
 						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
-					"version": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Version is an optional version indicator for the Application.",
-							Type:        []string{"string"},
-							Format:      "",
+							Description: "One sentence description of feature provided by this addon",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
 						},
 					},
 					"description": {
@@ -15601,7 +15590,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartCard(ref common.ReferenceCallba
 						},
 					},
 				},
-				Required: []string{"type", "name", "url", "versions"},
+				Required: []string{"url", "name", "versions"},
 			},
 		},
 		Dependencies: []string{
@@ -16802,12 +16791,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageMeta(ref common.ReferenceCall
 			SchemaProps: spec.SchemaProps{
 				Type: []string{"object"},
 				Properties: map[string]spec.Schema{
-					"type": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
 					"name": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
@@ -16901,7 +16884,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageMeta(ref common.ReferenceCall
 						},
 					},
 				},
-				Required: []string{"type", "name", "url"},
+				Required: []string{"name", "url"},
 			},
 		},
 		Dependencies: []string{
@@ -16971,12 +16954,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageView(ref common.ReferenceCall
 							Format:      "",
 						},
 					},
-					"type": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
 					"name": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
@@ -17069,9 +17046,15 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageView(ref common.ReferenceCall
 							},
 						},
 					},
-					"parameters": {
+					"values": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Default chart values",
+							Ref:         ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
+						},
+					},
+					"parameters": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Parameters",
 							Ref:         ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
 						},
 					},
@@ -17082,7 +17065,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageView(ref common.ReferenceCall
 						},
 					},
 				},
-				Required: []string{"type", "name", "url"},
+				Required: []string{"name", "url"},
 			},
 		},
 		Dependencies: []string{

@@ -47,10 +47,10 @@ type BundleSpec struct {
 }
 
 type PackageRef struct {
-	Chart    *ChartOption   `json:"chart,omitempty" protobuf:"bytes,1,opt,name=chart"`
-	Bundle   *BundleOption  `json:"bundle,omitempty" protobuf:"bytes,2,opt,name=bundle"`
-	OneOf    []BundleOption `json:"oneOf,omitempty" protobuf:"bytes,3,rep,name=oneOf"`
-	Required bool           `json:"required,omitempty" protobuf:"varint,4,opt,name=required"`
+	Chart    *ChartOption    `json:"chart,omitempty" protobuf:"bytes,1,opt,name=chart"`
+	Bundle   *BundleOption   `json:"bundle,omitempty" protobuf:"bytes,2,opt,name=bundle"`
+	OneOf    []*BundleOption `json:"oneOf,omitempty" protobuf:"bytes,3,rep,name=oneOf"`
+	Required bool            `json:"required,omitempty" protobuf:"varint,4,opt,name=required"`
 }
 
 type ChartRef struct {

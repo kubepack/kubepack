@@ -145,17 +145,17 @@ message BundleVersionRef {
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 message BundleView {
-  optional PackageMeta packageMeta = 1;
-
-  repeated PackageCard packages = 2;
+  optional BundleOptionView bundleOptionView = 1;
 }
 
 message ChartCard {
-  optional PackageMeta packageMeta = 1;
+  optional ChartRef chartRef = 1;
 
-  repeated VersionOption versions = 2;
+  optional PackageDescriptor packageDescriptor = 2;
 
-  optional bool multiSelect = 3;
+  repeated VersionOption versions = 3;
+
+  optional bool multiSelect = 4;
 }
 
 message ChartOption {
@@ -469,8 +469,6 @@ message PackageDescriptor {
 }
 
 message PackageMeta {
-  optional string type = 1;
-
   optional string name = 2;
 
   optional string url = 3;
@@ -496,13 +494,16 @@ message PackageView {
   optional PackageMeta packageMeta = 1;
 
   // Default chart values
-  optional k8s.io.apimachinery.pkg.runtime.RawExtension parameters = 2;
+  optional k8s.io.apimachinery.pkg.runtime.RawExtension values = 2;
+
+  // Parameters
+  optional k8s.io.apimachinery.pkg.runtime.RawExtension parameters = 3;
 
   // validation describes the schema used for validation and pruning of the custom resource.
   // If present, this validation schema is used to validate all versions.
   // Top-level and per-version schemas are mutually exclusive.
   // +optional
-  optional k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceValidation validation = 3;
+  optional k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceValidation validation = 4;
 }
 
 // Repo contains the name in monocular the url for the repository

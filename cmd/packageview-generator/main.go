@@ -59,13 +59,12 @@ func main() {
 			Kind:       "PackageView",
 		},
 		PackageMeta: v1alpha1.PackageMeta{
-			Type:              "FIX_IT",
 			Name:              pkgChart.Name(),
 			URL:               url,
 			Version:           pkgChart.Metadata.Version,
 			PackageDescriptor: util.GetPackageDescriptor(pkgChart),
 		},
-		Parameters: &runtime.RawExtension{
+		Values: &runtime.RawExtension{
 			Object: &unstructured.Unstructured{Object: pkgChart.Values},
 		},
 	}
