@@ -80,11 +80,6 @@ type BundleRef struct {
 	Name string `json:"name" protobuf:"bytes,2,opt,name=name"`
 }
 
-type BundleVersionRef struct {
-	BundleRef `json:",inline" protobuf:"bytes,1,opt,name=bundleRef"`
-	Versions  []string `json:"versions" protobuf:"bytes,2,rep,name=versions"`
-}
-
 type BundleOption struct {
 	BundleRef `json:",inline" protobuf:"bytes,1,opt,name=bundleRef"`
 	Version   string `json:"version" protobuf:"bytes,2,opt,name=version"`

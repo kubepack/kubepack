@@ -137,12 +137,6 @@ message BundleStatus {
   optional int64 observedGeneration = 1;
 }
 
-message BundleVersionRef {
-  optional BundleRef bundleRef = 1;
-
-  repeated string versions = 2;
-}
-
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 message BundleView {
   optional BundleOptionView bundleOptionView = 1;
@@ -176,10 +170,25 @@ message ChartRef {
   repeated string features = 3;
 }
 
+message ChartSelection {
+  optional ChartRef chartRef = 1;
+
+  repeated ChartVersionValues versions = 2;
+}
+
 message ChartVersionRef {
   optional ChartRef chartRef = 1;
 
   repeated string versions = 2;
+}
+
+message ChartVersionValues {
+  optional string version = 1;
+
+  // +optional
+  // +kubebuilder:validation:EmbeddedResource
+  // +kubebuilder:pruning:PreserveUnknownFields
+  optional k8s.io.apimachinery.pkg.runtime.RawExtension parameters = 2;
 }
 
 // ComponentList is a generic status holder for the top level resource
@@ -336,17 +345,6 @@ message IngressSelector {
   optional string path = 3;
 }
 
-message ItemRef {
-  optional ChartVersionRef chart = 1;
-
-  optional BundleVersionRef bundle = 2;
-
-  // +optional
-  // +kubebuilder:validation:EmbeddedResource
-  // +kubebuilder:pruning:PreserveUnknownFields
-  optional k8s.io.apimachinery.pkg.runtime.RawExtension parameters = 3;
-}
-
 // Link contains information about an URL to surface documentation, dashboards, etc.
 message Link {
   // Description is human readable content explaining the purpose of the link.
@@ -393,7 +391,7 @@ message OrderList {
 }
 
 message OrderSpec {
-  repeated ItemRef items = 1;
+  repeated PackageSelection items = 1;
 }
 
 message OrderStatus {
@@ -487,6 +485,10 @@ message PackageRef {
   repeated BundleOption oneOf = 3;
 
   optional bool required = 4;
+}
+
+message PackageSelection {
+  optional ChartVersionRef chart = 1;
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

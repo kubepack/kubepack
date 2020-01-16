@@ -18,7 +18,7 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	runtime "k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime"
 )
 
 const (
@@ -42,16 +42,24 @@ type Order struct {
 }
 
 type OrderSpec struct {
-	Items []ItemRef `json:"items" protobuf:"bytes,1,rep,name=items"`
+	Packages []PackageSelection `json:"items" protobuf:"bytes,1,rep,name=items"`
 }
 
-type ItemRef struct {
-	Chart  *ChartVersionRef  `json:"chart,omitempty" protobuf:"bytes,1,opt,name=chart"`
-	Bundle *BundleVersionRef `json:"bundle,omitempty" protobuf:"bytes,2,opt,name=bundle"`
+type PackageSelection struct {
+	Chart *ChartVersionRef `json:"chart,omitempty" protobuf:"bytes,1,opt,name=chart"`
+}
+
+type ChartSelection struct {
+	ChartRef `json:",inline" protobuf:"bytes,1,opt,name=chartRef"`
+	Versions []ChartVersionValues `json:"versions" protobuf:"bytes,2,rep,name=versions"`
+}
+
+type ChartVersionValues struct {
+	Version string `json:"version" protobuf:"bytes,1,opt,name=version"`
 	// +optional
 	// +kubebuilder:validation:EmbeddedResource
 	// +kubebuilder:pruning:PreserveUnknownFields
-	Parameters *runtime.RawExtension `json:"parameters,omitempty" protobuf:"bytes,3,opt,name=parameters"`
+	Parameters *runtime.RawExtension `json:"parameters,omitempty" protobuf:"bytes,2,opt,name=parameters"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

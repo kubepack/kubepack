@@ -26,6 +26,11 @@ type BundleView struct {
 	BundleOptionView `json:",inline" protobuf:"bytes,1,opt,name=bundleOptionView"`
 }
 
+type BundleOptionView struct {
+	PackageMeta `json:",inline" protobuf:"bytes,1,opt,name=packageMeta"`
+	Packages    []PackageCard `json:"packages" protobuf:"bytes,2,rep,name=packages"`
+}
+
 type PackageCard struct {
 	Chart    *ChartCard          `json:"chart,omitempty" protobuf:"bytes,1,opt,name=chart"`
 	Bundle   *BundleOptionView   `json:"bundle,omitempty" protobuf:"bytes,2,opt,name=bundle"`
@@ -38,9 +43,4 @@ type ChartCard struct {
 	PackageDescriptor `json:",inline" protobuf:"bytes,2,opt,name=packageDescriptor"`
 	Versions          []VersionOption `json:"versions" protobuf:"bytes,3,rep,name=versions"`
 	MultiSelect       bool            `json:"multiSelect,omitempty" protobuf:"varint,4,opt,name=multiSelect"`
-}
-
-type BundleOptionView struct {
-	PackageMeta `json:",inline" protobuf:"bytes,1,opt,name=packageMeta"`
-	Packages    []PackageCard `json:"packages" protobuf:"bytes,2,rep,name=packages"`
 }

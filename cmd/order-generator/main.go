@@ -17,13 +17,11 @@ limitations under the License.
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/kubepack/pkg/util"
 
 	flag "github.com/spf13/pflag"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -31,41 +29,75 @@ import (
 )
 
 var (
-	url     = "https://kubepack-testcharts.storage.googleapis.com"
-	name    = "kubedb-bundle"
-	version = "v0.13.0-rc.2"
+	file = "artifacts/kubedb-bundle/bundleview.yaml"
 )
 
 func main() {
-	flag.StringVar(&url, "url", url, "Chart repo url")
-	flag.StringVar(&name, "name", name, "Name of bundle")
-	flag.StringVar(&version, "version", version, "Version of bundle")
+	flag.StringVar(&file, "file", file, "Path to BundleView file")
 	flag.Parse()
 
-	pkgChart, err := util.GetChart(name, version, "myrepo", url)
+	data, err := ioutil.ReadFile(file)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatal(err)
+	}
+	var bv v1alpha1.BundleView
+	err = yaml.Unmarshal(data, &bv)
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	fmt.Println(pkgChart.Metadata.Description)
-
-	b := v1alpha1.Order{
+	out := v1alpha1.Order{
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: v1alpha1.SchemeGroupVersion.String(),
-			Kind:       v1alpha1.ResourceKindOrder,
+			Kind:       "Order",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name: bv.Name,
+		},
+		Spec: v1alpha1.OrderSpec{
+			Packages: toPackageSelection(bv.Packages),
 		},
 	}
 
-	data, err := yaml.Marshal(b)
+	data, err = yaml.Marshal(out)
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = os.MkdirAll("artifacts/"+name, 0755)
+	err = os.MkdirAll("artifacts/"+bv.Name, 0755)
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = ioutil.WriteFile("artifacts/"+name+"/order.yaml", data, 0644)
+	err = ioutil.WriteFile("artifacts/"+bv.Name+"/order.yaml", data, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func toPackageSelection(in []v1alpha1.PackageCard) []v1alpha1.PackageSelection {
+	var out []v1alpha1.PackageSelection
+
+	for _, pkg := range in {
+		if !pkg.Required {
+			continue
+		}
+		if pkg.Chart != nil {
+			selection := v1alpha1.PackageSelection{
+				Chart: &v1alpha1.ChartVersionRef{
+					ChartRef: pkg.Chart.ChartRef,
+				},
+			}
+			for _, v := range pkg.Chart.Versions {
+				if v.Selected {
+					selection.Chart.Versions = append(selection.Chart.Versions, v.Version)
+				}
+			}
+			out = append(out, selection)
+		} else if pkg.Bundle != nil {
+			out = append(out, toPackageSelection(pkg.Bundle.Packages)...)
+		} else if len(pkg.OneOf) > 0 {
+			log.Fatalln("User must select one bundle")
+		}
+	}
+
+	return out
 }

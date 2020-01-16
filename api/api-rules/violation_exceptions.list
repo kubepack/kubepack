@@ -169,10 +169,10 @@ API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alph
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,BundleList,Items
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,BundleOptionView,Packages
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,BundleSpec,Packages
-API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,BundleVersionRef,Versions
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ChartCard,Versions
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ChartOption,Versions
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ChartRef,Features
+API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ChartSelection,Versions
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ChartVersionRef,Versions
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ComponentList,Objects
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Descriptor,Icons
@@ -181,7 +181,7 @@ API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alph
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Descriptor,Maintainers
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Descriptor,Owners
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,OrderList,Items
-API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,OrderSpec,Items
+API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,OrderSpec,Packages
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,PackList,Items
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,PackSpec,WaitFors
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,PackageCard,OneOf
@@ -257,4 +257,5 @@ API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,App
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ComponentList,Objects
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ImageSpec,Source
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ImageSpec,TotalSize
+API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,OrderSpec,Packages
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,WaitOptions,ForCondition
