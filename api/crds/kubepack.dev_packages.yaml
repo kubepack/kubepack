@@ -200,8 +200,6 @@ spec:
               type: array
           required:
           - chart
-          - resources
-          - waitFors
           type: object
         status:
           properties:

@@ -155,7 +155,7 @@ message ChartCard {
 message ChartOption {
   optional ChartRef chartRef = 1;
 
-  repeated VersionOption versions = 2;
+  repeated VersionDetail versions = 2;
 
   optional bool multiSelect = 3;
 }
@@ -173,22 +173,22 @@ message ChartRef {
 message ChartSelection {
   optional ChartRef chartRef = 1;
 
-  repeated ChartVersionValues versions = 2;
+  optional string version = 2;
+
+  // +optional
+  // +kubebuilder:validation:EmbeddedResource
+  // +kubebuilder:pruning:PreserveUnknownFields
+  optional k8s.io.apimachinery.pkg.runtime.RawExtension parameters = 3;
+
+  optional ResourceDefinitions resources = 4;
+
+  repeated WaitOptions waitFors = 5;
 }
 
 message ChartVersionRef {
   optional ChartRef chartRef = 1;
 
   repeated string versions = 2;
-}
-
-message ChartVersionValues {
-  optional string version = 1;
-
-  // +optional
-  // +kubebuilder:validation:EmbeddedResource
-  // +kubebuilder:pruning:PreserveUnknownFields
-  optional k8s.io.apimachinery.pkg.runtime.RawExtension parameters = 2;
 }
 
 // ComponentList is a generic status holder for the top level resource
@@ -488,7 +488,7 @@ message PackageRef {
 }
 
 message PackageSelection {
-  optional ChartVersionRef chart = 1;
+  optional ChartSelection chart = 1;
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
@@ -556,6 +556,14 @@ message ServiceSelector {
 
   // The optional HTTP path.
   optional string path = 3;
+}
+
+message VersionDetail {
+  optional VersionOption versionOption = 1;
+
+  optional ResourceDefinitions resources = 2;
+
+  repeated WaitOptions waitFors = 3;
 }
 
 message VersionOption {

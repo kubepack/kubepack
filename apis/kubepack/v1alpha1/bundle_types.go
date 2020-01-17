@@ -66,7 +66,7 @@ type SelectionMode string
 
 type ChartOption struct {
 	ChartRef    `json:",inline" protobuf:"bytes,1,opt,name=chartRef"`
-	Versions    []VersionOption `json:"versions" protobuf:"bytes,2,rep,name=versions"`
+	Versions    []VersionDetail `json:"versions" protobuf:"bytes,2,rep,name=versions"`
 	MultiSelect bool            `json:"multiSelect,omitempty" protobuf:"varint,3,opt,name=multiSelect"`
 }
 
@@ -88,6 +88,12 @@ type BundleOption struct {
 type VersionOption struct {
 	Version  string `json:"version" protobuf:"bytes,1,opt,name=version"`
 	Selected bool   `json:"selected,omitempty" protobuf:"varint,2,opt,name=selected"`
+}
+
+type VersionDetail struct {
+	VersionOption `json:",inline" protobuf:"bytes,1,opt,name=versionOption"`
+	Resources     *ResourceDefinitions `json:"resources,omitempty" protobuf:"bytes,2,opt,name=resources"`
+	WaitFors      []WaitOptions        `json:"waitFors,omitempty" protobuf:"bytes,3,rep,name=waitFors"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

@@ -42,9 +42,9 @@ type Pack struct {
 }
 
 type PackSpec struct {
-	Chart     *ChartRef           `json:"chart" protobuf:"bytes,1,opt,name=chart"`
-	Resources ResourceDefinitions `json:"resources" protobuf:"bytes,2,opt,name=resources"`
-	WaitFors  []WaitOptions       `json:"waitFors" protobuf:"bytes,3,rep,name=waitFors"`
+	Chart     *ChartRef            `json:"chart" protobuf:"bytes,1,opt,name=chart"`
+	Resources *ResourceDefinitions `json:"resources,omitempty" protobuf:"bytes,2,opt,name=resources"`
+	WaitFors  []WaitOptions        `json:"waitFors,omitempty" protobuf:"bytes,3,rep,name=waitFors"`
 }
 
 type ResourceDefinitions struct {

@@ -22,6 +22,7 @@ import (
 	"os"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+	"kubepack.dev/kubepack/pkg/util"
 
 	flag "github.com/spf13/pflag"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -55,7 +56,7 @@ func main() {
 			Name: bv.Name,
 		},
 		Spec: v1alpha1.OrderSpec{
-			Packages: toPackageSelection(bv.Packages),
+			Packages: toPackageSelection(&bv.BundleOptionView),
 		},
 	}
 
@@ -73,31 +74,58 @@ func main() {
 	}
 }
 
-func toPackageSelection(in []v1alpha1.PackageCard) []v1alpha1.PackageSelection {
+func toPackageSelection(in *v1alpha1.BundleOptionView) []v1alpha1.PackageSelection {
 	var out []v1alpha1.PackageSelection
 
-	for _, pkg := range in {
+	_, bundle := util.GetBundle(&v1alpha1.BundleOption{
+		BundleRef: v1alpha1.BundleRef{
+			URL:  in.URL,
+			Name: in.Name,
+		},
+		Version: in.Version,
+	})
+
+	for _, pkg := range in.Packages {
 		if !pkg.Required {
 			continue
 		}
 		if pkg.Chart != nil {
-			selection := v1alpha1.PackageSelection{
-				Chart: &v1alpha1.ChartVersionRef{
-					ChartRef: pkg.Chart.ChartRef,
-				},
-			}
 			for _, v := range pkg.Chart.Versions {
 				if v.Selected {
-					selection.Chart.Versions = append(selection.Chart.Versions, v.Version)
+					crds, waitFors := FindChartData(bundle, pkg.Chart.ChartRef, v.Version)
+					selection := v1alpha1.PackageSelection{
+						Chart: &v1alpha1.ChartSelection{
+							ChartRef:  pkg.Chart.ChartRef,
+							Version:   v.Version,
+							Resources: crds,
+							WaitFors:  waitFors,
+						},
+					}
+					out = append(out, selection)
 				}
 			}
-			out = append(out, selection)
 		} else if pkg.Bundle != nil {
-			out = append(out, toPackageSelection(pkg.Bundle.Packages)...)
+			out = append(out, toPackageSelection(pkg.Bundle)...)
 		} else if len(pkg.OneOf) > 0 {
 			log.Fatalln("User must select one bundle")
 		}
 	}
 
 	return out
+}
+
+func FindChartData(bundle *v1alpha1.Bundle, chrtRef v1alpha1.ChartRef, chrtVersion string) (*v1alpha1.ResourceDefinitions, []v1alpha1.WaitOptions) {
+	for _, pkg := range bundle.Spec.Packages {
+		if pkg.Chart != nil &&
+			pkg.Chart.URL == chrtRef.URL &&
+			pkg.Chart.Name == chrtRef.Name {
+
+			for _, v := range pkg.Chart.Versions {
+				if v.Version == chrtVersion {
+					return v.Resources, v.WaitFors
+				}
+			}
+		}
+	}
+	return nil, nil
 }

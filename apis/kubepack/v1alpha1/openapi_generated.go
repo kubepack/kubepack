@@ -332,7 +332,6 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRef":                                           schema_kubepack_apis_kubepack_v1alpha1_ChartRef(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartSelection":                                     schema_kubepack_apis_kubepack_v1alpha1_ChartSelection(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartVersionRef":                                    schema_kubepack_apis_kubepack_v1alpha1_ChartVersionRef(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartVersionValues":                                 schema_kubepack_apis_kubepack_v1alpha1_ChartVersionValues(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ComponentList":                                      schema_kubepack_apis_kubepack_v1alpha1_ComponentList(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Condition":                                          schema_kubepack_apis_kubepack_v1alpha1_Condition(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ConfigMapKeySelector":                               schema_kubepack_apis_kubepack_v1alpha1_ConfigMapKeySelector(ref),
@@ -364,6 +363,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceID":                                         schema_kubepack_apis_kubepack_v1alpha1_ResourceID(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.SecretKeySelector":                                  schema_kubepack_apis_kubepack_v1alpha1_SecretKeySelector(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ServiceSelector":                                    schema_kubepack_apis_kubepack_v1alpha1_ServiceSelector(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.VersionDetail":                                      schema_kubepack_apis_kubepack_v1alpha1_VersionDetail(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.VersionOption":                                      schema_kubepack_apis_kubepack_v1alpha1_VersionOption(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitOptions":                                        schema_kubepack_apis_kubepack_v1alpha1_WaitOptions(ref),
 	}
@@ -15599,7 +15599,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartOption(ref common.ReferenceCall
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.VersionOption"),
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.VersionDetail"),
 									},
 								},
 							},
@@ -15616,7 +15616,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartOption(ref common.ReferenceCall
 			},
 		},
 		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.VersionOption"},
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.VersionDetail"},
 	}
 }
 
@@ -15691,24 +15691,40 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartSelection(ref common.ReferenceC
 							},
 						},
 					},
-					"versions": {
+					"version": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"parameters": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
+						},
+					},
+					"resources": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions"),
+						},
+					},
+					"waitFors": {
 						SchemaProps: spec.SchemaProps{
 							Type: []string{"array"},
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartVersionValues"),
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitOptions"),
 									},
 								},
 							},
 						},
 					},
 				},
-				Required: []string{"url", "name", "versions"},
+				Required: []string{"url", "name", "version"},
 			},
 		},
 		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartVersionValues"},
+			"k8s.io/apimachinery/pkg/runtime.RawExtension", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitOptions"},
 	}
 }
 
@@ -15761,32 +15777,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartVersionRef(ref common.Reference
 				Required: []string{"url", "name", "versions"},
 			},
 		},
-	}
-}
-
-func schema_kubepack_apis_kubepack_v1alpha1_ChartVersionValues(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Type: []string{"object"},
-				Properties: map[string]spec.Schema{
-					"version": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
-					"parameters": {
-						SchemaProps: spec.SchemaProps{
-							Ref: ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
-						},
-					},
-				},
-				Required: []string{"version"},
-			},
-		},
-		Dependencies: []string{
-			"k8s.io/apimachinery/pkg/runtime.RawExtension"},
 	}
 }
 
@@ -16642,7 +16632,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackSpec(ref common.ReferenceCallbac
 						},
 					},
 				},
-				Required: []string{"chart", "resources", "waitFors"},
+				Required: []string{"chart"},
 			},
 		},
 		Dependencies: []string{
@@ -16955,14 +16945,14 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageSelection(ref common.Referenc
 				Properties: map[string]spec.Schema{
 					"chart": {
 						SchemaProps: spec.SchemaProps{
-							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartVersionRef"),
+							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartSelection"),
 						},
 					},
 				},
 			},
 		},
 		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartVersionRef"},
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartSelection"},
 	}
 }
 
@@ -17358,6 +17348,50 @@ func schema_kubepack_apis_kubepack_v1alpha1_ServiceSelector(ref common.Reference
 				},
 			},
 		},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_VersionDetail(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"version": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"selected": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"boolean"},
+							Format: "",
+						},
+					},
+					"resources": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions"),
+						},
+					},
+					"waitFors": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitOptions"),
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"version"},
+			},
+		},
+		Dependencies: []string{
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitOptions"},
 	}
 }
 

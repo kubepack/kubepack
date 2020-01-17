@@ -46,20 +46,18 @@ type OrderSpec struct {
 }
 
 type PackageSelection struct {
-	Chart *ChartVersionRef `json:"chart,omitempty" protobuf:"bytes,1,opt,name=chart"`
+	Chart *ChartSelection `json:"chart,omitempty" protobuf:"bytes,1,opt,name=chart"`
 }
 
 type ChartSelection struct {
 	ChartRef `json:",inline" protobuf:"bytes,1,opt,name=chartRef"`
-	Versions []ChartVersionValues `json:"versions" protobuf:"bytes,2,rep,name=versions"`
-}
-
-type ChartVersionValues struct {
-	Version string `json:"version" protobuf:"bytes,1,opt,name=version"`
+	Version  string `json:"version" protobuf:"bytes,2,opt,name=version"`
 	// +optional
 	// +kubebuilder:validation:EmbeddedResource
 	// +kubebuilder:pruning:PreserveUnknownFields
-	Parameters *runtime.RawExtension `json:"parameters,omitempty" protobuf:"bytes,2,opt,name=parameters"`
+	Parameters *runtime.RawExtension `json:"parameters,omitempty" protobuf:"bytes,3,opt,name=parameters"`
+	Resources  *ResourceDefinitions  `json:"resources,omitempty" protobuf:"bytes,4,opt,name=resources"`
+	WaitFors   []WaitOptions         `json:"waitFors,omitempty" protobuf:"bytes,5,rep,name=waitFors"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

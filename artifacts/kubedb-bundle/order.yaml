@@ -9,14 +9,18 @@ spec:
       features:
       - KubeDB by AppsCode - Production ready databases on Kubernetes
       name: kubedb
+      resources:
+        owned: null
+        required: null
       url: https://charts.appscode.com/stable/
-      versions:
-      - v0.9.0-rc.2
+      version: v0.9.0-rc.2
   - chart:
       features:
       - KubeDB Catalog by AppsCode - Catalog for database versions
       name: kubedb-catalog
+      resources:
+        owned: null
+        required: null
       url: https://charts.appscode.com/stable/
-      versions:
-      - v0.9.0-rc.2
+      version: v0.9.0-rc.2
 status: {}

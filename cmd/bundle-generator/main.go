@@ -102,9 +102,11 @@ func main() {
 			if len(vparts) == 2 {
 				selected, _ = strconv.ParseBool(vparts[1])
 			}
-			ref.Chart.Versions = append(ref.Chart.Versions, v1alpha1.VersionOption{
-				Version:  version,
-				Selected: selected,
+			ref.Chart.Versions = append(ref.Chart.Versions, v1alpha1.VersionDetail{
+				VersionOption: v1alpha1.VersionOption{
+					Version:  version,
+					Selected: selected,
+				},
 			})
 			ref.Chart.MultiSelect = multiSelect
 		}
