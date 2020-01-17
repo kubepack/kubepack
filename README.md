@@ -25,12 +25,12 @@ $ go run cmd/bundle-generator/main.go --name=stash-bundle \
   --charts https://charts.appscode.com/stable/@stash@v0.9.0-rc.2 \
   --bundles https://kubepack-testcharts.storage.googleapis.com@stash-mongodb-bundle@v0.9.0-rc.2
 
-# $ go run cmd/bundle-generator/main.go --name=cert-manager-bundle --charts https://charts.jetstack.io@cert-manager@v0.12.0
+# $ go run cmd/bundle-generator/main.go --name=cert-manager-bundle --charts https://charts.jetstack.io@cert-manager@v0.12.0@@@cert-manager
 
 $ go run cmd/bundle-generator/main.go --name=kubedb-bundle \
   --charts https://charts.appscode.com/stable/@kubedb@v0.9.0-rc.2 \
   --charts https://charts.appscode.com/stable/@kubedb-catalog@v0.9.0-rc.2 \
-  --charts https://charts.jetstack.io@cert-manager@v0.12.0@optional \
+  --charts https://charts.jetstack.io@cert-manager@v0.12.0@optional@@cert-manager \
   --bundles https://kubepack-testcharts.storage.googleapis.com@stash-bundle@v0.9.0-rc.2
 
 $ ./hack/publish-testcharts.sh

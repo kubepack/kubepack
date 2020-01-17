@@ -71,3 +71,10 @@ func GetBundle(in *v1alpha1.BundleOption) (*chart.Chart, *v1alpha1.Bundle) {
 	}
 	return chrt, nil
 }
+
+func XorY(x, y string) string {
+	if x != "" {
+		return x
+	}
+	return y
+}

@@ -103,6 +103,8 @@ spec:
                     type: string
                 type: object
               type: array
+            namespace:
+              type: string
             owners:
               description: Owners is an optional list of the owners of the installed
                 application. The owners of the application should be contacted in
@@ -151,11 +153,18 @@ spec:
                         type: boolean
                       name:
                         type: string
+                      namespace:
+                        type: string
                       url:
                         type: string
                       versions:
                         items:
                           properties:
+                            parameters:
+                              description: 'RFC 6902 compatible json patch. ref: http://jsonpatch.com'
+                              type: object
+                              x-kubernetes-embedded-resource: true
+                              x-kubernetes-preserve-unknown-fields: true
                             resources:
                               properties:
                                 owned:

@@ -2,6 +2,7 @@ apiVersion: kubepack.dev/v1alpha1
 description: A Helm chart for Kubernetes
 kind: BundleView
 name: kubedb-bundle
+namespace: kube-system
 packages:
 - chart:
     description: KubeDB by AppsCode - Production ready databases on Kubernetes
@@ -17,6 +18,7 @@ packages:
     - email: kubedb@appscode.com
       name: appscode
     name: kubedb
+    namespace: kube-system
     url: https://charts.appscode.com/stable/
     versions:
     - selected: true
@@ -36,6 +38,7 @@ packages:
     - email: kubedb@appscode.com
       name: appscode
     name: kubedb-catalog
+    namespace: kube-system
     url: https://charts.appscode.com/stable/
     versions:
     - selected: true
@@ -60,6 +63,7 @@ packages:
     - email: james@jetstack.io
       name: munnerz
     name: cert-manager
+    namespace: cert-manager
     url: https://charts.jetstack.io
     versions:
     - selected: true
@@ -67,6 +71,7 @@ packages:
 - bundle:
     description: A Helm chart for Kubernetes
     name: stash-bundle
+    namespace: kube-system
     packages:
     - chart:
         description: Stash by AppsCode - Backup your Kubernetes Volumes
@@ -82,6 +87,7 @@ packages:
         - email: support@appscode.com
           name: appscode
         name: stash
+        namespace: kube-system
         url: https://charts.appscode.com/stable/
         versions:
         - selected: true
@@ -90,6 +96,7 @@ packages:
     - bundle:
         description: A Helm chart for Kubernetes
         name: stash-mongodb-bundle
+        namespace: kube-system
         packages:
         - chart:
             description: stash-mongodb - MongoDB database backup and restore plugin
@@ -108,6 +115,7 @@ packages:
               name: appscode
             multiSelect: true
             name: stash-mongodb
+            namespace: kube-system
             url: https://charts.appscode.com/stable/
             versions:
             - selected: true

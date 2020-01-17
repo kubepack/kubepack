@@ -64,8 +64,6 @@ type PackageView struct {
 
 	// Default chart values
 	Values *runtime.RawExtension `json:"values,omitempty" protobuf:"bytes,2,opt,name=values"`
-	// Parameters
-	Parameters *runtime.RawExtension `json:"parameters,omitempty" protobuf:"bytes,3,opt,name=parameters"`
 
 	// validation describes the schema used for validation and pruning of the custom resource.
 	// If present, this validation schema is used to validate all versions.

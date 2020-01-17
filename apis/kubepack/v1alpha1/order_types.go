@@ -50,14 +50,17 @@ type PackageSelection struct {
 }
 
 type ChartSelection struct {
-	ChartRef `json:",inline" protobuf:"bytes,1,opt,name=chartRef"`
-	Version  string `json:"version" protobuf:"bytes,2,opt,name=version"`
+	ChartRef  `json:",inline" protobuf:"bytes,1,opt,name=chartRef"`
+	Version   string `json:"version" protobuf:"bytes,2,opt,name=version"`
+	Namespace string `json:"namespace" protobuf:"bytes,3,opt,name=namespace"`
+
+	// RFC 6902 compatible json patch. ref: http://jsonpatch.com
 	// +optional
 	// +kubebuilder:validation:EmbeddedResource
 	// +kubebuilder:pruning:PreserveUnknownFields
-	Parameters *runtime.RawExtension `json:"parameters,omitempty" protobuf:"bytes,3,opt,name=parameters"`
-	Resources  *ResourceDefinitions  `json:"resources,omitempty" protobuf:"bytes,4,opt,name=resources"`
-	WaitFors   []WaitOptions         `json:"waitFors,omitempty" protobuf:"bytes,5,rep,name=waitFors"`
+	ValuesPatch *runtime.RawExtension `json:"valuesPatch,omitempty" protobuf:"bytes,4,opt,name=valuesPatch"`
+	Resources   *ResourceDefinitions  `json:"resources,omitempty" protobuf:"bytes,5,opt,name=resources"`
+	WaitFors    []WaitOptions         `json:"waitFors,omitempty" protobuf:"bytes,6,rep,name=waitFors"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

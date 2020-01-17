@@ -14,6 +14,7 @@ spec:
   maintainers:
   - email: kubedb@appscode.com
     name: appscode
+  namespace: kube-system
   packages:
   - chart:
       features:
@@ -35,6 +36,7 @@ spec:
       features:
       - A Helm chart for cert-manager
       name: cert-manager
+      namespace: cert-manager
       url: https://charts.jetstack.io
       versions:
       - version: v0.12.0

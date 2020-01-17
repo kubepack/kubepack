@@ -18,6 +18,7 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
 )
 
 const (
@@ -43,7 +44,8 @@ type Bundle struct {
 
 type BundleSpec struct {
 	PackageDescriptor `json:",inline" protobuf:"bytes,3,opt,name=packageDescriptor"`
-	Packages          []PackageRef `json:"packages" protobuf:"bytes,1,rep,name=packages"`
+	Namespace         string       `json:"namespace,omitempty" protobuf:"bytes,4,opt,name=namespace"`
+	Packages          []PackageRef `json:"packages" protobuf:"bytes,5,rep,name=packages"`
 }
 
 type PackageRef struct {
@@ -66,8 +68,9 @@ type SelectionMode string
 
 type ChartOption struct {
 	ChartRef    `json:",inline" protobuf:"bytes,1,opt,name=chartRef"`
-	Versions    []VersionDetail `json:"versions" protobuf:"bytes,2,rep,name=versions"`
-	MultiSelect bool            `json:"multiSelect,omitempty" protobuf:"varint,3,opt,name=multiSelect"`
+	Namespace   string          `json:"namespace,omitempty" protobuf:"bytes,2,opt,name=namespace"`
+	Versions    []VersionDetail `json:"versions" protobuf:"bytes,3,rep,name=versions"`
+	MultiSelect bool            `json:"multiSelect,omitempty" protobuf:"varint,4,opt,name=multiSelect"`
 }
 
 type ChartVersionRef struct {
@@ -88,12 +91,17 @@ type BundleOption struct {
 type VersionOption struct {
 	Version  string `json:"version" protobuf:"bytes,1,opt,name=version"`
 	Selected bool   `json:"selected,omitempty" protobuf:"varint,2,opt,name=selected"`
+	// RFC 6902 compatible json patch. ref: http://jsonpatch.com
+	// +optional
+	// +kubebuilder:validation:EmbeddedResource
+	// +kubebuilder:pruning:PreserveUnknownFields
+	ValuesPatch *runtime.RawExtension `json:"parameters,omitempty" protobuf:"bytes,3,opt,name=parameters"`
 }
 
 type VersionDetail struct {
 	VersionOption `json:",inline" protobuf:"bytes,1,opt,name=versionOption"`
-	Resources     *ResourceDefinitions `json:"resources,omitempty" protobuf:"bytes,2,opt,name=resources"`
-	WaitFors      []WaitOptions        `json:"waitFors,omitempty" protobuf:"bytes,3,rep,name=waitFors"`
+	Resources     *ResourceDefinitions `json:"resources,omitempty" protobuf:"bytes,3,opt,name=resources"`
+	WaitFors      []WaitOptions        `json:"waitFors,omitempty" protobuf:"bytes,4,rep,name=waitFors"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

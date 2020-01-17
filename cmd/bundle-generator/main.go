@@ -33,6 +33,7 @@ import (
 )
 
 var name = "stash-bundle"
+var namespace = "kube-system"
 var charts = []string{
 	"https://charts.appscode.com/stable/@stash@v0.9.0-rc.2",
 }
@@ -40,6 +41,7 @@ var bundles = []string{}
 
 func main() {
 	flag.StringVar(&name, "name", name, "Name of bundle, example: stash-bundle")
+	flag.StringVar(&namespace, "namespace", namespace, "Namespace where the bundle should be installed")
 	flag.StringArrayVar(&charts, "charts", charts, "Provide list charts in this bundle. format --charts url=chart_name@version --charts url=chart_name@version")
 	flag.StringArrayVar(&bundles, "bundles", bundles, "Provide list of bundles in this bundle. format --bundles url=bundle_chart_name@v1,v2 --bundles url=bundle_chart_name@v1,v2")
 	flag.Parse()
@@ -58,6 +60,10 @@ func main() {
 		},
 		ObjectMeta: metav1.ObjectMeta{
 			Name: fmt.Sprintf(`{{ include "%s.fullname" . }}`, name),
+			// TODO: set labels
+		},
+		Spec: v1alpha1.BundleSpec{
+			Namespace: namespace,
 		},
 	}
 
@@ -75,6 +81,10 @@ func main() {
 		if len(parts) >= 5 && strings.EqualFold(parts[4], "anyof") {
 			multiSelect = true
 		}
+		ns := ""
+		if len(parts) >= 6 {
+			ns = strings.TrimSpace(parts[5])
+		}
 
 		pkgChart, err := util.GetChart(chartName, primaryVersion, "myrepo", url)
 		if err != nil {
@@ -87,6 +97,7 @@ func main() {
 					Name:     pkgChart.Name(),
 					Features: []string{pkgChart.Metadata.Description},
 				},
+				Namespace: ns,
 			},
 			Required: required,
 		}

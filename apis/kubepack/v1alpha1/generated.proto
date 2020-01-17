@@ -115,7 +115,9 @@ message BundleOption {
 message BundleOptionView {
   optional PackageMeta packageMeta = 1;
 
-  repeated PackageCard packages = 2;
+  optional string namespace = 2;
+
+  repeated PackageCard packages = 3;
 }
 
 message BundleRef {
@@ -127,7 +129,9 @@ message BundleRef {
 message BundleSpec {
   optional PackageDescriptor packageDescriptor = 3;
 
-  repeated PackageRef packages = 1;
+  optional string namespace = 4;
+
+  repeated PackageRef packages = 5;
 }
 
 message BundleStatus {
@@ -147,17 +151,21 @@ message ChartCard {
 
   optional PackageDescriptor packageDescriptor = 2;
 
-  repeated VersionOption versions = 3;
+  optional string namespace = 3;
 
-  optional bool multiSelect = 4;
+  repeated VersionOption versions = 4;
+
+  optional bool multiSelect = 5;
 }
 
 message ChartOption {
   optional ChartRef chartRef = 1;
 
-  repeated VersionDetail versions = 2;
+  optional string namespace = 2;
 
-  optional bool multiSelect = 3;
+  repeated VersionDetail versions = 3;
+
+  optional bool multiSelect = 4;
 }
 
 message ChartRef {
@@ -175,14 +183,17 @@ message ChartSelection {
 
   optional string version = 2;
 
+  optional string namespace = 3;
+
+  // RFC 6902 compatible json patch. ref: http://jsonpatch.com
   // +optional
   // +kubebuilder:validation:EmbeddedResource
   // +kubebuilder:pruning:PreserveUnknownFields
-  optional k8s.io.apimachinery.pkg.runtime.RawExtension parameters = 3;
+  optional k8s.io.apimachinery.pkg.runtime.RawExtension valuesPatch = 4;
 
-  optional ResourceDefinitions resources = 4;
+  optional ResourceDefinitions resources = 5;
 
-  repeated WaitOptions waitFors = 5;
+  repeated WaitOptions waitFors = 6;
 }
 
 message ChartVersionRef {
@@ -498,9 +509,6 @@ message PackageView {
   // Default chart values
   optional k8s.io.apimachinery.pkg.runtime.RawExtension values = 2;
 
-  // Parameters
-  optional k8s.io.apimachinery.pkg.runtime.RawExtension parameters = 3;
-
   // validation describes the schema used for validation and pruning of the custom resource.
   // If present, this validation schema is used to validate all versions.
   // Top-level and per-version schemas are mutually exclusive.
@@ -561,15 +569,21 @@ message ServiceSelector {
 message VersionDetail {
   optional VersionOption versionOption = 1;
 
-  optional ResourceDefinitions resources = 2;
+  optional ResourceDefinitions resources = 3;
 
-  repeated WaitOptions waitFors = 3;
+  repeated WaitOptions waitFors = 4;
 }
 
 message VersionOption {
   optional string version = 1;
 
   optional bool selected = 2;
+
+  // RFC 6902 compatible json patch. ref: http://jsonpatch.com
+  // +optional
+  // +kubebuilder:validation:EmbeddedResource
+  // +kubebuilder:pruning:PreserveUnknownFields
+  optional k8s.io.apimachinery.pkg.runtime.RawExtension parameters = 3;
 }
 
 message WaitOptions {

@@ -30,14 +30,16 @@ import (
 )
 
 var (
-	url     = "https://kubepack-testcharts.storage.googleapis.com"
-	name    = "kubedb-bundle"
-	version = "v0.13.0-rc.2"
+	url       = "https://kubepack-testcharts.storage.googleapis.com"
+	name      = "kubedb-bundle"
+	namespace = "kube-system"
+	version   = "v0.13.0-rc.2"
 )
 
 func main() {
 	flag.StringVar(&url, "url", url, "Chart repo url")
 	flag.StringVar(&name, "name", name, "Name of bundle")
+	flag.StringVar(&namespace, "namespace", namespace, "Namespace where bundle will be installed")
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
@@ -80,6 +82,7 @@ func toBundleOptionView(in *v1alpha1.BundleOption) *v1alpha1.BundleOptionView {
 			Version:           chrt.Metadata.Version,
 			PackageDescriptor: util.GetPackageDescriptor(chrt),
 		},
+		Namespace: bundle.Spec.Namespace,
 	}
 
 	for _, pkg := range bundle.Spec.Packages {
@@ -107,6 +110,7 @@ func toBundleOptionView(in *v1alpha1.BundleOption) *v1alpha1.BundleOptionView {
 					},
 					PackageDescriptor: util.GetPackageDescriptor(pkgChart),
 					MultiSelect:       pkg.Chart.MultiSelect,
+					Namespace:         util.XorY(pkg.Chart.Namespace, bundle.Spec.Namespace),
 				},
 				Required: pkg.Required,
 			}

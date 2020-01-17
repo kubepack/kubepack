@@ -30,6 +30,6 @@ gsutil rsync -d -r testdata/archives gs://kubepack-testcharts
 gsutil acl ch -u AllUsers:R -r gs://kubepack-testcharts
 
 # https://cloud.google.com/storage/docs/gsutil/commands/setmeta
-gsutil setmeta -h "Cache-Control:public, max-age=10" gs://kubepack-testcharts/index.yaml
+gsutil setmeta -h "Cache-Control:public, max-age=60" gs://kubepack-testcharts/index.yaml
 
 popd

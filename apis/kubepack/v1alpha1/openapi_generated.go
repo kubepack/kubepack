@@ -15131,6 +15131,12 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleOptionView(ref common.Referenc
 							},
 						},
 					},
+					"namespace": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
 					"packages": {
 						SchemaProps: spec.SchemaProps{
 							Type: []string{"array"},
@@ -15254,6 +15260,12 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleSpec(ref common.ReferenceCallb
 									},
 								},
 							},
+						},
+					},
+					"namespace": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
 						},
 					},
 					"packages": {
@@ -15408,6 +15420,12 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleView(ref common.ReferenceCallb
 							},
 						},
 					},
+					"namespace": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
 					"packages": {
 						SchemaProps: spec.SchemaProps{
 							Type: []string{"array"},
@@ -15534,6 +15552,12 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartCard(ref common.ReferenceCallba
 							},
 						},
 					},
+					"namespace": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
 					"versions": {
 						SchemaProps: spec.SchemaProps{
 							Type: []string{"array"},
@@ -15591,6 +15615,12 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartOption(ref common.ReferenceCall
 									},
 								},
 							},
+						},
+					},
+					"namespace": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
 						},
 					},
 					"versions": {
@@ -15697,9 +15727,16 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartSelection(ref common.ReferenceC
 							Format: "",
 						},
 					},
-					"parameters": {
+					"namespace": {
 						SchemaProps: spec.SchemaProps{
-							Ref: ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"valuesPatch": {
+						SchemaProps: spec.SchemaProps{
+							Description: "RFC 6902 compatible json patch. ref: http://jsonpatch.com",
+							Ref:         ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
 						},
 					},
 					"resources": {
@@ -15720,7 +15757,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartSelection(ref common.ReferenceC
 						},
 					},
 				},
-				Required: []string{"url", "name", "version"},
+				Required: []string{"url", "name", "version", "namespace"},
 			},
 		},
 		Dependencies: []string{
@@ -17074,12 +17111,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageView(ref common.ReferenceCall
 							Ref:         ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
 						},
 					},
-					"parameters": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Parameters",
-							Ref:         ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
-						},
-					},
 					"validation": {
 						SchemaProps: spec.SchemaProps{
 							Description: "validation describes the schema used for validation and pruning of the custom resource. If present, this validation schema is used to validate all versions. Top-level and per-version schemas are mutually exclusive.",
@@ -17369,6 +17400,12 @@ func schema_kubepack_apis_kubepack_v1alpha1_VersionDetail(ref common.ReferenceCa
 							Format: "",
 						},
 					},
+					"parameters": {
+						SchemaProps: spec.SchemaProps{
+							Description: "RFC 6902 compatible json patch. ref: http://jsonpatch.com",
+							Ref:         ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
+						},
+					},
 					"resources": {
 						SchemaProps: spec.SchemaProps{
 							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions"),
@@ -17391,7 +17428,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_VersionDetail(ref common.ReferenceCa
 			},
 		},
 		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitOptions"},
+			"k8s.io/apimachinery/pkg/runtime.RawExtension", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitOptions"},
 	}
 }
 
@@ -17413,10 +17450,18 @@ func schema_kubepack_apis_kubepack_v1alpha1_VersionOption(ref common.ReferenceCa
 							Format: "",
 						},
 					},
+					"parameters": {
+						SchemaProps: spec.SchemaProps{
+							Description: "RFC 6902 compatible json patch. ref: http://jsonpatch.com",
+							Ref:         ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
+						},
+					},
 				},
 				Required: []string{"version"},
 			},
 		},
+		Dependencies: []string{
+			"k8s.io/apimachinery/pkg/runtime.RawExtension"},
 	}
 }
 

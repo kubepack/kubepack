@@ -95,10 +95,12 @@ func toPackageSelection(in *v1alpha1.BundleOptionView) []v1alpha1.PackageSelecti
 					crds, waitFors := FindChartData(bundle, pkg.Chart.ChartRef, v.Version)
 					selection := v1alpha1.PackageSelection{
 						Chart: &v1alpha1.ChartSelection{
-							ChartRef:  pkg.Chart.ChartRef,
-							Version:   v.Version,
-							Resources: crds,
-							WaitFors:  waitFors,
+							ChartRef:    pkg.Chart.ChartRef,
+							Version:     v.Version,
+							Namespace:   pkg.Chart.Namespace,
+							ValuesPatch: v.ValuesPatch,
+							Resources:   crds,
+							WaitFors:    waitFors,
 						},
 					}
 					out = append(out, selection)

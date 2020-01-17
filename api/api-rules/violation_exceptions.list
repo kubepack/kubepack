@@ -259,4 +259,5 @@ API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Com
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ImageSpec,Source
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ImageSpec,TotalSize
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,OrderSpec,Packages
+API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,VersionOption,ValuesPatch
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,WaitOptions,ForCondition

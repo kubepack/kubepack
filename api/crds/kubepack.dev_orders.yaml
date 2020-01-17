@@ -50,10 +50,8 @@ spec:
                         type: array
                       name:
                         type: string
-                      parameters:
-                        type: object
-                        x-kubernetes-embedded-resource: true
-                        x-kubernetes-preserve-unknown-fields: true
+                      namespace:
+                        type: string
                       resources:
                         properties:
                           owned:
@@ -120,6 +118,11 @@ spec:
                         type: object
                       url:
                         type: string
+                      valuesPatch:
+                        description: 'RFC 6902 compatible json patch. ref: http://jsonpatch.com'
+                        type: object
+                        x-kubernetes-embedded-resource: true
+                        x-kubernetes-preserve-unknown-fields: true
                       version:
                         type: string
                       waitFors:
@@ -207,6 +210,7 @@ spec:
                         type: array
                     required:
                     - name
+                    - namespace
                     - url
                     - version
                     type: object

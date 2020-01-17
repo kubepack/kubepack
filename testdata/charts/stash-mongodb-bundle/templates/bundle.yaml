@@ -15,6 +15,7 @@ spec:
   maintainers:
   - email: support@appscode.com
     name: appscode
+  namespace: kube-system
   packages:
   - chart:
       features:
