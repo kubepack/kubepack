@@ -20,6 +20,7 @@ require (
 	github.com/spf13/pflag v1.0.5
 	gocloud.dev v0.18.0
 	golang.org/x/net v0.0.0-20191028085509-fe3aa8a45271
+	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 	gomodules.xyz/version v0.1.0
 	helm.sh/helm/v3 v3.0.2
 	k8s.io/api v0.0.0-20191114100352-16d7abae0d2a

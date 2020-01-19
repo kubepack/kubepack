@@ -70,7 +70,7 @@ func main() {
 	}
 
 	for _, pkg := range bv.Spec.Packages {
-		if pkg.Chart != nil {
+		if pkg.Chart == nil {
 			continue
 		}
 		fmt.Println(pkg.Chart.ChartRef, pkg.Chart.Version)

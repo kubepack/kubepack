@@ -17,62 +17,107 @@ limitations under the License.
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"log"
-	"path/filepath"
+	"os"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+	"kubepack.dev/kubepack/pkg/util"
 
+	"github.com/google/uuid"
 	flag "github.com/spf13/pflag"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/tools/clientcmd"
-	"k8s.io/client-go/util/homedir"
 	"sigs.k8s.io/yaml"
 )
 
 var (
-	masterURL      = ""
-	kubeconfigPath = filepath.Join(homedir.HomeDir(), ".kube", "config")
-	file           = "artifacts/kubedb-bundle/order.yaml"
+	file = "artifacts/kubedb-bundle/order.yaml"
 )
 
 func main() {
-	flag.StringVar(&masterURL, "master", masterURL, "The address of the Kubernetes API server (overrides any value in kubeconfig)")
-	flag.StringVar(&kubeconfigPath, "kubeconfig", kubeconfigPath, "Path to kubeconfig file with authorization information (the master location is set by the master flag).")
 	flag.StringVar(&file, "file", file, "Path to Order file")
 	flag.Parse()
-
-	config, err := clientcmd.BuildConfigFromFlags(masterURL, kubeconfigPath)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	kc, err := kubernetes.NewForConfig(config)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	nodes, err := kc.CoreV1().Nodes().List(metav1.ListOptions{})
-	if err != nil {
-		log.Fatalln(err)
-	}
-	fmt.Println(nodes.Items)
 
 	data, err := ioutil.ReadFile(file)
 	if err != nil {
 		log.Fatal(err)
 	}
-	var bv v1alpha1.Order
-	err = yaml.Unmarshal(data, &bv)
+	var order v1alpha1.Order
+	err = yaml.Unmarshal(data, &order)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	for _, pkg := range bv.Spec.Packages {
-		if pkg.Chart != nil {
+	uid := uuid.New()
+
+	os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", util.GoogleApplicationCredentials)
+
+	var buf bytes.Buffer
+	_, err = buf.WriteString("#!/usr/bin/env bash\n")
+	if err != nil {
+		log.Fatal(err)
+	}
+	_, err = buf.WriteString("set -xeou pipefail\n\n")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, pkg := range order.Spec.Packages {
+		if pkg.Chart == nil {
 			continue
 		}
-		fmt.Println(pkg.Chart.ChartRef, pkg.Chart.Version)
+
+		err = util.NamespacePrinter{Namespace: pkg.Chart.Namespace, W: &buf}.Do()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		err = util.YAMLPrinter{
+			ChartRef:    pkg.Chart.ChartRef,
+			Version:     pkg.Chart.Version,
+			ReleaseName: pkg.Chart.ReleaseName,
+			Namespace:   pkg.Chart.Namespace,
+			KubeVersion: "v1.17.0",
+			ValuesPatch: pkg.Chart.ValuesPatch,
+			BucketURL:   util.YAMLBucket,
+			UID:         uid.String(),
+			PublicURL:   util.YAMLHost,
+			W:           &buf,
+		}.Do()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		err = util.WaitForPrinter{
+			Name:      pkg.Chart.ReleaseName,
+			Namespace: pkg.Chart.Namespace,
+			WaitFors:  pkg.Chart.WaitFors,
+			W:         &buf,
+		}.Do()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		if pkg.Chart.Resources != nil && len(pkg.Chart.Resources.Owned) > 0 {
+			err = util.CRDReadinessPrinter{
+				CRDs: pkg.Chart.Resources.Owned,
+				W:    &buf,
+			}.Do()
+		}
+
+		_, err = buf.WriteRune('\n')
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
+
+	err = util.Upload(uid.String(), "run.sh", buf.Bytes())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(buf.String())
+
+	fmt.Printf("curl -fsSL %s/%s/run.sh  | bash", util.YAMLHost, uid)
 }

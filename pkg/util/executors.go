@@ -52,6 +52,7 @@ import (
 	"kmodules.xyz/client-go/apiextensions/v1beta1"
 	"kmodules.xyz/lib-chart/helm"
 	"kmodules.xyz/resource-metadata/hub"
+	yamllib "sigs.k8s.io/yaml"
 )
 
 type DoFn func() error
@@ -61,12 +62,16 @@ type NamespacePrinter struct {
 	W         io.Writer
 }
 
-func (x *NamespacePrinter) Do() error {
-	_, err := x.W.Write([]byte("## create namespace if missing"))
+func (x NamespacePrinter) Do() error {
+	if x.Namespace == core.NamespaceDefault || x.Namespace == "kube-system" {
+		return nil
+	}
+
+	_, err := x.W.Write([]byte("## create namespace if missing\n"))
 	if err != nil {
 		return err
 	}
-	_, err = x.W.Write([]byte(fmt.Sprintf("kubectl create namespace %s || true", x.Namespace)))
+	_, err = x.W.Write([]byte(fmt.Sprintf("kubectl create namespace %s || true\n", x.Namespace)))
 	return err
 }
 
@@ -76,6 +81,10 @@ type NamespaceCreator struct {
 }
 
 func (x *NamespaceCreator) Do() error {
+	if x.Namespace == core.NamespaceDefault || x.Namespace == "kube-system" {
+		return nil
+	}
+
 	_, err := x.Client.CoreV1().Namespaces().Create(&core.Namespace{
 		ObjectMeta: v1.ObjectMeta{
 			Name: x.Namespace,
@@ -94,8 +103,12 @@ type WaitForPrinter struct {
 	W         io.Writer
 }
 
-func (x *WaitForPrinter) Do() error {
-	_, err := x.W.Write([]byte(fmt.Sprintf("## wait %s to be ready", x.Name)))
+func (x WaitForPrinter) Do() error {
+	if len(x.WaitFors) == 0 {
+		return nil
+	}
+
+	_, err := fmt.Fprintf(x.W, "## wait %s to be ready\n", x.Name)
 	if err != nil {
 		return err
 	}
@@ -143,7 +156,7 @@ func (x *WaitForPrinter) Do() error {
 			parts = append(parts, x.Namespace)
 		}
 
-		_, err = x.W.Write([]byte(strings.Join(parts, " ")))
+		_, err = fmt.Fprintln(x.W, strings.Join(parts, " "))
 		if err != nil {
 			return err
 		}
@@ -167,13 +180,14 @@ type CRDReadinessPrinter struct {
 	W    io.Writer
 }
 
-func (x *CRDReadinessPrinter) Do() error {
-	_, err := x.W.Write([]byte("## wait for crds to be ready"))
+func (x CRDReadinessPrinter) Do() error {
+	_, err := fmt.Fprintln(x.W, "## wait for crds to be ready")
 	if err != nil {
 		return err
 	}
+
 	for _, crd := range x.CRDs {
-		_, err := x.W.Write([]byte(fmt.Sprintf("kubectl wait --for=condition=Established crds/%s.%s --timeout=5m", crd.Name, crd.Group)))
+		_, err := fmt.Fprintf(x.W, "kubectl wait --for=condition=Established crds/%s.%s --timeout=5m\n", crd.Name, crd.Group)
 		if err != nil {
 			return err
 		}
@@ -224,7 +238,7 @@ type Helm3CommandPrinter struct {
 
 const indent = "  "
 
-func (x *Helm3CommandPrinter) Do() error {
+func (x Helm3CommandPrinter) Do() error {
 	chrt, err := GetChart(x.ChartRef.Name, x.Version, "myrepo", x.ChartRef.URL)
 	if err != nil {
 		return err
@@ -242,15 +256,19 @@ func (x *Helm3CommandPrinter) Do() error {
 		$ helm repo update
 		$ helm search repo appscode/voyager --version v12.0.0-rc.1
 	*/
-	_, err = buf.WriteString(fmt.Sprintf("helm repo add %s %s", reponame, x.ChartRef.URL))
+	_, err = fmt.Fprintf(&buf, "## add helm repository %s\n", reponame)
 	if err != nil {
 		return err
 	}
-	_, err = buf.WriteString("helm repo update")
+	_, err = fmt.Fprintf(&buf, "helm repo add %s %s\n", reponame, x.ChartRef.URL)
 	if err != nil {
 		return err
 	}
-	_, err = buf.WriteString(fmt.Sprintf("helm search repo %s/%s --version %s", reponame, x.ChartRef.Name, x.Version))
+	_, err = fmt.Fprintf(&buf, "helm repo update\n")
+	if err != nil {
+		return err
+	}
+	_, err = fmt.Fprintf(&buf, "helm search repo %s/%s --version %s\n", reponame, x.ChartRef.Name, x.Version)
 	if err != nil {
 		return err
 	}
@@ -260,12 +278,16 @@ func (x *Helm3CommandPrinter) Do() error {
 		  --namespace kube-system \
 		  --set cloudProvider=$provider
 	*/
-	_, err = buf.WriteString(fmt.Sprintf(`helm install %s %s/%s --version %s \`, x.ReleaseName, reponame, x.ChartRef.Name, x.Version))
+	_, err = fmt.Fprintf(&buf, "## install chart %s/%s\n", reponame, x.ChartRef.Name)
+	if err != nil {
+		return err
+	}
+	_, err = fmt.Fprintf(&buf, "helm install %s %s/%s --version %s \\\n", x.ReleaseName, reponame, x.ChartRef.Name, x.Version)
 	if err != nil {
 		return err
 	}
 	if x.Namespace != "" {
-		_, err = buf.WriteString(fmt.Sprintf(`%s--namespace %s \`, indent, x.Namespace))
+		_, err = fmt.Fprintf(&buf, "%s--namespace %s \\\n", indent, x.Namespace)
 		if err != nil {
 			return err
 		}
@@ -296,11 +318,19 @@ func (x *Helm3CommandPrinter) Do() error {
 		}
 		setValues := helm.GetChangedValues(chrt.Values, modified)
 		for _, v := range setValues {
-			buf.WriteString(fmt.Sprintf(`%s--set %s \`, indent, v))
+			_, err = fmt.Fprintf(&buf, `%s--set %s \\n`, indent, v)
+			if err != nil {
+				return err
+			}
 		}
 	}
+	buf.Truncate(buf.Len() - 3)
 
-	buf.Truncate(2)
+	_, err = buf.WriteRune('\n')
+	if err != nil {
+		return err
+	}
+
 	_, err = buf.WriteTo(x.W)
 	return err
 }
@@ -315,7 +345,7 @@ type Helm2CommandPrinter struct {
 	W io.Writer
 }
 
-func (x *Helm2CommandPrinter) Do() error {
+func (x Helm2CommandPrinter) Do() error {
 	chrt, err := GetChart(x.ChartRef.Name, x.Version, "myrepo", x.ChartRef.URL)
 	if err != nil {
 		return err
@@ -333,15 +363,19 @@ func (x *Helm2CommandPrinter) Do() error {
 		$ helm repo update
 		$ helm search repo appscode/voyager --version v12.0.0-rc.1
 	*/
-	_, err = buf.WriteString(fmt.Sprintf("helm repo add %s %s", reponame, x.ChartRef.URL))
+	_, err = fmt.Fprintf(&buf, "## add helm repository %s\n", reponame)
 	if err != nil {
 		return err
 	}
-	_, err = buf.WriteString("helm repo update")
+	_, err = fmt.Fprintf(&buf, "helm repo add %s %s\n", reponame, x.ChartRef.URL)
 	if err != nil {
 		return err
 	}
-	_, err = buf.WriteString(fmt.Sprintf("helm search %s/%s --version %s", reponame, x.ChartRef.Name, x.Version))
+	_, err = fmt.Fprintf(&buf, "helm repo update\n")
+	if err != nil {
+		return err
+	}
+	_, err = fmt.Fprintf(&buf, "helm search %s/%s --version %s\n", reponame, x.ChartRef.Name, x.Version)
 	if err != nil {
 		return err
 	}
@@ -351,12 +385,16 @@ func (x *Helm2CommandPrinter) Do() error {
 		  --namespace kube-system \
 		  --set cloudProvider=$provider
 	*/
-	_, err = buf.WriteString(fmt.Sprintf(`helm install %s/%s --name %s --version %s \`, reponame, x.ChartRef.Name, x.ReleaseName, x.Version))
+	_, err = fmt.Fprintf(&buf, "## install chart %s/%s\n", reponame, x.ChartRef.Name)
+	if err != nil {
+		return err
+	}
+	_, err = fmt.Fprintf(&buf, "helm install %s/%s --name %s --version %s \\\n", reponame, x.ChartRef.Name, x.ReleaseName, x.Version)
 	if err != nil {
 		return err
 	}
 	if x.Namespace != "" {
-		_, err = buf.WriteString(fmt.Sprintf(`%s--namespace %s \`, indent, x.Namespace))
+		_, err = fmt.Fprintf(&buf, "%s--namespace %s \\\n", indent, x.Namespace)
 		if err != nil {
 			return err
 		}
@@ -387,16 +425,25 @@ func (x *Helm2CommandPrinter) Do() error {
 		}
 		setValues := helm.GetChangedValues(chrt.Values, modified)
 		for _, v := range setValues {
-			buf.WriteString(fmt.Sprintf(`%s--set %s \`, indent, v))
+			_, err = fmt.Fprintf(&buf, `%s--set %s \\n`, indent, v)
+			if err != nil {
+				return err
+			}
 		}
 	}
+	buf.Truncate(buf.Len() - 3)
 
-	buf.Truncate(2)
+	_, err = buf.WriteRune('\n')
+	if err != nil {
+		return err
+	}
+
 	_, err = buf.WriteTo(x.W)
 	return err
 }
 
 const YAMLHost = "https://usercontent.kubepack.com"
+const YAMLBucket = "gs://kubepack-usercontent"
 
 type YAMLPrinter struct {
 	ChartRef    v1alpha1.ChartRef
@@ -407,22 +454,22 @@ type YAMLPrinter struct {
 	ValuesPatch *runtime.RawExtension
 
 	BucketURL string
+	UID       string
 	PublicURL string
+	W         io.Writer
 }
 
-func (x *YAMLPrinter) Do() error {
+func (x YAMLPrinter) Do() error {
 	ctx := context.Background()
 	bucket, err := blob.OpenBucket(ctx, x.BucketURL)
 	if err != nil {
 		return err
 	}
-	uid, err := uuid.NewRandom()
-	if err != nil {
-		return err
-	}
-	yamlDir := blob.PrefixedBucket(bucket, uid.String()+"/")
-	crdDir := blob.PrefixedBucket(yamlDir, "crds/")
-	defer crdDir.Close()
+
+	dirManifest := blob.PrefixedBucket(bucket, x.UID+"/manifests/")
+	defer dirManifest.Close()
+	dirCRD := blob.PrefixedBucket(bucket, x.UID+"/crds/")
+	defer dirCRD.Close()
 
 	var buf bytes.Buffer
 
@@ -512,18 +559,18 @@ func (x *YAMLPrinter) Do() error {
 	// Pre-install anything in the crd/ directory. We do this before Helm
 	// contacts the upstream server and builds the capabilities object.
 	if crds := chrt.CRDs(); len(crds) > 0 {
-		_, err = buf.WriteString("# install CRDs")
+		_, err = fmt.Fprintln(&buf, "# install CRDs")
 		if err != nil {
 			return err
 		}
 
 		for _, crd := range crds {
 			// Open the key "${releaseName}.yaml" for writing with the default options.
-			w, err := crdDir.NewWriter(ctx, crd.Name+".yaml", nil)
+			w, err := dirCRD.NewWriter(ctx, crd.Name+".yaml", nil)
 			if err != nil {
 				return err
 			}
-			_, writeErr := buf.WriteTo(w)
+			_, writeErr := w.Write(crd.Data)
 			// Always check the return value of Close when writing.
 			closeErr := w.Close()
 			if writeErr != nil {
@@ -533,7 +580,7 @@ func (x *YAMLPrinter) Do() error {
 				return closeErr
 			}
 
-			_, err = fmt.Fprintf(&buf, "kubectl apply -f %s\n", path.Join(x.PublicURL, uid.String(), "crds", crd.Name+".yaml"))
+			_, err = fmt.Fprintf(&buf, "kubectl apply -f %s\n", x.PublicURL+"/"+path.Join(x.UID, "crds", crd.Name+".yaml"))
 			if err != nil {
 				return err
 			}
@@ -573,10 +620,12 @@ func (x *YAMLPrinter) Do() error {
 		return err
 	}
 
+	var manifestDoc bytes.Buffer
+
 	for _, hook := range hooks {
 		if IsEvent(hook.Events, release.HookPreInstall) {
 			// TODO: Mark as pre-install hook
-			_, err = fmt.Fprintf(&buf, "---\n# Source: %s\n%s\n", hook.Path, hook.Manifest)
+			_, err = fmt.Fprintf(&manifestDoc, "---\n# Source: %s\n%s\n", hook.Path, hook.Manifest)
 			if err != nil {
 				return err
 			}
@@ -584,7 +633,7 @@ func (x *YAMLPrinter) Do() error {
 	}
 
 	for _, m := range manifests {
-		_, err = fmt.Fprintf(&buf, "---\n# Source: %s\n%s\n", m.Name, m.Content)
+		_, err = fmt.Fprintf(&manifestDoc, "---\n# Source: %s\n%s\n", m.Name, m.Content)
 		if err != nil {
 			return err
 		}
@@ -593,7 +642,7 @@ func (x *YAMLPrinter) Do() error {
 	for _, hook := range hooks {
 		if IsEvent(hook.Events, release.HookPostInstall) {
 			// TODO: Mark as post-install hook
-			_, err = fmt.Fprintf(&buf, "---\n# Source: %s\n%s\n", hook.Path, hook.Manifest)
+			_, err = fmt.Fprintf(&manifestDoc, "---\n# Source: %s\n%s\n", hook.Path, hook.Manifest)
 			if err != nil {
 				return err
 			}
@@ -602,11 +651,11 @@ func (x *YAMLPrinter) Do() error {
 
 	{
 		// Open the key "${releaseName}.yaml" for writing with the default options.
-		w, err := yamlDir.NewWriter(ctx, x.ReleaseName+".yaml", nil)
+		w, err := dirManifest.NewWriter(ctx, x.ReleaseName+".yaml", nil)
 		if err != nil {
 			return err
 		}
-		_, writeErr := buf.WriteTo(w)
+		_, writeErr := manifestDoc.WriteTo(w)
 		// Always check the return value of Close when writing.
 		closeErr := w.Close()
 		if writeErr != nil {
@@ -616,13 +665,14 @@ func (x *YAMLPrinter) Do() error {
 			return closeErr
 		}
 
-		_, err = fmt.Fprintf(&buf, "kubectl apply -f %s\n", path.Join(x.PublicURL, uid.String(), x.ReleaseName+".yaml"))
+		_, err = fmt.Fprintf(&buf, "kubectl apply -f %s\n", x.PublicURL+"/"+path.Join(x.UID, "manifests", x.ReleaseName+".yaml"))
 		if err != nil {
 			return err
 		}
 	}
 
-	return nil
+	_, err = buf.WriteTo(x.W)
+	return err
 }
 
 type ChartInstaller struct {
@@ -1102,6 +1152,9 @@ func ExtractResources(data []byte) ([]*unstructured.Unstructured, error) {
 	return resources, nil
 }
 
+// helm.sh/helm/v3/pkg/action/install.go
+const notesFileSuffix = "NOTES.txt"
+
 // renderResources renders the templates in a chart
 func renderResources(ch *chart.Chart, caps *chartutil.Capabilities, values chartutil.Values) ([]*release.Hook, []releaseutil.Manifest, error) {
 	hs := []*release.Hook{}
@@ -1116,6 +1169,12 @@ func renderResources(ch *chart.Chart, caps *chartutil.Capabilities, values chart
 	files, err := engine.Render(ch, values)
 	if err != nil {
 		return hs, nil, err
+	}
+
+	for k := range files {
+		if strings.HasSuffix(k, notesFileSuffix) {
+			delete(files, k)
+		}
 	}
 
 	// Sort hooks, manifests, and partials. Only hooks and manifests are returned,
@@ -1172,11 +1231,11 @@ func init() {
 				defer resp.Body.Close()
 				if data, err := ioutil.ReadAll(resp.Body); err == nil {
 					var hub v1alpha1.Hub
-					err = json.Unmarshal(data, &hub)
+					err = yamllib.Unmarshal(data, &hub)
 					if err == nil {
 						repoLock.Lock()
 						for _, repo := range hub.Repositories {
-							repos[repo.URL] = repo.Name
+							repos[strings.TrimSuffix(repo.URL, "/")] = repo.Name
 						}
 						repoLock.Unlock()
 					}
@@ -1193,7 +1252,7 @@ func init() {
 func getCachedRepoName(chartURL string) (string, bool) {
 	repoLock.Lock()
 	defer repoLock.Unlock()
-	name, ok := repos[chartURL]
+	name, ok := repos[strings.TrimSuffix(chartURL, "/")]
 	return name, ok
 }
 
@@ -1213,7 +1272,7 @@ func RepoName(chartURL string) (string, error) {
 	if ip == nil {
 		name = repoNameFromDomain(hostname)
 		repoLock.Lock()
-		repos[chartURL] = name
+		repos[strings.TrimSuffix(chartURL, "/")] = name
 		repoLock.Unlock()
 		return name, nil
 	} else if ipv4 := ip.To4(); ipv4 != nil {
@@ -1232,7 +1291,7 @@ func repoNameFromDomain(domain string) string {
 
 	publicSuffix, icann := publicsuffix.PublicSuffix(domain)
 	if icann {
-		domain = strings.TrimSuffix(domain, publicSuffix)
+		domain = strings.TrimSuffix(domain, "."+publicSuffix)
 	}
 	if strings.HasPrefix(domain, "charts.") {
 		domain = strings.TrimPrefix(domain, "charts.")
