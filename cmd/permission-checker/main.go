@@ -60,6 +60,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	getter := clientcmdutil.NewClientGetter(&kubeconfig)
 
 	config, err := cc.ClientConfig()
 	if err != nil {
@@ -98,7 +99,7 @@ func main() {
 			Verb:        "create",
 
 			Config:       config,
-			ClientGetter: clientcmdutil.NewClientGetter(&kubeconfig),
+			ClientGetter: getter,
 			Registry:     reg,
 		}
 		err = checker.Do()

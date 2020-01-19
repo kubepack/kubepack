@@ -183,10 +183,10 @@ type WaitForChecker struct {
 	Name      string
 	Namespace string
 	WaitFors  []v1alpha1.WaitOptions
-	W         io.Writer
 }
 
 func (x *WaitForChecker) Do() error {
+	// TODO: implement wait for
 	return nil
 }
 

@@ -25,7 +25,6 @@ import (
 	"kubepack.dev/kubepack/pkg/util"
 
 	flag "github.com/spf13/pflag"
-	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 	"k8s.io/client-go/util/homedir"
@@ -64,49 +63,17 @@ func main() {
 	}
 	getter := clientcmdutil.NewClientGetter(&kubeconfig)
 
-	config, err := cc.ClientConfig()
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	kc, err := kubernetes.NewForConfig(config)
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	for _, pkg := range order.Spec.Packages {
 		if pkg.Chart == nil {
 			continue
 		}
 
-		f1 := &util.NamespaceCreator{
-			Namespace: pkg.Chart.Namespace,
-			Client:    kc,
-		}
-		err = f1.Do()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		f2 := &util.ChartInstaller{
-			ChartRef:     pkg.Chart.ChartRef,
-			Version:      pkg.Chart.Version,
+		f1 := &util.ChartUninstaller{
 			ReleaseName:  pkg.Chart.ReleaseName,
 			Namespace:    pkg.Chart.Namespace,
-			ValuesPatch:  pkg.Chart.ValuesPatch,
 			ClientGetter: getter,
 		}
-		err = f2.Do()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		f3 := &util.WaitForChecker{
-			Name:      pkg.Chart.ReleaseName,
-			Namespace: pkg.Chart.Namespace,
-			WaitFors:  pkg.Chart.WaitFors,
-		}
-		err = f3.Do()
+		err = f1.Do()
 		if err != nil {
 			log.Fatal(err)
 		}
