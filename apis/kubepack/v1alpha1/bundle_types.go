@@ -58,24 +58,16 @@ type PackageRef struct {
 type ChartRef struct {
 	URL  string `json:"url" protobuf:"bytes,1,opt,name=url"`
 	Name string `json:"name" protobuf:"bytes,2,opt,name=name"`
-
-	// One sentence description of feature provided by this addon
-	// TODO: Move to a different struct instead of ref
-	Features []string `json:"features,omitempty" protobuf:"bytes,3,rep,name=features"`
 }
 
 type SelectionMode string
 
 type ChartOption struct {
 	ChartRef    `json:",inline" protobuf:"bytes,1,opt,name=chartRef"`
-	Namespace   string          `json:"namespace,omitempty" protobuf:"bytes,2,opt,name=namespace"`
-	Versions    []VersionDetail `json:"versions" protobuf:"bytes,3,rep,name=versions"`
-	MultiSelect bool            `json:"multiSelect,omitempty" protobuf:"varint,4,opt,name=multiSelect"`
-}
-
-type ChartVersionRef struct {
-	ChartRef `json:",inline" protobuf:"bytes,1,opt,name=chartRef"`
-	Versions []string `json:"versions" protobuf:"bytes,2,rep,name=versions"`
+	Features    []string        `json:"features,omitempty" protobuf:"bytes,2,rep,name=features"`
+	Namespace   string          `json:"namespace,omitempty" protobuf:"bytes,3,opt,name=namespace"`
+	Versions    []VersionDetail `json:"versions" protobuf:"bytes,4,rep,name=versions"`
+	MultiSelect bool            `json:"multiSelect,omitempty" protobuf:"varint,5,opt,name=multiSelect"`
 }
 
 type BundleRef struct {

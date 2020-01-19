@@ -143,9 +143,6 @@ spec:
                   chart:
                     properties:
                       features:
-                        description: 'One sentence description of feature provided
-                          by this addon TODO: Move to a different struct instead of
-                          ref'
                         items:
                           type: string
                         type: array
@@ -300,20 +297,15 @@ spec:
                                           "value". The requirements are ANDed.
                                         type: object
                                     type: object
-                                  name:
-                                    type: string
                                   resource:
                                     properties:
                                       group:
                                         type: string
-                                      resource:
-                                        type: string
-                                      version:
+                                      name:
                                         type: string
                                     required:
                                     - group
-                                    - resource
-                                    - version
+                                    - name
                                     type: object
                                   timeout:
                                     type: string
@@ -321,7 +313,6 @@ spec:
                                 - all
                                 - for
                                 - labels
-                                - name
                                 - resource
                                 - timeout
                                 type: object

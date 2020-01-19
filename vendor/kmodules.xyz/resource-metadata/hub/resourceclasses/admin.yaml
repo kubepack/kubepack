@@ -1,0 +1,43 @@
+apiVersion: meta.appscode.com/v1alpha1
+kind: ResourceClass
+metadata:
+  name: Admin
+spec:
+  weight: 10
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/resourceclasses/admin.svg
+    type: image/svg+xml
+  entries:
+  - name: Namespaces
+    required: true
+    type:
+      group: ""
+      resource: namespaces
+      version: v1
+  - name: Limit Ranges
+    type:
+      group: ""
+      resource: limitranges
+      version: v1
+  - name: Resource Quotas
+    type:
+      group: ""
+      resource: resourcequotas
+      version: v1
+  - name: Cluster Roles
+    required: true
+    type:
+      group: rbac.authorization.k8s.io
+      resource: clusterroles
+      version: v1
+  - name: Roles
+    required: true
+    type:
+      group: rbac.authorization.k8s.io
+      resource: roles
+      version: v1
+  - name: CSI Drivers
+    type:
+      group: storage.k8s.io
+      resource: csidrivers
+      version: v1beta1

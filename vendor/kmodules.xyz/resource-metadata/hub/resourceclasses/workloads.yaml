@@ -1,0 +1,58 @@
+apiVersion: meta.appscode.com/v1alpha1
+kind: ResourceClass
+metadata:
+  name: Workloads
+spec:
+  weight: 2
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/resourceclasses/workloads.svg
+    type: image/svg+xml
+  entries:
+  - name: Deployments
+    required: true
+    type:
+      group: apps
+      resource: deployments
+      version: v1
+  - name: Replica Sets
+    required: true
+    type:
+      group: apps
+      resource: replicasets
+      version: v1
+  - name: Replication Controllers
+    required: true
+    type:
+      group: ""
+      resource: replicationcontrollers
+      version: v1
+  - name: Stateful Sets
+    required: true
+    type:
+      group: apps
+      resource: statefulsets
+      version: v1
+  - name: Daemon Sets
+    required: true
+    type:
+      group: apps
+      resource: daemonsets
+      version: v1
+  - name: Jobs
+    required: true
+    type:
+      group: batch
+      resource: jobs
+      version: v1
+  - name: Cron Jobs
+    required: false
+    type:
+      group: batch
+      resource: cronjobs
+      version: v1beta1
+  - name: Pods
+    required: true
+    type:
+      group: ""
+      resource: pods
+      version: v1

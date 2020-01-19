@@ -151,31 +151,31 @@ message ChartCard {
 
   optional PackageDescriptor packageDescriptor = 2;
 
-  optional string namespace = 3;
+  repeated string features = 3;
 
-  repeated VersionOption versions = 4;
+  optional string namespace = 4;
 
-  optional bool multiSelect = 5;
+  repeated VersionOption versions = 5;
+
+  optional bool multiSelect = 6;
 }
 
 message ChartOption {
   optional ChartRef chartRef = 1;
 
-  optional string namespace = 2;
+  repeated string features = 2;
 
-  repeated VersionDetail versions = 3;
+  optional string namespace = 3;
 
-  optional bool multiSelect = 4;
+  repeated VersionDetail versions = 4;
+
+  optional bool multiSelect = 5;
 }
 
 message ChartRef {
   optional string url = 1;
 
   optional string name = 2;
-
-  // One sentence description of feature provided by this addon
-  // TODO: Move to a different struct instead of ref
-  repeated string features = 3;
 }
 
 message ChartSelection {
@@ -183,23 +183,19 @@ message ChartSelection {
 
   optional string version = 2;
 
-  optional string namespace = 3;
+  optional string releaseName = 3;
+
+  optional string namespace = 4;
 
   // RFC 6902 compatible json patch. ref: http://jsonpatch.com
   // +optional
   // +kubebuilder:validation:EmbeddedResource
   // +kubebuilder:pruning:PreserveUnknownFields
-  optional k8s.io.apimachinery.pkg.runtime.RawExtension valuesPatch = 4;
+  optional k8s.io.apimachinery.pkg.runtime.RawExtension valuesPatch = 5;
 
-  optional ResourceDefinitions resources = 5;
+  optional ResourceDefinitions resources = 6;
 
-  repeated WaitOptions waitFors = 6;
-}
-
-message ChartVersionRef {
-  optional ChartRef chartRef = 1;
-
-  repeated string versions = 2;
+  repeated WaitOptions waitFors = 7;
 }
 
 // ComponentList is a generic status holder for the top level resource
@@ -290,12 +286,22 @@ message Descriptor {
   optional string notes = 9;
 }
 
+message GroupResource {
+  optional string group = 1;
+
+  optional string name = 2;
+}
+
 message GroupVersionResource {
   optional string group = 1;
 
   optional string version = 2;
 
   optional string resource = 3;
+}
+
+message Hub {
+  repeated Repository repositories = 1;
 }
 
 // ImageSpec contains information about an image used as an icon.
@@ -403,6 +409,9 @@ message OrderList {
 
 message OrderSpec {
   repeated PackageSelection items = 1;
+
+  // KubeVersion is a SemVer constraint specifying the version of Kubernetes required.
+  optional string kubeVersion = 2;
 }
 
 message OrderStatus {
@@ -432,9 +441,11 @@ message PackList {
 message PackSpec {
   optional ChartRef chart = 1;
 
-  optional ResourceDefinitions resources = 2;
+  repeated string features = 2;
 
-  repeated WaitOptions waitFors = 3;
+  optional ResourceDefinitions resources = 3;
+
+  repeated WaitOptions waitFors = 4;
 }
 
 message PackStatus {
@@ -523,6 +534,14 @@ message Repo {
   optional string url = 2;
 }
 
+message Repository {
+  optional string name = 1;
+
+  optional string url = 2;
+
+  repeated ContactData maintainers = 3;
+}
+
 message ResourceDefinitions {
   repeated ResourceID owned = 1;
 
@@ -587,16 +606,14 @@ message VersionOption {
 }
 
 message WaitOptions {
-  optional GroupVersionResource resource = 1;
+  optional GroupResource resource = 1;
 
-  optional string name = 2;
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelector labels = 2;
 
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelector labels = 3;
+  optional bool all = 3;
 
-  optional bool all = 4;
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.Duration timeout = 4;
 
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.Duration timeout = 5;
-
-  optional string for = 6;
+  optional string for = 5;
 }
 

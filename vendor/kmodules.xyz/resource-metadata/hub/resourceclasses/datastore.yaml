@@ -1,0 +1,17 @@
+apiVersion: meta.appscode.com/v1alpha1
+kind: ResourceClass
+metadata:
+  name: Datastore
+spec:
+  apiGroup: kubedb.com
+  weight: 4
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/resourceclasses/datastore.svg
+    type: image/svg+xml
+  entries:
+  - name: Elasticsearch
+    required: true
+    type:
+      group: kubedb.com
+      resource: elasticsearches
+      version: v1alpha1

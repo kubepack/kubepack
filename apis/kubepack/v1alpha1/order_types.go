@@ -43,6 +43,8 @@ type Order struct {
 
 type OrderSpec struct {
 	Packages []PackageSelection `json:"items" protobuf:"bytes,1,rep,name=items"`
+	// KubeVersion is a SemVer constraint specifying the version of Kubernetes required.
+	KubeVersion string `json:"kubeVersion,omitempty" protobuf:"bytes,2,opt,name=kubeVersion"`
 }
 
 type PackageSelection struct {
@@ -50,17 +52,18 @@ type PackageSelection struct {
 }
 
 type ChartSelection struct {
-	ChartRef  `json:",inline" protobuf:"bytes,1,opt,name=chartRef"`
-	Version   string `json:"version" protobuf:"bytes,2,opt,name=version"`
-	Namespace string `json:"namespace" protobuf:"bytes,3,opt,name=namespace"`
+	ChartRef    `json:",inline" protobuf:"bytes,1,opt,name=chartRef"`
+	Version     string `json:"version" protobuf:"bytes,2,opt,name=version"`
+	ReleaseName string `json:"releaseName" protobuf:"bytes,3,opt,name=releaseName"`
+	Namespace   string `json:"namespace" protobuf:"bytes,4,opt,name=namespace"`
 
 	// RFC 6902 compatible json patch. ref: http://jsonpatch.com
 	// +optional
 	// +kubebuilder:validation:EmbeddedResource
 	// +kubebuilder:pruning:PreserveUnknownFields
-	ValuesPatch *runtime.RawExtension `json:"valuesPatch,omitempty" protobuf:"bytes,4,opt,name=valuesPatch"`
-	Resources   *ResourceDefinitions  `json:"resources,omitempty" protobuf:"bytes,5,opt,name=resources"`
-	WaitFors    []WaitOptions         `json:"waitFors,omitempty" protobuf:"bytes,6,rep,name=waitFors"`
+	ValuesPatch *runtime.RawExtension `json:"valuesPatch,omitempty" protobuf:"bytes,5,opt,name=valuesPatch"`
+	Resources   *ResourceDefinitions  `json:"resources,omitempty" protobuf:"bytes,6,opt,name=resources"`
+	WaitFors    []WaitOptions         `json:"waitFors,omitempty" protobuf:"bytes,7,rep,name=waitFors"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

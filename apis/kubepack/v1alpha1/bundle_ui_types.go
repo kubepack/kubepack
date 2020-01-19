@@ -42,7 +42,8 @@ type PackageCard struct {
 type ChartCard struct {
 	ChartRef          `json:",inline" protobuf:"bytes,1,opt,name=chartRef"`
 	PackageDescriptor `json:",inline" protobuf:"bytes,2,opt,name=packageDescriptor"`
-	Namespace         string          `json:"namespace,omitempty" protobuf:"bytes,3,opt,name=namespace"`
-	Versions          []VersionOption `json:"versions" protobuf:"bytes,4,rep,name=versions"`
-	MultiSelect       bool            `json:"multiSelect,omitempty" protobuf:"varint,5,opt,name=multiSelect"`
+	Features          []string        `json:"features,omitempty" protobuf:"bytes,3,rep,name=features"`
+	Namespace         string          `json:"namespace,omitempty" protobuf:"bytes,4,opt,name=namespace"`
+	Versions          []VersionOption `json:"versions" protobuf:"bytes,5,rep,name=versions"`
+	MultiSelect       bool            `json:"multiSelect,omitempty" protobuf:"varint,6,opt,name=multiSelect"`
 }

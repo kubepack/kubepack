@@ -1,0 +1,34 @@
+apiVersion: meta.appscode.com/v1alpha1
+kind: ResourceClass
+metadata:
+  name: "Service & Discovery"
+spec:
+  weight: 5
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/resourceclasses/networking.svg
+    type: image/svg+xml
+  entries:
+  - name: Services
+    required: true
+    type:
+      group: ""
+      resource: services
+      version: v1
+  - name: Ingresses
+    required: true
+    type:
+      group: networking.k8s.io
+      resource: ingresses
+      version: v1beta1
+  - name: Voyager Ingresses
+    required: true
+    type:
+      group: voyager.appscode.com
+      resource: ingresses
+      version: v1beta1
+  - name: Network Policies
+    required: true
+    type:
+      group: networking.k8s.io
+      resource: networkpolicies
+      version: v1

@@ -3,6 +3,7 @@ module kubepack.dev/kubepack
 go 1.12
 
 require (
+	github.com/Azure/go-autorest/autorest/azure/auth v0.4.2 // indirect
 	github.com/appscode/go v0.0.0-20191119085241-0887d8ec2ecc
 	github.com/coreos/prometheus-operator v0.34.0
 	github.com/evanphx/json-patch v4.5.0+incompatible
@@ -11,23 +12,29 @@ require (
 	github.com/gogo/protobuf v1.3.1
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/google/gofuzz v1.0.0
+	github.com/google/uuid v1.1.1
 	github.com/onsi/ginkgo v1.10.1
 	github.com/onsi/gomega v1.7.0
 	github.com/pkg/errors v0.8.1
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/pflag v1.0.5
-	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
+	gocloud.dev v0.18.0
+	golang.org/x/net v0.0.0-20191028085509-fe3aa8a45271
+	gomodules.xyz/version v0.1.0
 	helm.sh/helm/v3 v3.0.2
 	k8s.io/api v0.0.0-20191114100352-16d7abae0d2a
 	k8s.io/apiextensions-apiserver v0.0.0-20191114105449-027877536833
 	k8s.io/apimachinery v0.16.5-beta.1
 	k8s.io/apiserver v0.0.0-20191114103151-9ca1dc586682
+	k8s.io/cli-runtime v0.0.0-20191114110141-0a35778df828
 	k8s.io/client-go v12.0.0+incompatible
 	k8s.io/kube-openapi v0.0.0-20190918143330-0270cf2f1c1d
 	k8s.io/kubernetes v1.16.3
 	kmodules.xyz/client-go v0.0.0-20200108114229-70ba8841e60f
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20191129174258-81f984340891
 	kmodules.xyz/custom-resources v0.0.0-20191130062942-f41b54f62419
+	kmodules.xyz/lib-chart v0.0.0-20200117034103-46de78a037a7
+	kmodules.xyz/resource-metadata v0.3.4
 	kmodules.xyz/webhook-runtime v0.0.0-20191127075323-d4bfdee6974d
 	sigs.k8s.io/yaml v1.1.0
 )

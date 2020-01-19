@@ -1,9 +1,17 @@
+[![Go Report Card](https://goreportcard.com/badge/kubepack.dev/kubepack)](https://goreportcard.com/report/kubepack.dev/kubepack)
+[![Build Status](https://github.com/kubepack/kubepack/workflows/CI/badge.svg)](https://github.com/kubepack/kubepack/actions?workflow=CI)
+[![codecov](https://codecov.io/gh/kubepack/kubepack/branch/master/graph/badge.svg)](https://codecov.io/gh/kubepack/kubepack)
+[![Docker Pulls](https://img.shields.io/docker/pulls/kubepack/kubepack-operator.svg)](https://hub.docker.com/r/kubepack/kubepack-operator/)
+[![Slack](http://slack.kubernetes.io/badge.svg)](http://slack.kubernetes.io/#kubepack)
+[![Twitter](https://img.shields.io/twitter/follow/kubepack.svg?style=social&logo=twitter&label=Follow)](https://twitter.com/intent/follow?screen_name=Kubepack)
+
 # Kubepack
 
 ## Configure Helm
 
 ```console
 helm repo add kubepack-testcharts https://kubepack-testcharts.storage.googleapis.com
+helm repo add stable https://kubernetes-charts.storage.googleapis.com
 helm repo update
 ```
 

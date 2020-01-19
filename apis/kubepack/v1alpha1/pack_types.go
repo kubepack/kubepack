@@ -43,8 +43,9 @@ type Pack struct {
 
 type PackSpec struct {
 	Chart     *ChartRef            `json:"chart" protobuf:"bytes,1,opt,name=chart"`
-	Resources *ResourceDefinitions `json:"resources,omitempty" protobuf:"bytes,2,opt,name=resources"`
-	WaitFors  []WaitOptions        `json:"waitFors,omitempty" protobuf:"bytes,3,rep,name=waitFors"`
+	Features  []string             `json:"features,omitempty" protobuf:"bytes,2,rep,name=features"`
+	Resources *ResourceDefinitions `json:"resources,omitempty" protobuf:"bytes,3,opt,name=resources"`
+	WaitFors  []WaitOptions        `json:"waitFors,omitempty" protobuf:"bytes,4,rep,name=waitFors"`
 }
 
 type ResourceDefinitions struct {
@@ -55,18 +56,22 @@ type ResourceDefinitions struct {
 // wait ([-f FILENAME] | resource.group/resource.name | resource.group [(-l label | --all)]) [--for=delete|--for condition=available]
 
 type WaitOptions struct {
-	Resource     GroupVersionResource `json:"resource" protobuf:"bytes,1,opt,name=resource"`
-	Name         string               `json:"name" protobuf:"bytes,2,opt,name=name"`
-	Labels       metav1.LabelSelector `json:"labels" protobuf:"bytes,3,opt,name=labels"`
-	All          bool                 `json:"all" protobuf:"varint,4,opt,name=all"`
-	Timeout      metav1.Duration      `json:"timeout" protobuf:"bytes,5,opt,name=timeout"`
-	ForCondition string               `json:"for" protobuf:"bytes,6,opt,name=for"`
+	Resource     GroupResource         `json:"resource" protobuf:"bytes,1,opt,name=resource"`
+	Labels       *metav1.LabelSelector `json:"labels" protobuf:"bytes,2,opt,name=labels"`
+	All          bool                  `json:"all" protobuf:"varint,3,opt,name=all"`
+	Timeout      metav1.Duration       `json:"timeout" protobuf:"bytes,4,opt,name=timeout"`
+	ForCondition string                `json:"for" protobuf:"bytes,5,opt,name=for"`
 }
 
 type GroupVersionResource struct {
 	Group    string `json:"group" protobuf:"bytes,1,opt,name=group"`
 	Version  string `json:"version" protobuf:"bytes,2,opt,name=version"`
 	Resource string `json:"resource" protobuf:"bytes,3,opt,name=resource"`
+}
+
+type GroupResource struct {
+	Group string `json:"group" protobuf:"bytes,1,opt,name=group"`
+	Name  string `json:"name" protobuf:"bytes,2,opt,name=name"`
 }
 
 type PackStatus struct {

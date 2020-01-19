@@ -104,11 +104,11 @@ func toBundleOptionView(in *v1alpha1.BundleOption) *v1alpha1.BundleOptionView {
 			card := v1alpha1.PackageCard{
 				Chart: &v1alpha1.ChartCard{
 					ChartRef: v1alpha1.ChartRef{
-						Name:     pkg.Chart.Name,
-						URL:      pkg.Chart.URL,
-						Features: pkg.Chart.Features,
+						Name: pkg.Chart.Name,
+						URL:  pkg.Chart.URL,
 					},
 					PackageDescriptor: util.GetPackageDescriptor(pkgChart),
+					Features:          pkg.Chart.Features,
 					MultiSelect:       pkg.Chart.MultiSelect,
 					Namespace:         util.XorY(pkg.Chart.Namespace, bundle.Spec.Namespace),
 				},

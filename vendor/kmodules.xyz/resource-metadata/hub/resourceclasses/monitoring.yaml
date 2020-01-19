@@ -1,0 +1,17 @@
+apiVersion: meta.appscode.com/v1alpha1
+kind: ResourceClass
+metadata:
+  name: Monitoring
+spec:
+  apiGroup: monitoring.coreos.com
+  weight: 8
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/resourceclasses/monitoring.svg
+    type: image/svg+xml
+  entries:
+  - name: Prometheus
+    required: true
+    type:
+      group: monitoring.coreos.com
+      resource: prometheuses
+      version: v1

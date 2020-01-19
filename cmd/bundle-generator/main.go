@@ -93,10 +93,10 @@ func main() {
 		ref := v1alpha1.PackageRef{
 			Chart: &v1alpha1.ChartOption{
 				ChartRef: v1alpha1.ChartRef{
-					URL:      url,
-					Name:     pkgChart.Name(),
-					Features: []string{pkgChart.Metadata.Description},
+					URL:  url,
+					Name: pkgChart.Name(),
 				},
+				Features:  []string{pkgChart.Metadata.Description},
 				Namespace: ns,
 			},
 			Required: required,

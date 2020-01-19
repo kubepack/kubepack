@@ -1,0 +1,28 @@
+apiVersion: meta.appscode.com/v1alpha1
+kind: ResourceClass
+metadata:
+  name: Security
+spec:
+  weight: 9
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/resourceclasses/security.svg
+    type: image/svg+xml
+  entries:
+  - name: Policy
+    required: true
+    type:
+      group: policy
+      resource: podsecuritypolicies
+      version: v1beta1
+  - name: Certificates
+    required: true
+    type:
+      group: voyager.appscode.com
+      resource: certificates
+      version: v1beta1
+  - name: Service Accounts
+    required: true
+    type:
+      group: ""
+      resource: serviceaccounts
+      version: v1

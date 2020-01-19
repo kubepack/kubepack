@@ -1,0 +1,274 @@
+/*
+Copyright The Kmodules Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+package meta
+
+import (
+	"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+)
+
+type ReferenceType string
+
+// +genclient
+// +genclient:nonNamespaced
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+type ResourceDescriptor struct {
+	metav1.TypeMeta
+	metav1.ObjectMeta
+	Spec ResourceDescriptorSpec
+}
+
+type ResourceDescriptorSpec struct {
+	Resource    ResourceID
+	Columns     []ResourceColumnDefinition
+	SubTables   []ResourceSubTableDefinition
+	Connections []ResourceConnection
+	KeyTargets  []metav1.TypeMeta
+
+	Validation *apiextensions.CustomResourceValidation
+
+	Icons       []ImageSpec
+	Maintainers []ContactData
+	Links       []Link
+}
+
+type ResourceID struct {
+	Group   string
+	Version string
+	Name    string
+	Kind    string
+	Scope   ResourceScope
+}
+
+type ResourceScope string
+
+const (
+	ClusterScoped   ResourceScope = "Cluster"
+	NamespaceScoped ResourceScope = "Namespaced"
+)
+
+type ConnectionType string
+
+const (
+	MatchSelector ConnectionType = "MatchSelector"
+	MatchName     ConnectionType = "MatchName"
+	MatchRef      ConnectionType = "MatchRef"
+	OwnedBy       ConnectionType = "OwnedBy"
+)
+
+type ResourceConnection struct {
+	Target metav1.TypeMeta
+	ResourceConnectionSpec
+}
+
+type ResourceConnectionSpec struct {
+	Type            ConnectionType
+	NamespacePath   string
+	TargetLabelPath string
+	SelectorPath    string
+	Selector        *metav1.LabelSelector
+	NameTemplate    string
+	References      []string
+	Level           OwnershipLevel
+}
+
+type OwnershipLevel string
+
+const (
+	Reference  OwnershipLevel = ""
+	Owner      OwnershipLevel = "Owner"
+	Controller OwnershipLevel = "Controller"
+)
+
+// ResourceColumnDefinition specifies a column for server side printing.
+type ResourceColumnDefinition struct {
+	// name is a human readable name for the column.
+	Name string
+	// type is an OpenAPI type definition for this column.
+	// See https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for more.
+	Type string
+	// format is an optional OpenAPI type definition for this column. The 'name' format is applied
+	// to the primary identifier column to assist in clients identifying column is the resource name.
+	// See https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for more.
+	Format string
+	// description is a human readable description of this column.
+	Description string
+	// priority is an integer defining the relative importance of this column compared to others. Lower
+	// numbers are considered higher priority. Columns that may be omitted in limited space scenarios
+	// should be given a higher priority.
+	Priority int32
+	// JSONPath is a simple JSON path, i.e. without array notation.
+	JSONPath string
+}
+
+type ResourceSubTableDefinition struct {
+	Name      string
+	FieldPath string
+	Columns   []ResourceColumnDefinition
+}
+
+type ImageSpec struct {
+	Source string
+	Size   string
+	Type   string
+}
+
+type ContactData struct {
+	Name  string
+	URL   string
+	Email string
+}
+
+type Link struct {
+	Description string
+	URL         string
+}
+
+// +genclient:nonNamespaced
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// ResourceDescriptorList is a list of ResourceDescriptor objects.
+type ResourceDescriptorList struct {
+	metav1.TypeMeta
+	metav1.ListMeta
+	Items []ResourceDescriptor
+}
+
+type GroupVersionResource struct {
+	Group    string `json:"group"`
+	Version  string `json:"version"`
+	Resource string `json:"resource"`
+}
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+type PathFinder struct {
+	metav1.TypeMeta
+	Request  *PathRequest
+	Response *PathResponse
+}
+
+type PathRequest struct {
+	Source GroupVersionResource
+	Target *GroupVersionResource
+}
+
+type PathResponse struct {
+	Paths []Path
+}
+
+type Path struct {
+	Source   GroupVersionResource
+	Target   GroupVersionResource
+	Distance uint64
+	Edges    []Edge
+}
+
+type Edge struct {
+	Src        GroupVersionResource
+	Dst        GroupVersionResource
+	W          uint64
+	Connection ResourceConnectionSpec
+	Forward    bool
+}
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+type GraphFinder struct {
+	metav1.TypeMeta
+	Request  *GraphRequest
+	Response *GraphResponse
+}
+
+type GraphRequest struct {
+	Source GroupVersionResource
+}
+
+type GraphResponse struct {
+	Source      GroupVersionResource
+	Connections []Edge
+}
+
+type Table struct {
+	metav1.TypeMeta
+	metav1.ListMeta
+	ColumnDefinitions []ResourceColumnDefinition
+	Rows              []TableRow
+
+	SubTables []SubTable
+}
+
+type SubTable struct {
+	Name              string
+	ColumnDefinitions []ResourceColumnDefinition
+	Rows              []TableRow
+}
+
+type TableRow struct {
+	Cells []interface{}
+}
+
+type IncludeObjectPolicy string
+
+const (
+	IncludeNone     IncludeObjectPolicy = "None"
+	IncludeMetadata IncludeObjectPolicy = "Metadata"
+	IncludeObject   IncludeObjectPolicy = "Object"
+)
+
+type TableOptions struct {
+	metav1.TypeMeta
+	NoHeaders     bool
+	IncludeObject IncludeObjectPolicy
+}
+
+// +genclient
+// +genclient:nonNamespaced
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+type ResourceClass struct {
+	metav1.TypeMeta
+	metav1.ObjectMeta
+	Spec ResourceClassSpec
+}
+
+type ResourceClassSpec struct {
+	ResourceClassInfo
+	Weight  int
+	Entries []Entry
+}
+
+type ResourceClassInfo struct {
+	APIGroup    string
+	Icons       []ImageSpec
+	Maintainers []ContactData
+	Links       []Link
+}
+
+type Entry struct {
+	Name     string
+	Path     string
+	Type     *GroupVersionResource
+	Required bool
+	Icons    []ImageSpec
+}
+
+// +genclient:nonNamespaced
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+type ResourceClassList struct {
+	metav1.TypeMeta
+	metav1.ListMeta
+	Items []ResourceClass
+}
