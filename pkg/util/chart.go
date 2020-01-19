@@ -116,7 +116,7 @@ func setEnv(chartDir string) error {
 		return err
 	}
 
-	err = os.Setenv(xdg.ConfigHomeEnvVar, filepath.Join(chartDir, "config"))
+	err = os.Setenv(xdg.ConfigHomeEnvVar, filepath.Join(chartDir, "Config"))
 	if err != nil {
 		return err
 	}

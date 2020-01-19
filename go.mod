@@ -35,7 +35,7 @@ require (
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20191129174258-81f984340891
 	kmodules.xyz/custom-resources v0.0.0-20191130062942-f41b54f62419
 	kmodules.xyz/lib-chart v0.0.0-20200117034103-46de78a037a7
-	kmodules.xyz/resource-metadata v0.3.4
+	kmodules.xyz/resource-metadata v0.3.5-0.20200119221930-fbc6f8543679
 	kmodules.xyz/webhook-runtime v0.0.0-20191127075323-d4bfdee6974d
 	sigs.k8s.io/yaml v1.1.0
 )
@@ -61,6 +61,7 @@ replace (
 	github.com/prometheus/client_golang => github.com/prometheus/client_golang v0.9.2
 	google.golang.org/api => google.golang.org/api v0.6.1-0.20190607001116-5213b8090861
 	google.golang.org/grpc => github.com/gomodules/grpc-go v1.23.2-0.20191111130652-202dbf267fb7
+	helm.sh/helm/v3 => github.com/kubepack/helm/v3 v3.0.3-0.20200119202455-afb1ef54d569
 	k8s.io/api => k8s.io/api v0.0.0-20191114100352-16d7abae0d2a
 	k8s.io/apiextensions-apiserver => k8s.io/apiextensions-apiserver v0.0.0-20191114105449-027877536833
 	k8s.io/apimachinery => github.com/kmodules/apimachinery v0.0.0-20191119091232-0553326db082

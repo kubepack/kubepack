@@ -660,7 +660,7 @@ gopkg.in/natefinch/lumberjack.v2
 gopkg.in/tomb.v1
 # gopkg.in/yaml.v2 v2.2.4
 gopkg.in/yaml.v2
-# helm.sh/helm/v3 v3.0.2
+# helm.sh/helm/v3 v3.0.2 => github.com/kubepack/helm/v3 v3.0.3-0.20200119202455-afb1ef54d569
 helm.sh/helm/v3/internal/experimental/registry
 helm.sh/helm/v3/internal/ignore
 helm.sh/helm/v3/internal/resolver
@@ -927,6 +927,7 @@ k8s.io/cli-runtime/pkg/resource
 # k8s.io/client-go v12.0.0+incompatible => k8s.io/client-go v0.0.0-20191114101535-6c5935290e33
 k8s.io/client-go/discovery
 k8s.io/client-go/discovery/cached/disk
+k8s.io/client-go/discovery/cached/memory
 k8s.io/client-go/discovery/fake
 k8s.io/client-go/dynamic
 k8s.io/client-go/informers
@@ -1174,7 +1175,7 @@ kmodules.xyz/custom-resources/client/clientset/versioned/scheme
 kmodules.xyz/custom-resources/client/clientset/versioned/typed/appcatalog/v1alpha1
 # kmodules.xyz/lib-chart v0.0.0-20200117034103-46de78a037a7
 kmodules.xyz/lib-chart/helm
-# kmodules.xyz/resource-metadata v0.3.4
+# kmodules.xyz/resource-metadata v0.3.5-0.20200119221930-fbc6f8543679
 kmodules.xyz/resource-metadata/api/crds
 kmodules.xyz/resource-metadata/apis/meta
 kmodules.xyz/resource-metadata/apis/meta/v1alpha1

@@ -68,12 +68,13 @@ func main() {
 			continue
 		}
 
-		err = util.NamespacePrinter{Namespace: pkg.Chart.Namespace, W: &buf}.Do()
+		f1 := &util.NamespacePrinter{Namespace: pkg.Chart.Namespace, W: &buf}
+		err = f1.Do()
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		err = util.YAMLPrinter{
+		f2 := &util.YAMLPrinter{
 			ChartRef:    pkg.Chart.ChartRef,
 			Version:     pkg.Chart.Version,
 			ReleaseName: pkg.Chart.ReleaseName,
@@ -84,26 +85,29 @@ func main() {
 			UID:         uid.String(),
 			PublicURL:   util.YAMLHost,
 			W:           &buf,
-		}.Do()
+		}
+		err = f2.Do()
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		err = util.WaitForPrinter{
+		f3 := &util.WaitForPrinter{
 			Name:      pkg.Chart.ReleaseName,
 			Namespace: pkg.Chart.Namespace,
 			WaitFors:  pkg.Chart.WaitFors,
 			W:         &buf,
-		}.Do()
+		}
+		err = f3.Do()
 		if err != nil {
 			log.Fatal(err)
 		}
 
 		if pkg.Chart.Resources != nil && len(pkg.Chart.Resources.Owned) > 0 {
-			err = util.CRDReadinessPrinter{
+			f3 := &util.CRDReadinessPrinter{
 				CRDs: pkg.Chart.Resources.Owned,
 				W:    &buf,
-			}.Do()
+			}
+			err = f3.Do()
 		}
 
 		_, err = buf.WriteRune('\n')

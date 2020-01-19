@@ -36,7 +36,6 @@ import (
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 
 	jsonpatch "github.com/evanphx/json-patch"
-	"github.com/google/uuid"
 	"github.com/pkg/errors"
 	"gocloud.dev/blob"
 	_ "gocloud.dev/blob/azureblob"
@@ -78,7 +77,7 @@ type NamespacePrinter struct {
 	W         io.Writer
 }
 
-func (x NamespacePrinter) Do() error {
+func (x *NamespacePrinter) Do() error {
 	if x.Namespace == core.NamespaceDefault || x.Namespace == "kube-system" {
 		return nil
 	}
@@ -119,7 +118,7 @@ type WaitForPrinter struct {
 	W         io.Writer
 }
 
-func (x WaitForPrinter) Do() error {
+func (x *WaitForPrinter) Do() error {
 	if len(x.WaitFors) == 0 {
 		return nil
 	}
@@ -196,7 +195,7 @@ type CRDReadinessPrinter struct {
 	W    io.Writer
 }
 
-func (x CRDReadinessPrinter) Do() error {
+func (x *CRDReadinessPrinter) Do() error {
 	_, err := fmt.Fprintln(x.W, "## wait for crds to be ready")
 	if err != nil {
 		return err
@@ -254,7 +253,7 @@ type Helm3CommandPrinter struct {
 
 const indent = "  "
 
-func (x Helm3CommandPrinter) Do() error {
+func (x *Helm3CommandPrinter) Do() error {
 	chrt, err := GetChart(x.ChartRef.Name, x.Version, "myrepo", x.ChartRef.URL)
 	if err != nil {
 		return err
@@ -361,7 +360,7 @@ type Helm2CommandPrinter struct {
 	W io.Writer
 }
 
-func (x Helm2CommandPrinter) Do() error {
+func (x *Helm2CommandPrinter) Do() error {
 	chrt, err := GetChart(x.ChartRef.Name, x.Version, "myrepo", x.ChartRef.URL)
 	if err != nil {
 		return err
@@ -475,7 +474,7 @@ type YAMLPrinter struct {
 	W         io.Writer
 }
 
-func (x YAMLPrinter) Do() error {
+func (x *YAMLPrinter) Do() error {
 	ctx := context.Background()
 	bucket, err := blob.OpenBucket(ctx, x.BucketURL)
 	if err != nil {
@@ -698,7 +697,7 @@ type ChartInstaller struct {
 	Namespace   string
 	ValuesPatch *runtime.RawExtension
 
-	getter genericclioptions.RESTClientGetter
+	ClientGetter genericclioptions.RESTClientGetter
 }
 
 func (x *ChartInstaller) Do() error {
@@ -709,7 +708,7 @@ func (x *ChartInstaller) Do() error {
 
 	cfg := new(action.Configuration)
 	// TODO: Use secret driver for which namespace?
-	err = cfg.Init(x.getter, x.Namespace, "secret", debug)
+	err = cfg.Init(x.ClientGetter, x.Namespace, "secret", debug)
 	if err != nil {
 		return err
 	}
@@ -804,13 +803,13 @@ type ChartUninstaller struct {
 	ReleaseName string
 	Namespace   string
 
-	getter genericclioptions.RESTClientGetter
+	ClientGetter genericclioptions.RESTClientGetter
 }
 
 func (x *ChartUninstaller) Do() error {
 	cfg := new(action.Configuration)
 	// TODO: Use secret driver for which namespace?
-	err := cfg.Init(x.getter, x.Namespace, "secret", debug)
+	err := cfg.Init(x.ClientGetter, x.Namespace, "secret", debug)
 	if err != nil {
 		return err
 	}
@@ -839,14 +838,14 @@ type PermissionChecker struct {
 	Version     string
 	ReleaseName string
 	Namespace   string
-	KubeVersion string
-	ValuesPatch *runtime.RawExtension
+	Verb        string
 
-	config *rest.Config
-	attrs  map[authorization.ResourceAttributes]*ResourcePermission
+	Config       *rest.Config
+	ClientGetter genericclioptions.RESTClientGetter
+	Registry     *hub.Registry
 
-	verb string
-	m    sync.Mutex
+	attrs map[authorization.ResourceAttributes]*ResourcePermission
+	m     sync.Mutex
 }
 
 type ResourcePermission struct {
@@ -855,12 +854,8 @@ type ResourcePermission struct {
 }
 
 func (x *PermissionChecker) Do() error {
-	var buf bytes.Buffer
-
-	reg := hub.NewRegistry(uuid.New().String(), hub.KnownResources)
-	err := reg.DiscoverResources(x.config)
-	if err != nil {
-		return err
+	if x.attrs == nil {
+		x.attrs = make(map[authorization.ResourceAttributes]*ResourcePermission)
 	}
 
 	chrt, err := GetChart(x.ChartRef.Name, x.Version, "myrepo", x.ChartRef.URL)
@@ -869,6 +864,11 @@ func (x *PermissionChecker) Do() error {
 	}
 
 	cfg := new(action.Configuration)
+	err = cfg.Init(x.ClientGetter, x.Namespace, "memory", debug)
+	if err != nil {
+		return err
+	}
+
 	client := action.NewInstall(cfg)
 	var extraAPIs []string
 
@@ -885,13 +885,13 @@ func (x *PermissionChecker) Do() error {
 		return err
 	}
 
-	if chrt.Metadata.Deprecated {
-		_, err = fmt.Fprintln(&buf, "# WARNING: This chart is deprecated")
-		if err != nil {
-			return err
-		}
-
-	}
+	//if chrt.Metadata.Deprecated {
+	//	_, err = fmt.Fprintln(&buf, "# WARNING: This chart is deprecated")
+	//	if err != nil {
+	//		return err
+	//	}
+	//
+	//}
 
 	/*
 		// cp, err := client.ChartPathOptions.LocateChart(chart, settings)
@@ -922,40 +922,35 @@ func (x *PermissionChecker) Do() error {
 	*/
 
 	vals := chrt.Values
-	if x.ValuesPatch != nil {
-		values, err := json.Marshal(chrt.Values)
-		if err != nil {
-			return err
-		}
-
-		patchData, err := json.Marshal(x.ValuesPatch)
-		if err != nil {
-			return err
-		}
-		patch, err := jsonpatch.DecodePatch(patchData)
-		if err != nil {
-			return err
-		}
-		modifiedValues, err := patch.Apply(values)
-		if err != nil {
-			return err
-		}
-		err = json.Unmarshal(modifiedValues, &vals)
-		if err != nil {
-			return err
-		}
-	}
+	//if x.ValuesPatch != nil {
+	//	values, err := json.Marshal(chrt.Values)
+	//	if err != nil {
+	//		return err
+	//	}
+	//
+	//	patchData, err := json.Marshal(x.ValuesPatch)
+	//	if err != nil {
+	//		return err
+	//	}
+	//	patch, err := jsonpatch.DecodePatch(patchData)
+	//	if err != nil {
+	//		return err
+	//	}
+	//	modifiedValues, err := patch.Apply(values)
+	//	if err != nil {
+	//		return err
+	//	}
+	//	err = json.Unmarshal(modifiedValues, &vals)
+	//	if err != nil {
+	//		return err
+	//	}
+	//}
 
 	// Pre-install anything in the crd/ directory. We do this before Helm
 	// contacts the upstream server and builds the capabilities object.
 	if crds := chrt.CRDs(); len(crds) > 0 {
-		_, err = buf.WriteString("# install CRDs")
-		if err != nil {
-			return err
-		}
-
 		attr := authorization.ResourceAttributes{
-			Verb:     x.verb,
+			Verb:     x.Verb,
 			Group:    "apiextensions.k8s.io",
 			Version:  "v1beta1",
 			Resource: "CustomResourceDefinition",
@@ -979,18 +974,9 @@ func (x *PermissionChecker) Do() error {
 		return err
 	}
 
-	caps := chartutil.DefaultCapabilities
-	if x.KubeVersion != "" {
-		info, err := version.NewSemver(x.KubeVersion)
-		if err != nil {
-			return err
-		}
-		info = info.ToMutator().ResetPrerelease().ResetMetadata().Done()
-		caps.KubeVersion = chartutil.KubeVersion{
-			Version: info.String(),
-			Major:   strconv.FormatInt(info.Major(), 10),
-			Minor:   strconv.FormatInt(info.Minor(), 10),
-		}
+	caps, err := cfg.GetCapabilities()
+	if err != nil {
+		return err
 	}
 	options := chartutil.ReleaseOptions{
 		Name:      x.ReleaseName,
@@ -1010,7 +996,7 @@ func (x *PermissionChecker) Do() error {
 
 	for _, hook := range hooks {
 		if IsEvent(hook.Events, release.HookPreInstall) {
-			err = ExtractResourceAttributes([]byte(hook.Manifest), x.verb, reg, x.attrs)
+			err = ExtractResourceAttributes([]byte(hook.Manifest), x.Verb, x.Registry, x.attrs)
 			if err != nil {
 				return err
 			}
@@ -1018,7 +1004,7 @@ func (x *PermissionChecker) Do() error {
 	}
 
 	for _, m := range manifests {
-		err = ExtractResourceAttributes([]byte(m.Content), x.verb, reg, x.attrs)
+		err = ExtractResourceAttributes([]byte(m.Content), x.Verb, x.Registry, x.attrs)
 		if err != nil {
 			return err
 		}
@@ -1026,14 +1012,14 @@ func (x *PermissionChecker) Do() error {
 
 	for _, hook := range hooks {
 		if IsEvent(hook.Events, release.HookPostInstall) {
-			err = ExtractResourceAttributes([]byte(hook.Manifest), x.verb, reg, x.attrs)
+			err = ExtractResourceAttributes([]byte(hook.Manifest), x.Verb, x.Registry, x.attrs)
 			if err != nil {
 				return err
 			}
 		}
 	}
 
-	ac, err := authv1client.NewForConfig(x.config)
+	ac, err := authv1client.NewForConfig(x.Config)
 	if err != nil {
 		return err
 	}
@@ -1061,6 +1047,15 @@ func (x *PermissionChecker) Do() error {
 	wg.Wait()
 
 	return nil
+}
+
+func (x *PermissionChecker) Result() (map[authorization.ResourceAttributes]*ResourcePermission, bool) {
+	for _, v := range x.attrs {
+		if !v.Allowed {
+			return x.attrs, false
+		}
+	}
+	return x.attrs, true
 }
 
 func ExtractResourceAttributes(data []byte, verb string, reg *hub.Registry, attrs map[authorization.ResourceAttributes]*ResourcePermission) error {
