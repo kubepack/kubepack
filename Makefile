@@ -26,7 +26,7 @@ CODE_GENERATOR_IMAGE ?= appscode/gengo:release-1.16
 API_GROUPS           ?= kubepack:v1alpha1
 
 # Where to push the docker image.
-REGISTRY ?= searchlight
+REGISTRY ?= kubepack
 
 # This version-strategy uses git tags to set the version string
 git_branch       := $(shell git rev-parse --abbrev-ref HEAD)
@@ -216,8 +216,8 @@ patch-crd-%: $(BUILD_DIRS)
 .PHONY: label-crds
 label-crds: $(BUILD_DIRS)
 	@for f in api/crds/*.yaml; do \
-		echo "applying app=searchlight label to $$f"; \
-		kubectl label --overwrite -f $$f --local=true -o yaml app=searchlight > bin/crd.yaml; \
+		echo "applying app=kubepack label to $$f"; \
+		kubectl label --overwrite -f $$f --local=true -o yaml app=kubepack > bin/crd.yaml; \
 		mv bin/crd.yaml $$f; \
 	done
 
@@ -485,7 +485,7 @@ uninstall:
 
 .PHONY: purge
 purge: uninstall
-	kubectl delete crds -l app=searchlight
+	kubectl delete crds -l app=kubepack
 
 .PHONY: dev
 dev: gen fmt push
