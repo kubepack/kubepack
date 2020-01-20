@@ -470,7 +470,7 @@ endif
 .PHONY: install
 install:
 	@cd ../installer; \
-	helm install kubepack charts/kubepack \
+	helm install kubepack-operator charts/kubepack-operator \
 		--namespace=kube-system \
 		--set operator.registry=$(REGISTRY) \
 		--set operator.tag=$(TAG) \
@@ -481,7 +481,7 @@ install:
 .PHONY: uninstall
 uninstall:
 	@cd ../installer; \
-	helm uninstall kubepack --namespace=kube-system || true
+	helm uninstall kubepack-operator --namespace=kube-system || true
 
 .PHONY: purge
 purge: uninstall
