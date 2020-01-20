@@ -102,9 +102,9 @@ func main() {
 		}
 
 		f3 := &util.WaitForChecker{
-			Name:      pkg.Chart.ReleaseName,
-			Namespace: pkg.Chart.Namespace,
-			WaitFors:  pkg.Chart.WaitFors,
+			Namespace:    pkg.Chart.Namespace,
+			WaitFors:     pkg.Chart.WaitFors,
+			ClientGetter: getter,
 		}
 		err = f3.Do()
 		if err != nil {

@@ -45,7 +45,7 @@ type PackSpec struct {
 	Chart     *ChartRef            `json:"chart" protobuf:"bytes,1,opt,name=chart"`
 	Features  []string             `json:"features,omitempty" protobuf:"bytes,2,rep,name=features"`
 	Resources *ResourceDefinitions `json:"resources,omitempty" protobuf:"bytes,3,opt,name=resources"`
-	WaitFors  []WaitOptions        `json:"waitFors,omitempty" protobuf:"bytes,4,rep,name=waitFors"`
+	WaitFors  []WaitFlags          `json:"waitFors,omitempty" protobuf:"bytes,4,rep,name=waitFors"`
 }
 
 type ResourceDefinitions struct {
@@ -55,7 +55,7 @@ type ResourceDefinitions struct {
 
 // wait ([-f FILENAME] | resource.group/resource.name | resource.group [(-l label | --all)]) [--for=delete|--for condition=available]
 
-type WaitOptions struct {
+type WaitFlags struct {
 	Resource     GroupResource         `json:"resource" protobuf:"bytes,1,opt,name=resource"`
 	Labels       *metav1.LabelSelector `json:"labels" protobuf:"bytes,2,opt,name=labels"`
 	All          bool                  `json:"all" protobuf:"varint,3,opt,name=all"`

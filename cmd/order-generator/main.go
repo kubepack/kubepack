@@ -140,7 +140,7 @@ func toPackageSelection(in *v1alpha1.BundleOptionView) []v1alpha1.PackageSelecti
 	return out
 }
 
-func FindChartData(bundle *v1alpha1.Bundle, chrtRef v1alpha1.ChartRef, chrtVersion string) (*v1alpha1.ResourceDefinitions, []v1alpha1.WaitOptions) {
+func FindChartData(bundle *v1alpha1.Bundle, chrtRef v1alpha1.ChartRef, chrtVersion string) (*v1alpha1.ResourceDefinitions, []v1alpha1.WaitFlags) {
 	for _, pkg := range bundle.Spec.Packages {
 		if pkg.Chart != nil &&
 			pkg.Chart.URL == chrtRef.URL &&

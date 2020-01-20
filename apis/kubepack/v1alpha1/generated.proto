@@ -218,7 +218,7 @@ message ChartSelection {
 
   optional ResourceDefinitions resources = 6;
 
-  repeated WaitOptions waitFors = 7;
+  repeated WaitFlags waitFors = 7;
 }
 
 // ComponentList is a generic status holder for the top level resource
@@ -468,7 +468,7 @@ message PackSpec {
 
   optional ResourceDefinitions resources = 3;
 
-  repeated WaitOptions waitFors = 4;
+  repeated WaitFlags waitFors = 4;
 }
 
 message PackStatus {
@@ -606,7 +606,7 @@ message VersionDetail {
 
   optional ResourceDefinitions resources = 3;
 
-  repeated WaitOptions waitFors = 4;
+  repeated WaitFlags waitFors = 4;
 }
 
 message VersionOption {
@@ -621,7 +621,7 @@ message VersionOption {
   optional k8s.io.apimachinery.pkg.runtime.RawExtension parameters = 3;
 }
 
-message WaitOptions {
+message WaitFlags {
   optional GroupResource resource = 1;
 
   optional k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelector labels = 2;

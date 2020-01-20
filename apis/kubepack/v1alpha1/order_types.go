@@ -67,7 +67,7 @@ type ChartSelection struct {
 	// +kubebuilder:pruning:PreserveUnknownFields
 	ValuesPatch *runtime.RawExtension `json:"valuesPatch,omitempty" protobuf:"bytes,5,opt,name=valuesPatch"`
 	Resources   *ResourceDefinitions  `json:"resources,omitempty" protobuf:"bytes,6,opt,name=resources"`
-	WaitFors    []WaitOptions         `json:"waitFors,omitempty" protobuf:"bytes,7,rep,name=waitFors"`
+	WaitFors    []WaitFlags           `json:"waitFors,omitempty" protobuf:"bytes,7,rep,name=waitFors"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

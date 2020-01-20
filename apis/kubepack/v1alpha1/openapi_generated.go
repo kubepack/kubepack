@@ -368,7 +368,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ServiceSelector":                                    schema_kubepack_apis_kubepack_v1alpha1_ServiceSelector(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.VersionDetail":                                      schema_kubepack_apis_kubepack_v1alpha1_VersionDetail(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.VersionOption":                                      schema_kubepack_apis_kubepack_v1alpha1_VersionOption(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitOptions":                                        schema_kubepack_apis_kubepack_v1alpha1_WaitOptions(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitFlags":                                          schema_kubepack_apis_kubepack_v1alpha1_WaitFlags(ref),
 	}
 }
 
@@ -15804,7 +15804,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartSelection(ref common.ReferenceC
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitOptions"),
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitFlags"),
 									},
 								},
 							},
@@ -15815,7 +15815,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartSelection(ref common.ReferenceC
 			},
 		},
 		Dependencies: []string{
-			"k8s.io/apimachinery/pkg/runtime.RawExtension", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRepoRef", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitOptions"},
+			"k8s.io/apimachinery/pkg/runtime.RawExtension", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRepoRef", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitFlags"},
 	}
 }
 
@@ -16736,7 +16736,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackSpec(ref common.ReferenceCallbac
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitOptions"),
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitFlags"),
 									},
 								},
 							},
@@ -16747,7 +16747,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackSpec(ref common.ReferenceCallbac
 			},
 		},
 		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRef", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitOptions"},
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRef", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitFlags"},
 	}
 }
 
@@ -17504,7 +17504,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_VersionDetail(ref common.ReferenceCa
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitOptions"),
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitFlags"),
 									},
 								},
 							},
@@ -17515,7 +17515,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_VersionDetail(ref common.ReferenceCa
 			},
 		},
 		Dependencies: []string{
-			"k8s.io/apimachinery/pkg/runtime.RawExtension", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitOptions"},
+			"k8s.io/apimachinery/pkg/runtime.RawExtension", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitFlags"},
 	}
 }
 
@@ -17552,7 +17552,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_VersionOption(ref common.ReferenceCa
 	}
 }
 
-func schema_kubepack_apis_kubepack_v1alpha1_WaitOptions(ref common.ReferenceCallback) common.OpenAPIDefinition {
+func schema_kubepack_apis_kubepack_v1alpha1_WaitFlags(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
 			SchemaProps: spec.SchemaProps{

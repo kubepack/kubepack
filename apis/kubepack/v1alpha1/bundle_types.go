@@ -93,7 +93,7 @@ type VersionOption struct {
 type VersionDetail struct {
 	VersionOption `json:",inline" protobuf:"bytes,1,opt,name=versionOption"`
 	Resources     *ResourceDefinitions `json:"resources,omitempty" protobuf:"bytes,3,opt,name=resources"`
-	WaitFors      []WaitOptions        `json:"waitFors,omitempty" protobuf:"bytes,4,rep,name=waitFors"`
+	WaitFors      []WaitFlags          `json:"waitFors,omitempty" protobuf:"bytes,4,rep,name=waitFors"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

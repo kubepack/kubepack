@@ -263,4 +263,4 @@ API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Ima
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ImageSpec,TotalSize
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,OrderSpec,Packages
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,VersionOption,ValuesPatch
-API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,WaitOptions,ForCondition
+API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,WaitFlags,ForCondition

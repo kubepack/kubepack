@@ -27,6 +27,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"os"
 	"path"
 	"sort"
 	"strconv"
@@ -35,6 +36,7 @@ import (
 	"time"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+	wait2 "kubepack.dev/kubepack/pkg/wait"
 
 	jsonpatch "github.com/evanphx/json-patch"
 	"github.com/pkg/errors"
@@ -63,6 +65,9 @@ import (
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
+	"k8s.io/cli-runtime/pkg/printers"
+	"k8s.io/cli-runtime/pkg/resource"
+	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/kubernetes"
 	authv1client "k8s.io/client-go/kubernetes/typed/authorization/v1"
 	"k8s.io/client-go/rest"
@@ -116,7 +121,7 @@ func (x *NamespaceCreator) Do() error {
 type WaitForPrinter struct {
 	Name      string
 	Namespace string
-	WaitFors  []v1alpha1.WaitOptions
+	WaitFors  []v1alpha1.WaitFlags
 	W         io.Writer
 }
 
@@ -182,14 +187,88 @@ func (x *WaitForPrinter) Do() error {
 }
 
 type WaitForChecker struct {
-	Name      string
 	Namespace string
-	WaitFors  []v1alpha1.WaitOptions
+	WaitFors  []v1alpha1.WaitFlags
+
+	ClientGetter genericclioptions.RESTClientGetter
 }
 
 func (x *WaitForChecker) Do() error {
-	// TODO: implement wait for
+	streams := genericclioptions.IOStreams{
+		In:     os.Stdin,
+		Out:    os.Stdout,
+		ErrOut: os.Stderr,
+	}
+
+	for _, flags := range x.WaitFors {
+		builder := resource.NewBuilder(x.ClientGetter).
+			NamespaceParam(x.Namespace).DefaultNamespace().
+			// AllNamespaces(true).
+			Unstructured().
+			Latest().
+			ContinueOnError().
+			Flatten()
+		if flags.All {
+			builder.ResourceTypeOrNameArgs(true, flags.Resource.Group)
+		} else {
+			builder.ResourceTypeOrNameArgs(false, flags.Resource.Group+"/"+flags.Resource.Name)
+		}
+		if flags.Labels != nil {
+			selector, err := v1.LabelSelectorAsSelector(flags.Labels)
+			if err != nil {
+				return err
+			}
+			builder.LabelSelectorParam(selector.String())
+		}
+
+		clientConfig, err := x.ClientGetter.ToRESTConfig()
+		if err != nil {
+			return err
+		}
+		dynamicClient, err := dynamic.NewForConfig(clientConfig)
+		if err != nil {
+			return err
+		}
+		conditionFn, err := wait2.ConditionFuncFor(flags.ForCondition, streams.ErrOut)
+		if err != nil {
+			return err
+		}
+
+		effectiveTimeout := flags.Timeout.Duration
+		if effectiveTimeout < 0 {
+			effectiveTimeout = 168 * time.Hour
+		}
+
+		o := &wait2.WaitOptions{
+			ResourceFinder: &ResourceFindBuilderWrapper{builder},
+			DynamicClient:  dynamicClient,
+			Timeout:        effectiveTimeout,
+
+			Printer:     printers.NewDiscardingPrinter(),
+			ConditionFn: conditionFn,
+			IOStreams:   streams,
+		}
+
+		err = o.WaitUntilAvailable(flags.ForCondition)
+		if err != nil {
+			return err
+		}
+		err = o.RunWait()
+		if err != nil {
+			return err
+		}
+	}
 	return nil
+}
+
+// ResourceFindBuilderWrapper wraps a builder in an interface
+type ResourceFindBuilderWrapper struct {
+	builder *resource.Builder
+}
+
+// Do finds you resources to check
+func (b *ResourceFindBuilderWrapper) Do() resource.Visitor {
+	return b.builder.Do()
 }
 
 type CRDReadinessPrinter struct {

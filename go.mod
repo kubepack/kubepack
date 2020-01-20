@@ -6,6 +6,7 @@ require (
 	github.com/Azure/go-autorest/autorest/azure/auth v0.4.2 // indirect
 	github.com/appscode/go v0.0.0-20191119085241-0887d8ec2ecc
 	github.com/coreos/prometheus-operator v0.34.0
+	github.com/davecgh/go-spew v1.1.1
 	github.com/evanphx/json-patch v4.5.0+incompatible
 	github.com/gabriel-vasile/mimetype v1.0.2
 	github.com/go-openapi/spec v0.19.4
