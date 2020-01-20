@@ -1163,9 +1163,30 @@
         }
       ]
     },
+    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.ApplicationPackage": {
+      "type": "object",
+      "required": [
+        "chart",
+        "channel"
+      ],
+      "properties": {
+        "bundle": {
+          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.ChartRepoRef"
+        },
+        "channel": {
+          "type": "string"
+        },
+        "chart": {
+          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.ChartRepoRef"
+        }
+      }
+    },
     "dev.kubepack.kubepack.apis.kubepack.v1alpha1.ApplicationSpec": {
       "description": "ApplicationSpec defines the specification for an Application.",
       "type": "object",
+      "required": [
+        "package"
+      ],
       "properties": {
         "addOwnerRef": {
           "description": "AddOwnerRef objects - flag to indicate if we need to add OwnerRefs to matching objects Matching is done by using Selector to query all ComponentGroupKinds",
@@ -1192,6 +1213,9 @@
           "items": {
             "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.InfoItem"
           }
+        },
+        "package": {
+          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.ApplicationPackage"
         },
         "selector": {
           "description": "Selector is a label query over kinds that created by the application. It must match the component objects' labels. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors",
@@ -1223,6 +1247,26 @@
           "description": "ObservedGeneration is the most recent generation observed. It corresponds to the Object's generation, which is updated on mutation by the API Server.",
           "type": "integer",
           "format": "int64"
+        }
+      }
+    },
+    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.ChartRepoRef": {
+      "description": "ChartRepoRef references to a single version of a Chart",
+      "type": "object",
+      "required": [
+        "name",
+        "url",
+        "version"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
         }
       }
     },

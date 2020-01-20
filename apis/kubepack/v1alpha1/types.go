@@ -16,10 +16,11 @@ limitations under the License.
 
 package v1alpha1
 
-// Repo contains the name in monocular the url for the repository
-type Repo struct {
-	Name string `json:"name" protobuf:"bytes,1,opt,name=name"`
-	URL  string `json:"url" protobuf:"bytes,2,opt,name=url"`
+// ChartRepoRef references to a single version of a Chart
+type ChartRepoRef struct {
+	Name    string `json:"name" protobuf:"bytes,1,opt,name=name"`
+	URL     string `json:"url" protobuf:"bytes,2,opt,name=url"`
+	Version string `json:"version" protobuf:"bytes,3,opt,name=version"`
 }
 
 // ResourceID identifies a resource

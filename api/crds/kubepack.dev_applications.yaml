@@ -366,6 +366,42 @@ spec:
                     type: object
                 type: object
               type: array
+            package:
+              properties:
+                bundle:
+                  description: ChartRepoRef references to a single version of a Chart
+                  properties:
+                    name:
+                      type: string
+                    url:
+                      type: string
+                    version:
+                      type: string
+                  required:
+                  - name
+                  - url
+                  - version
+                  type: object
+                channel:
+                  type: string
+                chart:
+                  description: ChartRepoRef references to a single version of a Chart
+                  properties:
+                    name:
+                      type: string
+                    url:
+                      type: string
+                    version:
+                      type: string
+                  required:
+                  - name
+                  - url
+                  - version
+                  type: object
+              required:
+              - channel
+              - chart
+              type: object
             selector:
               description: 'Selector is a label query over kinds that created by the
                 application. It must match the component objects'' labels. More info:
@@ -411,6 +447,8 @@ spec:
                     are ANDed.
                   type: object
               type: object
+          required:
+          - package
           type: object
         status:
           description: ApplicationStatus defines controller's the observed state of

@@ -120,6 +120,11 @@ func toPackageSelection(in *v1alpha1.BundleOptionView) []v1alpha1.PackageSelecti
 							ValuesPatch: v.ValuesPatch,
 							Resources:   crds,
 							WaitFors:    waitFors,
+							Bundle: &v1alpha1.ChartRepoRef{
+								Name:    in.Name,
+								URL:     in.URL,
+								Version: in.Version,
+							},
 						},
 					}
 					out = append(out, selection)

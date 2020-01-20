@@ -43,3 +43,65 @@ $ go run cmd/bundle-generator/main.go --name=kubedb-bundle \
 
 $ ./hack/publish-testcharts.sh
 ```
+
+## Generate BundleView from a Bundle
+
+```console
+$ go run cmd/bundleview-generator/main.go
+```
+
+## Generate Order from a BundleView
+
+```console
+$ go run cmd/order-generator/main.go
+```
+
+## Generate Application from a selected Chart in an Order
+
+```console
+$ go run cmd/app-generator/main.go
+```
+
+## Generate PackageView for a Chart
+
+```console
+$ go run cmd/packageview-generator/main.go
+```
+
+## Generate Install scripts
+
+**Site for Hosting User YAMLs & Scripts**
+
+[https://usercontent.kubepack.com](https://usercontent.kubepack.com). These files are *public* and hosted on Google Cloud Storage Bucket `gs://kubepack-usercontent`.
+
+**Helm 3**
+```console
+$ go run cmd/helm3-command-generator/main.go
+```
+
+**Helm 2**
+```console
+$ go run cmd/helm2-command-generator/main.go
+```
+
+**YAML**
+```console
+$ go run cmd/install-yaml-generator/main.go
+```
+
+**Check Permission**
+```console
+$ go run cmd/permission-checker/main.go
+```
+
+**Install / Uninstall Chart**
+```console
+$ go run cmd/install-order/main.go
+$ go run cmd/uninstall-order/main.go
+```
+
+## Read Helm Hub index to determine Chart Repository Name
+
+```console
+$ go run cmd/helm-hub-reader/main.go
+```

@@ -46,6 +46,14 @@ message ApplicationList {
   repeated Application items = 2;
 }
 
+message ApplicationPackage {
+  optional ChartRepoRef bundle = 4;
+
+  optional ChartRepoRef chart = 2;
+
+  optional string channel = 3;
+}
+
 // ApplicationSpec defines the specification for an Application.
 message ApplicationSpec {
   // ComponentGroupKinds is a list of Kinds for Application's components (e.g. Deployments, Pods, Services, CRDs). It
@@ -69,6 +77,8 @@ message ApplicationSpec {
   // AssemblyPhase represents the current phase of the application's assembly.
   // An empty value is equivalent to "Succeeded".
   optional string assemblyPhase = 6;
+
+  optional ApplicationPackage package = 7;
 }
 
 // ApplicationStatus defines controller's the observed state of Application
@@ -178,6 +188,15 @@ message ChartRef {
   optional string name = 2;
 }
 
+// ChartRepoRef references to a single version of a Chart
+message ChartRepoRef {
+  optional string name = 1;
+
+  optional string url = 2;
+
+  optional string version = 3;
+}
+
 message ChartSelection {
   optional ChartRef chartRef = 1;
 
@@ -186,6 +205,10 @@ message ChartSelection {
   optional string releaseName = 3;
 
   optional string namespace = 4;
+
+  // Bundle points to the parent bundle which was used to install this, if any.
+  // If the chart was installed directly it will be unset.
+  optional ChartRepoRef bundle = 8;
 
   // RFC 6902 compatible json patch. ref: http://jsonpatch.com
   // +optional
@@ -525,13 +548,6 @@ message PackageView {
   // Top-level and per-version schemas are mutually exclusive.
   // +optional
   optional k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceValidation validation = 4;
-}
-
-// Repo contains the name in monocular the url for the repository
-message Repo {
-  optional string name = 1;
-
-  optional string url = 2;
 }
 
 message Repository {

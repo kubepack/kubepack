@@ -100,6 +100,8 @@ type ApplicationSpec struct {
 	// AssemblyPhase represents the current phase of the application's assembly.
 	// An empty value is equivalent to "Succeeded".
 	AssemblyPhase ApplicationAssemblyPhase `json:"assemblyPhase,omitempty" protobuf:"bytes,6,opt,name=assemblyPhase,casttype=ApplicationAssemblyPhase"`
+
+	Package ApplicationPackage `json:"package" protobuf:"bytes,7,opt,name=package"`
 }
 
 // ComponentList is a generic status holder for the top level resource
@@ -330,3 +332,17 @@ type ApplicationList struct {
 	metav1.ListMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
 	Items           []Application `json:"items" protobuf:"bytes,2,rep,name=items"`
 }
+
+type ApplicationPackage struct {
+	Bundle  *ChartRepoRef `json:"bundle,omitempty" protobuf:"bytes,4,opt,name=bundle"`
+	Chart   ChartRepoRef  `json:"chart" protobuf:"bytes,2,opt,name=chart"`
+	Channel ChannelType   `json:"channel" protobuf:"bytes,3,opt,name=channel,casttype=ChannelType"`
+}
+
+type ChannelType string
+
+const (
+	RapidChannel   ChannelType = "Rapid"
+	RegularChannel ChannelType = "Regular"
+	StableChannel  ChannelType = "Stable"
+)

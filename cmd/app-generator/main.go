@@ -30,10 +30,10 @@ import (
 )
 
 var (
-	file      = "artifacts/kubedb-bundle/order.yaml"
-	url       = "https://charts.appscode.com/stable/"
-	name      = "kubedb"
-	version   = "v0.13.0-rc.0"
+	file    = "artifacts/kubedb-bundle/order.yaml"
+	url     = "https://charts.appscode.com/stable/"
+	name    = "kubedb"
+	version = "v0.13.0-rc.0"
 )
 
 /*
@@ -128,7 +128,16 @@ func main() {
 			},
 			AddOwnerRef:   false,
 			Info:          nil,
-			AssemblyPhase: v1alpha1.ReasonInit,
+			AssemblyPhase: v1alpha1.Ready,
+			Package: v1alpha1.ApplicationPackage{
+				Bundle: selection.Bundle,
+				Chart: v1alpha1.ChartRepoRef{
+					Name:    selection.Name,
+					URL:     selection.URL,
+					Version: selection.Version,
+				},
+				Channel: v1alpha1.RegularChannel,
+			},
 		},
 	}
 

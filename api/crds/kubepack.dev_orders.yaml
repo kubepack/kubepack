@@ -41,6 +41,22 @@ spec:
                 properties:
                   chart:
                     properties:
+                      bundle:
+                        description: Bundle points to the parent bundle which was
+                          used to install this, if any. If the chart was installed
+                          directly it will be unset.
+                        properties:
+                          name:
+                            type: string
+                          url:
+                            type: string
+                          version:
+                            type: string
+                        required:
+                        - name
+                        - url
+                        - version
+                        type: object
                       name:
                         type: string
                       namespace:

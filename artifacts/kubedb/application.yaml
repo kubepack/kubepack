@@ -5,7 +5,7 @@ metadata:
   name: kubedb
   namespace: kube-system
 spec:
-  assemblyPhase: Init
+  assemblyPhase: Ready
   componentKinds:
   - group: ""
     kind: Secret
@@ -42,6 +42,16 @@ spec:
       name: appscode
     type: kubedb
     version: v0.13.0-rc.0
+  package:
+    bundle:
+      name: kubedb-bundle
+      url: https://kubepack-testcharts.storage.googleapis.com
+      version: v0.13.0-rc.2
+    channel: Regular
+    chart:
+      name: kubedb
+      url: https://charts.appscode.com/stable/
+      version: v0.13.0-rc.0
   selector:
     matchLabels:
       app: kubedb

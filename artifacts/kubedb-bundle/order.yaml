@@ -6,12 +6,20 @@ metadata:
 spec:
   items:
   - chart:
+      bundle:
+        name: kubedb-bundle
+        url: https://kubepack-testcharts.storage.googleapis.com
+        version: v0.13.0-rc.2
       name: kubedb
       namespace: kube-system
       releaseName: kubedb
       url: https://charts.appscode.com/stable/
       version: v0.13.0-rc.0
   - chart:
+      bundle:
+        name: kubedb-bundle
+        url: https://kubepack-testcharts.storage.googleapis.com
+        version: v0.13.0-rc.2
       name: kubedb-catalog
       namespace: kube-system
       releaseName: kubedb-catalog

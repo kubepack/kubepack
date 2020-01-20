@@ -57,6 +57,10 @@ type ChartSelection struct {
 	ReleaseName string `json:"releaseName" protobuf:"bytes,3,opt,name=releaseName"`
 	Namespace   string `json:"namespace" protobuf:"bytes,4,opt,name=namespace"`
 
+	// Bundle points to the parent bundle which was used to install this, if any.
+	// If the chart was installed directly it will be unset.
+	Bundle *ChartRepoRef `json:"bundle,omitempty" protobuf:"bytes,8,opt,name=bundle"`
+
 	// RFC 6902 compatible json patch. ref: http://jsonpatch.com
 	// +optional
 	// +kubebuilder:validation:EmbeddedResource
