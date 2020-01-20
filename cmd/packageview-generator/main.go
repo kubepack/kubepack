@@ -81,9 +81,9 @@ func main() {
 			}
 		}
 	}
-	if b.Validation == nil && len(pkgChart.Schema) > 0 {
-		// TODO convert json schema to openapi schema v3
-	}
+	//if b.Validation == nil && len(pkgChart.Schema) > 0 {
+	//	// TODO convert json schema to openapi schema v3
+	//}
 
 	data, err := yaml.Marshal(b)
 	if err != nil {

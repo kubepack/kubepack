@@ -32,12 +32,10 @@ import (
 	"sigs.k8s.io/yaml"
 )
 
-var name = "stash-bundle"
-var namespace = "kube-system"
-var charts = []string{
-	"https://charts.appscode.com/stable/@stash@v0.9.0-rc.2",
-}
-var bundles = []string{}
+var name = ""
+var namespace = ""
+var charts []string
+var bundles []string
 
 func main() {
 	flag.StringVar(&name, "name", name, "Name of bundle, example: stash-bundle")

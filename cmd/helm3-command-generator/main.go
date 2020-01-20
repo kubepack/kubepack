@@ -101,6 +101,9 @@ func main() {
 				W:    &buf,
 			}
 			err = f4.Do()
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 
 		_, err = buf.WriteRune('\n')

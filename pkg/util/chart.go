@@ -30,6 +30,7 @@ import (
 	"helm.sh/helm/v3/pkg/chart/loader"
 	"helm.sh/helm/v3/pkg/cli"
 	"helm.sh/helm/v3/pkg/helmpath/xdg"
+	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 )
 
 const (
@@ -88,13 +89,17 @@ func GetChart(chartName, version, repoName, url string) (*chart.Chart, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer os.RemoveAll(chartDir)
+	defer func() {
+		utilruntime.Must(os.RemoveAll(chartDir))
+	}()
 
 	err = setEnv(chartDir)
 	if err != nil {
 		return nil, err
 	}
-	defer unsetEnv()
+	defer func() {
+		utilruntime.Must(unsetEnv())
+	}()
 
 	settings := cli.New()
 	cp, err := client.LocateChart(chartName, settings)

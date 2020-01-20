@@ -10,7 +10,7 @@ spec:
     type: image/png
   links:
   - description: Homepage
-    url: https://github.com/kubedb/cli
+    url: https://github.com/kubedb/installer
   maintainers:
   - email: kubedb@appscode.com
     name: appscode
@@ -22,7 +22,7 @@ spec:
       name: kubedb
       url: https://charts.appscode.com/stable/
       versions:
-      - version: v0.9.0-rc.2
+      - version: v0.13.0-rc.0
     required: true
   - chart:
       features:
@@ -30,7 +30,7 @@ spec:
       name: kubedb-catalog
       url: https://charts.appscode.com/stable/
       versions:
-      - version: v0.9.0-rc.2
+      - version: v0.13.0-rc.0
     required: true
   - chart:
       features:

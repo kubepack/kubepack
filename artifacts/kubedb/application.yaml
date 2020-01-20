@@ -1,0 +1,51 @@
+apiVersion: kubepack.dev/v1alpha1
+kind: Application
+metadata:
+  creationTimestamp: null
+  name: kubedb
+  namespace: kube-system
+spec:
+  assemblyPhase: Init
+  componentKinds:
+  - group: ""
+    kind: Secret
+  - group: ""
+    kind: Service
+  - group: ""
+    kind: ServiceAccount
+  - group: admissionregistration.k8s.io
+    kind: MutatingWebhookConfiguration
+  - group: admissionregistration.k8s.io
+    kind: ValidatingWebhookConfiguration
+  - group: apiregistration.k8s.io
+    kind: APIService
+  - group: apps
+    kind: Deployment
+  - group: policy
+    kind: PodSecurityPolicy
+  - group: rbac.authorization.k8s.io
+    kind: ClusterRole
+  - group: rbac.authorization.k8s.io
+    kind: ClusterRoleBinding
+  - group: rbac.authorization.k8s.io
+    kind: RoleBinding
+  description:
+    description: KubeDB by AppsCode - Production ready databases on Kubernetes
+    icons:
+    - src: https://cdn.appscode.com/images/icon/kubedb.png
+      type: image/png
+    links:
+    - description: Homepage
+      url: https://github.com/kubedb/installer
+    maintainers:
+    - email: kubedb@appscode.com
+      name: appscode
+    type: kubedb
+    version: v0.13.0-rc.0
+  selector:
+    matchLabels:
+      app: kubedb
+      chart: kubedb-v0.13.0-rc.0
+      heritage: Helm
+      release: kubedb
+status: {}
