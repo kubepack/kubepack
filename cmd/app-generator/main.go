@@ -25,7 +25,6 @@ import (
 	"kubepack.dev/kubepack/pkg/util"
 
 	flag "github.com/spf13/pflag"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/yaml"
 )
 
@@ -96,65 +95,17 @@ func main() {
 		log.Fatalln("chart selection not found in order")
 	}
 
-	pkgChart, err := util.GetChart(name, version, "myrepo", url)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	desc := util.GetPackageDescriptor(pkgChart)
-
-	b := v1alpha1.Application{
-		TypeMeta: metav1.TypeMeta{
-			APIVersion: v1alpha1.SchemeGroupVersion.String(),
-			Kind:       v1alpha1.ResourceKindApplication,
-		},
-		ObjectMeta: metav1.ObjectMeta{
-			Name:        selection.ReleaseName,
-			Namespace:   selection.Namespace,
-			Labels:      nil,
-			Annotations: nil,
-		},
-		Spec: v1alpha1.ApplicationSpec{
-			Description: v1alpha1.Descriptor{
-				Type:        pkgChart.Name(),
-				Version:     pkgChart.Metadata.AppVersion,
-				Description: desc.Description,
-				Icons:       desc.Icons,
-				Maintainers: desc.Maintainers,
-				Owners:      nil,
-				Keywords:    desc.Keywords,
-				Links:       desc.Links,
-				Notes:       "",
-			},
-			AddOwnerRef:   false,
-			Info:          nil,
-			AssemblyPhase: v1alpha1.Ready,
-			Package: v1alpha1.ApplicationPackage{
-				Bundle: selection.Bundle,
-				Chart: v1alpha1.ChartRepoRef{
-					Name:    selection.Name,
-					URL:     selection.URL,
-					Version: selection.Version,
-				},
-				Channel: v1alpha1.RegularChannel,
-			},
-		},
-	}
-
 	fn := &util.ApplicationGenerator{
-		ChartRef:    selection.ChartRef,
-		Version:     selection.Version,
-		ReleaseName: selection.ReleaseName,
-		Namespace:   selection.Namespace,
+		Chart:       *selection,
 		KubeVersion: "v1.17.0",
 	}
 	err = fn.Do()
 	if err != nil {
 		log.Fatal(err)
 	}
-	b.Spec.ComponentGroupKinds, b.Spec.Selector = fn.Result()
+	app := fn.Result()
 
-	data, err = yaml.Marshal(b)
+	data, err = yaml.Marshal(app)
 	if err != nil {
 		log.Fatal(err)
 	}

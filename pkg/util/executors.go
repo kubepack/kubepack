@@ -36,6 +36,7 @@ import (
 	"time"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+	"kubepack.dev/kubepack/client/clientset/versioned"
 	wait2 "kubepack.dev/kubepack/pkg/wait"
 
 	jsonpatch "github.com/evanphx/json-patch"
@@ -56,6 +57,7 @@ import (
 	authorization "k8s.io/api/authorization/v1"
 	core "k8s.io/api/core/v1"
 	crdv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	crd_cs "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/typed/apiextensions/v1beta1"
 	kerr "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -1131,11 +1133,97 @@ func (x *PermissionChecker) Result() (map[authorization.ResourceAttributes]*Reso
 	return x.attrs, true
 }
 
+type ApplicationCRDRegPrinter struct {
+	W io.Writer
+}
+
+func (x *ApplicationCRDRegPrinter) Do() error {
+	_, err := fmt.Fprintln(x.W, "kubectl apply -f https://github.com/kubepack/kubepack/raw/prototype/api/crds/kubepack.dev_applications.yaml")
+	if err != nil {
+		return err
+	}
+	_, err = fmt.Fprintln(x.W, "kubectl wait --for=condition=Established crds/applications.kubepack.dev --timeout=5m")
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type ApplicationCRDRegistrar struct {
+	Config *rest.Config
+}
+
+func (x *ApplicationCRDRegistrar) Do() error {
+	kc, err := kubernetes.NewForConfig(x.Config)
+	if err != nil {
+		return err
+	}
+	apiextClient, err := crd_cs.NewForConfig(x.Config)
+	if err != nil {
+		return err
+	}
+	return v1beta1.RegisterCRDs(kc.Discovery(), apiextClient, []*crdv1beta1.CustomResourceDefinition{
+		v1alpha1.Application{}.CustomResourceDefinition(),
+	})
+}
+
+type ApplicationUploader struct {
+	App       *v1alpha1.Application
+	UID       string
+	BucketURL string
+	PublicURL string
+	W         io.Writer
+}
+
+func (x *ApplicationUploader) Do() error {
+	ctx := context.Background()
+	bucket, err := blob.OpenBucket(ctx, x.BucketURL)
+	if err != nil {
+		return err
+	}
+
+	bucket = blob.PrefixedBucket(bucket, x.UID+"/apps/"+x.App.Namespace+"/")
+	defer bucket.Close()
+
+	data, err := yamllib.Marshal(x.App)
+	if err != nil {
+		return err
+	}
+
+	w, err := bucket.NewWriter(ctx, x.App.Name+".yaml", nil)
+	if err != nil {
+		return err
+	}
+	_, writeErr := fmt.Fprintln(w, data)
+	// Always check the return value of Close when writing.
+	closeErr := w.Close()
+	if writeErr != nil {
+		return writeErr
+	}
+	if closeErr != nil {
+		return closeErr
+	}
+
+	_, err = fmt.Fprintf(x.W, "kubectl apply -f %s/%s\n", x.PublicURL, path.Join(x.UID, "apps", x.App.Namespace, x.App.Name+".yaml"))
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type ApplicationCreator struct {
+	App    *v1alpha1.Application
+	Client *versioned.Clientset
+}
+
+func (x *ApplicationCreator) Do() error {
+	_, err := x.Client.KubepackV1alpha1().Applications(x.App.Namespace).Create(x.App)
+	return err
+}
+
 type ApplicationGenerator struct {
-	ChartRef    v1alpha1.ChartRef
-	Version     string
-	ReleaseName string
-	Namespace   string
+	Chart v1alpha1.ChartSelection
+	chrt  *chart.Chart
 
 	KubeVersion string
 
@@ -1152,7 +1240,8 @@ func (x *ApplicationGenerator) Do() error {
 		x.commonLabels = make(map[string]string)
 	}
 
-	chrt, err := GetChart(x.ChartRef.Name, x.Version, "myrepo", x.ChartRef.URL)
+	var err error
+	x.chrt, err = GetChart(x.Chart.Name, x.Chart.Version, "myrepo", x.Chart.URL)
 	if err != nil {
 		return err
 	}
@@ -1167,14 +1256,14 @@ func (x *ApplicationGenerator) Do() error {
 	var extraAPIs []string
 
 	client.DryRun = true
-	client.ReleaseName = x.ReleaseName
-	client.Namespace = x.Namespace
+	client.ReleaseName = x.Chart.ReleaseName
+	client.Namespace = x.Chart.Namespace
 	client.Replace = true // Skip the name check
 	client.ClientOnly = true
 	client.APIVersions = chartutil.VersionSet(extraAPIs)
-	client.Version = x.Version
+	client.Version = x.Chart.Version
 
-	validInstallableChart, err := isChartInstallable(chrt)
+	validInstallableChart, err := isChartInstallable(x.chrt)
 	if !validInstallableChart {
 		return err
 	}
@@ -1215,7 +1304,7 @@ func (x *ApplicationGenerator) Do() error {
 		}
 	*/
 
-	vals := chrt.Values
+	vals := x.chrt.Values
 	//if x.ValuesPatch != nil {
 	//	values, err := json.Marshal(chrt.Values)
 	//	if err != nil {
@@ -1250,7 +1339,7 @@ func (x *ApplicationGenerator) Do() error {
 	//	x.components[attr] = struct{}{}
 	//}
 
-	if err := chartutil.ProcessDependencies(chrt, vals); err != nil {
+	if err := chartutil.ProcessDependencies(x.chrt, vals); err != nil {
 		return err
 	}
 
@@ -1268,17 +1357,17 @@ func (x *ApplicationGenerator) Do() error {
 		}
 	}
 	options := chartutil.ReleaseOptions{
-		Name:      x.ReleaseName,
-		Namespace: x.Namespace,
+		Name:      x.Chart.ReleaseName,
+		Namespace: x.Chart.Namespace,
 		Revision:  1,
 		IsInstall: true,
 	}
-	valuesToRender, err := chartutil.ToRenderValues(chrt, vals, options, caps)
+	valuesToRender, err := chartutil.ToRenderValues(x.chrt, vals, options, caps)
 	if err != nil {
 		return err
 	}
 
-	hooks, manifests, err := renderResources(chrt, caps, valuesToRender)
+	hooks, manifests, err := renderResources(x.chrt, caps, valuesToRender)
 	if err != nil {
 		return err
 	}
@@ -1311,7 +1400,47 @@ func (x *ApplicationGenerator) Do() error {
 	return nil
 }
 
-func (x *ApplicationGenerator) Result() ([]metav1.GroupKind, *metav1.LabelSelector) {
+func (x *ApplicationGenerator) Result() *v1alpha1.Application {
+	desc := GetPackageDescriptor(x.chrt)
+
+	b := &v1alpha1.Application{
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: v1alpha1.SchemeGroupVersion.String(),
+			Kind:       v1alpha1.ResourceKindApplication,
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name:        x.Chart.ReleaseName,
+			Namespace:   x.Chart.Namespace,
+			Labels:      nil, // TODO: ?
+			Annotations: nil, // TODO: ?
+		},
+		Spec: v1alpha1.ApplicationSpec{
+			Description: v1alpha1.Descriptor{
+				Type:        x.chrt.Name(),
+				Version:     x.chrt.Metadata.AppVersion,
+				Description: desc.Description,
+				Icons:       desc.Icons,
+				Maintainers: desc.Maintainers,
+				Owners:      nil,
+				Keywords:    desc.Keywords,
+				Links:       desc.Links,
+				Notes:       "",
+			},
+			AddOwnerRef:   false,
+			Info:          nil,
+			AssemblyPhase: v1alpha1.Ready,
+			Package: v1alpha1.ApplicationPackage{
+				Bundle: x.Chart.Bundle,
+				Chart: v1alpha1.ChartRepoRef{
+					Name:    x.Chart.Name,
+					URL:     x.Chart.URL,
+					Version: x.Chart.Version,
+				},
+				Channel: v1alpha1.RegularChannel,
+			},
+		},
+	}
+
 	gks := make([]metav1.GroupKind, 0, len(x.components))
 	for gk := range x.components {
 		gks = append(gks, gk)
@@ -1322,13 +1451,14 @@ func (x *ApplicationGenerator) Result() ([]metav1.GroupKind, *metav1.LabelSelect
 		}
 		return gks[i].Group < gks[j].Group
 	})
+	b.Spec.ComponentGroupKinds = gks
 
-	if len(x.commonLabels) == 0 {
-		return gks, nil
+	if len(x.commonLabels) > 0 {
+		b.Spec.Selector = &metav1.LabelSelector{
+			MatchLabels: x.commonLabels,
+		}
 	}
-	return gks, &metav1.LabelSelector{
-		MatchLabels: x.commonLabels,
-	}
+	return b
 }
 
 func (x *ApplicationGenerator) extractComponentAttributes(data []byte) error {

@@ -3,9 +3,9 @@ entries:
   cert-manager-bundle:
   - apiVersion: v2
     appVersion: v0.12.0
-    created: "2020-01-20T07:48:27.42144822-08:00"
+    created: "2020-01-20T18:23:00.09358325-08:00"
     description: A Helm chart for Kubernetes
-    digest: 541d0b799641b370be757c61d63736e12c7ba8dffb8ad96c096b4dd83eda6739
+    digest: 093676cae2298f644691dd14190d6a2229df2c2192707f309452f408a12069dc
     name: cert-manager-bundle
     type: application
     urls:
@@ -14,9 +14,9 @@ entries:
   csi-vault-bundle:
   - apiVersion: v2
     appVersion: v0.3.0
-    created: "2020-01-20T07:48:27.422876324-08:00"
+    created: "2020-01-20T18:23:00.093901216-08:00"
     description: A Helm chart for Kubernetes
-    digest: eea7615bfa350dd523b93fe24edf029cf1d43b08dd092e4b89694bb8b970f5ec
+    digest: 36bd35be569f386ed5aee05dbdeb4e45112d44551d124cf3ddebdcefa335e6fd
     name: csi-vault-bundle
     type: application
     urls:
@@ -25,9 +25,9 @@ entries:
   kubedb-bundle:
   - apiVersion: v2
     appVersion: v0.13.0-rc.2
-    created: "2020-01-20T07:48:27.423273048-08:00"
+    created: "2020-01-20T18:23:00.09433-08:00"
     description: A Helm chart for Kubernetes
-    digest: 55521e329e99ba56263648148a3c81eb1b363b99a29fbce9cb49863e65958290
+    digest: e83386f039406bd33b556ce5313a38d20452659dc537d0053c1273e669612997
     name: kubedb-bundle
     type: application
     urls:
@@ -36,9 +36,9 @@ entries:
   stash-bundle:
   - apiVersion: v2
     appVersion: v0.9.0-rc.2
-    created: "2020-01-20T07:48:27.423808482-08:00"
+    created: "2020-01-20T18:23:00.094639036-08:00"
     description: A Helm chart for Kubernetes
-    digest: f1d226216e58fd7fc87707fe265e3dbeb1ded9b184a46020bd4ae84e40ad134f
+    digest: dc4611d91668c0ae0121716fe8cfb0e64ef59e7f4bc6c99b1948002501e18e5f
     name: stash-bundle
     type: application
     urls:
@@ -47,9 +47,9 @@ entries:
   stash-mongodb-bundle:
   - apiVersion: v2
     appVersion: v0.9.0-rc.2
-    created: "2020-01-20T07:48:27.424324738-08:00"
+    created: "2020-01-20T18:23:00.094923606-08:00"
     description: A Helm chart for Kubernetes
-    digest: a7c66c5436d5706c66709e19ae01df6ef1de7af2f46a5dad1f61476db5964163
+    digest: 00ed583cd4d0c7ed6e2ed97f69afd1d3d460aa198594d09bc746b983b87e9d64
     name: stash-mongodb-bundle
     type: application
     urls:
@@ -58,12 +58,12 @@ entries:
   vault-operator-bundle:
   - apiVersion: v2
     appVersion: v0.3.0
-    created: "2020-01-20T07:48:27.424598359-08:00"
+    created: "2020-01-20T18:23:00.095216023-08:00"
     description: A Helm chart for Kubernetes
-    digest: fd7a0519f31c42c113cd561fce73290ed17762d022762cb3db49e772593ab404
+    digest: c727ebb8da667c85cdf3e085040bda91016566b88b998a362865e076c62a079f
     name: vault-operator-bundle
     type: application
     urls:
     - https://kubepack-testcharts.storage.googleapis.com/vault-operator-bundle-v0.3.0.tgz
     version: v0.3.0
-generated: "2020-01-20T07:48:27.421045809-08:00"
+generated: "2020-01-20T18:23:00.092267558-08:00"

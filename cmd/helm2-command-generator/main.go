@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/pkg/util"
@@ -51,6 +52,8 @@ func main() {
 
 	uid := uuid.New()
 
+	os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", util.GoogleApplicationCredentials)
+
 	var buf bytes.Buffer
 	_, err = buf.WriteString("#!/usr/bin/env bash\n")
 	if err != nil {
@@ -63,24 +66,32 @@ func main() {
 
 	namespaces := sets.NewString("default", "kube-system")
 
+	f1 := &util.ApplicationCRDRegPrinter{
+		W: &buf,
+	}
+	err = f1.Do()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	for _, pkg := range order.Spec.Packages {
 		if pkg.Chart == nil {
 			continue
 		}
 
 		if !namespaces.Has(pkg.Chart.Namespace) {
-			f1 := &util.NamespacePrinter{
+			f2 := &util.NamespacePrinter{
 				Namespace: pkg.Chart.Namespace,
 				W:         &buf,
 			}
-			err = f1.Do()
+			err = f2.Do()
 			if err != nil {
 				log.Fatal(err)
 			}
 			namespaces.Insert(pkg.Chart.Namespace)
 		}
 
-		f2 := &util.Helm2CommandPrinter{
+		f3 := &util.Helm2CommandPrinter{
 			ChartRef:    pkg.Chart.ChartRef,
 			Version:     pkg.Chart.Version,
 			ReleaseName: pkg.Chart.ReleaseName,
@@ -88,34 +99,58 @@ func main() {
 			ValuesPatch: pkg.Chart.ValuesPatch,
 			W:           &buf,
 		}
-		err = f2.Do()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		f3 := &util.WaitForPrinter{
-			Name:      pkg.Chart.ReleaseName,
-			Namespace: pkg.Chart.Namespace,
-			WaitFors:  pkg.Chart.WaitFors,
-			W:         &buf,
-		}
 		err = f3.Do()
 		if err != nil {
 			log.Fatal(err)
 		}
 
+		f4 := &util.WaitForPrinter{
+			Name:      pkg.Chart.ReleaseName,
+			Namespace: pkg.Chart.Namespace,
+			WaitFors:  pkg.Chart.WaitFors,
+			W:         &buf,
+		}
+		err = f4.Do()
+		if err != nil {
+			log.Fatal(err)
+		}
+
 		if pkg.Chart.Resources != nil && len(pkg.Chart.Resources.Owned) > 0 {
-			f4 := &util.CRDReadinessPrinter{
+			f5 := &util.CRDReadinessPrinter{
 				CRDs: pkg.Chart.Resources.Owned,
 				W:    &buf,
 			}
-			err = f4.Do()
+			err = f5.Do()
 			if err != nil {
 				log.Fatal(err)
 			}
 		}
 
-		buf.WriteRune('\n')
+		f6 := &util.ApplicationGenerator{
+			Chart:       *pkg.Chart,
+			KubeVersion: "v1.17.0",
+		}
+		err = f6.Do()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		f7 := &util.ApplicationUploader{
+			App:       f6.Result(),
+			UID:       uid.String(),
+			BucketURL: util.YAMLBucket,
+			PublicURL: util.YAMLHost,
+			W:         &buf,
+		}
+		err = f7.Do()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		_, err = buf.WriteRune('\n')
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	err = util.Upload(uid.String(), "run.sh", buf.Bytes())
