@@ -104,7 +104,7 @@ func (o *WaitOptions) RunWait() error {
 		visitCount++
 		finalObject, success, err := o.ConditionFn(info, o)
 		if success {
-			o.Printer.PrintObj(finalObject, o.Out)
+			_ = o.Printer.PrintObj(finalObject, o.Out)
 			return nil
 		}
 		if err == nil {
@@ -184,7 +184,7 @@ func IsDeleted(info *resource.Info, o *WaitOptions) (runtime.Object, bool, error
 			return gottenObj, false, err
 		}
 
-		timeout := endTime.Sub(time.Now())
+		timeout := time.Until(endTime)
 		errWaitTimeoutWithName := extendErrWaitTimeout(wait.ErrWaitTimeout, info)
 		if timeout < 0 {
 			// we're out of time
@@ -279,7 +279,7 @@ func (w ConditionalWait) IsConditionMet(info *resource.Info, o *WaitOptions) (ru
 			return gottenObj, false, err
 		}
 
-		timeout := endTime.Sub(time.Now())
+		timeout := time.Until(endTime)
 		errWaitTimeoutWithName := extendErrWaitTimeout(wait.ErrWaitTimeout, info)
 		if timeout < 0 {
 			// we're out of time
@@ -316,14 +316,14 @@ func (w ConditionalWait) checkCondition(obj *unstructured.Unstructured) (bool, e
 	for _, conditionUncast := range conditions {
 		condition := conditionUncast.(map[string]interface{})
 		name, found, err := unstructured.NestedString(condition, "type")
-		if !found || err != nil || strings.ToLower(name) != strings.ToLower(w.conditionName) {
+		if !found || err != nil || !strings.EqualFold(name, w.conditionName) {
 			continue
 		}
 		status, found, err := unstructured.NestedString(condition, "status")
 		if !found || err != nil {
 			continue
 		}
-		return strings.ToLower(status) == strings.ToLower(w.conditionStatus), nil
+		return strings.EqualFold(status, w.conditionStatus), nil
 	}
 
 	return false, nil

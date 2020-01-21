@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+//nolint:unparam
 package wait
 
 import (
@@ -29,6 +30,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
+	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 	"k8s.io/cli-runtime/pkg/printers"
@@ -75,7 +77,7 @@ func addCondition(in *unstructured.Unstructured, name, status string) *unstructu
 		"type":   name,
 		"status": status,
 	})
-	unstructured.SetNestedSlice(in.Object, conditions, "status", "conditions")
+	utilruntime.Must(unstructured.SetNestedSlice(in.Object, conditions, "status", "conditions"))
 	return in
 }
 
