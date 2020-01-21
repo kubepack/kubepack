@@ -85,10 +85,6 @@ type NamespacePrinter struct {
 }
 
 func (x *NamespacePrinter) Do() error {
-	if x.Namespace == core.NamespaceDefault || x.Namespace == "kube-system" {
-		return nil
-	}
-
 	_, err := x.W.Write([]byte("## create namespace if missing\n"))
 	if err != nil {
 		return err
@@ -103,10 +99,6 @@ type NamespaceCreator struct {
 }
 
 func (x *NamespaceCreator) Do() error {
-	if x.Namespace == core.NamespaceDefault || x.Namespace == "kube-system" {
-		return nil
-	}
-
 	_, err := x.Client.CoreV1().Namespaces().Create(&core.Namespace{
 		ObjectMeta: v1.ObjectMeta{
 			Name: x.Namespace,

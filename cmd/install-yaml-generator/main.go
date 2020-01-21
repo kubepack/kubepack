@@ -28,6 +28,7 @@ import (
 
 	"github.com/google/uuid"
 	flag "github.com/spf13/pflag"
+	"k8s.io/apimachinery/pkg/util/sets"
 	"sigs.k8s.io/yaml"
 )
 
@@ -63,15 +64,23 @@ func main() {
 		log.Fatal(err)
 	}
 
+	namespaces := sets.NewString("default", "kube-system")
+
 	for _, pkg := range order.Spec.Packages {
 		if pkg.Chart == nil {
 			continue
 		}
 
-		f1 := &util.NamespacePrinter{Namespace: pkg.Chart.Namespace, W: &buf}
-		err = f1.Do()
-		if err != nil {
-			log.Fatal(err)
+		if !namespaces.Has(pkg.Chart.Namespace) {
+			f1 := &util.NamespacePrinter{
+				Namespace: pkg.Chart.Namespace,
+				W:         &buf,
+			}
+			err = f1.Do()
+			if err != nil {
+				log.Fatal(err)
+			}
+			namespaces.Insert(pkg.Chart.Namespace)
 		}
 
 		f2 := &util.YAMLPrinter{

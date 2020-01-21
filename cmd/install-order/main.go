@@ -25,6 +25,7 @@ import (
 	"kubepack.dev/kubepack/pkg/util"
 
 	flag "github.com/spf13/pflag"
+	"k8s.io/apimachinery/pkg/util/sets"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
@@ -74,18 +75,23 @@ func main() {
 		log.Fatal(err)
 	}
 
+	namespaces := sets.NewString("default", "kube-system")
+
 	for _, pkg := range order.Spec.Packages {
 		if pkg.Chart == nil {
 			continue
 		}
 
-		f1 := &util.NamespaceCreator{
-			Namespace: pkg.Chart.Namespace,
-			Client:    kc,
-		}
-		err = f1.Do()
-		if err != nil {
-			log.Fatal(err)
+		if !namespaces.Has(pkg.Chart.Namespace) {
+			f1 := &util.NamespaceCreator{
+				Namespace: pkg.Chart.Namespace,
+				Client:    kc,
+			}
+			err = f1.Do()
+			if err != nil {
+				log.Fatal(err)
+			}
+			namespaces.Insert(pkg.Chart.Namespace)
 		}
 
 		f2 := &util.ChartInstaller{
