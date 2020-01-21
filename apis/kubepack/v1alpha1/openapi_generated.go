@@ -15769,6 +15769,13 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartOption(ref common.ReferenceCall
 							Format: "",
 						},
 					},
+					"licenseKeyPath": {
+						SchemaProps: spec.SchemaProps{
+							Description: "jsonpatch path in Values where the license key will be set using replace operation, if defined. See: http://jsonpatch.com",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
 				},
 				Required: []string{"url", "name", "versions"},
 			},

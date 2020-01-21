@@ -10,6 +10,7 @@ require (
 	github.com/evanphx/json-patch v4.5.0+incompatible
 	github.com/gabriel-vasile/mimetype v1.0.2
 	github.com/go-openapi/spec v0.19.4
+	github.com/gobuffalo/flect v0.1.7
 	github.com/gogo/protobuf v1.3.1
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/google/gofuzz v1.0.0

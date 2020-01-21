@@ -199,6 +199,10 @@ message ChartOption {
   optional bool multiSelect = 5;
 
   optional bool required = 6;
+
+  // jsonpatch path in Values where the license key will be set using replace operation, if defined.
+  // See: http://jsonpatch.com
+  optional string licenseKeyPath = 7;
 }
 
 message ChartRef {
