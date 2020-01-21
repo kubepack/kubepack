@@ -3,7 +3,7 @@ entries:
   cert-manager-bundle:
   - apiVersion: v2
     appVersion: v0.12.0
-    created: "2020-01-20T18:23:00.09358325-08:00"
+    created: "2020-01-20T19:25:20.913034681-08:00"
     description: A Helm chart for Kubernetes
     digest: 093676cae2298f644691dd14190d6a2229df2c2192707f309452f408a12069dc
     name: cert-manager-bundle
@@ -14,7 +14,7 @@ entries:
   csi-vault-bundle:
   - apiVersion: v2
     appVersion: v0.3.0
-    created: "2020-01-20T18:23:00.093901216-08:00"
+    created: "2020-01-20T19:25:20.913288393-08:00"
     description: A Helm chart for Kubernetes
     digest: 36bd35be569f386ed5aee05dbdeb4e45112d44551d124cf3ddebdcefa335e6fd
     name: csi-vault-bundle
@@ -25,7 +25,7 @@ entries:
   kubedb-bundle:
   - apiVersion: v2
     appVersion: v0.13.0-rc.2
-    created: "2020-01-20T18:23:00.09433-08:00"
+    created: "2020-01-20T19:25:20.913541371-08:00"
     description: A Helm chart for Kubernetes
     digest: e83386f039406bd33b556ce5313a38d20452659dc537d0053c1273e669612997
     name: kubedb-bundle
@@ -36,7 +36,7 @@ entries:
   stash-bundle:
   - apiVersion: v2
     appVersion: v0.9.0-rc.2
-    created: "2020-01-20T18:23:00.094639036-08:00"
+    created: "2020-01-20T19:25:20.913892665-08:00"
     description: A Helm chart for Kubernetes
     digest: dc4611d91668c0ae0121716fe8cfb0e64ef59e7f4bc6c99b1948002501e18e5f
     name: stash-bundle
@@ -47,7 +47,7 @@ entries:
   stash-mongodb-bundle:
   - apiVersion: v2
     appVersion: v0.9.0-rc.2
-    created: "2020-01-20T18:23:00.094923606-08:00"
+    created: "2020-01-20T19:25:20.914396332-08:00"
     description: A Helm chart for Kubernetes
     digest: 00ed583cd4d0c7ed6e2ed97f69afd1d3d460aa198594d09bc746b983b87e9d64
     name: stash-mongodb-bundle
@@ -58,7 +58,7 @@ entries:
   vault-operator-bundle:
   - apiVersion: v2
     appVersion: v0.3.0
-    created: "2020-01-20T18:23:00.095216023-08:00"
+    created: "2020-01-20T19:25:20.914970557-08:00"
     description: A Helm chart for Kubernetes
     digest: c727ebb8da667c85cdf3e085040bda91016566b88b998a362865e076c62a079f
     name: vault-operator-bundle
@@ -66,4 +66,4 @@ entries:
     urls:
     - https://kubepack-testcharts.storage.googleapis.com/vault-operator-bundle-v0.3.0.tgz
     version: v0.3.0
-generated: "2020-01-20T18:23:00.092267558-08:00"
+generated: "2020-01-20T19:25:20.912147671-08:00"

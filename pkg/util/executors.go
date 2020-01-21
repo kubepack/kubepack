@@ -277,7 +277,12 @@ func (x *CRDReadinessPrinter) Do() error {
 	}
 
 	for _, crd := range x.CRDs {
-		_, err := fmt.Fprintf(x.W, "kubectl wait --for=condition=Established crds/%s.%s --timeout=5m\n", crd.Name, crd.Group)
+		// Work around for bug: https://github.com/kubernetes/kubernetes/issues/83242
+		_, err := fmt.Fprintf(x.W, "until kubectl get crds %s.%s -o=jsonpath='{.items[0].metadata.name}' &> /dev/null; do sleep 1; done\n", crd.Name, crd.Group)
+		if err != nil {
+			return err
+		}
+		_, err = fmt.Fprintf(x.W, "kubectl wait --for=condition=Established crds/%s.%s --timeout=5m\n", crd.Name, crd.Group)
 		if err != nil {
 			return err
 		}
@@ -1138,11 +1143,11 @@ type ApplicationCRDRegPrinter struct {
 }
 
 func (x *ApplicationCRDRegPrinter) Do() error {
-	_, err := fmt.Fprintln(x.W, "kubectl apply -f https://github.com/kubepack/kubepack/raw/prototype/api/crds/kubepack.dev_applications.yaml")
+	_, err := fmt.Fprintln(x.W, "kubectl apply -f https://github.com/kubepack/kubepack/raw/prototype/api/crds/kubepack.com_applications.yaml")
 	if err != nil {
 		return err
 	}
-	_, err = fmt.Fprintln(x.W, "kubectl wait --for=condition=Established crds/applications.kubepack.dev --timeout=5m")
+	_, err = fmt.Fprintln(x.W, "kubectl wait --for=condition=Established crds/applications.kubepack.com --timeout=5m")
 	if err != nil {
 		return err
 	}
@@ -1194,7 +1199,7 @@ func (x *ApplicationUploader) Do() error {
 	if err != nil {
 		return err
 	}
-	_, writeErr := fmt.Fprintln(w, data)
+	_, writeErr := fmt.Fprintln(w, string(data))
 	// Always check the return value of Close when writing.
 	closeErr := w.Close()
 	if writeErr != nil {

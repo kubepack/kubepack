@@ -73,6 +73,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	_, err = buf.WriteRune('\n')
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	for _, pkg := range order.Spec.Packages {
 		if pkg.Chart == nil {
