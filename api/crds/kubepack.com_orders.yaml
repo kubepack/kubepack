@@ -4,9 +4,9 @@ metadata:
   creationTimestamp: null
   labels:
     app: kubepack
-  name: orders.kubepack.dev
+  name: orders.kubepack.com
 spec:
-  group: kubepack.dev
+  group: kubepack.com
   names:
     categories:
     - kubepack

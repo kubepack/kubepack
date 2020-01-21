@@ -1,4 +1,4 @@
-apiVersion: kubepack.dev/v1alpha1
+apiVersion: kubepack.com/v1alpha1
 description: HashiCorp Vault CSI Driver for Kubernetes
 icons:
 - src: https://cdn.appscode.com/images/products/kubevault/icons/android-icon-192x192.png

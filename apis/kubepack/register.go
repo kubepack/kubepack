@@ -17,4 +17,4 @@ limitations under the License.
 package kubepack
 
 // GroupName is the group name use in this package
-const GroupName = "kubepack.dev"
+const GroupName = "kubepack.com"

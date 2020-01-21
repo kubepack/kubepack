@@ -35,9 +35,9 @@ type FakeApplications struct {
 	ns   string
 }
 
-var applicationsResource = schema.GroupVersionResource{Group: "kubepack.dev", Version: "v1alpha1", Resource: "applications"}
+var applicationsResource = schema.GroupVersionResource{Group: "kubepack.com", Version: "v1alpha1", Resource: "applications"}
 
-var applicationsKind = schema.GroupVersionKind{Group: "kubepack.dev", Version: "v1alpha1", Kind: "Application"}
+var applicationsKind = schema.GroupVersionKind{Group: "kubepack.com", Version: "v1alpha1", Kind: "Application"}
 
 // Get takes name of the application, and returns the corresponding application object, and an error if there is any.
 func (c *FakeApplications) Get(name string, options v1.GetOptions) (result *v1alpha1.Application, err error) {

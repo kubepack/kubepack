@@ -97,6 +97,11 @@ message ApplicationStatus {
   // Resources embeds a list of object statuses
   // +optional
   optional ComponentList componentList = 11;
+
+  // CommonStatus taken from addon-operators. See: https://github.com/kubernetes-sigs/kubebuilder-declarative-pattern/blob/d91f6348488657f8606a6941f755aa530dd1b656/pkg/patterns/addon/pkg/apis/v1alpha1/common_types.go
+  optional bool healthy = 12;
+
+  repeated string errors = 13;
 }
 
 // +kubebuilder:object:root=true

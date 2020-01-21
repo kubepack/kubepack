@@ -166,6 +166,7 @@ API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alph
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ApplicationSpec,ComponentGroupKinds
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ApplicationSpec,Info
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ApplicationStatus,Conditions
+API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ApplicationStatus,Errors
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,BundleList,Items
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,BundleOptionView,Packages
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,BundleSpec,Packages

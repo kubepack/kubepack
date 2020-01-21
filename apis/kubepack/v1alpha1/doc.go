@@ -20,5 +20,5 @@ limitations under the License.
 // +k8s:openapi-gen=true
 // +k8s:defaulter-gen=TypeMeta
 
-// +groupName=kubepack.dev
+// +groupName=kubepack.com
 package v1alpha1

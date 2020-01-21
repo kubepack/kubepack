@@ -44,7 +44,7 @@ import (
 )
 
 const (
-	apiserviceName = "v1alpha1.validators.kubepack.dev"
+	apiserviceName = "v1alpha1.validators.kubepack.com"
 )
 
 var (

@@ -29,7 +29,7 @@ import (
 )
 
 const (
-	mutatorGroup   = "mutators.kubepack.dev"
+	mutatorGroup   = "mutators.kubepack.com"
 	mutatorVersion = "v1alpha1"
 )
 

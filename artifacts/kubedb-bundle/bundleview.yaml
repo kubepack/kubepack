@@ -1,4 +1,4 @@
-apiVersion: kubepack.dev/v1alpha1
+apiVersion: kubepack.com/v1alpha1
 description: A Helm chart for Kubernetes
 kind: BundleView
 name: kubedb-bundle

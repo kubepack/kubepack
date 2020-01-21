@@ -155,6 +155,11 @@ func (in *ApplicationStatus) DeepCopyInto(out *ApplicationStatus) {
 		}
 	}
 	in.ComponentList.DeepCopyInto(&out.ComponentList)
+	if in.Errors != nil {
+		in, out := &in.Errors, &out.Errors
+		*out = make([]string, len(*in))
+		copy(*out, *in)
+	}
 	return
 }
 

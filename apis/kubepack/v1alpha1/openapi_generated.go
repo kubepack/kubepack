@@ -14946,7 +14946,28 @@ func schema_kubepack_apis_kubepack_v1alpha1_ApplicationStatus(ref common.Referen
 							},
 						},
 					},
+					"healthy": {
+						SchemaProps: spec.SchemaProps{
+							Description: "CommonStatus taken from addon-operators. See: https://github.com/kubernetes-sigs/kubebuilder-declarative-pattern/blob/d91f6348488657f8606a6941f755aa530dd1b656/pkg/patterns/addon/pkg/apis/v1alpha1/common_types.go",
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+					"errors": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
+						},
+					},
 				},
+				Required: []string{"healthy"},
 			},
 		},
 		Dependencies: []string{

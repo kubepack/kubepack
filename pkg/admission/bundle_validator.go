@@ -35,7 +35,7 @@ import (
 )
 
 const (
-	validatorGroup   = "validators.kubepack.dev"
+	validatorGroup   = "validators.kubepack.com"
 	validatorVersion = "v1alpha1"
 )
 

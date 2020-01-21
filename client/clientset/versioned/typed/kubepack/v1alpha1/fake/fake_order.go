@@ -35,9 +35,9 @@ type FakeOrders struct {
 	ns   string
 }
 
-var ordersResource = schema.GroupVersionResource{Group: "kubepack.dev", Version: "v1alpha1", Resource: "orders"}
+var ordersResource = schema.GroupVersionResource{Group: "kubepack.com", Version: "v1alpha1", Resource: "orders"}
 
-var ordersKind = schema.GroupVersionKind{Group: "kubepack.dev", Version: "v1alpha1", Kind: "Order"}
+var ordersKind = schema.GroupVersionKind{Group: "kubepack.com", Version: "v1alpha1", Kind: "Order"}
 
 // Get takes name of the order, and returns the corresponding order object, and an error if there is any.
 func (c *FakeOrders) Get(name string, options v1.GetOptions) (result *v1alpha1.Order, err error) {

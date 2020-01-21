@@ -35,12 +35,12 @@ subsets:
 apiVersion: apiregistration.k8s.io/v1beta1
 kind: APIService
 metadata:
-  name: v1alpha1.validators.kubepack.dev
+  name: v1alpha1.validators.kubepack.com
   labels:
     app: kubepack
 spec:
   insecureSkipTLSVerify: true
-  group: validators.kubepack.dev
+  group: validators.kubepack.com
   groupPriorityMinimum: 1000
   versionPriority: 15
   service:
@@ -52,12 +52,12 @@ spec:
 apiVersion: apiregistration.k8s.io/v1beta1
 kind: APIService
 metadata:
-  name: v1alpha1.mutators.kubepack.dev
+  name: v1alpha1.mutators.kubepack.com
   labels:
     app: kubepack
 spec:
   insecureSkipTLSVerify: true
-  group: mutators.kubepack.dev
+  group: mutators.kubepack.com
   groupPriorityMinimum: 1000
   versionPriority: 15
   service:
@@ -69,12 +69,12 @@ spec:
 apiVersion: apiregistration.k8s.io/v1beta1
 kind: APIService
 metadata:
-  name: v1alpha1.validators.engine.kubepack.dev
+  name: v1alpha1.validators.engine.kubepack.com
   labels:
     app: kubepack
 spec:
   insecureSkipTLSVerify: true
-  group: validators.engine.kubepack.dev
+  group: validators.engine.kubepack.com
   groupPriorityMinimum: 1000
   versionPriority: 15
   service:

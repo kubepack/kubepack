@@ -164,6 +164,10 @@ type ApplicationStatus struct {
 	// Resources embeds a list of object statuses
 	// +optional
 	ComponentList `json:",inline,omitempty" protobuf:"bytes,11,opt,name=componentList"`
+
+	// CommonStatus taken from addon-operators. See: https://github.com/kubernetes-sigs/kubebuilder-declarative-pattern/blob/d91f6348488657f8606a6941f755aa530dd1b656/pkg/patterns/addon/pkg/apis/v1alpha1/common_types.go
+	Healthy bool     `json:"healthy" protobuf:"varint,12,opt,name=healthy"`
+	Errors  []string `json:"errors,omitempty" protobuf:"bytes,13,rep,name=errors"`
 }
 
 // ImageSpec contains information about an image used as an icon.

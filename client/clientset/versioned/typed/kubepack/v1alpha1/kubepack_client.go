@@ -33,7 +33,7 @@ type KubepackV1alpha1Interface interface {
 	PacksGetter
 }
 
-// KubepackV1alpha1Client is used to interact with features provided by the kubepack.dev group.
+// KubepackV1alpha1Client is used to interact with features provided by the kubepack.com group.
 type KubepackV1alpha1Client struct {
 	restClient rest.Interface
 }
