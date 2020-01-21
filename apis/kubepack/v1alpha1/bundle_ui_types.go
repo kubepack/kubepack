@@ -28,15 +28,20 @@ type BundleView struct {
 
 type BundleOptionView struct {
 	PackageMeta `json:",inline" protobuf:"bytes,1,opt,name=packageMeta"`
-	Namespace   string        `json:"namespace,omitempty" protobuf:"bytes,2,opt,name=namespace"`
-	Packages    []PackageCard `json:"packages" protobuf:"bytes,3,rep,name=packages"`
+	DisplayName string        `json:"displayName" protobuf:"bytes,2,opt,name=displayName"`
+	Features    []Feature     `json:"features,omitempty" protobuf:"bytes,3,rep,name=features"`
+	Packages    []PackageCard `json:"packages" protobuf:"bytes,4,rep,name=packages"`
 }
 
 type PackageCard struct {
-	Chart    *ChartCard          `json:"chart,omitempty" protobuf:"bytes,1,opt,name=chart"`
-	Bundle   *BundleOptionView   `json:"bundle,omitempty" protobuf:"bytes,2,opt,name=bundle"`
-	OneOf    []*BundleOptionView `json:"oneOf,omitempty" protobuf:"bytes,3,rep,name=oneOf"`
-	Required bool                `json:"required,omitempty" protobuf:"varint,4,opt,name=required"`
+	Chart  *ChartCard             `json:"chart,omitempty" protobuf:"bytes,1,opt,name=chart"`
+	Bundle *BundleOptionView      `json:"bundle,omitempty" protobuf:"bytes,2,opt,name=bundle"`
+	OneOf  *OneOfBundleOptionView `json:"oneOf,omitempty" protobuf:"bytes,3,rep,name=oneOf"`
+}
+
+type OneOfBundleOptionView struct {
+	Description string              `json:"description" protobuf:"bytes,1,opt,name=description"`
+	Bundles     []*BundleOptionView `json:"bundles,omitempty" protobuf:"bytes,2,rep,name=bundles"`
 }
 
 type ChartCard struct {
@@ -46,4 +51,6 @@ type ChartCard struct {
 	Namespace         string          `json:"namespace,omitempty" protobuf:"bytes,4,opt,name=namespace"`
 	Versions          []VersionOption `json:"versions" protobuf:"bytes,5,rep,name=versions"`
 	MultiSelect       bool            `json:"multiSelect,omitempty" protobuf:"varint,6,opt,name=multiSelect"`
+	Required          bool            `json:"required,omitempty" protobuf:"varint,7,opt,name=required"`
+	Selected          bool            `json:"selected,omitempty" protobuf:"varint,8,opt,name=selected"`
 }

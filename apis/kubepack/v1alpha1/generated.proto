@@ -130,9 +130,11 @@ message BundleOption {
 message BundleOptionView {
   optional PackageMeta packageMeta = 1;
 
-  optional string namespace = 2;
+  optional string displayName = 2;
 
-  repeated PackageCard packages = 3;
+  repeated Feature features = 3;
+
+  repeated PackageCard packages = 4;
 }
 
 message BundleRef {
@@ -144,9 +146,15 @@ message BundleRef {
 message BundleSpec {
   optional PackageDescriptor packageDescriptor = 3;
 
-  optional string namespace = 4;
+  optional string displayName = 4;
 
-  repeated PackageRef packages = 5;
+  repeated Feature features = 5;
+
+  optional string namespace = 6;
+
+  repeated PackageRef packages = 7;
+
+  optional ProductRef product = 8;
 }
 
 message BundleStatus {
@@ -173,6 +181,10 @@ message ChartCard {
   repeated VersionOption versions = 5;
 
   optional bool multiSelect = 6;
+
+  optional bool required = 7;
+
+  optional bool selected = 8;
 }
 
 message ChartOption {
@@ -185,6 +197,10 @@ message ChartOption {
   repeated VersionDetail versions = 4;
 
   optional bool multiSelect = 5;
+
+  optional bool required = 6;
+
+  optional bool selected = 7;
 }
 
 message ChartRef {
@@ -314,6 +330,12 @@ message Descriptor {
   optional string notes = 9;
 }
 
+message Feature {
+  optional string trait = 1;
+
+  optional string value = 2;
+}
+
 message GroupResource {
   optional string group = 1;
 
@@ -418,6 +440,18 @@ message ObjectStatus {
   optional string status = 5;
 }
 
+message OneOfBundleOption {
+  optional string description = 1;
+
+  repeated BundleOption bundles = 2;
+}
+
+message OneOfBundleOptionView {
+  optional string description = 1;
+
+  repeated BundleOptionView bundles = 2;
+}
+
 // +kubebuilder:object:root=true
 // +kubebuilder:resource:path=orders,singular=order,categories={kubepack,appscode}
 // +kubebuilder:subresource:status
@@ -488,9 +522,7 @@ message PackageCard {
 
   optional BundleOptionView bundle = 2;
 
-  repeated BundleOptionView oneOf = 3;
-
-  optional bool required = 4;
+  optional OneOfBundleOptionView oneOf = 3;
 }
 
 message PackageDescriptor {
@@ -532,9 +564,7 @@ message PackageRef {
 
   optional BundleOption bundle = 2;
 
-  repeated BundleOption oneOf = 3;
-
-  optional bool required = 4;
+  optional OneOfBundleOption oneOf = 3;
 }
 
 message PackageSelection {
@@ -553,6 +583,14 @@ message PackageView {
   // Top-level and per-version schemas are mutually exclusive.
   // +optional
   optional k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceValidation validation = 4;
+}
+
+message ProductRef {
+  optional string vendorID = 1;
+
+  optional string productID = 2;
+
+  optional string planID = 3;
 }
 
 message Repository {

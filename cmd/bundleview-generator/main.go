@@ -82,7 +82,7 @@ func toBundleOptionView(in *v1alpha1.BundleOption) *v1alpha1.BundleOptionView {
 			Version:           chrt.Metadata.Version,
 			PackageDescriptor: util.GetPackageDescriptor(chrt),
 		},
-		Namespace: bundle.Spec.Namespace,
+		DisplayName: bundle.Spec.DisplayName,
 	}
 
 	for _, pkg := range bundle.Spec.Packages {
@@ -111,8 +111,8 @@ func toBundleOptionView(in *v1alpha1.BundleOption) *v1alpha1.BundleOptionView {
 					Features:          pkg.Chart.Features,
 					MultiSelect:       pkg.Chart.MultiSelect,
 					Namespace:         util.XorY(pkg.Chart.Namespace, bundle.Spec.Namespace),
+					Required:          pkg.Chart.Required,
 				},
-				Required: pkg.Required,
 			}
 			for _, v := range pkg.Chart.Versions {
 				card.Chart.Versions = append(card.Chart.Versions, v.VersionOption)
@@ -123,17 +123,18 @@ func toBundleOptionView(in *v1alpha1.BundleOption) *v1alpha1.BundleOptionView {
 			bv.Packages = append(bv.Packages, card)
 		} else if pkg.Bundle != nil {
 			bv.Packages = append(bv.Packages, v1alpha1.PackageCard{
-				Bundle:   toBundleOptionView(pkg.Bundle),
-				Required: pkg.Required,
+				Bundle: toBundleOptionView(pkg.Bundle),
 			})
-		} else if len(pkg.OneOf) > 0 {
-			bovs := make([]*v1alpha1.BundleOptionView, 0, len(pkg.OneOf))
-			for _, bo := range pkg.OneOf {
+		} else if pkg.OneOf != nil {
+			bovs := make([]*v1alpha1.BundleOptionView, 0, len(pkg.OneOf.Bundles))
+			for _, bo := range pkg.OneOf.Bundles {
 				bovs = append(bovs, toBundleOptionView(bo))
 			}
 			bv.Packages = append(bv.Packages, v1alpha1.PackageCard{
-				OneOf:    bovs,
-				Required: pkg.Required,
+				OneOf: &v1alpha1.OneOfBundleOptionView{
+					Description: pkg.OneOf.Description,
+					Bundles:     bovs,
+				},
 			})
 		}
 	}

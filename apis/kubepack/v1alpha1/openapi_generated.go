@@ -338,6 +338,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ConfigMapKeySelector":                               schema_kubepack_apis_kubepack_v1alpha1_ConfigMapKeySelector(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData":                                        schema_kubepack_apis_kubepack_v1alpha1_ContactData(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Descriptor":                                         schema_kubepack_apis_kubepack_v1alpha1_Descriptor(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Feature":                                            schema_kubepack_apis_kubepack_v1alpha1_Feature(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.GroupResource":                                      schema_kubepack_apis_kubepack_v1alpha1_GroupResource(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.GroupVersionResource":                               schema_kubepack_apis_kubepack_v1alpha1_GroupVersionResource(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Hub":                                                schema_kubepack_apis_kubepack_v1alpha1_Hub(ref),
@@ -347,6 +348,8 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.IngressSelector":                                    schema_kubepack_apis_kubepack_v1alpha1_IngressSelector(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link":                                               schema_kubepack_apis_kubepack_v1alpha1_Link(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ObjectStatus":                                       schema_kubepack_apis_kubepack_v1alpha1_ObjectStatus(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.OneOfBundleOption":                                  schema_kubepack_apis_kubepack_v1alpha1_OneOfBundleOption(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.OneOfBundleOptionView":                              schema_kubepack_apis_kubepack_v1alpha1_OneOfBundleOptionView(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Order":                                              schema_kubepack_apis_kubepack_v1alpha1_Order(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.OrderList":                                          schema_kubepack_apis_kubepack_v1alpha1_OrderList(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.OrderSpec":                                          schema_kubepack_apis_kubepack_v1alpha1_OrderSpec(ref),
@@ -361,6 +364,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageRef":                                         schema_kubepack_apis_kubepack_v1alpha1_PackageRef(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageSelection":                                   schema_kubepack_apis_kubepack_v1alpha1_PackageSelection(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageView":                                        schema_kubepack_apis_kubepack_v1alpha1_PackageView(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductRef":                                         schema_kubepack_apis_kubepack_v1alpha1_ProductRef(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Repository":                                         schema_kubepack_apis_kubepack_v1alpha1_Repository(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions":                                schema_kubepack_apis_kubepack_v1alpha1_ResourceDefinitions(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceID":                                         schema_kubepack_apis_kubepack_v1alpha1_ResourceID(ref),
@@ -15192,10 +15196,22 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleOptionView(ref common.Referenc
 							},
 						},
 					},
-					"namespace": {
+					"displayName": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
+						},
+					},
+					"features": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.Feature"),
+									},
+								},
+							},
 						},
 					},
 					"packages": {
@@ -15211,11 +15227,11 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleOptionView(ref common.Referenc
 						},
 					},
 				},
-				Required: []string{"name", "url", "packages"},
+				Required: []string{"name", "url", "displayName", "packages"},
 			},
 		},
 		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageCard"},
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Feature", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageCard"},
 	}
 }
 
@@ -15323,6 +15339,24 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleSpec(ref common.ReferenceCallb
 							},
 						},
 					},
+					"displayName": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"features": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.Feature"),
+									},
+								},
+							},
+						},
+					},
 					"namespace": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
@@ -15341,12 +15375,17 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleSpec(ref common.ReferenceCallb
 							},
 						},
 					},
+					"product": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductRef"),
+						},
+					},
 				},
-				Required: []string{"packages"},
+				Required: []string{"displayName", "packages", "product"},
 			},
 		},
 		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageRef"},
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Feature", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageRef", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductRef"},
 	}
 }
 
@@ -15481,10 +15520,22 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleView(ref common.ReferenceCallb
 							},
 						},
 					},
-					"namespace": {
+					"displayName": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
+						},
+					},
+					"features": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.Feature"),
+									},
+								},
+							},
 						},
 					},
 					"packages": {
@@ -15500,11 +15551,11 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleView(ref common.ReferenceCallb
 						},
 					},
 				},
-				Required: []string{"name", "url", "packages"},
+				Required: []string{"name", "url", "displayName", "packages"},
 			},
 		},
 		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageCard"},
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Feature", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageCard"},
 	}
 }
 
@@ -15636,6 +15687,18 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartCard(ref common.ReferenceCallba
 							Format: "",
 						},
 					},
+					"required": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"boolean"},
+							Format: "",
+						},
+					},
+					"selected": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"boolean"},
+							Format: "",
+						},
+					},
 				},
 				Required: []string{"url", "name", "versions"},
 			},
@@ -15695,6 +15758,18 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartOption(ref common.ReferenceCall
 						},
 					},
 					"multiSelect": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"boolean"},
+							Format: "",
+						},
+					},
+					"required": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"boolean"},
+							Format: "",
+						},
+					},
+					"selected": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"boolean"},
 							Format: "",
@@ -16136,6 +16211,31 @@ func schema_kubepack_apis_kubepack_v1alpha1_Descriptor(ref common.ReferenceCallb
 	}
 }
 
+func schema_kubepack_apis_kubepack_v1alpha1_Feature(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"trait": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"value": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+				},
+				Required: []string{"trait", "value"},
+			},
+		},
+	}
+}
+
 func schema_kubepack_apis_kubepack_v1alpha1_GroupResource(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -16493,6 +16593,72 @@ func schema_kubepack_apis_kubepack_v1alpha1_ObjectStatus(ref common.ReferenceCal
 	}
 }
 
+func schema_kubepack_apis_kubepack_v1alpha1_OneOfBundleOption(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"description": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"bundles": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleOption"),
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"description"},
+			},
+		},
+		Dependencies: []string{
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleOption"},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_OneOfBundleOptionView(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"description": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"bundles": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleOptionView"),
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"description"},
+			},
+		},
+		Dependencies: []string{
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleOptionView"},
+	}
+}
+
 func schema_kubepack_apis_kubepack_v1alpha1_Order(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -16809,27 +16975,14 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageCard(ref common.ReferenceCall
 					},
 					"oneOf": {
 						SchemaProps: spec.SchemaProps{
-							Type: []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleOptionView"),
-									},
-								},
-							},
-						},
-					},
-					"required": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"boolean"},
-							Format: "",
+							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.OneOfBundleOptionView"),
 						},
 					},
 				},
 			},
 		},
 		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleOptionView", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartCard"},
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleOptionView", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartCard", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.OneOfBundleOptionView"},
 	}
 }
 
@@ -17045,27 +17198,14 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageRef(ref common.ReferenceCallb
 					},
 					"oneOf": {
 						SchemaProps: spec.SchemaProps{
-							Type: []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleOption"),
-									},
-								},
-							},
-						},
-					},
-					"required": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"boolean"},
-							Format: "",
+							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.OneOfBundleOption"),
 						},
 					},
 				},
 			},
 		},
 		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleOption", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartOption"},
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleOption", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartOption", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.OneOfBundleOption"},
 	}
 }
 
@@ -17218,6 +17358,37 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageView(ref common.ReferenceCall
 		},
 		Dependencies: []string{
 			"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1.CustomResourceValidation", "k8s.io/apimachinery/pkg/runtime.RawExtension", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link"},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_ProductRef(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"vendorID": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"productID": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"planID": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+				},
+				Required: []string{"vendorID", "productID", "planID"},
+			},
+		},
 	}
 }
 

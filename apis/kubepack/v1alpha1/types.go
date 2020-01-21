@@ -42,3 +42,14 @@ const (
 	ClusterScoped   ResourceScope = "Cluster"
 	NamespaceScoped ResourceScope = "Namespaced"
 )
+
+type Feature struct {
+	Trait string `json:"trait" protobuf:"bytes,1,opt,name=trait"`
+	Value string `json:"value" protobuf:"bytes,2,opt,name=value"`
+}
+
+type ProductRef struct {
+	VendorID  string `json:"vendorID" protobuf:"bytes,1,opt,name=vendorID"`
+	ProductID string `json:"productID" protobuf:"bytes,2,opt,name=productID"`
+	PlanID    string `json:"planID" protobuf:"bytes,3,opt,name=planID"`
+}

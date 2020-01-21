@@ -39,6 +39,20 @@ spec:
             description:
               description: Description is a brief string description of the Application.
               type: string
+            displayName:
+              type: string
+            features:
+              items:
+                properties:
+                  trait:
+                    type: string
+                  value:
+                    type: string
+                required:
+                - trait
+                - value
+                type: object
+              type: array
             icons:
               description: Icons is an optional list of icons for an application.
                 Icon information includes the source, size, and mime type.
@@ -152,6 +166,10 @@ spec:
                         type: string
                       namespace:
                         type: string
+                      required:
+                        type: boolean
+                      selected:
+                        type: boolean
                       url:
                         type: string
                       versions:
@@ -327,26 +345,46 @@ spec:
                     - versions
                     type: object
                   oneOf:
-                    items:
-                      properties:
-                        name:
-                          type: string
-                        url:
-                          type: string
-                        version:
-                          type: string
-                      required:
-                      - name
-                      - url
-                      - version
-                      type: object
-                    type: array
-                  required:
-                    type: boolean
+                    properties:
+                      bundles:
+                        items:
+                          properties:
+                            name:
+                              type: string
+                            url:
+                              type: string
+                            version:
+                              type: string
+                          required:
+                          - name
+                          - url
+                          - version
+                          type: object
+                        type: array
+                      description:
+                        type: string
+                    required:
+                    - description
+                    type: object
                 type: object
               type: array
+            product:
+              properties:
+                planID:
+                  type: string
+                productID:
+                  type: string
+                vendorID:
+                  type: string
+              required:
+              - planID
+              - productID
+              - vendorID
+              type: object
           required:
+          - displayName
           - packages
+          - product
           type: object
         status:
           properties:

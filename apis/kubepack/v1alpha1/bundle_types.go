@@ -44,15 +44,22 @@ type Bundle struct {
 
 type BundleSpec struct {
 	PackageDescriptor `json:",inline" protobuf:"bytes,3,opt,name=packageDescriptor"`
-	Namespace         string       `json:"namespace,omitempty" protobuf:"bytes,4,opt,name=namespace"`
-	Packages          []PackageRef `json:"packages" protobuf:"bytes,5,rep,name=packages"`
+	DisplayName       string       `json:"displayName" protobuf:"bytes,4,opt,name=displayName"`
+	Features          []Feature    `json:"features,omitempty" protobuf:"bytes,5,rep,name=features"`
+	Namespace         string       `json:"namespace,omitempty" protobuf:"bytes,6,opt,name=namespace"`
+	Packages          []PackageRef `json:"packages" protobuf:"bytes,7,rep,name=packages"`
+	Product           *ProductRef  `json:"product" protobuf:"bytes,8,opt,name=product"`
 }
 
 type PackageRef struct {
-	Chart    *ChartOption    `json:"chart,omitempty" protobuf:"bytes,1,opt,name=chart"`
-	Bundle   *BundleOption   `json:"bundle,omitempty" protobuf:"bytes,2,opt,name=bundle"`
-	OneOf    []*BundleOption `json:"oneOf,omitempty" protobuf:"bytes,3,rep,name=oneOf"`
-	Required bool            `json:"required,omitempty" protobuf:"varint,4,opt,name=required"`
+	Chart  *ChartOption       `json:"chart,omitempty" protobuf:"bytes,1,opt,name=chart"`
+	Bundle *BundleOption      `json:"bundle,omitempty" protobuf:"bytes,2,opt,name=bundle"`
+	OneOf  *OneOfBundleOption `json:"oneOf,omitempty" protobuf:"bytes,3,rep,name=oneOf"`
+}
+
+type OneOfBundleOption struct {
+	Description string          `json:"description" protobuf:"bytes,1,opt,name=description"`
+	Bundles     []*BundleOption `json:"bundles,omitempty" protobuf:"bytes,2,rep,name=bundles"`
 }
 
 type ChartRef struct {
@@ -68,6 +75,8 @@ type ChartOption struct {
 	Namespace   string          `json:"namespace,omitempty" protobuf:"bytes,3,opt,name=namespace"`
 	Versions    []VersionDetail `json:"versions" protobuf:"bytes,4,rep,name=versions"`
 	MultiSelect bool            `json:"multiSelect,omitempty" protobuf:"varint,5,opt,name=multiSelect"`
+	Required    bool            `json:"required,omitempty" protobuf:"varint,6,opt,name=required"`
+	Selected    bool            `json:"selected,omitempty" protobuf:"varint,7,opt,name=selected"`
 }
 
 type BundleRef struct {

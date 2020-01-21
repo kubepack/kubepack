@@ -95,10 +95,11 @@ func toPackageSelection(in *v1alpha1.BundleOptionView) []v1alpha1.PackageSelecti
 	})
 
 	for _, pkg := range in.Packages {
-		if !pkg.Required {
-			continue
-		}
 		if pkg.Chart != nil {
+			if !pkg.Chart.Required {
+				continue
+			}
+
 			for _, v := range pkg.Chart.Versions {
 				if v.Selected {
 					crds, waitFors := FindChartData(bundle, pkg.Chart.ChartRef, v.Version)
@@ -132,7 +133,7 @@ func toPackageSelection(in *v1alpha1.BundleOptionView) []v1alpha1.PackageSelecti
 			}
 		} else if pkg.Bundle != nil {
 			out = append(out, toPackageSelection(pkg.Bundle)...)
-		} else if len(pkg.OneOf) > 0 {
+		} else if pkg.OneOf != nil {
 			log.Fatalln("User must select one bundle")
 		}
 	}

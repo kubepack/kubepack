@@ -33,12 +33,14 @@ import (
 )
 
 var name = ""
+var displayName = ""
 var namespace = ""
 var charts []string
 var bundles []string
 
 func main() {
 	flag.StringVar(&name, "name", name, "Name of bundle, example: stash-bundle")
+	flag.StringVar(&displayName, "displayName", displayName, "Display Name of bundle, example: stash-bundle")
 	flag.StringVar(&namespace, "namespace", namespace, "Namespace where the bundle should be installed")
 	flag.StringArrayVar(&charts, "charts", charts, "Provide list charts in this bundle. format --charts url=chart_name@version --charts url=chart_name@version")
 	flag.StringArrayVar(&bundles, "bundles", bundles, "Provide list of bundles in this bundle. format --bundles url=bundle_chart_name@v1,v2 --bundles url=bundle_chart_name@v1,v2")
@@ -61,7 +63,8 @@ func main() {
 			// TODO: set labels
 		},
 		Spec: v1alpha1.BundleSpec{
-			Namespace: namespace,
+			DisplayName: displayName,
+			Namespace:   namespace,
 		},
 	}
 
@@ -96,8 +99,9 @@ func main() {
 				},
 				Features:  []string{pkgChart.Metadata.Description},
 				Namespace: ns,
+				Required:  required,
+				Selected:  required,
 			},
-			Required: required,
 		}
 
 		if idx == 0 {
