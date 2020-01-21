@@ -16,6 +16,10 @@ limitations under the License.
 
 package v1alpha1
 
+import (
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+)
+
 // ChartRepoRef references to a single version of a Chart
 type ChartRepoRef struct {
 	Name    string `json:"name" protobuf:"bytes,1,opt,name=name"`
@@ -52,4 +56,30 @@ type ProductRef struct {
 	VendorID  string `json:"vendorID" protobuf:"bytes,1,opt,name=vendorID"`
 	ProductID string `json:"productID" protobuf:"bytes,2,opt,name=productID"`
 	PlanID    string `json:"planID" protobuf:"bytes,3,opt,name=planID"`
+}
+
+type ResourceDefinitions struct {
+	Owned    []ResourceID `json:"owned" protobuf:"bytes,1,rep,name=owned"`
+	Required []ResourceID `json:"required" protobuf:"bytes,2,rep,name=required"`
+}
+
+// wait ([-f FILENAME] | resource.group/resource.name | resource.group [(-l label | --all)]) [--for=delete|--for condition=available]
+
+type WaitFlags struct {
+	Resource     GroupResource         `json:"resource" protobuf:"bytes,1,opt,name=resource"`
+	Labels       *metav1.LabelSelector `json:"labels" protobuf:"bytes,2,opt,name=labels"`
+	All          bool                  `json:"all" protobuf:"varint,3,opt,name=all"`
+	Timeout      metav1.Duration       `json:"timeout" protobuf:"bytes,4,opt,name=timeout"`
+	ForCondition string                `json:"for" protobuf:"bytes,5,opt,name=for"`
+}
+
+type GroupVersionResource struct {
+	Group    string `json:"group" protobuf:"bytes,1,opt,name=group"`
+	Version  string `json:"version" protobuf:"bytes,2,opt,name=version"`
+	Resource string `json:"resource" protobuf:"bytes,3,opt,name=resource"`
+}
+
+type GroupResource struct {
+	Group string `json:"group" protobuf:"bytes,1,opt,name=group"`
+	Name  string `json:"name" protobuf:"bytes,2,opt,name=name"`
 }

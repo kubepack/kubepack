@@ -24,22 +24,21 @@ import (
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/pkg/util"
 
+	"github.com/gobuffalo/flect"
 	flag "github.com/spf13/pflag"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/yaml"
 )
 
 var (
-	url       = "https://kubepack-testcharts.storage.googleapis.com"
-	name      = "kubedb-bundle"
-	namespace = "kube-system"
-	version   = "v0.13.0-rc.2"
+	url     = "https://kubepack-testcharts.storage.googleapis.com"
+	name    = "kubedb-bundle"
+	version = "v0.13.0-rc.2"
 )
 
 func main() {
 	flag.StringVar(&url, "url", url, "Chart repo url")
 	flag.StringVar(&name, "name", name, "Name of bundle")
-	flag.StringVar(&namespace, "namespace", namespace, "Namespace where bundle will be installed")
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
@@ -49,7 +48,7 @@ func main() {
 			Name: name,
 		},
 		Version: version,
-	})
+	}, 0)
 	bv := v1alpha1.BundleView{
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: v1alpha1.SchemeGroupVersion.String(),
@@ -72,7 +71,7 @@ func main() {
 	}
 }
 
-func toBundleOptionView(in *v1alpha1.BundleOption) *v1alpha1.BundleOptionView {
+func toBundleOptionView(in *v1alpha1.BundleOption, level int) *v1alpha1.BundleOptionView {
 	chrt, bundle := util.GetBundle(in)
 
 	bv := v1alpha1.BundleOptionView{
@@ -82,7 +81,7 @@ func toBundleOptionView(in *v1alpha1.BundleOption) *v1alpha1.BundleOptionView {
 			Version:           chrt.Metadata.Version,
 			PackageDescriptor: util.GetPackageDescriptor(chrt),
 		},
-		DisplayName: bundle.Spec.DisplayName,
+		DisplayName: util.XorY(bundle.Spec.DisplayName, flect.Titleize(flect.Humanize(bundle.Name))),
 	}
 
 	for _, pkg := range bundle.Spec.Packages {
@@ -101,6 +100,13 @@ func toBundleOptionView(in *v1alpha1.BundleOption) *v1alpha1.BundleOptionView {
 			if err != nil {
 				log.Fatalln(err)
 			}
+
+			required := pkg.Chart.Required
+			if level > 0 {
+				// Only direct charts can be required
+				required = false
+			}
+
 			card := v1alpha1.PackageCard{
 				Chart: &v1alpha1.ChartCard{
 					ChartRef: v1alpha1.ChartRef{
@@ -111,7 +117,8 @@ func toBundleOptionView(in *v1alpha1.BundleOption) *v1alpha1.BundleOptionView {
 					Features:          pkg.Chart.Features,
 					MultiSelect:       pkg.Chart.MultiSelect,
 					Namespace:         util.XorY(pkg.Chart.Namespace, bundle.Spec.Namespace),
-					Required:          pkg.Chart.Required,
+					Required:          required,
+					Selected:          pkg.Chart.Required,
 				},
 			}
 			for _, v := range pkg.Chart.Versions {
@@ -123,12 +130,12 @@ func toBundleOptionView(in *v1alpha1.BundleOption) *v1alpha1.BundleOptionView {
 			bv.Packages = append(bv.Packages, card)
 		} else if pkg.Bundle != nil {
 			bv.Packages = append(bv.Packages, v1alpha1.PackageCard{
-				Bundle: toBundleOptionView(pkg.Bundle),
+				Bundle: toBundleOptionView(pkg.Bundle, level+1),
 			})
 		} else if pkg.OneOf != nil {
 			bovs := make([]*v1alpha1.BundleOptionView, 0, len(pkg.OneOf.Bundles))
 			for _, bo := range pkg.OneOf.Bundles {
-				bovs = append(bovs, toBundleOptionView(bo))
+				bovs = append(bovs, toBundleOptionView(bo, level+1))
 			}
 			bv.Packages = append(bv.Packages, v1alpha1.PackageCard{
 				OneOf: &v1alpha1.OneOfBundleOptionView{

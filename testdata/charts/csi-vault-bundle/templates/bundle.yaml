@@ -5,6 +5,7 @@ metadata:
   name: '{{ include "csi-vault-bundle.fullname" . }}'
 spec:
   description: HashiCorp Vault CSI Driver for Kubernetes
+  displayName: Csi Vault Bundle
   icons:
   - src: https://cdn.appscode.com/images/products/kubevault/icons/android-icon-192x192.png
     type: image/png
@@ -20,8 +21,8 @@ spec:
       features:
       - HashiCorp Vault CSI Driver for Kubernetes
       name: csi-vault
+      required: true
       url: https://charts.appscode.com/stable/
       versions:
       - version: v0.3.0
-    required: true
 status: {}

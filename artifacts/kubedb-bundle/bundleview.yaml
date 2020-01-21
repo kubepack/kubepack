@@ -1,8 +1,8 @@
 apiVersion: kubepack.com/v1alpha1
 description: A Helm chart for Kubernetes
+displayName: Kubedb Bundle
 kind: BundleView
 name: kubedb-bundle
-namespace: kube-system
 packages:
 - chart:
     description: KubeDB by AppsCode - Production ready databases on Kubernetes
@@ -19,11 +19,12 @@ packages:
       name: appscode
     name: kubedb
     namespace: kube-system
+    required: true
+    selected: true
     url: https://charts.appscode.com/stable/
     versions:
     - selected: true
       version: v0.13.0-rc.0
-  required: true
 - chart:
     description: KubeDB Catalog by AppsCode - Catalog for database versions
     features:
@@ -39,11 +40,12 @@ packages:
       name: appscode
     name: kubedb-catalog
     namespace: kube-system
+    required: true
+    selected: true
     url: https://charts.appscode.com/stable/
     versions:
     - selected: true
       version: v0.13.0-rc.0
-  required: true
 - chart:
     description: A Helm chart for cert-manager
     features:
@@ -70,8 +72,8 @@ packages:
       version: v0.12.0
 - bundle:
     description: A Helm chart for Kubernetes
+    displayName: Stash Bundle
     name: stash-bundle
-    namespace: kube-system
     packages:
     - chart:
         description: Stash by AppsCode - Backup your Kubernetes Volumes
@@ -88,15 +90,15 @@ packages:
           name: appscode
         name: stash
         namespace: kube-system
+        selected: true
         url: https://charts.appscode.com/stable/
         versions:
         - selected: true
           version: v0.9.0-rc.2
-      required: true
     - bundle:
         description: A Helm chart for Kubernetes
+        displayName: Stash Mongodb Bundle
         name: stash-mongodb-bundle
-        namespace: kube-system
         packages:
         - chart:
             description: stash-mongodb - MongoDB database backup and restore plugin
@@ -116,6 +118,7 @@ packages:
             multiSelect: true
             name: stash-mongodb
             namespace: kube-system
+            selected: true
             url: https://charts.appscode.com/stable/
             versions:
             - selected: true
@@ -126,7 +129,6 @@ packages:
               version: 4.0.11
             - selected: true
               version: 4.1.13
-          required: true
         url: https://kubepack-testcharts.storage.googleapis.com
         version: v0.9.0-rc.2
     url: https://kubepack-testcharts.storage.googleapis.com

@@ -5,6 +5,7 @@ metadata:
   name: '{{ include "vault-operator-bundle.fullname" . }}'
 spec:
   description: Vault Operator by AppsCode - HashiCorp Vault Operator for Kubernetes
+  displayName: Vault Operator Bundle
   icons:
   - src: https://cdn.appscode.com/images/products/kubevault/icons/android-icon-192x192.png
     type: image/png
@@ -20,18 +21,18 @@ spec:
       features:
       - Vault Operator by AppsCode - HashiCorp Vault Operator for Kubernetes
       name: vault-operator
+      required: true
       url: https://charts.appscode.com/stable/
       versions:
       - version: v0.3.0
-    required: true
   - chart:
       features:
       - Vault Catalog by AppsCode - Catalog for Vault versions
       name: vault-catalog
+      required: true
       url: https://charts.appscode.com/stable/
       versions:
       - version: v0.3.0
-    required: true
   - bundle:
       name: csi-vault-bundle
       url: https://kubepack-testcharts.storage.googleapis.com

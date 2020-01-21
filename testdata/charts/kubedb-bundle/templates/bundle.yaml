@@ -5,6 +5,7 @@ metadata:
   name: '{{ include "kubedb-bundle.fullname" . }}'
 spec:
   description: KubeDB by AppsCode - Production ready databases on Kubernetes
+  displayName: Kubedb Bundle
   icons:
   - src: https://cdn.appscode.com/images/icon/kubedb.png
     type: image/png
@@ -20,18 +21,18 @@ spec:
       features:
       - KubeDB by AppsCode - Production ready databases on Kubernetes
       name: kubedb
+      required: true
       url: https://charts.appscode.com/stable/
       versions:
       - version: v0.13.0-rc.0
-    required: true
   - chart:
       features:
       - KubeDB Catalog by AppsCode - Catalog for database versions
       name: kubedb-catalog
+      required: true
       url: https://charts.appscode.com/stable/
       versions:
       - version: v0.13.0-rc.0
-    required: true
   - chart:
       features:
       - A Helm chart for cert-manager

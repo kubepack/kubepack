@@ -33,7 +33,7 @@ import (
 // OrdersGetter has a method to return a OrderInterface.
 // A group's client should implement this interface.
 type OrdersGetter interface {
-	Orders(namespace string) OrderInterface
+	Orders() OrderInterface
 }
 
 // OrderInterface has methods to work with Order resources.
@@ -53,14 +53,12 @@ type OrderInterface interface {
 // orders implements OrderInterface
 type orders struct {
 	client rest.Interface
-	ns     string
 }
 
 // newOrders returns a Orders
-func newOrders(c *KubepackV1alpha1Client, namespace string) *orders {
+func newOrders(c *KubepackV1alpha1Client) *orders {
 	return &orders{
 		client: c.RESTClient(),
-		ns:     namespace,
 	}
 }
 
@@ -68,7 +66,6 @@ func newOrders(c *KubepackV1alpha1Client, namespace string) *orders {
 func (c *orders) Get(name string, options v1.GetOptions) (result *v1alpha1.Order, err error) {
 	result = &v1alpha1.Order{}
 	err = c.client.Get().
-		Namespace(c.ns).
 		Resource("orders").
 		Name(name).
 		VersionedParams(&options, scheme.ParameterCodec).
@@ -85,7 +82,6 @@ func (c *orders) List(opts v1.ListOptions) (result *v1alpha1.OrderList, err erro
 	}
 	result = &v1alpha1.OrderList{}
 	err = c.client.Get().
-		Namespace(c.ns).
 		Resource("orders").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
@@ -102,7 +98,6 @@ func (c *orders) Watch(opts v1.ListOptions) (watch.Interface, error) {
 	}
 	opts.Watch = true
 	return c.client.Get().
-		Namespace(c.ns).
 		Resource("orders").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
@@ -113,7 +108,6 @@ func (c *orders) Watch(opts v1.ListOptions) (watch.Interface, error) {
 func (c *orders) Create(order *v1alpha1.Order) (result *v1alpha1.Order, err error) {
 	result = &v1alpha1.Order{}
 	err = c.client.Post().
-		Namespace(c.ns).
 		Resource("orders").
 		Body(order).
 		Do().
@@ -125,7 +119,6 @@ func (c *orders) Create(order *v1alpha1.Order) (result *v1alpha1.Order, err erro
 func (c *orders) Update(order *v1alpha1.Order) (result *v1alpha1.Order, err error) {
 	result = &v1alpha1.Order{}
 	err = c.client.Put().
-		Namespace(c.ns).
 		Resource("orders").
 		Name(order.Name).
 		Body(order).
@@ -140,7 +133,6 @@ func (c *orders) Update(order *v1alpha1.Order) (result *v1alpha1.Order, err erro
 func (c *orders) UpdateStatus(order *v1alpha1.Order) (result *v1alpha1.Order, err error) {
 	result = &v1alpha1.Order{}
 	err = c.client.Put().
-		Namespace(c.ns).
 		Resource("orders").
 		Name(order.Name).
 		SubResource("status").
@@ -153,7 +145,6 @@ func (c *orders) UpdateStatus(order *v1alpha1.Order) (result *v1alpha1.Order, er
 // Delete takes name of the order and deletes it. Returns an error if one occurs.
 func (c *orders) Delete(name string, options *v1.DeleteOptions) error {
 	return c.client.Delete().
-		Namespace(c.ns).
 		Resource("orders").
 		Name(name).
 		Body(options).
@@ -168,7 +159,6 @@ func (c *orders) DeleteCollection(options *v1.DeleteOptions, listOptions v1.List
 		timeout = time.Duration(*listOptions.TimeoutSeconds) * time.Second
 	}
 	return c.client.Delete().
-		Namespace(c.ns).
 		Resource("orders").
 		VersionedParams(&listOptions, scheme.ParameterCodec).
 		Timeout(timeout).
@@ -181,7 +171,6 @@ func (c *orders) DeleteCollection(options *v1.DeleteOptions, listOptions v1.List
 func (c *orders) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1alpha1.Order, err error) {
 	result = &v1alpha1.Order{}
 	err = c.client.Patch(pt).
-		Namespace(c.ns).
 		Resource("orders").
 		SubResource(subresources...).
 		Name(name).

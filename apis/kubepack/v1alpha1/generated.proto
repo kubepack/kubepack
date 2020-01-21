@@ -199,8 +199,6 @@ message ChartOption {
   optional bool multiSelect = 5;
 
   optional bool required = 6;
-
-  optional bool selected = 7;
 }
 
 message ChartRef {
@@ -298,36 +296,14 @@ message ContactData {
 
 // Descriptor defines the Metadata and informations about the Application.
 message Descriptor {
-  // Type is the type of the application (e.g. WordPress, MySQL, Cassandra).
-  optional string type = 1;
+  optional PackageDescriptor packageDescriptor = 7;
 
   // Version is an optional version indicator for the Application.
   optional string version = 2;
 
-  // Description is a brief string description of the Application.
-  optional string description = 3;
-
-  // Icons is an optional list of icons for an application. Icon information includes the source, size,
-  // and mime type.
-  repeated ImageSpec icons = 4;
-
-  // Maintainers is an optional list of maintainers of the application. The maintainers in this list maintain the
-  // the source code, images, and package for the application.
-  repeated ContactData maintainers = 5;
-
   // Owners is an optional list of the owners of the installed application. The owners of the application should be
   // contacted in the event of a orderned or unorderned disruption affecting the application.
   repeated ContactData owners = 6;
-
-  // Keywords is an optional list of key words associated with the application (e.g. MySQL, RDBMS, database).
-  repeated string keywords = 7;
-
-  // Links are a list of descriptive URLs intended to be used to surface additional documentation, dashboards, etc.
-  repeated Link links = 8;
-
-  // Notes contain a human readable snippets intended as a quick start for the users of the Application.
-  // CommonMark markdown syntax may be used for rich text representation.
-  optional string notes = 9;
 }
 
 message Feature {
@@ -453,7 +429,7 @@ message OneOfBundleOptionView {
 }
 
 // +kubebuilder:object:root=true
-// +kubebuilder:resource:path=orders,singular=order,categories={kubepack,appscode}
+// +kubebuilder:resource:path=orders,singular=order,scope=Cluster,categories={kubepack,appscode}
 // +kubebuilder:subresource:status
 message Order {
   optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
@@ -483,40 +459,6 @@ message OrderStatus {
   optional int64 observedGeneration = 1;
 }
 
-// +kubebuilder:object:root=true
-// +kubebuilder:resource:path=packages,singular=package,scope=Cluster,shortName=pkg,categories={kubepack,appscode}
-// +kubebuilder:subresource:status
-message Pack {
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
-
-  optional PackSpec spec = 2;
-
-  optional PackStatus status = 3;
-}
-
-message PackList {
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.ListMeta metadata = 1;
-
-  repeated Pack items = 2;
-}
-
-message PackSpec {
-  optional ChartRef chart = 1;
-
-  repeated string features = 2;
-
-  optional ResourceDefinitions resources = 3;
-
-  repeated WaitFlags waitFors = 4;
-}
-
-message PackStatus {
-  // ObservedGeneration is the most recent generation observed for this resource. It corresponds to the
-  // resource's generation, which is updated on mutation by the API Server.
-  // +optional
-  optional int64 observedGeneration = 1;
-}
-
 message PackageCard {
   optional ChartCard chart = 1;
 
@@ -526,26 +468,29 @@ message PackageCard {
 }
 
 message PackageDescriptor {
+  // Type is the type of the application (e.g. WordPress, MySQL, Cassandra).
+  optional string type = 1;
+
   // Description is a brief string description of the Application.
-  optional string description = 5;
+  optional string description = 2;
 
   // Icons is an optional list of icons for an application. Icon information includes the source, size,
   // and mime type.
-  repeated ImageSpec icons = 6;
+  repeated ImageSpec icons = 3;
 
   // Maintainers is an optional list of maintainers of the application. The maintainers in this list maintain the
   // the source code, images, and package for the application.
-  repeated ContactData maintainers = 7;
-
-  // Owners is an optional list of the owners of the installed application. The owners of the application should be
-  // contacted in the event of a orderned or unorderned disruption affecting the application.
-  repeated ContactData owners = 8;
+  repeated ContactData maintainers = 4;
 
   // Keywords is an optional list of key words associated with the application (e.g. MySQL, RDBMS, database).
-  repeated string keywords = 9;
+  repeated string keywords = 6;
 
   // Links are a list of descriptive URLs intended to be used to surface additional documentation, dashboards, etc.
-  repeated Link links = 10;
+  repeated Link links = 7;
+
+  // Notes contain a human readable snippets intended as a quick start for the users of the Application.
+  // CommonMark markdown syntax may be used for rich text representation.
+  optional string notes = 8;
 }
 
 message PackageMeta {

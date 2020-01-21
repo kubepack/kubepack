@@ -16,7 +16,7 @@ spec:
     plural: orders
     singular: order
   preserveUnknownFields: false
-  scope: Namespaced
+  scope: Cluster
   subresources:
     status: {}
   validation:

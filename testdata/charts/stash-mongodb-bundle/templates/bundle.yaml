@@ -6,6 +6,7 @@ metadata:
 spec:
   description: stash-mongodb - MongoDB database backup and restore plugin for Stash  by
     AppsCode
+  displayName: Stash Mongodb Bundle
   icons:
   - src: https://cdn.appscode.com/images/icon/stash.png
     type: image/png
@@ -22,6 +23,7 @@ spec:
       - stash-mongodb - MongoDB database backup and restore plugin for Stash  by AppsCode
       multiSelect: true
       name: stash-mongodb
+      required: true
       url: https://charts.appscode.com/stable/
       versions:
       - selected: true
@@ -32,5 +34,4 @@ spec:
         version: 4.0.11
       - selected: true
         version: 4.1.13
-    required: true
 status: {}

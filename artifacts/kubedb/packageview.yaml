@@ -1,0 +1,64 @@
+apiVersion: kubepack.com/v1alpha1
+description: KubeDB by AppsCode - Production ready databases on Kubernetes
+icons:
+- src: https://cdn.appscode.com/images/icon/kubedb.png
+  type: image/png
+kind: PackageView
+links:
+- description: Homepage
+  url: https://github.com/kubedb/installer
+maintainers:
+- email: kubedb@appscode.com
+  name: appscode
+name: kubedb
+url: https://charts.appscode.com/stable/
+values:
+  additionalPodSecurityPolicies: []
+  affinity: {}
+  annotations: {}
+  apiserver:
+    bypassValidatingWebhookXray: false
+    ca: not-ca-cert
+    disableStatusSubresource: false
+    enableMutatingWebhook: true
+    enableValidatingWebhook: true
+    groupPriorityMinimum: 10000
+    healthcheck:
+      enabled: true
+    port: 8443
+    useKubeapiserverFqdnForAks: true
+    versionPriority: 15
+  cleaner:
+    registry: appscode
+    repository: kubectl
+    tag: v1.12
+  criticalAddon: false
+  enableAnalytics: true
+  imagePullPolicy: IfNotPresent
+  kubedb:
+    registry: kubedb
+    repository: operator
+    tag: v0.13.0-rc.0
+  logLevel: 3
+  monitoring:
+    agent: none
+    enabled: false
+    prometheus:
+      namespace: ""
+    serviceMonitor:
+      labels: {}
+  nodeSelector:
+    beta.kubernetes.io/arch: amd64
+    beta.kubernetes.io/os: linux
+  rbac:
+    create: true
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 60Mi
+  serviceAccount:
+    create: true
+    name: null
+  tolerations: {}
+version: v0.13.0-rc.0

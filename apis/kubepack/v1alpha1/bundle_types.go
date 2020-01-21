@@ -44,11 +44,11 @@ type Bundle struct {
 
 type BundleSpec struct {
 	PackageDescriptor `json:",inline" protobuf:"bytes,3,opt,name=packageDescriptor"`
-	DisplayName       string       `json:"displayName" protobuf:"bytes,4,opt,name=displayName"`
+	DisplayName       string       `json:"displayName,omitempty" protobuf:"bytes,4,opt,name=displayName"`
 	Features          []Feature    `json:"features,omitempty" protobuf:"bytes,5,rep,name=features"`
-	Namespace         string       `json:"namespace,omitempty" protobuf:"bytes,6,opt,name=namespace"`
+	Namespace         string       `json:"namespace" protobuf:"bytes,6,opt,name=namespace"`
 	Packages          []PackageRef `json:"packages" protobuf:"bytes,7,rep,name=packages"`
-	Product           *ProductRef  `json:"product" protobuf:"bytes,8,opt,name=product"`
+	Product           *ProductRef  `json:"product,omitempty" protobuf:"bytes,8,opt,name=product"`
 }
 
 type PackageRef struct {
@@ -76,7 +76,6 @@ type ChartOption struct {
 	Versions    []VersionDetail `json:"versions" protobuf:"bytes,4,rep,name=versions"`
 	MultiSelect bool            `json:"multiSelect,omitempty" protobuf:"varint,5,opt,name=multiSelect"`
 	Required    bool            `json:"required,omitempty" protobuf:"varint,6,opt,name=required"`
-	Selected    bool            `json:"selected,omitempty" protobuf:"varint,7,opt,name=selected"`
 }
 
 type BundleRef struct {

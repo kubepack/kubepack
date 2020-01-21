@@ -1421,15 +1421,17 @@ func (x *ApplicationGenerator) Result() *v1alpha1.Application {
 		},
 		Spec: v1alpha1.ApplicationSpec{
 			Description: v1alpha1.Descriptor{
-				Type:        x.chrt.Name(),
-				Version:     x.chrt.Metadata.AppVersion,
-				Description: desc.Description,
-				Icons:       desc.Icons,
-				Maintainers: desc.Maintainers,
-				Owners:      nil,
-				Keywords:    desc.Keywords,
-				Links:       desc.Links,
-				Notes:       "",
+				PackageDescriptor: v1alpha1.PackageDescriptor{
+					Type:        x.chrt.Name(),
+					Description: desc.Description,
+					Icons:       desc.Icons,
+					Maintainers: desc.Maintainers,
+					Keywords:    desc.Keywords,
+					Links:       desc.Links,
+					Notes:       "",
+				},
+				Version: x.chrt.Metadata.AppVersion,
+				Owners:  nil, // TODO: Add the user email who is installing this app
 			},
 			AddOwnerRef:   false,
 			Info:          nil,

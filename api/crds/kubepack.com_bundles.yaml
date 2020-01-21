@@ -119,25 +119,11 @@ spec:
               type: array
             namespace:
               type: string
-            owners:
-              description: Owners is an optional list of the owners of the installed
-                application. The owners of the application should be contacted in
-                the event of a orderned or unorderned disruption affecting the application.
-              items:
-                description: ContactData contains information about an individual
-                  or organization.
-                properties:
-                  email:
-                    description: Email is the email address.
-                    type: string
-                  name:
-                    description: Name is the descriptive name.
-                    type: string
-                  url:
-                    description: Url could typically be a website address.
-                    type: string
-                type: object
-              type: array
+            notes:
+              description: Notes contain a human readable snippets intended as a quick
+                start for the users of the Application. CommonMark markdown syntax
+                may be used for rich text representation.
+              type: string
             packages:
               items:
                 properties:
@@ -167,8 +153,6 @@ spec:
                       namespace:
                         type: string
                       required:
-                        type: boolean
-                      selected:
                         type: boolean
                       url:
                         type: string
@@ -381,10 +365,13 @@ spec:
               - productID
               - vendorID
               type: object
+            type:
+              description: Type is the type of the application (e.g. WordPress, MySQL,
+                Cassandra).
+              type: string
           required:
-          - displayName
+          - namespace
           - packages
-          - product
           type: object
         status:
           properties:

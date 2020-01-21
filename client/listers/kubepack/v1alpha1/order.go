@@ -30,8 +30,8 @@ import (
 type OrderLister interface {
 	// List lists all Orders in the indexer.
 	List(selector labels.Selector) (ret []*v1alpha1.Order, err error)
-	// Orders returns an object that can list and get Orders.
-	Orders(namespace string) OrderNamespaceLister
+	// Get retrieves the Order from the index for a given name.
+	Get(name string) (*v1alpha1.Order, error)
 	OrderListerExpansion
 }
 
@@ -53,38 +53,9 @@ func (s *orderLister) List(selector labels.Selector) (ret []*v1alpha1.Order, err
 	return ret, err
 }
 
-// Orders returns an object that can list and get Orders.
-func (s *orderLister) Orders(namespace string) OrderNamespaceLister {
-	return orderNamespaceLister{indexer: s.indexer, namespace: namespace}
-}
-
-// OrderNamespaceLister helps list and get Orders.
-type OrderNamespaceLister interface {
-	// List lists all Orders in the indexer for a given namespace.
-	List(selector labels.Selector) (ret []*v1alpha1.Order, err error)
-	// Get retrieves the Order from the indexer for a given namespace and name.
-	Get(name string) (*v1alpha1.Order, error)
-	OrderNamespaceListerExpansion
-}
-
-// orderNamespaceLister implements the OrderNamespaceLister
-// interface.
-type orderNamespaceLister struct {
-	indexer   cache.Indexer
-	namespace string
-}
-
-// List lists all Orders in the indexer for a given namespace.
-func (s orderNamespaceLister) List(selector labels.Selector) (ret []*v1alpha1.Order, err error) {
-	err = cache.ListAllByNamespace(s.indexer, s.namespace, selector, func(m interface{}) {
-		ret = append(ret, m.(*v1alpha1.Order))
-	})
-	return ret, err
-}
-
-// Get retrieves the Order from the indexer for a given namespace and name.
-func (s orderNamespaceLister) Get(name string) (*v1alpha1.Order, error) {
-	obj, exists, err := s.indexer.GetByKey(s.namespace + "/" + name)
+// Get retrieves the Order from the index for a given name.
+func (s *orderLister) Get(name string) (*v1alpha1.Order, error) {
+	obj, exists, err := s.indexer.GetByKey(name)
 	if err != nil {
 		return nil, err
 	}

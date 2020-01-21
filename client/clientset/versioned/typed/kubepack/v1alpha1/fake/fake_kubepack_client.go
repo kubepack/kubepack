@@ -37,12 +37,8 @@ func (c *FakeKubepackV1alpha1) Bundles() v1alpha1.BundleInterface {
 	return &FakeBundles{c}
 }
 
-func (c *FakeKubepackV1alpha1) Orders(namespace string) v1alpha1.OrderInterface {
-	return &FakeOrders{c, namespace}
-}
-
-func (c *FakeKubepackV1alpha1) Packs() v1alpha1.PackInterface {
-	return &FakePacks{c}
+func (c *FakeKubepackV1alpha1) Orders() v1alpha1.OrderInterface {
+	return &FakeOrders{c}
 }
 
 // RESTClient returns a RESTClient that is used to communicate

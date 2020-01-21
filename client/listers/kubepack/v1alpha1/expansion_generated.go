@@ -33,11 +33,3 @@ type BundleListerExpansion interface{}
 // OrderListerExpansion allows custom methods to be added to
 // OrderLister.
 type OrderListerExpansion interface{}
-
-// OrderNamespaceListerExpansion allows custom methods to be added to
-// OrderNamespaceLister.
-type OrderNamespaceListerExpansion interface{}
-
-// PackListerExpansion allows custom methods to be added to
-// PackLister.
-type PackListerExpansion interface{}

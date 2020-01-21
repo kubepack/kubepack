@@ -23,5 +23,3 @@ type ApplicationExpansion interface{}
 type BundleExpansion interface{}
 
 type OrderExpansion interface{}
-
-type PackExpansion interface{}

@@ -27,6 +27,7 @@ import (
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/pkg/util"
 
+	"github.com/gobuffalo/flect"
 	flag "github.com/spf13/pflag"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/yaml"
@@ -34,7 +35,7 @@ import (
 
 var name = ""
 var displayName = ""
-var namespace = ""
+var namespace = "kube-system"
 var charts []string
 var bundles []string
 
@@ -63,7 +64,7 @@ func main() {
 			// TODO: set labels
 		},
 		Spec: v1alpha1.BundleSpec{
-			DisplayName: displayName,
+			DisplayName: util.XorY(displayName, flect.Titleize(flect.Humanize(name))),
 			Namespace:   namespace,
 		},
 	}
@@ -100,7 +101,6 @@ func main() {
 				Features:  []string{pkgChart.Metadata.Description},
 				Namespace: ns,
 				Required:  required,
-				Selected:  required,
 			},
 		}
 

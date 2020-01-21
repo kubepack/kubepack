@@ -30,8 +30,6 @@ type Interface interface {
 	Bundles() BundleInformer
 	// Orders returns a OrderInformer.
 	Orders() OrderInformer
-	// Packs returns a PackInformer.
-	Packs() PackInformer
 }
 
 type version struct {
@@ -57,10 +55,5 @@ func (v *version) Bundles() BundleInformer {
 
 // Orders returns a OrderInformer.
 func (v *version) Orders() OrderInformer {
-	return &orderInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
-}
-
-// Packs returns a PackInformer.
-func (v *version) Packs() PackInformer {
-	return &packInformer{factory: v.factory, tweakListOptions: v.tweakListOptions}
+	return &orderInformer{factory: v.factory, tweakListOptions: v.tweakListOptions}
 }

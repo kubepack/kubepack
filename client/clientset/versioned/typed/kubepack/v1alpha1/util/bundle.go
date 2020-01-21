@@ -72,7 +72,7 @@ func PatchBundleObject(c cs.KubepackV1alpha1Interface, cur, mod *api.Bundle) (*a
 	if len(patch) == 0 || string(patch) == "{}" {
 		return cur, kutil.VerbUnchanged, nil
 	}
-	glog.V(3).Infof("Patching Bundle %s/%s with %s.", cur.Namespace, cur.Name, string(patch))
+	glog.V(3).Infof("Patching Bundle %s with %s.", cur.Name, string(patch))
 	out, err := c.Bundles().Patch(cur.Name, types.MergePatchType, patch)
 	return out, kutil.VerbPatched, err
 }
@@ -88,12 +88,12 @@ func TryUpdateBundle(c cs.KubepackV1alpha1Interface, meta metav1.ObjectMeta, tra
 			result, e2 = c.Bundles().Update(transform(cur.DeepCopy()))
 			return e2 == nil, nil
 		}
-		glog.Errorf("Attempt %d failed to update Bundle %s/%s due to %v.", attempt, cur.Namespace, cur.Name, e2)
+		glog.Errorf("Attempt %d failed to update Bundle %s due to %v.", attempt, cur.Name, e2)
 		return false, nil
 	})
 
 	if err != nil {
-		err = fmt.Errorf("failed to update Bundle %s/%s after %d attempts due to %v", meta.Namespace, meta.Name, attempt, err)
+		err = fmt.Errorf("failed to update Bundle %s after %d attempts due to %v", meta.Name, attempt, err)
 	}
 	return
 }

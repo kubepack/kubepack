@@ -51,10 +51,10 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 	scheme.AddKnownTypes(SchemeGroupVersion,
 		&Application{},
 		&ApplicationList{},
-		&Pack{},
-		&PackList{},
 		&Bundle{},
 		&BundleList{},
+		&Order{},
+		&OrderList{},
 	)
 
 	scheme.AddKnownTypes(SchemeGroupVersion,

@@ -36,8 +36,8 @@ import (
 
 var (
 	url     = "https://charts.appscode.com/stable/"
-	name    = "csi-vault"
-	version = "v0.3.0"
+	name    = "kubedb"
+	version = "v0.13.0-rc.0"
 )
 
 func main() {

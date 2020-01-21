@@ -28,11 +28,12 @@ const (
 )
 
 // +genclient
+// +genclient:nonNamespaced
 // +k8s:openapi-gen=true
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 // +kubebuilder:object:root=true
-// +kubebuilder:resource:path=orders,singular=order,categories={kubepack,appscode}
+// +kubebuilder:resource:path=orders,singular=order,scope=Cluster,categories={kubepack,appscode}
 // +kubebuilder:subresource:status
 type Order struct {
 	metav1.TypeMeta   `json:",inline"`

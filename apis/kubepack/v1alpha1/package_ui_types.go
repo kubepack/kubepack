@@ -22,29 +22,30 @@ import (
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
-// TODO: Map chart metadata to PackageCard
-
 type PackageDescriptor struct {
+	// Type is the type of the application (e.g. WordPress, MySQL, Cassandra).
+	Type string `json:"type,omitempty" protobuf:"bytes,1,opt,name=type"`
+
 	// Description is a brief string description of the Application.
-	Description string `json:"description,omitempty" protobuf:"bytes,5,opt,name=description"`
+	Description string `json:"description,omitempty" protobuf:"bytes,2,opt,name=description"`
 
 	// Icons is an optional list of icons for an application. Icon information includes the source, size,
 	// and mime type.
-	Icons []ImageSpec `json:"icons,omitempty" protobuf:"bytes,6,rep,name=icons"`
+	Icons []ImageSpec `json:"icons,omitempty" protobuf:"bytes,3,rep,name=icons"`
 
 	// Maintainers is an optional list of maintainers of the application. The maintainers in this list maintain the
 	// the source code, images, and package for the application.
-	Maintainers []ContactData `json:"maintainers,omitempty" protobuf:"bytes,7,rep,name=maintainers"`
-
-	// Owners is an optional list of the owners of the installed application. The owners of the application should be
-	// contacted in the event of a orderned or unorderned disruption affecting the application.
-	Owners []ContactData `json:"owners,omitempty" protobuf:"bytes,8,rep,name=owners"`
+	Maintainers []ContactData `json:"maintainers,omitempty" protobuf:"bytes,4,rep,name=maintainers"`
 
 	// Keywords is an optional list of key words associated with the application (e.g. MySQL, RDBMS, database).
-	Keywords []string `json:"keywords,omitempty" protobuf:"bytes,9,rep,name=keywords"`
+	Keywords []string `json:"keywords,omitempty" protobuf:"bytes,6,rep,name=keywords"`
 
 	// Links are a list of descriptive URLs intended to be used to surface additional documentation, dashboards, etc.
-	Links []Link `json:"links,omitempty" protobuf:"bytes,10,rep,name=links"`
+	Links []Link `json:"links,omitempty" protobuf:"bytes,7,rep,name=links"`
+
+	// Notes contain a human readable snippets intended as a quick start for the users of the Application.
+	// CommonMark markdown syntax may be used for rich text representation.
+	Notes string `json:"notes,omitempty" protobuf:"bytes,8,opt,name=notes"`
 }
 
 type PackageMeta struct {
