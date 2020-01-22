@@ -527,11 +527,9 @@ message PackageView {
   // Default chart values
   optional k8s.io.apimachinery.pkg.runtime.RawExtension values = 2;
 
-  // validation describes the schema used for validation and pruning of the custom resource.
-  // If present, this validation schema is used to validate all versions.
-  // Top-level and per-version schemas are mutually exclusive.
+  // openAPIV3Schema describes the schema used for validation and pruning of the Values file.
   // +optional
-  optional k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceValidation validation = 4;
+  optional k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps openAPIV3Schema = 3;
 }
 
 message ProductRef {

@@ -66,9 +66,7 @@ type PackageView struct {
 	// Default chart values
 	Values *runtime.RawExtension `json:"values,omitempty" protobuf:"bytes,2,opt,name=values"`
 
-	// validation describes the schema used for validation and pruning of the custom resource.
-	// If present, this validation schema is used to validate all versions.
-	// Top-level and per-version schemas are mutually exclusive.
+	// openAPIV3Schema describes the schema used for validation and pruning of the Values file.
 	// +optional
-	Validation *crdv1beta1.CustomResourceValidation `json:"validation,omitempty" protobuf:"bytes,4,opt,name=validation"`
+	OpenAPIV3Schema *crdv1beta1.JSONSchemaProps `json:"openAPIV3Schema,omitempty" protobuf:"bytes,3,opt,name=openAPIV3Schema"`
 }

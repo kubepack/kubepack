@@ -17,7 +17,7 @@ limitations under the License.
 package main
 
 import (
-	"encoding/json"
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -31,13 +31,18 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
-	"sigs.k8s.io/yaml"
+	"k8s.io/apimachinery/pkg/util/yaml"
+	yamllib "sigs.k8s.io/yaml"
 )
 
 var (
-	url     = "https://charts.appscode.com/stable/"
-	name    = "kubedb"
-	version = "v0.13.0-rc.0"
+	//url     = "https://charts.appscode.com/stable/"
+	//name    = "kubedb"
+	//version = "v0.13.0-rc.0"
+
+	url     = "https://kubepack-testcharts.storage.googleapis.com"
+	name    = "stash"
+	version = "v0.9.0-rc.2"
 )
 
 func main() {
@@ -69,23 +74,22 @@ func main() {
 		},
 	}
 
-	for _, f := range pkgChart.Raw {
-		if f.Name == "kubepack/values.schema.json" {
+	for _, f := range pkgChart.Files {
+		if f.Name == "values.openapiv3_schema.json" || f.Name == "values.openapiv3_schema.yaml" || f.Name == "values.openapiv3_schema.yml" {
 			var schema crdv1beta1.JSONSchemaProps
-			err := json.Unmarshal(f.Data, &schema)
+			reader := yaml.NewYAMLOrJSONDecoder(bytes.NewReader(f.Data), 2048)
+			err := reader.Decode(&schema)
 			if err != nil {
 				log.Fatalln(err)
 			}
-			b.Validation = &crdv1beta1.CustomResourceValidation{
-				OpenAPIV3Schema: &schema,
-			}
+			b.OpenAPIV3Schema = &schema
 		}
 	}
-	//if b.Validation == nil && len(pkgChart.Schema) > 0 {
+	//if b.Schema == nil && len(pkgChart.Schema) > 0 {
 	//	// TODO convert json schema to openapi schema v3
 	//}
 
-	data, err := yaml.Marshal(b)
+	data, err := yamllib.Marshal(b)
 	if err != nil {
 		log.Fatal(err)
 	}

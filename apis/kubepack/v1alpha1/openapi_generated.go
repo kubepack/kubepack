@@ -17193,10 +17193,10 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageView(ref common.ReferenceCall
 							Ref:         ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
 						},
 					},
-					"validation": {
+					"openAPIV3Schema": {
 						SchemaProps: spec.SchemaProps{
-							Description: "validation describes the schema used for validation and pruning of the custom resource. If present, this validation schema is used to validate all versions. Top-level and per-version schemas are mutually exclusive.",
-							Ref:         ref("k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1.CustomResourceValidation"),
+							Description: "openAPIV3Schema describes the schema used for validation and pruning of the Values file.",
+							Ref:         ref("k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1.JSONSchemaProps"),
 						},
 					},
 				},
@@ -17204,7 +17204,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageView(ref common.ReferenceCall
 			},
 		},
 		Dependencies: []string{
-			"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1.CustomResourceValidation", "k8s.io/apimachinery/pkg/runtime.RawExtension", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link"},
+			"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1.JSONSchemaProps", "k8s.io/apimachinery/pkg/runtime.RawExtension", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link"},
 	}
 }
 

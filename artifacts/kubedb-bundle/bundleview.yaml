@@ -80,18 +80,18 @@ packages:
         features:
         - Stash by AppsCode - Backup your Kubernetes Volumes
         icons:
-        - src: https://cdn.appscode.com/images/icon/stash.png
+        - src: https://cdn.appscode.com/images/products/stash/icons/android-icon-192x192.png
           type: image/png
         links:
         - description: Homepage
-          url: https://github.com/stashed/stash
+          url: https://appscode.com/products/stash/
         maintainers:
         - email: support@appscode.com
           name: appscode
         name: stash
         namespace: kube-system
         selected: true
-        url: https://charts.appscode.com/stable/
+        url: https://kubepack-testcharts.storage.googleapis.com
         versions:
         - selected: true
           version: v0.9.0-rc.2
