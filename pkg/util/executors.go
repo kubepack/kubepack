@@ -598,33 +598,14 @@ func (x *YAMLPrinter) Do() error {
 
 	}
 
-	/*
-		// cp, err := client.ChartPathOptions.LocateChart(chart, settings)
-		//
-		if req := chrt.Metadata.Dependencies; req != nil {
-			// If CheckDependencies returns an error, we have unfulfilled dependencies.
-			// As of Helm 2.4.0, this is treated as a stopping condition:
-			// https://github.com/helm/helm/issues/2209
-			if err := action.CheckDependencies(chrt, req); err != nil {
-				if client.DependencyUpdate {
-					man := &downloader.Manager{
-						Out:              os.Stdout, // TODO: pass io.Writer?
-						ChartPath:        cp,
-						Keyring:          client.ChartPathOptions.Keyring,
-						SkipUpdate:       false,
-						Getters:          p,
-						RepositoryConfig: settings.RepositoryConfig,
-						RepositoryCache:  settings.RepositoryCache,
-					}
-					if err := man.Update(); err != nil {
-						return err
-					}
-				} else {
-					return err
-				}
-			}
+	if req := chrt.Metadata.Dependencies; req != nil {
+		// If CheckDependencies returns an error, we have unfulfilled dependencies.
+		// As of Helm 2.4.0, this is treated as a stopping condition:
+		// https://github.com/helm/helm/issues/2209
+		if err := action.CheckDependencies(chrt, req); err != nil {
+			return err
 		}
-	*/
+	}
 
 	vals := chrt.Values
 	if x.ValuesPatch != nil {
@@ -816,33 +797,14 @@ func (x *ChartInstaller) Do() error {
 		}
 	}
 
-	/*
-		// cp, err := client.ChartPathOptions.LocateChart(chart, settings)
-		//
-		if req := chrt.Metadata.Dependencies; req != nil {
-			// If CheckDependencies returns an error, we have unfulfilled dependencies.
-			// As of Helm 2.4.0, this is treated as a stopping condition:
-			// https://github.com/helm/helm/issues/2209
-			if err := action.CheckDependencies(chrt, req); err != nil {
-				if client.DependencyUpdate {
-					man := &downloader.Manager{
-						Out:              os.Stdout, // TODO: pass io.Writer?
-						ChartPath:        cp,
-						Keyring:          client.ChartPathOptions.Keyring,
-						SkipUpdate:       false,
-						Getters:          p,
-						RepositoryConfig: settings.RepositoryConfig,
-						RepositoryCache:  settings.RepositoryCache,
-					}
-					if err := man.Update(); err != nil {
-						return err
-					}
-				} else {
-					return err
-				}
-			}
+	if req := chrt.Metadata.Dependencies; req != nil {
+		// If CheckDependencies returns an error, we have unfulfilled dependencies.
+		// As of Helm 2.4.0, this is treated as a stopping condition:
+		// https://github.com/helm/helm/issues/2209
+		if err := action.CheckDependencies(chrt, req); err != nil {
+			return err
 		}
-	*/
+	}
 
 	vals := chrt.Values
 	if x.ValuesPatch != nil {
@@ -973,33 +935,14 @@ func (x *PermissionChecker) Do() error {
 	//
 	//}
 
-	/*
-		// cp, err := client.ChartPathOptions.LocateChart(chart, settings)
-		//
-		if req := chrt.Metadata.Dependencies; req != nil {
-			// If CheckDependencies returns an error, we have unfulfilled dependencies.
-			// As of Helm 2.4.0, this is treated as a stopping condition:
-			// https://github.com/helm/helm/issues/2209
-			if err := action.CheckDependencies(chrt, req); err != nil {
-				if client.DependencyUpdate {
-					man := &downloader.Manager{
-						Out:              os.Stdout, // TODO: pass io.Writer?
-						ChartPath:        cp,
-						Keyring:          client.ChartPathOptions.Keyring,
-						SkipUpdate:       false,
-						Getters:          p,
-						RepositoryConfig: settings.RepositoryConfig,
-						RepositoryCache:  settings.RepositoryCache,
-					}
-					if err := man.Update(); err != nil {
-						return err
-					}
-				} else {
-					return err
-				}
-			}
+	if req := chrt.Metadata.Dependencies; req != nil {
+		// If CheckDependencies returns an error, we have unfulfilled dependencies.
+		// As of Helm 2.4.0, this is treated as a stopping condition:
+		// https://github.com/helm/helm/issues/2209
+		if err := action.CheckDependencies(chrt, req); err != nil {
+			return err
 		}
-	*/
+	}
 
 	vals := chrt.Values
 	//if x.ValuesPatch != nil {
@@ -1281,33 +1224,14 @@ func (x *ApplicationGenerator) Do() error {
 	//
 	//}
 
-	/*
-		// cp, err := client.ChartPathOptions.LocateChart(chart, settings)
-		//
-		if req := chrt.Metadata.Dependencies; req != nil {
-			// If CheckDependencies returns an error, we have unfulfilled dependencies.
-			// As of Helm 2.4.0, this is treated as a stopping condition:
-			// https://github.com/helm/helm/issues/2209
-			if err := action.CheckDependencies(chrt, req); err != nil {
-				if client.DependencyUpdate {
-					man := &downloader.Manager{
-						Out:              os.Stdout, // TODO: pass io.Writer?
-						ChartPath:        cp,
-						Keyring:          client.ChartPathOptions.Keyring,
-						SkipUpdate:       false,
-						Getters:          p,
-						RepositoryConfig: settings.RepositoryConfig,
-						RepositoryCache:  settings.RepositoryCache,
-					}
-					if err := man.Update(); err != nil {
-						return err
-					}
-				} else {
-					return err
-				}
-			}
+	if req := x.chrt.Metadata.Dependencies; req != nil {
+		// If CheckDependencies returns an error, we have unfulfilled dependencies.
+		// As of Helm 2.4.0, this is treated as a stopping condition:
+		// https://github.com/helm/helm/issues/2209
+		if err := action.CheckDependencies(x.chrt, req); err != nil {
+			return err
 		}
-	*/
+	}
 
 	vals := x.chrt.Values
 	//if x.ValuesPatch != nil {

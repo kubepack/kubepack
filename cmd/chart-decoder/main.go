@@ -32,7 +32,6 @@ import (
 	"helm.sh/helm/v3/pkg/chartutil"
 	"helm.sh/helm/v3/pkg/cli"
 	"helm.sh/helm/v3/pkg/cli/values"
-	"helm.sh/helm/v3/pkg/downloader"
 	"helm.sh/helm/v3/pkg/getter"
 	"helm.sh/helm/v3/pkg/release"
 )
@@ -143,22 +142,7 @@ func runInstall(args []string, client *action.Install, valueOpts *values.Options
 		// As of Helm 2.4.0, this is treated as a stopping condition:
 		// https://github.com/helm/helm/issues/2209
 		if err := action.CheckDependencies(chartRequested, req); err != nil {
-			if client.DependencyUpdate {
-				man := &downloader.Manager{
-					Out:              out,
-					ChartPath:        cp,
-					Keyring:          client.ChartPathOptions.Keyring,
-					SkipUpdate:       false,
-					Getters:          p,
-					RepositoryConfig: settings.RepositoryConfig,
-					RepositoryCache:  settings.RepositoryCache,
-				}
-				if err := man.Update(); err != nil {
-					return nil, err
-				}
-			} else {
-				return nil, err
-			}
+			return nil, err
 		}
 	}
 
