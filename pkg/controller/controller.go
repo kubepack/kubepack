@@ -65,7 +65,6 @@ type KubepackController struct {
 func (c *KubepackController) ensureCustomResourceDefinitions() error {
 	crds := []*crd_api.CustomResourceDefinition{
 		api.Bundle{}.CustomResourceDefinition(),
-		api.Pack{}.CustomResourceDefinition(),
 		api.Order{}.CustomResourceDefinition(),
 		api.Application{}.CustomResourceDefinition(),
 		appcat.AppBinding{}.CustomResourceDefinition(),
