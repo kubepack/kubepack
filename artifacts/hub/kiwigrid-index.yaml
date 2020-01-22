@@ -1,0 +1,3723 @@
+apiVersion: v1
+entries:
+  any-resource:
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: "2019-03-06T13:16:11.121135314Z"
+    description: A Helm chart to bring any kind of resources in a k8s cluster
+    digest: bcd9195b29d4b6b43284b05b5ee873ee408cbeea745ee5988f7ef8e792a33a95
+    home: https://github.com/kiwigrid/helm-charts
+    maintainers:
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: any-resource
+    urls:
+    - https://kiwigrid.github.io/any-resource-0.1.0.tgz
+    version: 0.1.0
+  ditto-digital-twins:
+  - apiVersion: v1
+    appVersion: 1.0.0-M3
+    created: "2020-01-09T10:19:18.921047595Z"
+    deprecated: true
+    description: A Helm chart for Eclipse Ditto
+    digest: b2f0eb0e1c1035a93e26e188832798059ef373d99c49ec36d0de68a7a980fe4c
+    home: www.eclipse.org/ditto
+    icon: https://www.eclipse.org/ditto/images/ditto.svg
+    name: ditto-digital-twins
+    sources:
+    - https://github.com/eclipse/ditto
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/ditto-digital-twins
+    urls:
+    - https://kiwigrid.github.io/ditto-digital-twins-0.7.1.tgz
+    version: 0.7.1
+  - apiVersion: v1
+    appVersion: 1.0.0-M3
+    created: "2019-12-10T10:17:05.187334315Z"
+    description: A Helm chart for Eclipse Ditto
+    digest: 62e559077c98c0aa3e4b146ec9a3d44a75afa4b44f189fe37b8ca84fd1bae512
+    home: www.eclipse.org/ditto
+    icon: https://www.eclipse.org/ditto/images/ditto.svg
+    maintainers:
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: ditto-digital-twins
+    sources:
+    - https://github.com/eclipse/ditto
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/ditto-digital-twins
+    urls:
+    - https://kiwigrid.github.io/ditto-digital-twins-0.7.0.tgz
+    version: 0.7.0
+  - apiVersion: v1
+    appVersion: 1.0.0-M3
+    created: "2019-11-20T11:07:46.366491071Z"
+    description: A Helm chart for Eclipse Ditto
+    digest: 2cecd2cb556f50add1047ed3db6a1d17f0b33effed3ce8ee017444a2a71c0d63
+    home: www.eclipse.org/ditto
+    icon: https://www.eclipse.org/ditto/images/ditto.svg
+    maintainers:
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: ditto-digital-twins
+    sources:
+    - https://github.com/eclipse/ditto
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/ditto-digital-twins
+    urls:
+    - https://kiwigrid.github.io/ditto-digital-twins-0.6.1.tgz
+    version: 0.6.1
+  - apiVersion: v1
+    appVersion: 1.0.0-M3
+    created: "2019-11-19T16:09:51.267611379Z"
+    description: A Helm chart for Eclipse Ditto
+    digest: 53b7b7b23c69fae46723080c8a9293de51ef74581b25c0625de47c1056956528
+    home: www.eclipse.org/ditto
+    icon: https://www.eclipse.org/ditto/images/ditto.svg
+    maintainers:
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: ditto-digital-twins
+    sources:
+    - https://github.com/eclipse/ditto
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/ditto-digital-twins
+    urls:
+    - https://kiwigrid.github.io/ditto-digital-twins-0.6.0.tgz
+    version: 0.6.0
+  - apiVersion: v1
+    appVersion: 1.0.0-M3
+    created: "2019-11-19T13:44:30.752548264Z"
+    description: A Helm chart for Eclipse Ditto
+    digest: 924d44d2a12f719d6faa4ffb9744c99feba3278c8a76b93b285f7e73c063de57
+    home: www.eclipse.org/ditto
+    icon: https://www.eclipse.org/ditto/images/ditto.svg
+    maintainers:
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: ditto-digital-twins
+    sources:
+    - https://github.com/eclipse/ditto
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/ditto-digital-twins
+    urls:
+    - https://kiwigrid.github.io/ditto-digital-twins-0.5.0.tgz
+    version: 0.5.0
+  - apiVersion: v1
+    appVersion: 1.0.0-M3
+    created: "2019-11-18T15:35:33.462318403Z"
+    description: A Helm chart for Eclipse Ditto
+    digest: bdc8a831dd5cd46e00e21b4a43623069f3e6deb4bca3987dc2888cef61ea52e3
+    home: www.eclipse.org/ditto
+    icon: https://www.eclipse.org/ditto/images/ditto.svg
+    maintainers:
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: ditto-digital-twins
+    sources:
+    - https://github.com/eclipse/ditto
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/ditto-digital-twins
+    urls:
+    - https://kiwigrid.github.io/ditto-digital-twins-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v1
+    appVersion: 1.0.0-M3
+    created: "2019-11-18T13:56:17.477112498Z"
+    description: A Helm chart for Eclipse Ditto
+    digest: 490d820a33705b914ce3a55fbc0c8c6f3824b252ff9e36cbf9f3233d459fc435
+    home: www.eclipse.org/ditto
+    icon: https://www.eclipse.org/ditto/images/ditto.svg
+    maintainers:
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: ditto-digital-twins
+    sources:
+    - https://github.com/eclipse/ditto
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/ditto-digital-twins
+    urls:
+    - https://kiwigrid.github.io/ditto-digital-twins-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v1
+    appVersion: 0.9.0
+    created: "2019-11-16T11:00:43.057735119Z"
+    description: A Helm chart for Eclipse Ditto
+    digest: 4d04b1f4d8392526174370f33d43490a46824d597265551a24da8136090218ff
+    home: www.eclipse.org/ditto
+    icon: https://www.eclipse.org/ditto/images/ditto.svg
+    maintainers:
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: ditto-digital-twins
+    sources:
+    - https://github.com/eclipse/ditto
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/ditto-digital-twins
+    urls:
+    - https://kiwigrid.github.io/ditto-digital-twins-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    appVersion: 0.9.0
+    created: "2019-11-14T14:28:30.011903954Z"
+    description: A Helm chart for Eclipse Ditto
+    digest: ff8a6c17dbc5c0fc9c834ac4aaf0293730640bc3a040242f3ab03f928573a748
+    home: www.eclipse.org/ditto
+    icon: https://www.eclipse.org/ditto/images/ditto.svg
+    maintainers:
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: ditto-digital-twins
+    sources:
+    - https://github.com/eclipse/ditto
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/ditto-digital-twins
+    urls:
+    - https://kiwigrid.github.io/ditto-digital-twins-0.1.0.tgz
+    version: 0.1.0
+  enmasse:
+  - apiVersion: v1
+    appVersion: 0.30.1
+    created: "2019-11-19T07:56:51.808333115Z"
+    description: A Helm chart for enmasse
+    digest: a671a11c2253755ec8d1dacd95410c3f6f5656ef98fc28ae96bf7d7aa9eda830
+    home: https://enmasse.io/
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: enmasse
+    sources:
+    - https://github.com/EnMasseProject/enmasse
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/enmasse
+    urls:
+    - https://kiwigrid.github.io/enmasse-0.1.0.tgz
+    version: 0.1.0
+  enmasse-crd:
+  - apiVersion: v1
+    appVersion: 0.30.1
+    created: "2019-11-14T16:47:32.087513186Z"
+    description: A Helm chart for enmasse CRD's
+    digest: 518a060f75f784b96efb73bfbc7c3b3a5cd22114a46f5ff07ca29142abcd680b
+    home: https://enmasse.io/
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: enmasse-crd
+    sources:
+    - https://github.com/EnMasseProject/enmasse
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/enmasse-crd
+    urls:
+    - https://kiwigrid.github.io/enmasse-crd-0.1.0.tgz
+    version: 0.1.0
+  error-pages:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: "2019-05-13T13:37:35.631776467Z"
+    description: A Helm chart for Kubernetes error pages for traefik
+    digest: ebceb519e8bac1b4b8c00e6657a1658114c13b1b505a05fe323b5fd8704a7e3b
+    home: https://github.com/kiwigrid/helm-charts
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: error-pages
+    sources:
+    - https://github.com/kiwigrid/helm-charts
+    urls:
+    - https://kiwigrid.github.io/error-pages-0.1.0.tgz
+    version: 0.1.0
+  fluentd-elasticsearch:
+  - apiVersion: v1
+    appVersion: 2.8.0
+    created: "2020-01-15T11:57:54.85162Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: c55154a0aa74adb20849fd370e8b2c6be1b5a52e9c5c9ed6382e48a1174e3df4
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-6.1.0.tgz
+    version: 6.1.0
+  - apiVersion: v1
+    appVersion: 2.8.0
+    created: "2020-01-14T11:14:35.947631667Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 98de4258ae1ee39219f422d29c24d6b4f5f282376528efcbc7ff3d3da16ec097
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-6.0.0.tgz
+    version: 6.0.0
+  - apiVersion: v1
+    appVersion: 2.8.0
+    created: "2020-01-13T21:31:24.098754856Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: e1b62c28c0c26ca88c38f7fc6c28f7dcccd6a9e8d767ab0163bc10a53b5775dc
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-5.3.3.tgz
+    version: 5.3.3
+  - apiVersion: v1
+    appVersion: 2.8.0
+    created: "2020-01-09T15:00:22.544806329Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 95065480aa7f9097ade51a0ad6a35ffdee110a8996ce56395685cc79b52e98bb
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-5.3.2.tgz
+    version: 5.3.2
+  - apiVersion: v1
+    appVersion: 2.8.0
+    created: "2019-12-10T10:26:48.304275355Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 8dd9c20adf24fd31e224a64e9dcf442f5904be6688440a4baa157c66bbc48200
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-5.3.1.tgz
+    version: 5.3.1
+  - apiVersion: v1
+    appVersion: 2.7.0
+    created: "2019-12-07T23:19:58.696895664Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 9f2c4c0d9824de94c1d6124e80188865999aadd594e91d4e6bb381a09d66a99a
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-5.3.0.tgz
+    version: 5.3.0
+  - apiVersion: v1
+    appVersion: 2.7.0
+    created: "2019-12-05T16:24:01.921815467Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 1469d21ef10061e45c24c061faac988c90b0ee19e8a2632b008aacfb199e9ea8
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-5.2.1.tgz
+    version: 5.2.1
+  - apiVersion: v1
+    appVersion: 2.7.0
+    created: "2019-12-04T21:13:10.930688127Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: d403513b80d5fd6d33226abc700c60aa5c48cebe2cf635e1abc20b34a80d6e32
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-5.2.0.tgz
+    version: 5.2.0
+  - apiVersion: v1
+    appVersion: 2.7.0
+    created: "2019-11-13T15:03:28.456106289Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 4f741f6df48cf39658f1bff3e9b271f70729fd2ab20da72c9f8115f9e0e3683c
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-5.1.3.tgz
+    version: 5.1.3
+  - apiVersion: v1
+    appVersion: 2.7.0
+    created: "2019-11-13T10:24:58.043266278Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 54ee2ad2738dc550da5a6412c5e8c89fd0319ae50c47c75d5355abb70da15391
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-5.1.2.tgz
+    version: 5.1.2
+  - apiVersion: v1
+    appVersion: 2.7.0
+    created: "2019-11-11T23:11:55.286101759Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 7863ce4d5f90c4b53d1453ff5eef0c0b097064f00678205bafb127375e81dd0a
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-5.1.1.tgz
+    version: 5.1.1
+  - apiVersion: v1
+    appVersion: 2.7.0
+    created: "2019-11-06T17:15:51.206147619Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 92653571e7b7d4b6d35f64b86b1daf266c69bbf0c81e725b634b880035035035
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-5.1.0.tgz
+    version: 5.1.0
+  - apiVersion: v1
+    appVersion: 2.7.0
+    created: "2019-10-28T12:54:35.232955645Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 2f07fdfebca6656f4425b83d7840f0791dac9fe2f24a8a9001ab223cb4aaf202
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-5.0.1.tgz
+    version: 5.0.1
+  - apiVersion: v1
+    appVersion: 2.7.0
+    created: "2019-10-17T12:29:38.659091907Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: a715f087845b48bf5b23c2824261dde53d58bbecd320a1d96302842ad039444e
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-5.0.0.tgz
+    version: 5.0.0
+  - apiVersion: v1
+    appVersion: 2.7.0
+    created: "2019-10-11T12:32:41.611307326Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 868a157aa76afe52e2d34bf88542347f431ca652d178817350a1d16374ec82a1
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.9.4.tgz
+    version: 4.9.4
+  - apiVersion: v1
+    appVersion: 2.7.0
+    created: "2019-09-27T22:42:54.422206427Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 10afa1f8a45c39450259b8e7acbe45046182a5468e38f954dbb03626f474b4b5
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.9.3.tgz
+    version: 4.9.3
+  - apiVersion: v1
+    appVersion: 2.7.0
+    created: "2019-09-27T13:29:06.408711677Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 4930c11d1e55dbda88ea0412f9b4f1bb3fd8e81ac5df9b6f635fa68566a3331e
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.9.2.tgz
+    version: 4.9.2
+  - apiVersion: v1
+    appVersion: 2.7.0
+    created: "2019-09-21T16:28:02.521405682Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: ab4d539ba8be01d990aaeb4e6e7c0e9b685e2e71847508839c0d0387735a5e86
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.9.1.tgz
+    version: 4.9.1
+  - apiVersion: v1
+    appVersion: 2.7.0
+    created: "2019-09-21T12:25:23.371690364Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 3af3f8d1671877191be7894ba2b19b528349f2acdb6530d65aac1993117108ed
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.9.0.tgz
+    version: 4.9.0
+  - apiVersion: v1
+    appVersion: 2.7.0
+    created: "2019-09-02T17:47:36.320100947Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 44a425393017d561c1a4d728f2759787a41e942ff7befa684b64ce1b0e6d69be
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.8.5.tgz
+    version: 4.8.5
+  - apiVersion: v1
+    appVersion: 2.7.0
+    created: "2019-08-20T16:30:00.866938322Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 28f38c4e2f531f5e9466ece8c96c98b557e3f0a028f19cbc51e5e36e6331b445
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.8.4.tgz
+    version: 4.8.4
+  - apiVersion: v1
+    appVersion: 2.6.0
+    created: "2019-08-08T09:52:47.715408244Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: e3c9620972fddd1d9c4373a3446d1d919e5100ddf7229c8aac9207710819031a
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.8.3.tgz
+    version: 4.8.3
+  - apiVersion: v1
+    appVersion: 2.6.0
+    created: "2019-08-05T08:08:59.832027508Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 16137bdbfac6660e831d5e21d79aa2580f955cb30285dfd5e657cc3c1061296d
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.8.2.tgz
+    version: 4.8.2
+  - apiVersion: v1
+    appVersion: 2.6.0
+    created: "2019-08-04T10:31:22.898462533Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 89f548f1d63382a7683b16c3192d03ae0ab58bb6e859b7409bb9a979d248ee8d
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.8.1.tgz
+    version: 4.8.1
+  - apiVersion: v1
+    appVersion: 2.6.0
+    created: "2019-08-03T22:10:13.511172125Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: f80bbae3566456749c3e1495a8ef80823e773b1fed252952debf3f44384ca935
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.8.0.tgz
+    version: 4.8.0
+  - apiVersion: v1
+    appVersion: 2.6.0
+    created: "2019-08-03T07:49:32.011439576Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 64ad4002cebab0f5cfac51b8e409ef9301f1e035dfdba548490c0fec9f76e02c
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.7.0.tgz
+    version: 4.7.0
+  - apiVersion: v1
+    appVersion: 2.6.0
+    created: "2019-07-30T08:10:51.093130061Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 5e44c2dd80ac817da509aa6ab440bb07c24e14310130d790f896fcc4cf1756a0
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.6.0.tgz
+    version: 4.6.0
+  - apiVersion: v1
+    appVersion: 2.6.0
+    created: "2019-07-29T14:35:29.764004646Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 2af1649fa82a21357248e395fe8a9037c911f97710cb0620659435f625700685
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.5.1.tgz
+    version: 4.5.1
+  - apiVersion: v1
+    appVersion: 2.6.0
+    created: "2019-07-26T22:25:29.724653175Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 91e2516536fbf818d858030b1592a547d16bf7cc687815178f02c4a1a8bef0b5
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.5.0.tgz
+    version: 4.5.0
+  - apiVersion: v1
+    appVersion: 2.6.0
+    created: "2019-07-23T22:05:01.210006444Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: a2ad09b989944788e8a4b42f8fa88964e7a3a189fb093e6b83b532fb2a28401a
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.4.0.tgz
+    version: 4.4.0
+  - apiVersion: v1
+    appVersion: 2.6.0
+    created: "2019-07-17T13:59:27.139353198Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 1df47d02f9c149b49b64d3ed2928962c57490f84fd59afe7ef49414aacba09c9
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.3.2.tgz
+    version: 4.3.2
+  - apiVersion: v1
+    appVersion: 2.6.0
+    created: "2019-07-16T19:36:03.472160874Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 3427c92e98ce92ab3df14949726216428bc585faa8afe17c9cbafd7c9ba7b31d
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.3.1.tgz
+    version: 4.3.1
+  - apiVersion: v1
+    appVersion: 2.6.0
+    created: "2019-07-10T08:57:21.93941037Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: ab6acfc2cdc337ac7adb2427adf09fea1a86eabe99f265d1a9a91c13c80c6ec6
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.3.0.tgz
+    version: 4.3.0
+  - apiVersion: v1
+    appVersion: 2.6.0
+    created: "2019-07-06T16:19:07.953151226Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 487cb9a1a3649f8b173aa22fcbaf83bd6fa9f8822aa43213d93163dede153ad5
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.2.1.tgz
+    version: 4.2.1
+  - apiVersion: v1
+    appVersion: 2.6.0
+    created: "2019-06-26T08:24:21.548352202Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 0ba275f9a32a9606cfdb660dfdd4e95492b3461223f3365242d06e12ecf45f26
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.2.0.tgz
+    version: 4.2.0
+  - apiVersion: v1
+    appVersion: 2.6.0
+    created: "2019-06-24T11:33:22.480937111Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 062f320fc4061448279b0433418fe5c26b1dddf057b341c332f000403b036b30
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.1.0.tgz
+    version: 4.1.0
+  - apiVersion: v1
+    appVersion: 2.5.2
+    created: "2019-06-13T08:56:02.843284032Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 3724b9006a506721a45c0eeca8cb7aeffa5bfa16c3a6bbe2e786a58f29db1e96
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-4.0.0.tgz
+    version: 4.0.0
+  - apiVersion: v1
+    appVersion: 2.5.2
+    created: "2019-06-12T13:47:19.804816189Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 1291cbe48fdceb3c844f949610faa7f4b160dbb548e1300488c6d84e686cb72a
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-3.0.2.tgz
+    version: 3.0.2
+  - apiVersion: v1
+    appVersion: 2.5.2
+    created: "2019-05-28T13:59:55.602704044Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: a5ae9db4d8e0c0bdedd9ea24a79ed05f06476eb29a719fc2007ba052a956ac05
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-3.0.1.tgz
+    version: 3.0.1
+  - appVersion: 2.5.2
+    created: "2019-05-16T19:36:48.653980187Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: c3a7cd4597fd4b67db30339e052bf39e064b459046a71bb1219b9a959c44c54b
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-3.0.0.tgz
+    version: 3.0.0
+  - appVersion: 2.5.2
+    created: "2019-05-15T13:15:27.529252467Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 4701ed3fb6eef70137f1eaf3625d8d523d912ab206721d1fd9f1b2b915b0b1f5
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.12.0.tgz
+    version: 2.12.0
+  - appVersion: 2.5.1
+    created: "2019-05-14T14:54:23.003432246Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 6ac28f3353102a9e2daee3b760d0108d7fecbc0a2faa3efd9a0ea2e5fc98fa7b
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.11.1.tgz
+    version: 2.11.1
+  - appVersion: 2.5.1
+    created: "2019-05-14T10:54:36.906502164Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 336804f30be8044ab29691e1f55b68efc31e3704145a4d5a31045462f6a4d257
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.11.0.tgz
+    version: 2.11.0
+  - appVersion: 2.5.1
+    created: "2019-05-14T09:03:03.453604427Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: f3c671d4080f98de44e214273d455ecbc588294622ec9e97e524df975564a7b2
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.10.1.tgz
+    version: 2.10.1
+  - appVersion: 2.5.1
+    created: "2019-05-13T21:40:32.893651194Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 181427186af2a3fd445a40b5064caf9e4ea4798b3e47a601e03bdd837d878987
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.10.0.tgz
+    version: 2.10.0
+  - appVersion: 2.5.1
+    created: "2019-05-08T09:36:34.21917001Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 3ac72b563cd06c64984002db77152f1048323e8bfd28d8495f72a99e240e7f0c
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.9.1.tgz
+    version: 2.9.1
+  - appVersion: 2.5.1
+    created: "2019-04-24T17:27:06.842620945Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 4b68f58b55ca59b6ef1b55eb9f13470b8f04002a5e7a623eb7e4d133e5e14454
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.9.0.tgz
+    version: 2.9.0
+  - appVersion: 2.5.1
+    created: "2019-04-08T09:45:19.774380123Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: f9f52dfc80151455ba2fcf9b05c2cd04b5703f4a1976ceab4d01c21c2282f3c2
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.8.3.tgz
+    version: 2.8.3
+  - appVersion: 2.5.1
+    created: "2019-04-08T09:37:37.433323938Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 56a01c0376d44c25684d3bd545810409a671952555e3b1ae4d526e38c6cfefa7
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.8.2.tgz
+    version: 2.8.2
+  - appVersion: 2.5.0
+    created: "2019-03-29T12:29:46.79312683Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: d212ba9a1f5db5438bbeb8e938970c090f1833c6c71249526e68e7484a030df0
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.8.1.tgz
+    version: 2.8.1
+  - appVersion: 2.5.0
+    created: "2019-03-28T10:48:29.038419845Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 0e1ba94bdd0c2e00b782454b3677622fecbacbe1ba9ef8d5ff2fb5a07b044804
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kubernetes/charts/stable/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.8.0.tgz
+    version: 2.8.0
+  - appVersion: 2.4.0
+    created: "2019-03-19T17:39:21.832714626Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 6371d71cebcc73113b4c56026e4ee4afe44c17de184a67a58508b3298e672858
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kubernetes/charts/stable/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.7.0.tgz
+    version: 2.7.0
+  - appVersion: 2.4.0
+    created: "2019-03-12T16:28:29.694293502Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 0c7726fa57b7ea10290da98ca24b29b0e4892dcb67497ddfa1f0546b396bfaac
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kubernetes/charts/stable/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.6.0.tgz
+    version: 2.6.0
+  - appVersion: 2.4.0
+    created: "2019-02-26T07:50:05.66367247Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: ba8e0a674c86bb15c6b0e1648bc8b40d67985ebe8d91ccf895b83e855798b65b
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kubernetes/charts/stable/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.5.0.tgz
+    version: 2.5.0
+  - appVersion: 2.4.0
+    created: "2019-02-25T13:35:48.526890775Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 0b12f9126cbabe5dee2753ab14245c1bb0c45491a49b94bcb591318f71f357f5
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kubernetes/charts/stable/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.4.0.tgz
+    version: 2.4.0
+  - appVersion: 2.4.0
+    created: "2019-02-22T22:06:09.957262361Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 55af1d855204a8b52628ff56011e3a018d223cd6b1951252fe41b74f84028607
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kubernetes/charts/stable/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.3.3.tgz
+    version: 2.3.3
+  - appVersion: 2.4.0
+    created: "2019-02-22T21:14:10.083676152Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 03da217494bd1ea46d8bcb7bec7f6581c9c8ba2f660bc735c608070ea180ce57
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kubernetes/charts/stable/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.3.2.tgz
+    version: 2.3.2
+  - appVersion: 2.4.0
+    created: "2019-02-22T18:57:37.05971082Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: c5010fa1d9c4f0f7c409972b5716ea340f0feb0bb0757307d17747dabf80d91b
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kubernetes/charts/stable/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.3.1.tgz
+    version: 2.3.1
+  - appVersion: 2.4.0
+    created: "2019-02-20T08:31:10.546579094Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 67b5bff45be6b09e000e6c22a5237dd51c7a43722b851909cfab79f3006ecfe0
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kubernetes/charts/stable/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.3.0.tgz
+    version: 2.3.0
+  - appVersion: 2.4.0
+    created: "2019-02-19T13:25:57.17728915Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: cd973ff3914f04c4b5cc9f11634ff8d769630c25775cbabe39ca52faa115cad9
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kubernetes/charts/stable/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.2.4.tgz
+    version: 2.2.4
+  - appVersion: 2.4.0
+    created: "2019-02-03T10:29:31.523619044Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 0849ed2b81790f7e38e20e2ca09fc1bbb6fec59b5b267aa9cc8e121e616b6e83
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kubernetes/charts/stable/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.2.3.tgz
+    version: 2.2.3
+  - appVersion: 2.4.0
+    created: "2019-01-22T23:36:51.28413345Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 046073b6a978b27b08d622943af94d10c8f768ac3bd1072fb1bfdeb9a3942961
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kubernetes/charts/stable/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.2.2.tgz
+    version: 2.2.2
+  - appVersion: 2.4.0
+    created: "2019-01-16T11:51:14.596034226Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: b19369de109b5eba12330ae73d82b0cb2bfd508ac038e643a3f34be74a55759f
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kubernetes/charts/stable/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.2.1.tgz
+    version: 2.2.1
+  - appVersion: 2.4.0
+    created: "2019-01-16T09:21:10.354559435Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 7cab1ddd35f63cadc4290e8516fac492b2dce2c5a68680e0b367d9fa7b3b9e3b
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kubernetes/charts/stable/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.2.0.tgz
+    version: 2.2.0
+  - appVersion: 2.3.2
+    created: "2019-01-08T13:11:43.288775399Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 4a09b8671b4340f0f83413bdd57b188f3b915689e7d4e07ec7f4f662572434ea
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kubernetes/charts/stable/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.1.2.tgz
+    version: 2.1.2
+  - appVersion: 2.3.2
+    created: "2019-01-05T16:55:45.057457592Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: b01e95c26ce8a80eb5f4dd62b26833f6a54c9ff968681a23afc12216ecc204fe
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kubernetes/charts/stable/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.1.1.tgz
+    version: 2.1.1
+  - appVersion: 2.3.2
+    created: "2019-01-02T18:42:16.37365598Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: be99b993fb661e8be43950bbb06d010d71cbed96cdb82bba12e057689dc74f70
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: monotek23@gmail.com
+      name: monotek
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kubernetes/charts/stable/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-2.1.0.tgz
+    version: 2.1.0
+  gcp-serviceaccount-controller:
+  - apiVersion: v1
+    appVersion: 0.2.4
+    created: "2019-10-29T15:29:43.678866616Z"
+    description: A Helm chart for a Kubernetes Controller to create secrets for GCP
+      Service Accounts
+    digest: c5a5d01745dc2c81e7d5089f4ad91400ffc7e6fc49050d10736664d174d965b9
+    home: https://github.com/kiwigrid/gcp-serviceaccount-controller
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: gcp-serviceaccount-controller
+    sources:
+    - https://github.com/kiwigrid/gcp-serviceaccount-controller
+    urls:
+    - https://kiwigrid.github.io/gcp-serviceaccount-controller-0.2.5.tgz
+    version: 0.2.5
+  - apiVersion: v1
+    appVersion: 0.2.2
+    created: "2019-10-28T10:52:00.32890906Z"
+    description: A Helm chart for a Kubernetes Controller to create secrets for GCP
+      Service Accounts
+    digest: 48620b8af93bd349e60ad420cf580e9ca247e7f34624de320a463a91147d6a29
+    home: https://github.com/kiwigrid/gcp-serviceaccount-controller
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: gcp-serviceaccount-controller
+    sources:
+    - https://github.com/kiwigrid/gcp-serviceaccount-controller
+    urls:
+    - https://kiwigrid.github.io/gcp-serviceaccount-controller-0.2.4.tgz
+    version: 0.2.4
+  - apiVersion: v1
+    appVersion: 0.2.1
+    created: "2019-05-25T16:11:03.643430283Z"
+    description: A Helm chart for a Kubernetes Controller to create secrets for GCP
+      Service Accounts
+    digest: 55f2b6914a970926cfb9edba890caa7cc3b4b9d99cda99c43ca3d2b3f518452e
+    home: https://github.com/kiwigrid/gcp-serviceaccount-controller
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: gcp-serviceaccount-controller
+    sources:
+    - https://github.com/kiwigrid/gcp-serviceaccount-controller
+    urls:
+    - https://kiwigrid.github.io/gcp-serviceaccount-controller-0.2.3.tgz
+    version: 0.2.3
+  - apiVersion: v1
+    appVersion: 0.2.1
+    created: "2019-05-02T08:26:36.236952384Z"
+    description: A Helm chart for a Kubernetes Controller to create secrets for GCP
+      Service Accounts
+    digest: a9e0d987f94da93f7f1fca3f37939710a6a7be819bfe023051246e4c33fd562e
+    home: https://github.com/kiwigrid/gcp-serviceaccount-controller
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: gcp-serviceaccount-controller
+    sources:
+    - https://github.com/kiwigrid/gcp-serviceaccount-controller
+    urls:
+    - https://kiwigrid.github.io/gcp-serviceaccount-controller-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v1
+    appVersion: 0.2.1
+    created: "2019-03-05T09:02:39.090876814Z"
+    description: A Helm chart for a Kubernetes Controller to create secrets for GCP
+      Service Accounts
+    digest: 597615c65455b1286663af28f1efdc3bbbb3d0ad417132861f50262613311895
+    home: https://github.com/kiwigrid/gcp-serviceaccount-controller
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: gcp-serviceaccount-controller
+    sources:
+    - https://github.com/kiwigrid/gcp-serviceaccount-controller
+    urls:
+    - https://kiwigrid.github.io/gcp-serviceaccount-controller-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v1
+    appVersion: 0.2.1
+    created: "2019-02-11T13:31:32.655793012Z"
+    description: A Helm chart for a Kubernetes Controller to create secrets for GCP
+      Service Accounts
+    digest: 51c66d4115c3865f0c0aad48be485493b0da604cfb0fbd678861e3db58a0cf4e
+    home: https://github.com/kiwigrid/gcp-serviceaccount-controller
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: gcp-serviceaccount-controller
+    sources:
+    - https://github.com/kiwigrid/gcp-serviceaccount-controller
+    urls:
+    - https://kiwigrid.github.io/gcp-serviceaccount-controller-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: "2019-01-16T11:51:14.596347518Z"
+    description: A Helm chart for a Kubernetes Controller to create secrets for GCP
+      Service Accounts
+    digest: 3f9e77901efc6c9d3b63c2c0eea9fe6d3bd23966219dc482e0d8ee62e2df16dc
+    home: https://github.com/kiwigrid/gcp-serviceaccount-controller
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: gcp-serviceaccount-controller
+    sources:
+    - https://github.com/kiwigrid/gcp-serviceaccount-controller
+    urls:
+    - https://kiwigrid.github.io/gcp-serviceaccount-controller-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: "2019-01-16T09:49:37.367168871Z"
+    description: A Helm chart for a Kubernetes Controller to create secrets for GCP
+      Service Accounts
+    digest: 9c7d069dfdc2dfcf26b808316f7a087ade884e641a85ad5e6b83ce9e37e40374
+    home: https://github.com/kiwigrid/gcp-serviceaccount-controller
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: gcp-serviceaccount-controller
+    sources:
+    - https://github.com/kiwigrid/gcp-serviceaccount-controller
+    urls:
+    - https://kiwigrid.github.io/gcp-serviceaccount-controller-0.1.0.tgz
+    version: 0.1.0
+  graphite:
+  - apiVersion: v1
+    appVersion: 1.1.5-4
+    created: "2020-01-17T11:56:08.719832414Z"
+    description: Graphite metrics server
+    digest: 1186a03e9b98281447a9c70655e6f181e5143878afb12af0efa4750c2455c13e
+    home: https://graphiteapp.org/
+    icon: https://graphiteapp.org/img/graphite-logo_color.png
+    keywords:
+    - metrics
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: graphite
+    sources:
+    - https://github.com/graphite-project
+    - https://github.com/graphite-project/docker-graphite-statsd
+    urls:
+    - https://kiwigrid.github.io/graphite-0.5.0.tgz
+    version: 0.5.0
+  - apiVersion: v1
+    appVersion: 1.1.5-4
+    created: "2020-01-14T09:57:45.827641915Z"
+    description: Graphite metrics server
+    digest: 650cd6bd0094b751279fec4d402615c6a9ebd7c43767bd4ef27e073749d63676
+    home: https://graphiteapp.org/
+    icon: https://graphiteapp.org/img/graphite-logo_color.png
+    keywords:
+    - metrics
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: graphite
+    sources:
+    - https://github.com/graphite-project
+    - https://github.com/graphite-project/docker-graphite-statsd
+    urls:
+    - https://kiwigrid.github.io/graphite-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v1
+    appVersion: 1.1.5-4
+    created: "2019-06-29T21:12:35.42478766Z"
+    description: Graphite metrics server
+    digest: f4a4c9ffe917b920a64595d2f6c0d63774ebe7ad5b764c7993351413bbfcdf31
+    home: https://graphiteapp.org/
+    icon: https://graphiteapp.org/img/graphite-logo_color.png
+    keywords:
+    - metrics
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: graphite
+    sources:
+    - https://github.com/graphite-project
+    - https://github.com/graphite-project/docker-graphite-statsd
+    urls:
+    - https://kiwigrid.github.io/graphite-0.3.5.tgz
+    version: 0.3.5
+  - apiVersion: v1
+    appVersion: 1.1.5-4
+    created: "2019-01-24T10:18:47.283312011Z"
+    description: Graphite metrics server
+    digest: 88ddccea808a1dda2c5ff875a2b1b564f494ecfe6b5e8e9a9758a50e4aa31653
+    home: https://graphiteapp.org/
+    icon: https://graphiteapp.org/img/graphite-logo_color.png
+    keywords:
+    - metrics
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: graphite
+    sources:
+    - https://github.com/graphite-project
+    - https://github.com/graphite-project/docker-graphite-statsd
+    urls:
+    - https://kiwigrid.github.io/graphite-0.3.4.tgz
+    version: 0.3.4
+  - apiVersion: v1
+    appVersion: 1.1.5-3
+    created: "2019-01-16T11:51:14.597063122Z"
+    description: Graphite metrics server
+    digest: 4f01f966ec1798818d02bf5a56c25d0966748c5f1493a2f17454312893858b00
+    home: https://graphiteapp.org/
+    icon: https://graphiteapp.org/img/graphite-logo_color.png
+    keywords:
+    - metrics
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: graphite
+    sources:
+    - https://github.com/graphite-project
+    - https://github.com/graphite-project/docker-graphite-statsd
+    urls:
+    - https://kiwigrid.github.io/graphite-0.3.3.tgz
+    version: 0.3.3
+  - apiVersion: v1
+    appVersion: 1.1.5-3
+    created: "2019-01-16T09:21:10.356279866Z"
+    description: Graphite metrics server
+    digest: d339c247bf2f02f6ec2b1dd59f9517f87304ae762717626dcb0021109384183b
+    home: https://graphiteapp.org/
+    icon: https://graphiteapp.org/img/graphite-logo_color.png
+    keywords:
+    - metrics
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: graphite
+    sources:
+    - https://github.com/graphite-project
+    - https://github.com/graphite-project/docker-graphite-statsd
+    urls:
+    - https://kiwigrid.github.io/graphite-0.3.2.tgz
+    version: 0.3.2
+  - apiVersion: v1
+    appVersion: 1.1.5-3
+    created: "2019-01-07T14:20:17.482531794Z"
+    description: Graphite metrics server
+    digest: cd443dacc5c6c78e736f5fb9e0916ed9cff7932be2784f5d3f53166acdf5f209
+    home: https://graphiteapp.org/
+    icon: https://graphiteapp.org/img/graphite-logo_color.png
+    keywords:
+    - metrics
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: graphite
+    sources:
+    - https://github.com/graphite-project
+    - https://github.com/graphite-project/docker-graphite-statsd
+    urls:
+    - https://kiwigrid.github.io/graphite-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v1
+    appVersion: 1.1.5-3
+    created: "2019-01-07T12:34:26.776016741Z"
+    description: Graphite metrics server
+    digest: 9bd3c3bdbf5a0189dfb33c6d44f7c6b6b5e3db7a5b80b9b3eb73a6df731c2729
+    home: https://graphiteapp.org/
+    icon: https://graphiteapp.org/img/graphite-logo_color.png
+    keywords:
+    - metrics
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: graphite
+    sources:
+    - https://github.com/graphite-project
+    - https://github.com/graphite-project/docker-graphite-statsd
+    urls:
+    - https://kiwigrid.github.io/graphite-0.3.0.tgz
+    version: 0.3.0
+  hawkbit-update-server:
+  - apiVersion: v1
+    appVersion: 0.3.0M5-mysql
+    created: "2019-11-07T13:27:59.3050771Z"
+    description: A Helm chart for hawkbit update server
+    digest: d7dd29533d0fd362efa18c8470d38e8a04c0b795a1a276fe805cc5f6a40122a1
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: hawkbit-update-server
+    sources:
+    - https://github.com/eclipse/hawkbit
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-2.1.1.tgz
+    version: 2.1.1
+  - apiVersion: v1
+    appVersion: 0.3.0
+    created: "2019-11-07T08:24:15.973789406Z"
+    description: A Helm chart for hawkbit update server
+    digest: 7dc3627dccc7daef96d7f5b7d0b7b9f613d8816178517e50ac907ddc8e0cdd8b
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: hawkbit-update-server
+    sources:
+    - https://github.com/eclipse/hawkbit
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-2.1.0.tgz
+    version: 2.1.0
+  - apiVersion: v1
+    appVersion: 0.3.0
+    created: "2019-10-07T15:10:36.120876164Z"
+    description: A Helm chart for hawkbit update server
+    digest: 0936a9b86ff43678a0f51f1cc9f371aef6e20129dc71773046832799e1ff86d4
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: hawkbit-update-server
+    sources:
+    - https://github.com/eclipse/hawkbit
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-2.0.2.tgz
+    version: 2.0.2
+  - apiVersion: v1
+    appVersion: 0.3.0
+    created: "2019-10-01T14:12:51.896791632Z"
+    description: A Helm chart for hawkbit update server
+    digest: 2a04821747d280038c6fb53b40d3bcf53cfc432529bb73a116e395d28a7e5894
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: hawkbit-update-server
+    sources:
+    - https://github.com/eclipse/hawkbit
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-2.0.1.tgz
+    version: 2.0.1
+  - apiVersion: v1
+    appVersion: 0.3.0
+    created: "2019-10-01T12:55:50.738804306Z"
+    description: A Helm chart for hawkbit update server
+    digest: 0a157fee99130a04bcfbbce174d28ed201434ded9c70883710768fcca348087a
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: hawkbit-update-server
+    sources:
+    - https://github.com/eclipse/hawkbit
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-2.0.0.tgz
+    version: 2.0.0
+  - apiVersion: v1
+    appVersion: 0.3.0
+    created: "2019-08-05T08:48:30.216105408Z"
+    description: A Helm chart for hawkbit update server
+    digest: aa9afafaf4f3acc4e811faad2bfcb2b682bceed51b24548a87acc0dd8e08a8cd
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v1
+    appVersion: 0.3.0
+    created: "2019-07-16T06:04:31.042533173Z"
+    description: A Helm chart for hawkbit update server
+    digest: a3a702703ea19044434aae00123f2490de52b85f869603193c8ed0ce71d8808c
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-0.6.1.tgz
+    version: 0.6.1
+  - apiVersion: v1
+    appVersion: 0.3.0
+    created: "2019-07-15T14:27:41.588034906Z"
+    description: A Helm chart for hawkbit update server
+    digest: 5f759bf2deed3b631b8ae93d03bebd89883daa8f9c505e2426654744db17e9c5
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-0.6.0.tgz
+    version: 0.6.0
+  - apiVersion: v1
+    appVersion: 0.3.0
+    created: "2019-06-05T12:03:59.400498924Z"
+    description: A Helm chart for hawkbit update server
+    digest: afd75cd33bb28861877776d787303a0ab9763488148cef99730c5bd05fa70b75
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-0.5.0.tgz
+    version: 0.5.0
+  - apiVersion: v1
+    appVersion: 0.3.0
+    created: "2019-05-09T13:52:55.777746153Z"
+    description: A Helm chart for hawkbit update server
+    digest: 46de7d4ab32256f6437935d09aba4af72073dc892fd924beb83c3bb48f5eef68
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v1
+    appVersion: 0.2.5
+    created: "2019-05-09T08:36:54.621297087Z"
+    description: A Helm chart for hawkbit update server
+    digest: ecf245167a8f055753a02f727dc1ba887f14378260cec77302d701d119094b97
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v1
+    appVersion: 0.2.5
+    created: "2019-05-08T15:05:19.903941437Z"
+    description: A Helm chart for hawkbit update server
+    digest: fc2c5d58c46bd77678a354585ca89a93a37dc42da45f6dab37756aa24a5640ff
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v1
+    appVersion: 0.2.5
+    created: "2019-04-02T13:13:34.006127362Z"
+    description: A Helm chart for hawkbit update server
+    digest: 2dd0d87c3be599effd5ce5c7e09f0a62202d8b13f6a1cf47bd82bd93784618aa
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-0.2.3.tgz
+    version: 0.2.3
+  - apiVersion: v1
+    appVersion: 0.2.5
+    created: "2019-03-07T12:43:45.939890543Z"
+    description: A Helm chart for hawkbit update server
+    digest: c7c182cc0e4edc7fbb95b13cfdede8ea95b72cc226ae998c0f3fd26c1b612617
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v1
+    appVersion: 0.2.5
+    created: "2019-03-06T14:51:47.623937638Z"
+    description: A Helm chart for hawkbit update server
+    digest: c97a0b4cea496580318d6b4bbdd7def157ae1dc773aebd72cc60646dde432240
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v1
+    appVersion: 0.2.5
+    created: "2019-03-06T11:30:44.716451373Z"
+    description: A Helm chart for hawkbit update server
+    digest: dd4269a49dd75bdb04d60531dd8b5a11207bfaa7add7cb9e841527ec0aac311c
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    appVersion: 0.2.5
+    created: "2019-02-11T14:13:18.403624645Z"
+    description: A Helm chart for hawkbit update server
+    digest: 4640ac2ec67d17e9e9715953bbb59de77c8a25f726291cee1f3f06860243a74d
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v1
+    appVersion: 0.2.5
+    created: "2019-02-08T08:51:30.893530095Z"
+    description: A Helm chart for hawkbit update server
+    digest: 03349e21608a6927d440d57b74e3000368e0bec67fff08c0c5cd134a4fd928f1
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
+    appVersion: 0.2.5
+    created: "2019-02-07T16:44:36.642813718Z"
+    description: A Helm chart for hawkbit update server
+    digest: db2d7d75c50de3a4f7a4d2b3268ad965d6d5f04d6e36cb052ae2171e5ba7a3f1
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    appVersion: 0.2.5
+    created: "2019-02-07T14:59:19.828436901Z"
+    description: A Helm chart for hawkbit update server
+    digest: 1846d2301e8039031667c6599572acbb295a67de631095ecfeb70e6929e393b7
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    maintainers:
+    - email: fabian.schlegel@kiwigrid.com
+      name: fabian-schlegel
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    name: hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-0.1.0.tgz
+    version: 0.1.0
+  ingress-annotator:
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: "2019-05-13T14:52:00.594002692Z"
+    description: A Helm chart for ingress annotator controller
+    digest: 7cc4d2c504e57c38d6f9f68b62226a8bcf5a5c263c4a4fec608ad7cd8a4447fe
+    home: https://github.com/kiwigrid/ingress-annotator
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: ingress-annotator
+    sources:
+    - https://github.com/kiwigrid/ingress-annotator
+    urls:
+    - https://kiwigrid.github.io/ingress-annotator-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: "2019-05-06T09:21:17.897578115Z"
+    description: A Helm chart for ingress annotator controller
+    digest: d95d952704e093f8331ef21a6d5d83c6869befa48a42698121ac960d725ddd7e
+    home: https://github.com/kiwigrid/ingress-annotator
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: ingress-annotator
+    sources:
+    - https://github.com/kiwigrid/ingress-annotator
+    urls:
+    - https://kiwigrid.github.io/ingress-annotator-0.1.0.tgz
+    version: 0.1.0
+  keycloak-client-controller:
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: "2019-04-08T06:56:16.650451147Z"
+    description: A Helm chart for a Kubernetes controller to manage Keycloak clients
+    digest: b6158163ec3bd629246f74bab8a38387952fbccb63163f877fc8ac20034774da
+    home: https://github.com/kiwigrid/keycloak-client-controller
+    maintainers:
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: keycloak-client-controller
+    sources:
+    - https://github.com/kiwigrid/keycloak-client-controller
+    urls:
+    - https://kiwigrid.github.io/keycloak-client-controller-0.1.0.tgz
+    version: 0.1.0
+  keycloak-controller:
+  - apiVersion: v1
+    appVersion: 1.4.1
+    created: "2020-01-21T07:25:27.798717716Z"
+    description: A Helm chart for a Kubernetes controller to manage Keycloak clients
+      and realms.
+    digest: 907a2052619faa4b362a5767b56da500cdfafd40b8f19131ff7beac1ef792291
+    home: https://github.com/kiwigrid/keycloak-controller
+    maintainers:
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    - email: stephan.schnabel@kiwigrid.com
+      name: sschnabe
+    name: keycloak-controller
+    sources:
+    - https://github.com/kiwigrid/keycloak-controller
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/keycloak-controller
+    urls:
+    - https://kiwigrid.github.io/keycloak-controller-0.5.1.tgz
+    version: 0.5.1
+  - apiVersion: v1
+    appVersion: 1.4.0
+    created: "2020-01-07T08:22:43.759193318Z"
+    description: A Helm chart for a Kubernetes controller to manage Keycloak clients
+      and realms.
+    digest: 1c7649f34500f0e4529d6a4f6ce565606a37bb3fd0ff0370c9921a978b854ef9
+    home: https://github.com/kiwigrid/keycloak-controller
+    maintainers:
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    - email: stephan.schnabel@kiwigrid.com
+      name: sschnabe
+    name: keycloak-controller
+    sources:
+    - https://github.com/kiwigrid/keycloak-controller
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/keycloak-controller
+    urls:
+    - https://kiwigrid.github.io/keycloak-controller-0.5.0.tgz
+    version: 0.5.0
+  - apiVersion: v1
+    appVersion: 1.3.1
+    created: "2019-12-12T08:34:04.995899397Z"
+    description: A Helm chart for a Kubernetes controller to manage Keycloak clients
+      and realms.
+    digest: 62fb9325c204dbf72b8ebaafcffbefda280a0e9c50a454e34575c09f1723256b
+    home: https://github.com/kiwigrid/keycloak-controller
+    maintainers:
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    - email: stephan.schnabel@kiwigrid.com
+      name: sschnabe
+    name: keycloak-controller
+    sources:
+    - https://github.com/kiwigrid/keycloak-controller
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/keycloak-controller
+    urls:
+    - https://kiwigrid.github.io/keycloak-controller-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v1
+    appVersion: 1.3.0
+    created: "2019-12-10T13:39:01.148496207Z"
+    description: A Helm chart for a Kubernetes controller to manage Keycloak clients
+      and realms.
+    digest: bd4c717bb060525d416f8e57b7a554fc1254232c26e652372d2b4c37dfa85eda
+    home: https://github.com/kiwigrid/keycloak-controller
+    maintainers:
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    - email: stephan.schnabel@kiwigrid.com
+      name: sschnabe
+    name: keycloak-controller
+    sources:
+    - https://github.com/kiwigrid/keycloak-controller
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/keycloak-controller
+    urls:
+    - https://kiwigrid.github.io/keycloak-controller-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v1
+    appVersion: 1.2.0
+    created: "2019-11-06T06:46:14.772385033Z"
+    description: A Helm chart for a Kubernetes controller to manage Keycloak clients
+      and realms.
+    digest: 58982d3ae045974e95f95f481f57adac90cf70ca38345ec7401878afddc23db0
+    home: https://github.com/kiwigrid/keycloak-controller
+    maintainers:
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    - email: stephan.schnabel@kiwigrid.com
+      name: sschnabe
+    name: keycloak-controller
+    sources:
+    - https://github.com/kiwigrid/keycloak-controller
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/keycloak-controller
+    urls:
+    - https://kiwigrid.github.io/keycloak-controller-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v1
+    appVersion: 1.1.0
+    created: "2019-09-09T10:23:29.914862787Z"
+    description: A Helm chart for a Kubernetes controller to manage Keycloak clients
+      and realms.
+    digest: 79003e3fb1aa200bea41b82ac0a17fbac1a70abcb663def3d49dce6eeca59b93
+    home: https://github.com/kiwigrid/keycloak-controller
+    maintainers:
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    - email: stephan.schnabel@kiwigrid.com
+      name: sschnabe
+    name: keycloak-controller
+    sources:
+    - https://github.com/kiwigrid/keycloak-controller
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/keycloak-controller
+    urls:
+    - https://kiwigrid.github.io/keycloak-controller-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    appVersion: 1.0.0
+    created: "2019-06-18T13:39:20.363349918Z"
+    description: A Helm chart for a Kubernetes controller to manage Keycloak clients
+      and realms.
+    digest: 5537acbe0bb949f4aa61724a7bda7aff8377f0ea775acfb6c23b8a67a6cb7cc6
+    home: https://github.com/kiwigrid/keycloak-controller
+    maintainers:
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    - email: stephan.schnabel@kiwigrid.com
+      name: sschnabe
+    name: keycloak-controller
+    sources:
+    - https://github.com/kiwigrid/keycloak-controller
+    urls:
+    - https://kiwigrid.github.io/keycloak-controller-0.1.0.tgz
+    version: 0.1.0
+  kubernetes-policy-controller:
+  - apiVersion: v1
+    appVersion: "1.2"
+    created: "2019-01-18T15:04:53.477800989Z"
+    description: A Helm chart for Kubernetes Policy Controller and the open policy
+      agent to manage your cluster policies
+    digest: a2f299de3c494d3c461a712f38527717e7d28e19a0e56ac45e8477c69e9e2bd6
+    home: https://github.com/kiwigrid/helm-charts
+    icon: https://www.openpolicyagent.org/img/opa-logo.svg
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: kubernetes-policy-controller
+    sources:
+    - https://github.com/open-policy-agent/kubernetes-policy-controller
+    - https://github.com/open-policy-agent/opa
+    urls:
+    - https://kiwigrid.github.io/kubernetes-policy-controller-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    appVersion: "1.2"
+    created: "2019-01-16T11:51:14.597425906Z"
+    description: A Helm chart for Kubernetes Policy Controller and the open policy
+      agent to manage your cluster policies
+    digest: 5238c707b54a318049791f627768e00a43d9604355e0a60cce8003c5a01f776c
+    home: https://github.com/kiwigrid/helm-charts
+    icon: https://www.openpolicyagent.org/img/opa-logo.svg
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: kubernetes-policy-controller
+    sources:
+    - https://github.com/open-policy-agent/kubernetes-policy-controller
+    - https://github.com/open-policy-agent/opa
+    urls:
+    - https://kiwigrid.github.io/kubernetes-policy-controller-0.1.0.tgz
+    version: 0.1.0
+  prometheus-pingdom-exporter:
+  - apiVersion: v1
+    appVersion: 20180821-1
+    created: "2019-09-23T13:51:49.395197616Z"
+    description: A Helm chart for Prometheus Pingdom Exporter
+    digest: bf24dc81eeb9d929e9dd8c71925fb4144747a22ec7b75145c5e5b41aeb4016d3
+    home: https://github.com/giantswarm/prometheus-pingdom-exporter
+    icon: https://raw.githubusercontent.com/cncf/artwork/master/prometheus/icon/color/prometheus-icon-color.svg
+    keywords:
+    - prometheus
+    - pingdom
+    maintainers:
+    - email: hanjo.meinhardt@kiwigrid.com
+      name: bunix42
+    name: prometheus-pingdom-exporter
+    sources:
+    - https://github.com/giantswarm/prometheus-pingdom-exporter
+    - https://github.com/camptocamp/prometheus-pingdom-exporter
+    urls:
+    - https://kiwigrid.github.io/prometheus-pingdom-exporter-2.2.0.tgz
+    version: 2.2.0
+  - apiVersion: v1
+    appVersion: 20180821-1
+    created: "2019-09-21T14:17:04.41551093Z"
+    description: A Helm chart for Prometheus Pingdom Exporter
+    digest: 591dee80d0a4a521d2e69bbae5489e1da947301f2cdb81d08d9e6f557dd197d3
+    home: https://github.com/giantswarm/prometheus-pingdom-exporter
+    icon: https://raw.githubusercontent.com/cncf/artwork/master/prometheus/icon/color/prometheus-icon-color.svg
+    keywords:
+    - prometheus
+    - pingdom
+    maintainers:
+    - email: hanjo.meinhardt@kiwigrid.com
+      name: bunix42
+    name: prometheus-pingdom-exporter
+    sources:
+    - https://github.com/giantswarm/prometheus-pingdom-exporter
+    - https://github.com/camptocamp/prometheus-pingdom-exporter
+    urls:
+    - https://kiwigrid.github.io/prometheus-pingdom-exporter-2.1.0.tgz
+    version: 2.1.0
+  - apiVersion: v1
+    appVersion: 20180821-1
+    created: "2019-01-16T11:51:14.597757044Z"
+    description: A Helm chart for Prometheus Pingdom Exporter
+    digest: a44d1b56c7f72a668168968754f589503255d98f2729771ed70fc9c356999d38
+    home: https://github.com/giantswarm/prometheus-pingdom-exporter
+    icon: https://raw.githubusercontent.com/cncf/artwork/master/prometheus/icon/color/prometheus-icon-color.svg
+    keywords:
+    - prometheus
+    - pingdom
+    maintainers:
+    - email: hanjo.meinhardt@kiwigrid.com
+      name: bunix42
+    name: prometheus-pingdom-exporter
+    sources:
+    - https://github.com/giantswarm/prometheus-pingdom-exporter
+    - https://github.com/camptocamp/prometheus-pingdom-exporter
+    urls:
+    - https://kiwigrid.github.io/prometheus-pingdom-exporter-2.0.0.tgz
+    version: 2.0.0
+  prometheus-thanos:
+  - apiVersion: v1
+    appVersion: 0.10.0
+    created: "2020-01-14T12:46:27.873744485Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 210dc11c1dc0feebbb62cfbe0adc85bdc8f0c568d7e798d2646ba330c1687cb9
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.6.0.tgz
+    version: 2.6.0
+  - apiVersion: v1
+    appVersion: 0.9.0
+    created: "2020-01-09T07:44:27.707796498Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 8dd2b56d02dc7485b481c11144be83f01fd01405ee8354866f38db3614c21b52
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.5.0.tgz
+    version: 2.5.0
+  - apiVersion: v1
+    appVersion: 0.8.1
+    created: "2019-10-24T13:55:51.758955229Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 8dab5bd88a41e287083d0eaf0446725f2472126e9c6b4335bc86c8ea2b4d1d8c
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.4.0.tgz
+    version: 2.4.0
+  - apiVersion: v1
+    appVersion: 0.7.0
+    created: "2019-10-21T13:42:00.667910601Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 5cc82dabc3f54f64eafbb6b162fffa4d1cc73abe496b1a404fb89d093093c7d1
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.3.0.tgz
+    version: 2.3.0
+  - apiVersion: v1
+    appVersion: 0.7.0
+    created: "2019-10-17T06:16:08.074630915Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 160b613fe6b909a4be8338fd759bdc75d8b29775f1baa8b443c0486d50408dc5
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.2.4.tgz
+    version: 2.2.4
+  - apiVersion: v1
+    appVersion: 0.7.0
+    created: "2019-10-16T12:01:59.939433853Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 4ffc9de8bde47cca223c65ade8ca7971cca6ea55738453af9b29d9fbc489b1fc
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.2.3.tgz
+    version: 2.2.3
+  - apiVersion: v1
+    appVersion: 0.7.0
+    created: "2019-10-09T05:59:46.396727404Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 4f99f4fa93f6829d4eba7084d2b402fe25a7f0c98dc3f1eea0d2cf1975ab15cf
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.2.2.tgz
+    version: 2.2.2
+  - apiVersion: v1
+    appVersion: 0.7.0
+    created: "2019-09-22T10:02:49.58178599Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 6e149f095cbaabd3f9b644909d635ac6ec0fb24d5512d4dbfb61e4aeadfdd779
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.2.1.tgz
+    version: 2.2.1
+  - apiVersion: v1
+    appVersion: 0.7.0
+    created: "2019-09-09T09:22:08.58341802Z"
+    description: A Helm chart for thanos monitoring components
+    digest: b0444b5fc7d7ed5ca66f5c20a6e8e1d05e6642f40a1d6d836605fbcc9272430c
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.2.0.tgz
+    version: 2.2.0
+  - apiVersion: v1
+    appVersion: 0.7.0
+    created: "2019-09-03T19:28:50.74450321Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 9a75c717ec0bae861b468bf7f863838ea32aff1db0374e0294a66782cc7883fa
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.1.1.tgz
+    version: 2.1.1
+  - apiVersion: v1
+    appVersion: 0.7.0
+    created: "2019-09-03T13:21:45.112905576Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 71379bfd4f8a50af58a327958b4776aaa9212caa9d1c1046746504a0b6f9024b
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.1.0.tgz
+    version: 2.1.0
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: "2019-08-30T11:01:39.722370319Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 5ee1675f39f024d361f19c8e259a22abd71ec76738ff6547950fbe044140e412
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.0.1.tgz
+    version: 2.0.1
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: "2019-08-30T09:04:41.332706602Z"
+    description: A Helm chart for thanos monitoring components
+    digest: dadea86fff347c202e1b65cebbd7a92462e0aa7f856ce806df1bb1c235449170
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.0.0.tgz
+    version: 2.0.0
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: "2019-08-19T14:53:53.568693082Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 682143586b7ffe6a1c7042e6dbb413bf968b2b49e26f2cc04c34d8edadbbd505
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-1.3.0.tgz
+    version: 1.3.0
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: "2019-07-25T08:59:11.276123906Z"
+    description: A Helm chart for thanos monitoring components
+    digest: a2d2d85e9a582dde86cee424c23b567c148aa5ee6710b37289be9e95dd656140
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-1.2.1.tgz
+    version: 1.2.1
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: "2019-07-22T07:24:20.249061233Z"
+    description: A Helm chart for thanos monitoring components
+    digest: d94ddd6baf70dadf71d922fe1764f7a6dee69cf320a890908e74992d9a69cf3b
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-1.2.0.tgz
+    version: 1.2.0
+  - apiVersion: v1
+    appVersion: 0.5.0
+    created: "2019-07-11T09:14:44.115753277Z"
+    description: A Helm chart for thanos monitoring components
+    digest: af7a0d16b4ce7f081c188aa635afc7681de65b63fab51c0bd1fb2c20dfa28563
+    home: https://github.com/improbable-eng/thanos
+    icon: https://raw.githubusercontent.com/improbable-eng/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/improbable-eng/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-1.1.3.tgz
+    version: 1.1.3
+  - apiVersion: v1
+    appVersion: 0.5.0
+    created: "2019-07-10T06:50:47.130698698Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 848bc92646b5b8a7dfe36da61a406795cbe3f7d2fee767937a762ec5a7e46a7e
+    home: https://github.com/improbable-eng/thanos
+    icon: https://raw.githubusercontent.com/improbable-eng/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/improbable-eng/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-1.1.2.tgz
+    version: 1.1.2
+  - apiVersion: v1
+    appVersion: 0.5.0
+    created: "2019-07-09T13:47:56.745925889Z"
+    description: A Helm chart for thanos monitoring components
+    digest: e7f2856ce5fa66b33140061ee988e53e62b8ffe770df37f6df5602014a50213d
+    home: https://github.com/improbable-eng/thanos
+    icon: https://raw.githubusercontent.com/improbable-eng/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/improbable-eng/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v1
+    appVersion: 0.5.0
+    created: "2019-06-11T12:13:55.583687119Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 9d1e93639e56bfecf7d12705d6cfc6e8756fe482a79715814080cf969e670e37
+    home: https://github.com/improbable-eng/thanos
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: prometheus-thanos
+    sources:
+    - https://github.com/improbable-eng/thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v1
+    appVersion: 0.4.0
+    created: "2019-06-11T11:37:53.01731556Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 329cfab403c0d7d08490e65f96eaf3c96821faa33404ce8ab9eef96336b14c15
+    home: https://github.com/improbable-eng/thanos
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: prometheus-thanos
+    sources:
+    - https://github.com/improbable-eng/thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v1
+    appVersion: 0.4.0
+    created: "2019-06-04T12:52:59.396885695Z"
+    description: A Helm chart for thanos monitoring components
+    digest: cfb19b260baadb6bf763e4aafee05e4cf9a07a8e009a6baae4d8cd68f925a380
+    home: https://github.com/improbable-eng/thanos
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: prometheus-thanos
+    sources:
+    - https://github.com/improbable-eng/thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v1
+    appVersion: 0.4.0
+    created: "2019-06-04T09:02:47.071770918Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 62a7bc32adfc43af057468dea7d48996511d6c72551a36eaf26abe2ce67d0b95
+    home: https://github.com/improbable-eng/thanos
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: prometheus-thanos
+    sources:
+    - https://github.com/improbable-eng/thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-0.8.0.tgz
+    version: 0.8.0
+  - apiVersion: v1
+    appVersion: 0.4.0
+    created: "2019-05-24T11:09:47.550551899Z"
+    description: A Helm chart for thanos querier and store gateway
+    digest: 217396bc842da0883c7908998c61b5e849e3c1dd674d1a8beb87b81b74c26a04
+    home: https://github.com/improbable-eng/thanos
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: prometheus-thanos
+    sources:
+    - https://github.com/improbable-eng/thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-0.7.0.tgz
+    version: 0.7.0
+  - apiVersion: v1
+    appVersion: 0.4.0
+    created: "2019-05-08T13:43:20.237031165Z"
+    description: A Helm chart for thanos querier and store gateway
+    digest: 0c4062f559b1a5f840c0f24677caf0473dad1c97a720682b2d9c22e762ef3d94
+    home: https://github.com/improbable-eng/thanos
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: prometheus-thanos
+    sources:
+    - https://github.com/improbable-eng/thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-0.6.0.tgz
+    version: 0.6.0
+  - apiVersion: v1
+    appVersion: 0.3.2
+    created: "2019-05-02T13:06:42.352805508Z"
+    description: A Helm chart for thanos querier and store gateway
+    digest: 759e42fd5ce609a7726a4aa58f37fbf21e4e90852c66b011bfe65d5aabac0258
+    home: https://github.com/improbable-eng/thanos
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: prometheus-thanos
+    sources:
+    - https://github.com/improbable-eng/thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-0.5.0.tgz
+    version: 0.5.0
+  - apiVersion: v1
+    appVersion: 0.3.2
+    created: "2019-04-12T14:32:45.819447317Z"
+    description: A Helm chart for thanos querier and store gateway
+    digest: 6552ef1fec0ead2730039ca60b9e5728a2f33359d139a140b65437922c0d3ca1
+    home: https://github.com/improbable-eng/thanos
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: prometheus-thanos
+    sources:
+    - https://github.com/improbable-eng/thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v1
+    appVersion: 0.3.2
+    created: "2019-04-12T09:53:30.575145612Z"
+    description: A Helm chart for thanos querier and store gateway
+    digest: 9e7004535f20aa61343b3fe2489561ef393b2ee00bcc915ea904b39e3ceff006
+    home: https://github.com/improbable-eng/thanos
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: prometheus-thanos
+    sources:
+    - https://github.com/improbable-eng/thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v1
+    appVersion: 0.3.2
+    created: "2019-04-12T06:45:26.733948623Z"
+    description: A Helm chart for thanos querier and store gateway
+    digest: 63cbed0aa50016bc55dc2d714c37d969038c65bb38107ef7fd79378df0fff009
+    home: https://github.com/improbable-eng/thanos
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: prometheus-thanos
+    sources:
+    - https://github.com/improbable-eng/thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v1
+    appVersion: 0.3.2
+    created: "2019-04-05T11:50:41.693755791Z"
+    description: A Helm chart for thanos querier and store gateway
+    digest: 33f419545e4c41cd81689a0e9af59b64546ec7c8aed5623cef6f345e5e1c81da
+    home: https://github.com/improbable-eng/thanos
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: prometheus-thanos
+    sources:
+    - https://github.com/improbable-eng/thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v1
+    appVersion: 0.3.2
+    created: "2019-04-05T07:29:25.64665337Z"
+    description: A Helm chart for thanos querier and store gateway
+    digest: 72c35a42e800cbff04cd56696c37866e7f1ce0caa8d4edf20272d386f92eb764
+    home: https://github.com/improbable-eng/thanos
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: prometheus-thanos
+    sources:
+    - https://github.com/improbable-eng/thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    appVersion: 0.3.2
+    created: "2019-03-28T15:10:25.479822418Z"
+    description: A Helm chart for thanos querier and store gateway
+    digest: 52eeff2c0ec53d94071dcac3833136c61b2b54c4fb05d30bc22fcae615818942
+    home: https://github.com/improbable-eng/thanos
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: prometheus-thanos
+    sources:
+    - https://github.com/improbable-eng/thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-0.1.0.tgz
+    version: 0.1.0
+  pull-secret-distributor:
+  - apiVersion: v1
+    appVersion: "25"
+    created: "2019-02-11T20:50:35.261701997Z"
+    deprecated: true
+    description: A Helm chart to distribute pull secret across namespaces
+    digest: 2b49cc76b5c463f18e26f2fc5e4816fcdafbddedad60dac61768d0afc95060e4
+    home: https://github.com/kiwigrid/pull-secret-distributor
+    name: pull-secret-distributor
+    sources:
+    - https://github.com/kiwigrid/pull-secret-distributor
+    urls:
+    - https://kiwigrid.github.io/pull-secret-distributor-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v1
+    appVersion: "25"
+    created: "2019-01-18T13:46:33.992080956Z"
+    description: A Helm chart to distribute pull secret across namespaces
+    digest: 341851d0ad4b9deb89b0f6d39080e90a37a146dfec0791f8473856bae798cb55
+    home: https://github.com/kiwigrid/pull-secret-distributor
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: pull-secret-distributor
+    sources:
+    - https://github.com/kiwigrid/pull-secret-distributor
+    urls:
+    - https://kiwigrid.github.io/pull-secret-distributor-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v1
+    appVersion: "15"
+    created: "2019-01-16T11:51:14.598051683Z"
+    description: A Helm chart to distribute pull secret across namespaces
+    digest: 3de7b7d6bbc6020b5c037d930a66b32f906040b3056a513a9a2042c5a31d924b
+    home: https://github.com/kiwigrid/pull-secret-distributor
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: pull-secret-distributor
+    sources:
+    - https://github.com/kiwigrid/pull-secret-distributor
+    urls:
+    - https://kiwigrid.github.io/pull-secret-distributor-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    appVersion: "10"
+    created: "2019-01-15T13:51:24.325304396Z"
+    description: A Helm chart to distribute pull secret across namespaces
+    digest: cda02baf9fceb3a78936464f6ef08b12406b0621d04d235aa6e2a3b3493e7cac
+    home: https://github.com/kiwigrid/pull-secret-distributor
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: pull-secret-distributor
+    sources:
+    - https://github.com/kiwigrid/pull-secret-distributor
+    urls:
+    - https://kiwigrid.github.io/pull-secret-distributor-0.1.0.tgz
+    version: 0.1.0
+  secret-replicator:
+  - apiVersion: v1
+    appVersion: 0.1.1
+    created: "2020-01-07T15:26:01.677321626Z"
+    description: A Helm chart to replicate secret across namespaces
+    digest: a9def0acb17c264ac5871608d962f94a0b0a5793bc33f18238a0b783c53130fa
+    home: https://github.com/kiwigrid/secret-replicator
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: secret-replicator
+    sources:
+    - https://github.com/kiwigrid/secret-replicator
+    urls:
+    - https://kiwigrid.github.io/secret-replicator-0.5.0.tgz
+    version: 0.5.0
+  - apiVersion: v1
+    appVersion: 0.1.1
+    created: "2019-04-08T12:41:19.288684543Z"
+    description: A Helm chart to replicate secret across namespaces
+    digest: a833d561045e38038d4190d8bbcd518beb601737943e689376c6d983e38ec125
+    home: https://github.com/kiwigrid/secret-replicator
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: secret-replicator
+    sources:
+    - https://github.com/kiwigrid/secret-replicator
+    urls:
+    - https://kiwigrid.github.io/secret-replicator-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: "2019-02-11T14:49:51.865693302Z"
+    description: A Helm chart to replicate secret across namespaces
+    digest: b8b723c9ca498006d9b1a3ef19c6b5420214a29038dddf656a09f0a1f802277b
+    home: https://github.com/kiwigrid/secret-replicator
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: secret-replicator
+    sources:
+    - https://github.com/kiwigrid/secret-replicator
+    urls:
+    - https://kiwigrid.github.io/secret-replicator-0.4.0.tgz
+    version: 0.4.0
+  spring-cloud-config-server:
+  - apiVersion: v1
+    appVersion: 2.1.3.RELEASE
+    created: "2019-08-01T07:37:03.206494728Z"
+    description: A Helm chart for Spring Cloud Config Server
+    digest: 73ae337f8643af57f7eae67a00f0f55ef51371c1386596b2981f044c88fb2d2e
+    home: https://github.com/hyness/spring-cloud-config-server
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: spring-cloud-config-server
+    sources:
+    - https://github.com/hyness/spring-cloud-config-server
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/spring-cloud-config-server
+    urls:
+    - https://kiwigrid.github.io/spring-cloud-config-server-0.1.0.tgz
+    version: 0.1.0
+  stackdriver-exporter:
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: "2019-03-12T13:00:19.803777074Z"
+    description: A Helm chart for exporting stackdriver metrics to prometheus
+    digest: fcdc52c3ce5cd5108c7ecfe208a544b2b1848cf2b462f4699f1e8b2c26d66993
+    home: https://github.com/frodenas/stackdriver_exporter
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: stackdriver-exporter
+    sources:
+    - https://github.com/frodenas/stackdriver_exporter
+    urls:
+    - https://kiwigrid.github.io/stackdriver-exporter-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: "2019-03-12T12:16:34.17155551Z"
+    description: A Helm chart for exporting stackdriver metrics to prometheus
+    digest: af28a2df3a937dec28cf0ad902cd20916c45e2e7e82c9ec6813b9f88f282931f
+    home: https://github.com/frodenas/stackdriver_exporter
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: stackdriver-exporter
+    sources:
+    - https://github.com/frodenas/stackdriver_exporter
+    urls:
+    - https://kiwigrid.github.io/stackdriver-exporter-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: "2019-03-06T09:55:45.125455593Z"
+    description: A Helm chart for exporting stackdriver metrics to prometheus
+    digest: 3fe6ba2d1b9f840f64bd0f5ed14b09abf683fb731bc58b018029ded9d630e1c9
+    home: https://github.com/frodenas/stackdriver_exporter
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: stackdriver-exporter
+    sources:
+    - https://github.com/frodenas/stackdriver_exporter
+    urls:
+    - https://kiwigrid.github.io/stackdriver-exporter-0.1.0.tgz
+    version: 0.1.0
+  zipkin-stackdriver-proxy:
+  - apiVersion: v1
+    appVersion: v0.6.0
+    created: "2019-01-18T16:32:33.25559843Z"
+    description: A Helm chart for Zipkin Stackdriver proxy
+    digest: a34c9e2b06098b755fc6b5c2bfa0580a8dd68a171dda70334d84548a8379f035
+    home: https://github.com/openzipkin/zipkin-gcp
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: zipkin-stackdriver-proxy
+    sources:
+    - https://github.com/openzipkin/zipkin-gcp
+    urls:
+    - https://kiwigrid.github.io/zipkin-stackdriver-proxy-0.1.0.tgz
+    version: 0.1.0
+generated: "2020-01-21T07:25:27.797830216Z"

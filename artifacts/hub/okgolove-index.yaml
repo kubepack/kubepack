@@ -1,0 +1,173 @@
+apiVersion: v1
+entries:
+  asprom:
+  - appVersion: 1.7.0
+    created: 2019-12-26T18:27:58.728698549Z
+    description: Asprom provides aerospike metrics for prometheus
+    digest: 5fd43045d420a273f78e21152afbed981444b168b55ac938274124dfe31a5d80
+    home: https://github.com/alicebob/asprom
+    keywords:
+    - aerospike
+    - prometheus
+    - exporter
+    maintainers:
+    - email: okgolove@markeloff.net
+      name: okgolove
+    name: asprom
+    sources:
+    - https://github.com/alicebob/asprom
+    urls:
+    - asprom/asprom-1.2.0.tgz
+    version: 1.2.0
+  - appVersion: 1.6.1
+    created: 2019-12-26T18:27:58.728392362Z
+    description: Asprom provides aerospike metrics for prometheus
+    digest: 10fcb722644a43d94a90040cb7f30f1d85408c8c418b2c8bd36df85927d541d2
+    home: https://github.com/alicebob/asprom
+    keywords:
+    - aerospike
+    - prometheus
+    - exporter
+    maintainers:
+    - email: okgolove@markeloff.net
+      name: okgolove
+    name: asprom
+    sources:
+    - https://github.com/alicebob/asprom
+    urls:
+    - asprom/asprom-1.1.0.tgz
+    version: 1.1.0
+  - appVersion: 1.5.0
+    created: 2019-12-26T18:27:58.728092511Z
+    description: Asprom provides aerospike metrics for prometheus
+    digest: 3ee1b12b5066989efc4b506b73c3d86f5ef9bdb03ffe87b3376a120548c81497
+    home: https://github.com/alicebob/asprom
+    keywords:
+    - aerospike
+    - prometheus
+    - exporter
+    maintainers:
+    - email: okgolove@markeloff.net
+      name: okgolove
+    name: asprom
+    sources:
+    - https://github.com/alicebob/asprom
+    urls:
+    - asprom/asprom-1.0.0.tgz
+    version: 1.0.0
+  aws-xray:
+  - appVersion: 3.2.0
+    created: 2019-12-26T18:27:58.73135703Z
+    description: AWS X-Ray helps you debug and analyze your microservices applications
+      with request tracing
+    digest: b2456cfb332578cdf2d0fce366c818d0c8ed922462bd09588d82f0e6780b977c
+    home: https://aws.amazon.com/xray/
+    keywords:
+    - aws
+    - tracing
+    - xray
+    maintainers:
+    - email: okgolove@markeloff.net
+      name: okgolove
+    name: aws-xray
+    sources:
+    - https://github.com/aws/aws-xray-daemon
+    urls:
+    - aws-xray/aws-xray-1.3.0.tgz
+    version: 1.3.0
+  - appVersion: 3.1.0
+    created: 2019-12-26T18:27:58.730085066Z
+    description: AWS X-Ray helps you debug and analyze your microservices applications
+      with request tracing
+    digest: d8a48803e2b493509aa4514de0224768be68b8e5528154965add3f1e73ad6716
+    home: https://aws.amazon.com/xray/
+    keywords:
+    - aws
+    - tracing
+    - xray
+    maintainers:
+    - email: okgolove@markeloff.net
+      name: okgolove
+    name: aws-xray
+    sources:
+    - https://github.com/aws/aws-xray-daemon
+    urls:
+    - aws-xray/aws-xray-1.2.0.tgz
+    version: 1.2.0
+  - appVersion: 3.0.2
+    created: 2019-12-26T18:27:58.729673319Z
+    description: AWS X-Ray helps you debug and analyze your microservices applications
+      with request tracing
+    digest: 6b61fd974ad4109ca19f941b2f6d761f602194d693d1116201201fd130d86363
+    home: https://aws.amazon.com/xray/
+    keywords:
+    - aws
+    - tracing
+    - xray
+    maintainers:
+    - email: okgolove@markeloff.net
+      name: okgolove
+    name: aws-xray
+    sources:
+    - https://github.com/aws/aws-xray-daemon
+    urls:
+    - aws-xray/aws-xray-1.1.0.tgz
+    version: 1.1.0
+  - appVersion: 3.0.0
+    created: 2019-12-26T18:27:58.729343777Z
+    description: AWS X-Ray helps you debug and analyze your microservices applications
+      with request tracing
+    digest: 74555b0b3db6329868f9469b5deeb748f25d4a9fd293c66552a6380e83dc1825
+    home: https://aws.amazon.com/xray/
+    keywords:
+    - aws
+    - tracing
+    - xray
+    maintainers:
+    - email: okgolove@markeloff.net
+      name: okgolove
+    name: aws-xray
+    sources:
+    - https://github.com/aws/aws-xray-daemon
+    urls:
+    - aws-xray/aws-xray-1.0.1.tgz
+    version: 1.0.1
+  - appVersion: 3.0.0
+    created: 2019-12-26T18:27:58.729033368Z
+    description: AWS X-Ray helps you debug and analyze your microservices applications
+      with request tracing
+    digest: 41f7087265c30da51f4ec93aded6d8b76e694f5d168fbb6f8325a7d5dd9101f5
+    home: https://aws.amazon.com/xray/
+    keywords:
+    - aws
+    - tracing
+    - xray
+    maintainers:
+    - email: okgolove@markeloff.net
+      name: okgolove
+    name: aws-xray
+    sources:
+    - https://github.com/aws/aws-xray-daemon
+    urls:
+    - aws-xray/aws-xray-1.0.0.tgz
+    version: 1.0.0
+  kuttle:
+  - appVersion: 1.0.0
+    created: 2019-12-26T18:27:58.731658535Z
+    description: Kuttle is a wrapper for sshuttle (VPN over SSH)
+    digest: ef24c171f358a7a1ffabd88cb127881284272c044dc756b8c018ef49c22f05b9
+    home: https://github.com/kayrus/kuttle
+    keywords:
+    - vpn
+    - ssh
+    - sshuttle
+    maintainers:
+    - email: okgolove@markeloff.net
+      name: okgolove
+    name: kuttle
+    sources:
+    - https://github.com/kayrus/kuttle
+    urls:
+    - kuttle/kuttle-1.0.0.tgz
+    version: 1.0.0
+generated: 2019-12-26T18:27:58.727595266Z

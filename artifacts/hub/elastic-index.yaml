@@ -1,0 +1,1035 @@
+apiVersion: v1
+entries:
+  elasticsearch:
+  - apiVersion: v1
+    appVersion: 7.5.2
+    created: "2020-01-21T20:57:36.50008+01:00"
+    description: Official Elastic helm chart for Elasticsearch
+    digest: 71ae7e33cf1e7bf634eb6e04673d51dc73d7a7e74bbf72a978c9237a64c9fd9d
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/elasticsearch.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-7.5.2.tgz
+    version: 7.5.2
+  - apiVersion: v1
+    appVersion: 7.5.1
+    created: "2019-12-18T20:53:05.216661+01:00"
+    description: Official Elastic helm chart for Elasticsearch
+    digest: 618f24875f49f4177843683e5094f7ba79692f6c66ffc34701f9e81c3cbe72d3
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/elasticsearch.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-7.5.1.tgz
+    version: 7.5.1
+  - apiVersion: v1
+    appVersion: 7.5.0
+    created: "2019-12-06T11:27:12.672859+01:00"
+    description: Official Elastic helm chart for Elasticsearch
+    digest: 6f483c687bf7794fe4b4edd1d409939fc672c83dedeb45aa160b038aae403477
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/elasticsearch.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-7.5.0.tgz
+    version: 7.5.0
+  - apiVersion: v1
+    appVersion: 7.4.1
+    created: "2019-10-23T17:52:12.863896+02:00"
+    description: Official Elastic helm chart for Elasticsearch
+    digest: d4790d13df6c2ff2e7d49212bd8e44f4f47c3087d14b689721097485cdf7afc0
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/elasticsearch.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-7.4.1.tgz
+    version: 7.4.1
+  - appVersion: 7.4.0
+    created: "2019-10-03T10:22:42.447794+02:00"
+    description: Official Elastic helm chart for Elasticsearch
+    digest: 0da58c78b962e257a850acd09752b947cdd470ce3268d10515f9631bfcbdbb2e
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/elasticsearch.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-7.4.0.tgz
+    version: 7.4.0
+  - appVersion: 7.3.2
+    created: "2019-09-19T18:21:36.580028+02:00"
+    description: Official Elastic helm chart for Elasticsearch
+    digest: 361de632017c13aecc4b9529a503870eaa0bd6b8dfadd04715f412bc0e49fb95
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/elasticsearch.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-7.3.2.tgz
+    version: 7.3.2
+  - appVersion: 7.3.0
+    created: "2019-07-31T17:07:28.629185+02:00"
+    description: Official Elastic helm chart for Elasticsearch
+    digest: a1510649b35a1c6af8514288e1c685b8827f82b03a529924812abd1412ace269
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/elasticsearch.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-7.3.0.tgz
+    version: 7.3.0
+  - appVersion: 7.2.0
+    created: "2019-07-18T08:44:56.74144+02:00"
+    description: Official Elastic helm chart for Elasticsearch
+    digest: 0a86edfa54266b3c11036861802474569d2ceb83a96990758932a969e6ac808a
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/elasticsearch.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-7.2.1-0.tgz
+    version: 7.2.1-0
+  - appVersion: 7.2.0
+    created: "2019-07-01T13:13:42.300175+02:00"
+    description: Official Elastic helm chart for Elasticsearch
+    digest: 2ff20e53bd4591c41e953606bbccac6f9a1eb3f5e07b36d9859a5338ca30e2eb
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/elasticsearch.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-7.2.0.tgz
+    version: 7.2.0
+  - appVersion: 7.1.1
+    created: "2019-06-07T11:43:45.939385+02:00"
+    description: Elasticsearch
+    digest: 008efff22128daaa98138c5d697745dd6bcd276cafb80407cc7e57ac1b811335
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/elasticsearch.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-7.1.1.tgz
+    version: 7.1.1
+  - appVersion: 7.1.0
+    created: "2019-05-21T13:28:51.0778+02:00"
+    description: Elasticsearch
+    digest: 9cd24c5c743cf05c0d9c5ca23cc35e4ab0ad3018ffa0c3daefae6a9140006b87
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/elasticsearch.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-7.1.0.tgz
+    version: 7.1.0
+  - appVersion: 7.0.1
+    created: "2019-05-02T12:30:51.429441+02:00"
+    description: Elasticsearch
+    digest: 0dca3008eaf86c2dc9ca90f0b72bc1036bd0b429ac8b98061f716162c356e5aa
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/elasticsearch.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-7.0.1-alpha1.tgz
+    version: 7.0.1-alpha1
+  - appVersion: 7.0.0
+    created: "2019-04-17T12:15:56.224332+01:00"
+    description: Elasticsearch
+    digest: 25eecac19269df8a726e4e9fe6f24afe8a1783697d46b99290d773a997f0abf6
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/elasticsearch.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-7.0.0-alpha1.tgz
+    version: 7.0.0-alpha1
+  - appVersion: 6.6.2
+    created: "2019-03-19T00:25:42.261343+10:00"
+    description: Elasticsearch
+    digest: e1e11bc63b46b908115522cbabd8b222cdbf9ae833d2e347cfecfa583a0109db
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/elasticsearch.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-6.6.2-alpha1.tgz
+    version: 6.6.2-alpha1
+  - appVersion: 6.6.0
+    created: "2019-01-30T11:15:56.534293+01:00"
+    description: Elasticsearch
+    digest: 380bb9aa0dc64380b5d6a79ea9bb62fd5da6bd3573fae1b69a6c2b35a4f34d7e
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/elasticsearch.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-6.6.0-alpha1.tgz
+    version: 6.6.0-alpha1
+  - appVersion: 6.5.4
+    created: "2019-01-14T15:38:54.953671+01:00"
+    description: Elasticsearch
+    digest: c89b1e0ac6c2fa6baa3f02d13544089da7b0660e77c734cf71b3da1117d0798e
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/elasticsearch.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-6.5.4-alpha3.tgz
+    version: 6.5.4-alpha3
+  - appVersion: 6.5.4
+    created: "2019-01-14T09:36:13.884371+01:00"
+    description: Elasticsearch
+    digest: 8da30353ea0fb8854b86fc56c840aaf5f130b4c2e7764c43c27561ef92e61743
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/elasticsearch.svg
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-6.5.4-alpha2.tgz
+    version: 6.5.4-alpha2
+  - appVersion: 6.5.4
+    created: "2018-12-31T11:33:29.519914+01:00"
+    description: Elasticsearch
+    digest: 195931416f92b8a5177b568584ccc2132ab00fd964189dc6ff2b0c9da89e3986
+    home: https://github.com/elastic/helm-charts
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-6.5.4-alpha1.tgz
+    version: 6.5.4-alpha1
+  - appVersion: 6.5.3
+    created: "2018-12-13T17:45:45.226999-08:00"
+    description: Elasticsearch
+    digest: 3a315587f6ae1980f26e2718ab895c95bdd343fd6cde40966040aa68c9ffd4df
+    home: https://github.com/elastic/helm-charts
+    maintainers:
+    - email: michael.russell@elastic.co
+      name: Michael Russell
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-6.5.3-alpha1.tgz
+    version: 6.5.3-alpha1
+  - appVersion: 6.5.2
+    created: "2018-12-06T09:55:51.107351+01:00"
+    description: Elasticsearch
+    digest: ae091f4044a3c77387b7d502acf2365cd655d61dff436890dbc9eda61f1e6471
+    home: https://github.com/elastic/helm-charts
+    maintainers:
+    - email: michael.russell@elastic.co
+      name: Michael Russell
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-6.5.2-alpha1.tgz
+    version: 6.5.2-alpha1
+  - appVersion: 6.5.0
+    created: "2018-11-21T08:02:05.441797+01:00"
+    description: Elasticsearch
+    digest: 3beac6e783f8d36b03cfad8aad449e0c48e2bebf916f9432be830f2f5747757d
+    home: https://github.com/elastic/helm-charts
+    maintainers:
+    - email: michael.russell@elastic.co
+      name: Michael Russell
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-6.5.0.tgz
+    version: 6.5.0
+  - appVersion: 6.4.3
+    created: "2018-11-14T06:18:26.985422+08:00"
+    description: Elasticsearch
+    digest: 4ecb220d6be5a2f0a0117d55a285aa81f9c62d4f50d5b28244ca67973ef13c3c
+    home: https://github.com/elastic/helm-charts
+    maintainers:
+    - email: michael.russell@elastic.co
+      name: Michael Russell
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-6.4.3.tgz
+    version: 6.4.3
+  - appVersion: 6.4.2
+    created: "2018-10-24T10:14:07.674371+02:00"
+    description: Elasticsearch
+    digest: 392346ab91c92ff9fc91ab28730e87a51fdded4b9d05116d2cc9902c777a3968
+    home: https://github.com/elastic/helm-charts
+    maintainers:
+    - email: michael.russell@elastic.co
+      name: Michael Russell
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://helm.elastic.co/helm/elasticsearch/elasticsearch-6.4.2.tgz
+    version: 6.4.2
+  filebeat:
+  - apiVersion: v1
+    appVersion: 7.5.2
+    created: "2020-01-21T20:57:36.500803+01:00"
+    description: Official Elastic helm chart for Filebeat
+    digest: 9ea4ee1568c77a73d44cfc0289d8cc79135d092d788441b3e1de379312ceed03
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/beats.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: filebeat
+    sources:
+    - https://github.com/elastic/beats
+    urls:
+    - https://helm.elastic.co/helm/filebeat/filebeat-7.5.2.tgz
+    version: 7.5.2
+  - apiVersion: v1
+    appVersion: 7.5.1
+    created: "2019-12-18T20:53:05.217886+01:00"
+    description: Official Elastic helm chart for Filebeat
+    digest: 24ddf6e335e6a388978e08ed8e66b946f152844063266b38c3346f7e9eb44979
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/beats.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: filebeat
+    sources:
+    - https://github.com/elastic/beats
+    urls:
+    - https://helm.elastic.co/helm/filebeat/filebeat-7.5.1.tgz
+    version: 7.5.1
+  - apiVersion: v1
+    appVersion: 7.5.0
+    created: "2019-12-06T11:27:12.67534+01:00"
+    description: Official Elastic helm chart for Filebeat
+    digest: 4d91006ca6684bb654b809fe3d72b1d59714828b38014072918fcf9df223b715
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/beats.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: filebeat
+    sources:
+    - https://github.com/elastic/beats
+    urls:
+    - https://helm.elastic.co/helm/filebeat/filebeat-7.5.0.tgz
+    version: 7.5.0
+  - apiVersion: v1
+    appVersion: 7.4.1
+    created: "2019-10-23T17:52:12.864666+02:00"
+    description: Official Elastic helm chart for Filebeat
+    digest: 26cec7b6ea6b96cb9e50c312ac6d14f0e00888994704274774b9e31368f71d36
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/filebeat.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: filebeat
+    sources:
+    - https://github.com/elastic/beats
+    urls:
+    - https://helm.elastic.co/helm/filebeat/filebeat-7.4.1.tgz
+    version: 7.4.1
+  - appVersion: 7.4.0
+    created: "2019-10-03T10:22:42.448309+02:00"
+    description: Official Elastic helm chart for Filebeat
+    digest: d2f7f81583d517e4433127a6b3590825e4962ded3032309ee508318cc28c66c1
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/filebeat.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: filebeat
+    sources:
+    - https://github.com/elastic/beats
+    urls:
+    - https://helm.elastic.co/helm/filebeat/filebeat-7.4.0.tgz
+    version: 7.4.0
+  - appVersion: 7.3.2
+    created: "2019-09-19T18:21:36.580604+02:00"
+    description: Official Elastic helm chart for Filebeat
+    digest: e172df146a67377e641bcdbb10be70a87c2310032897a6258fdc7c73e5e3bb2f
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/filebeat.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: filebeat
+    sources:
+    - https://github.com/elastic/beats
+    urls:
+    - https://helm.elastic.co/helm/filebeat/filebeat-7.3.2.tgz
+    version: 7.3.2
+  - appVersion: 7.3.0
+    created: "2019-07-31T17:07:28.629776+02:00"
+    description: Official Elastic helm chart for Filebeat
+    digest: 725a3a7fcfc8acc84b34303a85a7e3f446eb8ccbce1da12a9ebf8e3dad490fde
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/filebeat.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: filebeat
+    sources:
+    - https://github.com/elastic/beats
+    urls:
+    - https://helm.elastic.co/helm/filebeat/filebeat-7.3.0.tgz
+    version: 7.3.0
+  - appVersion: 7.2.0
+    created: "2019-07-18T08:44:56.741866+02:00"
+    description: Official Elastic helm chart for Filebeat
+    digest: f3d49d204b6755b424620e49c38770c1dd6d5ee9afbee11a990844a3c21a19be
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/filebeat.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: filebeat
+    sources:
+    - https://github.com/elastic/beats
+    urls:
+    - https://helm.elastic.co/helm/filebeat/filebeat-7.2.1-0.tgz
+    version: 7.2.1-0
+  - appVersion: 7.2.0
+    created: "2019-07-01T13:13:42.300649+02:00"
+    description: Official Elastic helm chart for Filebeat
+    digest: ca4b78a05b3aa66431fe6773fae17fe03e28488882a38e4f8de4494183b2bcd0
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/filebeat.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: filebeat
+    sources:
+    - https://github.com/elastic/beats
+    urls:
+    - https://helm.elastic.co/helm/filebeat/filebeat-7.2.0.tgz
+    version: 7.2.0
+  - appVersion: 7.1.1
+    created: "2019-06-07T11:43:45.939939+02:00"
+    description: Filebeat
+    digest: fa841fab60fa19ef9fe4ed58f34f2f201d4c6428a71c74b40573a23286e38e05
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/filebeat.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: filebeat
+    sources:
+    - https://github.com/elastic/beats
+    urls:
+    - https://helm.elastic.co/helm/filebeat/filebeat-7.1.1.tgz
+    version: 7.1.1
+  - appVersion: 7.1.0
+    created: "2019-05-21T13:28:51.078531+02:00"
+    description: Filebeat
+    digest: 269d234df0404f666b1dbd12cc46f7069c3475e7aa61b1e4f67a70b89097741b
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/filebeat.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: filebeat
+    sources:
+    - https://github.com/elastic/beats
+    urls:
+    - https://helm.elastic.co/helm/filebeat/filebeat-7.1.0.tgz
+    version: 7.1.0
+  kibana:
+  - apiVersion: v1
+    appVersion: 7.5.2
+    created: "2020-01-21T20:57:36.502031+01:00"
+    description: Official Elastic helm chart for Kibana
+    digest: ffc5c2c3049bff7162ac535249e02e7cfbf66d60167c6c5a241759f157343b44
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/kibana.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-7.5.2.tgz
+    version: 7.5.2
+  - apiVersion: v1
+    appVersion: 7.5.1
+    created: "2019-12-18T20:53:05.21954+01:00"
+    description: Official Elastic helm chart for Kibana
+    digest: eac1daee103f118d1466b5a012f9b58e1eb47c836242346fa4abff31d6c2f6c9
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/kibana.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-7.5.1.tgz
+    version: 7.5.1
+  - apiVersion: v1
+    appVersion: 7.5.0
+    created: "2019-12-06T11:27:12.67945+01:00"
+    description: Official Elastic helm chart for Kibana
+    digest: 92a6af528ee8ecb19e3652a78daa5462df7a1ccc91a7a4af8afc9b8aef838539
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/kibana.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-7.5.0.tgz
+    version: 7.5.0
+  - apiVersion: v1
+    appVersion: 7.4.1
+    created: "2019-10-23T17:52:12.865958+02:00"
+    description: Official Elastic helm chart for Kibana
+    digest: 0d5b6f78eace60f5d3ca0795b91590d495a4b9561f39bf97e37fcdee692520fb
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/kibana.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-7.4.1.tgz
+    version: 7.4.1
+  - appVersion: 7.4.0
+    created: "2019-10-03T10:22:42.450856+02:00"
+    description: Official Elastic helm chart for Kibana
+    digest: 9121094bca67a87e986fcba77932a807f17d956fb77dab4c67f2afc895344c7d
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/kibana.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-7.4.0.tgz
+    version: 7.4.0
+  - appVersion: 7.3.2
+    created: "2019-09-19T18:21:36.581228+02:00"
+    description: Official Elastic helm chart for Kibana
+    digest: e09bda4b04c3949b16a7e2fb3ae17806460ef0deba8bf341e5fb5dd20cf2067a
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/kibana.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-7.3.2.tgz
+    version: 7.3.2
+  - appVersion: 7.3.0
+    created: "2019-07-31T17:07:28.630496+02:00"
+    description: Official Elastic helm chart for Kibana
+    digest: 1d0b7e01866fed9037afa2b112c8b6f80ea3523e558e11c09410430b0c61a0c9
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/kibana.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-7.3.0.tgz
+    version: 7.3.0
+  - appVersion: 7.2.0
+    created: "2019-07-18T08:44:56.74232+02:00"
+    description: Official Elastic helm chart for Kibana
+    digest: 678f735bb5ee2e84c65cf1a5b5f8d2131cb22d9ad757fc415e34c5352ffdfe05
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/kibana.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-7.2.1-0.tgz
+    version: 7.2.1-0
+  - appVersion: 7.2.0
+    created: "2019-07-01T13:13:42.301137+02:00"
+    description: Official Elastic helm chart for Kibana
+    digest: 310810df678226cb008574d625865eae2c87f5126cdd024ef31534b0e6f0bd58
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/kibana.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-7.2.0.tgz
+    version: 7.2.0
+  - appVersion: 7.1.1
+    created: "2019-06-07T11:43:45.940423+02:00"
+    description: Kibana
+    digest: 85bcf9b230706c9c461ab10909a0381f4d50f817ca0ecd3b82587dc7443b43b2
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/kibana.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-7.1.1.tgz
+    version: 7.1.1
+  - appVersion: 7.1.0
+    created: "2019-05-21T13:28:51.079641+02:00"
+    description: Kibana
+    digest: c8e0477df68f17c095e64ecb248be979d602014450580ab823330b42e8b3a40d
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/kibana.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-7.1.0.tgz
+    version: 7.1.0
+  - appVersion: 7.0.1
+    created: "2019-05-02T12:30:51.429914+02:00"
+    description: Kibana
+    digest: 34a488e66709c6df7a6499cccd82321b32a849e02462314628c9d927ceb1b83a
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/kibana.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-7.0.1-alpha1.tgz
+    version: 7.0.1-alpha1
+  - appVersion: 7.0.0
+    created: "2019-04-17T12:15:56.224771+01:00"
+    description: Kibana
+    digest: dde494658928f966d756cf2bab39957e064ca70577588db7e7efe11f8aea0c88
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/kibana.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-7.0.0-alpha1.tgz
+    version: 7.0.0-alpha1
+  - appVersion: 6.6.2
+    created: "2019-03-19T00:25:42.26191+10:00"
+    description: Kibana
+    digest: 4206650b43116f30c3ed1d616faff2fb5706c30c3cc9c1e621f95f7d920baae8
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/kibana.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-6.6.2-alpha1.tgz
+    version: 6.6.2-alpha1
+  - appVersion: 6.6.0
+    created: "2019-01-30T11:15:56.534824+01:00"
+    description: Kibana
+    digest: cb838d160b02442602a95f77af3d19086a2132aee57c4bab36b84eccb508d1f1
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/kibana.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-6.6.0-alpha1.tgz
+    version: 6.6.0-alpha1
+  - appVersion: 6.5.4
+    created: "2019-01-14T15:38:54.954074+01:00"
+    description: Kibana
+    digest: 162e943f518ffc6f819d3348057daad420a3daae09ecd2bddd21ced902f38144
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/kibana.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-6.5.4-alpha3.tgz
+    version: 6.5.4-alpha3
+  - appVersion: 6.5.4
+    created: "2019-01-14T09:36:13.884811+01:00"
+    description: Kibana
+    digest: c7dce002b56d8d7e29d6167fcc2abb47a8a61840e945805fb4505bba921cf02c
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/kibana.svg
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-6.5.4-alpha2.tgz
+    version: 6.5.4-alpha2
+  - appVersion: 6.5.4
+    created: "2018-12-31T11:33:29.520321+01:00"
+    description: Kibana
+    digest: e1b240b8aeb9e4e9e48fe4d5166254dd653e54a4368571c8dff5dec09abd2786
+    home: https://github.com/elastic/helm-charts
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-6.5.4-alpha1.tgz
+    version: 6.5.4-alpha1
+  - appVersion: 6.5.3
+    created: "2018-12-13T17:45:45.227484-08:00"
+    description: Kibana
+    digest: 6c5fa7018df971330b48b285077706cf6ee6cee942460fea562b19ace326cd8e
+    home: https://github.com/elastic/helm-charts
+    maintainers:
+    - email: michael.russell@elastic.co
+      name: Michael Russell
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-6.5.3-alpha1.tgz
+    version: 6.5.3-alpha1
+  - appVersion: 6.5.2
+    created: "2018-12-06T09:55:51.107756+01:00"
+    description: Kibana
+    digest: 2684b79a5493738ce60eb1de7b6352ea23305753c7215759be33246f119371cd
+    home: https://github.com/elastic/helm-charts
+    maintainers:
+    - email: michael.russell@elastic.co
+      name: Michael Russell
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-6.5.2-alpha1.tgz
+    version: 6.5.2-alpha1
+  - appVersion: 6.5.0
+    created: "2018-11-21T08:02:05.442177+01:00"
+    description: Kibana
+    digest: 29fdc1c2ee74ddde1336f80da9cfc52fb0c39c88b21b9b69f1a69a9fdaddf51d
+    home: https://github.com/elastic/helm-charts
+    maintainers:
+    - email: michael.russell@elastic.co
+      name: Michael Russell
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-6.5.0.tgz
+    version: 6.5.0
+  - appVersion: 6.4.3
+    created: "2018-11-14T06:18:26.985955+08:00"
+    description: Kibana
+    digest: ad356e1d1a3123585494b7de92600a0757507414cdc0de579a72c2b3ccbfc160
+    home: https://github.com/elastic/helm-charts
+    maintainers:
+    - email: michael.russell@elastic.co
+      name: Michael Russell
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-6.4.3.tgz
+    version: 6.4.3
+  - appVersion: 6.4.2
+    created: "2018-10-24T10:14:07.67474+02:00"
+    description: Kibana
+    digest: cc3e656d7dcc8a9d47d8f96db97550fb868a81d0fd8617d26099e2b155ec9b46
+    home: https://github.com/elastic/helm-charts
+    maintainers:
+    - email: michael.russell@elastic.co
+      name: Michael Russell
+    name: kibana
+    sources:
+    - https://github.com/elastic/kibana
+    urls:
+    - https://helm.elastic.co/helm/kibana/kibana-6.4.2.tgz
+    version: 6.4.2
+  logstash:
+  - apiVersion: v1
+    appVersion: 7.5.2
+    created: "2020-01-21T20:57:36.504539+01:00"
+    description: Official Elastic helm chart for Logstash
+    digest: f4b24a0732ec65af13ccaa1ae9278a63be8c5f2700c8c261a7ac1bdd9400fd77
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/logstash.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: logstash
+    sources:
+    - https://github.com/elastic/logstash
+    urls:
+    - https://helm.elastic.co/helm/logstash/logstash-7.5.2.tgz
+    version: 7.5.2
+  - apiVersion: v1
+    appVersion: 7.5.1
+    created: "2019-12-18T20:53:05.220636+01:00"
+    description: Official Elastic helm chart for Logstash
+    digest: 1b8b96301a907134cdbcdb29b69980b0c128d0e0f2d850932fec787c1c48ff62
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/logstash.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: logstash
+    sources:
+    - https://github.com/elastic/logstash
+    urls:
+    - https://helm.elastic.co/helm/logstash/logstash-7.5.1.tgz
+    version: 7.5.1
+  - apiVersion: v1
+    appVersion: 7.5.0
+    created: "2019-12-06T11:27:12.681441+01:00"
+    description: Official Elastic helm chart for Logstash
+    digest: c72fb5ce5668a76a586f5f06d881f531a9786dbae026cd2bde197490a050dcd7
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/logstash.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: logstash
+    sources:
+    - https://github.com/elastic/logstash
+    urls:
+    - https://helm.elastic.co/helm/logstash/logstash-7.5.0.tgz
+    version: 7.5.0
+  metricbeat:
+  - apiVersion: v1
+    appVersion: 7.5.2
+    created: "2020-01-21T20:57:36.505741+01:00"
+    description: Official Elastic helm chart for Metricbeat
+    digest: 34ea9e50dfda9ccbc1dce0df4f044eab02c426967f435475bf7ca8895fdc948f
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/beats.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: metricbeat
+    sources:
+    - https://github.com/elastic/beats
+    urls:
+    - https://helm.elastic.co/helm/metricbeat/metricbeat-7.5.2.tgz
+    version: 7.5.2
+  - apiVersion: v1
+    appVersion: 7.5.1
+    created: "2019-12-18T20:53:05.222155+01:00"
+    description: Official Elastic helm chart for Metricbeat
+    digest: b827fdf69c2327536ed20357540126a6d57762aa2b68562627857bead4681bc6
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/beats.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: metricbeat
+    sources:
+    - https://github.com/elastic/beats
+    urls:
+    - https://helm.elastic.co/helm/metricbeat/metricbeat-7.5.1.tgz
+    version: 7.5.1
+  - apiVersion: v1
+    appVersion: 7.5.0
+    created: "2019-12-06T11:27:12.6827+01:00"
+    description: Official Elastic helm chart for Metricbeat
+    digest: d53a42204f95c66909ea1f2650154b51d896f9edf2758cf821ca2c3b0b8da884
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/beats.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: metricbeat
+    sources:
+    - https://github.com/elastic/beats
+    urls:
+    - https://helm.elastic.co/helm/metricbeat/metricbeat-7.5.0.tgz
+    version: 7.5.0
+  - apiVersion: v1
+    appVersion: 7.4.1
+    created: "2019-10-23T17:52:12.866953+02:00"
+    description: Official Elastic helm chart for Metricbeat
+    digest: d6ff0f34eae040114f7d3ffe2500d9f9b1487530152cbae2e61a3fa929fdfc20
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/metricbeat.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: metricbeat
+    sources:
+    - https://github.com/elastic/beats
+    urls:
+    - https://helm.elastic.co/helm/metricbeat/metricbeat-7.4.1.tgz
+    version: 7.4.1
+  - appVersion: 7.4.0
+    created: "2019-10-03T10:22:42.451915+02:00"
+    description: Official Elastic helm chart for Metricbeat
+    digest: 92453768062f612cec82c892596a54a3cae8d9fb73830d9a1c85b22fa67a1110
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/metricbeat.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: metricbeat
+    sources:
+    - https://github.com/elastic/beats
+    urls:
+    - https://helm.elastic.co/helm/metricbeat/metricbeat-7.4.0.tgz
+    version: 7.4.0
+  - appVersion: 7.3.2
+    created: "2019-09-19T18:21:36.582023+02:00"
+    description: Official Elastic helm chart for Metricbeat
+    digest: f49c6397b18efb802c0428a138ce5fa2c91b08ae53a2fe5de62ca3a827cef689
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/metricbeat.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: metricbeat
+    sources:
+    - https://github.com/elastic/beats
+    urls:
+    - https://helm.elastic.co/helm/metricbeat/metricbeat-7.3.2.tgz
+    version: 7.3.2
+  - appVersion: 7.3.0
+    created: "2019-07-31T17:07:28.632464+02:00"
+    description: Official Elastic helm chart for Metricbeat
+    digest: e6d4ee17bd8a45884f055ab537ae5fb433ad21ae9671497ee0d13c19b1e15c1c
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/metricbeat.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: metricbeat
+    sources:
+    - https://github.com/elastic/beats
+    urls:
+    - https://helm.elastic.co/helm/metricbeat/metricbeat-7.3.0.tgz
+    version: 7.3.0
+  - appVersion: 7.2.0
+    created: "2019-07-18T08:44:56.743166+02:00"
+    description: Official Elastic helm chart for Metricbeat
+    digest: 34da0a2080fbcd3f9dfedf217e7f0398ba04691f439c225742a7e419ce7c030a
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/metricbeat.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: metricbeat
+    sources:
+    - https://github.com/elastic/beats
+    urls:
+    - https://helm.elastic.co/helm/metricbeat/metricbeat-7.2.1-0.tgz
+    version: 7.2.1-0
+generated: "2020-01-21T20:57:36.498443+01:00"

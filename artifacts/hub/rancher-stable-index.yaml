@@ -1,0 +1,707 @@
+apiVersion: v1
+entries:
+  rancher:
+  - apiVersion: v1
+    appVersion: v2.3.4
+    created: 2020-01-16T20:31:17.526174164Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 52209010d95eda10955a3e9c043d1f2975d29e79c8d876e61a1439052bbe9621
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.3.4.tgz
+    version: 2.3.4
+  - apiVersion: v1
+    appVersion: v2.3.3
+    created: 2019-11-27T19:28:17.774253615Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: b5bcc4c59319f9a096f60f7e6a4637b34f81850c532feb113749c36d7d2fe7f4
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.3.3.tgz
+    version: 2.3.3
+  - apiVersion: v1
+    appVersion: v2.3.2
+    created: 2019-10-28T23:40:58.578877905Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 2ddff6138808af0619d7c75e3a9aa007c282749940410055a9ab84d320088124
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.3.2.tgz
+    version: 2.3.2
+  - apiVersion: v1
+    appVersion: v2.2.10
+    created: 2020-01-16T22:12:54.501856816Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 160229439a19bd18182e3358741d2394331b42b79f414ceb67ed32416ce20f99
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.2.10.tgz
+    version: 2.2.10
+  - apiVersion: v1
+    appVersion: v2.2.9
+    created: 2019-10-17T00:05:08.526483146Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 6b6d27ef949988304e310dcc99632f39a34c6585f1f540d4e75d4169bfdc0668
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.2.9.tgz
+    version: 2.2.9
+  - apiVersion: v1
+    appVersion: v2.2.8
+    created: 2019-08-20T21:10:10.755520301Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: dad782e43dc567584018870057e3e2f571f9ee6b02e2ccce5b4109fc3f5d7037
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.2.8.tgz
+    version: 2.2.8
+  - apiVersion: v1
+    appVersion: v2.2.7
+    created: 2019-08-06T21:59:02.414102036Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 9ef577f2feff41a70bb471f8d7d96392865d83c2b3097d01b421d2461dd7b82d
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.2.7.tgz
+    version: 2.2.7
+  - apiVersion: v1
+    appVersion: v2.2.6
+    created: 2019-07-23T20:32:56.345145669Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: bb65e400bd88ceb357426aee6bcdef2a3994281593002501f49b6d8d897f7375
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.2.6.tgz
+    version: 2.2.6
+  - apiVersion: v1
+    appVersion: v2.2.5
+    created: 2019-07-15T20:31:47.149883473Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 1bcad68f7b8c450460f102a49874713c8a312ef407699bedb61f58ca928ade33
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.2.5.tgz
+    version: 2.2.5
+  - apiVersion: v1
+    appVersion: v2.2.4
+    created: 2019-06-05T21:38:10.79214371Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 9bf214f9d9d575f8f10b78c405a54fd8596869c786a0fbd70c20aabe074ef09f
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.2.4.tgz
+    version: 2.2.4
+  - apiVersion: v1
+    appVersion: v2.2.3
+    created: 2019-05-14T04:16:26.301624001Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 6d283012b5cd0c88e9eda838cca85e02589507ef22e3e496751eb3eb74399663
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.2.3.tgz
+    version: 2.2.3
+  - apiVersion: v1
+    appVersion: v2.2.2
+    created: 2019-04-16T22:33:37.296318557Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 2c5e2a88af3852256d5efe7cd5f8306096db1b86ed17d53589d099ef4ca1e6b1
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.2.2.tgz
+    version: 2.2.2
+  - apiVersion: v1
+    appVersion: v2.1.14
+    created: 2020-01-16T22:10:43.521235608Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: b255c192d9e2e2d7607e1dec18344fe830eb911151354db7c589513118c09901
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.1.14.tgz
+    version: 2.1.14
+  - apiVersion: v1
+    appVersion: v2.1.13
+    created: 2019-08-20T21:04:59.139066991Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 8058742a5356c6c0b0970cea599ae2dde300fc6aa7e256e4964d5a6d7aa33d5c
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.1.13.tgz
+    version: 2.1.13
+  - apiVersion: v1
+    appVersion: v2.1.11
+    created: 2019-07-15T20:36:37.524210252Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 633c5b3cbf505f6b9f82cf26b13f59cf7c0356101038b0583d7ead2435d985fd
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.1.11.tgz
+    version: 2.1.11
+  - apiVersion: v1
+    appVersion: v2.1.10
+    created: 2019-06-05T21:41:34.555077796Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: b9df05d5df646a04d6c60204f2a60ff4588f46e978aaa25499a5a36941be4f48
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.1.10.tgz
+    version: 2.1.10
+  - apiVersion: v1
+    appVersion: v2.1.9
+    created: 2019-04-23T23:17:58.751470061Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 33a482c0c70df66937f65176c7ac3f401a3d83a2afc0cb9ac61148b2cdbb7e50
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.1.9.tgz
+    version: 2.1.9
+  - apiVersion: v1
+    appVersion: v2.1.8
+    created: 2019-03-28T18:44:03.133023058Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: b7d0f67db1410d40572af8b0b328de3e3700b504bf7fc2a1f663885b21e3a2a5
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.1.8.tgz
+    version: 2.1.8
+  - apiVersion: v1
+    appVersion: v2.1.7
+    created: 2019-03-06T19:08:34.268468488Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: b96d8d93e1f94cfd610e31b2570771a0a0b587f7e13ce842f5c56b71e6f8e082
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.1.7.tgz
+    version: 2.1.7
+  - apiVersion: v1
+    appVersion: v2.1.6
+    created: 2019-01-29T21:24:20.962102009Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 0d83e4b0fe9b6205f882a3a5604a41eff1cb67e00abdd622793dbc48a87d3734
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.1.6.tgz
+    version: 2.1.6
+  - apiVersion: v1
+    appVersion: v2.1.5
+    created: 2019-01-09T15:26:42.47170459-06:00
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: a1a74738c83acc0b3d4327f9cfd21f412a5289ff5c0b89a70a699518bd9da038
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.1.5.tgz
+    version: 2.1.5
+  - apiVersion: v1
+    appVersion: v2.1.4
+    created: 2019-01-09T15:26:42.470563856-06:00
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 16c53b02c6095c4d25670954adfe80945c8ad4f3161e8a2c2e8b7c9e8ec84bab
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.1.4.tgz
+    version: 2.1.4
+  - apiVersion: v1
+    appVersion: v2.1.3
+    created: 2019-01-09T15:26:42.469948185-06:00
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: f2c04ac2c979df8c8034f48dd4d3d864e44d0b240447f5a8c1714a5c32e1607a
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.1.3.tgz
+    version: 2.1.3
+  - apiVersion: v1
+    appVersion: v2.1.2
+    created: 2019-01-09T15:26:42.469287539-06:00
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 787003164d2f65dec5e57baf72a51167aebfa84594410c543bf06628c606e32c
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.1.2.tgz
+    version: 2.1.2
+  - apiVersion: v1
+    appVersion: v2.1.1
+    created: 2019-01-09T15:26:42.468636327-06:00
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 25a8ca173f5fb47d3e657e9d837ed7897c81139c58154ff66a176fa973252076
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.1.1.tgz
+    version: 2.1.1
+  - apiVersion: v1
+    appVersion: v2.1.0
+    created: 2019-01-09T15:26:42.468006253-06:00
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: aa2c12c5a59dbee1340c9a2604e4d27f6683f1d867393f6a56b6de6cf3ddda28
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.1.0.tgz
+    version: 2.1.0
+  - apiVersion: v1
+    appVersion: v2.0.16
+    created: 2019-07-15T20:47:24.844869553Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 4f85b62179ff5e3fb582ac25b7e96989e847c8f0f8949dab11dd9e32cec44019
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.0.16.tgz
+    version: 2.0.16
+  - apiVersion: v1
+    appVersion: v2.0.15
+    created: 2019-06-05T21:51:25.335734799Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 7c9b6e2f7eca2dcf14089594befb60beefdf7998113df0f039d3ae320ad625d0
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.0.15.tgz
+    version: 2.0.15
+  - apiVersion: v1
+    appVersion: v2.0.14
+    created: 2019-04-23T23:19:25.023802627Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: ad6ae432e189567744cd02ce9609caa9cea7a6ae1f56f627c192935a24f6de42
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.0.14.tgz
+    version: 2.0.14
+  - apiVersion: v1
+    appVersion: v2.0.11
+    created: 2019-01-29T21:50:53.045842178Z
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 3ca793861e840efc87bba8476bde25d6cbfacfce836af78c0068e86c76780547
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.0.11.tgz
+    version: 2.0.11
+  - apiVersion: v1
+    appVersion: v2.0.10
+    created: 2019-01-09T15:26:42.463748165-06:00
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 860cd1ae75b26ec01f98445d1cedf243cf1bac0e2d7c632de9e679a715b9a63d
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.0.10.tgz
+    version: 2.0.10
+  - apiVersion: v1
+    appVersion: v2.0.9
+    created: 2019-01-09T15:26:42.467387953-06:00
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: f65162446a0a2732f07a7f8aa931fca712bd33889186a35dbb460a2b2c6cf720
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.0.9.tgz
+    version: 2.0.9
+  - apiVersion: v1
+    appVersion: v2.0.8
+    created: 2019-01-09T15:26:42.466786808-06:00
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 429554c3e713c8b19589bf9405ee25f08ab5d1d3dd8758c0460756c48b39051c
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.0.8.tgz
+    version: 2.0.8
+  - apiVersion: v1
+    appVersion: v2.0.7
+    created: 2019-01-09T15:26:42.466202306-06:00
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 390fd6f307a509a3d418922df4ef13e1dd3e1b1e61f14b50888f458a9fe1601f
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.0.7.tgz
+    version: 2.0.7
+  - apiVersion: v1
+    appVersion: v2.0.6
+    created: 2019-01-09T15:26:42.465585694-06:00
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: fb8ee938021812b89ef3115ff8917b8be4cade57d09b4819d869cc2531c03f14
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.0.6.tgz
+    version: 2.0.6
+  - apiVersion: v1
+    appVersion: v2.0.5
+    created: 2019-01-09T15:26:42.464968826-06:00
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 8837e4d12b19a948885702f5fcd03cfeb794dd35827335b36e44a2b38d454d0d
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.0.5.tgz
+    version: 2.0.5
+  - apiVersion: v1
+    appVersion: v2.0.4
+    created: 2019-01-09T15:26:42.464305693-06:00
+    description: Install Rancher Server to manage Kubernetes clusters across providers.
+    digest: 60fd3b8ab751fce62e68074734b618ec9dd158f614b911760a488dbb4cf86ea3
+    home: https://rancher.com
+    icon: https://github.com/rancher/ui/blob/master/public/assets/images/logos/welcome-cow.svg
+    keywords:
+    - rancher
+    maintainers:
+    - email: charts@rancher.com
+      name: Rancher Labs
+    name: rancher
+    sources:
+    - https://github.com/rancher/rancher
+    - https://github.com/rancher/server-chart
+    urls:
+    - rancher-2.0.4.tgz
+    version: 2.0.4
+generated: 2020-01-16T22:12:54.501345479Z

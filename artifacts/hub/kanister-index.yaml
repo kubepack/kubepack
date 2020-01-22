@@ -1,0 +1,2487 @@
+apiVersion: v1
+entries:
+  kanister-elasticsearch:
+  - apiVersion: v1
+    appVersion: 6.3.1
+    created: 2020-01-17T23:41:38.698233176Z
+    description: Elasticsearch w/ Kanister support based on incubator/elasticsearch
+    digest: a10aef2558ff06a3c7395c56c8f3eef6cc78bb91c6f189dc76c59ed3b949b386
+    home: https://www.elastic.co/products/elasticsearch
+    icon: https://static-www.elastic.co/assets/blteb1c97719574938d/logo-elastic-elasticsearch-lt.svg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: supriya@kasten.io
+      name: SupriyaKasten
+    name: kanister-elasticsearch
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://www.elastic.co/products/elasticsearch
+    - https://github.com/jetstack/elasticsearch-pet
+    - https://github.com/giantswarm/kubernetes-elastic-stack
+    - https://github.com/GoogleCloudPlatform/elasticsearch-docker
+    - https://github.com/clockworksoul/helm-elasticsearch
+    - https://github.com/pires/kubernetes-elasticsearch-cluster
+    urls:
+    - https://charts.kanister.io/kanister-elasticsearch-0.24.0.tgz
+    version: 0.24.0
+  - apiVersion: v1
+    appVersion: 6.3.1
+    created: 2019-12-17T17:55:17.867782698-08:00
+    description: Elasticsearch w/ Kanister support based on incubator/elasticsearch
+    digest: 3c693d816a96092e63d4aa41e6a3f9c42e8a0fd63fe357c8d7a82cdee5132b6f
+    home: https://www.elastic.co/products/elasticsearch
+    icon: https://static-www.elastic.co/assets/blteb1c97719574938d/logo-elastic-elasticsearch-lt.svg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: supriya@kasten.io
+      name: SupriyaKasten
+    name: kanister-elasticsearch
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://www.elastic.co/products/elasticsearch
+    - https://github.com/jetstack/elasticsearch-pet
+    - https://github.com/giantswarm/kubernetes-elastic-stack
+    - https://github.com/GoogleCloudPlatform/elasticsearch-docker
+    - https://github.com/clockworksoul/helm-elasticsearch
+    - https://github.com/pires/kubernetes-elasticsearch-cluster
+    urls:
+    - https://charts.kanister.io/kanister-elasticsearch-0.23.0.tgz
+    version: 0.23.0
+  - apiVersion: v1
+    appVersion: 6.3.1
+    created: 2019-11-11T21:34:29.0543414-08:00
+    description: Elasticsearch w/ Kanister support based on incubator/elasticsearch
+    digest: 1d3f23c6a42f9fff8710f3a48e739f20240fa7467e34591725190f79fedff3e7
+    home: https://www.elastic.co/products/elasticsearch
+    icon: https://static-www.elastic.co/assets/blteb1c97719574938d/logo-elastic-elasticsearch-lt.svg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: supriya@kasten.io
+      name: SupriyaKasten
+    name: kanister-elasticsearch
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://www.elastic.co/products/elasticsearch
+    - https://github.com/jetstack/elasticsearch-pet
+    - https://github.com/giantswarm/kubernetes-elastic-stack
+    - https://github.com/GoogleCloudPlatform/elasticsearch-docker
+    - https://github.com/clockworksoul/helm-elasticsearch
+    - https://github.com/pires/kubernetes-elasticsearch-cluster
+    urls:
+    - https://charts.kanister.io/kanister-elasticsearch-0.22.0.tgz
+    version: 0.22.0
+  - appVersion: 6.3.1
+    created: 2019-08-28T14:26:49.145478856-07:00
+    description: Elasticsearch w/ Kanister support based on incubator/elasticsearch
+    digest: 5993b130da61cab37b0660ca52801b26af0454564804ee7a27d0c347de67f2fb
+    home: https://www.elastic.co/products/elasticsearch
+    icon: https://static-www.elastic.co/assets/blteb1c97719574938d/logo-elastic-elasticsearch-lt.svg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: supriya@kasten.io
+      name: SupriyaKasten
+    name: kanister-elasticsearch
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://www.elastic.co/products/elasticsearch
+    - https://github.com/jetstack/elasticsearch-pet
+    - https://github.com/giantswarm/kubernetes-elastic-stack
+    - https://github.com/GoogleCloudPlatform/elasticsearch-docker
+    - https://github.com/clockworksoul/helm-elasticsearch
+    - https://github.com/pires/kubernetes-elasticsearch-cluster
+    urls:
+    - https://charts.kanister.io/kanister-elasticsearch-0.21.0.tgz
+    version: 0.21.0
+  - appVersion: 6.3.1
+    created: 2019-06-11T17:46:05.288897Z
+    description: Elasticsearch w/ Kanister support based on incubator/elasticsearch
+    digest: fc66812ef36cb72196dbf00d85122d683dce0eac8a943e8b41f1a164306d3dd9
+    home: https://www.elastic.co/products/elasticsearch
+    icon: https://static-www.elastic.co/assets/blteb1c97719574938d/logo-elastic-elasticsearch-lt.svg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: supriya@kasten.io
+      name: SupriyaKasten
+    name: kanister-elasticsearch
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://www.elastic.co/products/elasticsearch
+    - https://github.com/jetstack/elasticsearch-pet
+    - https://github.com/giantswarm/kubernetes-elastic-stack
+    - https://github.com/GoogleCloudPlatform/elasticsearch-docker
+    - https://github.com/clockworksoul/helm-elasticsearch
+    - https://github.com/pires/kubernetes-elasticsearch-cluster
+    urls:
+    - https://charts.kanister.io/kanister-elasticsearch-0.20.0.tgz
+    version: 0.20.0
+  - appVersion: 6.3.1
+    created: 2019-05-08T00:51:10.293014372Z
+    description: Elasticsearch w/ Kanister support based on incubator/elasticsearch
+    digest: 049a9f41f338554e69667e285756890b8682a3560fbae0b9280100a8cc80866e
+    home: https://www.elastic.co/products/elasticsearch
+    icon: https://static-www.elastic.co/assets/blteb1c97719574938d/logo-elastic-elasticsearch-lt.svg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: supriya@kasten.io
+      name: SupriyaKasten
+    name: kanister-elasticsearch
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://www.elastic.co/products/elasticsearch
+    - https://github.com/jetstack/elasticsearch-pet
+    - https://github.com/giantswarm/kubernetes-elastic-stack
+    - https://github.com/GoogleCloudPlatform/elasticsearch-docker
+    - https://github.com/clockworksoul/helm-elasticsearch
+    - https://github.com/pires/kubernetes-elasticsearch-cluster
+    urls:
+    - https://charts.kanister.io/kanister-elasticsearch-0.19.0.tgz
+    version: 0.19.0
+  - appVersion: 6.3.1
+    created: 2019-03-12T21:37:50.000944471Z
+    description: Elasticsearch w/ Kanister support based on incubator/elasticsearch
+    digest: 34da051e22a7ba9332e07ebaa0e8ff87766ce51c49f724ab7c971c3fc4a98a1b
+    home: https://www.elastic.co/products/elasticsearch
+    icon: https://static-www.elastic.co/assets/blteb1c97719574938d/logo-elastic-elasticsearch-lt.svg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: supriya@kasten.io
+      name: SupriyaKasten
+    name: kanister-elasticsearch
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://www.elastic.co/products/elasticsearch
+    - https://github.com/jetstack/elasticsearch-pet
+    - https://github.com/giantswarm/kubernetes-elastic-stack
+    - https://github.com/GoogleCloudPlatform/elasticsearch-docker
+    - https://github.com/clockworksoul/helm-elasticsearch
+    - https://github.com/pires/kubernetes-elasticsearch-cluster
+    urls:
+    - https://charts.kanister.io/kanister-elasticsearch-0.18.0.tgz
+    version: 0.18.0
+  - appVersion: 6.3.1
+    created: 2019-03-12T16:49:50.942093-07:00
+    description: Elasticsearch w/ Kanister support based on incubator/elasticsearch
+    digest: e2622ee7b8422b8c052447dbe63c86102662c4791abd66358e5781e6d4f2e5ff
+    home: https://www.elastic.co/products/elasticsearch
+    icon: https://static-www.elastic.co/assets/blteb1c97719574938d/logo-elastic-elasticsearch-lt.svg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: supriya@kasten.io
+      name: SupriyaKasten
+    name: kanister-elasticsearch
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://www.elastic.co/products/elasticsearch
+    - https://github.com/jetstack/elasticsearch-pet
+    - https://github.com/giantswarm/kubernetes-elastic-stack
+    - https://github.com/GoogleCloudPlatform/elasticsearch-docker
+    - https://github.com/clockworksoul/helm-elasticsearch
+    - https://github.com/pires/kubernetes-elasticsearch-cluster
+    urls:
+    - https://charts.kanister.io/kanister-elasticsearch-0.18.0-3-gae6a06c.tgz
+    version: 0.18.0-3-gae6a06c
+  - appVersion: 6.3.1
+    created: 2019-03-10T02:15:40.952638946Z
+    description: Elasticsearch w/ Kanister support based on incubator/elasticsearch
+    digest: 763d867c10ed807ad3d57d1fe6938f9083b3ec59dc83e535a6c9a1dc1a73ae6f
+    home: https://www.elastic.co/products/elasticsearch
+    icon: https://static-www.elastic.co/assets/blteb1c97719574938d/logo-elastic-elasticsearch-lt.svg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: supriya@kasten.io
+      name: SupriyaKasten
+    name: kanister-elasticsearch
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://www.elastic.co/products/elasticsearch
+    - https://github.com/jetstack/elasticsearch-pet
+    - https://github.com/giantswarm/kubernetes-elastic-stack
+    - https://github.com/GoogleCloudPlatform/elasticsearch-docker
+    - https://github.com/clockworksoul/helm-elasticsearch
+    - https://github.com/pires/kubernetes-elasticsearch-cluster
+    urls:
+    - https://charts.kanister.io/kanister-elasticsearch-0.17.0.tgz
+    version: 0.17.0
+  - appVersion: 6.3.1
+    created: 2019-01-03T17:01:48.067236-08:00
+    description: Elasticsearch w/ Kanister support based on incubator/elasticsearch
+    digest: fe19c34d8e85414d0e15b499c4cf15515bc8b17d9c1f73b8438b4972f5f0dff3
+    home: https://www.elastic.co/products/elasticsearch
+    icon: https://static-www.elastic.co/assets/blteb1c97719574938d/logo-elastic-elasticsearch-lt.svg
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    - email: ilya@kasten.io
+      name: Ilya Kislenko
+    - email: supriya@kasten.io
+      name: Supriya Kharade
+    name: kanister-elasticsearch
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://www.elastic.co/products/elasticsearch
+    - https://github.com/jetstack/elasticsearch-pet
+    - https://github.com/giantswarm/kubernetes-elastic-stack
+    - https://github.com/GoogleCloudPlatform/elasticsearch-docker
+    - https://github.com/clockworksoul/helm-elasticsearch
+    - https://github.com/pires/kubernetes-elasticsearch-cluster
+    urls:
+    - https://charts.kanister.io/kanister-elasticsearch-0.16.0.tgz
+    version: 0.16.0
+  - appVersion: 6.3.1
+    created: 2018-12-09T20:28:34.467441077-08:00
+    description: Elasticsearch w/ Kanister support based on incubator/elasticsearch
+    digest: e8e5c5387b7477c8675c6595913325207b4545774fbcd80fb7357f7ae4240819
+    home: https://www.elastic.co/products/elasticsearch
+    icon: https://static-www.elastic.co/assets/blteb1c97719574938d/logo-elastic-elasticsearch-lt.svg
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    - email: ilya@kasten.io
+      name: Ilya Kislenko
+    - email: supriya@kasten.io
+      name: Supriya Kharade
+    name: kanister-elasticsearch
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://www.elastic.co/products/elasticsearch
+    - https://github.com/jetstack/elasticsearch-pet
+    - https://github.com/giantswarm/kubernetes-elastic-stack
+    - https://github.com/GoogleCloudPlatform/elasticsearch-docker
+    - https://github.com/clockworksoul/helm-elasticsearch
+    - https://github.com/pires/kubernetes-elasticsearch-cluster
+    urls:
+    - https://charts.kanister.io/kanister-elasticsearch-0.15.0.tgz
+    version: 0.15.0
+  - appVersion: 6.3.1
+    created: 2018-12-03T16:48:56.935019-08:00
+    description: Elasticsearch w/ Kanister support based on incubator/elasticsearch
+    digest: 18ca503409140eb82db283186b00f825ec7b3317f2a21cde35a94c0d3de9b71f
+    home: https://www.elastic.co/products/elasticsearch
+    icon: https://static-www.elastic.co/assets/blteb1c97719574938d/logo-elastic-elasticsearch-lt.svg
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    - email: ilya@kasten.io
+      name: Ilya Kislenko
+    - email: supriya@kasten.io
+      name: Supriya Kharade
+    name: kanister-elasticsearch
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://www.elastic.co/products/elasticsearch
+    - https://github.com/jetstack/elasticsearch-pet
+    - https://github.com/giantswarm/kubernetes-elastic-stack
+    - https://github.com/GoogleCloudPlatform/elasticsearch-docker
+    - https://github.com/clockworksoul/helm-elasticsearch
+    - https://github.com/pires/kubernetes-elasticsearch-cluster
+    urls:
+    - https://charts.kanister.io/kanister-elasticsearch-0.14.0.tgz
+    version: 0.14.0
+  - appVersion: 6.3.1
+    created: 2018-11-05T17:27:03.082652-08:00
+    description: Elasticsearch w/ Kanister support based on incubator/elasticsearch
+    digest: 5968bbddc56c6c56f24ae4def22e76341f467b2b23729f3ef16cb0cd818358e9
+    home: https://www.elastic.co/products/elasticsearch
+    icon: https://static-www.elastic.co/assets/blteb1c97719574938d/logo-elastic-elasticsearch-lt.svg
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    - email: ilya@kasten.io
+      name: Ilya Kislenko
+    - email: supriya@kasten.io
+      name: Supriya Kharade
+    name: kanister-elasticsearch
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://www.elastic.co/products/elasticsearch
+    - https://github.com/jetstack/elasticsearch-pet
+    - https://github.com/giantswarm/kubernetes-elastic-stack
+    - https://github.com/GoogleCloudPlatform/elasticsearch-docker
+    - https://github.com/clockworksoul/helm-elasticsearch
+    - https://github.com/pires/kubernetes-elasticsearch-cluster
+    urls:
+    - https://charts.kanister.io/kanister-elasticsearch-0.13.1.tgz
+    version: 0.13.1
+  - appVersion: 6.3.1
+    created: 2018-10-23T19:50:45.119815593Z
+    description: Elasticsearch w/ Kanister support based on incubator/elasticsearch
+    digest: bd3a248dc26e2afe0626ae17ffff6002a7cb2c3aa1c59304bb7aa29b557124d7
+    home: https://www.elastic.co/products/elasticsearch
+    icon: https://static-www.elastic.co/assets/blteb1c97719574938d/logo-elastic-elasticsearch-lt.svg
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    - email: ilya@kasten.io
+      name: Ilya Kislenko
+    - email: supriya@kasten.io
+      name: Supriya Kharade
+    name: kanister-elasticsearch
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://www.elastic.co/products/elasticsearch
+    - https://github.com/jetstack/elasticsearch-pet
+    - https://github.com/giantswarm/kubernetes-elastic-stack
+    - https://github.com/GoogleCloudPlatform/elasticsearch-docker
+    - https://github.com/clockworksoul/helm-elasticsearch
+    - https://github.com/pires/kubernetes-elasticsearch-cluster
+    urls:
+    - https://charts.kanister.io/kanister-elasticsearch-0.13.0.tgz
+    version: 0.13.0
+  - appVersion: 6.3.1
+    created: 2018-10-02T10:35:52.784648541-07:00
+    description: Elasticsearch w/ Kanister support based on incubator/elasticsearch
+    digest: a226ca45ae2982adf42ec676793b94d7108aad44c35e726d1c26d6bf248d76d7
+    home: https://www.elastic.co/products/elasticsearch
+    icon: https://static-www.elastic.co/assets/blteb1c97719574938d/logo-elastic-elasticsearch-lt.svg
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    - email: ilya@kasten.io
+      name: Ilya Kislenko
+    - email: supriya@kasten.io
+      name: Supriya Kharade
+    name: kanister-elasticsearch
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://www.elastic.co/products/elasticsearch
+    - https://github.com/jetstack/elasticsearch-pet
+    - https://github.com/giantswarm/kubernetes-elastic-stack
+    - https://github.com/GoogleCloudPlatform/elasticsearch-docker
+    - https://github.com/clockworksoul/helm-elasticsearch
+    - https://github.com/pires/kubernetes-elasticsearch-cluster
+    urls:
+    - https://charts.kanister.io/kanister-elasticsearch-0.12.0.tgz
+    version: 0.12.0
+  kanister-mongodb-replicaset:
+  - appVersion: "3.6"
+    created: 2020-01-17T23:41:28.736109364Z
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: 22660d36d98a0cce17d4010d52cfdb8e598a4b1a159d06104187f575c1abc7b7
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    - https://github.com/percona/mongodb_exporter
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.24.0.tgz
+    version: 0.24.0
+  - appVersion: "3.6"
+    created: 2019-12-17T17:55:10.643103481-08:00
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: 98696eada5cd71ff60d4592997f0b0dfa071c1e5ace5f314b519c495465b3423
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    - https://github.com/percona/mongodb_exporter
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.23.0.tgz
+    version: 0.23.0
+  - appVersion: "3.6"
+    created: 2019-11-11T21:34:21.055435713-08:00
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: 0d3d985c0dda9425bf851e15521ecae1bed6dbe2127f152f57fa45b0d9762137
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    - https://github.com/percona/mongodb_exporter
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.22.0.tgz
+    version: 0.22.0
+  - appVersion: "3.6"
+    created: 2019-08-28T14:26:36.644313424-07:00
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: c2a083368357408bc0b6b4bf1d4a7e34732cd226c8a21612a258656a9d254d0d
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    - https://github.com/percona/mongodb_exporter
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.21.0.tgz
+    version: 0.21.0
+  - appVersion: "3.6"
+    created: 2019-06-11T17:45:54.2884225Z
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: 89b0b96666815ff8a14be3b3ea7f48fb607939a4ee762e61f607ae974a961d1c
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    - https://github.com/percona/mongodb_exporter
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.20.0.tgz
+    version: 0.20.0
+  - appVersion: "3.6"
+    created: 2019-05-08T00:50:57.862852797Z
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: c405d9c22439b1cc4c5360716e1f2525eefd55a1b295f8ac9d109150ba95d19a
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    - https://github.com/percona/mongodb_exporter
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.19.0.tgz
+    version: 0.19.0
+  - appVersion: "3.6"
+    created: 2019-03-12T21:37:37.336016466Z
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: f96fe1742c94c9c956565b9eae8275502edff26d07a02f63b67383667297ce90
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    - https://github.com/percona/mongodb_exporter
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.18.0.tgz
+    version: 0.18.0
+  - appVersion: "3.6"
+    created: 2019-03-12T16:49:38.894666-07:00
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: 2840b4403773bea72317128b98f558eeeb977d2b05a4ee2fef6f73554c4ac3d0
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    - https://github.com/percona/mongodb_exporter
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.18.0-3-gae6a06c.tgz
+    version: 0.18.0-3-gae6a06c
+  - appVersion: "3.6"
+    created: 2019-03-10T02:15:28.549355276Z
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: 42a636d1616255e7260d507c6ac80dd91f6da7f6fc099be2f081cc9a954cff98
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    - https://github.com/percona/mongodb_exporter
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.17.0.tgz
+    version: 0.17.0
+  - appVersion: "3.6"
+    created: 2019-01-03T17:01:28.902017-08:00
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: b83e1b586309aaee20dc96028a107183ee155a43a6c620ee2257ec2c741ec199
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    - https://github.com/percona/mongodb_exporter
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.16.0.tgz
+    version: 0.16.0
+  - appVersion: "3.6"
+    created: 2018-12-09T20:28:20.383850049-08:00
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: 5fcfce6b68172726fbf247050f4034df43b0790d97bd6dcf772164eee7d26216
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    - https://github.com/percona/mongodb_exporter
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.15.0.tgz
+    version: 0.15.0
+  - appVersion: "3.6"
+    created: 2018-12-03T16:48:38.180211-08:00
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: 5cbbf6b05541745e6da25e2d037548fe4cb925df59646e0453cc1d6866b7b18e
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    - https://github.com/percona/mongodb_exporter
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.14.0.tgz
+    version: 0.14.0
+  - appVersion: "3.6"
+    created: 2018-11-05T17:26:45.497438-08:00
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: 6c670f240b21b31781fbd7e57e4a04b24a9d0ea85f1c8288d98de829e7bedd1a
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    - https://github.com/percona/mongodb_exporter
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.13.1.tgz
+    version: 0.13.1
+  - appVersion: "3.6"
+    created: 2018-10-23T19:50:28.515218637Z
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: 22d0642d7005c81cbd4d6e2a2934de2ceb2b925b76756f5d647952f0ba425f46
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    - https://github.com/percona/mongodb_exporter
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.13.0.tgz
+    version: 0.13.0
+  - appVersion: "3.6"
+    created: 2018-10-02T10:35:37.415369522-07:00
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: da5879de93c8d17be8b6db63706909bd761e16506c368083c08ea5b576bcbe8b
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    - https://github.com/percona/mongodb_exporter
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.12.0.tgz
+    version: 0.12.0
+  - appVersion: "3.6"
+    created: 2018-08-17T15:59:13.44102431-07:00
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: 9686fabcc81d6253a6737f3394e71cb43a72cd069e1d56f0cd446a90737833cc
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    - https://github.com/percona/mongodb_exporter
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.11.0.tgz
+    version: 0.11.0
+  - created: 2018-06-29T16:58:11.747309966-07:00
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: fc5743eec20a4d372191f5c03fd876bd7e8aae0d804acf54ae6adf234892d7fa
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: ilya@kasten.io
+      name: Ilya Kislenko
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.10.0.tgz
+    version: 0.10.0
+  - created: 2018-06-20T23:35:13.511532767-07:00
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: f0cf616881f1c973b08cda4ef6468c1543f5d6a375b2ddbd1ce6679a7018f2d7
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: ilya@kasten.io
+      name: Ilya Kislenko
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.9.0.tgz
+    version: 0.9.0
+  - created: 2018-06-17T22:46:02.348998738-07:00
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: 3e7362d4c1fe5ab96024c03f2ac7152e60993ebb7af19de1ae468fb98dde2cf2
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: ilya@kasten.io
+      name: Ilya Kislenko
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.8.0.tgz
+    version: 0.8.0
+  - appVersion: 2.1.2
+    created: 2018-06-02T17:48:59.749182518Z
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: 3bc83b9d11c022a110cb9eea4596c872953ed5f2ba5714748a218ff3f2a0be94
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: ilya@kasten.io
+      name: Ilya Kislenko
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.7.0.tgz
+    version: 0.7.0
+  - created: 2018-05-11T14:13:49.722935979-07:00
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: f351839eb070658a36e15026de80cea10fbefc9adda312f600347c1a32d2ca7a
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: ilya@kasten.io
+      name: Ilya Kislenko
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.6.0.tgz
+    version: 0.6.0
+  - appVersion: 2.1.2
+    created: 2018-04-15T05:53:46.775523998Z
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: 49312beaabb72203c841ffc36e1ba7afb5a46834ddcbca6daef8a72f3c386ddf
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: ilya@kasten.io
+      name: Ilya Kislenko
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-0.5.0.tgz
+    version: 0.5.0
+  - appVersion: 2.1.2
+    created: 2018-04-09T10:53:56.207717388-07:00
+    description: Kanister-enabled NoSQL document-oriented database that stores JSON-like
+      documents with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: 7ca174721cb7055f9b4d1b857ae80d9d12a2a94fae69de00ec5463d60e80f54b
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: ilya@kasten.io
+      name: Ilya Kislenko
+    name: kanister-mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    urls:
+    - https://charts.kanister.io/kanister-mongodb-replicaset-v0.4.0.tgz
+    version: v0.4.0
+  kanister-mysql:
+  - appVersion: 5.7.14
+    created: 2020-01-17T23:41:32.047989318Z
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: c24d916b245d564112db087cd9a4cc7d8de7bf4d0ca47b2d41547eab92f0b3a3
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.24.0.tgz
+    version: 0.24.0
+  - appVersion: 5.7.14
+    created: 2019-12-17T17:55:13.132850665-08:00
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: 40a6205b0c8d6aacb1bc5ec00c349dd7b34cf469272a539cdbc4240277f7b2f8
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.23.0.tgz
+    version: 0.23.0
+  - appVersion: 5.7.14
+    created: 2019-11-11T21:34:23.800741598-08:00
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: 2291d9e33484edf6888da806294d5af0be581c734ae02bfa7b3fca5acab91ad7
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.22.0.tgz
+    version: 0.22.0
+  - appVersion: 5.7.14
+    created: 2019-08-28T14:26:39.930486629-07:00
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: 4b02547fb398c1d6fbd941b1a160041fa7ff1a9715e27460c40fa45a55fed7c3
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.21.0.tgz
+    version: 0.21.0
+  - appVersion: 5.7.14
+    created: 2019-06-11T17:45:58.0116625Z
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: cadacb4fc21f1f7909afdea39b8e1e960081b4e2d625e44901436ccfba4f387e
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.20.0.tgz
+    version: 0.20.0
+  - appVersion: 5.7.14
+    created: 2019-05-08T00:51:02.095169458Z
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: e2dfaed9b05f867a6205b10a14bcb45c9eb389ba058d0614ce57c1d29b1a0d3b
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.19.0.tgz
+    version: 0.19.0
+  - appVersion: 5.7.14
+    created: 2019-03-12T21:37:41.656118373Z
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: a0b79ea0dceeedc736b3c6b0069447137336b1a34e3fc6c73a88b051e2f0fb6a
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.18.0.tgz
+    version: 0.18.0
+  - appVersion: 5.7.14
+    created: 2019-03-12T16:49:42.674538-07:00
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: 404ea4cad8229de505ed51b7cb533b4f5e5e39fc55de8b8c9f2479fa74e86268
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.18.0-3-gae6a06c.tgz
+    version: 0.18.0-3-gae6a06c
+  - appVersion: 5.7.14
+    created: 2019-03-10T02:15:32.636872271Z
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: c64b94103fcdb7a0b5c649c02e2f1cd3577ade725ca0bd01dda79b4e96a2142f
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.17.0.tgz
+    version: 0.17.0
+  - created: 2019-01-03T17:01:35.257-08:00
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: 8de34f5c8eacb8b67fcf7b728642210ba4089db01d8c9ecb372bbf26fee3e101
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.16.0.tgz
+    version: 0.16.0
+  - created: 2018-12-09T20:28:25.478078653-08:00
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: c401d34397e7afcc1a5ad669e258506986aa6147cfafcd3bcbb3d986b60e6096
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.15.0.tgz
+    version: 0.15.0
+  - created: 2018-12-03T16:48:44.644737-08:00
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: ecb532b972f80370b3551a4d39e33f5c0710416859d0bec440cd6afa0d2a0303
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.14.0.tgz
+    version: 0.14.0
+  - created: 2018-11-05T17:26:51.287806-08:00
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: 928c04dc43161abc877936582b1a77b4ef2d2d08051d8b5b2dd75a08f13fe9e6
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.13.1.tgz
+    version: 0.13.1
+  - created: 2018-10-23T19:50:33.90311675Z
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: 7f8500354ef5926fcc8cd1150a75a6d5cffe98a25aa3b87fac046e86c5f9ac7f
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.13.0.tgz
+    version: 0.13.0
+  - created: 2018-10-02T10:35:42.375570426-07:00
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: 6337aad5ed1f4b3af10470ce380981abb48df9c4d2c8feb963891bc2b9b3e897
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.12.0.tgz
+    version: 0.12.0
+  - created: 2018-08-17T15:59:18.273740556-07:00
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: 13f04579cdbc379e954e1c487cb4cfb43740b8b52a8005b42ab197ac17db785d
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.11.0.tgz
+    version: 0.11.0
+  - created: 2018-06-29T16:58:15.618502468-07:00
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: f12ac9fc8a3acd838a5cd8dc9af76827ce80336f04ccdefcd80da339db43a6e7
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.10.0.tgz
+    version: 0.10.0
+  - created: 2018-06-20T23:35:17.665747816-07:00
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: 0452c774e4a136cb615dd1d12f4578630a98af8c86f0b84fca4aabf5ab966def
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.9.0.tgz
+    version: 0.9.0
+  - created: 2018-06-17T22:46:06.831123365-07:00
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: 608a33731c4fc97b7b95f3d468b6d6ecfa6a38d5ca196fe9b5e8e8c026918281
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.8.0.tgz
+    version: 0.8.0
+  - appVersion: 1.1.2
+    created: 2018-06-02T17:49:02.20374673Z
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: f8cf98b58c40f14b4d6816bdf9b6e0723ae76526553ae0a5c1d42be86cddf975
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.7.0.tgz
+    version: 0.7.0
+  - created: 2018-05-11T14:13:54.368492621-07:00
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: efde3e2129241c98974c1f6d152fe89eac588758200a67f77e020cfd0bec1ec3
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.6.0.tgz
+    version: 0.6.0
+  - appVersion: 1.1.2
+    created: 2018-04-15T05:53:49.275096534Z
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: c9c92559b07391f02880b31ddf6824f99fab09d4b0cf0ac099626381d3795605
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-0.5.0.tgz
+    version: 0.5.0
+  - appVersion: 1.1.2
+    created: 2018-04-09T10:54:00.878198029-07:00
+    description: MySQL w/ Kanister support based on stable/mysql
+    digest: 652a33c4f65e78ffbaff997fd223e321b6ab968792b34ed7af8050dda9abf6b3
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    - kanister
+    maintainers:
+    - email: tom@kasten.io
+      name: Tom Manville
+    name: kanister-mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    - https://kanister.io/
+    urls:
+    - https://charts.kanister.io/kanister-mysql-v0.4.0.tgz
+    version: v0.4.0
+  kanister-operator:
+  - apiVersion: v1
+    appVersion: 0.24.0
+    created: 2020-01-17T23:41:41.997152655Z
+    description: Kanister-operator Helm chart for Kubernetes
+    digest: abb2d4974e89a6ca5459dd1d6be7dd310ceb4ebb0bc6c13a8850cf0c93f95030
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-operator
+    urls:
+    - https://charts.kanister.io/kanister-operator-0.24.0.tgz
+    version: 0.24.0
+  - apiVersion: v1
+    appVersion: 0.23.0
+    created: 2019-12-17T17:55:21.162357893-08:00
+    description: Kanister-operator Helm chart for Kubernetes
+    digest: 78dc9fad2c9d37bd1519abe51927f0b128eeb1699a68866a7d43aca2e5e7e500
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-operator
+    urls:
+    - https://charts.kanister.io/kanister-operator-0.23.0.tgz
+    version: 0.23.0
+  - apiVersion: v1
+    appVersion: 0.22.0
+    created: 2019-11-11T21:34:31.665788695-08:00
+    description: Kanister-operator Helm chart for Kubernetes
+    digest: a20dee76827f03828a51a30b9edc7a18d2cfa145d605e93a6dba6bc0363209e0
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-operator
+    urls:
+    - https://charts.kanister.io/kanister-operator-0.22.0.tgz
+    version: 0.22.0
+  - apiVersion: v1
+    appVersion: 0.21.0
+    created: 2019-08-28T14:26:52.216687271-07:00
+    description: Kanister-operator Helm chart for Kubernetes
+    digest: bc957554d60af4f82fd0e97c7db80881474055057e5ff2647d2d611c900582f2
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-operator
+    urls:
+    - https://charts.kanister.io/kanister-operator-0.21.0.tgz
+    version: 0.21.0
+  - apiVersion: v1
+    appVersion: 0.20.0
+    created: 2019-06-11T17:46:09.2463416Z
+    description: Kanister-operator Helm chart for Kubernetes
+    digest: 927970b6ffcbe50ab8321f9a5adb0b4da2eccd0123f65d4ccd7b04506f465336
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-operator
+    urls:
+    - https://charts.kanister.io/kanister-operator-0.20.0.tgz
+    version: 0.20.0
+  - apiVersion: v1
+    appVersion: 0.19.0
+    created: 2019-05-08T00:51:14.472886421Z
+    description: Kanister-operator Helm chart for Kubernetes
+    digest: f222589e3a17aed5660b92b80a83ec62e3cf300410f84eeb58654b8594bccae5
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-operator
+    urls:
+    - https://charts.kanister.io/kanister-operator-0.19.0.tgz
+    version: 0.19.0
+  - apiVersion: v1
+    appVersion: 0.18.0
+    created: 2019-03-12T21:37:54.044779761Z
+    description: Kanister-operator Helm chart for Kubernetes
+    digest: 0d7c52823b25a40cafc032baa42ed157fafdb1a534b335d225f5979faaca864d
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-operator
+    urls:
+    - https://charts.kanister.io/kanister-operator-0.18.0.tgz
+    version: 0.18.0
+  - apiVersion: v1
+    appVersion: 0.18.0
+    created: 2019-03-12T16:49:54.846039-07:00
+    description: Kanister-operator Helm chart for Kubernetes
+    digest: 6a7d36f40d3e486601ef7c4c7a9a058cb8601ffdea26a1711bf203e45eb7c0e1
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-operator
+    urls:
+    - https://charts.kanister.io/kanister-operator-0.18.0-3-gae6a06c.tgz
+    version: 0.18.0-3-gae6a06c
+  - apiVersion: v1
+    appVersion: 0.17.0
+    created: 2019-03-10T02:15:45.086628004Z
+    description: Kanister-operator Helm chart for Kubernetes
+    digest: 5424795d0e9852a1ff2bb4deebb8613d942059aadb76353d059cebc60fde787c
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-operator
+    urls:
+    - https://charts.kanister.io/kanister-operator-0.17.0.tgz
+    version: 0.17.0
+  - apiVersion: v1
+    appVersion: 0.15.0
+    created: 2019-01-03T17:01:51.888708-08:00
+    description: Kanister-operator Helm chart for Kubernetes
+    digest: dc244cadf716ad572644b5522465809463ccd13502de157f8c1ad11f6e3ba388
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-operator
+    urls:
+    - https://charts.kanister.io/kanister-operator-0.16.0.tgz
+    version: 0.16.0
+  - apiVersion: v1
+    appVersion: 0.15.0
+    created: 2018-12-09T20:28:37.477132998-08:00
+    description: Kanister-operator Helm chart for Kubernetes
+    digest: 142752c861648428d17b8961d32e4435d915d6be558684111759896d3dc8e9d8
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-operator
+    urls:
+    - https://charts.kanister.io/kanister-operator-0.15.0.tgz
+    version: 0.15.0
+  - apiVersion: v1
+    appVersion: 0.14.0
+    created: 2018-12-03T16:49:00.69554-08:00
+    description: Kanister-operator Helm chart for Kubernetes
+    digest: c9a7860e3a47ded6c6a79d778dbbca6d333ce431779d40f53e16a1d1d4467873
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-operator
+    urls:
+    - https://charts.kanister.io/kanister-operator-0.14.0.tgz
+    version: 0.14.0
+  - apiVersion: v1
+    appVersion: 0.10.0
+    created: 2018-11-05T17:27:06.644296-08:00
+    description: Kanister-operator Helm chart for Kubernetes
+    digest: 48102c1654e4a4f934c4d118a376d44add4525b7ba0b5e6368321528e55077d3
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-operator
+    urls:
+    - https://charts.kanister.io/kanister-operator-0.13.1.tgz
+    version: 0.13.1
+  - apiVersion: v1
+    appVersion: 0.10.0
+    created: 2018-10-23T19:50:48.806027905Z
+    description: Kanister-operator Helm chart for Kubernetes
+    digest: 4222be7d80cd0c13a57fec2ca2a1676563b131d3602b3c217b2e40287fa4cb05
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-operator
+    urls:
+    - https://charts.kanister.io/kanister-operator-0.13.0.tgz
+    version: 0.13.0
+  - apiVersion: v1
+    appVersion: 0.10.0
+    created: 2018-10-02T10:35:55.566621193-07:00
+    description: Kanister-operator Helm chart for Kubernetes
+    digest: f89aa151f00f89e4ccd79956fe98f04ee76b5fb793c0b63ffa2e5f002359414a
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-operator
+    urls:
+    - https://charts.kanister.io/kanister-operator-0.12.0.tgz
+    version: 0.12.0
+  - apiVersion: v1
+    appVersion: 0.10.0
+    created: 2018-08-17T15:59:27.215699791-07:00
+    description: Kanister-operator Helm chart for Kubernetes
+    digest: e402aff9021d0a1d64c5940d4ea500455f831d6a59437714ff6df65cb9db36a6
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-operator
+    urls:
+    - https://charts.kanister.io/kanister-operator-0.11.0.tgz
+    version: 0.11.0
+  - apiVersion: v1
+    appVersion: 0.10.0
+    created: 2018-06-29T16:58:21.90793539-07:00
+    description: Kanister-operator Helm chart for Kubernetes
+    digest: 0bb38fe7545c70da0925c25e1d6372d895a29493c6758498ababb06ffb21979e
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-operator
+    urls:
+    - https://charts.kanister.io/kanister-operator-0.10.0.tgz
+    version: 0.10.0
+  - apiVersion: v1
+    appVersion: v0.2.0
+    created: 2018-06-20T23:35:24.323399754-07:00
+    description: Kanister-operator Helm chart for Kubernetes
+    digest: 8756e7444f5b54df9aa9cf5013f1214932e790ef72abedfabb9633c55763ce3a
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: ilya@kasten.io
+      name: depohmel
+    - email: tom@kasten.io
+      name: tdmanv
+    name: kanister-operator
+    urls:
+    - https://charts.kanister.io/kanister-operator-0.9.0.tgz
+    version: 0.9.0
+  kanister-postgresql:
+  - appVersion: 9.6.2
+    created: 2020-01-17T23:41:35.388377018Z
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: fbb98d66b5a51093a51428be336f4c8429a71a7891b5f38c99e4d24a19123295
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.24.0.tgz
+    version: 0.24.0
+  - appVersion: 9.6.2
+    created: 2019-12-17T17:55:15.473248733-08:00
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: d570e6e73c66af215259e33b2a5ca27128e33dde69a298d3a16aac976d302223
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.23.0.tgz
+    version: 0.23.0
+  - appVersion: 9.6.2
+    created: 2019-11-11T21:34:26.389285993-08:00
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: e8d1ae0cd9a329b4a46e9762476e6faa9022a28a0d42432e9895494d3150e4d7
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.22.0.tgz
+    version: 0.22.0
+  - appVersion: 9.6.2
+    created: 2019-08-28T14:26:43.393813663-07:00
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: f4d30b4ba5f8b3bc024fb457abcdc6d0e7c2eb647eb729f2f3dec0c05a3beeda
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.21.0.tgz
+    version: 0.21.0
+  - appVersion: 9.6.2
+    created: 2019-06-11T17:46:01.6888172Z
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: b4bb5e0aa8a1e645c062b0df3d699c398f3e204e059106c3ab85a0e190dfea11
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.20.0.tgz
+    version: 0.20.0
+  - appVersion: 9.6.2
+    created: 2019-05-08T00:51:06.211380241Z
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: a1e05ba57d6cd12ce9d6668b3b1b7a8e885ec47a025192f1457a45d39bb36323
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.19.0.tgz
+    version: 0.19.0
+  - appVersion: 9.6.2
+    created: 2019-03-12T21:37:45.763563351Z
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: 536d115c6296d651773ee5660926caee9a8f903827df1617a5b96fb7a86fe984
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.18.0.tgz
+    version: 0.18.0
+  - appVersion: 9.6.2
+    created: 2019-03-12T16:49:46.467853-07:00
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: 2e626bb71777c6475bfd8423f7bfcfea366edd6adfb5a1fcdef3353580d3846a
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.18.0-3-gae6a06c.tgz
+    version: 0.18.0-3-gae6a06c
+  - appVersion: 9.6.2
+    created: 2019-03-10T02:15:36.736153257Z
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: 528f87520191c7f8ba7a250892230b83c13e72223cb3a3961aba5182088a6038
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.17.0.tgz
+    version: 0.17.0
+  - appVersion: 9.6.2
+    created: 2019-01-03T17:01:41.670268-08:00
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: dc2c582669a61ab52a35f37626b96b0e525ba55de8498f99e0c58f8fb01750d8
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.16.0.tgz
+    version: 0.16.0
+  - appVersion: 9.6.2
+    created: 2018-12-09T20:28:29.792462215-08:00
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: 707e125df099646ccff6c88077bca87cbea04ababa3796bb73931f4696eb162f
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.15.0.tgz
+    version: 0.15.0
+  - appVersion: 9.6.2
+    created: 2018-12-03T16:48:50.736594-08:00
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: 9661d336c4706c506b2e005c7aa51ce1b4e152382e87943a856bbbe5a693bc99
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.14.0.tgz
+    version: 0.14.0
+  - appVersion: 9.6.2
+    created: 2018-11-05T17:26:57.298914-08:00
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: adbdf409de279390f136d8cd0666dd4c8ef7847613b3134a5e3089f7a16a45b7
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.13.1.tgz
+    version: 0.13.1
+  - appVersion: 9.6.2
+    created: 2018-10-23T19:50:39.264817557Z
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: a2aaa9de62256630b4cb3ac6edb4714ca59adeab9200bce3e03a96342809fa0a
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.13.0.tgz
+    version: 0.13.0
+  - appVersion: 9.6.2
+    created: 2018-10-02T10:35:47.594178397-07:00
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: a7330c479bca967d9cfb309343a81eabb288f82796eddd52c2905f3a861b6537
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.12.0.tgz
+    version: 0.12.0
+  - appVersion: 9.6.2
+    created: 2018-08-17T15:59:24.871182031-07:00
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: e267ec088f6008d786d5f713fdcce65907d61cb9d13899132016d1eefd927f71
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.11.0.tgz
+    version: 0.11.0
+  - appVersion: 9.6.2
+    created: 2018-06-29T16:58:19.594183434-07:00
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: d435f1c71d05a596d9e75aab9410bf7c345a34c2488f9ba528125b9e58f5b795
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.10.0.tgz
+    version: 0.10.0
+  - appVersion: 9.6.2
+    created: 2018-06-20T23:35:21.968578325-07:00
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: b3765d0a9112440306e0b6df945331d17498edaf8b4bbb16a9f37476f0c96e2c
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.9.0.tgz
+    version: 0.9.0
+  - appVersion: 9.6.2
+    created: 2018-06-17T22:46:11.177485894-07:00
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: effbfe699fe4ac1d7da75754e7abbd7264234cb778b171fd519621910d8ffc27
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.8.0.tgz
+    version: 0.8.0
+  - appVersion: 9.6.2
+    created: 2018-06-02T17:49:04.505837187Z
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: e7c2578f928dd8b5937092fe5a8748e863bc1340e6a7d66be60e965dce008c49
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.7.0.tgz
+    version: 0.7.0
+  - appVersion: 9.6.2
+    created: 2018-05-11T14:13:58.331634488-07:00
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: 5ebd72d7eeece349339428d9943d0b64e61151533b283c2eecc4e8685c7d7098
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.6.0.tgz
+    version: 0.6.0
+  - appVersion: 9.6.2
+    created: 2018-04-15T05:53:51.706883757Z
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: ba679e3f260c14b228d45a7e77331390f7d5e7e743087b0987f4eac408a7b4cf
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-0.5.0.tgz
+    version: 0.5.0
+  - appVersion: 9.6.2
+    created: 2018-04-09T10:54:04.15253795-07:00
+    description: PostgreSQL w/ Kanister support based on stable/postgresql
+    digest: 34cf323ed180891477c4a5fa605f8f09a1cb45d3f5eebaa55f12e05a034bb78c
+    engine: gotpl
+    home: https://www.postgresql.org/
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    maintainers:
+    - name: depohmel
+    - name: tdmanv
+    name: kanister-postgresql
+    sources:
+    - https://github.com/kansiterio/kanister
+    - https://github.com/kansiterio/blueprint-helm-charts
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/postgres
+    urls:
+    - https://charts.kanister.io/kanister-postgresql-v0.4.0.tgz
+    version: v0.4.0
+  profile:
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: 2020-01-17T23:41:25.420072618Z
+    description: A helm chart to create profile custom resource for kanister
+    digest: 9a68ebbfad2b820bb05896fc587158cf7278f010f925c928dec79424a0bb39a0
+    engine: gotpl
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.24.0.tgz
+    version: 0.24.0
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: 2019-12-17T17:55:08.141750164-08:00
+    description: A helm chart to create profile custom resource for kanister
+    digest: 89ba3662dd8e5b6d4b2855708fe3d98563a2e5dd11a48c78732b7b6f1b0d7cda
+    engine: gotpl
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.23.0.tgz
+    version: 0.23.0
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: 2019-11-11T21:34:18.441297188-08:00
+    description: A helm chart to create profile custom resource for kanister
+    digest: dcd6bff1f767fe1bbcef9c5341598b1d6367fa96b037618f96c9e208eeb46474
+    engine: gotpl
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.22.0.tgz
+    version: 0.22.0
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: 2019-08-28T14:26:33.452205192-07:00
+    description: A helm chart to create profile custom resource for kanister
+    digest: c6225ab6240a6a5e4ddd83c5a01a4293df0dc845a0dfaf3407923c47a5b8290e
+    engine: gotpl
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.21.0.tgz
+    version: 0.21.0
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: 2019-06-11T17:45:50.6319234Z
+    description: A helm chart to create profile custom resource for kanister
+    digest: 05d1bf0de4aee0ffba7ae761f5840e510c7db9997d9aa60adbd016a49fd8ee72
+    engine: gotpl
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.20.0.tgz
+    version: 0.20.0
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: 2019-05-08T00:50:53.72264044Z
+    description: A helm chart to create profile custom resource for kanister
+    digest: b1b6dd648eff839bc9788d1628e013b7faa857dc4246a0924b0b34bcbf9ddb68
+    engine: gotpl
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.19.0.tgz
+    version: 0.19.0
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: 2019-03-12T21:37:33.134371327Z
+    description: A helm chart to create profile custom resource for kanister
+    digest: 6925b15a9260e89e5b1c11b84808920a2f7f93a1c9b8b3564413e5563c83f708
+    engine: gotpl
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.18.0.tgz
+    version: 0.18.0
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: 2019-03-12T16:49:35.308248-07:00
+    description: A helm chart to create profile custom resource for kanister
+    digest: 65d530564d78c2fab1ad9de64143bf628b23ad3a1da00eb2ed0b5314172747e4
+    engine: gotpl
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.18.0-3-gae6a06c.tgz
+    version: 0.18.0-3-gae6a06c
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: 2019-03-10T02:15:24.560602012Z
+    description: A helm chart to create profile custom resource for kanister
+    digest: db78feb02c45b45d85015b7b62a390adacbdefb5e53aa5d2c108e6bef1a33107
+    engine: gotpl
+    home: https://kanister.io/
+    icon: https://kasten.io/assets/img/kanister-logo.png
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.17.0.tgz
+    version: 0.17.0
+  - apiVersion: v1
+    created: 2019-01-03T17:01:22.555245-08:00
+    description: A helm chart to create profile custom resource for kanister
+    digest: 8b23815c9f3fc1d63ecd36904ec8f47236c32d2a2d054781288b95830f492c80
+    engine: gotpl
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.16.0.tgz
+    version: 0.16.0
+  - apiVersion: v1
+    created: 2018-12-09T20:28:14.00754044-08:00
+    description: A helm chart to create profile custom resource for kanister
+    digest: aa40eff2d9132971c319486d111e4e1677bdf7964a95a8ccff7640e91e40aaad
+    engine: gotpl
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.15.0.tgz
+    version: 0.15.0
+  - apiVersion: v1
+    created: 2018-12-03T16:48:30.124729-08:00
+    description: A helm chart to create profile custom resource for kanister
+    digest: 4b93aad3ae078c92e9f441b4584d88940d478694e0f5019ac8220915a40c9510
+    engine: gotpl
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.14.0.tgz
+    version: 0.14.0
+  - apiVersion: v1
+    created: 2018-11-05T17:26:40.00002-08:00
+    description: A helm chart to create profile custom resource for kanister
+    digest: 01907bdb3444bea6374c66fdd3b2c204961c5eeeb4cf48fa5c98b881f53f32e1
+    engine: gotpl
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.13.1.tgz
+    version: 0.13.1
+  - apiVersion: v1
+    created: 2018-10-23T19:50:22.987661286Z
+    description: A helm chart to create profile custom resource for kanister
+    digest: 8be62a72b376819dc76ce59d50ffcea1c3405acdef159d7c08bc4b12ad69607e
+    engine: gotpl
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.13.0.tgz
+    version: 0.13.0
+  - apiVersion: v1
+    created: 2018-10-02T10:35:32.839162708-07:00
+    description: A helm chart to create profile custom resource for kanister
+    digest: 32ce71d60d367e67bc108dc7c6d94797e1b7e3b532f3ff1575f63cc20a065e56
+    engine: gotpl
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.12.0.tgz
+    version: 0.12.0
+  - apiVersion: v1
+    created: 2018-08-17T15:59:07.515130295-07:00
+    description: A helm chart to create profile custom resource for kanister
+    digest: b3e66887c9f1fe684ec5ce9923ae8eb002ff9257b59d64b90750dfceac9412a1
+    engine: gotpl
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.11.0.tgz
+    version: 0.11.0
+  - apiVersion: v1
+    created: 2018-06-29T16:58:24.090652118-07:00
+    description: A helm chart to create profile custom resource for kanister
+    digest: 5a8177fc32555ee2682b43f7e97a88f55688de63fcce7546b7eb1ee2f10103c3
+    engine: gotpl
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.10.0.tgz
+    version: 0.10.0
+  - apiVersion: v1
+    created: 2018-06-20T23:35:26.60863215-07:00
+    description: A helm chart to create profile custom resource for kanister
+    digest: 0a7343864ddd80aaefc2f00e0e270be18bb840fd21fd4de4a566fb9a2ff4b1f4
+    engine: gotpl
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.9.0.tgz
+    version: 0.9.0
+  - apiVersion: v1
+    created: 2018-06-17T22:45:58.109950264-07:00
+    description: A helm chart to create profile custom resource for kanister
+    digest: 03cd2a441b66423c0968ad990ba8dc9d195c158da45779079d6f0142648c0a5c
+    engine: gotpl
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.8.0.tgz
+    version: 0.8.0
+  - apiVersion: v1
+    created: 2018-06-13T16:13:55.872516327-07:00
+    description: A helm chart to create profile custom resource for kanister
+    digest: 05a6f29fa46179953bbfbb81ae53124e4b50f8961a5dc7e0047c29efbc1ec233
+    engine: gotpl
+    maintainers:
+    - email: tom@kasten.io
+      name: tdmanv
+    - email: ilya@kasten.io
+      name: depohmel
+    name: profile
+    urls:
+    - https://charts.kanister.io/profile-0.1.0.tgz
+    version: 0.1.0
+generated: 2020-01-17T23:41:41.996467057Z

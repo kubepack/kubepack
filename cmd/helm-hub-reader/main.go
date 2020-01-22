@@ -19,7 +19,9 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
+	"os"
 	"strings"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
@@ -39,6 +41,24 @@ func main() {
 			if err == nil {
 				for _, repo := range hub.Repositories {
 					repos[strings.TrimSuffix(repo.URL, "/")] = repo.Name
+
+					resp, err := http.Get(strings.TrimSuffix(repo.URL, "/") + "/index.yaml")
+					if err != nil {
+						log.Fatalln(err)
+					}
+					defer resp.Body.Close()
+					data, err := ioutil.ReadAll(resp.Body)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					err = os.MkdirAll("artifacts/hub", 0755)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					err = ioutil.WriteFile("artifacts/hub/"+repo.Name+"-index.yaml", data, 0644)
+					if err != nil {
+						log.Fatalln(err)
+					}
 				}
 			}
 		}

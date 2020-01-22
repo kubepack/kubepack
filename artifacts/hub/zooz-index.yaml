@@ -1,0 +1,114 @@
+apiVersion: v1
+entries:
+  predator:
+  - appVersion: 1.1.0
+    created: "2020-01-14T17:42:08.235446+02:00"
+    description: Predator is an open-source distributed performance testing platform
+    digest: e0cf50bddbb00cea9ab3b7ab66d53a9826c4ec5500917e799c49e0cdcc04f949
+    home: https://zooz.github.io/predator
+    icon: https://zooz.github.io/predator/logo.png
+    keywords:
+    - performance
+    - node.js
+    - rest
+    - stress
+    - test
+    - load
+    maintainers:
+    - email: enudler@gmail.com
+      name: enudler
+    name: predator
+    sources:
+    - https://github.com/Zooz/predator
+    urls:
+    - predator-1.1.0.tgz
+    version: 1.1.0
+  - appVersion: 1.0.9
+    created: 2019-07-24T14:30:27.66958+03:00
+    description: Predator is an open-source distributed performance testing platform
+    digest: bbcd1758d818954994c16a57cf1e89d05ae95806dd8d1d7605d1a1c166acd453
+    home: https://zooz.github.io/predator
+    icon: https://zooz.github.io/predator/logo.png
+    keywords:
+    - performance
+    - node.js
+    - rest
+    - stress
+    - test
+    - load
+    maintainers:
+    - email: enudler@gmail.com
+      name: enudler
+    name: predator
+    sources:
+    - https://github.com/Zooz/predator
+    urls:
+    - predator-1.0.9.tgz
+    version: 1.0.9
+  - appVersion: 1.0.8
+    created: 2019-07-23T10:27:20.970583+03:00
+    description: Predator is an open-source distributed performance testing platform
+    digest: 5aaeb2a8046e6b04d42e65d588d917d758d938c2024a6c2ec32b97905bb2a9b9
+    home: https://zooz.github.io/predator
+    icon: https://zooz.github.io/predator/logo.png
+    keywords:
+    - performance
+    - node.js
+    - rest
+    - stress
+    - test
+    - load
+    maintainers:
+    - email: enudler@gmail.com
+      name: enudler
+    name: predator
+    sources:
+    - https://github.com/Zooz/predator
+    urls:
+    - predator-1.0.8.tgz
+    version: 1.0.8
+  - appVersion: 1.0.7
+    created: 2019-07-01T09:37:36.396463+03:00
+    description: Predator is an open-source distributed performance testing platform
+    digest: fca2be48991b079e469396fa475f95c61a9a8e92b2a81f218e30b3cf481961e5
+    home: https://zooz.github.io/predator
+    icon: https://zooz.github.io/predator/logo.png
+    keywords:
+    - performance
+    - node.js
+    - rest
+    - stress
+    - test
+    - load
+    maintainers:
+    - email: enudler@gmail.com
+      name: enudler
+    name: predator
+    sources:
+    - https://github.com/Zooz/predator
+    urls:
+    - predator-1.0.7.tgz
+    version: 1.0.7
+  - appVersion: 1.0.6
+    created: 2019-07-01T09:37:36.396022+03:00
+    description: Predator is an open-source distributed performance testing framework
+    digest: 46c52172e48fdad820e6eb00f3fab1bb37782384017187ff1d41392fd5d8320e
+    home: https://zooz.github.io/predator
+    icon: https://zooz.github.io/predator/logo.png
+    keywords:
+    - performance
+    - node.js
+    - rest
+    - stress
+    - test
+    - load
+    maintainers:
+    - email: enudler@gmail.com
+      name: enudler
+    name: predator
+    sources:
+    - https://github.com/Zooz/predator
+    urls:
+    - predator-1.0.6.tgz
+    version: 1.0.6
+generated: 2019-07-24T14:30:27.661034+03:00

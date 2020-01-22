@@ -1,0 +1,76 @@
+apiVersion: v1
+entries:
+  vmware-exporter:
+  - apiVersion: v1
+    appVersion: 0.10.4
+    created: "2019-10-17T15:16:25.927375+02:00"
+    description: VMware vCenter Exporter for Prometheus Helm chart
+    digest: ce67a0e38127508cc33c47fd4165e634241fb1e74012fcfe0ca43ed5132612e4
+    engine: gotpl
+    home: https://github.com/pryorda/vmware_exporter
+    maintainers:
+    - email: info@martinkremers.de
+      name: kremers
+    - email: daniel@pryorda.net
+      name: pryorda
+    name: vmware-exporter
+    sources:
+    - https://github.com/pryorda/vmware_exporter
+    urls:
+    - vmware-exporter-1.0.4.tgz
+    version: 1.0.4
+  - apiVersion: v1
+    appVersion: 0.9.7
+    created: "2019-10-17T15:16:25.926682+02:00"
+    description: VMware vCenter Exporter for Prometheus Helm chart
+    digest: a485c57ce5afa291c3ec9c45e99efc87413d2513e0343729c3a3545f72a7fe51
+    engine: gotpl
+    home: https://github.com/pryorda/vmware_exporter
+    maintainers:
+    - email: info@martinkremers.de
+      name: kremers
+    - email: daniel@pryorda.net
+      name: pryorda
+    name: vmware-exporter
+    sources:
+    - https://github.com/pryorda/vmware_exporter
+    urls:
+    - vmware-exporter-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v1
+    appVersion: 0.9.1
+    created: "2019-10-17T15:16:25.925514+02:00"
+    description: VMware vCenter Exporter for Prometheus Helm chart
+    digest: 856cf99156bfb687eecba2a99334ff834c26f058fdc9c5021c3aeeba90c365c9
+    engine: gotpl
+    home: https://github.com/pryorda/vmware_exporter
+    maintainers:
+    - email: info@martinkremers.de
+      name: kremers
+    - email: daniel@pryorda.net
+      name: pryorda
+    name: vmware-exporter
+    sources:
+    - https://github.com/pryorda/vmware_exporter
+    urls:
+    - vmware-exporter-1.0.2.tgz
+    version: 1.0.2
+  - apiVersion: v1
+    appVersion: 0.9.0
+    created: "2019-10-17T15:16:25.924411+02:00"
+    description: VMware vCenter Exporter for Prometheus Helm chart
+    digest: 4e359b89f2091a8306fb6a60f3a9b9bb6e7ea48ded10db55b9e3f52d3472687d
+    engine: gotpl
+    home: https://github.com/pryorda/vmware_exporter
+    maintainers:
+    - email: info@martinkremers.de
+      name: kremers
+    - email: daniel@pryorda.net
+      name: pryorda
+    name: vmware-exporter
+    sources:
+    - https://github.com/pryorda/vmware_exporter
+    urls:
+    - vmware-exporter-1.0.1.tgz
+    version: 1.0.1
+generated: "2019-10-17T15:16:25.922881+02:00"

@@ -1,0 +1,45 @@
+apiVersion: v1
+entries:
+  kafka-topics-ui:
+  - apiVersion: v1
+    appVersion: v0.9.4
+    created: 2019-06-06T10:26:42.973576+02:00
+    description: This is a web tool for the confluentinc/kafka-rest proxy in order
+      to browse Kafka topics and understand what's happening on your cluster. Find
+      topics / view topic metadata / browse topic data (kafka messages) / view topic
+      configuration / download data.
+    digest: 98bef0b52e3f92ee91bd0c92d860aaf38318f3b2dbdbc9042bfd579350c08e61
+    home: https://github.com/Landoop/kafka-topics-ui
+    icon: https://avatars2.githubusercontent.com/u/9439498?s=200&v=4
+    keywords:
+    - confluent
+    - kafka-topics-ui
+    - Kafka
+    maintainers:
+    - email: dhia.absi@gmail.com
+      name: dhiatn
+    name: kafka-topics-ui
+    urls:
+    - https://dhiatn.github.io/helm-kafka-topics-ui/kafka-topics-ui-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    appVersion: v0.9.4
+    created: 2019-06-06T10:26:42.972847+02:00
+    description: This is a web tool for the confluentinc/schema-registry in order
+      to create / view / search / evolve / view history & configure Avro schemas of
+      your Kafka cluster.
+    digest: 5e12e5a034903ca855e59a41a2772b009ac408f98d5c7d5aac4bce4dbc4811be
+    home: https://github.com/Landoop/kafka-topics-ui
+    icon: https://avatars2.githubusercontent.com/u/9439498?s=200&v=4
+    keywords:
+    - confluent
+    - kafka-topics-ui
+    - Kafka
+    maintainers:
+    - email: dhia.absi@gmail.com
+      name: dhiatn
+    name: kafka-topics-ui
+    urls:
+    - https://dhiatn.github.io/helm-kafka-topics-ui/kafka-topics-ui-0.1.0.tgz
+    version: 0.1.0
+generated: 2019-06-06T10:26:42.970211+02:00

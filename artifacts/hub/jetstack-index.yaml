@@ -1,0 +1,530 @@
+apiVersion: v1
+entries:
+  cert-manager:
+  - apiVersion: v1
+    appVersion: v0.13.0
+    created: "2020-01-21T18:35:57.114Z"
+    description: A Helm chart for cert-manager
+    digest: e89bdb41db004da7c46d92c087ccfa672779e9b56a0a188be3d461930e28d9e9
+    home: https://github.com/jetstack/cert-manager
+    icon: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.13.0.tgz
+    version: v0.13.0
+  - apiVersion: v1
+    appVersion: v0.13.0-alpha.0
+    created: "2019-12-16T12:38:41.46Z"
+    description: A Helm chart for cert-manager
+    digest: cde674a080e7cb6307dea0380c80772d453bc78564af838ac48ae7ff18016899
+    home: https://github.com/jetstack/cert-manager
+    icon: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.13.0-alpha.0.tgz
+    version: v0.13.0-alpha.0
+  - apiVersion: v1
+    appVersion: v0.12.0
+    created: "2019-11-28T13:11:30.845Z"
+    description: A Helm chart for cert-manager
+    digest: 7b42b4927bbcc04fa8c3aee9a86596ad5f020866b566ff78eba7f2fd704956f9
+    home: https://github.com/jetstack/cert-manager
+    icon: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.12.0.tgz
+    version: v0.12.0
+  - apiVersion: v1
+    appVersion: v0.12.0-beta.1
+    created: "2019-11-15T17:15:44.27Z"
+    description: A Helm chart for cert-manager
+    digest: fb34babe9a4a505a7f5a1fcf231970c037f9b50fe2be8d5c87e24298407cc9a0
+    home: https://github.com/jetstack/cert-manager
+    icon: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.12.0-beta.1.tgz
+    version: v0.12.0-beta.1
+  - apiVersion: v1
+    appVersion: v0.12.0-beta.0
+    created: "2019-11-14T11:49:12.252Z"
+    description: A Helm chart for cert-manager
+    digest: 95c4ec8297366d467f9eb83b30b018af6e0550311a7daa3a034ad7945005ef4b
+    home: https://github.com/jetstack/cert-manager
+    icon: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.12.0-beta.0.tgz
+    version: v0.12.0-beta.0
+  - apiVersion: v1
+    appVersion: v0.11.1
+    created: "2019-11-27T23:14:13.26Z"
+    description: A Helm chart for cert-manager
+    digest: 0aea3737850dfac9c9ab54bd3fdd16c4b7d8bdb84c42c1982cadc2ad8468d305
+    home: https://github.com/jetstack/cert-manager
+    icon: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.11.1.tgz
+    version: v0.11.1
+  - appVersion: v0.11.0
+    created: "2019-10-10T13:57:16.097Z"
+    description: A Helm chart for cert-manager
+    digest: 41826c830da91f45c816931707c05736766e4014c579d29b9def46fa211e9d30
+    home: https://github.com/jetstack/cert-manager
+    icon: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.11.0.tgz
+    version: v0.11.0
+  - appVersion: v0.11.0-beta.0
+    created: "2019-10-03T12:23:26.538Z"
+    description: A Helm chart for cert-manager
+    digest: 355b2326554a9f12e6d9909a57cf7e1f92b31a153dd358e3f27cf44933fc192f
+    home: https://github.com/jetstack/cert-manager
+    icon: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.11.0-beta.0.tgz
+    version: v0.11.0-beta.0
+  - appVersion: v0.10.1
+    created: "2019-09-27T12:36:33.775Z"
+    description: A Helm chart for cert-manager
+    digest: bf43465e42bb6b5c29c66b22bfa02702cf890e53c9c44d8f8fc43f4e6c8d9499
+    home: https://github.com/jetstack/cert-manager
+    icon: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.10.1.tgz
+    version: v0.10.1
+  - appVersion: v0.10.0
+    created: "2019-09-05T14:22:01.512Z"
+    description: A Helm chart for cert-manager
+    digest: 33a7abb67820db9568224d0ba824f87254294a09f3f7c030d34934b83ded2987
+    home: https://github.com/jetstack/cert-manager
+    icon: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.10.0.tgz
+    version: v0.10.0
+  - appVersion: v0.10.0-alpha.0
+    created: "2019-08-20T16:15:05.912Z"
+    description: A Helm chart for cert-manager
+    digest: 8d0fa1db51e58a328a5dd0cd8e6193fb6cf072eb796690cf5a9d34c71ea58fe0
+    home: https://github.com/jetstack/cert-manager
+    icon: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.10.0-alpha.0.tgz
+    version: v0.10.0-alpha.0
+  - appVersion: v0.9.1
+    created: "2019-08-13T14:01:31.885Z"
+    description: A Helm chart for cert-manager
+    digest: 0d16e7f3205ced4e5c4fa39dd58d7989b814770a884c7f1f3ffdbe7b38a32e0d
+    home: https://github.com/jetstack/cert-manager
+    icon: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.9.1.tgz
+    version: v0.9.1
+  - appVersion: v0.9.0
+    created: "2019-07-23T17:39:20.557Z"
+    description: A Helm chart for cert-manager
+    digest: eaaefc80a597c8bc7dd396201b104236ca991bd78966facc27dd30c8eb75f07c
+    home: https://github.com/jetstack/cert-manager
+    icon: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.9.0.tgz
+    version: v0.9.0
+  - appVersion: v0.9.0-beta.0
+    created: "2019-07-17T18:07:44.179Z"
+    description: A Helm chart for cert-manager
+    digest: ade3931571d4a58d965da29d4c3c66e0b4132da00f58b1c36d7c55a94137d935
+    home: https://github.com/jetstack/cert-manager
+    icon: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.9.0-beta.0.tgz
+    version: v0.9.0-beta.0
+  - appVersion: v0.9.0-alpha.0
+    created: "2019-07-08T16:03:27.017Z"
+    description: A Helm chart for cert-manager
+    digest: 8a2771f27e96d4b19f8c78f615aec1fdd1a0cb1047bca4a3195ee65d40ea07f0
+    home: https://github.com/jetstack/cert-manager
+    icon: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.9.0-alpha.0.tgz
+    version: v0.9.0-alpha.0
+  - appVersion: v0.8.1
+    created: "2019-06-18T15:04:54.287Z"
+    description: A Helm chart for cert-manager
+    digest: ff8d3acff2fd8198ce109b1dd6ae926af5dadf22144bbb15eb3206548df47342
+    home: https://github.com/jetstack/cert-manager
+    icon: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.8.1.tgz
+    version: v0.8.1
+  - appVersion: v0.8.0
+    created: "2019-05-20T17:12:39.532Z"
+    description: A Helm chart for cert-manager
+    digest: 3bb2261bf27f8f19fc2fa8a1e060dd7303c8dfbeab13bbeabfcf2bae7919063f
+    home: https://github.com/jetstack/cert-manager
+    icon: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.8.0.tgz
+    version: v0.8.0
+  - appVersion: v0.8.0-beta.0
+    created: "2019-05-07T13:22:11.191Z"
+    description: A Helm chart for cert-manager
+    digest: 451d50cd09ad36335c44e60f42a4db74b700b758e2527b17d2b3b32a8d578ec8
+    home: https://github.com/jetstack/cert-manager
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.8.0-beta.0.tgz
+    version: v0.8.0-beta.0
+  - appVersion: v0.8.0-alpha.0
+    created: "2019-05-01T17:20:00.514Z"
+    description: A Helm chart for cert-manager
+    digest: 802ccb261e6cda4190f1ce45802e9e27c97147314a85c98754331da3eba85d2d
+    home: https://github.com/jetstack/cert-manager
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.8.0-alpha.0.tgz
+    version: v0.8.0-alpha.0
+  - appVersion: v0.7.2
+    created: "2019-05-01T18:14:52.318Z"
+    description: A Helm chart for cert-manager
+    digest: e0596b237981dd6e478a7036521a8d3f805eb6fa0e03e9be7ee3e49af2dd640f
+    home: https://github.com/jetstack/cert-manager
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.7.2.tgz
+    version: v0.7.2
+  - appVersion: v0.7.1
+    created: "2019-04-24T13:17:11.214Z"
+    description: A Helm chart for cert-manager
+    digest: 6196e099d9b8c72f706dbe1a8aea2ab2c17ff1f8c7310d0aaae96c8c0d65bb50
+    home: https://github.com/jetstack/cert-manager
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.7.1.tgz
+    version: v0.7.1
+  - appVersion: v0.7.0
+    created: "2019-03-11T18:22:58.295Z"
+    description: A Helm chart for cert-manager
+    digest: d5f0b603126b2933ef85ece47ccdf276d98f00c5c3f25d7901e3b1188d6c9052
+    home: https://github.com/jetstack/cert-manager
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.7.0.tgz
+    version: v0.7.0
+  - appVersion: v0.7.0-beta.0
+    created: "2019-03-02T12:11:25.974Z"
+    description: A Helm chart for cert-manager
+    digest: 48cc6ed22c18320b873c28ffab8b0cab5f5d9b92aa76428a7a132dce21367c76
+    home: https://github.com/jetstack/cert-manager
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.7.0-beta.0.tgz
+    version: v0.7.0-beta.0
+  - appVersion: v0.7.0-alpha.0
+    created: "2019-02-22T15:15:51.922Z"
+    description: A Helm chart for cert-manager
+    digest: f004ce4e66691e9f2df382ee901cbae68568d2eabff993bd6ebbcbfb601f334a
+    home: https://github.com/jetstack/cert-manager
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.7.0-alpha.1.tgz
+    version: v0.7.0-alpha.1
+  - appVersion: v0.6.0
+    created: "2019-01-23T14:12:14.413Z"
+    description: A Helm chart for cert-manager
+    digest: 28e5a8d8b6229b33026bfe28a81a92cf5ff94366c56ef86a54afc69889b3cd1c
+    home: https://github.com/jetstack/cert-manager
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.6.0.tgz
+    version: v0.6.0
+  - appVersion: v0.5.2
+    created: "2018-12-11T17:31:41.836Z"
+    description: A Helm chart for cert-manager
+    digest: 5a2081b9532be8ba5b1cf2f37d812fe679eddb2640eecc297bcd8ebe79cb7719
+    home: https://github.com/jetstack/cert-manager
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - charts/cert-manager-v0.5.2.tgz
+    version: v0.5.2
+  tor-proxy:
+  - apiVersion: v1
+    created: "2018-11-16T09:23:13.538Z"
+    description: A Helm chart for Kubernetes
+    digest: 1d2fd11e22ba58bf0a263c39777f0f18855368b099aed7b03123ca91e55343e4
+    name: tor-proxy
+    urls:
+    - charts/tor-proxy-0.1.1.tgz
+    version: 0.1.1
+generated: "2020-01-21T18:35:58Z"

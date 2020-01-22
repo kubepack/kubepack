@@ -1,0 +1,725 @@
+apiVersion: v1
+entries:
+  agones:
+  - apiVersion: v1
+    appVersion: 1.3.0
+    created: 2020-01-21T23:41:19.905467528Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 7bb83410852be17b315f0905d0e51e95b5ba000927a47e69a42ad60231ea1248
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/googleforgames/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/googleforgames/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-1.3.0.tgz
+    version: 1.3.0
+  - apiVersion: v1
+    appVersion: 1.3.0-rc
+    created: 2020-01-14T23:21:16.384979291Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 8e986928bc1cfd7a3879a28ee179a22e4077c9bec8fa318ae7ee8e85c64d228e
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/googleforgames/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/googleforgames/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-1.3.0-rc.tgz
+    version: 1.3.0-rc
+  - apiVersion: v1
+    appVersion: 1.2.0
+    created: 2019-12-11T22:30:02.974690055Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 43f22705305a108eeb63cdbf3759928114e077d4f6035da08a9c31dec6cf68c7
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/googleforgames/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/googleforgames/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-1.2.0.tgz
+    version: 1.2.0
+  - apiVersion: v1
+    appVersion: 1.2.0-rc
+    created: 2019-12-04T23:34:01.840488032Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 90b7d715543d664516245130abd37a2b5387349774b9c14b7cbb136ac292f522
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/googleforgames/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/googleforgames/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-1.2.0-rc.tgz
+    version: 1.2.0-rc
+  - apiVersion: v1
+    appVersion: 1.1.0
+    created: 2019-10-29T20:44:35.12403538Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 6735d5cdb62f6d4975aab81119bda8f75e13725a7345f23960b94129ba94393a
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/googleforgames/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/googleforgames/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v1
+    appVersion: 1.1.0-rc
+    created: 2019-10-23T00:06:03.60436747Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: d30f0ddd7a894bc243342c0ebca40e081a4968cd73c9352a01a70e45961a30be
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/googleforgames/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/googleforgames/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-1.1.0-rc.tgz
+    version: 1.1.0-rc
+  - apiVersion: v1
+    appVersion: 1.0.0
+    created: 2019-09-17T21:26:22.143313119Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 5c5a07e10bcbedf78fd692528c51251cd4237f1aedf8a5da207174d15b572efe
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/googleforgames/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/googleforgames/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v1
+    appVersion: 1.0.0-rc
+    created: 2019-09-10T20:18:34.798497053Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 432ce3f4bfa102be7329b6b13ffabbd500593996e398f0b44879c716677023a0
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/googleforgames/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/googleforgames/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-1.0.0-rc.tgz
+    version: 1.0.0-rc
+  - apiVersion: v1
+    appVersion: 0.12.0
+    created: 2019-08-07T00:36:26.53782396Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 8b47534da29b059f4aa68bece331eabda34330aa11580ad956917a8b5a324e8d
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/googleforgames/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/googleforgames/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-0.12.0.tgz
+    version: 0.12.0
+  - apiVersion: v1
+    appVersion: 0.12.0-rc
+    created: 2019-08-01T06:25:23.354666384Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: ef909928c81ac5e54f07b1218ccdc6f9600651686a2727602c234f50c6c88c46
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/googleforgames/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/googleforgames/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-0.12.0-rc.tgz
+    version: 0.12.0-rc
+  - apiVersion: v1
+    appVersion: 0.11.0
+    created: 2019-06-25T19:15:55.191813894Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: f9a761a8c31a9de82ef4952238618bd20c824505297f7a436bb8a3aab67e0569
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/googleforgames/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/googleforgames/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-0.11.0.tgz
+    version: 0.11.0
+  - apiVersion: v1
+    appVersion: 0.11.0-rc
+    created: 2019-06-18T23:40:04.831499911Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 8d9a6e4ab9c483fb03a7604d8a32aa097825c6de448c9afccfdb93b03f55a8f2
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/googleforgames/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/googleforgames/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-0.11.0-rc.tgz
+    version: 0.11.0-rc
+  - apiVersion: v1
+    appVersion: 0.10.0
+    created: 2019-05-16T01:00:47.449998398Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: b3922a9e4ad9fe4bf97483542ef381402b2b4585576fa934c092d5d0a6f9762c
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/GoogleCloudPlatform/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/GoogleCloudPlatform/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-0.10.0.tgz
+    version: 0.10.0
+  - apiVersion: v1
+    appVersion: 0.10.0-rc
+    created: 2019-05-08T18:58:09.876072842Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 4c0d26adc8dd6d043544460acb16dd7554b9711cf6b353be728e5b9d5717f4b8
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/GoogleCloudPlatform/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/GoogleCloudPlatform/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-0.10.0-rc.tgz
+    version: 0.10.0-rc
+  - apiVersion: v1
+    appVersion: 0.9.0
+    created: 2019-04-03T02:31:14.985109557Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 661e5395e9bcdc4771b0461ffe433afbfc29c792013ef470d8cf20a90b67e5b8
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/GoogleCloudPlatform/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/GoogleCloudPlatform/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-0.9.0.tgz
+    version: 0.9.0
+  - apiVersion: v1
+    appVersion: 0.9.0-rc
+    created: 2019-03-27T00:27:35.8973396Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: b1d98134aebe66aca80cca546fd34d899a2f0f1831e75fb5e18fbaaac542a0f1
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/GoogleCloudPlatform/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/GoogleCloudPlatform/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-0.9.0-rc.tgz
+    version: 0.9.0-rc
+  - apiVersion: v1
+    appVersion: 0.8.1
+    created: 2019-03-02T00:14:07.453791841Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 72b1b860e769a081764bc31c7c5799d026960d3487e7d72b825b563de2722ad5
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/GoogleCloudPlatform/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/GoogleCloudPlatform/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-0.8.1.tgz
+    version: 0.8.1
+  - apiVersion: v1
+    appVersion: 0.8.0
+    created: 2019-02-20T23:42:59.104909593Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 6237635fb90d16e5cb1dedcf39d6d2b56fc6380ff219de6ef2cc611b361a3d21
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/GoogleCloudPlatform/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/GoogleCloudPlatform/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-0.8.0.tgz
+    version: 0.8.0
+  - apiVersion: v1
+    appVersion: 0.8.0-rc
+    created: 2019-02-14T01:47:15.240403695Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: bb5c5653669938a2dadb1f4ab926f83cb31ae0a86b9d564b94fb5a95b64c1e5d
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/GoogleCloudPlatform/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/GoogleCloudPlatform/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-0.8.0-rc.tgz
+    version: 0.8.0-rc
+  - apiVersion: v1
+    appVersion: 0.7.0
+    created: 2019-01-08T20:09:48.811325618Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 05c6aaf080434a7ff6e8290e6b3d52f3dccf72d871e77604335f35c45ba393bb
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/GoogleCloudPlatform/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/GoogleCloudPlatform/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-0.7.0.tgz
+    version: 0.7.0
+  - apiVersion: v1
+    appVersion: 0.7.0-rc
+    created: 2019-01-02T01:13:02.177756761Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 324e3f52d28748a19edaec9ffa726a581c04dd98e57a4ab6e87a297479787405
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/GoogleCloudPlatform/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/GoogleCloudPlatform/agones
+    tillerVersion: '>2.10.0'
+    urls:
+    - agones-0.7.0-rc.tgz
+    version: 0.7.0-rc
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: 2018-11-28T01:00:01.121106238Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: ae7d1359397f5ab6c83f7296c6bfb2121dfc192e645a9862469f24a3ca5635a4
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/GoogleCloudPlatform/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/GoogleCloudPlatform/agones
+    urls:
+    - agones-0.6.0.tgz
+    version: 0.6.0
+  - apiVersion: v1
+    appVersion: 0.6.0-rc
+    created: 2018-11-21T00:29:47.866325216Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 9152a8ad51dd66378c81e3df8f60794a956182a0c64c7308ce4e02838b2d3552
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/GoogleCloudPlatform/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/GoogleCloudPlatform/agones
+    urls:
+    - agones-0.6.0-rc.tgz
+    version: 0.6.0-rc
+  - apiVersion: v1
+    appVersion: 0.5.0
+    created: 2018-10-16T17:04:18.728424023Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 298e7e57405b0f108bfa07681d70ca378fd944be5483c29d062d1659d6e51ee4
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/GoogleCloudPlatform/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/GoogleCloudPlatform/agones
+    urls:
+    - agones-0.5.0.tgz
+    version: 0.5.0
+  - apiVersion: v1
+    appVersion: 0.5.0-rc
+    created: 2018-10-09T20:47:33.247240415Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 8ad3cd22c6739f4a08b2685b78de513a4fe611c4050a67ad79052c55d128aa4b
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/GoogleCloudPlatform/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/GoogleCloudPlatform/agones
+    urls:
+    - agones-0.5.0-rc.tgz
+    version: 0.5.0-rc
+  - apiVersion: v1
+    appVersion: 0.4.0
+    created: 2018-09-11T00:32:20.6302964Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 062c8eca418f52873cc0061190b3eb11ede694f160b75806c35a5db0a6139938
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/GoogleCloudPlatform/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/GoogleCloudPlatform/agones
+    urls:
+    - agones-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v1
+    appVersion: 0.3.0
+    created: 2018-09-11T00:30:37.4451467Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: 0ff191e90734c6363655fd945c126f8361b93622b4dadfec05a38120a2092742
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/GoogleCloudPlatform/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/GoogleCloudPlatform/agones
+    urls:
+    - agones-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v1
+    appVersion: 0.2.0
+    created: 2018-09-11T00:29:25.0514505Z
+    description: a library for hosting, running and scaling dedicated game servers
+      on Kubernetes.
+    digest: ada1d5708201b5d6135d94c74684fd738f2354706b43e389178ce9289589a924
+    engine: gotpl
+    home: https://agones.dev
+    icon: https://github.com/GoogleCloudPlatform/agones/raw/master/docs/agones.png
+    keywords:
+    - go
+    - golang
+    - dedicated-gameservers
+    - multiplayer
+    - game-development
+    maintainers:
+    - email: agones-discuss@googlegroups.com
+      name: agones
+      url: https://groups.google.com/forum/#!forum/agones-discuss
+    name: agones
+    sources:
+    - https://github.com/GoogleCloudPlatform/agones
+    urls:
+    - agones-0.2.0.tgz
+    version: 0.2.0
+generated: 2020-01-21T23:41:19.904676057Z

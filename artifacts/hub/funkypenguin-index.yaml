@@ -1,0 +1,136 @@
+apiVersion: v1
+entries:
+  cockroachdb:
+  - apiVersion: v1
+    appVersion: 19.1.3
+    created: 2019-12-12T21:22:14.962047979Z
+    description: CockroachDB is a scalable, survivable, strongly-consistent SQL database.
+    digest: 78181d3658ca6c8a98872a418459012420823b5cacaefc8164ac52448e0685d2
+    home: https://www.cockroachlabs.com
+    icon: https://raw.githubusercontent.com/cockroachdb/cockroach/master/docs/media/cockroach_db.png
+    maintainers:
+    - email: alexdwanerobinson@gmail.com
+      name: a-robinson
+    - email: Joel.A.Kenny@gmail.com
+      name: DuskEagle
+    - email: joshimhoff13@gmail.com
+      name: joshimhoff
+    - email: keith.mcclellan@gmail.com
+      name: keith-mcclellan
+    name: cockroachdb
+    sources:
+    - https://github.com/cockroachdb/cockroach
+    urls:
+    - cockroachdb/cockroachdb-2.1.13.tgz
+    version: 2.1.13
+  concourse:
+  - apiVersion: v1
+    appVersion: 5.5.0
+    created: 2019-12-12T21:22:14.968003411Z
+    description: Concourse is a simple and scalable CI system.
+    digest: 4aee2ab1d492641711110b534ebe5cb8edd42bb8aac32ae87471401971a378ae
+    engine: gotpl
+    home: https://concourse-ci.org/
+    icon: https://avatars1.githubusercontent.com/u/7809479
+    keywords:
+    - ci
+    - concourse
+    - concourse.ci
+    maintainers:
+    - email: cscosta@pivotal.io
+      name: cirocosta
+    - email: will@autonomic.ai
+      name: william-tran
+    - email: byoussef@pivotal.io
+      name: YoussB
+    name: concourse
+    sources:
+    - https://github.com/concourse/concourse
+    - https://github.com/helm/charts
+    urls:
+    - concourse/concourse-8.2.5.tgz
+    version: 8.2.5
+  docker-mailserver:
+  - apiVersion: v1
+    appVersion: 6.1.0
+    created: 2019-12-12T21:22:14.975010143Z
+    description: A fullstack but simple mailserver (smtp, imap, antispam, antivirus,
+      ssl...) using Docker.
+    digest: a2cf62d42aa4dcae7a0c45e0f581f764e1d671c407b14b210f84b8f746ccdff6
+    keywords:
+    - mailserver
+    - postfix
+    - dovecot
+    - amavis
+    - imap
+    maintainers:
+    - email: davidy@funkypenguin.co.nz
+      name: funkypenguin
+    name: docker-mailserver
+    sources:
+    - https://github.com/funkypenguin/docker-mailserver
+    tillerVersion: '>=2.13.0'
+    urls:
+    - docker-mailserver/docker-mailserver-0.1.0.tgz
+    version: 0.1.0
+  k-rail:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2019-12-12T21:22:14.975415198Z
+    description: A Helm chart for Kubernetes
+    digest: 5e5dc779f5ee256bfec4d5b4232d947a5f3c6016cea30fe79d6865a80e1956fa
+    name: k-rail
+    urls:
+    - k-rail/k-rail-0.1.0.tgz
+    version: 0.1.0
+  kubernetes-dashboard:
+  - apiVersion: v1
+    appVersion: 1.10.1
+    created: 2019-12-12T21:22:14.976241336Z
+    description: General-purpose web UI for Kubernetes clusters
+    digest: 208fad8e3a0d771b9131fac8daef0b3ff81d5231421301e9b75cb09e20743f29
+    home: https://github.com/kubernetes/dashboard
+    icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg
+    keywords:
+    - kubernetes
+    - dashboard
+    maintainers:
+    - email: Kevin.Fox@pnnl.gov
+      name: kfox1111
+    - email: cdesaintmartin@wiremind.fr
+      name: desaintmartin
+    name: kubernetes-dashboard
+    sources:
+    - https://github.com/kubernetes/dashboard
+    urls:
+    - kubernetes-dashboard/kubernetes-dashboard-1.9.0.tgz
+    version: 1.9.0
+  local-static-provisioner:
+  - apiVersion: v1
+    appVersion: 2.3.3
+    created: 2019-12-12T21:22:14.976705034Z
+    description: local provisioner chart
+    digest: 0dd3b04b96bd6f1160a85bb0c474caa5836e9312b432f62f65fd30df0d0f2ef3
+    engine: gotpl
+    keywords:
+    - storage
+    - local
+    name: local-static-provisioner
+    urls:
+    - local-static-provisioner/local-static-provisioner-2.3.3.tgz
+    version: 2.3.3
+  local-volume-provisioner:
+  - apiVersion: v1
+    appVersion: 2.3.3
+    created: 2019-12-12T21:22:14.977179721Z
+    description: local provisioner chart
+    digest: d2b56edde59b2d7a517aa810f9eea1a59ced450c1f8d8574bb6a5f35f3ef40da
+    engine: gotpl
+    keywords:
+    - storage
+    - local
+    name: local-volume-provisioner
+    urls:
+    - local-volume-provisioner/local-volume-provisioner-2.3.3.tgz
+    version: 2.3.3
+generated: 2019-12-12T21:22:14.96071754Z

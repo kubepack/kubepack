@@ -1,0 +1,25 @@
+apiVersion: v1
+entries:
+  linkerd2:
+  - apiVersion: v1
+    appVersion: stable-2.6.1
+    created: "2019-12-17T19:37:17.920675191Z"
+    description: Linkerd gives you observability, reliability, and security for your
+      microservices — with no code change required.
+    digest: 118a41f7472fac68bfd620b29890ba3ba7bece6df4b3990ee76cda5651fa2a73
+    home: https://linkerd.io
+    icon: https://linkerd.io/images/logo-only-200h.png
+    keywords:
+    - service-mesh
+    kubeVersion: '>=1.12.0-0'
+    maintainers:
+    - email: cncf-linkerd-dev@lists.cncf.io
+      name: Linkerd authors
+      url: https://linkerd.io/
+    name: linkerd2
+    sources:
+    - https://github.com/linkerd/linkerd2/
+    urls:
+    - https://helm.linkerd.io/stable/linkerd2-2.6.1.tgz
+    version: 2.6.1
+generated: "2019-12-17T19:37:17.918751297Z"
