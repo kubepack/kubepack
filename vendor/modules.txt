@@ -74,7 +74,7 @@ github.com/appscode/go/types
 github.com/appscode/go/version
 # github.com/asaskevich/govalidator v0.0.0-20190424111038-f61b66f89f4a
 github.com/asaskevich/govalidator
-# github.com/aws/aws-sdk-go v1.19.45
+# github.com/aws/aws-sdk-go v1.20.20
 github.com/aws/aws-sdk-go/aws
 github.com/aws/aws-sdk-go/aws/awserr
 github.com/aws/aws-sdk-go/aws/awsutil
@@ -1149,7 +1149,7 @@ k8s.io/utils/integer
 k8s.io/utils/path
 k8s.io/utils/pointer
 k8s.io/utils/trace
-# kmodules.xyz/client-go v0.0.0-20200108114229-70ba8841e60f
+# kmodules.xyz/client-go v0.0.0-20200127013029-a6db892785ee
 kmodules.xyz/client-go
 kmodules.xyz/client-go/admissionregistration/v1beta1
 kmodules.xyz/client-go/apiextensions/v1beta1
@@ -1173,8 +1173,6 @@ kmodules.xyz/custom-resources/apis/appcatalog
 kmodules.xyz/custom-resources/apis/appcatalog/v1alpha1
 kmodules.xyz/custom-resources/client/clientset/versioned/scheme
 kmodules.xyz/custom-resources/client/clientset/versioned/typed/appcatalog/v1alpha1
-# kmodules.xyz/lib-chart v0.0.0-20200117034103-46de78a037a7
-kmodules.xyz/lib-chart/helm
 # kmodules.xyz/resource-metadata v0.3.5-0.20200119221930-fbc6f8543679
 kmodules.xyz/resource-metadata/api/crds
 kmodules.xyz/resource-metadata/apis/meta
@@ -1185,6 +1183,8 @@ kmodules.xyz/resource-metadata/hub/resourcedescriptors
 # kmodules.xyz/webhook-runtime v0.0.0-20191127075323-d4bfdee6974d
 kmodules.xyz/webhook-runtime/admission/v1beta1
 kmodules.xyz/webhook-runtime/registry/admissionreview/v1beta1
+# kubepack.dev/lib-chart v0.0.0-20200122124008-18a41f64b037
+kubepack.dev/lib-chart/helm
 # sigs.k8s.io/kustomize v2.0.3+incompatible => sigs.k8s.io/kustomize v2.0.3+incompatible
 sigs.k8s.io/kustomize/pkg/commands/build
 sigs.k8s.io/kustomize/pkg/constants

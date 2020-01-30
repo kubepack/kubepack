@@ -5,6 +5,7 @@ go 1.12
 require (
 	github.com/Azure/go-autorest/autorest/azure/auth v0.4.2 // indirect
 	github.com/appscode/go v0.0.0-20191119085241-0887d8ec2ecc
+	github.com/aws/aws-sdk-go v1.20.20 // indirect
 	github.com/coreos/prometheus-operator v0.34.0
 	github.com/davecgh/go-spew v1.1.1
 	github.com/evanphx/json-patch v4.5.0+incompatible
@@ -15,6 +16,7 @@ require (
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/google/gofuzz v1.0.0
 	github.com/google/uuid v1.1.1
+	github.com/gregjones/httpcache v0.0.0-20181110185634-c63ab54fda8f
 	github.com/onsi/ginkgo v1.10.1
 	github.com/onsi/gomega v1.7.0
 	github.com/pkg/errors v0.8.1
@@ -33,12 +35,12 @@ require (
 	k8s.io/client-go v12.0.0+incompatible
 	k8s.io/kube-openapi v0.0.0-20190918143330-0270cf2f1c1d
 	k8s.io/kubernetes v1.16.3
-	kmodules.xyz/client-go v0.0.0-20200108114229-70ba8841e60f
+	kmodules.xyz/client-go v0.0.0-20200127013029-a6db892785ee
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20191129174258-81f984340891
 	kmodules.xyz/custom-resources v0.0.0-20191130062942-f41b54f62419
-	kmodules.xyz/lib-chart v0.0.0-20200117034103-46de78a037a7
 	kmodules.xyz/resource-metadata v0.3.5-0.20200119221930-fbc6f8543679
 	kmodules.xyz/webhook-runtime v0.0.0-20191127075323-d4bfdee6974d
+	kubepack.dev/lib-chart v0.0.0-20200122124008-18a41f64b037
 	sigs.k8s.io/yaml v1.1.0
 )
 

@@ -34,27 +34,17 @@ var (
 	version = "v0.13.0-rc.2"
 )
 
-type Table struct {
-	Plans []string `json:"plans"`
-	Rows  []*Row   `json:"rows"`
-}
-
-type Row struct {
-	Trait  string   `json:"trait"`
-	Values []string `json:"values"`
-}
-
 func main() {
 	flag.StringVar(&url, "url", url, "Chart repo url")
 	flag.StringSliceVar(&names, "names", names, "Name of bundles")
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	var table Table
+	var table v1alpha1.FeatureTable
 	table.Plans = names
 
 	var ids = map[string]int{} // trait -> idx
-	var rows []*Row
+	var rows []*v1alpha1.Row
 	idx := 0
 
 	for bundleIdx, bundleName := range names {
@@ -72,7 +62,7 @@ func main() {
 			if !ok {
 				id = idx
 				ids[feature.Trait] = id
-				rows = append(rows, &Row{
+				rows = append(rows, &v1alpha1.Row{
 					Trait:  feature.Trait,
 					Values: make([]string, len(table.Plans)),
 				})

@@ -38,6 +38,7 @@ import (
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/client/clientset/versioned"
 	wait2 "kubepack.dev/kubepack/pkg/wait"
+	"kubepack.dev/lib-chart/helm"
 
 	jsonpatch "github.com/evanphx/json-patch"
 	"github.com/pkg/errors"
@@ -74,7 +75,6 @@ import (
 	authv1client "k8s.io/client-go/kubernetes/typed/authorization/v1"
 	"k8s.io/client-go/rest"
 	"kmodules.xyz/client-go/apiextensions/v1beta1"
-	"kmodules.xyz/lib-chart/helm"
 	"kmodules.xyz/resource-metadata/hub"
 	yamllib "sigs.k8s.io/yaml"
 )

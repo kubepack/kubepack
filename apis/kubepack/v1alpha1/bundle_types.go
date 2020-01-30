@@ -96,9 +96,8 @@ type VersionOption struct {
 	Selected bool   `json:"selected,omitempty" protobuf:"varint,2,opt,name=selected"`
 	// RFC 6902 compatible json patch. ref: http://jsonpatch.com
 	// +optional
-	// +kubebuilder:validation:EmbeddedResource
 	// +kubebuilder:pruning:PreserveUnknownFields
-	ValuesPatch *runtime.RawExtension `json:"parameters,omitempty" protobuf:"bytes,3,opt,name=parameters"`
+	ValuesPatch *runtime.RawExtension `json:"valuesPatch,omitempty" protobuf:"bytes,3,opt,name=valuesPatch"`
 }
 
 type VersionDetail struct {

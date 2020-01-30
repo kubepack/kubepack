@@ -26,11 +26,14 @@ import (
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 
+	"github.com/gregjones/httpcache"
 	"sigs.k8s.io/yaml"
 )
 
 func main() {
 	var repos = map[string]string{}
+
+	http.DefaultClient.Transport = httpcache.NewMemoryCacheTransport()
 
 	resp, err := http.Get("https://raw.githubusercontent.com/helm/hub/master/repos.yaml")
 	if err == nil {
@@ -42,22 +45,25 @@ func main() {
 				for _, repo := range hub.Repositories {
 					repos[strings.TrimSuffix(repo.URL, "/")] = repo.Name
 
-					resp, err := http.Get(strings.TrimSuffix(repo.URL, "/") + "/index.yaml")
-					if err != nil {
-						log.Fatalln(err)
-					}
-					defer resp.Body.Close()
-					data, err := ioutil.ReadAll(resp.Body)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					err = os.MkdirAll("artifacts/hub", 0755)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					err = ioutil.WriteFile("artifacts/hub/"+repo.Name+"-index.yaml", data, 0644)
-					if err != nil {
-						log.Fatalln(err)
+					for i := 0; i < 2; i++ {
+						url := strings.TrimSuffix(repo.URL, "/") + "/index.yaml"
+						resp, err := http.Get(url)
+						if err != nil {
+							log.Fatalln(err)
+						}
+						data, err := ioutil.ReadAll(resp.Body)
+						if err != nil {
+							log.Fatalln(err)
+						}
+						resp.Body.Close()
+						err = os.MkdirAll("artifacts/hub", 0755)
+						if err != nil {
+							log.Fatalln(err)
+						}
+						err = ioutil.WriteFile("artifacts/hub/"+repo.Name+"-index.yaml", data, 0644)
+						if err != nil {
+							log.Fatalln(err)
+						}
 					}
 				}
 			}

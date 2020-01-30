@@ -132,7 +132,6 @@ spec:
                       valuesPatch:
                         description: 'RFC 6902 compatible json patch. ref: http://jsonpatch.com'
                         type: object
-                        x-kubernetes-embedded-resource: true
                         x-kubernetes-preserve-unknown-fields: true
                       version:
                         type: string

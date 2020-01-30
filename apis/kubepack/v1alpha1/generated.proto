@@ -235,7 +235,6 @@ message ChartSelection {
 
   // RFC 6902 compatible json patch. ref: http://jsonpatch.com
   // +optional
-  // +kubebuilder:validation:EmbeddedResource
   // +kubebuilder:pruning:PreserveUnknownFields
   optional k8s.io.apimachinery.pkg.runtime.RawExtension valuesPatch = 5;
 
@@ -314,6 +313,12 @@ message Feature {
   optional string trait = 1;
 
   optional string value = 2;
+}
+
+message FeatureTable {
+  repeated string plans = 1;
+
+  repeated Row rows = 2;
 }
 
 message GroupResource {
@@ -570,6 +575,12 @@ message ResourceID {
   optional string scope = 5;
 }
 
+message Row {
+  optional string trait = 1;
+
+  repeated string values = 2;
+}
+
 // SecretKeySelector selects a key from a Secret.
 message SecretKeySelector {
   // The Secret to select from.
@@ -606,9 +617,8 @@ message VersionOption {
 
   // RFC 6902 compatible json patch. ref: http://jsonpatch.com
   // +optional
-  // +kubebuilder:validation:EmbeddedResource
   // +kubebuilder:pruning:PreserveUnknownFields
-  optional k8s.io.apimachinery.pkg.runtime.RawExtension parameters = 3;
+  optional k8s.io.apimachinery.pkg.runtime.RawExtension valuesPatch = 3;
 }
 
 message WaitFlags {

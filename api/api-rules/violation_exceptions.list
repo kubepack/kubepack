@@ -179,6 +179,8 @@ API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alph
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ChartSelection,WaitFors
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ComponentList,Objects
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Descriptor,Owners
+API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,FeatureTable,Plans
+API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,FeatureTable,Rows
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Hub,Repositories
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,OneOfBundleOption,Bundles
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,OneOfBundleOptionView,Bundles
@@ -191,6 +193,7 @@ API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alph
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Repository,Maintainers
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ResourceDefinitions,Owned
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ResourceDefinitions,Required
+API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Row,Values
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,VersionDetail,WaitFors
 API rule violation: names_match,k8s.io/api/core/v1,AzureDiskVolumeSource,DataDiskURI
 API rule violation: names_match,k8s.io/api/core/v1,ContainerStatus,LastTerminationState
@@ -257,5 +260,4 @@ API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Com
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ImageSpec,Source
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ImageSpec,TotalSize
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,OrderSpec,Packages
-API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,VersionOption,ValuesPatch
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,WaitFlags,ForCondition

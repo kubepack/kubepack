@@ -54,3 +54,13 @@ type ChartCard struct {
 	Required          bool            `json:"required,omitempty" protobuf:"varint,7,opt,name=required"`
 	Selected          bool            `json:"selected,omitempty" protobuf:"varint,8,opt,name=selected"`
 }
+
+type FeatureTable struct {
+	Plans []string `json:"plans" protobuf:"bytes,1,rep,name=plans"`
+	Rows  []*Row   `json:"rows" protobuf:"bytes,2,rep,name=rows"`
+}
+
+type Row struct {
+	Trait  string   `json:"trait" protobuf:"bytes,1,opt,name=trait"`
+	Values []string `json:"values" protobuf:"bytes,2,rep,name=values"`
+}

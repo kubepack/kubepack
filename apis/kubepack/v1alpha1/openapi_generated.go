@@ -339,6 +339,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData":                                        schema_kubepack_apis_kubepack_v1alpha1_ContactData(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Descriptor":                                         schema_kubepack_apis_kubepack_v1alpha1_Descriptor(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Feature":                                            schema_kubepack_apis_kubepack_v1alpha1_Feature(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.FeatureTable":                                       schema_kubepack_apis_kubepack_v1alpha1_FeatureTable(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.GroupResource":                                      schema_kubepack_apis_kubepack_v1alpha1_GroupResource(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.GroupVersionResource":                               schema_kubepack_apis_kubepack_v1alpha1_GroupVersionResource(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Hub":                                                schema_kubepack_apis_kubepack_v1alpha1_Hub(ref),
@@ -364,6 +365,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Repository":                                         schema_kubepack_apis_kubepack_v1alpha1_Repository(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions":                                schema_kubepack_apis_kubepack_v1alpha1_ResourceDefinitions(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceID":                                         schema_kubepack_apis_kubepack_v1alpha1_ResourceID(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Row":                                                schema_kubepack_apis_kubepack_v1alpha1_Row(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.SecretKeySelector":                                  schema_kubepack_apis_kubepack_v1alpha1_SecretKeySelector(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ServiceSelector":                                    schema_kubepack_apis_kubepack_v1alpha1_ServiceSelector(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.VersionDetail":                                      schema_kubepack_apis_kubepack_v1alpha1_VersionDetail(ref),
@@ -16237,6 +16239,46 @@ func schema_kubepack_apis_kubepack_v1alpha1_Feature(ref common.ReferenceCallback
 	}
 }
 
+func schema_kubepack_apis_kubepack_v1alpha1_FeatureTable(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"plans": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
+						},
+					},
+					"rows": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.Row"),
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"plans", "rows"},
+			},
+		},
+		Dependencies: []string{
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Row"},
+	}
+}
+
 func schema_kubepack_apis_kubepack_v1alpha1_GroupResource(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -17363,6 +17405,38 @@ func schema_kubepack_apis_kubepack_v1alpha1_ResourceID(ref common.ReferenceCallb
 	}
 }
 
+func schema_kubepack_apis_kubepack_v1alpha1_Row(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"trait": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"values": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"trait", "values"},
+			},
+		},
+	}
+}
+
 func schema_kubepack_apis_kubepack_v1alpha1_SecretKeySelector(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -17526,7 +17600,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_VersionDetail(ref common.ReferenceCa
 							Format: "",
 						},
 					},
-					"parameters": {
+					"valuesPatch": {
 						SchemaProps: spec.SchemaProps{
 							Description: "RFC 6902 compatible json patch. ref: http://jsonpatch.com",
 							Ref:         ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
@@ -17576,7 +17650,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_VersionOption(ref common.ReferenceCa
 							Format: "",
 						},
 					},
-					"parameters": {
+					"valuesPatch": {
 						SchemaProps: spec.SchemaProps{
 							Description: "RFC 6902 compatible json patch. ref: http://jsonpatch.com",
 							Ref:         ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),

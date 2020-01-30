@@ -64,7 +64,6 @@ type ChartSelection struct {
 
 	// RFC 6902 compatible json patch. ref: http://jsonpatch.com
 	// +optional
-	// +kubebuilder:validation:EmbeddedResource
 	// +kubebuilder:pruning:PreserveUnknownFields
 	ValuesPatch *runtime.RawExtension `json:"valuesPatch,omitempty" protobuf:"bytes,5,opt,name=valuesPatch"`
 	Resources   *ResourceDefinitions  `json:"resources,omitempty" protobuf:"bytes,6,opt,name=resources"`
