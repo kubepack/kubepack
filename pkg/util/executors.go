@@ -334,7 +334,7 @@ type Helm3CommandPrinter struct {
 const indent = "  "
 
 func (x *Helm3CommandPrinter) Do() error {
-	chrt, err := GetChart(x.ChartRef.Name, x.Version, "myrepo", x.ChartRef.URL)
+	chrt, err := GetChart(x.ChartRef.URL, x.ChartRef.Name, x.Version)
 	if err != nil {
 		return err
 	}
@@ -441,7 +441,7 @@ type Helm2CommandPrinter struct {
 }
 
 func (x *Helm2CommandPrinter) Do() error {
-	chrt, err := GetChart(x.ChartRef.Name, x.Version, "myrepo", x.ChartRef.URL)
+	chrt, err := GetChart(x.ChartRef.URL, x.ChartRef.Name, x.Version)
 	if err != nil {
 		return err
 	}
@@ -568,7 +568,7 @@ func (x *YAMLPrinter) Do() error {
 
 	var buf bytes.Buffer
 
-	chrt, err := GetChart(x.ChartRef.Name, x.Version, "myrepo", x.ChartRef.URL)
+	chrt, err := GetChart(x.ChartRef.URL, x.ChartRef.Name, x.Version)
 	if err != nil {
 		return err
 	}
@@ -762,7 +762,7 @@ type ChartInstaller struct {
 }
 
 func (x *ChartInstaller) Do() error {
-	chrt, err := GetChart(x.ChartRef.Name, x.Version, "myrepo", x.ChartRef.URL)
+	chrt, err := GetChart(x.ChartRef.URL, x.ChartRef.Name, x.Version)
 	if err != nil {
 		return err
 	}
@@ -900,7 +900,7 @@ func (x *PermissionChecker) Do() error {
 		x.attrs = make(map[authorization.ResourceAttributes]*ResourcePermission)
 	}
 
-	chrt, err := GetChart(x.ChartRef.Name, x.Version, "myrepo", x.ChartRef.URL)
+	chrt, err := GetChart(x.ChartRef.URL, x.ChartRef.Name, x.Version)
 	if err != nil {
 		return err
 	}
@@ -1189,7 +1189,7 @@ func (x *ApplicationGenerator) Do() error {
 	}
 
 	var err error
-	x.chrt, err = GetChart(x.Chart.Name, x.Chart.Version, "myrepo", x.Chart.URL)
+	x.chrt, err = GetChart(x.Chart.URL, x.Chart.Name, x.Chart.Version)
 	if err != nil {
 		return err
 	}

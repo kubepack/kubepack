@@ -39,6 +39,12 @@ var namespace = "kube-system"
 var charts []string
 var bundles []string
 
+//var name = "csi-vault-bundle"
+//var displayName = ""
+//var namespace = "kube-system"
+//var charts = []string{"https://charts.appscode.com/stable/@csi-vault@v0.3.0"}
+//var bundles []string
+
 func main() {
 	flag.StringVar(&name, "name", name, "Name of bundle, example: stash-bundle")
 	flag.StringVar(&displayName, "displayName", displayName, "Display Name of bundle, example: stash-bundle")
@@ -88,7 +94,7 @@ func main() {
 			ns = strings.TrimSpace(parts[5])
 		}
 
-		pkgChart, err := util.GetChart(chartName, primaryVersion, "myrepo", url)
+		pkgChart, err := util.GetChart(url, chartName, primaryVersion)
 		if err != nil {
 			log.Fatalln(err)
 		}
@@ -132,7 +138,7 @@ func main() {
 		bundleName := parts[1]
 		version := parts[2]
 
-		chart, err := util.GetChart(bundleName, version, "myrepo", url)
+		chart, err := util.GetChart(url, bundleName, version)
 		if err != nil {
 			log.Fatalln(err)
 		}

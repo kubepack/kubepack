@@ -17,20 +17,14 @@ limitations under the License.
 package util
 
 import (
-	"io/ioutil"
 	"net/http"
-	"os"
-	"path/filepath"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+	"kubepack.dev/kubepack/pkg/chart/loader"
+	"kubepack.dev/kubepack/pkg/repo"
 
 	"github.com/gabriel-vasile/mimetype"
-	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/chart"
-	"helm.sh/helm/v3/pkg/chart/loader"
-	"helm.sh/helm/v3/pkg/cli"
-	"helm.sh/helm/v3/pkg/helmpath/xdg"
-	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 )
 
 const (
@@ -48,7 +42,7 @@ func GetPackageDescriptor(pkgChart *chart.Chart) v1alpha1.PackageDescriptor {
 			if mime, err := mimetype.DetectReader(resp.Body); err == nil {
 				imgType = mime.String()
 			}
-			resp.Body.Close()
+			_ = resp.Body.Close()
 		}
 		out.Icons = []v1alpha1.ImageSpec{
 			{
@@ -79,66 +73,13 @@ func GetPackageDescriptor(pkgChart *chart.Chart) v1alpha1.PackageDescriptor {
 	return out
 }
 
-func GetChart(chartName, version, repoName, url string) (*chart.Chart, error) {
-	cfg := new(action.Configuration)
-	client := action.NewInstall(cfg)
-	client.Version = version
-	client.RepoURL = url
+var reg = repo.NewDiskCacheRegistry()
 
-	chartDir, err := ioutil.TempDir(TmpDir, DirPrefix)
-	if err != nil {
-		return nil, err
-	}
-	defer func() {
-		utilruntime.Must(os.RemoveAll(chartDir))
-	}()
-
-	err = setEnv(chartDir)
-	if err != nil {
-		return nil, err
-	}
-	defer func() {
-		utilruntime.Must(unsetEnv())
-	}()
-
-	settings := cli.New()
-	cp, err := client.LocateChart(chartName, settings)
+func GetChart(repoURL, chartName, chartVersion string) (*chart.Chart, error) {
+	reader, err := LocateChart(reg, repoURL, chartName, chartVersion)
 	if err != nil {
 		return nil, err
 	}
 
-	chartRequested, err := loader.Load(cp)
-	if err != nil {
-		return nil, err
-	}
-
-	return chartRequested, nil
-}
-
-func setEnv(chartDir string) error {
-	err := os.Setenv(xdg.CacheHomeEnvVar, filepath.Join(chartDir, "cache"))
-	if err != nil {
-		return err
-	}
-
-	err = os.Setenv(xdg.ConfigHomeEnvVar, filepath.Join(chartDir, "Config"))
-	if err != nil {
-		return err
-	}
-
-	return os.Setenv(xdg.DataHomeEnvVar, filepath.Join(chartDir, "data"))
-}
-
-func unsetEnv() error {
-	err := os.Unsetenv(xdg.CacheHomeEnvVar)
-	if err != nil {
-		return err
-	}
-
-	err = os.Unsetenv(xdg.ConfigHomeEnvVar)
-	if err != nil {
-		return err
-	}
-
-	return os.Unsetenv(xdg.DataHomeEnvVar)
+	return loader.Load(reader)
 }

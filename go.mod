@@ -4,6 +4,8 @@ go 1.12
 
 require (
 	github.com/Azure/go-autorest/autorest/azure/auth v0.4.2 // indirect
+	github.com/Masterminds/semver/v3 v3.0.3
+	github.com/PuerkitoBio/purell v1.1.1
 	github.com/appscode/go v0.0.0-20191119085241-0887d8ec2ecc
 	github.com/aws/aws-sdk-go v1.20.20 // indirect
 	github.com/coreos/prometheus-operator v0.34.0
@@ -14,6 +16,7 @@ require (
 	github.com/gobuffalo/flect v0.1.7
 	github.com/gogo/protobuf v1.3.1
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
+	github.com/gomodule/redigo v2.0.0+incompatible
 	github.com/google/gofuzz v1.0.0
 	github.com/google/uuid v1.1.1
 	github.com/gregjones/httpcache v0.0.0-20181110185634-c63ab54fda8f

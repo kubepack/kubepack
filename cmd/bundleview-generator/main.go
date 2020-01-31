@@ -96,7 +96,7 @@ func toBundleOptionView(in *v1alpha1.BundleOption, level int) *v1alpha1.BundleOp
 			if chartVersion == "" {
 				chartVersion = pkg.Chart.Versions[0].Version
 			}
-			pkgChart, err := util.GetChart(pkg.Chart.Name, chartVersion, "myrepo", pkg.Chart.URL)
+			pkgChart, err := util.GetChart(pkg.Chart.URL, pkg.Chart.Name, chartVersion)
 			if err != nil {
 				log.Fatalln(err)
 			}

@@ -30,7 +30,7 @@ import (
 )
 
 func GetBundle(in *v1alpha1.BundleOption) (*chart.Chart, *v1alpha1.Bundle) {
-	chrt, err := GetChart(in.Name, in.Version, "myrepo", in.URL)
+	chrt, err := GetChart(in.URL, in.Name, in.Version)
 	if err != nil {
 		log.Fatal(err)
 	}
