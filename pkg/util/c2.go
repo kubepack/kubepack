@@ -7,9 +7,9 @@ import (
 	"os"
 	"strings"
 
-	"kubepack.dev/kubepack/pkg/downloader"
-	"kubepack.dev/kubepack/pkg/getter"
-	"kubepack.dev/kubepack/pkg/repo"
+	"kubepack.dev/lib-helm/downloader"
+	"kubepack.dev/lib-helm/getter"
+	"kubepack.dev/lib-helm/repo"
 
 	"helm.sh/helm/v3/pkg/provenance"
 )

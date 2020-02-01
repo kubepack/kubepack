@@ -20,8 +20,8 @@ import (
 	"net/http"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/kubepack/pkg/chart/loader"
-	"kubepack.dev/kubepack/pkg/repo"
+	"kubepack.dev/lib-helm/chart/loader"
+	"kubepack.dev/lib-helm/repo"
 
 	"github.com/gabriel-vasile/mimetype"
 	"helm.sh/helm/v3/pkg/chart"

@@ -37,8 +37,8 @@ import (
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/client/clientset/versioned"
+	chart2 "kubepack.dev/lib-helm/chart"
 	wait2 "kubepack.dev/kubepack/pkg/wait"
-	"kubepack.dev/lib-chart/helm"
 
 	jsonpatch "github.com/evanphx/json-patch"
 	"github.com/pkg/errors"
@@ -411,7 +411,7 @@ func (x *Helm3CommandPrinter) Do() error {
 		if err != nil {
 			return err
 		}
-		setValues := helm.GetChangedValues(chrt.Values, modified)
+		setValues := chart2.GetChangedValues(chrt.Values, modified)
 		for _, v := range setValues {
 			_, err = fmt.Fprintf(&buf, `%s--set %s \\n`, indent, v)
 			if err != nil {
@@ -518,7 +518,7 @@ func (x *Helm2CommandPrinter) Do() error {
 		if err != nil {
 			return err
 		}
-		setValues := helm.GetChangedValues(chrt.Values, modified)
+		setValues := chart2.GetChangedValues(chrt.Values, modified)
 		for _, v := range setValues {
 			_, err = fmt.Fprintf(&buf, `%s--set %s \\n`, indent, v)
 			if err != nil {

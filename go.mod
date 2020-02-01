@@ -4,8 +4,6 @@ go 1.12
 
 require (
 	github.com/Azure/go-autorest/autorest/azure/auth v0.4.2 // indirect
-	github.com/Masterminds/semver/v3 v3.0.3
-	github.com/PuerkitoBio/purell v1.1.1
 	github.com/appscode/go v0.0.0-20191119085241-0887d8ec2ecc
 	github.com/aws/aws-sdk-go v1.20.20 // indirect
 	github.com/coreos/prometheus-operator v0.34.0
@@ -16,7 +14,6 @@ require (
 	github.com/gobuffalo/flect v0.1.7
 	github.com/gogo/protobuf v1.3.1
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
-	github.com/gomodule/redigo v2.0.0+incompatible
 	github.com/google/gofuzz v1.0.0
 	github.com/google/uuid v1.1.1
 	github.com/gregjones/httpcache v0.0.0-20181110185634-c63ab54fda8f
@@ -29,7 +26,7 @@ require (
 	golang.org/x/net v0.0.0-20191028085509-fe3aa8a45271
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 	gomodules.xyz/version v0.1.0
-	helm.sh/helm/v3 v3.0.2
+	helm.sh/helm/v3 v3.0.3
 	k8s.io/api v0.0.0-20191114100352-16d7abae0d2a
 	k8s.io/apiextensions-apiserver v0.0.0-20191114105449-027877536833
 	k8s.io/apimachinery v0.16.5-beta.1
@@ -43,7 +40,7 @@ require (
 	kmodules.xyz/custom-resources v0.0.0-20191130062942-f41b54f62419
 	kmodules.xyz/resource-metadata v0.3.5-0.20200119221930-fbc6f8543679
 	kmodules.xyz/webhook-runtime v0.0.0-20191127075323-d4bfdee6974d
-	kubepack.dev/lib-chart v0.0.0-20200122124008-18a41f64b037
+	kubepack.dev/lib-helm v0.0.0-20200201053053-ceee20cb3008
 	sigs.k8s.io/yaml v1.1.0
 )
 
