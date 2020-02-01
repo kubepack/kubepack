@@ -899,8 +899,8 @@ k8s.io/utils v0.0.0-20190801114015-581e00157fb1 h1:+ySTxfHnfzZb9ys375PXNlLhkJPLK
 k8s.io/utils v0.0.0-20190801114015-581e00157fb1/go.mod h1:sZAwmy6armz5eXlNoLmJcl4F1QuKu7sr+mFQ0byX7Ew=
 kmodules.xyz/client-go v0.0.0-20191127054604-26981530831d/go.mod h1:OFxuKCiVR+MYlR2a08FkfaF+IbXkLe0xBetu2LTUuGI=
 kmodules.xyz/client-go v0.0.0-20200101081724-6b136a38d486/go.mod h1:OFxuKCiVR+MYlR2a08FkfaF+IbXkLe0xBetu2LTUuGI=
-kmodules.xyz/client-go v0.0.0-20200127013029-a6db892785ee h1:KkSmlIhw9OsZakUJtNYQ9W1up4xjAzNhKjn9Hd0U/p0=
-kmodules.xyz/client-go v0.0.0-20200127013029-a6db892785ee/go.mod h1:OFxuKCiVR+MYlR2a08FkfaF+IbXkLe0xBetu2LTUuGI=
+kmodules.xyz/client-go v0.0.0-20200201171629-70cdbdd3321b h1:/PVPAAvCPDIteB9BNvlGzamFWTasOgW2E5eS4eDdzO4=
+kmodules.xyz/client-go v0.0.0-20200201171629-70cdbdd3321b/go.mod h1:OFxuKCiVR+MYlR2a08FkfaF+IbXkLe0xBetu2LTUuGI=
 kmodules.xyz/crd-schema-fuzz v0.0.0-20191129174258-81f984340891 h1:2W/fqLbAurvupIZL3TEFrlb7DnOIhlOXpNgzgcFFSmA=
 kmodules.xyz/crd-schema-fuzz v0.0.0-20191129174258-81f984340891/go.mod h1:9NXNZ4xhqof0WngtIuo4vl+WoCQpLJEJcyuEo3mPpiM=
 kmodules.xyz/custom-resources v0.0.0-20191130062942-f41b54f62419 h1:o6KD8XMxdyRR3rqScTsWvcufFDT7vQBnYXpHUp6UtRg=
@@ -910,8 +910,8 @@ kmodules.xyz/resource-metadata v0.3.5-0.20200119221930-fbc6f8543679 h1:Vf8V9Tdp2
 kmodules.xyz/resource-metadata v0.3.5-0.20200119221930-fbc6f8543679/go.mod h1:GSAzu4wsCI/0Y292vh7PjM7krnG/N4vBNEmD9qaYEHg=
 kmodules.xyz/webhook-runtime v0.0.0-20191127075323-d4bfdee6974d h1:qLWf0Xk2sAWT9qWBcodkinrzt0jkYTKhuHCsbwpXutE=
 kmodules.xyz/webhook-runtime v0.0.0-20191127075323-d4bfdee6974d/go.mod h1:aaaxyAmKOpw0ey3LrpBkqWq0LTl35f9PW6mhwVDBMow=
-kubepack.dev/lib-helm v0.0.0-20200201053053-ceee20cb3008 h1:499HdRG9VTvq2nZwtmlANlFHiQ//V4GFMIjmh+NhocU=
-kubepack.dev/lib-helm v0.0.0-20200201053053-ceee20cb3008/go.mod h1:SydjRaDwcULmH/smZCOU6y5JAwTJiIHtzjsk7aQHKuk=
+kubepack.dev/lib-helm v0.0.0-20200201172824-2d1a8e0a94b5 h1:N2YRSW6O2cPcvwoj32sjuXevv3uTgomOUrqRCkvgx7Q=
+kubepack.dev/lib-helm v0.0.0-20200201172824-2d1a8e0a94b5/go.mod h1:+nPCCV83PkJMTTH/ASWjhI59cQfEWu5U2S4kCYGrnA8=
 modernc.org/cc v1.0.0/go.mod h1:1Sk4//wdnYJiUIxnW8ddKpaOJCF37yAdqYnkxUpaYxw=
 modernc.org/golex v1.0.0/go.mod h1:b/QX9oBD/LhixY6NDh+IdGv17hgB+51fET1i2kPSmvk=
 modernc.org/mathutil v1.0.0/go.mod h1:wU0vUrJsVWBZ4P6e7xtFJEhFSNsfRLJ8H458uRjg03k=
