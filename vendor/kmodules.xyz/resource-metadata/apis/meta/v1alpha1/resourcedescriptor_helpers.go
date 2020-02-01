@@ -30,6 +30,10 @@ func (r ResourceID) GroupVersion() schema.GroupVersion {
 	return schema.GroupVersion{Group: r.Group, Version: r.Version}
 }
 
+func (r ResourceID) GroupResource() schema.GroupResource {
+	return schema.GroupResource{Group: r.Group, Resource: r.Name}
+}
+
 func (r ResourceID) TypeMeta() metav1.TypeMeta {
 	return metav1.TypeMeta{APIVersion: r.GroupVersion().String(), Kind: r.Kind}
 }

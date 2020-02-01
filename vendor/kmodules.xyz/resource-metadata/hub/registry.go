@@ -27,6 +27,7 @@ import (
 	"kmodules.xyz/resource-metadata/hub/resourceclasses"
 	"kmodules.xyz/resource-metadata/hub/resourcedescriptors"
 
+	"gomodules.xyz/version"
 	crdv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	crd_cs "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/typed/apiextensions/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -37,11 +38,12 @@ import (
 )
 
 type Registry struct {
-	uid    string
-	cache  KV
-	m      sync.RWMutex
-	regGVK map[schema.GroupVersionKind]*v1alpha1.ResourceID
-	regGVR map[schema.GroupVersionResource]*v1alpha1.ResourceID
+	uid       string
+	cache     KV
+	m         sync.RWMutex
+	preferred []schema.GroupVersionResource
+	regGVK    map[schema.GroupVersionKind]*v1alpha1.ResourceID
+	regGVR    map[schema.GroupVersionResource]*v1alpha1.ResourceID
 }
 
 func NewRegistry(uid string, cache KV) *Registry {
@@ -52,12 +54,45 @@ func NewRegistry(uid string, cache KV) *Registry {
 		regGVR: map[schema.GroupVersionResource]*v1alpha1.ResourceID{},
 	}
 
+	guess := make(map[schema.GroupResource]string)
+
 	r.cache.Visit(func(key string, val *v1alpha1.ResourceDescriptor) {
 		v := val.Spec.Resource // copy
 		r.regGVK[v.GroupVersionKind()] = &v
 		r.regGVR[v.GroupVersionResource()] = &v
+
+		gr := v.GroupResource()
+		if curVer, ok := guess[gr]; !ok || mustCompareVersions(v.Version, curVer) > 0 {
+			guess[gr] = v.Version
+		}
 	})
+
+	r.preferred = make([]schema.GroupVersionResource, 0, len(guess))
+	for gr, version := range guess {
+		r.preferred = append(r.preferred, gr.WithVersion(version))
+	}
+
 	return r
+}
+
+func mustCompareVersions(x, y string) int {
+	result, err := compareVersions(x, y)
+	if err != nil {
+		panic(err)
+	}
+	return result
+}
+
+func compareVersions(x, y string) (int, error) {
+	xv, err := version.NewVersion(x)
+	if err != nil {
+		return 0, err
+	}
+	yv, err := version.NewVersion(y)
+	if err != nil {
+		return 0, err
+	}
+	return xv.Compare(yv), nil
 }
 
 func NewRegistryOfKnownResources() *Registry {
@@ -65,12 +100,13 @@ func NewRegistryOfKnownResources() *Registry {
 }
 
 func (r *Registry) DiscoverResources(cfg *rest.Config) error {
-	reg, err := r.createRegistry(cfg)
+	preferred, reg, err := r.createRegistry(cfg)
 	if err != nil {
 		return err
 	}
 
 	r.m.Lock()
+	r.preferred = preferred
 	for filename, rd := range reg {
 		if _, found := r.cache.Get(filename); !found {
 			r.regGVK[rd.Spec.Resource.GroupVersionKind()] = &rd.Spec.Resource
@@ -94,20 +130,20 @@ func (r *Registry) Register(gvr schema.GroupVersionResource, cfg *rest.Config) e
 	return r.DiscoverResources(cfg)
 }
 
-func (r *Registry) createRegistry(cfg *rest.Config) (map[string]*v1alpha1.ResourceDescriptor, error) {
+func (r *Registry) createRegistry(cfg *rest.Config) ([]schema.GroupVersionResource, map[string]*v1alpha1.ResourceDescriptor, error) {
 	kc, err := kubernetes.NewForConfig(cfg)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	apiext, err := crd_cs.NewForConfig(cfg)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	_, rsLists, err := kc.Discovery().ServerGroupsAndResources()
+	rsLists, err := kc.Discovery().ServerPreferredResources()
 	if err != nil && !discovery.IsGroupDiscoveryFailedError(err) {
-		return nil, err
+		return nil, nil, err
 	}
 
 	reg := make(map[string]*v1alpha1.ResourceDescriptor)
@@ -120,7 +156,7 @@ func (r *Registry) createRegistry(cfg *rest.Config) (map[string]*v1alpha1.Resour
 
 			gv, err := schema.ParseGroupVersion(rsList.GroupVersion)
 			if err != nil {
-				return nil, err
+				return nil, nil, err
 			}
 			rs.Group = gv.Group
 			rs.Version = gv.Version
@@ -165,14 +201,24 @@ func (r *Registry) createRegistry(cfg *rest.Config) (map[string]*v1alpha1.Resour
 		}
 	}
 
+	preferred := make([]schema.GroupVersionResource, 0, len(reg))
+	for _, rd := range reg {
+		preferred = append(preferred, rd.Spec.Resource.GroupVersionResource())
+	}
+
 	for _, name := range resourcedescriptors.AssetNames() {
 		delete(reg, name)
 	}
-	return reg, nil
+	return preferred, reg, nil
 }
 
 func (r *Registry) Visit(f func(key string, val *v1alpha1.ResourceDescriptor)) {
-	r.cache.Visit(f)
+	for _, gvr := range r.Resources() {
+		key := r.filename(gvr)
+		if rd, ok := r.cache.Get(key); ok {
+			f(key, rd)
+		}
+	}
 }
 
 func (r *Registry) GVR(gvk schema.GroupVersionKind) (schema.GroupVersionResource, error) {
@@ -215,36 +261,26 @@ func (r *Registry) IsNamespaced(gvr schema.GroupVersionResource) (bool, error) {
 	return rid.Scope == v1alpha1.NamespaceScoped, nil
 }
 
-func (r *Registry) Types() []metav1.TypeMeta {
-	r.m.RLock()
-	defer r.m.RUnlock()
-
-	types := make([]metav1.TypeMeta, 0, len(r.regGVK))
-	for _, v := range r.regGVK {
-		types = append(types, v.TypeMeta())
-	}
-	return types
-}
-
 func (r *Registry) Resources() []schema.GroupVersionResource {
 	r.m.RLock()
 	defer r.m.RUnlock()
 
-	resources := make([]schema.GroupVersionResource, 0, len(r.regGVR))
-	for k := range r.regGVR {
-		resources = append(resources, k)
+	out := make([]schema.GroupVersionResource, 0, len(r.preferred))
+	for _, gvr := range r.preferred {
+		out = append(out, gvr)
 	}
-	return resources
+	return out
 }
 
 func (r *Registry) LoadByGVR(gvr schema.GroupVersionResource) (*v1alpha1.ResourceDescriptor, error) {
-	var filename string
+	return r.LoadByFile(r.filename(gvr))
+}
+
+func (r *Registry) filename(gvr schema.GroupVersionResource) string {
 	if gvr.Group == "" && gvr.Version == "v1" {
-		filename = fmt.Sprintf("core/v1/%s.yaml", gvr.Resource)
-	} else {
-		filename = fmt.Sprintf("%s/%s/%s.yaml", gvr.Group, gvr.Version, gvr.Resource)
+		return fmt.Sprintf("core/v1/%s.yaml", gvr.Resource)
 	}
-	return r.LoadByFile(filename)
+	return fmt.Sprintf("%s/%s/%s.yaml", gvr.Group, gvr.Version, gvr.Resource)
 }
 
 func (r *Registry) LoadByName(name string) (*v1alpha1.ResourceDescriptor, error) {
