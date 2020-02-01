@@ -268,8 +268,6 @@ github.com/gobwas/glob/syntax/ast
 github.com/gobwas/glob/syntax/lexer
 github.com/gobwas/glob/util/runes
 github.com/gobwas/glob/util/strings
-# github.com/gofrs/flock v0.7.1
-github.com/gofrs/flock
 # github.com/gogo/protobuf v1.3.1 => github.com/gogo/protobuf v1.2.2-0.20190723190241-65acae22fc9d
 github.com/gogo/protobuf/gogoproto
 github.com/gogo/protobuf/proto
@@ -664,7 +662,7 @@ gopkg.in/natefinch/lumberjack.v2
 gopkg.in/tomb.v1
 # gopkg.in/yaml.v2 v2.2.4
 gopkg.in/yaml.v2
-# helm.sh/helm/v3 v3.0.2 => github.com/kubepack/helm/v3 v3.0.3-0.20200119202455-afb1ef54d569
+# helm.sh/helm/v3 v3.0.3 => github.com/kubepack/helm/v3 v3.0.3-0.20200119202455-afb1ef54d569
 helm.sh/helm/v3/internal/experimental/registry
 helm.sh/helm/v3/internal/ignore
 helm.sh/helm/v3/internal/resolver
@@ -695,7 +693,6 @@ helm.sh/helm/v3/pkg/provenance
 helm.sh/helm/v3/pkg/release
 helm.sh/helm/v3/pkg/releaseutil
 helm.sh/helm/v3/pkg/repo
-helm.sh/helm/v3/pkg/repo/repotest
 helm.sh/helm/v3/pkg/storage
 helm.sh/helm/v3/pkg/storage/driver
 helm.sh/helm/v3/pkg/strvals
@@ -1146,7 +1143,6 @@ k8s.io/kubectl/pkg/validation
 k8s.io/kubectl/pkg/version
 # k8s.io/kubernetes v1.16.3 => github.com/kmodules/kubernetes v1.17.0-alpha.0.0.20191127022853-9d027e3886fd
 k8s.io/kubernetes/pkg/api/legacyscheme
-k8s.io/kubernetes/pkg/apis/core
 # k8s.io/utils v0.0.0-20191010214722-8d271d903fe4 => k8s.io/utils v0.0.0-20190801114015-581e00157fb1
 k8s.io/utils/buffer
 k8s.io/utils/exec
@@ -1188,8 +1184,15 @@ kmodules.xyz/resource-metadata/hub/resourcedescriptors
 # kmodules.xyz/webhook-runtime v0.0.0-20191127075323-d4bfdee6974d
 kmodules.xyz/webhook-runtime/admission/v1beta1
 kmodules.xyz/webhook-runtime/registry/admissionreview/v1beta1
-# kubepack.dev/lib-chart v0.0.0-20200122124008-18a41f64b037
-kubepack.dev/lib-chart/helm
+# kubepack.dev/lib-helm v0.0.0-20200201053053-ceee20cb3008
+kubepack.dev/lib-helm/chart
+kubepack.dev/lib-helm/chart/loader
+kubepack.dev/lib-helm/downloader
+kubepack.dev/lib-helm/getter
+kubepack.dev/lib-helm/internal/tlsutil
+kubepack.dev/lib-helm/internal/urlutil
+kubepack.dev/lib-helm/internal/version
+kubepack.dev/lib-helm/repo
 # sigs.k8s.io/kustomize v2.0.3+incompatible => sigs.k8s.io/kustomize v2.0.3+incompatible
 sigs.k8s.io/kustomize/pkg/commands/build
 sigs.k8s.io/kustomize/pkg/constants
