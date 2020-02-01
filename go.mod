@@ -4,11 +4,9 @@ go 1.12
 
 require (
 	github.com/Azure/go-autorest/autorest/azure/auth v0.4.2 // indirect
-	github.com/PuerkitoBio/purell v1.1.1
 	github.com/appscode/go v0.0.0-20191119085241-0887d8ec2ecc
 	github.com/aws/aws-sdk-go v1.20.20 // indirect
 	github.com/coreos/prometheus-operator v0.34.0
-	github.com/davecgh/go-spew v1.1.1
 	github.com/evanphx/json-patch v4.5.0+incompatible
 	github.com/gabriel-vasile/mimetype v1.0.2
 	github.com/go-openapi/spec v0.19.4
@@ -24,7 +22,6 @@ require (
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/pflag v1.0.5
 	gocloud.dev v0.18.0
-	golang.org/x/net v0.0.0-20191028085509-fe3aa8a45271
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 	gomodules.xyz/version v0.1.0
 	helm.sh/helm/v3 v3.0.3
@@ -36,12 +33,12 @@ require (
 	k8s.io/client-go v12.0.0+incompatible
 	k8s.io/kube-openapi v0.0.0-20190918143330-0270cf2f1c1d
 	k8s.io/kubernetes v1.16.3
-	kmodules.xyz/client-go v0.0.0-20200127013029-a6db892785ee
+	kmodules.xyz/client-go v0.0.0-20200201171629-70cdbdd3321b
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20191129174258-81f984340891
 	kmodules.xyz/custom-resources v0.0.0-20191130062942-f41b54f62419
 	kmodules.xyz/resource-metadata v0.3.5-0.20200119221930-fbc6f8543679
 	kmodules.xyz/webhook-runtime v0.0.0-20191127075323-d4bfdee6974d
-	kubepack.dev/lib-helm v0.0.0-20200201053053-ceee20cb3008
+	kubepack.dev/lib-helm v0.0.0-20200201172824-2d1a8e0a94b5
 	sigs.k8s.io/yaml v1.1.0
 )
 

@@ -22,11 +22,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
-	"net"
-	"net/http"
-	"net/url"
 	"os"
 	"path"
 	"sort"
@@ -37,19 +33,16 @@ import (
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/client/clientset/versioned"
-	wait2 "kubepack.dev/kubepack/pkg/wait"
 	chart2 "kubepack.dev/lib-helm/chart"
+	"kubepack.dev/lib-helm/repo"
 
-	"github.com/PuerkitoBio/purell"
 	jsonpatch "github.com/evanphx/json-patch"
-	"github.com/gregjones/httpcache"
 	"github.com/pkg/errors"
 	"gocloud.dev/blob"
 	_ "gocloud.dev/blob/azureblob"
 	_ "gocloud.dev/blob/fileblob"
 	_ "gocloud.dev/blob/gcsblob"
 	_ "gocloud.dev/blob/s3blob"
-	"golang.org/x/net/publicsuffix"
 	"gomodules.xyz/version"
 	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/chart"
@@ -76,6 +69,7 @@ import (
 	authv1client "k8s.io/client-go/kubernetes/typed/authorization/v1"
 	"k8s.io/client-go/rest"
 	"kmodules.xyz/client-go/apiextensions/v1beta1"
+	wait2 "kmodules.xyz/client-go/tools/wait"
 	"kmodules.xyz/resource-metadata/hub"
 	yamllib "sigs.k8s.io/yaml"
 )
@@ -340,7 +334,7 @@ func (x *Helm3CommandPrinter) Do() error {
 		return err
 	}
 
-	reponame, err := RepoName(x.ChartRef.URL)
+	reponame, err := repo.DefaultNamer.Name(x.ChartRef.URL)
 	if err != nil {
 		return err
 	}
@@ -447,7 +441,7 @@ func (x *Helm2CommandPrinter) Do() error {
 		return err
 	}
 
-	reponame, err := RepoName(x.ChartRef.URL)
+	reponame, err := repo.DefaultNamer.Name(x.ChartRef.URL)
 	if err != nil {
 		return err
 	}
@@ -1620,105 +1614,4 @@ func isChartInstallable(ch *chart.Chart) (bool, error) {
 		return true, nil
 	}
 	return false, errors.Errorf("%s charts are not installable", ch.Metadata.Type)
-}
-
-// url -> name
-var repos = map[string]string{}
-var repoLock sync.Mutex
-
-var repoClient = http.Client{
-	Transport: httpcache.NewMemoryCacheTransport(),
-}
-
-func getRepoNameFromHelmHub(chartURL string) (string, bool) {
-	resp, err := repoClient.Get("https://raw.githubusercontent.com/helm/hub/master/repos.yaml")
-	if err != nil {
-		return "", false
-	}
-	defer resp.Body.Close()
-	data, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return "", false
-	}
-
-	var hub v1alpha1.Hub
-	err = yamllib.Unmarshal(data, &hub)
-	if err != nil {
-		return "", false
-	}
-
-	repoLock.Lock()
-	for _, repo := range hub.Repositories {
-		u, err := purell.NormalizeURLString(repo.URL, purell.FlagsUsuallySafeGreedy)
-		if err != nil {
-			return "", false
-		}
-		repos[u] = repo.Name
-	}
-	repoLock.Unlock()
-
-	name, ok := repos[chartURL]
-	return name, ok
-}
-
-func RepoName(chartURL string) (string, error) {
-	var err error
-	chartURL, err = purell.NormalizeURLString(chartURL, purell.FlagsUsuallySafeGreedy)
-	if err != nil {
-		return "", err
-	}
-
-	repoLock.Lock()
-	name, ok := repos[chartURL]
-	repoLock.Unlock()
-	if ok {
-		return name, nil
-	}
-
-	name, ok = getRepoNameFromHelmHub(chartURL)
-	if ok {
-		return name, nil
-	}
-
-	u, err := url.Parse(chartURL)
-	if err != nil {
-		return "", err
-	}
-
-	hostname := u.Hostname()
-	ip := net.ParseIP(hostname)
-	if ip == nil {
-		name = repoNameFromDomain(hostname)
-		repoLock.Lock()
-		repos[chartURL] = name
-		repoLock.Unlock()
-		return name, nil
-	} else if ipv4 := ip.To4(); ipv4 != nil {
-		return strings.ReplaceAll(ipv4.String(), ".", "-"), nil
-	} else if ipv6 := ip.To16(); ipv6 != nil {
-		return strings.ReplaceAll(ipv6.String(), ":", "-"), nil
-	}
-	return "", fmt.Errorf("failed to generate repo name for url:%s", chartURL)
-}
-
-func repoNameFromDomain(domain string) string {
-	// TODO: Use https://raw.githubusercontent.com/helm/hub/master/repos.yaml
-	if strings.HasSuffix(domain, ".storage.googleapis.com") {
-		return strings.TrimSuffix(domain, ".storage.googleapis.com")
-	}
-
-	publicSuffix, icann := publicsuffix.PublicSuffix(domain)
-	if icann {
-		domain = strings.TrimSuffix(domain, "."+publicSuffix)
-	}
-	if strings.HasPrefix(domain, "charts.") {
-		domain = strings.TrimPrefix(domain, "charts.")
-	}
-
-	parts := strings.Split(domain, ".")
-	for i := 0; i < len(parts)/2; i++ {
-		j := len(parts) - i - 1
-		parts[i], parts[j] = parts[j], parts[i]
-	}
-	return strings.Join(parts, "-")
 }

@@ -931,7 +931,6 @@ k8s.io/client-go/discovery
 k8s.io/client-go/discovery/cached/disk
 k8s.io/client-go/discovery/fake
 k8s.io/client-go/dynamic
-k8s.io/client-go/dynamic/fake
 k8s.io/client-go/informers
 k8s.io/client-go/informers/admissionregistration
 k8s.io/client-go/informers/admissionregistration/v1
@@ -1150,7 +1149,7 @@ k8s.io/utils/integer
 k8s.io/utils/path
 k8s.io/utils/pointer
 k8s.io/utils/trace
-# kmodules.xyz/client-go v0.0.0-20200127013029-a6db892785ee
+# kmodules.xyz/client-go v0.0.0-20200201171629-70cdbdd3321b
 kmodules.xyz/client-go
 kmodules.xyz/client-go/admissionregistration/v1beta1
 kmodules.xyz/client-go/apiextensions/v1beta1
@@ -1166,6 +1165,7 @@ kmodules.xyz/client-go/tools/cli
 kmodules.xyz/client-go/tools/clientcmd
 kmodules.xyz/client-go/tools/clusterid
 kmodules.xyz/client-go/tools/queue
+kmodules.xyz/client-go/tools/wait
 # kmodules.xyz/crd-schema-fuzz v0.0.0-20191129174258-81f984340891
 kmodules.xyz/crd-schema-fuzz
 # kmodules.xyz/custom-resources v0.0.0-20191130062942-f41b54f62419
@@ -1184,7 +1184,7 @@ kmodules.xyz/resource-metadata/hub/resourcedescriptors
 # kmodules.xyz/webhook-runtime v0.0.0-20191127075323-d4bfdee6974d
 kmodules.xyz/webhook-runtime/admission/v1beta1
 kmodules.xyz/webhook-runtime/registry/admissionreview/v1beta1
-# kubepack.dev/lib-helm v0.0.0-20200201053053-ceee20cb3008
+# kubepack.dev/lib-helm v0.0.0-20200201172824-2d1a8e0a94b5
 kubepack.dev/lib-helm/chart
 kubepack.dev/lib-helm/chart/loader
 kubepack.dev/lib-helm/downloader
