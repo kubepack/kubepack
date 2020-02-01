@@ -4,6 +4,7 @@ go 1.12
 
 require (
 	github.com/Azure/go-autorest/autorest/azure/auth v0.4.2 // indirect
+	github.com/PuerkitoBio/purell v1.1.1
 	github.com/appscode/go v0.0.0-20191119085241-0887d8ec2ecc
 	github.com/aws/aws-sdk-go v1.20.20 // indirect
 	github.com/coreos/prometheus-operator v0.34.0

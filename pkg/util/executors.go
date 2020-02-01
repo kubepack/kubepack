@@ -37,10 +37,12 @@ import (
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/client/clientset/versioned"
-	chart2 "kubepack.dev/lib-helm/chart"
 	wait2 "kubepack.dev/kubepack/pkg/wait"
+	chart2 "kubepack.dev/lib-helm/chart"
 
+	"github.com/PuerkitoBio/purell"
 	jsonpatch "github.com/evanphx/json-patch"
+	"github.com/gregjones/httpcache"
 	"github.com/pkg/errors"
 	"gocloud.dev/blob"
 	_ "gocloud.dev/blob/azureblob"
@@ -65,7 +67,6 @@ import (
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 	"k8s.io/cli-runtime/pkg/printers"
@@ -1625,41 +1626,56 @@ func isChartInstallable(ch *chart.Chart) (bool, error) {
 var repos = map[string]string{}
 var repoLock sync.Mutex
 
-func init() {
-	go func() {
-		err := wait.PollImmediateInfinite(24*time.Hour, func() (done bool, err error) {
-			resp, err := http.Get("https://raw.githubusercontent.com/helm/hub/master/repos.yaml")
-			if err == nil {
-				defer resp.Body.Close()
-				if data, err := ioutil.ReadAll(resp.Body); err == nil {
-					var hub v1alpha1.Hub
-					err = yamllib.Unmarshal(data, &hub)
-					if err == nil {
-						repoLock.Lock()
-						for _, repo := range hub.Repositories {
-							repos[strings.TrimSuffix(repo.URL, "/")] = repo.Name
-						}
-						repoLock.Unlock()
-					}
-				}
-			}
-			return false, nil // never exit
-		})
-		if err != nil {
-			panic(err)
-		}
-	}()
+var repoClient = http.Client{
+	Transport: httpcache.NewMemoryCacheTransport(),
 }
 
-func getCachedRepoName(chartURL string) (string, bool) {
+func getRepoNameFromHelmHub(chartURL string) (string, bool) {
+	resp, err := repoClient.Get("https://raw.githubusercontent.com/helm/hub/master/repos.yaml")
+	if err != nil {
+		return "", false
+	}
+	defer resp.Body.Close()
+	data, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", false
+	}
+
+	var hub v1alpha1.Hub
+	err = yamllib.Unmarshal(data, &hub)
+	if err != nil {
+		return "", false
+	}
+
 	repoLock.Lock()
-	defer repoLock.Unlock()
-	name, ok := repos[strings.TrimSuffix(chartURL, "/")]
+	for _, repo := range hub.Repositories {
+		u, err := purell.NormalizeURLString(repo.URL, purell.FlagsUsuallySafeGreedy)
+		if err != nil {
+			return "", false
+		}
+		repos[u] = repo.Name
+	}
+	repoLock.Unlock()
+
+	name, ok := repos[chartURL]
 	return name, ok
 }
 
 func RepoName(chartURL string) (string, error) {
-	name, ok := getCachedRepoName(chartURL)
+	var err error
+	chartURL, err = purell.NormalizeURLString(chartURL, purell.FlagsUsuallySafeGreedy)
+	if err != nil {
+		return "", err
+	}
+
+	repoLock.Lock()
+	name, ok := repos[chartURL]
+	repoLock.Unlock()
+	if ok {
+		return name, nil
+	}
+
+	name, ok = getRepoNameFromHelmHub(chartURL)
 	if ok {
 		return name, nil
 	}
@@ -1674,7 +1690,7 @@ func RepoName(chartURL string) (string, error) {
 	if ip == nil {
 		name = repoNameFromDomain(hostname)
 		repoLock.Lock()
-		repos[strings.TrimSuffix(chartURL, "/")] = name
+		repos[chartURL] = name
 		repoLock.Unlock()
 		return name, nil
 	} else if ipv4 := ip.To4(); ipv4 != nil {
