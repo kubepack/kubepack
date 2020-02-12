@@ -106,5 +106,5 @@ jobs:
         echo >> hack/config/.env
         echo "GOOGLE_SERVICE_ACCOUNT_JSON_KEY=$(echo $GOOGLE_SERVICE_ACCOUNT_JSON_KEY)" >> hack/config/.env
         make install || ( kubectl describe deployment -n kube-system kubepack; kubectl logs -n kube-system deployment/kubepack; exit 1; )
-        echo
-        make e2e-tests
+        # echo
+        # make e2e-tests

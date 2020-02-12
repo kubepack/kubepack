@@ -33,12 +33,12 @@ require (
 	k8s.io/client-go v12.0.0+incompatible
 	k8s.io/kube-openapi v0.0.0-20190918143330-0270cf2f1c1d
 	k8s.io/kubernetes v1.16.3
-	kmodules.xyz/client-go v0.0.0-20200201171629-70cdbdd3321b
+	kmodules.xyz/client-go v0.0.0-20200216080917-08714f78f885
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20191129174258-81f984340891
 	kmodules.xyz/custom-resources v0.0.0-20191130062942-f41b54f62419
-	kmodules.xyz/resource-metadata v0.3.5
+	kmodules.xyz/resource-metadata v0.3.6
 	kmodules.xyz/webhook-runtime v0.0.0-20191127075323-d4bfdee6974d
-	kubepack.dev/lib-helm v0.0.0-20200201172824-2d1a8e0a94b5
+	kubepack.dev/lib-helm v0.0.0-20200217211818-9d7f96519a6d
 	sigs.k8s.io/yaml v1.1.0
 )
 

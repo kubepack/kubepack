@@ -93,7 +93,7 @@ func main() {
 
 func debug(format string, v ...interface{}) {
 	format = fmt.Sprintf("[debug] %s\n", format)
-	log.Output(2, fmt.Sprintf(format, v...))
+	_ = log.Output(2, fmt.Sprintf(format, v...))
 }
 
 func runInstall(args []string, client *action.Install, valueOpts *values.Options, out io.Writer) (*release.Release, error) {
