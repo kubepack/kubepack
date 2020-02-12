@@ -20,16 +20,10 @@ import (
 	"net/http"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/lib-helm/chart/loader"
 	"kubepack.dev/lib-helm/repo"
 
 	"github.com/gabriel-vasile/mimetype"
 	"helm.sh/helm/v3/pkg/chart"
-)
-
-const (
-	TmpDir    = "/tmp"
-	DirPrefix = "helm"
 )
 
 func GetPackageDescriptor(pkgChart *chart.Chart) v1alpha1.PackageDescriptor {
@@ -76,10 +70,5 @@ func GetPackageDescriptor(pkgChart *chart.Chart) v1alpha1.PackageDescriptor {
 var reg = repo.NewDiskCacheRegistry()
 
 func GetChart(repoURL, chartName, chartVersion string) (*chart.Chart, error) {
-	reader, err := LocateChart(reg, repoURL, chartName, chartVersion)
-	if err != nil {
-		return nil, err
-	}
-
-	return loader.Load(reader)
+	return reg.GetChart(repoURL, chartName, chartVersion)
 }

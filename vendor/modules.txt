@@ -1149,7 +1149,7 @@ k8s.io/utils/integer
 k8s.io/utils/path
 k8s.io/utils/pointer
 k8s.io/utils/trace
-# kmodules.xyz/client-go v0.0.0-20200201171629-70cdbdd3321b
+# kmodules.xyz/client-go v0.0.0-20200216080917-08714f78f885
 kmodules.xyz/client-go
 kmodules.xyz/client-go/admissionregistration/v1beta1
 kmodules.xyz/client-go/apiextensions/v1beta1
@@ -1174,7 +1174,7 @@ kmodules.xyz/custom-resources/apis/appcatalog
 kmodules.xyz/custom-resources/apis/appcatalog/v1alpha1
 kmodules.xyz/custom-resources/client/clientset/versioned/scheme
 kmodules.xyz/custom-resources/client/clientset/versioned/typed/appcatalog/v1alpha1
-# kmodules.xyz/resource-metadata v0.3.5
+# kmodules.xyz/resource-metadata v0.3.6
 kmodules.xyz/resource-metadata/api/crds
 kmodules.xyz/resource-metadata/apis/meta
 kmodules.xyz/resource-metadata/apis/meta/v1alpha1
@@ -1184,7 +1184,7 @@ kmodules.xyz/resource-metadata/hub/resourcedescriptors
 # kmodules.xyz/webhook-runtime v0.0.0-20191127075323-d4bfdee6974d
 kmodules.xyz/webhook-runtime/admission/v1beta1
 kmodules.xyz/webhook-runtime/registry/admissionreview/v1beta1
-# kubepack.dev/lib-helm v0.0.0-20200201172824-2d1a8e0a94b5
+# kubepack.dev/lib-helm v0.0.0-20200217211818-9d7f96519a6d
 kubepack.dev/lib-helm/chart
 kubepack.dev/lib-helm/chart/loader
 kubepack.dev/lib-helm/downloader
