@@ -30,6 +30,7 @@ type KubepackV1alpha1Interface interface {
 	ApplicationsGetter
 	BundlesGetter
 	OrdersGetter
+	ProductsGetter
 }
 
 // KubepackV1alpha1Client is used to interact with features provided by the kubepack.com group.
@@ -47,6 +48,10 @@ func (c *KubepackV1alpha1Client) Bundles() BundleInterface {
 
 func (c *KubepackV1alpha1Client) Orders() OrderInterface {
 	return newOrders(c)
+}
+
+func (c *KubepackV1alpha1Client) Products() ProductInterface {
+	return newProducts(c)
 }
 
 // NewForConfig creates a new KubepackV1alpha1Client for the given config.

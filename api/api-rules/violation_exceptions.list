@@ -182,6 +182,8 @@ API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alph
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,FeatureTable,Plans
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,FeatureTable,Rows
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Hub,Repositories
+API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Mapping,SubProjectVersions
+API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Mapping,Versions
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,OneOfBundleOption,Bundles
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,OneOfBundleOptionView,Bundles
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,OrderList,Items
@@ -190,6 +192,15 @@ API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alph
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,PackageDescriptor,Keywords
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,PackageDescriptor,Links
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,PackageDescriptor,Maintainers
+API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ProductList,Items
+API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ProductSpec,Badges
+API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ProductSpec,Keywords
+API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ProductSpec,Links
+API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ProductSpec,Maintainers
+API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ProductSpec,Media
+API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ProductSpec,Plans
+API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ProductSpec,Versions
+API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ProjectRef,Mappings
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Repository,Maintainers
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ResourceDefinitions,Owned
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ResourceDefinitions,Required
@@ -260,4 +271,8 @@ API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Com
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ImageSpec,Source
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ImageSpec,TotalSize
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,OrderSpec,Packages
+API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Plan,NickName
+API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Plan,StripeID
+API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ProductSpec,Media
+API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ProductSpec,StripeID
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,WaitFlags,ForCondition

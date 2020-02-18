@@ -355,19 +355,6 @@ spec:
                     type: object
                 type: object
               type: array
-            product:
-              properties:
-                planID:
-                  type: string
-                productID:
-                  type: string
-                vendorID:
-                  type: string
-              required:
-              - planID
-              - productID
-              - vendorID
-              type: object
             type:
               description: Type is the type of the application (e.g. WordPress, MySQL,
                 Cassandra).

@@ -41,6 +41,10 @@ func (c *FakeKubepackV1alpha1) Orders() v1alpha1.OrderInterface {
 	return &FakeOrders{c}
 }
 
+func (c *FakeKubepackV1alpha1) Products() v1alpha1.ProductInterface {
+	return &FakeProducts{c}
+}
+
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
 func (c *FakeKubepackV1alpha1) RESTClient() rest.Interface {
