@@ -1418,6 +1418,7 @@ func (in *ProductVersion) DeepCopyInto(out *ProductVersion) {
 			(*out)[key] = val
 		}
 	}
+	in.ReleaseDate.DeepCopyInto(&out.ReleaseDate)
 	return
 }
 

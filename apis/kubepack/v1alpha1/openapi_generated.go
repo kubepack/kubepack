@@ -17903,10 +17903,17 @@ func schema_kubepack_apis_kubepack_v1alpha1_ProductVersion(ref common.ReferenceC
 							},
 						},
 					},
+					"releaseDate": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
+						},
+					},
 				},
 				Required: []string{"version", "hostDocs"},
 			},
 		},
+		Dependencies: []string{
+			"k8s.io/apimachinery/pkg/apis/meta/v1.Time"},
 	}
 }
 
