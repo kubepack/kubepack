@@ -274,6 +274,10 @@ spec:
                     additionalProperties:
                       type: string
                     type: object
+                  releaseDate:
+                    format: date-time
+                    nullable: true
+                    type: string
                   show:
                     type: boolean
                   version:

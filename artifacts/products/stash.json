@@ -99,7 +99,8 @@
       {
         "version": "master",
         "hostDocs": false,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "v0.9.0-rc.4",
@@ -108,7 +109,8 @@
         "info": {
           "catalog": "v0.2.0",
           "cli": "v0.3.0"
-        }
+        },
+        "releaseDate": null
       },
       {
         "version": "v0.9.0-rc.2",
@@ -117,7 +119,8 @@
         "info": {
           "catalog": "v0.1.0",
           "cli": "v0.2.0"
-        }
+        },
+        "releaseDate": null
       },
       {
         "version": "v0.9.0-rc.1",
@@ -126,91 +129,111 @@
         "info": {
           "catalog": "v0.1.0",
           "cli": "v0.1.0"
-        }
+        },
+        "releaseDate": null
       },
       {
         "version": "v0.9.0-rc.0",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "0.8.3",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "0.8.2",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "0.8.1",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "0.8.0",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "0.7.0",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "0.7.0-rc.5",
-        "hostDocs": true
+        "hostDocs": true,
+        "releaseDate": null
       },
       {
         "version": "0.7.0-rc.4",
-        "hostDocs": true
+        "hostDocs": true,
+        "releaseDate": null
       },
       {
         "version": "0.7.0-rc.3",
-        "hostDocs": true
+        "hostDocs": true,
+        "releaseDate": null
       },
       {
         "version": "0.7.0-rc.2",
-        "hostDocs": true
+        "hostDocs": true,
+        "releaseDate": null
       },
       {
         "version": "0.7.0-rc.1",
-        "hostDocs": true
+        "hostDocs": true,
+        "releaseDate": null
       },
       {
         "version": "0.7.0-rc.0",
-        "hostDocs": true
+        "hostDocs": true,
+        "releaseDate": null
       },
       {
         "version": "0.6.4",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "0.6.3",
-        "hostDocs": true
+        "hostDocs": true,
+        "releaseDate": null
       },
       {
         "version": "0.6.2",
-        "hostDocs": true
+        "hostDocs": true,
+        "releaseDate": null
       },
       {
         "version": "0.6.1",
-        "hostDocs": true
+        "hostDocs": true,
+        "releaseDate": null
       },
       {
         "version": "0.6.0",
-        "hostDocs": true
+        "hostDocs": true,
+        "releaseDate": null
       },
       {
         "version": "0.5.1",
-        "hostDocs": false
+        "hostDocs": false,
+        "releaseDate": null
       },
       {
         "version": "0.4.2",
         "hostDocs": false,
-        "show": true
+        "show": true,
+        "releaseDate": null
       }
     ],
     "latestVersion": "v0.9.0-rc.4",

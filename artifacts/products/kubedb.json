@@ -112,70 +112,85 @@
       {
         "version": "master",
         "hostDocs": false,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "v0.13.0-rc.0",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "0.12.0",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "0.11.0",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "0.10.0",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "0.9.0",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "0.9.0-rc.2",
-        "hostDocs": true
+        "hostDocs": true,
+        "releaseDate": null
       },
       {
         "version": "0.9.0-rc.1",
-        "hostDocs": true
+        "hostDocs": true,
+        "releaseDate": null
       },
       {
         "version": "0.9.0-rc.0",
-        "hostDocs": true
+        "hostDocs": true,
+        "releaseDate": null
       },
       {
         "version": "0.8.0",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "0.8.0-rc.0",
-        "hostDocs": true
+        "hostDocs": true,
+        "releaseDate": null
       },
       {
         "version": "0.8.0-beta.2",
-        "hostDocs": true
+        "hostDocs": true,
+        "releaseDate": null
       },
       {
         "version": "0.8.0-beta.0",
-        "hostDocs": true
+        "hostDocs": true,
+        "releaseDate": null
       },
       {
         "version": "0.7.1",
-        "hostDocs": false
+        "hostDocs": false,
+        "releaseDate": null
       },
       {
         "version": "0.6.0",
         "hostDocs": false,
-        "show": true
+        "show": true,
+        "releaseDate": null
       }
     ],
     "latestVersion": "v0.13.0-rc.0"

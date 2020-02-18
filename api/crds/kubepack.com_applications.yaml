@@ -486,10 +486,12 @@ spec:
                     description: Last time the condition transitioned from one status
                       to another.
                     format: date-time
+                    nullable: true
                     type: string
                   lastUpdateTime:
                     description: Last time the condition was probed
                     format: date-time
+                    nullable: true
                     type: string
                   message:
                     description: A human readable message indicating details about

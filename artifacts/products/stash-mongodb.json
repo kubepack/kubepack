@@ -62,77 +62,92 @@
       {
         "version": "master",
         "hostDocs": false,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "3.4",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "3.4.17",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "3.4.22",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "3.6",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "3.6.8",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "3.6.13",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "4.0",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "4.0.3",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "4.0.5",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "4.0.11",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "4.1",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "4.1.4",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "4.1.7",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "4.1.13",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       }
     ],
     "latestVersion": "4.1.13"

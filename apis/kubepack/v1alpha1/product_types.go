@@ -135,6 +135,8 @@ type ProductVersion struct {
 	DocsDir  string            `json:"docsDir,omitempty" protobuf:"bytes,4,opt,name=docsDir"` // default: "docs"
 	Branch   string            `json:"branch,omitempty" protobuf:"bytes,5,opt,name=branch"`
 	Info     map[string]string `json:"info,omitempty" protobuf:"bytes,6,rep,name=info"`
+	// +optional
+	ReleaseDate metav1.Time `json:"releaseDate,omitempty" protobuf:"bytes,7,opt,name=releaseDate"`
 }
 
 type ProjectRef struct {

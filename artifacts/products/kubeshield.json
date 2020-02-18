@@ -98,12 +98,14 @@
       {
         "version": "master",
         "hostDocs": false,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "0.1.0",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       }
     ],
     "latestVersion": "0.1.0"

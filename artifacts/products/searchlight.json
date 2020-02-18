@@ -91,48 +91,58 @@
       {
         "version": "master",
         "hostDocs": false,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "8.0.0",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "8.0.0-rc.0",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "7.0.0",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "7.0.0-rc.0",
-        "hostDocs": true
+        "hostDocs": true,
+        "releaseDate": null
       },
       {
         "version": "5.1.1",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "5.1.0",
-        "hostDocs": true
+        "hostDocs": true,
+        "releaseDate": null
       },
       {
         "version": "5.0.0",
-        "hostDocs": true
+        "hostDocs": true,
+        "releaseDate": null
       },
       {
         "version": "4.0.0",
-        "hostDocs": false
+        "hostDocs": false,
+        "releaseDate": null
       },
       {
         "version": "3.0.1",
         "hostDocs": false,
-        "show": true
+        "show": true,
+        "releaseDate": null
       }
     ],
     "latestVersion": "8.0.0"

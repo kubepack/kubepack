@@ -61,12 +61,14 @@
       {
         "version": "master",
         "hostDocs": false,
-        "show": true
+        "show": true,
+        "releaseDate": null
       },
       {
         "version": "5.7",
         "hostDocs": true,
-        "show": true
+        "show": true,
+        "releaseDate": null
       }
     ],
     "latestVersion": "5.7"
