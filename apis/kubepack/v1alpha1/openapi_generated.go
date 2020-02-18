@@ -17651,7 +17651,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_ProductSpec(ref common.ReferenceCall
 						},
 					},
 				},
-				Required: []string{"id", "key", "name", "shortName", "tagline", "summary", "owner", "phase", "plans", "subProjects"},
+				Required: []string{"id", "key", "name", "shortName", "tagline", "owner", "phase"},
 			},
 		},
 		Dependencies: []string{

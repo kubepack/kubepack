@@ -1,0 +1,156 @@
+{
+  "key": "kubeform",
+  "name": "Kubeform",
+  "fullname": "Kubeform by AppsCode",
+  "tagline": "Provision cloud resources <br /> using <strong>Kubernetes</strong> CRDs <br />& <strong>Terraform</strong>",
+  "summary": "",
+  "published": true,
+  "author": "AppsCode Inc.",
+  "website": {
+    "domainKey": "domain_kubeform",
+    "path": "",
+    "themeColor": "#592217"
+  },
+  "keywords": "kubernetes appscode terraform kubeform crd",
+  "heroImage": {
+    "src": "https://cdn.appscode.com/images/products/kubeform/kubeform-hero.png",
+    "alt": "Kubeform"
+  },
+  "logo": {
+    "src": "https://cdn.appscode.com/images/products/kubeform/kubeform.png",
+    "alt": "Kubeform"
+  },
+  "logoWhite": {
+    "src": "https://cdn.appscode.com/images/products/kubeform/kubeform-white.png",
+    "alt": "Kubeform"
+  },
+  "icon": {
+    "src": "https://cdn.appscode.com/images/products/kubeform/kubeform-icon.png",
+    "alt": "Kubeform",
+    "sizes": {
+      "192x192": "https://cdn.appscode.com/images/products/kubeform/icons/android-icon-192x192.png"
+    }
+  },
+  "repoURL": "https://github.com/kubeform/docs",
+  "starRepo": "kubeform/kubeform",
+  "docRepo": "kubeform/docs",
+  "badges": [
+    {
+      "url": "github/stars/kubeform/kubeform",
+      "alt": "GitHub Stars",
+      "logo": "github"
+    },
+    {
+      "url": "docker/pulls/kubeform/kfc",
+      "alt": "Docker Pulls",
+      "logo": "docker"
+    }
+  ],
+  "features": [
+    {
+      "title": "Native Kubernetes Support",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/kubeform/features/feature-1.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/kubeform/features/kubernetes.png",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "Standard Kubernetes is all you need. If you can run Kubernetes, you can provision and manage cloud infrastructure using Kubeform. Use standard Kubernetes CLI and API to provision and manage different cloud infrastructures. This native integration with Kubernetes means your cloud infrastructures are ready for any higher level deployment tooling like GitOps, Open Policy Agent (OPA), etc."
+    },
+    {
+      "title": "Built on Terrafrom",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/kubeform/features/feature-2.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/kubeform/features/terraform.png",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "Terraform is a popular tool for provisioning cloud infrastructure. Kubeform is built on top of Terraform. You can think it like a kubernetes operator for terraform. You can easily convert any resource of terrafrom using a CRD. You can just write a yaml for the resource which is almost same as a `tf` configuration. After applying the yaml using kubernetes API, kubeform will provision the cloud infrastructure for you!"
+    },
+    {
+      "title": "Infrastructure as Code",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/kubeform/features/feature-3.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/kubeform/features/source-code.png",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "Using kubeform, you can just write a yaml and provision a cloud infrastructure in popular cloud platforms. You can easily provision and manage cloud infrastructures using codes. You can automate the lifecycle of cloud infrastructure using kubeform."
+    },
+    {
+      "title": "Supports Multiple Cloud Platform",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/kubeform/features/feature-4.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/kubeform/features/clouds.png",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "Kubeform supports 5 top cloud platforms. These are AWS, Google Cloud, Azure, Digitalocean & Linode. Using Kubeform, Infrastructure of any of these clouds can be provisioned using a simple CRD instance."
+    },
+    {
+      "title": "Unleash Developer Velocity",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/kubeform/features/feature-5.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/kubeform/features/speed.png",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "With Kubeform, you can launch a cloud infrastructure via a simple CRD instance and start developing in minutes. Kubeform eliminates lengthy deployment and management processes with on-demand provisioning, scaling, patching and updating cloud infrastructure and shortens time-to-value. Kubeform gives each developer on your team their own development instance, so your team can focus on what matters most — velocity and not have to worry about stepping on each other’s toes."
+    },
+    {
+      "title": "Open Source",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/kubeform/features/feature-6.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/kubeform/features/teamwork.png",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "Kubeform is 100% open source and distributed under a commercial friendly Apache v2 license. You get the benefits of bug fixes and enhancements made by the Kubeform community as a whole and not just by its primary sponsor AppsCode Inc. Since it is open source, your engineering team has the ability to debug issues unique to your deployment and make any changes if necessary. You get the peace of mind that your critical infrastructure component is not tied to the fate of a startup."
+    }
+  ],
+  "versions": [
+    { "version": "master", "hostDocs": false, "show": true },
+    { "version": "v0.0.1", "hostDocs": true, "show": false },
+    { "version": "v0.1.0", "hostDocs": true, "show": true }
+  ],
+  "latestVersion": "v0.1.0",
+  "socialLinks": {
+    "facebook": "https://facebook.com/appscode",
+    "github": "https://github.com/kubeform/kubeform",
+    "linkedin": "https://www.linkedin.com/company/appscode",
+    "twitter": "https://twitter.com/Kubeform",
+    "youtube": "https://www.youtube.com/c/appscodeinc"
+  },
+  "description": {
+    "html": "<h1>Kubeform</h1>\n\n<p><a href=\"https://goreportcard.com/report/kubeform.dev/cli\"><img src=\"https://goreportcard.com/badge/kubeform.dev/cli\" alt=\"Go Report Card\" /></a>\n<a href=\"https://travis-ci.org/kubeform/cli\"><img src=\"https://travis-ci.org/kubeform/cli.svg?branch=master\" alt=\"Build Status\" /></a>\n<a href=\"https://codecov.io/gh/kubeform/cli\"><img src=\"https://codecov.io/gh/kubeform/cli/branch/master/graph/badge.svg\" alt=\"codecov\" /></a>\n<a href=\"https://hub.docker.com/r/kubeform/operator/\"><img src=\"https://img.shields.io/docker/pulls/kubeform/operator.svg\" alt=\"Docker Pulls\" /></a>\n<a href=\"http://slack.kubernetes.io/#kubeform\"><img src=\"http://slack.kubernetes.io/badge.svg\" alt=\"Slack\" /></a>\n<a href=\"https://groups.google.com/forum/#!forum/kubeform\"><img src=\"https://img.shields.io/badge/mailing_list-join-blue.svg\" alt=\"mailing list\" /></a>\n<a href=\"https://twitter.com/intent/follow?screen_name=kubeform\"><img src=\"https://img.shields.io/twitter/follow/kubeform.svg?style=social&amp;logo=twitter&amp;label=Follow\" alt=\"Twitter\" /></a></p>\n\n<blockquote>\n<p>Making running production-grade databases easy on Kubernetes</p>\n</blockquote>\n\n<p>Running production quality database in Kubernetes can be tricky to say the least. In the early days of Kubernetes, replication controllers were used to run a single pod for a database. With the introduction of StatefulSet, it became easy to run a docker container for any database. But what about monitoring, taking periodic backups, restoring from backups or cloning from an existing database? Kubeform is a framework for writing operators for any database that support the following operational requirements:</p>\n\n<ul>\n<li>Create a database declaratively using CRD.</li>\n<li>Take one-off backups or periodic backups to various cloud stores, eg, S3, GCS, Azure etc.</li>\n<li>Restore from backup or clone any database.</li>\n<li>Native integration with Prometheus for monitoring via <a href=\"https://github.com/coreos/prometheus-operator\">CoreOS Prometheus Operator</a>.</li>\n<li>Apply deletion lock to avoid accidental deletion of database.</li>\n<li>Keep track of deleted databases, cleanup prior snapshots with a single command.</li>\n<li>Use cli to manage databases like kubectl for Kubernetes.</li>\n</ul>\n\n<p>Kubeform is developed at <a href=\"https://twitter.com/AppsCodeHQ\">AppsCode</a> to run their SAAS platform on Kubernetes. Currently Kubeform includes support for following datastores:\n - Postgres\n - Elasticsearch\n - Etcd\n - MySQL / MariaDB / Percona Server for MySQL\n - MongoDB\n - Redis\n - Memcached</p>\n\n<h2>Supported Versions</h2>\n\n<p>Please pick a version of Kubeform that matches your Kubernetes installation.</p>\n\n<table>\n<thead>\n<tr>\n<th>Kubeform Version</th>\n<th>Docs</th>\n<th>Kubernetes Version</th>\n</tr>\n</thead>\n\n<tbody>\n<tr>\n<td><a href=\"https://github.com/kubeform/cli/releases/tag/0.12.0\">0.12.0</a> (uses CRD)</td>\n<td><a href=\"https://kubeform.com/docs/0.12.0/\">User Guide</a></td>\n<td>1.9.x +</td>\n</tr>\n\n<tr>\n<td><a href=\"https://github.com/kubeform/cli/releases/tag/0.11.0\">0.11.0</a> (uses CRD)</td>\n<td><a href=\"https://kubeform.com/docs/0.11.0/\">User Guide</a></td>\n<td>1.9.x +</td>\n</tr>\n\n<tr>\n<td><a href=\"https://github.com/kubeform/cli/releases/tag/0.10.0\">0.10.0</a> (uses CRD)</td>\n<td><a href=\"https://kubeform.com/docs/0.10.0/\">User Guide</a></td>\n<td>1.9.x +</td>\n</tr>\n\n<tr>\n<td><a href=\"https://github.com/kubeform/cli/releases/tag/0.9.0\">0.9.0</a> (uses CRD)</td>\n<td><a href=\"https://kubeform.com/docs/0.9.0/\">User Guide</a></td>\n<td>1.9.x +</td>\n</tr>\n\n<tr>\n<td><a href=\"https://github.com/kubeform/cli/releases/tag/0.8.0\">0.8.0</a> (uses CRD)</td>\n<td><a href=\"https://kubeform.com/docs/0.8.0/\">User Guide</a></td>\n<td>1.9.x +</td>\n</tr>\n\n<tr>\n<td><a href=\"https://github.com/kubeform/cli/releases/tag/0.6.0\">0.6.0</a> (uses TPR)</td>\n<td><a href=\"https://github.com/kubeform/cli/tree/0.6.0/docs\">User Guide</a></td>\n<td>1.5.x - 1.7.x</td>\n</tr>\n</tbody>\n</table>\n\n<h2>Installation</h2>\n\n<p>To install Kubeform, please follow the guide <a href=\"https://kubeform.com/docs/latest/setup/install/\">here</a>.</p>\n\n<h2>Using Kubeform</h2>\n\n<p>Want to learn how to use Kubeform? Please start <a href=\"https://kubeform.com/docs/latest/guides/\">here</a>.</p>\n\n<h2>Kubeform API Clients</h2>\n\n<p>You can use Kubeform api clients to programmatically access its CRD objects. Here are the supported clients:</p>\n\n<ul>\n<li>Go: <a href=\"https://github.com/kubeform/apimachinery/tree/master/client/clientset/versioned\">https://github.com/kubeform/apimachinery</a></li>\n<li>Java: <a href=\"https://github.com/kubeform-client/java\">https://github.com/kubeform-client/java</a></li>\n</ul>\n\n<h2>Contribution guidelines</h2>\n\n<p>Want to help improve Kubeform? Please start <a href=\"https://kubeform.com/docs/latest/welcome/contributing/\">here</a>.</p>\n\n<hr />\n\n<p><strong>Kubeform binaries collects anonymous usage statistics to help us learn how the software is being used and how we can improve it. To disable stats collection, run the operator with the flag</strong> <code>--enable-analytics=false</code>.</p>\n\n<hr />\n\n<h2>Support</h2>\n\n<p>We use Slack for public discussions. To chit chat with us or the rest of the community, join us in the <a href=\"https://kubernetes.slack.com/messages/C8149MREV/\">Kubernetes Slack team</a> channel <code>#kubeform</code>. To sign up, use our <a href=\"http://slack.kubernetes.io/\">Slack inviter</a>.</p>\n\n<p>To receive product announcements, please join our <a href=\"https://groups.google.com/forum/#!forum/kubeform\">mailing list</a> or follow us on <a href=\"https://twitter.com/Kubeform\">Twitter</a>. Our mailing list is also used to share design docs shared via Google docs.</p>\n\n<p>If you have found a bug with Kubeform or want to request for new features, please <a href=\"https://github.com/kubeform/project/issues/new\">file an issue</a>.</p>\n",
+    "markdown": "# Kubeform\n\n[![Go Report Card](https://goreportcard.com/badge/kubeform.dev/cli)](https://goreportcard.com/report/kubeform.dev/cli)\n[![Build Status](https://travis-ci.org/kubeform/cli.svg?branch=master)](https://travis-ci.org/kubeform/cli)\n[![codecov](https://codecov.io/gh/kubeform/cli/branch/master/graph/badge.svg)](https://codecov.io/gh/kubeform/cli)\n[![Docker Pulls](https://img.shields.io/docker/pulls/kubeform/operator.svg)](https://hub.docker.com/r/kubeform/operator/)\n[![Slack](http://slack.kubernetes.io/badge.svg)](http://slack.kubernetes.io/#kubeform)\n[![mailing list](https://img.shields.io/badge/mailing_list-join-blue.svg)](https://groups.google.com/forum/#!forum/kubeform)\n[![Twitter](https://img.shields.io/twitter/follow/kubeform.svg?style=social&logo=twitter&label=Follow)](https://twitter.com/intent/follow?screen_name=kubeform)\n\n> Making running production-grade databases easy on Kubernetes\n\nRunning production quality database in Kubernetes can be tricky to say the least. In the early days of Kubernetes, replication controllers were used to run a single pod for a database. With the introduction of StatefulSet, it became easy to run a docker container for any database. But what about monitoring, taking periodic backups, restoring from backups or cloning from an existing database? Kubeform is a framework for writing operators for any database that support the following operational requirements:\n\n - Create a database declaratively using CRD.\n - Take one-off backups or periodic backups to various cloud stores, eg, S3, GCS, Azure etc.\n - Restore from backup or clone any database.\n - Native integration with Prometheus for monitoring via [CoreOS Prometheus Operator](https://github.com/coreos/prometheus-operator).\n - Apply deletion lock to avoid accidental deletion of database.\n - Keep track of deleted databases, cleanup prior snapshots with a single command.\n - Use cli to manage databases like kubectl for Kubernetes.\n\nKubeform is developed at [AppsCode](https://twitter.com/AppsCodeHQ) to run their SAAS platform on Kubernetes. Currently Kubeform includes support for following datastores:\n - Postgres\n - Elasticsearch\n - Etcd\n - MySQL / MariaDB / Percona Server for MySQL\n - MongoDB\n - Redis\n - Memcached\n\n## Supported Versions\nPlease pick a version of Kubeform that matches your Kubernetes installation.\n\n| Kubeform Version                                                                     | Docs                                                                | Kubernetes Version |\n|------------------------------------------------------------------------------------|---------------------------------------------------------------------|--------------------|\n| [0.12.0](https://github.com/kubeform/cli/releases/tag/0.12.0) (uses CRD)             | [User Guide](https://kubeform.com/docs/0.12.0/)                       | 1.9.x +            |\n| [0.11.0](https://github.com/kubeform/cli/releases/tag/0.11.0) (uses CRD)             | [User Guide](https://kubeform.com/docs/0.11.0/)                       | 1.9.x +            |\n| [0.10.0](https://github.com/kubeform/cli/releases/tag/0.10.0) (uses CRD)             | [User Guide](https://kubeform.com/docs/0.10.0/)                       | 1.9.x +            |\n| [0.9.0](https://github.com/kubeform/cli/releases/tag/0.9.0) (uses CRD)               | [User Guide](https://kubeform.com/docs/0.9.0/)                        | 1.9.x +            |\n| [0.8.0](https://github.com/kubeform/cli/releases/tag/0.8.0) (uses CRD)               | [User Guide](https://kubeform.com/docs/0.8.0/)                        | 1.9.x +            |\n| [0.6.0](https://github.com/kubeform/cli/releases/tag/0.6.0) (uses TPR)               | [User Guide](https://github.com/kubeform/cli/tree/0.6.0/docs)         | 1.5.x - 1.7.x      |\n\n## Installation\nTo install Kubeform, please follow the guide [here](https://kubeform.com/docs/latest/setup/install/).\n\n## Using Kubeform\nWant to learn how to use Kubeform? Please start [here](https://kubeform.com/docs/latest/guides/).\n\n## Kubeform API Clients\nYou can use Kubeform api clients to programmatically access its CRD objects. Here are the supported clients:\n\n- Go: [https://github.com/kubeform/apimachinery](https://github.com/kubeform/apimachinery/tree/master/client/clientset/versioned)\n- Java: https://github.com/kubeform-client/java\n\n## Contribution guidelines\nWant to help improve Kubeform? Please start [here](https://kubeform.com/docs/latest/welcome/contributing/).\n\n---\n\n**Kubeform binaries collects anonymous usage statistics to help us learn how the software is being used and how we can improve it. To disable stats collection, run the operator with the flag** `--enable-analytics=false`.\n\n---\n\n## Support\nWe use Slack for public discussions. To chit chat with us or the rest of the community, join us in the [Kubernetes Slack team](https://kubernetes.slack.com/messages/C8149MREV/) channel `#kubeform`. To sign up, use our [Slack inviter](http://slack.kubernetes.io/).\n\nTo receive product announcements, please join our [mailing list](https://groups.google.com/forum/#!forum/kubeform) or follow us on [Twitter](https://twitter.com/Kubeform). Our mailing list is also used to share design docs shared via Google docs.\n\nIf you have found a bug with Kubeform or want to request for new features, please [file an issue](https://github.com/kubeform/project/issues/new).\n"
+  },
+  "supportLinks": {
+    "Support URL": "https://appscode.freshdesk.com",
+    "Website URL": "https://www.kubeform.com"
+  },
+  "stripeProductID": "prod_FARWKSytMzmLb9",
+  "plans": {
+    "Community": {
+      "price": "0"
+    }
+  }
+}

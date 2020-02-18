@@ -1,0 +1,139 @@
+{
+  "key": "guard",
+  "name": "Guard",
+  "fullname": "Guard by AppsCode",
+  "tagline": "Kubernetes Authentication WebHook Server",
+  "summary": "",
+  "published": true,
+  "author": "AppsCode Inc.",
+  "website": {
+    "domainKey": "domain_appscode",
+    "path": "/products/guard/"
+  },
+  "heroImage": {
+    "src": "https://cdn.appscode.com/images/products/guard/guard-hero.png",
+    "alt": "Guard"
+  },
+  "logo": {
+    "src": "https://cdn.appscode.com/images/products/guard/guard.png",
+    "alt": "Guard"
+  },
+  "logoWhite": {
+    "src": "https://cdn.appscode.com/images/products/guard/guard-white.png",
+    "alt": "Guard"
+  },
+  "icon": {
+    "src": "https://cdn.appscode.com/images/products/guard/guard-icon.png",
+    "alt": "Guard",
+    "sizes": {
+      "192x192": "https://cdn.appscode.com/images/products/guard/icons/android-icon-192x192.png"
+    }
+  },
+  "repoURL": "https://github.com/appscode/guard",
+  "starRepo": "appscode/guard",
+  "docRepo": "appscode/guard",
+  "datasheetFormID": "",
+  "badges": [
+    {
+      "url": "github/stars/appscode/guard",
+      "alt": "GitHub Stars",
+      "logo": "github"
+    },
+    {
+      "url": "docker/pulls/appscode/guard",
+      "alt": "Docker Pulls",
+      "logo": "docker"
+    }
+  ],
+  "features": [
+    {
+      "title": "Identity Providers",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/guard/features/feature-1.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/guard/features/identity-providers.svg",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "Guard supports Github and Google as identity providers"
+    },
+    {
+      "title": "CLI",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/guard/features/feature-2.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/guard/features/cli.svg",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "Guard comes with a cli to easily deploy in any Kubernetes cluster."
+    },
+    {
+      "title": "RBAC",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/guard/features/feature-3.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/guard/features/rbac.svg",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "This tutorial will show you how to use KubeDB in a RBAC enabled cluster."
+    }
+  ],
+  "versions": [
+    { "version": "master", "hostDocs": false, "show": true },
+    { "version": "v0.5.0-rc.1", "hostDocs": true, "show": true },
+    { "version": "v0.5.0-rc.0", "hostDocs": true, "show": true },
+    { "version": "0.4.0", "hostDocs": true, "show": true },
+    { "version": "0.3.0", "hostDocs": true, "show": true },
+    { "version": "0.2.1", "hostDocs": true, "show": true },
+    { "version": "0.2.0", "hostDocs": true },
+    { "version": "0.1.4", "hostDocs": true },
+    { "version": "0.1.3", "hostDocs": true },
+    { "version": "0.1.2", "hostDocs": true },
+    { "version": "0.1.1", "hostDocs": true },
+    { "version": "0.1.0", "hostDocs": true },
+    { "version": "0.1.0-rc.5", "hostDocs": true },
+    { "version": "0.1.0-rc.4", "hostDocs": false }
+  ],
+  "latestVersion": "v0.5.0-rc.1",
+  "socialLinks": {
+    "facebook": "https://facebook.com/appscode",
+    "github": "https://github.com/appscode/guard",
+    "linkedin": "https://www.linkedin.com/company/appscode",
+    "twitter": "https://twitter.com/AppsCodeHQ",
+    "youtube": "https://www.youtube.com/c/appscodeinc"
+  },
+  "description": {
+    "html": "<p align=\"center\"><img src=\"/logo/LOGO_GUARD_Readme.jpg\"></p>\n\n<p><a href=\"https://goreportcard.com/report/github.com/appscode/guard\"><img src=\"https://goreportcard.com/badge/github.com/appscode/guard\" alt=\"Go Report Card\" /></a>\n<a href=\"https://travis-ci.org/appscode/guard\"><img src=\"https://travis-ci.org/appscode/guard.svg?branch=master\" alt=\"Build Status\" /></a>\n<a href=\"https://codecov.io/gh/appscode/guard\"><img src=\"https://codecov.io/gh/appscode/guard/branch/master/graph/badge.svg\" alt=\"codecov\" /></a>\n<a href=\"https://hub.docker.com/r/appscode/guard/\"><img src=\"https://img.shields.io/docker/pulls/appscode/guard.svg\" alt=\"Docker Pulls\" /></a>\n<a href=\"https://slack.appscode.com\"><img src=\"https://slack.appscode.com/badge.svg\" alt=\"Slack\" /></a>\n<a href=\"https://twitter.com/intent/follow?screen_name=AppsCodeHQ\"><img src=\"https://img.shields.io/twitter/follow/appscodehq.svg?style=social&amp;logo=twitter&amp;label=Follow\" alt=\"Twitter\" /></a></p>\n\n<h1>Guard</h1>\n\n<p>Guard by AppsCode is a <a href=\"https://kubernetes.io/docs/admin/authentication/#webhook-token-authentication\">Kubernetes Webhook Authentication</a> server. Using guard, you can log into your Kubernetes cluster using various auth providers. Guard also configures groups of authenticated user appropriately. This allows cluster administrator to setup RBAC rules based on membership in groups. Guard supports following auth providers:</p>\n\n<ul>\n<li><a href=\"https://appscode.com/products/guard/0.4.0/guides/authenticator/static_token_file/\">Static Token File</a></li>\n<li><a href=\"https://appscode.com/products/guard/0.4.0/guides/authenticator/github/\">Github</a></li>\n<li><a href=\"https://appscode.com/products/guard/0.4.0/guides/authenticator/gitlab/\">Gitlab</a></li>\n<li><a href=\"https://appscode.com/products/guard/0.4.0/guides/authenticator/google/\">Google</a></li>\n<li><a href=\"https://appscode.com/products/guard/0.4.0/guides/authenticator/azure/\">Azure</a></li>\n<li><a href=\"https://appscode.com/products/guard/0.4.0/guides/authenticator/ldap/\">LDAP using Simple or Kerberos authentication</a></li>\n<li><a href=\"https://appscode.com/products/guard/0.4.0/guides/authenticator/ldap_azure/\">Azure Active Directory via LDAP</a></li>\n</ul>\n\n<h2>Supported Versions</h2>\n\n<p>Kubernetes 1.9+</p>\n\n<h2>Installation</h2>\n\n<p>To install Guard, please follow the guide <a href=\"https://appscode.com/products/guard/0.4.0/setup/install/\">here</a>.</p>\n\n<h2>Using Guard</h2>\n\n<p>Want to learn how to use Guard? Please start <a href=\"https://appscode.com/products/guard/0.4.0/\">here</a>.</p>\n\n<h2>Contribution guidelines</h2>\n\n<p>Want to help improve Guard? Please start <a href=\"https://appscode.com/products/guard/0.4.0/welcome/contributing/\">here</a>.</p>\n\n<hr />\n\n<p><strong>Guard binaries collects anonymous usage statistics to help us learn how the software is being used and how we can improve it. To disable stats collection, run the operator with the flag</strong> <code>--analytics=false</code>.</p>\n\n<hr />\n\n<h2>Acknowledgement</h2>\n\n<ul>\n<li><a href=\"https://github.com/apprenda-kismatic/kubernetes-ldap\">apprenda-kismatic/kubernetes-ldap</a></li>\n<li><a href=\"https://github.com/Nike-Inc/harbormaster\">Nike-Inc/harbormaster</a></li>\n</ul>\n\n<h2>Support</h2>\n\n<p>We use Slack for public discussions. To chit chat with us or the rest of the community, join us in the <a href=\"https://appscode.slack.com/messages/C8M8HANQ0/details/\">AppsCode Slack team</a> channel <code>#guard</code>. To sign up, use our <a href=\"https://slack.appscode.com/\">Slack inviter</a>.</p>\n\n<p>If you have found a bug with Guard or want to request for new features, please <a href=\"https://github.com/appscode/guard/issues/new\">file an issue</a>.</p>\n\n<p align=\"center\"><img src=\"/logo/Separador.jpg\"></p>\n",
+    "markdown": "<p align=\"center\"><img src=\"/logo/LOGO_GUARD_Readme.jpg\"></p>\n\n[![Go Report Card](https://goreportcard.com/badge/github.com/appscode/guard)](https://goreportcard.com/report/github.com/appscode/guard)\n[![Build Status](https://travis-ci.org/appscode/guard.svg?branch=master)](https://travis-ci.org/appscode/guard)\n[![codecov](https://codecov.io/gh/appscode/guard/branch/master/graph/badge.svg)](https://codecov.io/gh/appscode/guard)\n[![Docker Pulls](https://img.shields.io/docker/pulls/appscode/guard.svg)](https://hub.docker.com/r/appscode/guard/)\n[![Slack](https://slack.appscode.com/badge.svg)](https://slack.appscode.com)\n[![Twitter](https://img.shields.io/twitter/follow/appscodehq.svg?style=social&logo=twitter&label=Follow)](https://twitter.com/intent/follow?screen_name=AppsCodeHQ)\n\n# Guard\nGuard by AppsCode is a [Kubernetes Webhook Authentication](https://kubernetes.io/docs/admin/authentication/#webhook-token-authentication) server. Using guard, you can log into your Kubernetes cluster using various auth providers. Guard also configures groups of authenticated user appropriately. This allows cluster administrator to setup RBAC rules based on membership in groups. Guard supports following auth providers:\n\n- [Static Token File](https://appscode.com/products/guard/0.4.0/guides/authenticator/static_token_file/)\n- [Github](https://appscode.com/products/guard/0.4.0/guides/authenticator/github/)\n- [Gitlab](https://appscode.com/products/guard/0.4.0/guides/authenticator/gitlab/)\n- [Google](https://appscode.com/products/guard/0.4.0/guides/authenticator/google/)\n- [Azure](https://appscode.com/products/guard/0.4.0/guides/authenticator/azure/)\n- [LDAP using Simple or Kerberos authentication](https://appscode.com/products/guard/0.4.0/guides/authenticator/ldap/)\n- [Azure Active Directory via LDAP](https://appscode.com/products/guard/0.4.0/guides/authenticator/ldap_azure/)\n\n## Supported Versions\nKubernetes 1.9+\n\n## Installation\nTo install Guard, please follow the guide [here](https://appscode.com/products/guard/0.4.0/setup/install/).\n\n## Using Guard\nWant to learn how to use Guard? Please start [here](https://appscode.com/products/guard/0.4.0/).\n\n## Contribution guidelines\nWant to help improve Guard? Please start [here](https://appscode.com/products/guard/0.4.0/welcome/contributing/).\n\n---\n\n**Guard binaries collects anonymous usage statistics to help us learn how the software is being used and how we can improve it. To disable stats collection, run the operator with the flag** `--analytics=false`.\n\n---\n\n## Acknowledgement\n\n- [apprenda-kismatic/kubernetes-ldap](https://github.com/apprenda-kismatic/kubernetes-ldap)\n- [Nike-Inc/harbormaster](https://github.com/Nike-Inc/harbormaster)\n\n## Support\nWe use Slack for public discussions. To chit chat with us or the rest of the community, join us in the [AppsCode Slack team](https://appscode.slack.com/messages/C8M8HANQ0/details/) channel `#guard`. To sign up, use our [Slack inviter](https://slack.appscode.com/).\n\nIf you have found a bug with Guard or want to request for new features, please [file an issue](https://github.com/appscode/guard/issues/new).\n\n<p align=\"center\"><img src=\"/logo/Separador.jpg\"></p>\n"
+  },
+  "supportLinks": {
+    "Support URL": "https://appscode.freshdesk.com",
+    "Website URL": "https://www.appscode.com/products/guard"
+  },
+  "stripeProductID": "prod_FARVnkJx8nelJk",
+  "plans": {
+    "Community": {
+      "price": "0"
+    },
+    "Standard_M2M": {
+      "price": "499"
+    },
+    "Standard_Y2Y": {
+      "price": "349"
+    },
+    "Golden_M2M": {
+      "price": "899"
+    },
+    "Golden_Y2Y": {
+      "price": "699"
+    }
+  }
+}
