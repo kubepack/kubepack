@@ -181,13 +181,29 @@ func main() {
 			nu.Spec.SubProjects[k] = convertProjectRef(v)
 		}
 
-		data, err = json.MarshalIndent(&nu, "", "  ")
+		f := filepath.Join("artifacts", "products", filename)
+		err = os.MkdirAll(filepath.Dir(f), 0755)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		f := filepath.Join("artifacts", "products", filename)
-		err = os.MkdirAll(filepath.Dir(f), 0755)
+		if _, err := os.Stat(f); err == nil {
+			data, err := ioutil.ReadFile(f)
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			var existing v1alpha1.Product
+			err = json.Unmarshal(data, &existing)
+			if err != nil {
+				log.Fatal(err)
+			}
+			// preserve product id and plans
+			nu.Spec.StripeID = existing.Spec.StripeID
+			nu.Spec.Plans = existing.Spec.Plans
+		}
+
+		data, err = json.MarshalIndent(&nu, "", "  ")
 		if err != nil {
 			log.Fatal(err)
 		}

@@ -186,6 +186,8 @@ spec:
               type: string
             tagline:
               type: string
+            unitLabel:
+              type: string
             versions:
               items:
                 properties:

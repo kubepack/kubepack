@@ -4,12 +4,13 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "",
+    "id": "prod_Gl0ZmpGXoSjOB1",
     "key": "stash-elasticsearch",
     "name": "Stash Elasticsearch Addon",
     "shortName": "Elasticsearch",
     "tagline": "Elasticsearch backup and restore plugin for Stash by AppsCode",
     "owner": 1,
+    "unitLabel": "Cluster",
     "phase": "Active",
     "maintainers": [
       {

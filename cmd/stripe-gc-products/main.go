@@ -4,13 +4,15 @@ import (
 	"fmt"
 	"os"
 
+	"kubepack.dev/kubepack/apis"
+
 	"github.com/stripe/stripe-go"
 	"github.com/stripe/stripe-go/plan"
 	"github.com/stripe/stripe-go/product"
 )
 
 func main() {
-	stripe.Key = os.Getenv("STRIPE_API_KEY")
+	stripe.Key = os.Getenv(apis.StripeAPIKey)
 
 	{
 		var entries []string

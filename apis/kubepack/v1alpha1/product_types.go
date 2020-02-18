@@ -51,27 +51,29 @@ type ProductSpec struct {
 	//+optional
 	Summary string `json:"summary,omitempty" protobuf:"bytes,6,opt,name=summary"`
 	Owner   int64  `json:"owner" protobuf:"varint,7,opt,name=owner"`
-	Phase   Phase  `json:"phase" protobuf:"bytes,8,opt,name=phase,casttype=Phase"`
 	//+optional
-	Description string `json:"description,omitempty" protobuf:"bytes,9,opt,name=description"`
+	Description string `json:"description,omitempty" protobuf:"bytes,8,opt,name=description"`
 	//+optional
-	Media []MediaSpec `json:"icons,omitempty" protobuf:"bytes,10,rep,name=icons"`
+	UnitLabel string `json:"unitLabel,omitempty" protobuf:"bytes,9,opt,name=unitLabel"`
+	Phase     Phase  `json:"phase" protobuf:"bytes,10,opt,name=phase,casttype=Phase"`
 	//+optional
-	Maintainers []ContactData `json:"maintainers,omitempty" protobuf:"bytes,11,rep,name=maintainers"`
+	Media []MediaSpec `json:"icons,omitempty" protobuf:"bytes,11,rep,name=icons"`
 	//+optional
-	Keywords []string `json:"keywords,omitempty" protobuf:"bytes,12,rep,name=keywords"`
+	Maintainers []ContactData `json:"maintainers,omitempty" protobuf:"bytes,12,rep,name=maintainers"`
 	//+optional
-	Links []Link `json:"links,omitempty" protobuf:"bytes,13,rep,name=links"`
+	Keywords []string `json:"keywords,omitempty" protobuf:"bytes,13,rep,name=keywords"`
 	//+optional
-	Badges []Badge `json:"badges,omitempty" protobuf:"bytes,14,rep,name=badges"`
+	Links []Link `json:"links,omitempty" protobuf:"bytes,14,rep,name=links"`
 	//+optional
-	Plans []Plan `json:"plans,omitempty" protobuf:"bytes,15,rep,name=plans"`
+	Badges []Badge `json:"badges,omitempty" protobuf:"bytes,15,rep,name=badges"`
 	//+optional
-	Versions []ProductVersion `json:"versions,omitempty" protobuf:"bytes,16,rep,name=versions"`
+	Plans []Plan `json:"plans,omitempty" protobuf:"bytes,16,rep,name=plans"`
 	//+optional
-	LatestVersion string `json:"latestVersion,omitempty" protobuf:"bytes,17,opt,name=latestVersion"`
+	Versions []ProductVersion `json:"versions,omitempty" protobuf:"bytes,17,rep,name=versions"`
 	//+optional
-	SubProjects map[string]ProjectRef `json:"subProjects,omitempty" protobuf:"bytes,18,rep,name=subProjects"`
+	LatestVersion string `json:"latestVersion,omitempty" protobuf:"bytes,18,opt,name=latestVersion"`
+	//+optional
+	SubProjects map[string]ProjectRef `json:"subProjects,omitempty" protobuf:"bytes,19,rep,name=subProjects"`
 }
 
 type Phase string

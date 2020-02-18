@@ -4,14 +4,15 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_FiawKtgLGy6R9v",
+    "id": "prod_Gl0Z8ZOyfLH2Oh",
     "key": "kubevault",
     "name": "KubeVault by AppsCode",
     "shortName": "KubeVault",
     "tagline": "Tools for running HashiCorp \u003cstrong\u003eVault\u003c/strong\u003e on \u003cstrong\u003eKubernetes\u003c/strong\u003e",
     "owner": 1,
-    "phase": "Active",
     "description": "---\ntitle: Welcome | KubeVault\ndescription: Welcome to KubeVault\nmenu:\n  docs_0.2.0:\n    identifier: readme-kubevault\n    name: Readme\n    parent: welcome\n    weight: -1\nmenu_name: docs_0.2.0\nsection_menu_id: welcome\nurl: /docs/0.2.0/welcome/\naliases:\n  - /docs/0.2.0/\n  - /docs/0.2.0/README/\n---\n\n# KubeVault\n\nKubeVault by AppsCode is a collection of tools for running HashiCorp [Vault](https://www.vaultproject.io/) on Kubernetes. You can deploy and mange Vault using Vault operator. Using Vault operator, you can deploy Vault for following storage backends:\n\n- [Azure Storage](/docs/concepts/vault-server-crds/storage/azure.md)\n- [DynamoDB](/docs/concepts/vault-server-crds/storage/dynamodb.md)\n- [Etcd](/docs/concepts/vault-server-crds/storage/etcd.md)\n- [GCS](/docs/concepts/vault-server-crds/storage/gcs.md)\n- [In Memory](/docs/concepts/vault-server-crds/storage/inmem.md)\n- [MySQL](/docs/concepts/vault-server-crds/storage/mysql.md)\n- [PosgreSQL](/docs/concepts/vault-server-crds/storage/postgresql.md)\n- [AWS S3](/docs/concepts/vault-server-crds/storage/s3.md)\n- [Swift](/docs/concepts/vault-server-crds/storage/swift.md)\n- [Consul](/docs/concepts/vault-server-crds/storage/consul.md)\n\nFrom here you can learn all about Vault operator's architecture and how to deploy and use Vault operator.\n\n- [Concepts](/docs/concepts/). Concepts explain the CRDs (CustomResourceDefinition) used by Vault operator.\n\n- [Setup](/docs/setup/). Setup contains instructions for installing\n  the Vault operator in various cloud providers.\n\n- [Monitoring](/docs/guides/monitoring). Monitoring contains instructions for setup prometheus with Vault server\n\n- [Guides](/docs/guides/). Guides show you how to perform tasks with Vault operator.\n\n- [Reference](/docs/reference/). Detailed exhaustive lists of\ncommand-line options, configuration options, API definitions, and procedures.\n\nWe're always looking for help improving our documentation, so please don't hesitate to [file an issue](https://github.com/kubevault/project/issues/new) if you see some problem. Or better yet, submit your own [contributions](/docs/CONTRIBUTING.md) to help\nmake our docs better.\n\n---\n\n**KubeVault binaries collect anonymous usage statistics to help us learn how the software is being used and how we can improve it. To disable stats collection, run the operator with the flag** `--enable-analytics=false`.\n\n---\n",
+    "unitLabel": "Cluster",
+    "phase": "Active",
     "maintainers": [
       {
         "name": "AppsCode Inc.",

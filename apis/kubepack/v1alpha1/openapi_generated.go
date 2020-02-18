@@ -17553,13 +17553,19 @@ func schema_kubepack_apis_kubepack_v1alpha1_ProductSpec(ref common.ReferenceCall
 							Format: "int64",
 						},
 					},
-					"phase": {
+					"description": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
 						},
 					},
-					"description": {
+					"unitLabel": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"phase": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
