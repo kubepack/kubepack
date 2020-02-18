@@ -365,6 +365,8 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageSelection":                                   schema_kubepack_apis_kubepack_v1alpha1_PackageSelection(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageView":                                        schema_kubepack_apis_kubepack_v1alpha1_PackageView(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Plan":                                               schema_kubepack_apis_kubepack_v1alpha1_Plan(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTier":                                           schema_kubepack_apis_kubepack_v1alpha1_PlanTier(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTransformUsage":                                 schema_kubepack_apis_kubepack_v1alpha1_PlanTransformUsage(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Product":                                            schema_kubepack_apis_kubepack_v1alpha1_Product(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductList":                                        schema_kubepack_apis_kubepack_v1alpha1_ProductList(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductSpec":                                        schema_kubepack_apis_kubepack_v1alpha1_ProductSpec(ref),
@@ -17408,12 +17410,159 @@ func schema_kubepack_apis_kubepack_v1alpha1_Plan(ref common.ReferenceCallback) c
 							},
 						},
 					},
+					"aggregate_usage": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"amount": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"integer"},
+							Format: "int64",
+						},
+					},
+					"amount_decimal": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"billing_scheme": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"currency": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"interval": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"interval_count": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"integer"},
+							Format: "int64",
+						},
+					},
+					"tiers": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTier"),
+									},
+								},
+							},
+						},
+					},
+					"tiers_mode": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"transform_usage": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTransformUsage"),
+						},
+					},
+					"trial_period_days": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"integer"},
+							Format: "int64",
+						},
+					},
+					"usage_type": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
 				},
-				Required: []string{"id", "name", "chart", "phase"},
+				Required: []string{"id", "name", "chart", "phase", "amount"},
 			},
 		},
 		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRef"},
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRef", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTier", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTransformUsage"},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_PlanTier(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "PlanTier configures tiered pricing",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"flat_amount": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"integer"},
+							Format: "int64",
+						},
+					},
+					"flat_amount_decimal": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"unit_amount": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"integer"},
+							Format: "int64",
+						},
+					},
+					"unit_amount_decimal": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"up_to": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"integer"},
+							Format: "int64",
+						},
+					},
+				},
+				Required: []string{"flat_amount", "unit_amount", "up_to"},
+			},
+		},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_PlanTransformUsage(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "PlanTransformUsage represents the bucket billing configuration.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"divide_by": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"integer"},
+							Format: "int64",
+						},
+					},
+					"round": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+				},
+				Required: []string{"divide_by", "round"},
+			},
+		},
 	}
 }
 

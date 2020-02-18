@@ -568,6 +568,50 @@ message Plan {
 
   // +optional
   repeated string includedPlans = 5;
+
+  optional string aggregate_usage = 6;
+
+  optional int64 amount = 7;
+
+  optional double amount_decimal = 8;
+
+  optional string billing_scheme = 9;
+
+  optional string currency = 10;
+
+  optional string interval = 11;
+
+  optional int64 interval_count = 12;
+
+  repeated PlanTier tiers = 13;
+
+  optional string tiers_mode = 14;
+
+  optional PlanTransformUsage transform_usage = 15;
+
+  optional int64 trial_period_days = 16;
+
+  optional string usage_type = 17;
+}
+
+// PlanTier configures tiered pricing
+message PlanTier {
+  optional int64 flat_amount = 1;
+
+  optional double flat_amount_decimal = 2;
+
+  optional int64 unit_amount = 3;
+
+  optional double unit_amount_decimal = 4;
+
+  optional int64 up_to = 5;
+}
+
+// PlanTransformUsage represents the bucket billing configuration.
+message PlanTransformUsage {
+  optional int64 divide_by = 1;
+
+  optional string round = 2;
 }
 
 // +kubebuilder:object:root=true

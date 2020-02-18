@@ -17,6 +17,7 @@ limitations under the License.
 package v1alpha1
 
 import (
+	"github.com/stripe/stripe-go"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/sets"
 )
@@ -91,6 +92,34 @@ type Plan struct {
 	Phase    Phase    `json:"phase" protobuf:"bytes,4,opt,name=phase,casttype=Phase"`
 	//+optional
 	IncludedPlans []string `json:"includedPlans,omitempty" protobuf:"bytes,5,rep,name=includedPlans"`
+
+	AggregateUsage  string                   `json:"aggregate_usage,omitempty" protobuf:"bytes,6,opt,name=aggregate_usage,json=aggregateUsage"`
+	Amount          int64                    `json:"amount" protobuf:"varint,7,opt,name=amount"`
+	AmountDecimal   float64                  `json:"amount_decimal,string,omitempty" protobuf:"fixed64,8,opt,name=amount_decimal,json=amountDecimal"`
+	BillingScheme   stripe.PlanBillingScheme `json:"billing_scheme,omitempty" protobuf:"bytes,9,opt,name=billing_scheme,json=billingScheme,casttype=github.com/stripe/stripe-go.PlanBillingScheme"`
+	Currency        stripe.Currency          `json:"currency,omitempty" protobuf:"bytes,10,opt,name=currency,casttype=github.com/stripe/stripe-go.Currency"`
+	Interval        stripe.PlanInterval      `json:"interval,omitempty" protobuf:"bytes,11,opt,name=interval,casttype=github.com/stripe/stripe-go.PlanInterval"`
+	IntervalCount   int64                    `json:"interval_count,omitempty" protobuf:"varint,12,opt,name=interval_count,json=intervalCount"`
+	Tiers           []*PlanTier              `json:"tiers,omitempty" protobuf:"bytes,13,rep,name=tiers"`
+	TiersMode       string                   `json:"tiers_mode,omitempty" protobuf:"bytes,14,opt,name=tiers_mode,json=tiersMode"`
+	TransformUsage  *PlanTransformUsage      `json:"transform_usage,omitempty" protobuf:"bytes,15,opt,name=transform_usage,json=transformUsage"`
+	TrialPeriodDays int64                    `json:"trial_period_days,omitempty" protobuf:"varint,16,opt,name=trial_period_days,json=trialPeriodDays"`
+	UsageType       stripe.PlanUsageType     `json:"usage_type,omitempty" protobuf:"bytes,17,opt,name=usage_type,json=usageType,casttype=github.com/stripe/stripe-go.PlanUsageType"`
+}
+
+// PlanTier configures tiered pricing
+type PlanTier struct {
+	FlatAmount        int64   `json:"flat_amount" protobuf:"varint,1,opt,name=flat_amount,json=flatAmount"`
+	FlatAmountDecimal float64 `json:"flat_amount_decimal,string,omitempty" protobuf:"fixed64,2,opt,name=flat_amount_decimal,json=flatAmountDecimal"`
+	UnitAmount        int64   `json:"unit_amount" protobuf:"varint,3,opt,name=unit_amount,json=unitAmount"`
+	UnitAmountDecimal float64 `json:"unit_amount_decimal,string,omitempty" protobuf:"fixed64,4,opt,name=unit_amount_decimal,json=unitAmountDecimal"`
+	UpTo              int64   `json:"up_to" protobuf:"varint,5,opt,name=up_to,json=upTo"`
+}
+
+// PlanTransformUsage represents the bucket billing configuration.
+type PlanTransformUsage struct {
+	DivideBy int64                          `json:"divide_by" protobuf:"varint,1,opt,name=divide_by,json=divideBy"`
+	Round    stripe.PlanTransformUsageRound `json:"round" protobuf:"bytes,2,opt,name=round,casttype=github.com/stripe/stripe-go.PlanTransformUsageRound"`
 }
 
 func (p Plan) BundledPlans() []string {
