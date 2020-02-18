@@ -40,11 +40,11 @@ func GetBundle(in *v1alpha1.BundleOption) (*chart.Chart, *v1alpha1.Bundle) {
 		Revision:  1,
 		IsInstall: true,
 	}
-	values, err := chartutil.ToRenderValues(chrt, chrt.Values, options, chartutil.DefaultCapabilities)
+	values, err := chartutil.ToRenderValues(chrt.Chart, chrt.Values, options, chartutil.DefaultCapabilities)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	files, err := engine.Render(chrt, values)
+	files, err := engine.Render(chrt.Chart, values)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -66,10 +66,10 @@ func GetBundle(in *v1alpha1.BundleOption) (*chart.Chart, *v1alpha1.Bundle) {
 			if err != nil {
 				log.Fatalln(err)
 			}
-			return chrt, &bundle
+			return chrt.Chart, &bundle
 		}
 	}
-	return chrt, nil
+	return chrt.Chart, nil
 }
 
 func XorY(x, y string) string {

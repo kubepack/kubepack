@@ -580,7 +580,7 @@ func (x *YAMLPrinter) Do() error {
 	client.APIVersions = chartutil.VersionSet(extraAPIs)
 	client.Version = x.Version
 
-	validInstallableChart, err := isChartInstallable(chrt)
+	validInstallableChart, err := isChartInstallable(chrt.Chart)
 	if !validInstallableChart {
 		return err
 	}
@@ -597,7 +597,7 @@ func (x *YAMLPrinter) Do() error {
 		// If CheckDependencies returns an error, we have unfulfilled dependencies.
 		// As of Helm 2.4.0, this is treated as a stopping condition:
 		// https://github.com/helm/helm/issues/2209
-		if err := action.CheckDependencies(chrt, req); err != nil {
+		if err := action.CheckDependencies(chrt.Chart, req); err != nil {
 			return err
 		}
 	}
@@ -658,7 +658,7 @@ func (x *YAMLPrinter) Do() error {
 		}
 	}
 
-	if err := chartutil.ProcessDependencies(chrt, vals); err != nil {
+	if err := chartutil.ProcessDependencies(chrt.Chart, vals); err != nil {
 		return err
 	}
 
@@ -681,12 +681,12 @@ func (x *YAMLPrinter) Do() error {
 		Revision:  1,
 		IsInstall: true,
 	}
-	valuesToRender, err := chartutil.ToRenderValues(chrt, vals, options, caps)
+	valuesToRender, err := chartutil.ToRenderValues(chrt.Chart, vals, options, caps)
 	if err != nil {
 		return err
 	}
 
-	hooks, manifests, err := renderResources(chrt, caps, valuesToRender)
+	hooks, manifests, err := renderResources(chrt.Chart, caps, valuesToRender)
 	if err != nil {
 		return err
 	}
@@ -780,7 +780,7 @@ func (x *ChartInstaller) Do() error {
 	client.APIVersions = chartutil.VersionSet(extraAPIs)
 	client.Version = x.Version
 
-	validInstallableChart, err := isChartInstallable(chrt)
+	validInstallableChart, err := isChartInstallable(chrt.Chart)
 	if !validInstallableChart {
 		return err
 	}
@@ -796,7 +796,7 @@ func (x *ChartInstaller) Do() error {
 		// If CheckDependencies returns an error, we have unfulfilled dependencies.
 		// As of Helm 2.4.0, this is treated as a stopping condition:
 		// https://github.com/helm/helm/issues/2209
-		if err := action.CheckDependencies(chrt, req); err != nil {
+		if err := action.CheckDependencies(chrt.Chart, req); err != nil {
 			return err
 		}
 	}
@@ -826,7 +826,7 @@ func (x *ChartInstaller) Do() error {
 		}
 	}
 
-	_, err = client.Run(chrt, vals)
+	_, err = client.Run(chrt.Chart, vals)
 	if err != nil {
 		return err
 	}
@@ -917,7 +917,7 @@ func (x *PermissionChecker) Do() error {
 	client.APIVersions = chartutil.VersionSet(extraAPIs)
 	client.Version = x.Version
 
-	validInstallableChart, err := isChartInstallable(chrt)
+	validInstallableChart, err := isChartInstallable(chrt.Chart)
 	if !validInstallableChart {
 		return err
 	}
@@ -934,7 +934,7 @@ func (x *PermissionChecker) Do() error {
 		// If CheckDependencies returns an error, we have unfulfilled dependencies.
 		// As of Helm 2.4.0, this is treated as a stopping condition:
 		// https://github.com/helm/helm/issues/2209
-		if err := action.CheckDependencies(chrt, req); err != nil {
+		if err := action.CheckDependencies(chrt.Chart, req); err != nil {
 			return err
 		}
 	}
@@ -988,7 +988,7 @@ func (x *PermissionChecker) Do() error {
 		}
 	}
 
-	if err := chartutil.ProcessDependencies(chrt, vals); err != nil {
+	if err := chartutil.ProcessDependencies(chrt.Chart, vals); err != nil {
 		return err
 	}
 
@@ -1002,12 +1002,12 @@ func (x *PermissionChecker) Do() error {
 		Revision:  1,
 		IsInstall: true,
 	}
-	valuesToRender, err := chartutil.ToRenderValues(chrt, vals, options, caps)
+	valuesToRender, err := chartutil.ToRenderValues(chrt.Chart, vals, options, caps)
 	if err != nil {
 		return err
 	}
 
-	hooks, manifests, err := renderResources(chrt, caps, valuesToRender)
+	hooks, manifests, err := renderResources(chrt.Chart, caps, valuesToRender)
 	if err != nil {
 		return err
 	}
@@ -1183,8 +1183,8 @@ func (x *ApplicationGenerator) Do() error {
 		x.commonLabels = make(map[string]string)
 	}
 
-	var err error
-	x.chrt, err = GetChart(x.Chart.URL, x.Chart.Name, x.Chart.Version)
+	chrt, err := GetChart(x.Chart.URL, x.Chart.Name, x.Chart.Version)
+	x.chrt = chrt.Chart
 	if err != nil {
 		return err
 	}

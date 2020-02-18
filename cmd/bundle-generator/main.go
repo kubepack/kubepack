@@ -111,7 +111,7 @@ func main() {
 		}
 
 		if idx == 0 {
-			b.Spec.PackageDescriptor = util.GetPackageDescriptor(pkgChart)
+			b.Spec.PackageDescriptor = util.GetPackageDescriptor(pkgChart.Chart)
 		}
 
 		for _, versionInfo := range versions {

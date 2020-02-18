@@ -58,7 +58,7 @@ func GetPackageDescriptor(pkgChart *chart.Chart) v1alpha1.PackageDescriptor {
 	if pkgChart.Metadata.Home != "" {
 		out.Links = []v1alpha1.Link{
 			{
-				Description: "Homepage",
+				Description: v1alpha1.LinkWebsite,
 				URL:         pkgChart.Metadata.Home,
 			},
 		}
@@ -69,6 +69,6 @@ func GetPackageDescriptor(pkgChart *chart.Chart) v1alpha1.PackageDescriptor {
 
 var reg = repo.NewDiskCacheRegistry()
 
-func GetChart(repoURL, chartName, chartVersion string) (*chart.Chart, error) {
+func GetChart(repoURL, chartName, chartVersion string) (*repo.ChartExtended, error) {
 	return reg.GetChart(repoURL, chartName, chartVersion)
 }

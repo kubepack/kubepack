@@ -23,6 +23,7 @@ import (
 	"os"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/PuerkitoBio/purell"
 	"github.com/gomodule/redigo/redis"
@@ -108,14 +109,14 @@ func (r *Registry) Delete(url string) (*Entry, error) {
 }
 
 // LocateChart looks for a chart and returns either the reader or an error.
-func (r *Registry) LocateChart(repoURL, name, version string) (*bytes.Reader, error) {
+func (r *Registry) LocateChart(repoURL, name, version string) (*bytes.Reader, *ChartVersion, error) {
 	if repoURL == "" {
-		return nil, fmt.Errorf("can't find repoURL for chart %s", name)
+		return nil, nil, fmt.Errorf("can't find repoURL for chart %s", name)
 	}
 
 	rc, _, err := r.Get(repoURL)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	name = strings.TrimSpace(name)
@@ -134,12 +135,12 @@ func (r *Registry) LocateChart(repoURL, name, version string) (*bytes.Reader, er
 
 	cv, err := FindChartInAuthRepoURL(rc, name, version, getter.All())
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	reader, err := dl.DownloadTo(cv.URLs[0], version)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	// digest, err := provenance.Digest(reader)
@@ -153,17 +154,37 @@ func (r *Registry) LocateChart(repoURL, name, version string) (*bytes.Reader, er
 
 	_, err = reader.Seek(0, io.SeekStart)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return reader, nil
+	return reader, cv, nil
 }
 
-func (r *Registry) GetChart(repoURL, chartName, chartVersion string) (*chart.Chart, error) {
-	reader, err := r.LocateChart(repoURL, chartName, chartVersion)
+func (r *Registry) GetChart(repoURL, chartName, chartVersion string) (*ChartExtended, error) {
+	reader, cv, err := r.LocateChart(repoURL, chartName, chartVersion)
 	if err != nil {
 		return nil, err
 	}
 
-	return loader.Load(reader)
+	chrt, err := loader.Load(reader)
+	if err != nil {
+		return nil, err
+	}
+
+	return &ChartExtended{
+		Chart:   chrt,
+		URLs:    cv.URLs,
+		Created: cv.Created,
+		Removed: cv.Removed,
+		Digest:  cv.Digest,
+	}, nil
+}
+
+// ChartExtended represents a chart with metadata from its entry in the IndexFile
+type ChartExtended struct {
+	*chart.Chart
+	URLs    []string  `json:"urls"`
+	Created time.Time `json:"created,omitempty"`
+	Removed bool      `json:"removed,omitempty"`
+	Digest  string    `json:"digest,omitempty"`
 }
