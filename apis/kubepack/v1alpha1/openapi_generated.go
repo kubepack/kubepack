@@ -320,6 +320,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ApplicationPackage":                                 schema_kubepack_apis_kubepack_v1alpha1_ApplicationPackage(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ApplicationSpec":                                    schema_kubepack_apis_kubepack_v1alpha1_ApplicationSpec(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ApplicationStatus":                                  schema_kubepack_apis_kubepack_v1alpha1_ApplicationStatus(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Badge":                                              schema_kubepack_apis_kubepack_v1alpha1_Badge(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Bundle":                                             schema_kubepack_apis_kubepack_v1alpha1_Bundle(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleList":                                         schema_kubepack_apis_kubepack_v1alpha1_BundleList(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleOption":                                       schema_kubepack_apis_kubepack_v1alpha1_BundleOption(ref),
@@ -348,6 +349,8 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.InfoItemSource":                                     schema_kubepack_apis_kubepack_v1alpha1_InfoItemSource(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.IngressSelector":                                    schema_kubepack_apis_kubepack_v1alpha1_IngressSelector(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link":                                               schema_kubepack_apis_kubepack_v1alpha1_Link(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Mapping":                                            schema_kubepack_apis_kubepack_v1alpha1_Mapping(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.MediaSpec":                                          schema_kubepack_apis_kubepack_v1alpha1_MediaSpec(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ObjectStatus":                                       schema_kubepack_apis_kubepack_v1alpha1_ObjectStatus(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.OneOfBundleOption":                                  schema_kubepack_apis_kubepack_v1alpha1_OneOfBundleOption(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.OneOfBundleOptionView":                              schema_kubepack_apis_kubepack_v1alpha1_OneOfBundleOptionView(ref),
@@ -361,7 +364,13 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageRef":                                         schema_kubepack_apis_kubepack_v1alpha1_PackageRef(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageSelection":                                   schema_kubepack_apis_kubepack_v1alpha1_PackageSelection(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageView":                                        schema_kubepack_apis_kubepack_v1alpha1_PackageView(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductRef":                                         schema_kubepack_apis_kubepack_v1alpha1_ProductRef(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Plan":                                               schema_kubepack_apis_kubepack_v1alpha1_Plan(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Product":                                            schema_kubepack_apis_kubepack_v1alpha1_Product(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductList":                                        schema_kubepack_apis_kubepack_v1alpha1_ProductList(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductSpec":                                        schema_kubepack_apis_kubepack_v1alpha1_ProductSpec(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductStatus":                                      schema_kubepack_apis_kubepack_v1alpha1_ProductStatus(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductVersion":                                     schema_kubepack_apis_kubepack_v1alpha1_ProductVersion(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProjectRef":                                         schema_kubepack_apis_kubepack_v1alpha1_ProjectRef(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Repository":                                         schema_kubepack_apis_kubepack_v1alpha1_Repository(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions":                                schema_kubepack_apis_kubepack_v1alpha1_ResourceDefinitions(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceID":                                         schema_kubepack_apis_kubepack_v1alpha1_ResourceID(ref),
@@ -14977,6 +14986,37 @@ func schema_kubepack_apis_kubepack_v1alpha1_ApplicationStatus(ref common.Referen
 	}
 }
 
+func schema_kubepack_apis_kubepack_v1alpha1_Badge(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"url": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"alt": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"logo": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+				},
+				Required: []string{"url", "alt", "logo"},
+			},
+		},
+	}
+}
+
 func schema_kubepack_apis_kubepack_v1alpha1_Bundle(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -15375,17 +15415,12 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleSpec(ref common.ReferenceCallb
 							},
 						},
 					},
-					"product": {
-						SchemaProps: spec.SchemaProps{
-							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductRef"),
-						},
-					},
 				},
 				Required: []string{"namespace", "packages"},
 			},
 		},
 		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Feature", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageRef", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductRef"},
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Feature", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageRef"},
 	}
 }
 
@@ -16588,6 +16623,87 @@ func schema_kubepack_apis_kubepack_v1alpha1_Link(ref common.ReferenceCallback) c
 	}
 }
 
+func schema_kubepack_apis_kubepack_v1alpha1_Mapping(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"versions": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
+						},
+					},
+					"subProjectVersions": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"versions", "subProjectVersions"},
+			},
+		},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_MediaSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "MediaSpec contains information about an image/video.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"description": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Description is human readable content explaining the purpose of the link.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"src": {
+						SchemaProps: spec.SchemaProps{
+							Description: "The source for image represented as either an absolute URL to the image or a Data URL containing the image. Data URLs are defined in RFC 2397.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"size": {
+						SchemaProps: spec.SchemaProps{
+							Description: "(optional) The size of the image in pixels (e.g., 25x25).",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"type": {
+						SchemaProps: spec.SchemaProps{
+							Description: "(optional) The mine type of the image (e.g., \"image/png\").",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+				},
+				Required: []string{"src"},
+			},
+		},
+	}
+}
+
 func schema_kubepack_apis_kubepack_v1alpha1_ObjectStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -17250,34 +17366,406 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageView(ref common.ReferenceCall
 	}
 }
 
-func schema_kubepack_apis_kubepack_v1alpha1_ProductRef(ref common.ReferenceCallback) common.OpenAPIDefinition {
+func schema_kubepack_apis_kubepack_v1alpha1_Plan(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
 			SchemaProps: spec.SchemaProps{
 				Type: []string{"object"},
 				Properties: map[string]spec.Schema{
-					"vendorID": {
+					"id": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
 						},
 					},
-					"productID": {
+					"name": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
 						},
 					},
-					"planID": {
+					"chart": {
 						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
+							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRef"),
 						},
 					},
 				},
-				Required: []string{"vendorID", "productID", "planID"},
+				Required: []string{"id", "name", "chart"},
 			},
 		},
+		Dependencies: []string{
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRef"},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_Product(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"metadata": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
+						},
+					},
+					"spec": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductSpec"),
+						},
+					},
+					"status": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductStatus"),
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductStatus"},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_ProductList(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"metadata": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"),
+						},
+					},
+					"items": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.Product"),
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Product"},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_ProductSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"id": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"key": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"name": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"shortName": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"tagline": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"summary": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"owner": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"integer"},
+							Format: "int64",
+						},
+					},
+					"phase": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"description": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"icons": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.MediaSpec"),
+									},
+								},
+							},
+						},
+					},
+					"maintainers": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData"),
+									},
+								},
+							},
+						},
+					},
+					"keywords": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
+						},
+					},
+					"links": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link"),
+									},
+								},
+							},
+						},
+					},
+					"badges": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.Badge"),
+									},
+								},
+							},
+						},
+					},
+					"plans": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.Plan"),
+									},
+								},
+							},
+						},
+					},
+					"versions": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductVersion"),
+									},
+								},
+							},
+						},
+					},
+					"latestVersion": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"subProjects": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"object"},
+							AdditionalProperties: &spec.SchemaOrBool{
+								Allows: true,
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProjectRef"),
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"id", "key", "name", "shortName", "tagline", "summary", "owner", "phase", "plans", "subProjects"},
+			},
+		},
+		Dependencies: []string{
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Badge", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.MediaSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Plan", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductVersion", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProjectRef"},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_ProductStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"observedGeneration": {
+						SchemaProps: spec.SchemaProps{
+							Description: "ObservedGeneration is the most recent generation observed for this resource. It corresponds to the resource's generation, which is updated on mutation by the API Server.",
+							Type:        []string{"integer"},
+							Format:      "int64",
+						},
+					},
+				},
+			},
+		},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_ProductVersion(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"version": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"hostDocs": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"boolean"},
+							Format: "",
+						},
+					},
+					"show": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"boolean"},
+							Format: "",
+						},
+					},
+					"docsDir": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"branch": {
+						SchemaProps: spec.SchemaProps{
+							Description: "default: \"docs\"",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"info": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"object"},
+							AdditionalProperties: &spec.SchemaOrBool{
+								Allows: true,
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"version", "hostDocs"},
+			},
+		},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_ProjectRef(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"dir": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"mappings": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.Mapping"),
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"dir", "mappings"},
+			},
+		},
+		Dependencies: []string{
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Mapping"},
 	}
 }
 

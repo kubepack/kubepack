@@ -48,7 +48,6 @@ type BundleSpec struct {
 	Features          []Feature    `json:"features,omitempty" protobuf:"bytes,5,rep,name=features"`
 	Namespace         string       `json:"namespace" protobuf:"bytes,6,opt,name=namespace"`
 	Packages          []PackageRef `json:"packages" protobuf:"bytes,7,rep,name=packages"`
-	Product           *ProductRef  `json:"product,omitempty" protobuf:"bytes,8,opt,name=product"`
 }
 
 type PackageRef struct {

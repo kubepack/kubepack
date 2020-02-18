@@ -104,6 +104,14 @@ message ApplicationStatus {
   repeated string errors = 13;
 }
 
+message Badge {
+  optional string url = 1;
+
+  optional string alt = 2;
+
+  optional string logo = 3;
+}
+
 // +kubebuilder:object:root=true
 // +kubebuilder:resource:path=bundles,singular=bundle,scope=Cluster,categories={kubepack,appscode}
 // +kubebuilder:subresource:status
@@ -153,8 +161,6 @@ message BundleSpec {
   optional string namespace = 6;
 
   repeated PackageRef packages = 7;
-
-  optional ProductRef product = 8;
 }
 
 message BundleStatus {
@@ -406,6 +412,20 @@ message Link {
   optional string url = 2;
 }
 
+message Mapping {
+  repeated string versions = 1;
+
+  repeated string subProjectVersions = 2;
+}
+
+// MediaSpec contains information about an image/video.
+message MediaSpec {
+  // Description is human readable content explaining the purpose of the link.
+  optional string description = 1;
+
+  optional ImageSpec imageSpec = 2;
+}
+
 // ObjectStatus is a generic status holder for objects
 // +k8s:deepcopy-gen=true
 message ObjectStatus {
@@ -537,12 +557,95 @@ message PackageView {
   optional k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps openAPIV3Schema = 3;
 }
 
-message ProductRef {
-  optional string vendorID = 1;
+message Plan {
+  optional string id = 1;
 
-  optional string productID = 2;
+  optional string name = 2;
 
-  optional string planID = 3;
+  optional ChartRef chart = 3;
+}
+
+// +kubebuilder:object:root=true
+// +kubebuilder:resource:path=products,singular=product,scope=Cluster,categories={kubepack,appscode}
+// +kubebuilder:subresource:status
+message Product {
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
+
+  optional ProductSpec spec = 2;
+
+  optional ProductStatus status = 3;
+}
+
+message ProductList {
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.ListMeta metadata = 1;
+
+  repeated Product items = 2;
+}
+
+message ProductSpec {
+  optional string id = 1;
+
+  optional string key = 2;
+
+  optional string name = 3;
+
+  optional string shortName = 4;
+
+  optional string tagline = 5;
+
+  optional string summary = 6;
+
+  optional int64 owner = 7;
+
+  optional string phase = 8;
+
+  optional string description = 9;
+
+  repeated MediaSpec icons = 10;
+
+  repeated ContactData maintainers = 11;
+
+  repeated string keywords = 12;
+
+  repeated Link links = 13;
+
+  repeated Badge badges = 14;
+
+  repeated Plan plans = 15;
+
+  repeated ProductVersion versions = 16;
+
+  optional string latestVersion = 17;
+
+  map<string, ProjectRef> subProjects = 18;
+}
+
+message ProductStatus {
+  // ObservedGeneration is the most recent generation observed for this resource. It corresponds to the
+  // resource's generation, which is updated on mutation by the API Server.
+  // +optional
+  optional int64 observedGeneration = 1;
+}
+
+message ProductVersion {
+  optional string version = 1;
+
+  optional bool hostDocs = 2;
+
+  optional bool show = 3;
+
+  optional string docsDir = 4;
+
+  // default: "docs"
+  optional string branch = 5;
+
+  map<string, string> info = 6;
+}
+
+message ProjectRef {
+  optional string dir = 1;
+
+  repeated Mapping mappings = 2;
 }
 
 message Repository {
