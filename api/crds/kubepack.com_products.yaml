@@ -139,12 +139,19 @@ spec:
                     type: object
                   id:
                     type: string
+                  includedPlans:
+                    items:
+                      type: string
+                    type: array
                   name:
+                    type: string
+                  phase:
                     type: string
                 required:
                 - chart
                 - id
                 - name
+                - phase
                 type: object
               type: array
             shortName:

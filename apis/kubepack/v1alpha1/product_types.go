@@ -18,6 +18,7 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/util/sets"
 )
 
 const (
@@ -48,9 +49,9 @@ type ProductSpec struct {
 	ShortName string `json:"shortName" protobuf:"bytes,4,opt,name=shortName,json=shortName"`
 	Tagline   string `json:"tagline" protobuf:"bytes,5,opt,name=tagline"`
 	//+optional
-	Summary string       `json:"summary,omitempty" protobuf:"bytes,6,opt,name=summary"`
-	Owner   int64        `json:"owner" protobuf:"varint,7,opt,name=owner"`
-	Phase   ProductPhase `json:"phase" protobuf:"bytes,8,opt,name=phase,casttype=ProductPhase"`
+	Summary string `json:"summary,omitempty" protobuf:"bytes,6,opt,name=summary"`
+	Owner   int64  `json:"owner" protobuf:"varint,7,opt,name=owner"`
+	Phase   Phase  `json:"phase" protobuf:"bytes,8,opt,name=phase,casttype=Phase"`
 	//+optional
 	Description string `json:"description,omitempty" protobuf:"bytes,9,opt,name=description"`
 	//+optional
@@ -73,18 +74,27 @@ type ProductSpec struct {
 	SubProjects map[string]ProjectRef `json:"subProjects,omitempty" protobuf:"bytes,18,rep,name=subProjects"`
 }
 
-type ProductPhase string
+type Phase string
 
 const (
-	ProductDraft    ProductPhase = "Draft"
-	ProductActive   ProductPhase = "Active"
-	ProductArchived ProductPhase = "Archived"
+	PhaseDraft    Phase = "Draft"
+	PhaseActive   Phase = "Active"
+	PhaseArchived Phase = "Archived"
 )
 
 type Plan struct {
 	StripeID string   `json:"id" protobuf:"bytes,1,opt,name=id"`
 	NickName string   `json:"name" protobuf:"bytes,2,opt,name=name"`
 	Chart    ChartRef `json:"chart" protobuf:"bytes,3,opt,name=chart"`
+	Phase    Phase    `json:"phase" protobuf:"bytes,4,opt,name=phase,casttype=Phase"`
+	//+optional
+	IncludedPlans []string `json:"includedPlans,omitempty" protobuf:"bytes,5,rep,name=includedPlans"`
+}
+
+func (p Plan) BundledPlans() []string {
+	plans := sets.NewString(p.StripeID)
+	plans.Insert(p.IncludedPlans...)
+	return plans.List()
 }
 
 type ProductVersion struct {

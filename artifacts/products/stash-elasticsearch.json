@@ -9,7 +9,6 @@
     "name": "Stash Elasticsearch Addon",
     "shortName": "Elasticsearch",
     "tagline": "Elasticsearch backup and restore plugin for Stash by AppsCode",
-    "summary": "",
     "owner": 1,
     "phase": "Active",
     "maintainers": [

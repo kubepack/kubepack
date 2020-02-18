@@ -1203,6 +1203,11 @@ func (in *PackageView) DeepCopyObject() runtime.Object {
 func (in *Plan) DeepCopyInto(out *Plan) {
 	*out = *in
 	out.Chart = in.Chart
+	if in.IncludedPlans != nil {
+		in, out := &in.IncludedPlans, &out.IncludedPlans
+		*out = make([]string, len(*in))
+		copy(*out, *in)
+	}
 	return
 }
 
@@ -1308,7 +1313,9 @@ func (in *ProductSpec) DeepCopyInto(out *ProductSpec) {
 	if in.Plans != nil {
 		in, out := &in.Plans, &out.Plans
 		*out = make([]Plan, len(*in))
-		copy(*out, *in)
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
 	}
 	if in.Versions != nil {
 		in, out := &in.Versions, &out.Versions

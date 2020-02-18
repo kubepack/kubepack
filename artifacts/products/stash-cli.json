@@ -9,7 +9,6 @@
     "name": "Stash kubectl Plugin",
     "shortName": "Stash kubectl Plugin",
     "tagline": "kubectl plugin for Stash",
-    "summary": "",
     "owner": 1,
     "phase": "Active",
     "maintainers": [

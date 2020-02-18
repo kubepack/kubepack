@@ -192,6 +192,7 @@ API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alph
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,PackageDescriptor,Keywords
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,PackageDescriptor,Links
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,PackageDescriptor,Maintainers
+API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Plan,IncludedPlans
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ProductList,Items
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ProductSpec,Badges
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ProductSpec,Keywords

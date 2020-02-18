@@ -9,7 +9,6 @@
     "name": "Stash PostgreSQL Addon",
     "shortName": "PostgreSQL",
     "tagline": "Postgres backup and restore plugin for Stash by AppsCode",
-    "summary": "",
     "owner": 1,
     "phase": "Active",
     "maintainers": [
