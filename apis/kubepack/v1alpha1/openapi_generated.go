@@ -17389,8 +17389,27 @@ func schema_kubepack_apis_kubepack_v1alpha1_Plan(ref common.ReferenceCallback) c
 							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRef"),
 						},
 					},
+					"phase": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"includedPlans": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
+						},
+					},
 				},
-				Required: []string{"id", "name", "chart"},
+				Required: []string{"id", "name", "chart", "phase"},
 			},
 		},
 		Dependencies: []string{

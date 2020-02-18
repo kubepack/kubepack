@@ -76,8 +76,6 @@ github.com/alecthomas/units v0.0.0-20151022065526-2efee857e7cf/go.mod h1:ybxpYRF
 github.com/ant31/crd-validation v0.0.0-20180702145049-30f8a35d0ac2/go.mod h1:X0noFIik9YqfhGYBLEHg8LJKEwy7QIitLQuFMpKLcPk=
 github.com/appscode/go v0.0.0-20191119085241-0887d8ec2ecc h1:Q5jwbRq/a1Tien+Is8Zn6HMBRgE13+UOQ9mTvrIuvuE=
 github.com/appscode/go v0.0.0-20191119085241-0887d8ec2ecc/go.mod h1:OawnOmAL4ZX3YaPdN+8HTNwBveT1jMsqP74moa9XUbE=
-github.com/appscode/static-assets v0.4.1-0.20200218063653-774a5698140e h1:8AMbEMsVOXgOeeCIepDAHzxTqoXu396WWFYzZHJin1w=
-github.com/appscode/static-assets v0.4.1-0.20200218063653-774a5698140e/go.mod h1:Bvk6peljX6QnzrfYfz+cetuVO+icWh/sTlkZ7gP1I/s=
 github.com/appscode/static-assets v0.4.1 h1:yVlvdpNpwhaOldc6tsKcpAopZyA2Y3gpKhlVxVVuD5w=
 github.com/appscode/static-assets v0.4.1/go.mod h1:Bvk6peljX6QnzrfYfz+cetuVO+icWh/sTlkZ7gP1I/s=
 github.com/armon/circbuf v0.0.0-20150827004946-bbbad097214e/go.mod h1:3U/XgcO3hCbHZ8TKRvWD2dDTCfh9M9ya+I9JpbB7O8o=

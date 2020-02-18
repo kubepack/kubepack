@@ -563,6 +563,11 @@ message Plan {
   optional string name = 2;
 
   optional ChartRef chart = 3;
+
+  optional string phase = 4;
+
+  // +optional
+  repeated string includedPlans = 5;
 }
 
 // +kubebuilder:object:root=true

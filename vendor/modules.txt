@@ -72,7 +72,7 @@ github.com/appscode/go/runtime
 github.com/appscode/go/sets
 github.com/appscode/go/types
 github.com/appscode/go/version
-# github.com/appscode/static-assets v0.4.1-0.20200218063653-774a5698140e
+# github.com/appscode/static-assets v0.4.1
 github.com/appscode/static-assets/api
 github.com/appscode/static-assets/data/products
 # github.com/asaskevich/govalidator v0.0.0-20190424111038-f61b66f89f4a
