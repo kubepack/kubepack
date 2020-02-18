@@ -207,10 +207,7 @@ spec:
           - name
           - owner
           - phase
-          - plans
           - shortName
-          - subProjects
-          - summary
           - tagline
           type: object
         status:

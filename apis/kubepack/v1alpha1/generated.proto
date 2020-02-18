@@ -593,30 +593,41 @@ message ProductSpec {
 
   optional string tagline = 5;
 
+  // +optional
   optional string summary = 6;
 
   optional int64 owner = 7;
 
   optional string phase = 8;
 
+  // +optional
   optional string description = 9;
 
+  // +optional
   repeated MediaSpec icons = 10;
 
+  // +optional
   repeated ContactData maintainers = 11;
 
+  // +optional
   repeated string keywords = 12;
 
+  // +optional
   repeated Link links = 13;
 
+  // +optional
   repeated Badge badges = 14;
 
+  // +optional
   repeated Plan plans = 15;
 
+  // +optional
   repeated ProductVersion versions = 16;
 
+  // +optional
   optional string latestVersion = 17;
 
+  // +optional
   map<string, ProjectRef> subProjects = 18;
 }
 

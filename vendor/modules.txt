@@ -72,6 +72,9 @@ github.com/appscode/go/runtime
 github.com/appscode/go/sets
 github.com/appscode/go/types
 github.com/appscode/go/version
+# github.com/appscode/static-assets v0.4.1-0.20200218063653-774a5698140e
+github.com/appscode/static-assets/api
+github.com/appscode/static-assets/data/products
 # github.com/asaskevich/govalidator v0.0.0-20190424111038-f61b66f89f4a
 github.com/asaskevich/govalidator
 # github.com/aws/aws-sdk-go v1.20.20
@@ -441,7 +444,7 @@ github.com/prometheus/procfs
 github.com/prometheus/procfs/internal/util
 github.com/prometheus/procfs/nfs
 github.com/prometheus/procfs/xfs
-# github.com/russross/blackfriday v1.5.2
+# github.com/russross/blackfriday v1.5.3-0.20190124082335-a477dd164691
 github.com/russross/blackfriday
 # github.com/sergi/go-diff v1.0.0
 github.com/sergi/go-diff/diffmatchpatch

@@ -1,0 +1,156 @@
+{
+  "key": "kubeshield",
+  "name": "Kubeshield",
+  "fullname": "Kubeshield by AppsCode",
+  "tagline": "Secure Kubernetes for Everyone",
+  "summary": "",
+  "published": false,
+  "author": "AppsCode Inc.",
+  "website": {
+    "domainKey": "domain_kubeshield",
+    "path": "",
+    "themeColor": "#4D4DCB"
+  },
+  "keywords": "kubernetes appscode kubeshield security scanner",
+  "heroImage": {
+    "src": "https://cdn.appscode.com/images/products/kubeshield/kubeshield-hero.png",
+    "alt": "Kubeshield"
+  },
+  "logo": {
+    "src": "https://cdn.appscode.com/images/products/kubeshield/kubeshield.png",
+    "alt": "Kubeshield"
+  },
+  "logoWhite": {
+    "src": "https://cdn.appscode.com/images/products/kubeshield/kubeshield-white.png",
+    "alt": "Kubeshield"
+  },
+  "icon": {
+    "src": "https://cdn.appscode.com/images/products/kubeshield/kubeshield-icon.png",
+    "alt": "Kubeshield",
+    "sizes": {
+      "192x192": "https://cdn.appscode.com/images/products/kubeshield/icons/android-icon-192x192.png"
+    }
+  },
+  "repoURL": "https://github.com/kubeshield/scanner",
+  "starRepo": "kubeshield/scanner",
+  "docRepo": "kubeshield/scanner",
+  "datasheetFormID": "",
+  "badges": [
+    {
+      "url": "github/stars/kubeshield/scanner",
+      "alt": "GitHub Stars",
+      "logo": "github"
+    },
+    {
+      "url": "docker/pulls/kubeshield/scanner",
+      "alt": "Docker Pulls",
+      "logo": "docker"
+    }
+  ],
+  "features": [
+    {
+      "title": "Automatic Initialization & Unsealing",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/kubeshield/features/feature-1.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/kubeshield/features/http.png",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "When a Vault server is started, it starts in a sealed state. In a sealed state, almost no operation is possible with a Vault server. So, you will need to unseal Vault. Vault operator provides automatic initialization and unsealing facility. When you deploy or scale up a Vault server, you don't have worry about unsealing new Vault pods. Vault operator will do it for you. Also, it provides a secure way to store unseal keys and root token."
+    },
+    {
+      "title": "Manage Vault Policy",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/kubeshield/features/feature-2.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/kubeshield/features/http.png",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "Policies in Vault provide a declarative way to grant or forbid access to certain paths and operations in Vault. You can create, delete and update policy in Vault in a Kubernetes native way using Vault operator. Vault operator also provides a way to bind Vault policy with Kubernetes service accounts. ServiceAccounts will have the permissions that are specified in the policy."
+    },
+    {
+      "title": "AWS Secret Engine",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/kubeshield/features/feature-3.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/kubeshield/features/http.png",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "AWS secret engine in Vault generates AWS access credentials dynamically based on IAM policies. This makes AWS IAM user management easier. Using Vault operator, you can configure AWS secret engine and issue AWS access credential via Vault. A User can request AWS credential and after it's been approved Vault operator will create a Kubernetes Secret containing the AWS credential and also creates RBAC Role and RoleBinding so that the user can access the secret."
+    },
+    {
+      "title": "Azure Secret Engine",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/kubeshield/features/feature-4.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/kubeshield/features/http.png",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "The Azure secrets engine dynamically generates Azure service principals and role assignments. Vault roles can be mapped to one or more Azure roles, providing a simple, flexible way to manage the permissions granted to generated service principals. By using vault operator, one can easily configure vault azure secret engine and make request to generate service principals. Once the request is approved, the operator will get the credentials from vault and create kubernetes secret for storing those credentials. The operator also creates RBAC role and RoleBinding so that user can access the secret."
+    },
+    {
+      "title": "GCP Secret Engine",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/kubeshield/features/feature-5.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/kubeshield/features/http.png",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "The Google Cloud Vault secrets engine dynamically generates Google Cloud service account keys and OAuth tokens based on IAM policies. This enables users to gain access to Google Cloud resources without needing to create or manage a dedicated service account. By using vault operator, one can easily configure vault gcp secret engine and make request to generate Google Cloud account keys and OAuth tokens based on IAM policies. Once the request is approved, the operator will get the credentials from vault and create kubernetes secret for storing those credentials. The operator also creates RBAC role and RoleBinding so that user can access the secret."
+    },
+    {
+      "title": "Database Secret Engine",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/kubeshield/features/feature-6.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/kubeshield/features/http.png",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "PostgreSQL, MySQL & MongoDB database secret engine in Vault generates MongoDB database credentials dynamically based on configured roles. Using Vault operator, you can configure secret engine, create role and issue credential from Vault. A User can request credential and after it's been approved Vault operator will create a Kubernetes Secret containing the credential and also creates RBAC Role and RoleBinding so that the user can access the Secret."
+    }
+  ],
+  "versions": [
+    { "version": "master", "hostDocs": false, "show": true },
+    { "version": "0.1.0", "hostDocs": true, "show": true }
+  ],
+  "latestVersion": "0.1.0",
+  "socialLinks": {
+    "facebook": "https://facebook.com/appscode",
+    "github": "https://github.com/kubeshield/scanner",
+    "linkedin": "https://www.linkedin.com/company/appscode",
+    "twitter": "https://twitter.com/kubeshield",
+    "youtube": "https://www.youtube.com/c/appscodeinc"
+  },
+  "description": {
+    "html": "<p><a href=\"https://goreportcard.com/report/github.com/kubeshield/scanner\"><img src=\"https://goreportcard.com/badge/github.com/kubeshield/scanner\" alt=\"Go Report Card\" /></a>\n<a href=\"https://travis-ci.org/kubeshield/scanner\"><img src=\"https://travis-ci.org/kubeshield/scanner.svg?branch=master\" alt=\"Build Status\" /></a>\n<a href=\"https://codecov.io/gh/kubeshield/scanner\"><img src=\"https://codecov.io/gh/kubeshield/scanner/branch/master/graph/badge.svg\" alt=\"codecov\" /></a>\n<a href=\"https://hub.docker.com/r/kubeshield/scanner/\"><img src=\"https://img.shields.io/docker/pulls/kubeshield/scanner.svg\" alt=\"Docker Pulls\" /></a>\n<a href=\"https://slack.appscode.com\"><img src=\"https://slack.appscode.com/badge.svg\" alt=\"Slack\" /></a>\n<a href=\"https://twitter.com/intent/follow?screen_name=kubeshield\"><img src=\"https://img.shields.io/twitter/follow/kubeshield.svg?style=social&amp;logo=twitter&amp;label=Follow\" alt=\"Twitter\" /></a></p>\n\n<h1>Scanner</h1>\n\n<p>Scanner by AppsCode is a Docker image scanner. It uses <a href=\"https://github.com/coreos/clair\">Clair</a> for the static analysis of vulnerabilities in Docker containers. Using Scanner, you can backup Kubernetes volumes mounted in following types of workloads:</p>\n\n<ul>\n<li>Deployment</li>\n<li>DaemonSet</li>\n<li>ReplicaSet</li>\n<li>ReplicationController</li>\n<li>StatefulSet</li>\n<li>Pod</li>\n<li>Job</li>\n<li>CronJob</li>\n<li>Openshift DeploymentConfig</li>\n</ul>\n\n<h2>Supported Versions</h2>\n\n<p>Please pick a version of Scanner that matches your Kubernetes installation.</p>\n\n<table>\n<thead>\n<tr>\n<th>Scanner Version</th>\n<th>Docs</th>\n<th>Kubernetes Version</th>\n</tr>\n</thead>\n\n<tbody>\n<tr>\n<td><a href=\"https://github.com/kubeshield/scanner/releases/tag/0.1.0\">0.1.0</a> (uses CRD)</td>\n<td><a href=\"https://appscode.com/products/scanner/0.1.0\">User Guide</a></td>\n<td>1.9.x +</td>\n</tr>\n</tbody>\n</table>\n\n<h2>Installation</h2>\n\n<p>To install Scanner, please follow the guide <a href=\"https://appscode.com/products/scanner/0.1.0/setup/install\">here</a>.</p>\n\n<h2>Using Scanner</h2>\n\n<p>Want to learn how to use Scanner? Please start <a href=\"https://appscode.com/products/scanner/0.1.0\">here</a>.</p>\n\n<h2>Contribution guidelines</h2>\n\n<p>Want to help improve Scanner? Please start <a href=\"https://appscode.com/products/scanner/0.1.0/welcome/contributing\">here</a>.</p>\n\n<hr />\n\n<p><strong>Scanner binaries collects anonymous usage statistics to help us learn how the software is being used and how we can improve it. To disable stats collection, run the scanner with the flag</strong> <code>--enable-analytics=false</code>.</p>\n\n<hr />\n\n<h2>Acknowledgement</h2>\n\n<ul>\n<li>Many thanks to CoreOS for <a href=\"https://github.com/coreos/clair\">Clair</a> project.</li>\n</ul>\n\n<h2>Support</h2>\n\n<p>We use Slack for public discussions. To chit chat with us or the rest of the community, join us in the <a href=\"https://appscode.slack.com/messages/CAER85GPK/details/\">AppsCode Slack team</a> channel <code>#scanner</code>. To sign up, use our <a href=\"https://slack.appscode.com/\">Slack inviter</a>.</p>\n\n<p>If you have found a bug with Scanner or want to request for new features, please <a href=\"https://github.com/kubeshield/scanner/issues/new\">file an issue</a>.</p>\n",
+    "markdown": "[![Go Report Card](https://goreportcard.com/badge/github.com/kubeshield/scanner)](https://goreportcard.com/report/github.com/kubeshield/scanner)\n[![Build Status](https://travis-ci.org/kubeshield/scanner.svg?branch=master)](https://travis-ci.org/kubeshield/scanner)\n[![codecov](https://codecov.io/gh/kubeshield/scanner/branch/master/graph/badge.svg)](https://codecov.io/gh/kubeshield/scanner)\n[![Docker Pulls](https://img.shields.io/docker/pulls/kubeshield/scanner.svg)](https://hub.docker.com/r/kubeshield/scanner/)\n[![Slack](https://slack.appscode.com/badge.svg)](https://slack.appscode.com)\n[![Twitter](https://img.shields.io/twitter/follow/kubeshield.svg?style=social&logo=twitter&label=Follow)](https://twitter.com/intent/follow?screen_name=kubeshield)\n\n# Scanner\nScanner by AppsCode is a Docker image scanner. It uses [Clair](https://github.com/coreos/clair) for the static analysis of vulnerabilities in Docker containers. Using Scanner, you can backup Kubernetes volumes mounted in following types of workloads:\n\n- Deployment\n- DaemonSet\n- ReplicaSet\n- ReplicationController\n- StatefulSet\n- Pod\n- Job\n- CronJob\n- Openshift DeploymentConfig\n\n## Supported Versions\nPlease pick a version of Scanner that matches your Kubernetes installation.\n\n| Scanner Version                                                            | Docs                                                        | Kubernetes Version |\n|----------------------------------------------------------------------------|-------------------------------------------------------------|--------------------|\n| [0.1.0](https://github.com/kubeshield/scanner/releases/tag/0.1.0) (uses CRD) | [User Guide](https://appscode.com/products/scanner/0.1.0) | 1.9.x +            |\n\n## Installation\n\nTo install Scanner, please follow the guide [here](https://appscode.com/products/scanner/0.1.0/setup/install).\n\n## Using Scanner\nWant to learn how to use Scanner? Please start [here](https://appscode.com/products/scanner/0.1.0).\n\n## Contribution guidelines\nWant to help improve Scanner? Please start [here](https://appscode.com/products/scanner/0.1.0/welcome/contributing).\n\n---\n\n**Scanner binaries collects anonymous usage statistics to help us learn how the software is being used and how we can improve it. To disable stats collection, run the scanner with the flag** `--enable-analytics=false`.\n\n---\n\n## Acknowledgement\n - Many thanks to CoreOS for [Clair](https://github.com/coreos/clair) project.\n\n## Support\nWe use Slack for public discussions. To chit chat with us or the rest of the community, join us in the [AppsCode Slack team](https://appscode.slack.com/messages/CAER85GPK/details/) channel `#scanner`. To sign up, use our [Slack inviter](https://slack.appscode.com/).\n\nIf you have found a bug with Scanner or want to request for new features, please [file an issue](https://github.com/kubeshield/scanner/issues/new).\n"
+  },
+  "supportLinks": {
+    "Support URL": "https://appscode.freshdesk.com",
+    "Website URL": "https://kubeshield.app/"
+  },
+  "stripeProductID": "prod_FFhyh5Z56cmEJL",
+  "plans": {
+    "Community": {
+      "price": "0"
+    }
+  }
+}

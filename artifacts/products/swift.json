@@ -1,0 +1,173 @@
+{
+  "metadata": {
+    "name": "swift",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "prod_FARXloMWkxsKvP",
+    "key": "swift",
+    "name": "Swift by AppsCode",
+    "shortName": "Swift",
+    "tagline": "Ajax friendly Helm Tiller Proxy",
+    "summary": "",
+    "owner": 1,
+    "phase": "Active",
+    "description": "[![Go Report Card](https://goreportcard.com/badge/kubepack.dev/swift)](https://goreportcard.com/report/kubepack.dev/swift)\n[![Build Status](https://travis-ci.org/kubepack/swift.svg?branch=master)](https://travis-ci.org/kubepack/swift)\n[![codecov](https://codecov.io/gh/appscode/swift/branch/master/graph/badge.svg)](https://codecov.io/gh/appscode/swift)\n[![Docker Pulls](https://img.shields.io/docker/pulls/appscode/swift.svg)](https://hub.docker.com/r/appscode/swift/)\n[![Slack](https://slack.appscode.com/badge.svg)](https://slack.appscode.com)\n[![Twitter](https://img.shields.io/twitter/follow/appscodehq.svg?style=social\u0026logo=twitter\u0026label=Follow)](https://twitter.com/intent/follow?screen_name=AppsCodeHQ)\n\n# Swift\nSwift is an Ajax friendly [Helm](https://github.com/kubernetes/helm) Tiller proxy using [grpc-gateway](https://github.com/grpc-ecosystem/grpc-gateway).\n\n\n## Supported Versions\nKubernetes 1.5+ . Helm Tiller server [checks for version compatibility](https://github.com/kubernetes/helm/blob/master/pkg/version/compatible.go#L27). Please pick a version of Swift that matches your Tiller server.\n\n| Swift Version                                                   | Docs                                                            | Helm/Tiller Version |\n|-----------------------------------------------------------------|-----------------------------------------------------------------|---------------------|\n| [0.11.1](https://github.com/kubepack/swift/releases/tag/0.11.1) | [User Guide](https://appscode.com/products/swift/0.11.1/)       | 2.13.0              |\n| [0.10.0](https://github.com/kubepack/swift/releases/tag/0.10.0) | [User Guide](https://appscode.com/products/swift/0.10.0/)       | 2.12.0              |\n| [0.9.0](https://github.com/kubepack/swift/releases/tag/0.9.0)   | [User Guide](https://appscode.com/products/swift/0.9.0/)        | 2.11.0              |\n| [0.8.1](https://github.com/kubepack/swift/releases/tag/0.8.1)   | [User Guide](https://appscode.com/products/swift/0.8.1/)        | 2.9.0               |\n| [0.7.3](https://github.com/kubepack/swift/releases/tag/0.7.3)   | [User Guide](https://appscode.com/products/swift/0.7.3/)        | 2.8.0               |\n| [0.5.2](https://github.com/kubepack/swift/releases/tag/0.5.2)   | [User Guide](https://appscode.com/products/swift/0.5.2/)        | 2.7.0               |\n| [0.3.2](https://github.com/kubepack/swift/releases/tag/0.3.2)   | [User Guide](https://github.com/kubepack/swift/tree/0.3.2/docs) | 2.5.x, 2.6.x        |\n| [0.2.0](https://github.com/kubepack/swift/releases/tag/0.2.0)   | [User Guide](https://github.com/kubepack/swift/tree/0.2.0/docs) | 2.5.x, 2.6.x        |\n| [0.1.0](https://github.com/kubepack/swift/releases/tag/0.1.0)   | [User Guide](https://github.com/kubepack/swift/tree/0.1.0/docs) | 2.5.x, 2.6.x        |\n\n\n## Installation\nTo install Swift, please follow the guide [here](https://appscode.com/products/swift/0.11.1/setup/install/).\n\n## Using Swift\nWant to learn how to use Swift? Please start [here](https://appscode.com/products/swift/0.11.1/).\n\n## Contribution guidelines\nWant to help improve Swift? Please start [here](https://appscode.com/products/swift/0.11.1/welcome/contributing/).\n\n---\n\n**Swift server collects anonymous usage statistics to help us learn how the software is being used and how we can improve it. To disable stats collection, run the operator with the flag** `--enable-analytics=false`.\n\n---\n\n## Support\nWe use Slack for public discussions. To chit chat with us or the rest of the community, join us in the [AppsCode Slack team](https://appscode.slack.com/messages/C0XQFLGRM/details/) channel `#general`. To sign up, use our [Slack inviter](https://slack.appscode.com/).\n\nIf you have found a bug with Searchlight or want to request for new features, please [file an issue](https://github.com/kubepack/swift/issues/new).\n",
+    "maintainers": [
+      {
+        "name": "AppsCode Inc.",
+        "email": "support@appscode.com"
+      }
+    ],
+    "links": [
+      {
+        "description": "docs_repo",
+        "url": "kubepack/swift"
+      },
+      {
+        "description": "facebook",
+        "url": "https://facebook.com/appscode"
+      },
+      {
+        "description": "github",
+        "url": "https://kubepack.dev/swift"
+      },
+      {
+        "description": "linkedin",
+        "url": "https://www.linkedin.com/company/appscode"
+      },
+      {
+        "description": "src_repo",
+        "url": "https://github.com/kubepack/swift"
+      },
+      {
+        "description": "star_repo",
+        "url": "kubepack/swift"
+      },
+      {
+        "description": "support_desk",
+        "url": "https://appscode.freshdesk.com"
+      },
+      {
+        "description": "twitter",
+        "url": "https://twitter.com/AppsCodeHQ"
+      },
+      {
+        "description": "website",
+        "url": "https://www.appscode.com/products/swift"
+      },
+      {
+        "description": "youtube",
+        "url": "https://www.youtube.com/c/appscodeinc"
+      }
+    ],
+    "badges": [
+      {
+        "url": "github/stars/appscode/swift",
+        "alt": "GitHub Stars",
+        "logo": "github"
+      },
+      {
+        "url": "docker/pulls/appscode/swift",
+        "alt": "Docker Pulls",
+        "logo": "docker"
+      }
+    ],
+    "versions": [
+      {
+        "version": "master",
+        "hostDocs": false,
+        "show": true
+      },
+      {
+        "version": "v0.12.1",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "0.11.1",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "0.11.0",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "0.10.0",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "0.9.0",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "0.8.1",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "0.8.0",
+        "hostDocs": true
+      },
+      {
+        "version": "0.7.3",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "0.7.2",
+        "hostDocs": true
+      },
+      {
+        "version": "0.7.1",
+        "hostDocs": true
+      },
+      {
+        "version": "0.7.0",
+        "hostDocs": true
+      },
+      {
+        "version": "0.6.0",
+        "hostDocs": true
+      },
+      {
+        "version": "0.5.2",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "0.5.1",
+        "hostDocs": false
+      },
+      {
+        "version": "0.5.0",
+        "hostDocs": false
+      },
+      {
+        "version": "0.3.2",
+        "hostDocs": false,
+        "show": true
+      },
+      {
+        "version": "0.3.1",
+        "hostDocs": false
+      },
+      {
+        "version": "0.2.0",
+        "hostDocs": false,
+        "show": true
+      },
+      {
+        "version": "0.1.0",
+        "hostDocs": false,
+        "show": true
+      }
+    ],
+    "latestVersion": "v0.12.1"
+  },
+  "status": {}
+}

@@ -42,24 +42,35 @@ type Product struct {
 }
 
 type ProductSpec struct {
-	StripeID      string                `json:"id" protobuf:"bytes,1,opt,name=id"`
-	Key           string                `json:"key" protobuf:"bytes,2,opt,name=key"`
-	Name          string                `json:"name" protobuf:"bytes,3,opt,name=name"`
-	ShortName     string                `json:"shortName" protobuf:"bytes,4,opt,name=shortName,json=shortName"`
-	Tagline       string                `json:"tagline" protobuf:"bytes,5,opt,name=tagline"`
-	Summary       string                `json:"summary" protobuf:"bytes,6,opt,name=summary"`
-	Owner         int64                 `json:"owner" protobuf:"varint,7,opt,name=owner"`
-	Phase         ProductPhase          `json:"phase" protobuf:"bytes,8,opt,name=phase,casttype=ProductPhase"`
-	Description   string                `json:"description,omitempty" protobuf:"bytes,9,opt,name=description"`
-	Media         []MediaSpec           `json:"icons,omitempty" protobuf:"bytes,10,rep,name=icons"`
-	Maintainers   []ContactData         `json:"maintainers,omitempty" protobuf:"bytes,11,rep,name=maintainers"`
-	Keywords      []string              `json:"keywords,omitempty" protobuf:"bytes,12,rep,name=keywords"`
-	Links         []Link                `json:"links,omitempty" protobuf:"bytes,13,rep,name=links"`
-	Badges        []Badge               `json:"badges,omitempty" protobuf:"bytes,14,rep,name=badges"`
-	Plans         []Plan                `json:"plans" protobuf:"bytes,15,rep,name=plans"`
-	Versions      []ProductVersion      `json:"versions,omitempty" protobuf:"bytes,16,rep,name=versions"`
-	LatestVersion string                `json:"latestVersion,omitempty" protobuf:"bytes,17,opt,name=latestVersion"`
-	SubProjects   map[string]ProjectRef `json:"subProjects" protobuf:"bytes,18,rep,name=subProjects"`
+	StripeID  string `json:"id" protobuf:"bytes,1,opt,name=id"`
+	Key       string `json:"key" protobuf:"bytes,2,opt,name=key"`
+	Name      string `json:"name" protobuf:"bytes,3,opt,name=name"`
+	ShortName string `json:"shortName" protobuf:"bytes,4,opt,name=shortName,json=shortName"`
+	Tagline   string `json:"tagline" protobuf:"bytes,5,opt,name=tagline"`
+	//+optional
+	Summary string       `json:"summary,omitempty" protobuf:"bytes,6,opt,name=summary"`
+	Owner   int64        `json:"owner" protobuf:"varint,7,opt,name=owner"`
+	Phase   ProductPhase `json:"phase" protobuf:"bytes,8,opt,name=phase,casttype=ProductPhase"`
+	//+optional
+	Description string `json:"description,omitempty" protobuf:"bytes,9,opt,name=description"`
+	//+optional
+	Media []MediaSpec `json:"icons,omitempty" protobuf:"bytes,10,rep,name=icons"`
+	//+optional
+	Maintainers []ContactData `json:"maintainers,omitempty" protobuf:"bytes,11,rep,name=maintainers"`
+	//+optional
+	Keywords []string `json:"keywords,omitempty" protobuf:"bytes,12,rep,name=keywords"`
+	//+optional
+	Links []Link `json:"links,omitempty" protobuf:"bytes,13,rep,name=links"`
+	//+optional
+	Badges []Badge `json:"badges,omitempty" protobuf:"bytes,14,rep,name=badges"`
+	//+optional
+	Plans []Plan `json:"plans,omitempty" protobuf:"bytes,15,rep,name=plans"`
+	//+optional
+	Versions []ProductVersion `json:"versions,omitempty" protobuf:"bytes,16,rep,name=versions"`
+	//+optional
+	LatestVersion string `json:"latestVersion,omitempty" protobuf:"bytes,17,opt,name=latestVersion"`
+	//+optional
+	SubProjects map[string]ProjectRef `json:"subProjects,omitempty" protobuf:"bytes,18,rep,name=subProjects"`
 }
 
 type ProductPhase string
@@ -112,7 +123,7 @@ type LinkType string
 
 const (
 	LinkWebsite         LinkType = "website"
-	LinSupportDesk      LinkType = "support_desk"
+	LinkSupportDesk     LinkType = "support_desk"
 	LinkFacebook        LinkType = "facebook"
 	LinkLinkedIn        LinkType = "linkedin"
 	LinkTwitter         LinkType = "twitter"

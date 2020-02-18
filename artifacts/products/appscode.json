@@ -1,0 +1,23 @@
+{
+  "metadata": {
+    "name": "appscode",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "",
+    "key": "appscode",
+    "name": "AppsCode",
+    "shortName": "AppsCode",
+    "tagline": "GitHub for Kubernetes",
+    "summary": "Accelerating the transition to Containers by building a Kubernetes-native Data Platform",
+    "owner": 1,
+    "phase": "Active",
+    "maintainers": [
+      {
+        "name": "AppsCode Inc.",
+        "email": "support@appscode.com"
+      }
+    ]
+  },
+  "status": {}
+}

@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "name": "stash-mysql",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "",
+    "key": "stash-mysql",
+    "name": "Stash MySQL Addon",
+    "shortName": "MySQL",
+    "tagline": "MySQL backup and restore plugin for Stash by AppsCode",
+    "summary": "",
+    "owner": 1,
+    "phase": "Active",
+    "maintainers": [
+      {
+        "name": "AppsCode Inc.",
+        "email": "support@appscode.com"
+      }
+    ],
+    "links": [
+      {
+        "description": "docs_repo",
+        "url": "stashed/mysql"
+      },
+      {
+        "description": "src_repo",
+        "url": "https://github.com/stashed/mysql"
+      },
+      {
+        "description": "star_repo",
+        "url": "stashed/stash"
+      }
+    ],
+    "badges": [
+      {
+        "url": "github/stars/stashed/mysql",
+        "alt": "GitHub Stars",
+        "logo": "github"
+      },
+      {
+        "url": "docker/pulls/stashed/mysql",
+        "alt": "Docker Pulls",
+        "logo": "docker"
+      }
+    ],
+    "versions": [
+      {
+        "version": "master",
+        "hostDocs": false,
+        "show": true
+      },
+      {
+        "version": "5.7.25",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "8.0.3",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "8.0.14",
+        "hostDocs": true,
+        "show": true
+      }
+    ],
+    "latestVersion": "8.0.14"
+  },
+  "status": {}
+}

@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "name": "bytebuilders",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "",
+    "key": "bytebuilders",
+    "name": "ByteBuilders by AppsCode",
+    "shortName": "ByteBuilders",
+    "tagline": "Cloud reimagined \u003cbr /\u003efor the age of Kubernetes",
+    "summary": "Deploy, manage, upgrade Kubernetes on any cloud and automate deployment, \u003cbr /\u003escaling, and management of containerized applications.",
+    "owner": 1,
+    "phase": "Active",
+    "maintainers": [
+      {
+        "name": "AppsCode Inc.",
+        "email": "support@appscode.com"
+      }
+    ],
+    "links": [
+      {
+        "description": "docs_repo",
+        "url": "bytebuilders/community"
+      },
+      {
+        "description": "src_repo",
+        "url": "https://github.com/bytebuilders"
+      },
+      {
+        "description": "star_repo",
+        "url": "bytebuilders/community"
+      }
+    ]
+  },
+  "status": {}
+}

@@ -1,0 +1,170 @@
+{
+  "key": "kubevault",
+  "name": "KubeVault",
+  "fullname": "KubeVault by AppsCode",
+  "tagline": "Tools for running HashiCorp <strong>Vault</strong> on <strong>Kubernetes</strong>",
+  "summary": "",
+  "published": true,
+  "author": "AppsCode Inc.",
+  "website": {
+    "domainKey": "domain_kubevault",
+    "path": "",
+    "themeColor": "#326CE5"
+  },
+  "keywords": "kubernetes appscode vault secret csi security",
+  "heroImage": {
+    "src": "https://cdn.appscode.com/images/products/kubevault/kubevault-hero.png",
+    "alt": "KubeVault"
+  },
+  "logo": {
+    "src": "https://cdn.appscode.com/images/products/kubevault/kubevault.png",
+    "alt": "KubeVault"
+  },
+  "logoWhite": {
+    "src": "https://cdn.appscode.com/images/products/kubevault/kubevault-white.png",
+    "alt": "KubeVault"
+  },
+  "icon": {
+    "src": "https://cdn.appscode.com/images/products/kubevault/kubevault-icon.png",
+    "alt": "KubeVault",
+    "sizes": {
+      "192x192": "https://cdn.appscode.com/images/products/kubevault/icons/android-icon-192x192.png"
+    }
+  },
+  "repoURL": "https://github.com/kubevault/docs",
+  "starRepo": "kubevault/operator",
+  "docRepo": "kubevault/docs",
+  "datasheetFormID": "",
+  "badges": [
+    {
+      "url": "github/stars/kubevault/operator",
+      "alt": "GitHub Stars",
+      "logo": "github"
+    },
+    {
+      "url": "docker/pulls/kubevault/vault-operator",
+      "alt": "Docker Pulls",
+      "logo": "docker"
+    }
+  ],
+  "features": [
+    {
+      "title": "Automatic Initialization & Unsealing",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/kubevault/features/feature-1.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/kubevault/features/unlock.png",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "When a Vault server is started, it starts in a sealed state. In a sealed state, almost no operation is possible with a Vault server. So, you will need to unseal Vault. Vault operator provides automatic initialization and unsealing facility. When you deploy or scale up a Vault server, you don't have worry about unsealing new Vault pods. Vault operator will do it for you. Also, it provides a secure way to store unseal keys and root token."
+    },
+    {
+      "title": "Manage Vault Policy",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/kubevault/features/feature-2.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/kubevault/features/courthouse.png",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "Policies in Vault provide a declarative way to grant or forbid access to certain paths and operations in Vault. You can create, delete and update policy in Vault in a Kubernetes native way using Vault operator. Vault operator also provides a way to bind Vault policy with Kubernetes service accounts. ServiceAccounts will have the permissions that are specified in the policy."
+    },
+    {
+      "title": "AWS Secret Engine",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/kubevault/features/feature-3.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/kubevault/features/aws.png",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "AWS secret engine in Vault generates AWS access credentials dynamically based on IAM policies. This makes AWS IAM user management easier. Using Vault operator, you can configure AWS secret engine and issue AWS access credential via Vault. A User can request AWS credential and after it's been approved Vault operator will create a Kubernetes Secret containing the AWS credential and also creates RBAC Role and RoleBinding so that the user can access the secret."
+    },
+    {
+      "title": "Azure Secret Engine",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/kubevault/features/feature-4.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/kubevault/features/azure.png",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "The Azure secrets engine dynamically generates Azure service principals and role assignments. Vault roles can be mapped to one or more Azure roles, providing a simple, flexible way to manage the permissions granted to generated service principals. By using vault operator, one can easily configure vault azure secret engine and make request to generate service principals. Once the request is approved, the operator will get the credentials from vault and create kubernetes secret for storing those credentials. The operator also creates RBAC role and RoleBinding so that user can access the secret."
+    },
+    {
+      "title": "GCP Secret Engine",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/kubevault/features/feature-5.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/kubevault/features/google-cloud.png",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "The Google Cloud Vault secrets engine dynamically generates Google Cloud service account keys and OAuth tokens based on IAM policies. This enables users to gain access to Google Cloud resources without needing to create or manage a dedicated service account. By using vault operator, one can easily configure vault gcp secret engine and make request to generate Google Cloud account keys and OAuth tokens based on IAM policies. Once the request is approved, the operator will get the credentials from vault and create kubernetes secret for storing those credentials. The operator also creates RBAC role and RoleBinding so that user can access the secret."
+    },
+    {
+      "title": "Database Secret Engine",
+      "image": {
+        "src": "https://cdn.appscode.com/images/products/kubevault/features/feature-6.png",
+        "alt": "http"
+      },
+      "icon": {
+        "src": "https://cdn.appscode.com/images/products/kubevault/features/database-view.png",
+        "alt": "http"
+      },
+      "summary": "",
+      "description": "PostgreSQL, MySQL & MongoDB database secret engine in Vault generates MongoDB database credentials dynamically based on configured roles. Using Vault operator, you can configure secret engine, create role and issue credential from Vault. A User can request credential and after it's been approved Vault operator will create a Kubernetes Secret containing the credential and also creates RBAC Role and RoleBinding so that the user can access the Secret."
+    }
+  ],
+  "versions": [
+      { "version": "master", "hostDocs": false, "show": true },
+      { "version": "v0.3.0", "hostDocs": true, "show": true },
+      { "version": "0.2.0", "hostDocs": true, "show": true },
+      { "version": "0.1.0", "hostDocs": true, "show": true }
+  ],
+  "latestVersion": "v0.3.0",
+  "socialLinks": {
+    "facebook": "https://facebook.com/appscode",
+    "github": "https://github.com/kubevault",
+    "linkedin": "https://www.linkedin.com/company/appscode",
+    "twitter": "https://twitter.com/kubevault",
+    "youtube": "https://www.youtube.com/c/appscodeinc"
+  },
+  "description": {
+    "html": "<hr />\n\n<p>title: Welcome | KubeVault\ndescription: Welcome to KubeVault\nmenu:\n  docs_0.2.0:\n    identifier: readme-kubevault\n    name: Readme\n    parent: welcome\n    weight: -1\nmenu_name: docs_0.2.0\nsection_menu_id: welcome\nurl: /docs/0.2.0/welcome/\naliases:\n  - /docs/0.2.0/</p>\n\n<h2>- /docs/0.2.0/README/</h2>\n\n<h1>KubeVault</h1>\n\n<p>KubeVault by AppsCode is a collection of tools for running HashiCorp <a href=\"https://www.vaultproject.io/\">Vault</a> on Kubernetes. You can deploy and mange Vault using Vault operator. Using Vault operator, you can deploy Vault for following storage backends:</p>\n\n<ul>\n<li><a href=\"/docs/concepts/vault-server-crds/storage/azure.md\">Azure Storage</a></li>\n<li><a href=\"/docs/concepts/vault-server-crds/storage/dynamodb.md\">DynamoDB</a></li>\n<li><a href=\"/docs/concepts/vault-server-crds/storage/etcd.md\">Etcd</a></li>\n<li><a href=\"/docs/concepts/vault-server-crds/storage/gcs.md\">GCS</a></li>\n<li><a href=\"/docs/concepts/vault-server-crds/storage/inmem.md\">In Memory</a></li>\n<li><a href=\"/docs/concepts/vault-server-crds/storage/mysql.md\">MySQL</a></li>\n<li><a href=\"/docs/concepts/vault-server-crds/storage/postgresql.md\">PosgreSQL</a></li>\n<li><a href=\"/docs/concepts/vault-server-crds/storage/s3.md\">AWS S3</a></li>\n<li><a href=\"/docs/concepts/vault-server-crds/storage/swift.md\">Swift</a></li>\n<li><a href=\"/docs/concepts/vault-server-crds/storage/consul.md\">Consul</a></li>\n</ul>\n\n<p>From here you can learn all about Vault operator&rsquo;s architecture and how to deploy and use Vault operator.</p>\n\n<ul>\n<li><p><a href=\"/docs/concepts/\">Concepts</a>. Concepts explain the CRDs (CustomResourceDefinition) used by Vault operator.</p></li>\n\n<li><p><a href=\"/docs/setup/\">Setup</a>. Setup contains instructions for installing\nthe Vault operator in various cloud providers.</p></li>\n\n<li><p><a href=\"/docs/guides/monitoring\">Monitoring</a>. Monitoring contains instructions for setup prometheus with Vault server</p></li>\n\n<li><p><a href=\"/docs/guides/\">Guides</a>. Guides show you how to perform tasks with Vault operator.</p></li>\n\n<li><p><a href=\"/docs/reference/\">Reference</a>. Detailed exhaustive lists of\ncommand-line options, configuration options, API definitions, and procedures.</p></li>\n</ul>\n\n<p>We&rsquo;re always looking for help improving our documentation, so please don&rsquo;t hesitate to <a href=\"https://github.com/kubevault/project/issues/new\">file an issue</a> if you see some problem. Or better yet, submit your own <a href=\"/docs/CONTRIBUTING.md\">contributions</a> to help\nmake our docs better.</p>\n\n<hr />\n\n<p><strong>KubeVault binaries collect anonymous usage statistics to help us learn how the software is being used and how we can improve it. To disable stats collection, run the operator with the flag</strong> <code>--enable-analytics=false</code>.</p>\n\n<hr />\n",
+    "markdown": "---\ntitle: Welcome | KubeVault\ndescription: Welcome to KubeVault\nmenu:\n  docs_0.2.0:\n    identifier: readme-kubevault\n    name: Readme\n    parent: welcome\n    weight: -1\nmenu_name: docs_0.2.0\nsection_menu_id: welcome\nurl: /docs/0.2.0/welcome/\naliases:\n  - /docs/0.2.0/\n  - /docs/0.2.0/README/\n---\n\n# KubeVault\n\nKubeVault by AppsCode is a collection of tools for running HashiCorp [Vault](https://www.vaultproject.io/) on Kubernetes. You can deploy and mange Vault using Vault operator. Using Vault operator, you can deploy Vault for following storage backends:\n\n- [Azure Storage](/docs/concepts/vault-server-crds/storage/azure.md)\n- [DynamoDB](/docs/concepts/vault-server-crds/storage/dynamodb.md)\n- [Etcd](/docs/concepts/vault-server-crds/storage/etcd.md)\n- [GCS](/docs/concepts/vault-server-crds/storage/gcs.md)\n- [In Memory](/docs/concepts/vault-server-crds/storage/inmem.md)\n- [MySQL](/docs/concepts/vault-server-crds/storage/mysql.md)\n- [PosgreSQL](/docs/concepts/vault-server-crds/storage/postgresql.md)\n- [AWS S3](/docs/concepts/vault-server-crds/storage/s3.md)\n- [Swift](/docs/concepts/vault-server-crds/storage/swift.md)\n- [Consul](/docs/concepts/vault-server-crds/storage/consul.md)\n\nFrom here you can learn all about Vault operator's architecture and how to deploy and use Vault operator.\n\n- [Concepts](/docs/concepts/). Concepts explain the CRDs (CustomResourceDefinition) used by Vault operator.\n\n- [Setup](/docs/setup/). Setup contains instructions for installing\n  the Vault operator in various cloud providers.\n\n- [Monitoring](/docs/guides/monitoring). Monitoring contains instructions for setup prometheus with Vault server\n\n- [Guides](/docs/guides/). Guides show you how to perform tasks with Vault operator.\n\n- [Reference](/docs/reference/). Detailed exhaustive lists of\ncommand-line options, configuration options, API definitions, and procedures.\n\nWe're always looking for help improving our documentation, so please don't hesitate to [file an issue](https://github.com/kubevault/project/issues/new) if you see some problem. Or better yet, submit your own [contributions](/docs/CONTRIBUTING.md) to help\nmake our docs better.\n\n---\n\n**KubeVault binaries collect anonymous usage statistics to help us learn how the software is being used and how we can improve it. To disable stats collection, run the operator with the flag** `--enable-analytics=false`.\n\n---\n"
+  },
+  "supportLinks": {
+    "Support URL": "https://appscode.freshdesk.com",
+    "Website URL": "https://kubevault.com"
+  },
+  "stripeProductID": "prod_FiawKtgLGy6R9v",
+  "plans": {
+    "Community": {
+      "price": "0"
+    },
+    "Standard_M2M": {
+      "price": "499"
+    },
+    "Standard_Y2Y": {
+      "price": "349"
+    },
+    "Golden_M2M": {
+      "price": "899"
+    },
+    "Golden_Y2Y": {
+      "price": "699"
+    }
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "metadata": {
+    "name": "stash-elasticsearch",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "",
+    "key": "stash-elasticsearch",
+    "name": "Stash Elasticsearch Addon",
+    "shortName": "Elasticsearch",
+    "tagline": "Elasticsearch backup and restore plugin for Stash by AppsCode",
+    "summary": "",
+    "owner": 1,
+    "phase": "Active",
+    "maintainers": [
+      {
+        "name": "AppsCode Inc.",
+        "email": "support@appscode.com"
+      }
+    ],
+    "links": [
+      {
+        "description": "docs_repo",
+        "url": "stashed/elasticsearch"
+      },
+      {
+        "description": "src_repo",
+        "url": "https://github.com/stashed/elasticsearch"
+      },
+      {
+        "description": "star_repo",
+        "url": "stashed/stash"
+      }
+    ],
+    "badges": [
+      {
+        "url": "github/stars/stashed/elasticsearch",
+        "alt": "GitHub Stars",
+        "logo": "github"
+      },
+      {
+        "url": "docker/pulls/stashed/elasticsearch",
+        "alt": "Docker Pulls",
+        "logo": "docker"
+      }
+    ],
+    "versions": [
+      {
+        "version": "master",
+        "hostDocs": false,
+        "show": true
+      },
+      {
+        "version": "5.6",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "5.6.4",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "6.2",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "6.2.4",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "6.3",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "6.3.0",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "6.4",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "6.4.0",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "6.5",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "6.5.3",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "6.8",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "6.8.0",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "7.2",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "7.2.0",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "7.3",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "7.3.2",
+        "hostDocs": true,
+        "show": true
+      }
+    ],
+    "latestVersion": "7.3.2"
+  },
+  "status": {}
+}

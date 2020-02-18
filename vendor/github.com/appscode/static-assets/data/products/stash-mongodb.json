@@ -1,0 +1,41 @@
+{
+  "key": "stash-mongodb",
+  "name": "MongoDB",
+  "fullname": "Stash MongoDB Addon",
+  "tagline": "MongoDB backup and restore plugin for Stash by AppsCode",
+  "published": true,
+  "author": "AppsCode Inc.",
+  "repoURL": "https://github.com/stashed/mongodb",
+  "starRepo": "stashed/stash",
+  "docRepo": "stashed/mongodb",
+  "badges": [
+    {
+      "url" : "github/stars/stashed/mongodb",
+      "alt": "GitHub Stars",
+      "logo": "github"
+    },
+    {
+      "url" : "docker/pulls/stashed/mongodb",
+      "alt": "Docker Pulls",
+      "logo": "docker"
+    }
+  ],
+  "versions": [
+    { "version": "master", "hostDocs": false, "show": true },
+    { "version": "3.4", "hostDocs": true, "show": true },
+    { "version": "3.4.17", "hostDocs": true, "show": true },
+    { "version": "3.4.22", "hostDocs": true, "show": true },
+    { "version": "3.6", "hostDocs": true, "show": true },
+    { "version": "3.6.8", "hostDocs": true, "show": true },
+    { "version": "3.6.13", "hostDocs": true, "show": true },
+    { "version": "4.0", "hostDocs": true, "show": true },
+    { "version": "4.0.3", "hostDocs": true, "show": true },
+    { "version": "4.0.5", "hostDocs": true, "show": true },
+    { "version": "4.0.11", "hostDocs": true, "show": true },
+    { "version": "4.1", "hostDocs": true, "show": true },
+    { "version": "4.1.4", "hostDocs": true, "show": true },
+    { "version": "4.1.7", "hostDocs": true, "show": true },
+    { "version": "4.1.13", "hostDocs": true, "show": true }
+  ],
+  "latestVersion": "4.1.13"
+}

@@ -1,0 +1,61 @@
+{
+  "metadata": {
+    "name": "stash-percona-xtradb",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "",
+    "key": "stash-percona-xtradb",
+    "name": "Stash Percona XtraDB Addon",
+    "shortName": "Percona XtraDB",
+    "tagline": "Percona XtraDB backup and restore plugin for Stash by AppsCode",
+    "summary": "",
+    "owner": 1,
+    "phase": "Active",
+    "maintainers": [
+      {
+        "email": "support@appscode.com"
+      }
+    ],
+    "links": [
+      {
+        "description": "docs_repo",
+        "url": "stashed/percona-xtradb"
+      },
+      {
+        "description": "src_repo",
+        "url": "https://github.com/stashed/percona-xtradb"
+      },
+      {
+        "description": "star_repo",
+        "url": "stashed/stash"
+      }
+    ],
+    "badges": [
+      {
+        "url": "github/stars/stashed/percona-xtradb",
+        "alt": "GitHub Stars",
+        "logo": "github"
+      },
+      {
+        "url": "docker/pulls/stashed/percona-xtradb",
+        "alt": "Docker Pulls",
+        "logo": "docker"
+      }
+    ],
+    "versions": [
+      {
+        "version": "master",
+        "hostDocs": false,
+        "show": true
+      },
+      {
+        "version": "5.7",
+        "hostDocs": true,
+        "show": true
+      }
+    ],
+    "latestVersion": "5.7"
+  },
+  "status": {}
+}

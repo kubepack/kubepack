@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "name": "stash-postgres",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "",
+    "key": "stash-postgres",
+    "name": "Stash PostgreSQL Addon",
+    "shortName": "PostgreSQL",
+    "tagline": "Postgres backup and restore plugin for Stash by AppsCode",
+    "summary": "",
+    "owner": 1,
+    "phase": "Active",
+    "maintainers": [
+      {
+        "name": "AppsCode Inc.",
+        "email": "support@appscode.com"
+      }
+    ],
+    "links": [
+      {
+        "description": "docs_repo",
+        "url": "stashed/postgres"
+      },
+      {
+        "description": "src_repo",
+        "url": "https://github.com/stashed/postgres"
+      },
+      {
+        "description": "star_repo",
+        "url": "stashed/stash"
+      }
+    ],
+    "badges": [
+      {
+        "url": "github/stars/stashed/postgres",
+        "alt": "GitHub Stars",
+        "logo": "github"
+      },
+      {
+        "url": "docker/pulls/stashed/postgres",
+        "alt": "Docker Pulls",
+        "logo": "docker"
+      }
+    ],
+    "versions": [
+      {
+        "version": "master",
+        "hostDocs": false,
+        "show": true
+      },
+      {
+        "version": "9.6",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "10.2",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "10.6",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "11.1",
+        "hostDocs": true,
+        "show": true
+      },
+      {
+        "version": "11.2",
+        "hostDocs": true,
+        "show": true
+      }
+    ],
+    "latestVersion": "11.2"
+  },
+  "status": {}
+}
