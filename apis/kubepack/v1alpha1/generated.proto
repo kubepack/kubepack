@@ -603,37 +603,40 @@ message ProductSpec {
 
   optional int64 owner = 7;
 
-  optional string phase = 8;
+  // +optional
+  optional string description = 8;
 
   // +optional
-  optional string description = 9;
+  optional string unitLabel = 9;
+
+  optional string phase = 10;
 
   // +optional
-  repeated MediaSpec icons = 10;
+  repeated MediaSpec icons = 11;
 
   // +optional
-  repeated ContactData maintainers = 11;
+  repeated ContactData maintainers = 12;
 
   // +optional
-  repeated string keywords = 12;
+  repeated string keywords = 13;
 
   // +optional
-  repeated Link links = 13;
+  repeated Link links = 14;
 
   // +optional
-  repeated Badge badges = 14;
+  repeated Badge badges = 15;
 
   // +optional
-  repeated Plan plans = 15;
+  repeated Plan plans = 16;
 
   // +optional
-  repeated ProductVersion versions = 16;
+  repeated ProductVersion versions = 17;
 
   // +optional
-  optional string latestVersion = 17;
+  optional string latestVersion = 18;
 
   // +optional
-  map<string, ProjectRef> subProjects = 18;
+  map<string, ProjectRef> subProjects = 19;
 }
 
 message ProductStatus {
