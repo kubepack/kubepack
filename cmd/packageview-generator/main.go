@@ -67,7 +67,7 @@ func main() {
 			Name:              pkgChart.Name(),
 			URL:               url,
 			Version:           pkgChart.Metadata.Version,
-			PackageDescriptor: util.GetPackageDescriptor(pkgChart),
+			PackageDescriptor: util.GetPackageDescriptor(pkgChart.Chart),
 		},
 		Values: &runtime.RawExtension{
 			Object: &unstructured.Unstructured{Object: pkgChart.Values},

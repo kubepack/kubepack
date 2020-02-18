@@ -129,7 +129,9 @@ func (r *RepoNamer) Name(chartURL string) (string, error) {
 }
 
 func (r *RepoNamer) nameForDomain(domain string) string {
-	// TODO: Use https://raw.githubusercontent.com/helm/hub/master/repos.yaml
+	if domain == "kubernetes-charts.storage.googleapis.com" {
+		return "stable"
+	}
 	if strings.HasSuffix(domain, ".storage.googleapis.com") {
 		return strings.TrimSuffix(domain, ".storage.googleapis.com")
 	}

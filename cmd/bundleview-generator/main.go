@@ -113,7 +113,7 @@ func toBundleOptionView(in *v1alpha1.BundleOption, level int) *v1alpha1.BundleOp
 						Name: pkg.Chart.Name,
 						URL:  pkg.Chart.URL,
 					},
-					PackageDescriptor: util.GetPackageDescriptor(pkgChart),
+					PackageDescriptor: util.GetPackageDescriptor(pkgChart.Chart),
 					Features:          pkg.Chart.Features,
 					MultiSelect:       pkg.Chart.MultiSelect,
 					Namespace:         util.XorY(pkg.Chart.Namespace, bundle.Spec.Namespace),
