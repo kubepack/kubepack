@@ -94,6 +94,20 @@
         "logo": "docker"
       }
     ],
+    "plans": [
+      {
+        "id": "plan_Gl1KQqf57ElxzX",
+        "name": "KubeDB Community",
+        "chart": {
+          "url": "https://kubernetes-charts.storage.googleapis.com",
+          "name": "kubedb-community"
+        },
+        "phase": "Active",
+        "amount": 0,
+        "currency": "usd",
+        "interval": "month"
+      }
+    ],
     "versions": [
       {
         "version": "master",

@@ -43,6 +43,20 @@
         "logo": "docker"
       }
     ],
+    "plans": [
+      {
+        "id": "plan_Gl1Ky2eZIHrDl9",
+        "name": "Percona XtraDB Community",
+        "chart": {
+          "url": "https://kubernetes-charts.storage.googleapis.com",
+          "name": "stash-percona-xtradb-community"
+        },
+        "phase": "Active",
+        "amount": 0,
+        "currency": "usd",
+        "interval": "month"
+      }
+    ],
     "versions": [
       {
         "version": "master",

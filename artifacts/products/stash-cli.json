@@ -39,6 +39,20 @@
         "logo": "github"
       }
     ],
+    "plans": [
+      {
+        "id": "plan_Gl1KMOjIB4X93E",
+        "name": "Stash kubectl Plugin Community",
+        "chart": {
+          "url": "https://kubernetes-charts.storage.googleapis.com",
+          "name": "stash-cli-community"
+        },
+        "phase": "Active",
+        "amount": 0,
+        "currency": "usd",
+        "interval": "month"
+      }
+    ],
     "versions": [
       {
         "version": "master",

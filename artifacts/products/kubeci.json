@@ -78,6 +78,20 @@
         "logo": "docker"
       }
     ],
+    "plans": [
+      {
+        "id": "plan_Gl1KTWM5HOobwv",
+        "name": "KubeCI Community",
+        "chart": {
+          "url": "https://kubernetes-charts.storage.googleapis.com",
+          "name": "kubeci-community"
+        },
+        "phase": "Active",
+        "amount": 0,
+        "currency": "usd",
+        "interval": "month"
+      }
+    ],
     "versions": [
       {
         "version": "master",

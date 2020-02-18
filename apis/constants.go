@@ -17,6 +17,8 @@ limitations under the License.
 package apis
 
 const (
+	BundleRepoURL = "https://kubernetes-charts.storage.googleapis.com"
+
 	StripeAPIKey = "STRIPE_API_KEY"
 
 	StripeMetadataKeyUserID = "client_id"

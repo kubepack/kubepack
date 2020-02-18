@@ -81,6 +81,20 @@
         "logo": "docker"
       }
     ],
+    "plans": [
+      {
+        "id": "plan_Gl1KE3HPpwdJmC",
+        "name": "Stash Community",
+        "chart": {
+          "url": "https://kubernetes-charts.storage.googleapis.com",
+          "name": "stash-community"
+        },
+        "phase": "Active",
+        "amount": 0,
+        "currency": "usd",
+        "interval": "month"
+      }
+    ],
     "versions": [
       {
         "version": "master",

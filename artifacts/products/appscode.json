@@ -18,6 +18,20 @@
         "name": "AppsCode Inc.",
         "email": "support@appscode.com"
       }
+    ],
+    "plans": [
+      {
+        "id": "plan_Gl1KaUouXFz35r",
+        "name": "AppsCode Community",
+        "chart": {
+          "url": "https://kubernetes-charts.storage.googleapis.com",
+          "name": "appscode-community"
+        },
+        "phase": "Active",
+        "amount": 0,
+        "currency": "usd",
+        "interval": "month"
+      }
     ]
   },
   "status": {}

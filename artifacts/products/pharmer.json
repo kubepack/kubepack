@@ -80,6 +80,20 @@
         "logo": "docker"
       }
     ],
+    "plans": [
+      {
+        "id": "plan_Gl1KJCM4AbmnoL",
+        "name": "Pharmer Community",
+        "chart": {
+          "url": "https://kubernetes-charts.storage.googleapis.com",
+          "name": "pharmer-community"
+        },
+        "phase": "Active",
+        "amount": 0,
+        "currency": "usd",
+        "interval": "month"
+      }
+    ],
     "versions": [
       {
         "version": "master",
