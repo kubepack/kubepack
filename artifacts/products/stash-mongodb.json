@@ -46,64 +46,49 @@
     ],
     "versions": [
       {
-        "version": "master",
-        "releaseDate": null
+        "version": "master"
       },
       {
-        "version": "3.4",
-        "releaseDate": null
+        "version": "3.4"
       },
       {
-        "version": "3.4.17",
-        "releaseDate": null
+        "version": "3.4.17"
       },
       {
-        "version": "3.4.22",
-        "releaseDate": null
+        "version": "3.4.22"
       },
       {
-        "version": "3.6",
-        "releaseDate": null
+        "version": "3.6"
       },
       {
-        "version": "3.6.8",
-        "releaseDate": null
+        "version": "3.6.8"
       },
       {
-        "version": "3.6.13",
-        "releaseDate": null
+        "version": "3.6.13"
       },
       {
-        "version": "4.0",
-        "releaseDate": null
+        "version": "4.0"
       },
       {
-        "version": "4.0.3",
-        "releaseDate": null
+        "version": "4.0.3"
       },
       {
-        "version": "4.0.5",
-        "releaseDate": null
+        "version": "4.0.5"
       },
       {
-        "version": "4.0.11",
-        "releaseDate": null
+        "version": "4.0.11"
       },
       {
-        "version": "4.1",
-        "releaseDate": null
+        "version": "4.1"
       },
       {
-        "version": "4.1.4",
-        "releaseDate": null
+        "version": "4.1.4"
       },
       {
-        "version": "4.1.7",
-        "releaseDate": null
+        "version": "4.1.7"
       },
       {
-        "version": "4.1.13",
-        "releaseDate": null
+        "version": "4.1.13"
       }
     ],
     "latestVersion": "4.1.13"

@@ -98,10 +98,11 @@ func main() {
 			},
 		}
 	}
+	rlDate := metav1.NewTime(chrt.Created)
 	nu.Spec.Versions = []v1alpha1.ProductVersion{
 		{
 			Version:     chrt.Metadata.Version,
-			ReleaseDate: metav1.NewTime(chrt.Created),
+			ReleaseDate: &rlDate,
 		},
 	}
 	nu.Spec.LatestVersion = chrt.Metadata.Version // Not AppVersion

@@ -82,12 +82,10 @@
     ],
     "versions": [
       {
-        "version": "master",
-        "releaseDate": null
+        "version": "master"
       },
       {
-        "version": "0.1.0",
-        "releaseDate": null
+        "version": "0.1.0"
       }
     ],
     "latestVersion": "0.1.0"

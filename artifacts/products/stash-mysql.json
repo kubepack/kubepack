@@ -46,20 +46,16 @@
     ],
     "versions": [
       {
-        "version": "master",
-        "releaseDate": null
+        "version": "master"
       },
       {
-        "version": "5.7.25",
-        "releaseDate": null
+        "version": "5.7.25"
       },
       {
-        "version": "8.0.3",
-        "releaseDate": null
+        "version": "8.0.3"
       },
       {
-        "version": "8.0.14",
-        "releaseDate": null
+        "version": "8.0.14"
       }
     ],
     "latestVersion": "8.0.14"

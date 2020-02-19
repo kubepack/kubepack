@@ -46,28 +46,22 @@
     ],
     "versions": [
       {
-        "version": "master",
-        "releaseDate": null
+        "version": "master"
       },
       {
-        "version": "9.6",
-        "releaseDate": null
+        "version": "9.6"
       },
       {
-        "version": "10.2",
-        "releaseDate": null
+        "version": "10.2"
       },
       {
-        "version": "10.6",
-        "releaseDate": null
+        "version": "10.6"
       },
       {
-        "version": "11.1",
-        "releaseDate": null
+        "version": "11.1"
       },
       {
-        "version": "11.2",
-        "releaseDate": null
+        "version": "11.2"
       }
     ],
     "latestVersion": "11.2"

@@ -75,140 +75,106 @@
     ],
     "versions": [
       {
-        "version": "master",
-        "releaseDate": null
+        "version": "master"
       },
       {
-        "version": "v12.0.0-rc.1",
-        "releaseDate": null
+        "version": "v12.0.0-rc.1"
       },
       {
-        "version": "v12.0.0-rc.0",
-        "releaseDate": null
+        "version": "v12.0.0-rc.0"
       },
       {
-        "version": "v11.0.1",
-        "releaseDate": null
+        "version": "v11.0.1"
       },
       {
-        "version": "v11.0.0",
-        "releaseDate": null
+        "version": "v11.0.0"
       },
       {
-        "version": "10.0.0",
-        "releaseDate": null
+        "version": "10.0.0"
       },
       {
-        "version": "9.0.0",
-        "releaseDate": null
+        "version": "9.0.0"
       },
       {
-        "version": "8.0.1",
-        "releaseDate": null
+        "version": "8.0.1"
       },
       {
-        "version": "8.0.0",
-        "releaseDate": null
+        "version": "8.0.0"
       },
       {
-        "version": "7.4.0",
-        "releaseDate": null
+        "version": "7.4.0"
       },
       {
-        "version": "7.3.0",
-        "releaseDate": null
+        "version": "7.3.0"
       },
       {
-        "version": "7.2.0",
-        "releaseDate": null
+        "version": "7.2.0"
       },
       {
-        "version": "7.1.1",
-        "releaseDate": null
+        "version": "7.1.1"
       },
       {
-        "version": "7.1.0",
-        "releaseDate": null
+        "version": "7.1.0"
       },
       {
-        "version": "7.0.0",
-        "releaseDate": null
+        "version": "7.0.0"
       },
       {
-        "version": "7.0.0-rc.3",
-        "releaseDate": null
+        "version": "7.0.0-rc.3"
       },
       {
-        "version": "7.0.0-rc.2",
-        "releaseDate": null
+        "version": "7.0.0-rc.2"
       },
       {
-        "version": "7.0.0-rc.1",
-        "releaseDate": null
+        "version": "7.0.0-rc.1"
       },
       {
-        "version": "7.0.0-rc.0",
-        "releaseDate": null
+        "version": "7.0.0-rc.0"
       },
       {
-        "version": "6.0.0",
-        "releaseDate": null
+        "version": "6.0.0"
       },
       {
-        "version": "6.0.0-rc.2",
-        "releaseDate": null
+        "version": "6.0.0-rc.2"
       },
       {
-        "version": "6.0.0-rc.1",
-        "releaseDate": null
+        "version": "6.0.0-rc.1"
       },
       {
-        "version": "6.0.0-rc.0",
-        "releaseDate": null
+        "version": "6.0.0-rc.0"
       },
       {
-        "version": "5.0.0",
-        "releaseDate": null
+        "version": "5.0.0"
       },
       {
-        "version": "5.0.0-rc.11",
-        "releaseDate": null
+        "version": "5.0.0-rc.11"
       },
       {
-        "version": "3.2.2",
-        "releaseDate": null
+        "version": "3.2.2"
       },
       {
-        "version": "3.2.1",
-        "releaseDate": null
+        "version": "3.2.1"
       },
       {
-        "version": "3.2.0",
-        "releaseDate": null
+        "version": "3.2.0"
       },
       {
-        "version": "3.1.4",
-        "releaseDate": null
+        "version": "3.1.4"
       },
       {
-        "version": "3.1.3",
-        "releaseDate": null
+        "version": "3.1.3"
       },
       {
-        "version": "3.1.2",
-        "releaseDate": null
+        "version": "3.1.2"
       },
       {
-        "version": "3.1.1",
-        "releaseDate": null
+        "version": "3.1.1"
       },
       {
-        "version": "3.1.0",
-        "releaseDate": null
+        "version": "3.1.0"
       },
       {
-        "version": "3.0.0",
-        "releaseDate": null
+        "version": "3.0.0"
       }
     ],
     "latestVersion": "v12.0.0-rc.1"

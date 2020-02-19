@@ -83,96 +83,73 @@
     ],
     "versions": [
       {
-        "version": "master",
-        "releaseDate": null
+        "version": "master"
       },
       {
-        "version": "v0.9.0-rc.4",
-        "releaseDate": null
+        "version": "v0.9.0-rc.4"
       },
       {
-        "version": "v0.9.0-rc.2",
-        "releaseDate": null
+        "version": "v0.9.0-rc.2"
       },
       {
-        "version": "v0.9.0-rc.1",
-        "releaseDate": null
+        "version": "v0.9.0-rc.1"
       },
       {
-        "version": "v0.9.0-rc.0",
-        "releaseDate": null
+        "version": "v0.9.0-rc.0"
       },
       {
-        "version": "0.8.3",
-        "releaseDate": null
+        "version": "0.8.3"
       },
       {
-        "version": "0.8.2",
-        "releaseDate": null
+        "version": "0.8.2"
       },
       {
-        "version": "0.8.1",
-        "releaseDate": null
+        "version": "0.8.1"
       },
       {
-        "version": "0.8.0",
-        "releaseDate": null
+        "version": "0.8.0"
       },
       {
-        "version": "0.7.0",
-        "releaseDate": null
+        "version": "0.7.0"
       },
       {
-        "version": "0.7.0-rc.5",
-        "releaseDate": null
+        "version": "0.7.0-rc.5"
       },
       {
-        "version": "0.7.0-rc.4",
-        "releaseDate": null
+        "version": "0.7.0-rc.4"
       },
       {
-        "version": "0.7.0-rc.3",
-        "releaseDate": null
+        "version": "0.7.0-rc.3"
       },
       {
-        "version": "0.7.0-rc.2",
-        "releaseDate": null
+        "version": "0.7.0-rc.2"
       },
       {
-        "version": "0.7.0-rc.1",
-        "releaseDate": null
+        "version": "0.7.0-rc.1"
       },
       {
-        "version": "0.7.0-rc.0",
-        "releaseDate": null
+        "version": "0.7.0-rc.0"
       },
       {
-        "version": "0.6.4",
-        "releaseDate": null
+        "version": "0.6.4"
       },
       {
-        "version": "0.6.3",
-        "releaseDate": null
+        "version": "0.6.3"
       },
       {
-        "version": "0.6.2",
-        "releaseDate": null
+        "version": "0.6.2"
       },
       {
-        "version": "0.6.1",
-        "releaseDate": null
+        "version": "0.6.1"
       },
       {
-        "version": "0.6.0",
-        "releaseDate": null
+        "version": "0.6.0"
       },
       {
-        "version": "0.5.1",
-        "releaseDate": null
+        "version": "0.5.1"
       },
       {
-        "version": "0.4.2",
-        "releaseDate": null
+        "version": "0.4.2"
       }
     ],
     "latestVersion": "v0.9.0-rc.4"

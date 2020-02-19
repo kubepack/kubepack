@@ -75,44 +75,34 @@
     ],
     "versions": [
       {
-        "version": "master",
-        "releaseDate": null
+        "version": "master"
       },
       {
-        "version": "8.0.0",
-        "releaseDate": null
+        "version": "8.0.0"
       },
       {
-        "version": "8.0.0-rc.0",
-        "releaseDate": null
+        "version": "8.0.0-rc.0"
       },
       {
-        "version": "7.0.0",
-        "releaseDate": null
+        "version": "7.0.0"
       },
       {
-        "version": "7.0.0-rc.0",
-        "releaseDate": null
+        "version": "7.0.0-rc.0"
       },
       {
-        "version": "5.1.1",
-        "releaseDate": null
+        "version": "5.1.1"
       },
       {
-        "version": "5.1.0",
-        "releaseDate": null
+        "version": "5.1.0"
       },
       {
-        "version": "5.0.0",
-        "releaseDate": null
+        "version": "5.0.0"
       },
       {
-        "version": "4.0.0",
-        "releaseDate": null
+        "version": "4.0.0"
       },
       {
-        "version": "3.0.1",
-        "releaseDate": null
+        "version": "3.0.1"
       }
     ],
     "latestVersion": "8.0.0"

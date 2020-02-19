@@ -45,12 +45,10 @@
     ],
     "versions": [
       {
-        "version": "master",
-        "releaseDate": null
+        "version": "master"
       },
       {
-        "version": "5.7",
-        "releaseDate": null
+        "version": "5.7"
       }
     ],
     "latestVersion": "5.7"
