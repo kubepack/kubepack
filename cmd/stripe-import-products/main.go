@@ -200,7 +200,6 @@ func main() {
 			}
 			// preserve product id and plans
 			nu.Spec.StripeID = existing.Spec.StripeID
-			nu.Spec.Plans = existing.Spec.Plans
 		}
 
 		data, err = json.MarshalIndent(&nu, "", "  ")

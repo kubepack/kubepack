@@ -248,23 +248,3 @@ func convertPlanTier(in []*v1alpha1.PlanTier) []*stripe.PlanTierParams {
 	}
 	return out
 }
-
-func StringP(v string) *string {
-	if v != "" {
-		return &v
-	}
-	return nil
-}
-
-func Int64P(v int64) *int64 {
-	if v != 0 {
-		return &v
-	}
-	return nil
-}
-func Float64P(v float64) *float64 {
-	if v != 0 {
-		return &v
-	}
-	return nil
-}
