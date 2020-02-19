@@ -82,7 +82,7 @@ const (
 type ProductVersion struct {
 	Version string `json:"version" protobuf:"bytes,1,opt,name=version"`
 	// +optional
-	ReleaseDate metav1.Time `json:"releaseDate,omitempty" protobuf:"bytes,2,opt,name=releaseDate"`
+	ReleaseDate *metav1.Time `json:"releaseDate,omitempty" protobuf:"bytes,2,opt,name=releaseDate"`
 }
 
 type MediaType string
