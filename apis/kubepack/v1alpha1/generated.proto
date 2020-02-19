@@ -408,12 +408,6 @@ message Link {
   optional string url = 2;
 }
 
-message Mapping {
-  repeated string versions = 1;
-
-  repeated string subProjectVersions = 2;
-}
-
 // MediaSpec contains information about an image/video.
 message MediaSpec {
   // Description is human readable content explaining the purpose of the link.
@@ -697,9 +691,6 @@ message ProductSpec {
 
   // +optional
   optional string latestVersion = 17;
-
-  // +optional
-  map<string, ProjectRef> subProjects = 18;
 }
 
 message ProductStatus {
@@ -712,25 +703,8 @@ message ProductStatus {
 message ProductVersion {
   optional string version = 1;
 
-  optional bool hostDocs = 2;
-
-  optional bool show = 3;
-
-  optional string docsDir = 4;
-
-  // default: "docs"
-  optional string branch = 5;
-
-  map<string, string> info = 6;
-
   // +optional
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.Time releaseDate = 7;
-}
-
-message ProjectRef {
-  optional string dir = 1;
-
-  repeated Mapping mappings = 2;
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.Time releaseDate = 2;
 }
 
 message Repository {

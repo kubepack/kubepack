@@ -1182,7 +1182,7 @@ kmodules.xyz/custom-resources/apis/appcatalog
 kmodules.xyz/custom-resources/apis/appcatalog/v1alpha1
 kmodules.xyz/custom-resources/client/clientset/versioned/scheme
 kmodules.xyz/custom-resources/client/clientset/versioned/typed/appcatalog/v1alpha1
-# kmodules.xyz/resource-metadata v0.3.6
+# kmodules.xyz/resource-metadata v0.3.7
 kmodules.xyz/resource-metadata/api/crds
 kmodules.xyz/resource-metadata/apis/meta
 kmodules.xyz/resource-metadata/apis/meta/v1alpha1

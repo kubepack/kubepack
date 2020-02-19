@@ -68,6 +68,20 @@ type ResourceDescriptorSpec struct {
 
 	// Links are a list of descriptive URLs intended to be used to surface additional documentation, dashboards, etc.
 	Links []Link `json:"links,omitempty"`
+
+	Installer *DeploymentParameters `json:"installer,omitempty"`
+}
+
+type DeploymentParameters struct {
+	ProductID string    `json:"productID,omitempty"`
+	PlanID    string    `json:"planID,omitempty"`
+	Version   string    `json:"version,omitempty"`
+	Chart     *ChartRef `json:"chart,omitempty"`
+}
+
+type ChartRef struct {
+	URL  string `json:"url"`
+	Name string `json:"name"`
 }
 
 // ResourceID identifies a resource

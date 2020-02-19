@@ -69,8 +69,6 @@ type ProductSpec struct {
 	Versions []ProductVersion `json:"versions,omitempty" protobuf:"bytes,16,rep,name=versions"`
 	//+optional
 	LatestVersion string `json:"latestVersion,omitempty" protobuf:"bytes,17,opt,name=latestVersion"`
-	//+optional
-	SubProjects map[string]ProjectRef `json:"subProjects,omitempty" protobuf:"bytes,18,rep,name=subProjects"`
 }
 
 type Phase string
@@ -82,27 +80,10 @@ const (
 )
 
 type ProductVersion struct {
-	Version  string            `json:"version" protobuf:"bytes,1,opt,name=version"`
-	HostDocs bool              `json:"hostDocs" protobuf:"varint,2,opt,name=hostDocs"`
-	Show     bool              `json:"show,omitempty" protobuf:"varint,3,opt,name=show"`
-	DocsDir  string            `json:"docsDir,omitempty" protobuf:"bytes,4,opt,name=docsDir"` // default: "docs"
-	Branch   string            `json:"branch,omitempty" protobuf:"bytes,5,opt,name=branch"`
-	Info     map[string]string `json:"info,omitempty" protobuf:"bytes,6,rep,name=info"`
+	Version string `json:"version" protobuf:"bytes,1,opt,name=version"`
 	// +optional
-	ReleaseDate metav1.Time `json:"releaseDate,omitempty" protobuf:"bytes,7,opt,name=releaseDate"`
+	ReleaseDate metav1.Time `json:"releaseDate,omitempty" protobuf:"bytes,2,opt,name=releaseDate"`
 }
-
-type ProjectRef struct {
-	Dir      string    `json:"dir" protobuf:"bytes,1,opt,name=dir"`
-	Mappings []Mapping `json:"mappings" protobuf:"bytes,2,rep,name=mappings"`
-}
-
-type Mapping struct {
-	Versions           []string `json:"versions" protobuf:"bytes,1,rep,name=versions"`
-	SubProjectVersions []string `json:"subProjectVersions" protobuf:"bytes,2,rep,name=subProjectVersions"`
-}
-
-// INFO________________________________________________________________________
 
 type MediaType string
 
@@ -136,8 +117,6 @@ type Badge struct {
 	Alt  string `json:"alt" protobuf:"bytes,2,opt,name=alt"`
 	Logo string `json:"logo" protobuf:"bytes,3,opt,name=logo"`
 }
-
-// INFO________________________________________________________________________
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 // +kubebuilder:object:root=true
