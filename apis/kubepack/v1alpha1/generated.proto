@@ -205,10 +205,6 @@ message ChartOption {
   optional bool multiSelect = 5;
 
   optional bool required = 6;
-
-  // jsonpatch path in Values where the license key will be set using replace operation, if defined.
-  // See: http://jsonpatch.com
-  optional string licenseKeyPath = 7;
 }
 
 message ChartRef {
@@ -557,59 +553,85 @@ message PackageView {
   optional k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps openAPIV3Schema = 3;
 }
 
+// +kubebuilder:object:root=true
+// +kubebuilder:resource:path=plans,singular=plan,scope=Cluster,categories={kubepack,appscode}
+// +kubebuilder:subresource:status
 message Plan {
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
+
+  optional PlanSpec spec = 2;
+
+  optional PlanStatus status = 3;
+}
+
+message PlanList {
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.ListMeta metadata = 1;
+
+  repeated Plan items = 2;
+}
+
+message PlanSpec {
   optional string id = 1;
 
   optional string name = 2;
 
-  optional ChartRef chart = 3;
+  optional string productID = 3;
 
   optional string phase = 4;
 
+  optional ChartRef bundle = 5;
+
   // +optional
-  repeated string includedPlans = 5;
+  repeated string includedPlans = 6;
 
-  optional string aggregate_usage = 6;
+  optional string aggregateUsage = 7;
 
-  optional int64 amount = 7;
+  optional int64 amount = 8;
 
-  optional double amount_decimal = 8;
+  optional double amountDecimal = 9;
 
-  optional string billing_scheme = 9;
+  optional string billingScheme = 10;
 
-  optional string currency = 10;
+  optional string currency = 11;
 
-  optional string interval = 11;
+  optional string interval = 12;
 
-  optional int64 interval_count = 12;
+  optional int64 intervalCount = 13;
 
-  repeated PlanTier tiers = 13;
+  repeated PlanTier tiers = 14;
 
-  optional string tiers_mode = 14;
+  optional string tiersMode = 15;
 
-  optional PlanTransformUsage transform_usage = 15;
+  optional PlanTransformUsage transformUsage = 16;
 
-  optional int64 trial_period_days = 16;
+  optional int64 trialPeriodDays = 17;
 
-  optional string usage_type = 17;
+  optional string usageType = 18;
+}
+
+message PlanStatus {
+  // ObservedGeneration is the most recent generation observed for this resource. It corresponds to the
+  // resource's generation, which is updated on mutation by the API Server.
+  // +optional
+  optional int64 observedGeneration = 1;
 }
 
 // PlanTier configures tiered pricing
 message PlanTier {
-  optional int64 flat_amount = 1;
+  optional int64 flatAmount = 1;
 
-  optional double flat_amount_decimal = 2;
+  optional double flatAmountDecimal = 2;
 
-  optional int64 unit_amount = 3;
+  optional int64 unitAmount = 3;
 
-  optional double unit_amount_decimal = 4;
+  optional double unitAmountDecimal = 4;
 
-  optional int64 up_to = 5;
+  optional int64 upTo = 5;
 }
 
 // PlanTransformUsage represents the bucket billing configuration.
 message PlanTransformUsage {
-  optional int64 divide_by = 1;
+  optional int64 divideBy = 1;
 
   optional string round = 2;
 }
@@ -671,16 +693,13 @@ message ProductSpec {
   repeated Badge badges = 15;
 
   // +optional
-  repeated Plan plans = 16;
+  repeated ProductVersion versions = 16;
 
   // +optional
-  repeated ProductVersion versions = 17;
+  optional string latestVersion = 17;
 
   // +optional
-  optional string latestVersion = 18;
-
-  // +optional
-  map<string, ProjectRef> subProjects = 19;
+  map<string, ProjectRef> subProjects = 18;
 }
 
 message ProductStatus {
@@ -777,6 +796,10 @@ message VersionDetail {
   optional ResourceDefinitions resources = 3;
 
   repeated WaitFlags waitFors = 4;
+
+  // jsonpatch path in Values where the license key will be set using replace operation, if defined.
+  // See: http://jsonpatch.com
+  optional string licenseKeyPath = 5;
 }
 
 message VersionOption {

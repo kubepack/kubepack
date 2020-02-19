@@ -41,6 +41,10 @@ func (c *FakeKubepackV1alpha1) Orders() v1alpha1.OrderInterface {
 	return &FakeOrders{c}
 }
 
+func (c *FakeKubepackV1alpha1) Plans() v1alpha1.PlanInterface {
+	return &FakePlans{c}
+}
+
 func (c *FakeKubepackV1alpha1) Products() v1alpha1.ProductInterface {
 	return &FakeProducts{c}
 }

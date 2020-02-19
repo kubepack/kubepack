@@ -60,6 +60,8 @@ func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Kubepack().V1alpha1().Bundles().Informer()}, nil
 	case v1alpha1.SchemeGroupVersion.WithResource("orders"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Kubepack().V1alpha1().Orders().Informer()}, nil
+	case v1alpha1.SchemeGroupVersion.WithResource("plans"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Kubepack().V1alpha1().Plans().Informer()}, nil
 	case v1alpha1.SchemeGroupVersion.WithResource("products"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Kubepack().V1alpha1().Products().Informer()}, nil
 

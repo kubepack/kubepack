@@ -30,6 +30,8 @@ type Interface interface {
 	Bundles() BundleInformer
 	// Orders returns a OrderInformer.
 	Orders() OrderInformer
+	// Plans returns a PlanInformer.
+	Plans() PlanInformer
 	// Products returns a ProductInformer.
 	Products() ProductInformer
 }
@@ -58,6 +60,11 @@ func (v *version) Bundles() BundleInformer {
 // Orders returns a OrderInformer.
 func (v *version) Orders() OrderInformer {
 	return &orderInformer{factory: v.factory, tweakListOptions: v.tweakListOptions}
+}
+
+// Plans returns a PlanInformer.
+func (v *version) Plans() PlanInformer {
+	return &planInformer{factory: v.factory, tweakListOptions: v.tweakListOptions}
 }
 
 // Products returns a ProductInformer.

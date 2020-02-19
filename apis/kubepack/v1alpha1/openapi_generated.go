@@ -365,6 +365,9 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageSelection":                                   schema_kubepack_apis_kubepack_v1alpha1_PackageSelection(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PackageView":                                        schema_kubepack_apis_kubepack_v1alpha1_PackageView(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Plan":                                               schema_kubepack_apis_kubepack_v1alpha1_Plan(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanList":                                           schema_kubepack_apis_kubepack_v1alpha1_PlanList(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanSpec":                                           schema_kubepack_apis_kubepack_v1alpha1_PlanSpec(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanStatus":                                         schema_kubepack_apis_kubepack_v1alpha1_PlanStatus(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTier":                                           schema_kubepack_apis_kubepack_v1alpha1_PlanTier(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTransformUsage":                                 schema_kubepack_apis_kubepack_v1alpha1_PlanTransformUsage(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Product":                                            schema_kubepack_apis_kubepack_v1alpha1_Product(ref),
@@ -15808,13 +15811,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartOption(ref common.ReferenceCall
 							Format: "",
 						},
 					},
-					"licenseKeyPath": {
-						SchemaProps: spec.SchemaProps{
-							Description: "jsonpatch path in Values where the license key will be set using replace operation, if defined. See: http://jsonpatch.com",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
 				},
 				Required: []string{"url", "name", "versions"},
 			},
@@ -17374,6 +17370,94 @@ func schema_kubepack_apis_kubepack_v1alpha1_Plan(ref common.ReferenceCallback) c
 			SchemaProps: spec.SchemaProps{
 				Type: []string{"object"},
 				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"metadata": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
+						},
+					},
+					"spec": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanSpec"),
+						},
+					},
+					"status": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanStatus"),
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanStatus"},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_PlanList(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"metadata": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"),
+						},
+					},
+					"items": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.Plan"),
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Plan"},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_PlanSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
 					"id": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
@@ -17386,15 +17470,21 @@ func schema_kubepack_apis_kubepack_v1alpha1_Plan(ref common.ReferenceCallback) c
 							Format: "",
 						},
 					},
-					"chart": {
+					"productID": {
 						SchemaProps: spec.SchemaProps{
-							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRef"),
+							Type:   []string{"string"},
+							Format: "",
 						},
 					},
 					"phase": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
+						},
+					},
+					"bundle": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRef"),
 						},
 					},
 					"includedPlans": {
@@ -17410,7 +17500,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_Plan(ref common.ReferenceCallback) c
 							},
 						},
 					},
-					"aggregate_usage": {
+					"aggregateUsage": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
@@ -17422,13 +17512,13 @@ func schema_kubepack_apis_kubepack_v1alpha1_Plan(ref common.ReferenceCallback) c
 							Format: "int64",
 						},
 					},
-					"amount_decimal": {
+					"amountDecimal": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
 						},
 					},
-					"billing_scheme": {
+					"billingScheme": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
@@ -17446,7 +17536,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_Plan(ref common.ReferenceCallback) c
 							Format: "",
 						},
 					},
-					"interval_count": {
+					"intervalCount": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"integer"},
 							Format: "int64",
@@ -17464,35 +17554,54 @@ func schema_kubepack_apis_kubepack_v1alpha1_Plan(ref common.ReferenceCallback) c
 							},
 						},
 					},
-					"tiers_mode": {
+					"tiersMode": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
 						},
 					},
-					"transform_usage": {
+					"transformUsage": {
 						SchemaProps: spec.SchemaProps{
 							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTransformUsage"),
 						},
 					},
-					"trial_period_days": {
+					"trialPeriodDays": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"integer"},
 							Format: "int64",
 						},
 					},
-					"usage_type": {
+					"usageType": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
 						},
 					},
 				},
-				Required: []string{"id", "name", "chart", "phase", "amount"},
+				Required: []string{"id", "name", "productID", "phase"},
 			},
 		},
 		Dependencies: []string{
 			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRef", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTier", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTransformUsage"},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_PlanStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"observedGeneration": {
+						SchemaProps: spec.SchemaProps{
+							Description: "ObservedGeneration is the most recent generation observed for this resource. It corresponds to the resource's generation, which is updated on mutation by the API Server.",
+							Type:        []string{"integer"},
+							Format:      "int64",
+						},
+					},
+				},
+			},
+		},
 	}
 }
 
@@ -17503,38 +17612,37 @@ func schema_kubepack_apis_kubepack_v1alpha1_PlanTier(ref common.ReferenceCallbac
 				Description: "PlanTier configures tiered pricing",
 				Type:        []string{"object"},
 				Properties: map[string]spec.Schema{
-					"flat_amount": {
+					"flatAmount": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"integer"},
 							Format: "int64",
 						},
 					},
-					"flat_amount_decimal": {
+					"flatAmountDecimal": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
 						},
 					},
-					"unit_amount": {
+					"unitAmount": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"integer"},
 							Format: "int64",
 						},
 					},
-					"unit_amount_decimal": {
+					"unitAmountDecimal": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
 						},
 					},
-					"up_to": {
+					"upTo": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"integer"},
 							Format: "int64",
 						},
 					},
 				},
-				Required: []string{"flat_amount", "unit_amount", "up_to"},
 			},
 		},
 	}
@@ -17547,7 +17655,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_PlanTransformUsage(ref common.Refere
 				Description: "PlanTransformUsage represents the bucket billing configuration.",
 				Type:        []string{"object"},
 				Properties: map[string]spec.Schema{
-					"divide_by": {
+					"divideBy": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"integer"},
 							Format: "int64",
@@ -17560,7 +17668,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_PlanTransformUsage(ref common.Refere
 						},
 					},
 				},
-				Required: []string{"divide_by", "round"},
 			},
 		},
 	}
@@ -17781,18 +17888,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_ProductSpec(ref common.ReferenceCall
 							},
 						},
 					},
-					"plans": {
-						SchemaProps: spec.SchemaProps{
-							Type: []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.Plan"),
-									},
-								},
-							},
-						},
-					},
 					"versions": {
 						SchemaProps: spec.SchemaProps{
 							Type: []string{"array"},
@@ -17829,7 +17924,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_ProductSpec(ref common.ReferenceCall
 			},
 		},
 		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Badge", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.MediaSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Plan", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductVersion", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProjectRef"},
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Badge", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.MediaSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductVersion", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProjectRef"},
 	}
 }
 
@@ -18290,6 +18385,13 @@ func schema_kubepack_apis_kubepack_v1alpha1_VersionDetail(ref common.ReferenceCa
 									},
 								},
 							},
+						},
+					},
+					"licenseKeyPath": {
+						SchemaProps: spec.SchemaProps{
+							Description: "jsonpatch path in Values where the license key will be set using replace operation, if defined. See: http://jsonpatch.com",
+							Type:        []string{"string"},
+							Format:      "",
 						},
 					},
 				},
