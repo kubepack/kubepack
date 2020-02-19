@@ -30,6 +30,7 @@ type KubepackV1alpha1Interface interface {
 	ApplicationsGetter
 	BundlesGetter
 	OrdersGetter
+	PlansGetter
 	ProductsGetter
 }
 
@@ -48,6 +49,10 @@ func (c *KubepackV1alpha1Client) Bundles() BundleInterface {
 
 func (c *KubepackV1alpha1Client) Orders() OrderInterface {
 	return newOrders(c)
+}
+
+func (c *KubepackV1alpha1Client) Plans() PlanInterface {
+	return newPlans(c)
 }
 
 func (c *KubepackV1alpha1Client) Products() ProductInterface {

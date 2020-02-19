@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "mongodb-community",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "plan_GlMzhdLsOOOAz3",
+    "name": "MongoDB Community",
+    "productID": "prod_GlMzpSZB5t4j8a",
+    "phase": "Active",
+    "bundle": {
+      "url": "https://kubernetes-charts.storage.googleapis.com",
+      "name": "stash-mongodb-community"
+    },
+    "amount": 0,
+    "currency": "usd",
+    "interval": "month"
+  },
+  "status": {}
+}

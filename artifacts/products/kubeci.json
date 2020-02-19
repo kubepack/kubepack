@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_Gl0ZqRBwjD8H1S",
+    "id": "prod_GlMze7iJAtWAPF",
     "key": "kubeci",
     "name": "KubeCI by AppsCode",
     "shortName": "KubeCI",
@@ -76,20 +76,6 @@
         "url": "docker/pulls/kubeci/kubeci-engine",
         "alt": "Docker Pulls",
         "logo": "docker"
-      }
-    ],
-    "plans": [
-      {
-        "id": "plan_Gl1KTWM5HOobwv",
-        "name": "KubeCI Community",
-        "chart": {
-          "url": "https://kubernetes-charts.storage.googleapis.com",
-          "name": "kubeci-community"
-        },
-        "phase": "Active",
-        "amount": 0,
-        "currency": "usd",
-        "interval": "month"
       }
     ],
     "versions": [

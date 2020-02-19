@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_Gl0ZtSbc4JBRf9",
+    "id": "prod_GlMzqr35o9IJNf",
     "key": "stash-mysql",
     "name": "Stash MySQL Addon",
     "shortName": "MySQL",
@@ -42,20 +42,6 @@
         "url": "docker/pulls/stashed/mysql",
         "alt": "Docker Pulls",
         "logo": "docker"
-      }
-    ],
-    "plans": [
-      {
-        "id": "plan_Gl1KCwMYToVstw",
-        "name": "MySQL Community",
-        "chart": {
-          "url": "https://kubernetes-charts.storage.googleapis.com",
-          "name": "stash-mysql-community"
-        },
-        "phase": "Active",
-        "amount": 0,
-        "currency": "usd",
-        "interval": "month"
       }
     ],
     "versions": [

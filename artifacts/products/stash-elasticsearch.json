@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_Gl0ZmpGXoSjOB1",
+    "id": "prod_GlMzA9Te7SwXAM",
     "key": "stash-elasticsearch",
     "name": "Stash Elasticsearch Addon",
     "shortName": "Elasticsearch",
@@ -42,20 +42,6 @@
         "url": "docker/pulls/stashed/elasticsearch",
         "alt": "Docker Pulls",
         "logo": "docker"
-      }
-    ],
-    "plans": [
-      {
-        "id": "plan_Gl1KSW40b2ZueQ",
-        "name": "Elasticsearch Community",
-        "chart": {
-          "url": "https://kubernetes-charts.storage.googleapis.com",
-          "name": "stash-elasticsearch-community"
-        },
-        "phase": "Active",
-        "amount": 0,
-        "currency": "usd",
-        "interval": "month"
       }
     ],
     "versions": [

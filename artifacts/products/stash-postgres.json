@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_Gl0ZxTKshJxP20",
+    "id": "prod_GlMzAJQCNIwIru",
     "key": "stash-postgres",
     "name": "Stash PostgreSQL Addon",
     "shortName": "PostgreSQL",
@@ -42,20 +42,6 @@
         "url": "docker/pulls/stashed/postgres",
         "alt": "Docker Pulls",
         "logo": "docker"
-      }
-    ],
-    "plans": [
-      {
-        "id": "plan_Gl1KGcP18vM0LN",
-        "name": "PostgreSQL Community",
-        "chart": {
-          "url": "https://kubernetes-charts.storage.googleapis.com",
-          "name": "stash-postgres-community"
-        },
-        "phase": "Active",
-        "amount": 0,
-        "currency": "usd",
-        "interval": "month"
       }
     ],
     "versions": [

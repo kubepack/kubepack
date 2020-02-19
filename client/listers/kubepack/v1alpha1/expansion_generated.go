@@ -34,6 +34,10 @@ type BundleListerExpansion interface{}
 // OrderLister.
 type OrderListerExpansion interface{}
 
+// PlanListerExpansion allows custom methods to be added to
+// PlanLister.
+type PlanListerExpansion interface{}
+
 // ProductListerExpansion allows custom methods to be added to
 // ProductLister.
 type ProductListerExpansion interface{}

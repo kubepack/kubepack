@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "kubeshield-community",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "plan_GlMz7YBkmfOMn2",
+    "name": "Kubeshield Community",
+    "productID": "prod_GlMz62gqmnot4c",
+    "phase": "Active",
+    "bundle": {
+      "url": "https://kubernetes-charts.storage.googleapis.com",
+      "name": "kubeshield-community"
+    },
+    "amount": 0,
+    "currency": "usd",
+    "interval": "month"
+  },
+  "status": {}
+}

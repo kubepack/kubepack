@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_Gl0Zd7VbenDJSd",
+    "id": "prod_GlMzOFQ6KRxGE3",
     "key": "service-broker",
     "name": "Service Broker by AppsCode",
     "shortName": "ServiceBroker",
@@ -71,20 +71,6 @@
         "url": "docker/pulls/appscode/service-broker",
         "alt": "Docker Pulls",
         "logo": "docker"
-      }
-    ],
-    "plans": [
-      {
-        "id": "plan_Gl1KEfyvuZzTVo",
-        "name": "ServiceBroker Community",
-        "chart": {
-          "url": "https://kubernetes-charts.storage.googleapis.com",
-          "name": "service-broker-community"
-        },
-        "phase": "Active",
-        "amount": 0,
-        "currency": "usd",
-        "interval": "month"
       }
     ],
     "versions": [

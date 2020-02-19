@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "appscode-community",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "plan_GlMzSjrk53FJ5r",
+    "name": "AppsCode Community",
+    "productID": "prod_GlMzRzUFyiizLL",
+    "phase": "Active",
+    "bundle": {
+      "url": "https://kubernetes-charts.storage.googleapis.com",
+      "name": "appscode-community"
+    },
+    "amount": 0,
+    "currency": "usd",
+    "interval": "month"
+  },
+  "status": {}
+}

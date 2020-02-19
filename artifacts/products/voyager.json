@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_Gl0ZHdZaTJcjeR",
+    "id": "prod_GlMzjTiJrNx2bb",
     "key": "voyager",
     "name": "Voyager by AppsCode",
     "shortName": "Voyager",
@@ -71,20 +71,6 @@
         "url": "docker/pulls/appscode/voyager",
         "alt": "Docker Pulls",
         "logo": "docker"
-      }
-    ],
-    "plans": [
-      {
-        "id": "plan_Gl1KGYZ1YziqFX",
-        "name": "Voyager Community",
-        "chart": {
-          "url": "https://kubernetes-charts.storage.googleapis.com",
-          "name": "voyager-community"
-        },
-        "phase": "Active",
-        "amount": 0,
-        "currency": "usd",
-        "interval": "month"
       }
     ],
     "versions": [

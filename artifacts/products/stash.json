@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_Gl0ZzyApTjrGWG",
+    "id": "prod_GlMzw81OxdNNss",
     "key": "stash",
     "name": "Stash by AppsCode",
     "shortName": "Stash",
@@ -79,20 +79,6 @@
         "url": "docker/pulls/appscode/stash",
         "alt": "Docker Pulls",
         "logo": "docker"
-      }
-    ],
-    "plans": [
-      {
-        "id": "plan_Gl1KE3HPpwdJmC",
-        "name": "Stash Community",
-        "chart": {
-          "url": "https://kubernetes-charts.storage.googleapis.com",
-          "name": "stash-community"
-        },
-        "phase": "Active",
-        "amount": 0,
-        "currency": "usd",
-        "interval": "month"
       }
     ],
     "versions": [

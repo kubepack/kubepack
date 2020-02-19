@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "elasticsearch-community",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "plan_GlMz6cca4Q9cXF",
+    "name": "Elasticsearch Community",
+    "productID": "prod_GlMzA9Te7SwXAM",
+    "phase": "Active",
+    "bundle": {
+      "url": "https://kubernetes-charts.storage.googleapis.com",
+      "name": "stash-elasticsearch-community"
+    },
+    "amount": 0,
+    "currency": "usd",
+    "interval": "month"
+  },
+  "status": {}
+}

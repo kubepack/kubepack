@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_Gl0ZDt4luEeaBm",
+    "id": "prod_GlMz5xFym5mA5b",
     "key": "kubeform",
     "name": "Kubeform by AppsCode",
     "shortName": "Kubeform",
@@ -78,20 +78,6 @@
         "url": "docker/pulls/kubeform/kfc",
         "alt": "Docker Pulls",
         "logo": "docker"
-      }
-    ],
-    "plans": [
-      {
-        "id": "plan_Gl1KqESV8hVy11",
-        "name": "Kubeform Community",
-        "chart": {
-          "url": "https://kubernetes-charts.storage.googleapis.com",
-          "name": "kubeform-community"
-        },
-        "phase": "Active",
-        "amount": 0,
-        "currency": "usd",
-        "interval": "month"
       }
     ],
     "versions": [

@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_Gl0ZASnGcBxwKg",
+    "id": "prod_GlMzcj5t0MgMF2",
     "key": "pharmer",
     "name": "Pharmer by AppsCode",
     "shortName": "Pharmer",
@@ -78,20 +78,6 @@
         "url": "docker/pulls/pharmer/machine-controller",
         "alt": "Docker Pulls",
         "logo": "docker"
-      }
-    ],
-    "plans": [
-      {
-        "id": "plan_Gl1KJCM4AbmnoL",
-        "name": "Pharmer Community",
-        "chart": {
-          "url": "https://kubernetes-charts.storage.googleapis.com",
-          "name": "pharmer-community"
-        },
-        "phase": "Active",
-        "amount": 0,
-        "currency": "usd",
-        "interval": "month"
       }
     ],
     "versions": [

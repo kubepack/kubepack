@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_Gl0ZKSWHvTnq44",
+    "id": "prod_GlMzO71HXjQIjA",
     "key": "bytebuilders",
     "name": "ByteBuilders by AppsCode",
     "shortName": "ByteBuilders",
@@ -31,20 +31,6 @@
       {
         "description": "star_repo",
         "url": "bytebuilders/community"
-      }
-    ],
-    "plans": [
-      {
-        "id": "plan_Gl1K6b1rxPtBe1",
-        "name": "ByteBuilders Community",
-        "chart": {
-          "url": "https://kubernetes-charts.storage.googleapis.com",
-          "name": "bytebuilders-community"
-        },
-        "phase": "Active",
-        "amount": 0,
-        "currency": "usd",
-        "interval": "month"
       }
     ]
   },

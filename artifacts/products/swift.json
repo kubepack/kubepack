@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_Gl0Zrjo42ZpWNi",
+    "id": "prod_GlMzUjK8FihZNG",
     "key": "swift",
     "name": "Swift by AppsCode",
     "shortName": "Swift",
@@ -71,20 +71,6 @@
         "url": "docker/pulls/appscode/swift",
         "alt": "Docker Pulls",
         "logo": "docker"
-      }
-    ],
-    "plans": [
-      {
-        "id": "plan_Gl1KbkT7BWTFTx",
-        "name": "Swift Community",
-        "chart": {
-          "url": "https://kubernetes-charts.storage.googleapis.com",
-          "name": "swift-community"
-        },
-        "phase": "Active",
-        "amount": 0,
-        "currency": "usd",
-        "interval": "month"
       }
     ],
     "versions": [

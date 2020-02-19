@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "pharmer-community",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "plan_GlMzP2fUCpSjPO",
+    "name": "Pharmer Community",
+    "productID": "prod_GlMzcj5t0MgMF2",
+    "phase": "Active",
+    "bundle": {
+      "url": "https://kubernetes-charts.storage.googleapis.com",
+      "name": "pharmer-community"
+    },
+    "amount": 0,
+    "currency": "usd",
+    "interval": "month"
+  },
+  "status": {}
+}

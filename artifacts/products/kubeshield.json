@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_Gl0ZmaGgm10791",
+    "id": "prod_GlMz62gqmnot4c",
     "key": "kubeshield",
     "name": "Kubeshield by AppsCode",
     "shortName": "Kubeshield",
@@ -78,20 +78,6 @@
         "url": "docker/pulls/kubeshield/scanner",
         "alt": "Docker Pulls",
         "logo": "docker"
-      }
-    ],
-    "plans": [
-      {
-        "id": "plan_Gl1KQBHXbnDUxP",
-        "name": "Kubeshield Community",
-        "chart": {
-          "url": "https://kubernetes-charts.storage.googleapis.com",
-          "name": "kubeshield-community"
-        },
-        "phase": "Active",
-        "amount": 0,
-        "currency": "usd",
-        "interval": "month"
       }
     ],
     "versions": [

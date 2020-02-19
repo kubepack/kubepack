@@ -75,9 +75,6 @@ type ChartOption struct {
 	Versions    []VersionDetail `json:"versions" protobuf:"bytes,4,rep,name=versions"`
 	MultiSelect bool            `json:"multiSelect,omitempty" protobuf:"varint,5,opt,name=multiSelect"`
 	Required    bool            `json:"required,omitempty" protobuf:"varint,6,opt,name=required"`
-	// jsonpatch path in Values where the license key will be set using replace operation, if defined.
-	// See: http://jsonpatch.com
-	LicenseKeyPath string `json:"licenseKeyPath,omitempty" protobuf:"bytes,7,opt,name=licenseKeyPath"`
 }
 
 type BundleRef struct {
@@ -103,6 +100,9 @@ type VersionDetail struct {
 	VersionOption `json:",inline" protobuf:"bytes,1,opt,name=versionOption"`
 	Resources     *ResourceDefinitions `json:"resources,omitempty" protobuf:"bytes,3,opt,name=resources"`
 	WaitFors      []WaitFlags          `json:"waitFors,omitempty" protobuf:"bytes,4,rep,name=waitFors"`
+	// jsonpatch path in Values where the license key will be set using replace operation, if defined.
+	// See: http://jsonpatch.com
+	LicenseKeyPath string `json:"licenseKeyPath,omitempty" protobuf:"bytes,5,opt,name=licenseKeyPath"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

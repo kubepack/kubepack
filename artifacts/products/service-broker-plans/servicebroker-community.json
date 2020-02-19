@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "servicebroker-community",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "plan_GlMzEqNoXW2cLo",
+    "name": "ServiceBroker Community",
+    "productID": "prod_GlMzOFQ6KRxGE3",
+    "phase": "Active",
+    "bundle": {
+      "url": "https://kubernetes-charts.storage.googleapis.com",
+      "name": "service-broker-community"
+    },
+    "amount": 0,
+    "currency": "usd",
+    "interval": "month"
+  },
+  "status": {}
+}

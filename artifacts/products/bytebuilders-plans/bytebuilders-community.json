@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "bytebuilders-community",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "plan_GlMzpQbT1Mi5FF",
+    "name": "ByteBuilders Community",
+    "productID": "prod_GlMzO71HXjQIjA",
+    "phase": "Active",
+    "bundle": {
+      "url": "https://kubernetes-charts.storage.googleapis.com",
+      "name": "bytebuilders-community"
+    },
+    "amount": 0,
+    "currency": "usd",
+    "interval": "month"
+  },
+  "status": {}
+}

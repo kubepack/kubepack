@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "kubedb-community",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "plan_GlMz0TzqhVTFWv",
+    "name": "KubeDB Community",
+    "productID": "prod_GlMzh3nuTuZzaz",
+    "phase": "Active",
+    "bundle": {
+      "url": "https://kubernetes-charts.storage.googleapis.com",
+      "name": "kubedb-community"
+    },
+    "amount": 0,
+    "currency": "usd",
+    "interval": "month"
+  },
+  "status": {}
+}

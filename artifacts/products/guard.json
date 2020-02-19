@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_Gl0ZOcP8D64eWm",
+    "id": "prod_GlMzwjDmzl9bo0",
     "key": "guard",
     "name": "Guard by AppsCode",
     "shortName": "Guard",
@@ -71,20 +71,6 @@
         "url": "docker/pulls/appscode/guard",
         "alt": "Docker Pulls",
         "logo": "docker"
-      }
-    ],
-    "plans": [
-      {
-        "id": "plan_Gl1KWvO8GrVVsm",
-        "name": "Guard Community",
-        "chart": {
-          "url": "https://kubernetes-charts.storage.googleapis.com",
-          "name": "guard-community"
-        },
-        "phase": "Active",
-        "amount": 0,
-        "currency": "usd",
-        "interval": "month"
       }
     ],
     "versions": [

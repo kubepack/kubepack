@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_Gl0Z8ZOyfLH2Oh",
+    "id": "prod_GlMzd8AcRPVKDQ",
     "key": "kubevault",
     "name": "KubeVault by AppsCode",
     "shortName": "KubeVault",
@@ -79,20 +79,6 @@
         "url": "docker/pulls/kubevault/vault-operator",
         "alt": "Docker Pulls",
         "logo": "docker"
-      }
-    ],
-    "plans": [
-      {
-        "id": "plan_Gl1KzCQMoOyH6i",
-        "name": "KubeVault Community",
-        "chart": {
-          "url": "https://kubernetes-charts.storage.googleapis.com",
-          "name": "kubevault-community"
-        },
-        "phase": "Active",
-        "amount": 0,
-        "currency": "usd",
-        "interval": "month"
       }
     ],
     "versions": [

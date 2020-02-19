@@ -24,4 +24,6 @@ type BundleExpansion interface{}
 
 type OrderExpansion interface{}
 
+type PlanExpansion interface{}
+
 type ProductExpansion interface{}

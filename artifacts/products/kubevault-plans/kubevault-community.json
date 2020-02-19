@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "kubevault-community",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "plan_GlMzBouoIBwIdK",
+    "name": "KubeVault Community",
+    "productID": "prod_GlMzd8AcRPVKDQ",
+    "phase": "Active",
+    "bundle": {
+      "url": "https://kubernetes-charts.storage.googleapis.com",
+      "name": "kubevault-community"
+    },
+    "amount": 0,
+    "currency": "usd",
+    "interval": "month"
+  },
+  "status": {}
+}

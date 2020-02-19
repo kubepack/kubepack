@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_Gl0ZMwz4cHGHfp",
+    "id": "prod_GlMzzNUW8BLGRP",
     "key": "searchlight",
     "name": "Searchlight by AppsCode",
     "shortName": "Searchlight",
@@ -71,20 +71,6 @@
         "url": "docker/pulls/appscode/searchlight",
         "alt": "Docker Pulls",
         "logo": "docker"
-      }
-    ],
-    "plans": [
-      {
-        "id": "plan_Gl1KXTASkl8irX",
-        "name": "Searchlight Community",
-        "chart": {
-          "url": "https://kubernetes-charts.storage.googleapis.com",
-          "name": "searchlight-community"
-        },
-        "phase": "Active",
-        "amount": 0,
-        "currency": "usd",
-        "interval": "month"
       }
     ],
     "versions": [

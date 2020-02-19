@@ -146,10 +146,6 @@ spec:
                         items:
                           type: string
                         type: array
-                      licenseKeyPath:
-                        description: 'jsonpatch path in Values where the license key
-                          will be set using replace operation, if defined. See: http://jsonpatch.com'
-                        type: string
                       multiSelect:
                         type: boolean
                       name:
@@ -163,6 +159,11 @@ spec:
                       versions:
                         items:
                           properties:
+                            licenseKeyPath:
+                              description: 'jsonpatch path in Values where the license
+                                key will be set using replace operation, if defined.
+                                See: http://jsonpatch.com'
+                              type: string
                             resources:
                               properties:
                                 owned:

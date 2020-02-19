@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_Gl0Z4BUlEePVTO",
+    "id": "prod_GlMzoGHLip1nPT",
     "key": "stash-cli",
     "name": "Stash kubectl Plugin",
     "shortName": "Stash kubectl Plugin",
@@ -37,20 +37,6 @@
         "url": "github/stars/stashed/cli",
         "alt": "GitHub Stars",
         "logo": "github"
-      }
-    ],
-    "plans": [
-      {
-        "id": "plan_Gl1KMOjIB4X93E",
-        "name": "Stash kubectl Plugin Community",
-        "chart": {
-          "url": "https://kubernetes-charts.storage.googleapis.com",
-          "name": "stash-cli-community"
-        },
-        "phase": "Active",
-        "amount": 0,
-        "currency": "usd",
-        "interval": "month"
       }
     ],
     "versions": [

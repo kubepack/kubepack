@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_Gl0ZfmClhdn8QI",
+    "id": "prod_GlMzoHmw5tz6Ig",
     "key": "stash-percona-xtradb",
     "name": "Stash Percona XtraDB Addon",
     "shortName": "Percona XtraDB",
@@ -41,20 +41,6 @@
         "url": "docker/pulls/stashed/percona-xtradb",
         "alt": "Docker Pulls",
         "logo": "docker"
-      }
-    ],
-    "plans": [
-      {
-        "id": "plan_Gl1Ky2eZIHrDl9",
-        "name": "Percona XtraDB Community",
-        "chart": {
-          "url": "https://kubernetes-charts.storage.googleapis.com",
-          "name": "stash-percona-xtradb-community"
-        },
-        "phase": "Active",
-        "amount": 0,
-        "currency": "usd",
-        "interval": "month"
       }
     ],
     "versions": [

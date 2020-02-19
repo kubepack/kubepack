@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_Gl0ZlXh5cPh6KH",
+    "id": "prod_GlMzcDrGzaU9pV",
     "key": "kubed",
     "name": "Kubed by AppsCode",
     "shortName": "Kubed",
@@ -71,20 +71,6 @@
         "url": "docker/pulls/appscode/kubed",
         "alt": "Docker Pulls",
         "logo": "docker"
-      }
-    ],
-    "plans": [
-      {
-        "id": "plan_Gl1KhjJ454NhuL",
-        "name": "Kubed Community",
-        "chart": {
-          "url": "https://kubernetes-charts.storage.googleapis.com",
-          "name": "kubed-community"
-        },
-        "phase": "Active",
-        "amount": 0,
-        "currency": "usd",
-        "interval": "month"
       }
     ],
     "versions": [

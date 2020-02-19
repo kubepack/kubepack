@@ -24,6 +24,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 
 	"kubepack.dev/kubepack/apis"
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
@@ -31,6 +32,7 @@ import (
 	"github.com/stripe/stripe-go"
 	"github.com/stripe/stripe-go/plan"
 	"github.com/stripe/stripe-go/product"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func main() {
@@ -100,76 +102,6 @@ func main() {
 			}
 		}
 
-		if len(existing.Spec.Plans) == 0 {
-			params := &stripe.PlanParams{
-				Nickname:  stripe.String(existing.Spec.ShortName + " Community"),
-				ProductID: stripe.String(existing.Spec.StripeID),
-				Amount:    stripe.Int64(0),
-				Interval:  stripe.String(string(stripe.PlanIntervalMonth)),
-				Currency:  stripe.String(string(stripe.CurrencyUSD)),
-			}
-			p, err := plan.New(params)
-			if err != nil {
-				log.Fatalln(err)
-			}
-			existing.Spec.Plans = []v1alpha1.Plan{
-				{
-					StripeID: p.ID,
-					NickName: stripe.StringValue(params.Nickname),
-					Chart: v1alpha1.ChartRef{
-						URL:  apis.BundleRepoURL,
-						Name: existing.Spec.Key + "-community",
-					},
-					Phase:         v1alpha1.PhaseActive,
-					IncludedPlans: nil,
-					Amount:        p.Amount,
-					Interval:      p.Interval,
-					Currency:      p.Currency,
-				},
-			}
-		} else {
-			for idx, plaan := range existing.Spec.Plans {
-				exists := plaan.StripeID != ""
-				if exists {
-					_, err := plan.Get(plaan.StripeID, nil)
-					if err != nil {
-						if se, ok := err.(*stripe.Error); ok && se.Code == stripe.ErrorCodeResourceMissing {
-							exists = false
-						} else {
-							log.Fatalln(err)
-						}
-					}
-				}
-				if !exists {
-					params := &stripe.PlanParams{
-						Nickname:  stripe.String(plaan.NickName),
-						ProductID: stripe.String(existing.Spec.StripeID),
-
-						AggregateUsage: StringP(plaan.AggregateUsage),
-						Amount:         Int64P(plaan.Amount),
-						AmountDecimal:  Float64P(plaan.AmountDecimal),
-						BillingScheme:  StringP(string(plaan.BillingScheme)),
-						Currency:       StringP(string(plaan.Currency)),
-						Interval:       StringP(string(plaan.Interval)),
-						IntervalCount:  Int64P(plaan.IntervalCount),
-						Tiers:          convertPlanTier(plaan.Tiers),
-						TiersMode:      StringP(plaan.TiersMode),
-						TransformUsage: &stripe.PlanTransformUsageParams{
-							DivideBy: Int64P(plaan.TransformUsage.DivideBy),
-							Round:    StringP(string(plaan.TransformUsage.Round)),
-						},
-						TrialPeriodDays: Int64P(plaan.TrialPeriodDays),
-						UsageType:       StringP(string(plaan.UsageType)),
-					}
-					p, err := plan.New(params)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					existing.Spec.Plans[idx].StripeID = p.ID
-				}
-			}
-		}
-
 		data, err = json.MarshalIndent(existing, "", "  ")
 		if err != nil {
 			log.Fatalln(err)
@@ -178,6 +110,128 @@ func main() {
 		if err != nil {
 			log.Fatalln(err)
 		}
+
+		{
+			planDir := filepath.Join(dir, existing.Name+"-plans")
+			err = os.MkdirAll(planDir, 0755)
+			if err != nil {
+				log.Fatalln(err)
+			}
+			plaanfiles, err := ioutil.ReadDir(planDir)
+			if err != nil {
+				log.Fatalln(err)
+			}
+			if len(plaanfiles) == 0 {
+				params := &stripe.PlanParams{
+					Nickname:  stripe.String(existing.Spec.ShortName + " Community"),
+					ProductID: stripe.String(existing.Spec.StripeID),
+					Amount:    stripe.Int64(0),
+					Interval:  stripe.String(string(stripe.PlanIntervalMonth)),
+					Currency:  stripe.String(string(stripe.CurrencyUSD)),
+				}
+				p, err := plan.New(params)
+				if err != nil {
+					log.Fatalln(err)
+				}
+				plaan := v1alpha1.Plan{
+					ObjectMeta: metav1.ObjectMeta{
+						Name: strings.ReplaceAll(strings.ToLower(stripe.StringValue(params.Nickname)), " ", "-"),
+					},
+					Spec: v1alpha1.PlanSpec{
+						StripeID:  p.ID,
+						NickName:  stripe.StringValue(params.Nickname),
+						ProductID: existing.Spec.StripeID,
+						Bundle: &v1alpha1.ChartRef{
+							URL:  apis.BundleRepoURL,
+							Name: existing.Spec.Key + "-community",
+						},
+						Phase:         v1alpha1.PhaseActive,
+						IncludedPlans: nil,
+						Amount:        stripe.Int64(p.Amount),
+						Interval:      stripe.String(string(p.Interval)),
+						Currency:      stripe.String(string(p.Currency)),
+					},
+				}
+
+				data, err = json.MarshalIndent(plaan, "", "  ")
+				if err != nil {
+					log.Fatalln(err)
+				}
+				err = ioutil.WriteFile(filepath.Join(planDir, plaan.Name+".json"), data, 0644)
+				if err != nil {
+					log.Fatalln(err)
+				}
+			} else {
+				for _, plaanfile := range plaanfiles {
+					if plaanfile.IsDir() {
+						continue
+					}
+					data, err := ioutil.ReadFile(filepath.Join(planDir, plaanfile.Name()))
+					if err != nil {
+						log.Fatalln(err)
+					}
+					var plaan v1alpha1.Plan
+					err = json.Unmarshal(data, &plaan)
+					if err != nil {
+						log.Fatalln(err)
+					}
+
+					plaan.Spec.ProductID = existing.Spec.StripeID
+
+					exists := plaan.Spec.StripeID != ""
+					if exists {
+						_, err := plan.Get(plaan.Spec.StripeID, nil)
+						if err != nil {
+							if se, ok := err.(*stripe.Error); ok && se.Code == stripe.ErrorCodeResourceMissing {
+								exists = false
+							} else {
+								log.Fatalln(err)
+							}
+						}
+					}
+					if !exists {
+						params := &stripe.PlanParams{
+							Nickname:  stripe.String(plaan.Spec.NickName),
+							ProductID: stripe.String(existing.Spec.StripeID),
+
+							AggregateUsage:  plaan.Spec.AggregateUsage,
+							Amount:          plaan.Spec.Amount,
+							AmountDecimal:   plaan.Spec.AmountDecimal,
+							BillingScheme:   plaan.Spec.BillingScheme,
+							Currency:        plaan.Spec.Currency,
+							Interval:        plaan.Spec.Interval,
+							IntervalCount:   plaan.Spec.IntervalCount,
+							Tiers:           convertPlanTier(plaan.Spec.Tiers),
+							TiersMode:       plaan.Spec.TiersMode,
+							TrialPeriodDays: plaan.Spec.TrialPeriodDays,
+							UsageType:       plaan.Spec.UsageType,
+						}
+						if plaan.Spec.TransformUsage != nil {
+							params.TransformUsage = &stripe.PlanTransformUsageParams{
+								DivideBy: plaan.Spec.TransformUsage.DivideBy,
+								Round:    plaan.Spec.TransformUsage.Round,
+							}
+						}
+						p, err := plan.New(params)
+						if err != nil {
+							log.Fatalln(err)
+						}
+
+						plaan.Spec.StripeID = p.ID
+						plaan.Name = strings.ReplaceAll(strings.ToLower(stripe.StringValue(params.Nickname)), " ", "-")
+
+						data, err = json.MarshalIndent(plaan, "", "  ")
+						if err != nil {
+							log.Fatalln(err)
+						}
+						err = ioutil.WriteFile(filepath.Join(planDir, plaan.Name+".json"), data, 0644)
+						if err != nil {
+							log.Fatalln(err)
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -185,12 +239,11 @@ func convertPlanTier(in []*v1alpha1.PlanTier) []*stripe.PlanTierParams {
 	var out []*stripe.PlanTierParams
 	for _, tier := range in {
 		out = append(out, &stripe.PlanTierParams{
-			Params:            stripe.Params{},
-			FlatAmount:        Int64P(tier.FlatAmount),
-			FlatAmountDecimal: Float64P(tier.FlatAmountDecimal),
-			UnitAmount:        Int64P(tier.UnitAmount),
-			UnitAmountDecimal: Float64P(tier.UnitAmountDecimal),
-			UpTo:              Int64P(tier.UpTo),
+			FlatAmount:        tier.FlatAmount,
+			FlatAmountDecimal: tier.FlatAmountDecimal,
+			UnitAmount:        tier.UnitAmount,
+			UnitAmountDecimal: tier.UnitAmountDecimal,
+			UpTo:              tier.UpTo,
 		})
 	}
 	return out
