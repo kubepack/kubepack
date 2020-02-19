@@ -84,283 +84,98 @@
     "versions": [
       {
         "version": "master",
-        "hostDocs": false,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "v0.9.0-rc.4",
-        "hostDocs": true,
-        "show": true,
-        "info": {
-          "catalog": "v0.2.0",
-          "cli": "v0.3.0"
-        },
         "releaseDate": null
       },
       {
         "version": "v0.9.0-rc.2",
-        "hostDocs": true,
-        "show": true,
-        "info": {
-          "catalog": "v0.1.0",
-          "cli": "v0.2.0"
-        },
         "releaseDate": null
       },
       {
         "version": "v0.9.0-rc.1",
-        "hostDocs": true,
-        "show": true,
-        "info": {
-          "catalog": "v0.1.0",
-          "cli": "v0.1.0"
-        },
         "releaseDate": null
       },
       {
         "version": "v0.9.0-rc.0",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "0.8.3",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "0.8.2",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "0.8.1",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "0.8.0",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "0.7.0",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "0.7.0-rc.5",
-        "hostDocs": true,
         "releaseDate": null
       },
       {
         "version": "0.7.0-rc.4",
-        "hostDocs": true,
         "releaseDate": null
       },
       {
         "version": "0.7.0-rc.3",
-        "hostDocs": true,
         "releaseDate": null
       },
       {
         "version": "0.7.0-rc.2",
-        "hostDocs": true,
         "releaseDate": null
       },
       {
         "version": "0.7.0-rc.1",
-        "hostDocs": true,
         "releaseDate": null
       },
       {
         "version": "0.7.0-rc.0",
-        "hostDocs": true,
         "releaseDate": null
       },
       {
         "version": "0.6.4",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "0.6.3",
-        "hostDocs": true,
         "releaseDate": null
       },
       {
         "version": "0.6.2",
-        "hostDocs": true,
         "releaseDate": null
       },
       {
         "version": "0.6.1",
-        "hostDocs": true,
         "releaseDate": null
       },
       {
         "version": "0.6.0",
-        "hostDocs": true,
         "releaseDate": null
       },
       {
         "version": "0.5.1",
-        "hostDocs": false,
         "releaseDate": null
       },
       {
         "version": "0.4.2",
-        "hostDocs": false,
-        "show": true,
         "releaseDate": null
       }
     ],
-    "latestVersion": "v0.9.0-rc.4",
-    "subProjects": {
-      "stash-cli": {
-        "dir": "guides/latest/cli/reference",
-        "mappings": [
-          {
-            "versions": [
-              "v0.9.0-rc.4"
-            ],
-            "subProjectVersions": [
-              "v0.3.0"
-            ]
-          },
-          {
-            "versions": [
-              "v0.9.0-rc.2"
-            ],
-            "subProjectVersions": [
-              "v0.2.0"
-            ]
-          },
-          {
-            "versions": [
-              "v0.9.0-rc.1"
-            ],
-            "subProjectVersions": [
-              "v0.1.0"
-            ]
-          }
-        ]
-      },
-      "stash-elasticsearch": {
-        "dir": "addons/elasticsearch/guides",
-        "mappings": [
-          {
-            "versions": [
-              "v0.9.0-rc.1",
-              "v0.9.0-rc.2",
-              "v0.9.0-rc.4"
-            ],
-            "subProjectVersions": [
-              "5.6",
-              "5.6.4",
-              "6.2",
-              "6.2.4",
-              "6.3",
-              "6.3.0",
-              "6.4",
-              "6.4.0",
-              "6.5",
-              "6.5.3",
-              "6.8",
-              "6.8.0",
-              "7.2",
-              "7.2.0",
-              "7.3",
-              "7.3.2"
-            ]
-          }
-        ]
-      },
-      "stash-mongodb": {
-        "dir": "addons/mongodb/guides",
-        "mappings": [
-          {
-            "versions": [
-              "v0.9.0-rc.1",
-              "v0.9.0-rc.2",
-              "v0.9.0-rc.4"
-            ],
-            "subProjectVersions": [
-              "3.4",
-              "3.4.17",
-              "3.4.22",
-              "3.6",
-              "3.6.8",
-              "3.6.13",
-              "4.0",
-              "4.0.3",
-              "4.0.5",
-              "4.0.11",
-              "4.1",
-              "4.1.4",
-              "4.1.7",
-              "4.1.13"
-            ]
-          }
-        ]
-      },
-      "stash-mysql": {
-        "dir": "addons/mysql/guides",
-        "mappings": [
-          {
-            "versions": [
-              "v0.9.0-rc.1",
-              "v0.9.0-rc.2",
-              "v0.9.0-rc.4"
-            ],
-            "subProjectVersions": [
-              "5.7.25",
-              "8.0.3",
-              "8.0.14"
-            ]
-          }
-        ]
-      },
-      "stash-percona-xtradb": {
-        "dir": "addons/percona-xtradb/guides",
-        "mappings": [
-          {
-            "versions": [
-              "v0.9.0-rc.4"
-            ],
-            "subProjectVersions": [
-              "5.7"
-            ]
-          }
-        ]
-      },
-      "stash-postgres": {
-        "dir": "addons/postgres/guides",
-        "mappings": [
-          {
-            "versions": [
-              "v0.9.0-rc.1",
-              "v0.9.0-rc.2",
-              "v0.9.0-rc.4"
-            ],
-            "subProjectVersions": [
-              "9.6",
-              "10.2",
-              "10.6",
-              "11.1",
-              "11.2"
-            ]
-          }
-        ]
-      }
-    }
+    "latestVersion": "v0.9.0-rc.4"
   },
   "status": {}
 }

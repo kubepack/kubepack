@@ -45,6 +45,20 @@ type ResourceDescriptorSpec struct {
 	Icons       []ImageSpec
 	Maintainers []ContactData
 	Links       []Link
+
+	Installer *DeploymentParameters
+}
+
+type DeploymentParameters struct {
+	ProductID string
+	PlanID    string
+	Version   string
+	Chart     *ChartRef
+}
+
+type ChartRef struct {
+	URL  string
+	Name string
 }
 
 type ResourceID struct {

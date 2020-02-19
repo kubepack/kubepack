@@ -46,14 +46,10 @@
     "versions": [
       {
         "version": "master",
-        "hostDocs": false,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "5.7",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       }
     ],

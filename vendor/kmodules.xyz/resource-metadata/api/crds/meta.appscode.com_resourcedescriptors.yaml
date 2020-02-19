@@ -206,6 +206,25 @@ spec:
                 - src
                 type: object
               type: array
+            installer:
+              properties:
+                chart:
+                  properties:
+                    name:
+                      type: string
+                    url:
+                      type: string
+                  required:
+                  - name
+                  - url
+                  type: object
+                planID:
+                  type: string
+                productID:
+                  type: string
+                version:
+                  type: string
+              type: object
             keyTargets:
               items:
                 description: TypeMeta describes an individual object in an API response

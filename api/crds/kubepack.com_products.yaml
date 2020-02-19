@@ -126,32 +126,6 @@ spec:
               type: string
             shortName:
               type: string
-            subProjects:
-              additionalProperties:
-                properties:
-                  dir:
-                    type: string
-                  mappings:
-                    items:
-                      properties:
-                        subProjectVersions:
-                          items:
-                            type: string
-                          type: array
-                        versions:
-                          items:
-                            type: string
-                          type: array
-                      required:
-                      - subProjectVersions
-                      - versions
-                      type: object
-                    type: array
-                required:
-                - dir
-                - mappings
-                type: object
-              type: object
             summary:
               type: string
             tagline:
@@ -161,26 +135,13 @@ spec:
             versions:
               items:
                 properties:
-                  branch:
-                    type: string
-                  docsDir:
-                    type: string
-                  hostDocs:
-                    type: boolean
-                  info:
-                    additionalProperties:
-                      type: string
-                    type: object
                   releaseDate:
                     format: date-time
                     nullable: true
                     type: string
-                  show:
-                    type: boolean
                   version:
                     type: string
                 required:
-                - hostDocs
                 - version
                 type: object
               type: array

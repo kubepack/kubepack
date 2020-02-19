@@ -176,10 +176,6 @@ func main() {
 			nu.Spec.Versions = append(nu.Spec.Versions, convertVersion(in))
 		}
 		nu.Spec.LatestVersion = old.LatestVersion
-		nu.Spec.SubProjects = map[string]v1alpha1.ProjectRef{}
-		for k, v := range old.SubProjects {
-			nu.Spec.SubProjects[k] = convertProjectRef(v)
-		}
 
 		f := filepath.Join("artifacts", "products", filename)
 		err = os.MkdirAll(filepath.Dir(f), 0755)
@@ -223,24 +219,6 @@ func convertBadge(in api.Badge) v1alpha1.Badge {
 
 func convertVersion(in api.ProductVersion) v1alpha1.ProductVersion {
 	return v1alpha1.ProductVersion{
-		Version:  in.Version,
-		HostDocs: in.HostDocs,
-		Show:     in.Show,
-		DocsDir:  in.DocsDir,
-		Branch:   in.Branch,
-		Info:     in.Info,
+		Version: in.Version,
 	}
-}
-
-func convertProjectRef(in api.ProjectRef) v1alpha1.ProjectRef {
-	out := v1alpha1.ProjectRef{
-		Dir: in.Dir,
-	}
-	for _, m := range in.Mappings {
-		out.Mappings = append(out.Mappings, v1alpha1.Mapping{
-			Versions:           m.Versions,
-			SubProjectVersions: m.SubProjectVersions,
-		})
-	}
-	return out
 }

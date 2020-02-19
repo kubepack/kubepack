@@ -83,14 +83,10 @@
     "versions": [
       {
         "version": "master",
-        "hostDocs": false,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "0.1.0",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       }
     ],

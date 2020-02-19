@@ -47,104 +47,70 @@
     "versions": [
       {
         "version": "master",
-        "hostDocs": false,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "5.6",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "5.6.4",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "6.2",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "6.2.4",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "6.3",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "6.3.0",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "6.4",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "6.4.0",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "6.5",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "6.5.3",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "6.8",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "6.8.0",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "7.2",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "7.2.0",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "7.3",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "7.3.2",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       }
     ],

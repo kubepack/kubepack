@@ -47,26 +47,18 @@
     "versions": [
       {
         "version": "master",
-        "hostDocs": false,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "5.7.25",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "8.0.3",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "8.0.14",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       }
     ],

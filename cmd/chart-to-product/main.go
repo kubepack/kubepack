@@ -101,11 +101,6 @@ func main() {
 	nu.Spec.Versions = []v1alpha1.ProductVersion{
 		{
 			Version:     chrt.Metadata.Version,
-			HostDocs:    false,
-			Show:        false,
-			DocsDir:     "",
-			Branch:      "",
-			Info:        nil,
 			ReleaseDate: metav1.NewTime(chrt.Created),
 		},
 	}

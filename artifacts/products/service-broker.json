@@ -76,32 +76,22 @@
     "versions": [
       {
         "version": "master",
-        "hostDocs": false,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "0.3.1",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "0.3.0",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "0.2.0",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       },
       {
         "version": "0.1.0",
-        "hostDocs": true,
-        "show": true,
         "releaseDate": null
       }
     ],
