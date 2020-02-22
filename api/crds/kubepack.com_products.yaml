@@ -137,7 +137,6 @@ spec:
                 properties:
                   releaseDate:
                     format: date-time
-                    nullable: true
                     type: string
                   version:
                     type: string
