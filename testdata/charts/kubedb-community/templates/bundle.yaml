@@ -40,7 +40,7 @@ spec:
       namespace: cert-manager
       url: https://charts.jetstack.io
       versions:
-      - version: v0.12.0
+      - version: v0.13.1
   - bundle:
       name: stash-community
       url: https://kubepack-testcharts.storage.googleapis.com
