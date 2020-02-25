@@ -17,6 +17,7 @@ limitations under the License.
 package util
 
 import (
+	"bytes"
 	"net/http"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
@@ -24,6 +25,11 @@ import (
 
 	"github.com/gabriel-vasile/mimetype"
 	"helm.sh/helm/v3/pkg/chart"
+	crdv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/util/yaml"
 )
 
 func GetPackageDescriptor(pkgChart *chart.Chart) v1alpha1.PackageDescriptor {
@@ -71,4 +77,38 @@ var reg = repo.NewDiskCacheRegistry()
 
 func GetChart(repoURL, chartName, chartVersion string) (*repo.ChartExtended, error) {
 	return reg.GetChart(repoURL, chartName, chartVersion)
+}
+
+func ToPackageView(url string, chrt *chart.Chart) (*v1alpha1.PackageView, error) {
+	p := v1alpha1.PackageView{
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: v1alpha1.SchemeGroupVersion.String(),
+			Kind:       "PackageView",
+		},
+		PackageMeta: v1alpha1.PackageMeta{
+			Name:              chrt.Name(),
+			URL:               url,
+			Version:           chrt.Metadata.Version,
+			PackageDescriptor: GetPackageDescriptor(chrt),
+		},
+		Values: &runtime.RawExtension{
+			Object: &unstructured.Unstructured{Object: chrt.Values},
+		},
+	}
+
+	for _, f := range chrt.Files {
+		if f.Name == "values.openapiv3_schema.json" || f.Name == "values.openapiv3_schema.yaml" || f.Name == "values.openapiv3_schema.yml" {
+			var schema crdv1beta1.JSONSchemaProps
+			reader := yaml.NewYAMLOrJSONDecoder(bytes.NewReader(f.Data), 2048)
+			err := reader.Decode(&schema)
+			if err != nil {
+				return nil, err
+			}
+			p.OpenAPIV3Schema = &schema
+		}
+	}
+	//if b.Schema == nil && len(pkgChart.Schema) > 0 {
+	//	// TODO convert json schema to openapi schema v3
+	//}
+	return &p, nil
 }

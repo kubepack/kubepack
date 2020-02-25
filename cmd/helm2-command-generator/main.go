@@ -17,7 +17,6 @@ limitations under the License.
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -28,7 +27,7 @@ import (
 
 	"github.com/google/uuid"
 	flag "github.com/spf13/pflag"
-	"k8s.io/apimachinery/pkg/util/sets"
+	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/yaml"
 )
 
@@ -49,120 +48,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	uid := uuid.New()
+	order.UID = types.UID(uuid.New().String())
 
 	os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", util.GoogleApplicationCredentials)
 
-	var buf bytes.Buffer
-	_, err = buf.WriteString("#!/usr/bin/env bash\n")
+	script, err := util.GenerateHelm2Script(order)
 	if err != nil {
 		log.Fatal(err)
 	}
-	_, err = buf.WriteString("set -xeou pipefail\n\n")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	namespaces := sets.NewString("default", "kube-system")
-
-	f1 := &util.ApplicationCRDRegPrinter{
-		W: &buf,
-	}
-	err = f1.Do()
-	if err != nil {
-		log.Fatal(err)
-	}
-	_, err = buf.WriteRune('\n')
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	for _, pkg := range order.Spec.Packages {
-		if pkg.Chart == nil {
-			continue
-		}
-
-		if !namespaces.Has(pkg.Chart.Namespace) {
-			f2 := &util.NamespacePrinter{
-				Namespace: pkg.Chart.Namespace,
-				W:         &buf,
-			}
-			err = f2.Do()
-			if err != nil {
-				log.Fatal(err)
-			}
-			namespaces.Insert(pkg.Chart.Namespace)
-		}
-
-		f3 := &util.Helm2CommandPrinter{
-			ChartRef:    pkg.Chart.ChartRef,
-			Version:     pkg.Chart.Version,
-			ReleaseName: pkg.Chart.ReleaseName,
-			Namespace:   pkg.Chart.Namespace,
-			ValuesPatch: pkg.Chart.ValuesPatch,
-			W:           &buf,
-		}
-		err = f3.Do()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		f4 := &util.WaitForPrinter{
-			Name:      pkg.Chart.ReleaseName,
-			Namespace: pkg.Chart.Namespace,
-			WaitFors:  pkg.Chart.WaitFors,
-			W:         &buf,
-		}
-		err = f4.Do()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		if pkg.Chart.Resources != nil && len(pkg.Chart.Resources.Owned) > 0 {
-			f5 := &util.CRDReadinessPrinter{
-				CRDs: pkg.Chart.Resources.Owned,
-				W:    &buf,
-			}
-			err = f5.Do()
-			if err != nil {
-				log.Fatal(err)
-			}
-		}
-
-		f6 := &util.ApplicationGenerator{
-			Chart:       *pkg.Chart,
-			KubeVersion: "v1.17.0",
-		}
-		err = f6.Do()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		f7 := &util.ApplicationUploader{
-			App:       f6.Result(),
-			UID:       uid.String(),
-			BucketURL: util.YAMLBucket,
-			PublicURL: util.YAMLHost,
-			W:         &buf,
-		}
-		err = f7.Do()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		_, err = buf.WriteRune('\n')
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-
-	err = util.Upload(uid.String(), "run.sh", buf.Bytes())
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println(buf.String())
-
-	fmt.Printf("curl -fsSL %s/%s/run.sh  | bash", util.YAMLHost, uid)
+	fmt.Println(script)
 }

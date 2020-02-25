@@ -24,9 +24,7 @@ import (
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/pkg/util"
 
-	"github.com/pkg/errors"
 	flag "github.com/spf13/pflag"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/yaml"
 )
 
@@ -48,17 +46,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	out := v1alpha1.Order{
-		TypeMeta: metav1.TypeMeta{
-			APIVersion: v1alpha1.SchemeGroupVersion.String(),
-			Kind:       "Order",
-		},
-		ObjectMeta: metav1.ObjectMeta{
-			Name: bv.Name,
-		},
-		Spec: v1alpha1.OrderSpec{
-			Packages: toPackageSelection(&bv.BundleOptionView),
-		},
+	out, err := util.CreateOrder(bv)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	data, err = yaml.Marshal(out)
@@ -73,86 +63,4 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-}
-
-// releaseNameMaxLen is the maximum length of a release name.
-//
-// As of Kubernetes 1.4, the max limit on a name is 63 chars. We reserve 10 for
-// charts to add data. Effectively, that gives us 53 chars.
-// See https://github.com/helm/helm/issues/1528
-// xref: helm.sh/helm/v3/pkg/action/install.go
-const releaseNameMaxLen = 53
-
-func toPackageSelection(in *v1alpha1.BundleOptionView) []v1alpha1.PackageSelection {
-	var out []v1alpha1.PackageSelection
-
-	_, bundle := util.GetBundle(&v1alpha1.BundleOption{
-		BundleRef: v1alpha1.BundleRef{
-			URL:  in.URL,
-			Name: in.Name,
-		},
-		Version: in.Version,
-	})
-
-	for _, pkg := range in.Packages {
-		if pkg.Chart != nil {
-			if !pkg.Chart.Required {
-				continue
-			}
-
-			for _, v := range pkg.Chart.Versions {
-				if v.Selected {
-					crds, waitFors := FindChartData(bundle, pkg.Chart.ChartRef, v.Version)
-
-					releaseName := pkg.Chart.Name
-					if pkg.Chart.MultiSelect {
-						releaseName += "-" + v.Version
-					}
-					if len(releaseName) > releaseNameMaxLen {
-						log.Fatalln(errors.Errorf("release name %q exceeds max length of %d", releaseName, releaseNameMaxLen))
-					}
-
-					selection := v1alpha1.PackageSelection{
-						Chart: &v1alpha1.ChartSelection{
-							ChartRef:    pkg.Chart.ChartRef,
-							Version:     v.Version,
-							ReleaseName: releaseName,
-							Namespace:   pkg.Chart.Namespace,
-							ValuesPatch: v.ValuesPatch,
-							Resources:   crds,
-							WaitFors:    waitFors,
-							Bundle: &v1alpha1.ChartRepoRef{
-								Name:    in.Name,
-								URL:     in.URL,
-								Version: in.Version,
-							},
-						},
-					}
-					out = append(out, selection)
-				}
-			}
-		} else if pkg.Bundle != nil {
-			out = append(out, toPackageSelection(pkg.Bundle)...)
-		} else if pkg.OneOf != nil {
-			log.Fatalln("User must select one bundle")
-		}
-	}
-
-	return out
-}
-
-func FindChartData(bundle *v1alpha1.Bundle, chrtRef v1alpha1.ChartRef, chrtVersion string) (*v1alpha1.ResourceDefinitions, []v1alpha1.WaitFlags) {
-	for _, pkg := range bundle.Spec.Packages {
-		if pkg.Chart != nil &&
-			pkg.Chart.URL == chrtRef.URL &&
-			pkg.Chart.Name == chrtRef.Name {
-
-			for _, v := range pkg.Chart.Versions {
-				if v.Version == chrtVersion {
-					return v.Resources, v.WaitFors
-				}
-			}
-		}
-	}
-	return nil, nil
 }

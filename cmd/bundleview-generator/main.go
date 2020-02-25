@@ -21,12 +21,9 @@ import (
 	"log"
 	"os"
 
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/pkg/util"
 
-	"github.com/gobuffalo/flect"
 	flag "github.com/spf13/pflag"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/yaml"
 )
 
@@ -42,19 +39,9 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	view := toBundleOptionView(&v1alpha1.BundleOption{
-		BundleRef: v1alpha1.BundleRef{
-			URL:  url,
-			Name: name,
-		},
-		Version: version,
-	}, 0)
-	bv := v1alpha1.BundleView{
-		TypeMeta: metav1.TypeMeta{
-			APIVersion: v1alpha1.SchemeGroupVersion.String(),
-			Kind:       "BundleView",
-		},
-		BundleOptionView: *view,
+	bv, err := util.CreateBundleView(url, name, version)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	data, err := yaml.Marshal(bv)
@@ -69,82 +56,4 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-}
-
-func toBundleOptionView(in *v1alpha1.BundleOption, level int) *v1alpha1.BundleOptionView {
-	chrt, bundle := util.GetBundle(in)
-
-	bv := v1alpha1.BundleOptionView{
-		PackageMeta: v1alpha1.PackageMeta{
-			Name:              chrt.Name(),
-			URL:               url,
-			Version:           chrt.Metadata.Version,
-			PackageDescriptor: util.GetPackageDescriptor(chrt),
-		},
-		DisplayName: util.XorY(bundle.Spec.DisplayName, flect.Titleize(flect.Humanize(bundle.Name))),
-	}
-
-	for _, pkg := range bundle.Spec.Packages {
-		if pkg.Chart != nil {
-			var chartVersion string
-			for _, v := range pkg.Chart.Versions {
-				if v.Selected {
-					chartVersion = v.Version
-					break
-				}
-			}
-			if chartVersion == "" {
-				chartVersion = pkg.Chart.Versions[0].Version
-			}
-			pkgChart, err := util.GetChart(pkg.Chart.URL, pkg.Chart.Name, chartVersion)
-			if err != nil {
-				log.Fatalln(err)
-			}
-
-			required := pkg.Chart.Required
-			if level > 0 {
-				// Only direct charts can be required
-				required = false
-			}
-
-			card := v1alpha1.PackageCard{
-				Chart: &v1alpha1.ChartCard{
-					ChartRef: v1alpha1.ChartRef{
-						Name: pkg.Chart.Name,
-						URL:  pkg.Chart.URL,
-					},
-					PackageDescriptor: util.GetPackageDescriptor(pkgChart.Chart),
-					Features:          pkg.Chart.Features,
-					MultiSelect:       pkg.Chart.MultiSelect,
-					Namespace:         util.XorY(pkg.Chart.Namespace, bundle.Spec.Namespace),
-					Required:          required,
-					Selected:          pkg.Chart.Required,
-				},
-			}
-			for _, v := range pkg.Chart.Versions {
-				card.Chart.Versions = append(card.Chart.Versions, v.VersionOption)
-			}
-			if len(card.Chart.Versions) == 1 {
-				card.Chart.Versions[0].Selected = true
-			}
-			bv.Packages = append(bv.Packages, card)
-		} else if pkg.Bundle != nil {
-			bv.Packages = append(bv.Packages, v1alpha1.PackageCard{
-				Bundle: toBundleOptionView(pkg.Bundle, level+1),
-			})
-		} else if pkg.OneOf != nil {
-			bovs := make([]*v1alpha1.BundleOptionView, 0, len(pkg.OneOf.Bundles))
-			for _, bo := range pkg.OneOf.Bundles {
-				bovs = append(bovs, toBundleOptionView(bo, level+1))
-			}
-			bv.Packages = append(bv.Packages, v1alpha1.PackageCard{
-				OneOf: &v1alpha1.OneOfBundleOptionView{
-					Description: pkg.OneOf.Description,
-					Bundles:     bovs,
-				},
-			})
-		}
-	}
-
-	return &bv
 }

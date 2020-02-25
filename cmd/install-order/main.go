@@ -22,13 +22,9 @@ import (
 	"path/filepath"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/kubepack/client/clientset/versioned"
 	"kubepack.dev/kubepack/pkg/util"
 
 	flag "github.com/spf13/pflag"
-	"gomodules.xyz/version"
-	"k8s.io/apimachinery/pkg/util/sets"
-	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 	"k8s.io/client-go/util/homedir"
@@ -67,103 +63,8 @@ func main() {
 	}
 	getter := clientcmdutil.NewClientGetter(&kubeconfig)
 
-	config, err := cc.ClientConfig()
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	kc, err := kubernetes.NewForConfig(config)
+	err = util.InstallOrder(getter, order)
 	if err != nil {
 		log.Fatal(err)
-	}
-
-	info, err := kc.ServerVersion()
-	if err != nil {
-		log.Fatal(err)
-	}
-	kv, err := version.NewVersion(info.GitVersion)
-	if err != nil {
-		log.Fatal(err)
-	}
-	kubeVersion := kv.ToMutator().ResetPrerelease().ResetMetadata().Done().String()
-
-	namespaces := sets.NewString("default", "kube-system")
-
-	f1 := &util.ApplicationCRDRegistrar{
-		Config: config,
-	}
-	err = f1.Do()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	for _, pkg := range order.Spec.Packages {
-		if pkg.Chart == nil {
-			continue
-		}
-
-		if !namespaces.Has(pkg.Chart.Namespace) {
-			f2 := &util.NamespaceCreator{
-				Namespace: pkg.Chart.Namespace,
-				Client:    kc,
-			}
-			err = f2.Do()
-			if err != nil {
-				log.Fatal(err)
-			}
-			namespaces.Insert(pkg.Chart.Namespace)
-		}
-
-		f3 := &util.ChartInstaller{
-			ChartRef:     pkg.Chart.ChartRef,
-			Version:      pkg.Chart.Version,
-			ReleaseName:  pkg.Chart.ReleaseName,
-			Namespace:    pkg.Chart.Namespace,
-			ValuesPatch:  pkg.Chart.ValuesPatch,
-			ClientGetter: getter,
-		}
-		err = f3.Do()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		f4 := &util.WaitForChecker{
-			Namespace:    pkg.Chart.Namespace,
-			WaitFors:     pkg.Chart.WaitFors,
-			ClientGetter: getter,
-		}
-		err = f4.Do()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		if pkg.Chart.Resources != nil && len(pkg.Chart.Resources.Owned) > 0 {
-			f5 := &util.CRDReadinessChecker{
-				CRDs:   pkg.Chart.Resources.Owned,
-				Client: kc.RESTClient(),
-			}
-			err = f5.Do()
-			if err != nil {
-				log.Fatal(err)
-			}
-		}
-
-		f6 := &util.ApplicationGenerator{
-			Chart:       *pkg.Chart,
-			KubeVersion: kubeVersion,
-		}
-		err = f6.Do()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		f7 := &util.ApplicationCreator{
-			App:    f6.Result(),
-			Client: versioned.NewForConfigOrDie(config),
-		}
-		err = f7.Do()
-		if err != nil {
-			log.Fatal(err)
-		}
 	}
 }
