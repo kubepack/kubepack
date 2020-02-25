@@ -244,16 +244,21 @@ gen-crd-protos-%:
 .PHONY: gen-bindata
 gen-bindata:
 	@docker run                                                 \
-	    -i                                                      \
-	    --rm                                                    \
-	    -u $$(id -u):$$(id -g)                                  \
-	    -v $$(pwd):/src                                         \
-	    -w /src/api/crds                                        \
+		-i                                                      \
+		--rm                                                    \
+		-u $$(id -u):$$(id -g)                                  \
+		-v $$(pwd):/src                                         \
+		-w /src                                                 \
 		-v /tmp:/.cache                                         \
-	    --env HTTP_PROXY=$(HTTP_PROXY)                          \
-	    --env HTTPS_PROXY=$(HTTPS_PROXY)                        \
-	    $(BUILD_IMAGE)                                          \
-	    go-bindata -ignore=\\.go -ignore=\\.DS_Store -mode=0644 -modtime=1573722179 -o bindata.go -pkg crds ./...
+		--env HTTP_PROXY=$(HTTP_PROXY)                          \
+		--env HTTPS_PROXY=$(HTTPS_PROXY)                        \
+		$(BUILD_IMAGE)                                          \
+		/bin/bash -c "                                          \
+			cd /src/api/crds;                                                                                                \
+			go-bindata -ignore='\\.go$$' -ignore=\\.DS_Store -mode=0644 -modtime=1573722179 -o bindata.go -pkg crds ./...;   \
+			cd /src/artifacts/products;                                                                                      \
+			go-bindata -ignore='\\.go$$' -ignore=\\.DS_Store -mode=0644 -modtime=1573722179 -o bindata.go -pkg products .;   \
+		"
 
 .PHONY: manifests
 manifests: gen-crds label-crds gen-bindata
