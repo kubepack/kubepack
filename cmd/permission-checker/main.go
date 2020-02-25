@@ -20,20 +20,18 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"os"
 	"path/filepath"
-	"text/tabwriter"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/pkg/util"
 
 	"github.com/google/uuid"
 	flag "github.com/spf13/pflag"
+	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/tools/clientcmd"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 	"k8s.io/client-go/util/homedir"
 	clientcmdutil "kmodules.xyz/client-go/tools/clientcmd"
-	"kmodules.xyz/resource-metadata/hub"
 	"sigs.k8s.io/yaml"
 )
 
@@ -62,11 +60,6 @@ func main() {
 	}
 	getter := clientcmdutil.NewClientGetter(&kubeconfig)
 
-	config, err := cc.ClientConfig()
-	if err != nil {
-		log.Fatalln(err)
-	}
-
 	data, err := ioutil.ReadFile(file)
 	if err != nil {
 		log.Fatal(err)
@@ -76,49 +69,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	order.UID = types.UID(uuid.New().String())
 
-	uid := uuid.New()
-
-	reg := hub.NewRegistry(uid.String(), hub.KnownResources)
-	err = reg.DiscoverResources(config)
+	allowed, err := util.CheckPermissions(getter, order)
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	for _, pkg := range order.Spec.Packages {
-		if pkg.Chart == nil {
-			continue
-		}
-
-		// TODO: What does permission check mean for non-existent resources?
-		checker := &util.PermissionChecker{
-			ChartRef:    pkg.Chart.ChartRef,
-			Version:     pkg.Chart.Version,
-			ReleaseName: pkg.Chart.ReleaseName,
-			Namespace:   pkg.Chart.Namespace,
-			Verb:        "create",
-
-			Config:       config,
-			ClientGetter: getter,
-			Registry:     reg,
-		}
-		err = checker.Do()
-		if err != nil {
-			log.Fatal(err)
-		}
-		attrs, allowed := checker.Result()
-		if !allowed {
-			fmt.Println("Install not permitted")
-		}
-
-		w := new(tabwriter.Writer)
-		// Format in tab-separated columns with a tab stop of 8.
-		w.Init(os.Stdout, 0, 20, 0, '\t', 0)
-		fmt.Fprintln(w, "Group\tVersion\tResource\tNamespace\tName\tAllowed\t")
-		for k, v := range attrs {
-			fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%v\n", k.Group, k.Version, k.Resource, k.Namespace, k.Name, v.Allowed)
-		}
-		fmt.Fprintln(w)
-		w.Flush()
-	}
+	fmt.Println("ALLOWED", "=", allowed)
 }

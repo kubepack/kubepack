@@ -1,0 +1,63 @@
+package util
+
+import (
+	"fmt"
+	"os"
+	"text/tabwriter"
+
+	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+
+	"k8s.io/cli-runtime/pkg/genericclioptions"
+	"kmodules.xyz/resource-metadata/hub"
+)
+
+func CheckPermissions(getter genericclioptions.RESTClientGetter, order v1alpha1.Order) (bool, error) {
+	reg := hub.NewRegistry(string(order.UID), hub.KnownResources)
+	config, err := getter.ToRESTConfig()
+	if err != nil {
+		return false, err
+	}
+	err = reg.DiscoverResources(config)
+	if err != nil {
+		return false, err
+	}
+
+	for _, pkg := range order.Spec.Packages {
+		if pkg.Chart == nil {
+			continue
+		}
+
+		// TODO: What does permission check mean for non-existent resources?
+		checker := &PermissionChecker{
+			ChartRef:    pkg.Chart.ChartRef,
+			Version:     pkg.Chart.Version,
+			ReleaseName: pkg.Chart.ReleaseName,
+			Namespace:   pkg.Chart.Namespace,
+			Verb:        "create",
+
+			Config:       config,
+			ClientGetter: getter,
+			Registry:     reg,
+		}
+		err = checker.Do()
+		if err != nil {
+			return false, err
+		}
+		attrs, allowed := checker.Result()
+		if !allowed {
+			fmt.Println("Install not permitted")
+			return false, nil
+		}
+
+		w := new(tabwriter.Writer)
+		// Format in tab-separated columns with a tab stop of 8.
+		w.Init(os.Stdout, 0, 20, 0, '\t', 0)
+		fmt.Fprintln(w, "Group\tVersion\tResource\tNamespace\tName\tAllowed\t")
+		for k, v := range attrs {
+			fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%v\n", k.Group, k.Version, k.Resource, k.Namespace, k.Name, v.Allowed)
+		}
+		fmt.Fprintln(w)
+		w.Flush()
+	}
+	return true, nil
+}

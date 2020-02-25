@@ -63,19 +63,8 @@ func main() {
 	}
 	getter := clientcmdutil.NewClientGetter(&kubeconfig)
 
-	for _, pkg := range order.Spec.Packages {
-		if pkg.Chart == nil {
-			continue
-		}
-
-		f1 := &util.ChartUninstaller{
-			ReleaseName:  pkg.Chart.ReleaseName,
-			Namespace:    pkg.Chart.Namespace,
-			ClientGetter: getter,
-		}
-		err = f1.Do()
-		if err != nil {
-			log.Fatal(err)
-		}
+	err = util.UninstallOrder(getter, order)
+	if err != nil {
+		log.Fatal(err)
 	}
 }

@@ -17,21 +17,14 @@ limitations under the License.
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
 
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/pkg/util"
 
 	flag "github.com/spf13/pflag"
-	crdv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apimachinery/pkg/util/yaml"
 	yamllib "sigs.k8s.io/yaml"
 )
 
@@ -58,36 +51,10 @@ func main() {
 
 	fmt.Println(pkgChart.Metadata.Description)
 
-	b := v1alpha1.PackageView{
-		TypeMeta: metav1.TypeMeta{
-			APIVersion: v1alpha1.SchemeGroupVersion.String(),
-			Kind:       "PackageView",
-		},
-		PackageMeta: v1alpha1.PackageMeta{
-			Name:              pkgChart.Name(),
-			URL:               url,
-			Version:           pkgChart.Metadata.Version,
-			PackageDescriptor: util.GetPackageDescriptor(pkgChart.Chart),
-		},
-		Values: &runtime.RawExtension{
-			Object: &unstructured.Unstructured{Object: pkgChart.Values},
-		},
+	b, err := util.ToPackageView(url, pkgChart.Chart)
+	if err != nil {
+		log.Fatalln(err)
 	}
-
-	for _, f := range pkgChart.Files {
-		if f.Name == "values.openapiv3_schema.json" || f.Name == "values.openapiv3_schema.yaml" || f.Name == "values.openapiv3_schema.yml" {
-			var schema crdv1beta1.JSONSchemaProps
-			reader := yaml.NewYAMLOrJSONDecoder(bytes.NewReader(f.Data), 2048)
-			err := reader.Decode(&schema)
-			if err != nil {
-				log.Fatalln(err)
-			}
-			b.OpenAPIV3Schema = &schema
-		}
-	}
-	//if b.Schema == nil && len(pkgChart.Schema) > 0 {
-	//	// TODO convert json schema to openapi schema v3
-	//}
 
 	data, err := yamllib.Marshal(b)
 	if err != nil {
