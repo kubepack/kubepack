@@ -1,0 +1,39 @@
+apiVersion: kubepack.com/v1alpha1
+kind: Bundle
+metadata:
+  creationTimestamp: null
+  name: '{{ include "stash-postgres-community.fullname" . }}'
+spec:
+  description: stash-postgres - PostgreSQL database backup and restore plugin for Stash  by
+    AppsCode
+  displayName: Stash PostgreSQL Bundle
+  icons:
+  - src: https://cdn.appscode.com/images/icon/stash.png
+    type: image/png
+  links:
+  - description: website
+    url: https://github.com/stashed/postgres
+  maintainers:
+  - email: support@appscode.com
+    name: appscode
+  namespace: kube-system
+  packages:
+  - chart:
+      features:
+      - stash-postgres - PostgreSQL database backup and restore plugin for Stash  by AppsCode
+      multiSelect: true
+      name: stash-postgres
+      required: true
+      url: https://charts.appscode.com/stable/
+      versions:
+      - selected: true
+        version: "9.6"
+      - selected: true
+        version: "10.2"
+      - selected: true
+        version: "10.6"
+      - selected: true
+        version: "11.1"
+      - selected: true
+        version: "11.2"
+status: {}

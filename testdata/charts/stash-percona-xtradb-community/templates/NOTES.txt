@@ -1,0 +1,1 @@
+{{ include "stash-percona-xtradb-community.fullname" . }} is a Kubepack bundle. Visit https://kubepack.com to learn more.

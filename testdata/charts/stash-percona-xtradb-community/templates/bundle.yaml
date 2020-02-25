@@ -1,0 +1,31 @@
+apiVersion: kubepack.com/v1alpha1
+kind: Bundle
+metadata:
+  creationTimestamp: null
+  name: '{{ include "stash-percona-xtradb-community.fullname" . }}'
+spec:
+  description: stash-percona-xtradb - Percona XtraDB database backup and restore plugin for Stash  by
+    AppsCode
+  displayName: Stash Percona XtraDB Bundle
+  icons:
+  - src: https://cdn.appscode.com/images/icon/stash.png
+    type: image/png
+  links:
+  - description: website
+    url: https://github.com/stashed/percona-xtradb
+  maintainers:
+  - email: support@appscode.com
+    name: appscode
+  namespace: kube-system
+  packages:
+  - chart:
+      features:
+      - stash-percona-xtradb - Percona XtraDB database backup and restore plugin for Stash  by AppsCode
+      multiSelect: true
+      name: stash-percona-xtradb
+      required: true
+      url: https://charts.appscode.com/stable/
+      versions:
+      - selected: true
+        version: "5.7"
+status: {}

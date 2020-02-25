@@ -1,0 +1,63 @@
+apiVersion: kubepack.com/v1alpha1
+kind: Bundle
+metadata:
+  creationTimestamp: null
+  name: '{{ include "stash-elasticsearch-community.fullname" . }}'
+spec:
+  description: stash-elasticsearch - Elasticsearch database backup and restore plugin for Stash  by
+    AppsCode
+  displayName: Stash Elasticsearch Bundle
+  icons:
+  - src: https://cdn.appscode.com/images/icon/stash.png
+    type: image/png
+  links:
+  - description: website
+    url: https://github.com/stashed/elasticsearch
+  maintainers:
+  - email: support@appscode.com
+    name: appscode
+  namespace: kube-system
+  packages:
+  - chart:
+      features:
+      - stash-elasticsearch - Elasticsearch database backup and restore plugin for Stash  by AppsCode
+      multiSelect: true
+      name: stash-elasticsearch
+      required: true
+      url: https://charts.appscode.com/stable/
+      versions:
+      - selected: true
+        version: "5.6"
+      - selected: true
+        version: "5.6.4"
+      - selected: true
+        version: "6.2"
+      - selected: true
+        version: "6.2.4"
+      - selected: true
+        version: "6.3"
+      - selected: true
+        version: "6.3.0"
+      - selected: true
+        version: "6.4"
+      - selected: true
+        version: "6.4.0"
+      - selected: true
+        version: "6.5"
+      - selected: true
+        version: "6.5.3"
+      - selected: true
+        version: "6.8"
+      - selected: true
+        version: "6.8.0"
+      - selected: true
+        version: "7.2"
+      - selected: true
+        version: "7.2.0"
+      - selected: true
+        version: "7.3"
+      - selected: true
+        version: "7.3.2"
+status: {}
+
+

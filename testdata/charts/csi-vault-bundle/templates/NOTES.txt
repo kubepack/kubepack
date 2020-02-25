@@ -1,1 +1,0 @@
-{{ include "csi-vault-bundle.fullname" . }} is a Kubepack bundle. Visit https://kubepack.com to learn more.
