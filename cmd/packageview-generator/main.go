@@ -22,7 +22,7 @@ import (
 	"log"
 	"os"
 
-	"kubepack.dev/kubepack/pkg/util"
+	"kubepack.dev/kubepack/pkg/lib"
 
 	flag "github.com/spf13/pflag"
 	yamllib "sigs.k8s.io/yaml"
@@ -44,14 +44,14 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	pkgChart, err := util.GetChart(url, name, version)
+	pkgChart, err := lib.GetChart(url, name, version)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
 	fmt.Println(pkgChart.Metadata.Description)
 
-	b, err := util.ToPackageView(url, pkgChart.Chart)
+	b, err := lib.ToPackageView(url, pkgChart.Chart)
 	if err != nil {
 		log.Fatalln(err)
 	}

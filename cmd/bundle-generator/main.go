@@ -25,7 +25,7 @@ import (
 	"strings"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/kubepack/pkg/util"
+	"kubepack.dev/kubepack/pkg/lib"
 
 	"github.com/gobuffalo/flect"
 	flag "github.com/spf13/pflag"
@@ -70,7 +70,7 @@ func main() {
 			// TODO: set labels
 		},
 		Spec: v1alpha1.BundleSpec{
-			DisplayName: util.XorY(displayName, flect.Titleize(flect.Humanize(name))),
+			DisplayName: lib.XorY(displayName, flect.Titleize(flect.Humanize(name))),
 			Namespace:   namespace,
 		},
 	}
@@ -94,7 +94,7 @@ func main() {
 			ns = strings.TrimSpace(parts[5])
 		}
 
-		pkgChart, err := util.GetChart(url, chartName, primaryVersion)
+		pkgChart, err := lib.GetChart(url, chartName, primaryVersion)
 		if err != nil {
 			log.Fatalln(err)
 		}
@@ -111,7 +111,7 @@ func main() {
 		}
 
 		if idx == 0 {
-			b.Spec.PackageDescriptor = util.GetPackageDescriptor(pkgChart.Chart)
+			b.Spec.PackageDescriptor = lib.GetPackageDescriptor(pkgChart.Chart)
 		}
 
 		for _, versionInfo := range versions {
@@ -138,7 +138,7 @@ func main() {
 		bundleName := parts[1]
 		version := parts[2]
 
-		chart, err := util.GetChart(url, bundleName, version)
+		chart, err := lib.GetChart(url, bundleName, version)
 		if err != nil {
 			log.Fatalln(err)
 		}

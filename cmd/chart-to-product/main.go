@@ -22,7 +22,7 @@ import (
 	"log"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/kubepack/pkg/util"
+	"kubepack.dev/kubepack/pkg/lib"
 	"kubepack.dev/lib-helm/repo"
 
 	flag "github.com/spf13/pflag"
@@ -45,7 +45,7 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	chrt, err := util.GetChart(url, name, version)
+	chrt, err := lib.GetChart(url, name, version)
 	if err != nil {
 		log.Fatalln(err)
 	}

@@ -23,7 +23,7 @@ import (
 	"os"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/kubepack/pkg/util"
+	"kubepack.dev/kubepack/pkg/lib"
 
 	"github.com/google/uuid"
 	flag "github.com/spf13/pflag"
@@ -50,9 +50,9 @@ func main() {
 	}
 	order.UID = types.UID(uuid.New().String())
 
-	os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", util.GoogleApplicationCredentials)
+	os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", lib.GoogleApplicationCredentials)
 
-	script, err := util.GenerateHelm2Script(order)
+	script, err := lib.GenerateHelm2Script(order)
 	if err != nil {
 		log.Fatal(err)
 	}
