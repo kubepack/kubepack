@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_GlMzA9Te7SwXAM",
+    "id": "prod_Gnc3WG1r41PPKJ",
     "key": "stash-elasticsearch",
     "name": "Stash Elasticsearch Addon",
     "shortName": "Elasticsearch",

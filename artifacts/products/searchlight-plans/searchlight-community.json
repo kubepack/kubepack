@@ -4,9 +4,9 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "plan_GlMzcSJQinoRhq",
+    "id": "plan_Gnc3LuNNGP8lMV",
     "name": "Searchlight Community",
-    "productID": "prod_GlMzzNUW8BLGRP",
+    "productID": "prod_Gnc3vEJLJq8pU4",
     "phase": "Active",
     "bundle": {
       "url": "https://kubernetes-charts.storage.googleapis.com",

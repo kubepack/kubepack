@@ -4,9 +4,9 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "plan_GlMzSjrk53FJ5r",
+    "id": "plan_Gnc3SNjB5MX8Xy",
     "name": "AppsCode Community",
-    "productID": "prod_GlMzRzUFyiizLL",
+    "productID": "prod_Gnc3oJolDPiNPM",
     "phase": "Active",
     "bundle": {
       "url": "https://kubernetes-charts.storage.googleapis.com",

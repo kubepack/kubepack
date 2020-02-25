@@ -4,9 +4,9 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "plan_GlMzEqNoXW2cLo",
+    "id": "plan_Gnc3OhCiMQeAOY",
     "name": "ServiceBroker Community",
-    "productID": "prod_GlMzOFQ6KRxGE3",
+    "productID": "prod_Gnc3J04dgXvZHf",
     "phase": "Active",
     "bundle": {
       "url": "https://kubernetes-charts.storage.googleapis.com",

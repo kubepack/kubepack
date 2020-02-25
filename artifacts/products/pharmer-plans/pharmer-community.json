@@ -4,9 +4,9 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "plan_GlMzP2fUCpSjPO",
+    "id": "plan_Gnc3PEZvUFJUEk",
     "name": "Pharmer Community",
-    "productID": "prod_GlMzcj5t0MgMF2",
+    "productID": "prod_Gnc3htTrHeQR0O",
     "phase": "Active",
     "bundle": {
       "url": "https://kubernetes-charts.storage.googleapis.com",

@@ -4,9 +4,9 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "plan_GlMzhdLsOOOAz3",
+    "id": "plan_Gnc3UVjeFZKuyV",
     "name": "MongoDB Community",
-    "productID": "prod_GlMzpSZB5t4j8a",
+    "productID": "prod_Gnc3F4Wck1l0dA",
     "phase": "Active",
     "bundle": {
       "url": "https://kubernetes-charts.storage.googleapis.com",

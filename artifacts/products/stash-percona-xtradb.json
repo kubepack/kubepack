@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_GlMzoHmw5tz6Ig",
+    "id": "prod_Gnc3J1wSKBHcHP",
     "key": "stash-percona-xtradb",
     "name": "Stash Percona XtraDB Addon",
     "shortName": "Percona XtraDB",

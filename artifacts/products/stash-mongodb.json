@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_GlMzpSZB5t4j8a",
+    "id": "prod_Gnc3F4Wck1l0dA",
     "key": "stash-mongodb",
     "name": "Stash MongoDB Addon",
     "shortName": "MongoDB",

@@ -4,9 +4,9 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "plan_GlMzc8f2FN4prc",
+    "id": "plan_Gnc327a5rGye0Q",
     "name": "Percona XtraDB Community",
-    "productID": "prod_GlMzoHmw5tz6Ig",
+    "productID": "prod_Gnc3J1wSKBHcHP",
     "phase": "Active",
     "bundle": {
       "url": "https://kubernetes-charts.storage.googleapis.com",

@@ -4,9 +4,9 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "plan_GlMz6cca4Q9cXF",
+    "id": "plan_Gnc3fZ0nwIvDY1",
     "name": "Elasticsearch Community",
-    "productID": "prod_GlMzA9Te7SwXAM",
+    "productID": "prod_Gnc3WG1r41PPKJ",
     "phase": "Active",
     "bundle": {
       "url": "https://kubernetes-charts.storage.googleapis.com",

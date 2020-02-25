@@ -4,9 +4,9 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "plan_GlMzHqCjyYO0Ef",
+    "id": "plan_Gnc3iE0Uzee0cp",
     "name": "Stash kubectl Plugin Community",
-    "productID": "prod_GlMzoGHLip1nPT",
+    "productID": "prod_Gnc3xG7OPf5LpE",
     "phase": "Active",
     "bundle": {
       "url": "https://kubernetes-charts.storage.googleapis.com",

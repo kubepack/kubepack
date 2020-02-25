@@ -4,9 +4,9 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "plan_GlMzMKY6hPPGjK",
+    "id": "plan_Gnc3M79OT6knDd",
     "name": "PostgreSQL Community",
-    "productID": "prod_GlMzAJQCNIwIru",
+    "productID": "prod_Gnc3yjIPawuoQF",
     "phase": "Active",
     "bundle": {
       "url": "https://kubernetes-charts.storage.googleapis.com",

@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_GlMzoGHLip1nPT",
+    "id": "prod_Gnc3xG7OPf5LpE",
     "key": "stash-cli",
     "name": "Stash kubectl Plugin",
     "shortName": "Stash kubectl Plugin",

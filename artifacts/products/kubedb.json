@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_GlMzh3nuTuZzaz",
+    "id": "prod_Gnc33bJka9iRl9",
     "key": "kubedb",
     "name": "KubeDB by AppsCode",
     "shortName": "KubeDB",

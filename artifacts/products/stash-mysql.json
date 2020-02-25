@@ -4,7 +4,7 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "prod_GlMzqr35o9IJNf",
+    "id": "prod_Gnc3uOdpAW7vx8",
     "key": "stash-mysql",
     "name": "Stash MySQL Addon",
     "shortName": "MySQL",

@@ -4,9 +4,9 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "plan_GlMzUxtDs2jVH5",
+    "id": "plan_Gnc3ccqdYuI4PU",
     "name": "Voyager Community",
-    "productID": "prod_GlMzjTiJrNx2bb",
+    "productID": "prod_Gnc3UGstx2C1i4",
     "phase": "Active",
     "bundle": {
       "url": "https://kubernetes-charts.storage.googleapis.com",

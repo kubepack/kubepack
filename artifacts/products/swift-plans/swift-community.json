@@ -4,9 +4,9 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "plan_GlMzcCksxKoSwa",
+    "id": "plan_Gnc3yQSuTyexRN",
     "name": "Swift Community",
-    "productID": "prod_GlMzUjK8FihZNG",
+    "productID": "prod_Gnc3WJSAhtEP3W",
     "phase": "Active",
     "bundle": {
       "url": "https://kubernetes-charts.storage.googleapis.com",

@@ -4,9 +4,9 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "plan_GlMz6MMi2f5ILp",
+    "id": "plan_Gnc3qxApILT4Pg",
     "name": "MySQL Community",
-    "productID": "prod_GlMzqr35o9IJNf",
+    "productID": "prod_Gnc3uOdpAW7vx8",
     "phase": "Active",
     "bundle": {
       "url": "https://kubernetes-charts.storage.googleapis.com",

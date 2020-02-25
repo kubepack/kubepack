@@ -4,9 +4,9 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "plan_GlMzENVfq5FLEd",
+    "id": "plan_Gnc3WIITIya3iw",
     "name": "Kubeform Community",
-    "productID": "prod_GlMz5xFym5mA5b",
+    "productID": "prod_Gnc3R1tawPW1Mk",
     "phase": "Active",
     "bundle": {
       "url": "https://kubernetes-charts.storage.googleapis.com",

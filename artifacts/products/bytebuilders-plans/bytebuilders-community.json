@@ -4,9 +4,9 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "plan_GlMzpQbT1Mi5FF",
+    "id": "plan_Gnc3UzCitHgZFS",
     "name": "ByteBuilders Community",
-    "productID": "prod_GlMzO71HXjQIjA",
+    "productID": "prod_Gnc30PSfV1FKGB",
     "phase": "Active",
     "bundle": {
       "url": "https://kubernetes-charts.storage.googleapis.com",

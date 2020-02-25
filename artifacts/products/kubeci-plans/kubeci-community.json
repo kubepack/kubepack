@@ -4,9 +4,9 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "plan_GlMzGaBY0jv5Vk",
+    "id": "plan_Gnc35Uhbr1RdFs",
     "name": "KubeCI Community",
-    "productID": "prod_GlMze7iJAtWAPF",
+    "productID": "prod_Gnc3ViHyPjg4ea",
     "phase": "Active",
     "bundle": {
       "url": "https://kubernetes-charts.storage.googleapis.com",

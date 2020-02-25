@@ -4,9 +4,9 @@
     "creationTimestamp": null
   },
   "spec": {
-    "id": "plan_GlMz6K2OvELxBp",
+    "id": "plan_Gnc3V6eiXdQvtB",
     "name": "Guard Community",
-    "productID": "prod_GlMzwjDmzl9bo0",
+    "productID": "prod_Gnc30yRmhAsbZY",
     "phase": "Active",
     "bundle": {
       "url": "https://kubernetes-charts.storage.googleapis.com",

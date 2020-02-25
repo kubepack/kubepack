@@ -1,0 +1,1 @@
+{{ include "vault-operator-community.fullname" . }} is a Kubepack bundle. Visit https://kubepack.com to learn more.
