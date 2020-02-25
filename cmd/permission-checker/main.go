@@ -23,7 +23,7 @@ import (
 	"path/filepath"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/kubepack/pkg/util"
+	"kubepack.dev/kubepack/pkg/lib"
 
 	"github.com/google/uuid"
 	flag "github.com/spf13/pflag"
@@ -71,7 +71,7 @@ func main() {
 	}
 	order.UID = types.UID(uuid.New().String())
 
-	allowed, err := util.CheckPermissions(getter, order)
+	allowed, err := lib.CheckPermissions(getter, order)
 	if err != nil {
 		log.Fatal(err)
 	}

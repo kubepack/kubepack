@@ -22,7 +22,7 @@ import (
 	"os"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/kubepack/pkg/util"
+	"kubepack.dev/kubepack/pkg/lib"
 
 	flag "github.com/spf13/pflag"
 	"sigs.k8s.io/yaml"
@@ -95,7 +95,7 @@ func main() {
 		log.Fatalln("chart selection not found in order")
 	}
 
-	fn := &util.ApplicationGenerator{
+	fn := &lib.ApplicationGenerator{
 		Chart:       *selection,
 		KubeVersion: "v1.17.0",
 	}

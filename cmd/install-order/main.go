@@ -22,7 +22,7 @@ import (
 	"path/filepath"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/kubepack/pkg/util"
+	"kubepack.dev/kubepack/pkg/lib"
 
 	flag "github.com/spf13/pflag"
 	"k8s.io/client-go/tools/clientcmd"
@@ -63,7 +63,7 @@ func main() {
 	}
 	getter := clientcmdutil.NewClientGetter(&kubeconfig)
 
-	err = util.InstallOrder(getter, order)
+	err = lib.InstallOrder(getter, order)
 	if err != nil {
 		log.Fatal(err)
 	}

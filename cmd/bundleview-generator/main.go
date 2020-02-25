@@ -21,7 +21,7 @@ import (
 	"log"
 	"os"
 
-	"kubepack.dev/kubepack/pkg/util"
+	"kubepack.dev/kubepack/pkg/lib"
 
 	flag "github.com/spf13/pflag"
 	"sigs.k8s.io/yaml"
@@ -39,7 +39,7 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	bv, err := util.CreateBundleView(url, name, version)
+	bv, err := lib.CreateBundleView(url, name, version)
 	if err != nil {
 		log.Fatal(err)
 	}

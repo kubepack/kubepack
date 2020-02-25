@@ -22,7 +22,7 @@ import (
 	"os"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/kubepack/pkg/util"
+	"kubepack.dev/kubepack/pkg/lib"
 
 	flag "github.com/spf13/pflag"
 	"sigs.k8s.io/yaml"
@@ -46,7 +46,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	out, err := util.CreateOrder(bv)
+	out, err := lib.CreateOrder(bv)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package util
+package lib
 
 import (
 	"bytes"
@@ -25,7 +25,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/sets"
 )
 
-func GenerateYAMLScript(order v1alpha1.Order) (string, error) {
+func GenerateHelm3Script(order v1alpha1.Order) (string, error) {
 	var buf bytes.Buffer
 	_, err := buf.WriteString("#!/usr/bin/env bash\n")
 	if err != nil {
@@ -67,16 +67,12 @@ func GenerateYAMLScript(order v1alpha1.Order) (string, error) {
 			namespaces.Insert(pkg.Chart.Namespace)
 		}
 
-		f3 := &YAMLPrinter{
+		f3 := &Helm3CommandPrinter{
 			ChartRef:    pkg.Chart.ChartRef,
 			Version:     pkg.Chart.Version,
 			ReleaseName: pkg.Chart.ReleaseName,
 			Namespace:   pkg.Chart.Namespace,
-			KubeVersion: "v1.17.0",
 			ValuesPatch: pkg.Chart.ValuesPatch,
-			BucketURL:   YAMLBucket,
-			UID:         string(order.UID),
-			PublicURL:   YAMLHost,
 			W:           &buf,
 		}
 		err = f3.Do()
