@@ -70,7 +70,7 @@ func main() {
 			ctx.Error(http.StatusInternalServerError, err.Error())
 			return
 		}
-		ctx.Write(data)
+		_, _ = ctx.Write(data)
 	})
 
 	m.Get("/products/:owner/:key/plans", func(ctx *macaron.Context) {
@@ -173,7 +173,7 @@ func main() {
 			ctx.Error(http.StatusInternalServerError, err.Error())
 			return
 		}
-		ctx.Write(data)
+		_, _ = ctx.Write(data)
 	})
 
 	m.Group("/deploy/orders", func() {

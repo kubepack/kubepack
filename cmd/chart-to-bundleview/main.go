@@ -46,6 +46,9 @@ func main() {
 		Name:    name,
 		Version: version,
 	})
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	err = os.MkdirAll("artifacts/"+name, 0755)
 	if err != nil {
