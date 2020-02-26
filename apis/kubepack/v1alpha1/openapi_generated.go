@@ -15145,25 +15145,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleOptionView(ref common.Referenc
 			SchemaProps: spec.SchemaProps{
 				Type: []string{"object"},
 				Properties: map[string]spec.Schema{
-					"name": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
-					"url": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
-					"version": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Version is an optional version indicator for the Application.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
 					"type": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Type is the type of the application (e.g. WordPress, MySQL, Cassandra).",
@@ -15234,6 +15215,25 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleOptionView(ref common.Referenc
 					"notes": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Notes contain a human readable snippets intended as a quick start for the users of the Application. CommonMark markdown syntax may be used for rich text representation.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"name": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"url": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"version": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Version is an optional version indicator for the Application.",
 							Type:        []string{"string"},
 							Format:      "",
 						},
@@ -15466,25 +15466,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleView(ref common.ReferenceCallb
 							Format:      "",
 						},
 					},
-					"name": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
-					"url": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
-					"version": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Version is an optional version indicator for the Application.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
 					"type": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Type is the type of the application (e.g. WordPress, MySQL, Cassandra).",
@@ -15555,6 +15536,25 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleView(ref common.ReferenceCallb
 					"notes": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Notes contain a human readable snippets intended as a quick start for the users of the Application. CommonMark markdown syntax may be used for rich text representation.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"name": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"url": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"version": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Version is an optional version indicator for the Application.",
 							Type:        []string{"string"},
 							Format:      "",
 						},
@@ -17039,25 +17039,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageMeta(ref common.ReferenceCall
 			SchemaProps: spec.SchemaProps{
 				Type: []string{"object"},
 				Properties: map[string]spec.Schema{
-					"name": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
-					"url": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
-					"version": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Version is an optional version indicator for the Application.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
 					"type": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Type is the type of the application (e.g. WordPress, MySQL, Cassandra).",
@@ -17128,6 +17109,25 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageMeta(ref common.ReferenceCall
 					"notes": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Notes contain a human readable snippets intended as a quick start for the users of the Application. CommonMark markdown syntax may be used for rich text representation.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"name": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"url": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"version": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Version is an optional version indicator for the Application.",
 							Type:        []string{"string"},
 							Format:      "",
 						},
@@ -17209,25 +17209,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageView(ref common.ReferenceCall
 							Format:      "",
 						},
 					},
-					"name": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
-					"url": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
-					"version": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Version is an optional version indicator for the Application.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
 					"type": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Type is the type of the application (e.g. WordPress, MySQL, Cassandra).",
@@ -17298,6 +17279,25 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageView(ref common.ReferenceCall
 					"notes": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Notes contain a human readable snippets intended as a quick start for the users of the Application. CommonMark markdown syntax may be used for rich text representation.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"name": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"url": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"version": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Version is an optional version indicator for the Application.",
 							Type:        []string{"string"},
 							Format:      "",
 						},

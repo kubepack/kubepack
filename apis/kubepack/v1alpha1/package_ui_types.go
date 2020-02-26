@@ -38,24 +38,23 @@ type PackageDescriptor struct {
 	Maintainers []ContactData `json:"maintainers,omitempty" protobuf:"bytes,4,rep,name=maintainers"`
 
 	// Keywords is an optional list of key words associated with the application (e.g. MySQL, RDBMS, database).
-	Keywords []string `json:"keywords,omitempty" protobuf:"bytes,6,rep,name=keywords"`
+	Keywords []string `json:"keywords,omitempty" protobuf:"bytes,5,rep,name=keywords"`
 
 	// Links are a list of descriptive URLs intended to be used to surface additional documentation, dashboards, etc.
-	Links []Link `json:"links,omitempty" protobuf:"bytes,7,rep,name=links"`
+	Links []Link `json:"links,omitempty" protobuf:"bytes,6,rep,name=links"`
 
 	// Notes contain a human readable snippets intended as a quick start for the users of the Application.
 	// CommonMark markdown syntax may be used for rich text representation.
-	Notes string `json:"notes,omitempty" protobuf:"bytes,8,opt,name=notes"`
+	Notes string `json:"notes,omitempty" protobuf:"bytes,7,opt,name=notes"`
 }
 
 type PackageMeta struct {
+	PackageDescriptor `json:",inline" protobuf:"bytes,1,opt,name=packageDescriptor"`
+
 	Name string `json:"name" protobuf:"bytes,2,opt,name=name"`
 	URL  string `json:"url" protobuf:"bytes,3,opt,name=url"`
-
 	// Version is an optional version indicator for the Application.
 	Version string `json:"version,omitempty" protobuf:"bytes,4,opt,name=version"`
-
-	PackageDescriptor `json:",inline" protobuf:"bytes,5,opt,name=packageDescriptor"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

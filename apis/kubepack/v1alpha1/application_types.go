@@ -164,7 +164,7 @@ type ImageSpec struct {
 // MediaSpec contains information about an image/video.
 type MediaSpec struct {
 	// Description is human readable content explaining the purpose of the link.
-	Description MediaType `json:"description,omitempty" protobuf:"bytes,1,opt,name=description"`
+	Description MediaType `json:"description,omitempty" protobuf:"bytes,1,opt,name=description,casttype=MediaType"`
 
 	ImageSpec `json:",inline" protobuf:"bytes,2,opt,name=imageSpec"`
 }
@@ -184,7 +184,7 @@ type ContactData struct {
 // Link contains information about an URL to surface documentation, dashboards, etc.
 type Link struct {
 	// Description is human readable content explaining the purpose of the link.
-	Description LinkType `json:"description,omitempty" protobuf:"bytes,1,opt,name=description"`
+	Description LinkType `json:"description,omitempty" protobuf:"bytes,1,opt,name=description,casttype=LinkType"`
 
 	// Url typically points at a website address.
 	URL string `json:"url,omitempty" protobuf:"bytes,2,opt,name=url"`

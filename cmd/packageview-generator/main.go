@@ -51,7 +51,7 @@ func main() {
 
 	fmt.Println(pkgChart.Metadata.Description)
 
-	b, err := lib.ToPackageView(url, pkgChart.Chart)
+	b, err := lib.CreatePackageView(url, pkgChart.Chart)
 	if err != nil {
 		log.Fatalln(err)
 	}
