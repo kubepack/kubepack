@@ -31,7 +31,7 @@ require (
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 	gomodules.xyz/version v0.1.0
 	gopkg.in/ini.v1 v1.52.0 // indirect
-	gopkg.in/macaron.v1 v1.3.5
+	gopkg.in/macaron.v1 v1.3.2
 	helm.sh/helm/v3 v3.0.3
 	k8s.io/api v0.0.0-20191114100352-16d7abae0d2a
 	k8s.io/apiextensions-apiserver v0.0.0-20191114105449-027877536833
@@ -72,7 +72,6 @@ replace (
 	github.com/prometheus/client_golang => github.com/prometheus/client_golang v0.9.2
 	google.golang.org/api => google.golang.org/api v0.6.1-0.20190607001116-5213b8090861
 	google.golang.org/grpc => github.com/gomodules/grpc-go v1.23.2-0.20191111130652-202dbf267fb7
-	gopkg.in/macaron.v1 => github.com/gomodules/macaron v1.3.2
 	helm.sh/helm/v3 => github.com/kubepack/helm/v3 v3.0.3-0.20200119202455-afb1ef54d569
 	k8s.io/api => k8s.io/api v0.0.0-20191114100352-16d7abae0d2a
 	k8s.io/apiextensions-apiserver => k8s.io/apiextensions-apiserver v0.0.0-20191114105449-027877536833

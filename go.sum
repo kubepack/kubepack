@@ -325,8 +325,6 @@ github.com/gomodules/binding v0.0.0-20200226114658-71565367f820 h1:tRxAxtcgBhV9L
 github.com/gomodules/binding v0.0.0-20200226114658-71565367f820/go.mod h1:HMmC2blZtLFuiwb9OkxmKI9RUNBycwA8rDUFwPxWQDQ=
 github.com/gomodules/grpc-go v1.23.2-0.20191111130652-202dbf267fb7 h1:KYtpy5q3L+mfC8BagHtJbclSAxM/vRWMTunQ8PnhwfM=
 github.com/gomodules/grpc-go v1.23.2-0.20191111130652-202dbf267fb7/go.mod h1:Y5yQAOtifL1yxbo5wqy6BxZv8vAUGQwXBOALyacEbxg=
-github.com/gomodules/macaron v1.3.2 h1:DfwLD8RGpPI0v5ZWliybDz2oWC1Z6QZ5SzC6So7B/SU=
-github.com/gomodules/macaron v1.3.2/go.mod h1:cFVtmSHdsb2aXM9r9KXkCQj7MHQed9N0lHswhstyy+s=
 github.com/google/btree v0.0.0-20180813153112-4030bb1f1f0c h1:964Od4U6p2jUkFxvCydnIczKteheJEzHRToSGK3Bnlw=
 github.com/google/btree v0.0.0-20180813153112-4030bb1f1f0c/go.mod h1:lNA+9X1NB3Zf8V7Ke586lFgjr2dZNuvo3lPJSGZ5JPQ=
 github.com/google/btree v1.0.0 h1:0udJVsspx3VBr5FwtLhQQtuAsVc79tTq0ocGIPAU6qo=
@@ -863,6 +861,8 @@ gopkg.in/inf.v0 v0.9.1 h1:73M5CoZyi3ZLMOyDlQh031Cx6N9NDJ2Vvfl76EDAgDc=
 gopkg.in/inf.v0 v0.9.1/go.mod h1:cWUDdTG/fYaXco+Dcufb5Vnc6Gp2YChqWtbxRZE0mXw=
 gopkg.in/ini.v1 v1.52.0 h1:j+Lt/M1oPPejkniCg1TkWE2J3Eh1oZTsHSXzMTzUXn4=
 gopkg.in/ini.v1 v1.52.0/go.mod h1:pNLf8WUiyNEtQjuu5G5vTm06TEv9tsIgeAvK8hOrP4k=
+gopkg.in/macaron.v1 v1.3.2 h1:AvWIaPmwBUA87/OWzePkoxeaw6YJWDfBt1pDFPBnLf8=
+gopkg.in/macaron.v1 v1.3.2/go.mod h1:PrsiawTWAGZs6wFbT5hlr7SQ2Ns9h7cUVtcUu4lQOVo=
 gopkg.in/mcuadros/go-syslog.v2 v2.2.1/go.mod h1:l5LPIyOOyIdQquNg+oU6Z3524YwrcqEm0aKH+5zpt2U=
 gopkg.in/natefinch/lumberjack.v2 v2.0.0 h1:1Lc07Kr7qY4U2YPouBjpCLxpiyxIVoxqXgkXLknAOE8=
 gopkg.in/natefinch/lumberjack.v2 v2.0.0/go.mod h1:l0ndWWf7gzL7RNwBG7wST/UCcT4T24xpD6X8LsfU/+k=
