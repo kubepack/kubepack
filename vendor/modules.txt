@@ -58,7 +58,9 @@ github.com/NYTimes/gziphandler
 github.com/PuerkitoBio/purell
 # github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578
 github.com/PuerkitoBio/urlesc
-# github.com/appscode/go v0.0.0-20191119085241-0887d8ec2ecc
+# github.com/Unknwon/com v0.0.0-20190321035513-0fed4efef755
+github.com/Unknwon/com
+# github.com/appscode/go v0.0.0-20200225060711-86360b91102a
 github.com/appscode/go/analytics
 github.com/appscode/go/context
 github.com/appscode/go/crypto/rand
@@ -252,6 +254,10 @@ github.com/gabriel-vasile/mimetype/internal/json
 github.com/gabriel-vasile/mimetype/internal/matchers
 # github.com/ghodss/yaml v1.0.0
 github.com/ghodss/yaml
+# github.com/go-macaron/binding v0.0.0-00010101000000-000000000000 => github.com/gomodules/binding v0.0.0-20200226114658-71565367f820
+github.com/go-macaron/binding
+# github.com/go-macaron/inject v0.0.0-20160627170012-d8a0b8677191
+github.com/go-macaron/inject
 # github.com/go-openapi/jsonpointer v0.19.3
 github.com/go-openapi/jsonpointer
 # github.com/go-openapi/jsonreference v0.19.3
@@ -273,9 +279,11 @@ github.com/gobwas/glob/util/runes
 github.com/gobwas/glob/util/strings
 # github.com/gogo/protobuf v1.3.1 => github.com/gogo/protobuf v1.2.2-0.20190723190241-65acae22fc9d
 github.com/gogo/protobuf/gogoproto
+github.com/gogo/protobuf/jsonpb
 github.com/gogo/protobuf/proto
 github.com/gogo/protobuf/protoc-gen-gogo/descriptor
 github.com/gogo/protobuf/sortkeys
+github.com/gogo/protobuf/types
 # github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 github.com/golang/glog
 # github.com/golang/groupcache v0.0.0-20191027212112-611e8accdfc9
@@ -324,6 +332,8 @@ github.com/gophercloud/gophercloud/openstack/utils
 github.com/gophercloud/gophercloud/pagination
 # github.com/gorilla/mux v1.7.0
 github.com/gorilla/mux
+# github.com/gorilla/schema v1.1.0
+github.com/gorilla/schema
 # github.com/gosuri/uitable v0.0.1
 github.com/gosuri/uitable
 github.com/gosuri/uitable/util/strutil
@@ -664,6 +674,10 @@ google.golang.org/grpc/tap
 gopkg.in/fsnotify.v1
 # gopkg.in/inf.v0 v0.9.1
 gopkg.in/inf.v0
+# gopkg.in/ini.v1 v1.52.0
+gopkg.in/ini.v1
+# gopkg.in/macaron.v1 v1.3.5 => github.com/gomodules/macaron v1.3.2
+gopkg.in/macaron.v1
 # gopkg.in/natefinch/lumberjack.v2 v2.0.0
 gopkg.in/natefinch/lumberjack.v2
 # gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7

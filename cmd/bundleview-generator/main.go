@@ -17,6 +17,7 @@ limitations under the License.
 package main
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"log"
 	"os"
@@ -29,8 +30,8 @@ import (
 
 var (
 	url     = "https://kubepack-testcharts.storage.googleapis.com"
-	name    = "kubedb-bundle"
-	version = "v0.13.0-rc.2"
+	name    = "kubedb-community"
+	version = "v0.13.0-rc.0"
 )
 
 func main() {
@@ -39,21 +40,35 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	bv, err := lib.CreateBundleView(url, name, version)
+	bv, err := lib.CreateBundleViewForBundle(url, name, version)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	data, err := yaml.Marshal(bv)
-	if err != nil {
-		log.Fatal(err)
-	}
 	err = os.MkdirAll("artifacts/"+name, 0755)
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = ioutil.WriteFile("artifacts/"+name+"/bundleview.yaml", data, 0644)
-	if err != nil {
-		log.Fatal(err)
+
+	{
+		data, err := yaml.Marshal(bv)
+		if err != nil {
+			log.Fatal(err)
+		}
+		err = ioutil.WriteFile("artifacts/"+name+"/bundleview.yaml", data, 0644)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	{
+		data, err := json.MarshalIndent(bv, "", "  ")
+		if err != nil {
+			log.Fatal(err)
+		}
+		err = ioutil.WriteFile("artifacts/"+name+"/bundleview.json", data, 0644)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }

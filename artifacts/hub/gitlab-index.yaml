@@ -2,9 +2,27 @@ apiVersion: v1
 entries:
   auto-deploy-app:
   - apiVersion: v1
-    created: "2020-01-22T13:12:08.655335325Z"
+    created: "2020-02-18T23:36:06.294379466Z"
     description: GitLab's Auto-deploy Helm Chart
-    digest: b4ef9af3c8a0d33fe45a3655417859068adf8d80b956cca7294ebaa8773a6f75
+    digest: d673e7062034d83edb88e731139d435b1abc03cdd24a2145a35d648ba0dda1ff
+    icon: https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-square.png
+    name: auto-deploy-app
+    urls:
+    - https://gitlab-charts.s3.amazonaws.com/auto-deploy-app-0.5.2.tgz
+    version: 0.5.2
+  - apiVersion: v1
+    created: "2020-02-13T19:28:55.657798496Z"
+    description: GitLab's Auto-deploy Helm Chart
+    digest: 9630903d643af816342042b5d7bd44991cbc95c18b80f130dcd1f48c519feef9
+    icon: https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-square.png
+    name: auto-deploy-app
+    urls:
+    - https://gitlab-charts.s3.amazonaws.com/auto-deploy-app-0.5.0.tgz
+    version: 0.5.0
+  - apiVersion: v1
+    created: "2020-02-04T21:51:35.807265649Z"
+    description: GitLab's Auto-deploy Helm Chart
+    digest: 9f486c7ee914bb658b3779e3cc4e11f5fe66e890ee84496494c6c5df247e6295
     icon: https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-square.png
     name: auto-deploy-app
     urls:
@@ -102,6 +120,114 @@ entries:
     version: 0.2.4
   gitlab:
   - apiVersion: v1
+    appVersion: 12.8.1
+    created: "2020-02-24T19:20:40.401860927Z"
+    description: Web-based Git-repository manager with wiki and issue-tracking features.
+    digest: 94b6f9d8e42f287e5d22d512b3a3b73babdab0ff1921c7bb6a762024b9538e86
+    home: https://about.gitlab.com/
+    icon: https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-square.png
+    keywords:
+    - gitlab
+    maintainers:
+    - email: support@gitlab.com
+      name: GitLab Inc.
+    name: gitlab
+    sources:
+    - https://gitlab.com/gitlab-org/charts/gitlab
+    urls:
+    - https://gitlab-charts.s3.amazonaws.com/gitlab-3.1.1.tgz
+    version: 3.1.1
+  - apiVersion: v1
+    appVersion: 12.8.0
+    created: "2020-02-22T13:55:08.771117804Z"
+    description: Web-based Git-repository manager with wiki and issue-tracking features.
+    digest: 841a619932c323bb758adb12582849f00a6e017297ec9cac4531d47dfe5b6bc0
+    home: https://about.gitlab.com/
+    icon: https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-square.png
+    keywords:
+    - gitlab
+    maintainers:
+    - email: support@gitlab.com
+      name: GitLab Inc.
+    name: gitlab
+    sources:
+    - https://gitlab.com/gitlab-org/charts/gitlab
+    urls:
+    - https://gitlab-charts.s3.amazonaws.com/gitlab-3.1.0.tgz
+    version: 3.1.0
+  - apiVersion: v1
+    appVersion: 12.7.6
+    created: "2020-02-13T19:15:42.717756891Z"
+    description: Web-based Git-repository manager with wiki and issue-tracking features.
+    digest: 5ff40c732f7ba4f435b516cbd50852c94b5633901ee4866534f6331fafde850f
+    home: https://about.gitlab.com/
+    icon: https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-square.png
+    keywords:
+    - gitlab
+    maintainers:
+    - email: support@gitlab.com
+      name: GitLab Inc.
+    name: gitlab
+    sources:
+    - https://gitlab.com/gitlab-org/charts/gitlab
+    urls:
+    - https://gitlab-charts.s3.amazonaws.com/gitlab-3.0.4.tgz
+    version: 3.0.4
+  - apiVersion: v1
+    appVersion: 12.7.5
+    created: "2020-02-01T00:22:14.303237982Z"
+    description: Web-based Git-repository manager with wiki and issue-tracking features.
+    digest: 4a603843de467288de5b0ab325739ab01795fd4fe92777ff8e27fb43edb0443a
+    home: https://about.gitlab.com/
+    icon: https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-square.png
+    keywords:
+    - gitlab
+    maintainers:
+    - email: support@gitlab.com
+      name: GitLab Inc.
+    name: gitlab
+    sources:
+    - https://gitlab.com/gitlab-org/charts/gitlab
+    urls:
+    - https://gitlab-charts.s3.amazonaws.com/gitlab-3.0.3.tgz
+    version: 3.0.3
+  - apiVersion: v1
+    appVersion: 12.7.4
+    created: "2020-01-30T18:50:22.937670369Z"
+    description: Web-based Git-repository manager with wiki and issue-tracking features.
+    digest: 30b615c2dc527c8c2071473481675b1113322d4ff34875e4610ae710b2616884
+    home: https://about.gitlab.com/
+    icon: https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-square.png
+    keywords:
+    - gitlab
+    maintainers:
+    - email: support@gitlab.com
+      name: GitLab Inc.
+    name: gitlab
+    sources:
+    - https://gitlab.com/gitlab-org/charts/gitlab
+    urls:
+    - https://gitlab-charts.s3.amazonaws.com/gitlab-3.0.2.tgz
+    version: 3.0.2
+  - apiVersion: v1
+    appVersion: 12.7.2
+    created: "2020-01-24T20:16:29.16771795Z"
+    description: Web-based Git-repository manager with wiki and issue-tracking features.
+    digest: 294a2c0453051d3302db457a600e2754346a7e74ed6e559ee206f7e1dd4685de
+    home: https://about.gitlab.com/
+    icon: https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-square.png
+    keywords:
+    - gitlab
+    maintainers:
+    - email: support@gitlab.com
+      name: GitLab Inc.
+    name: gitlab
+    sources:
+    - https://gitlab.com/gitlab-org/charts/gitlab
+    urls:
+    - https://gitlab-charts.s3.amazonaws.com/gitlab-3.0.1.tgz
+    version: 3.0.1
+  - apiVersion: v1
     appVersion: 12.7.0
     created: "2020-01-22T13:11:10.42485339Z"
     description: Web-based Git-repository manager with wiki and issue-tracking features.
@@ -119,6 +245,42 @@ entries:
     urls:
     - https://gitlab-charts.s3.amazonaws.com/gitlab-3.0.0.tgz
     version: 3.0.0
+  - apiVersion: v1
+    appVersion: 12.6.7
+    created: "2020-02-13T19:20:39.828590457Z"
+    description: Web-based Git-repository manager with wiki and issue-tracking features.
+    digest: e973d0ce7d44434ee71f9fd33b3b6cee956b664767fa8181b1689da2ef31c35f
+    home: https://about.gitlab.com/
+    icon: https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-square.png
+    keywords:
+    - gitlab
+    maintainers:
+    - email: support@gitlab.com
+      name: GitLab Inc.
+    name: gitlab
+    sources:
+    - https://gitlab.com/gitlab-org/charts/gitlab
+    urls:
+    - https://gitlab-charts.s3.amazonaws.com/gitlab-2.6.8.tgz
+    version: 2.6.8
+  - apiVersion: v1
+    appVersion: 12.6.6
+    created: "2020-01-30T18:14:50.891348011Z"
+    description: Web-based Git-repository manager with wiki and issue-tracking features.
+    digest: 5acb337de3b4c9af665cd0a5795ddc8373368f978a85d84fe10b721aae9e02d0
+    home: https://about.gitlab.com/
+    icon: https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-square.png
+    keywords:
+    - gitlab
+    maintainers:
+    - email: support@gitlab.com
+      name: GitLab Inc.
+    name: gitlab
+    sources:
+    - https://gitlab.com/gitlab-org/charts/gitlab
+    urls:
+    - https://gitlab-charts.s3.amazonaws.com/gitlab-2.6.7.tgz
+    version: 2.6.7
   - apiVersion: v1
     appVersion: 12.6.4
     created: "2020-01-20T17:34:35.466428609Z"
@@ -245,6 +407,42 @@ entries:
     urls:
     - https://gitlab-charts.s3.amazonaws.com/gitlab-2.6.0.tgz
     version: 2.6.0
+  - apiVersion: v1
+    appVersion: 12.5.10
+    created: "2020-02-13T19:28:08.23359863Z"
+    description: Web-based Git-repository manager with wiki and issue-tracking features.
+    digest: 895820f645d4362a725fb76c81f6f6ac4c61ca9da89d8223b03273aef53d709b
+    home: https://about.gitlab.com/
+    icon: https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-square.png
+    keywords:
+    - gitlab
+    maintainers:
+    - email: support@gitlab.com
+      name: GitLab Inc.
+    name: gitlab
+    sources:
+    - https://gitlab.com/gitlab-org/charts/gitlab
+    urls:
+    - https://gitlab-charts.s3.amazonaws.com/gitlab-2.5.11.tgz
+    version: 2.5.11
+  - apiVersion: v1
+    appVersion: 12.5.9
+    created: "2020-01-30T19:59:49.767569165Z"
+    description: Web-based Git-repository manager with wiki and issue-tracking features.
+    digest: 00085d04cf0d8966fde1dfae019899b595484b8f01c23b2bdf9c66f9b7689161
+    home: https://about.gitlab.com/
+    icon: https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-square.png
+    keywords:
+    - gitlab
+    maintainers:
+    - email: support@gitlab.com
+      name: GitLab Inc.
+    name: gitlab
+    sources:
+    - https://gitlab.com/gitlab-org/charts/gitlab
+    urls:
+    - https://gitlab-charts.s3.amazonaws.com/gitlab-2.5.10.tgz
+    version: 2.5.10
   - apiVersion: v1
     appVersion: 12.5.7
     created: "2020-01-20T17:39:01.014903292Z"
@@ -2757,10 +2955,10 @@ entries:
     version: 0.1.9
   gitlab-omnibus:
   - apiVersion: v1
-    created: "2020-01-22T13:12:08.657198274Z"
+    created: "2020-02-24T19:48:40.886971168Z"
     deprecated: true
     description: GitLab Omnibus all-in-one bundle
-    digest: 70fa47060c444658efbea8a7422da208b6b65e22447094e99db37fc9eddf410a
+    digest: 12f97ec05472280958ecb9088e65b491b8e21eaf10077b557b8aabca92b50557
     home: https://about.gitlab.com
     icon: https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-square.png
     keywords:
@@ -2787,6 +2985,66 @@ entries:
     - https://gitlab-charts.s3.amazonaws.com/gitlab-omnibus-0.1.37.tgz
     version: 0.1.37
   gitlab-runner:
+  - apiVersion: v1
+    appVersion: 12.8.0
+    created: "2020-02-22T02:15:38.791451471Z"
+    description: GitLab Runner
+    digest: 37e68193a4c958e08d261d59d2150e2021a66d38f70c7450f73b33436f0b24aa
+    icon: https://gitlab.com/uploads/-/system/project/avatar/250833/runner_logo.png
+    keywords:
+    - git
+    - ci
+    - deploy
+    maintainers:
+    - email: support@gitlab.com
+      name: GitLab Inc.
+    name: gitlab-runner
+    sources:
+    - https://hub.docker.com/r/gitlab/gitlab-runner/
+    - https://docs.gitlab.com/runner/
+    urls:
+    - https://gitlab-charts.s3.amazonaws.com/gitlab-runner-0.14.0.tgz
+    version: 0.14.0
+  - apiVersion: v1
+    appVersion: 12.8.0-rc1
+    created: "2020-02-14T15:26:05.795183026Z"
+    description: GitLab Runner
+    digest: 8a1db7edea720444886dd389b74df2e0ca753166bf0ff93f354fd5c93bf9be30
+    icon: https://gitlab.com/uploads/-/system/project/avatar/250833/runner_logo.png
+    keywords:
+    - git
+    - ci
+    - deploy
+    maintainers:
+    - email: support@gitlab.com
+      name: GitLab Inc.
+    name: gitlab-runner
+    sources:
+    - https://hub.docker.com/r/gitlab/gitlab-runner/
+    - https://docs.gitlab.com/runner/
+    urls:
+    - https://gitlab-charts.s3.amazonaws.com/gitlab-runner-0.14.0-rc1.tgz
+    version: 0.14.0-rc1
+  - apiVersion: v1
+    appVersion: 12.7.1
+    created: "2020-01-23T09:38:28.988624733Z"
+    description: GitLab Runner
+    digest: ea56655ebf7ab9b96c239a3ed45a08216607431b906b3000baaaa0a11b66fce0
+    icon: https://gitlab.com/uploads/-/system/project/avatar/250833/runner_logo.png
+    keywords:
+    - git
+    - ci
+    - deploy
+    maintainers:
+    - email: support@gitlab.com
+      name: GitLab Inc.
+    name: gitlab-runner
+    sources:
+    - https://hub.docker.com/r/gitlab/gitlab-runner/
+    - https://docs.gitlab.com/runner/
+    urls:
+    - https://gitlab-charts.s3.amazonaws.com/gitlab-runner-0.13.1.tgz
+    version: 0.13.1
   - apiVersion: v1
     appVersion: 12.7.0
     created: "2020-01-20T08:51:21.756032795Z"
@@ -4241,4 +4499,4 @@ entries:
     urls:
     - https://gitlab-charts.s3.amazonaws.com/plantuml-0.1.10.tgz
     version: 0.1.10
-generated: "2020-01-22T13:12:08.653744087Z"
+generated: "2020-02-24T19:48:40.885451148Z"

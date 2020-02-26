@@ -17,7 +17,9 @@ limitations under the License.
 package lib
 
 import (
+	"bytes"
 	"context"
+	"io"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -68,4 +70,45 @@ func Upload(dir, filename string, data []byte) error {
 		return closeErr
 	}
 	return nil
+}
+
+func Download(dir, filename string) ([]byte, error) {
+	saKey, err := ioutil.ReadFile(GoogleApplicationCredentials)
+	if err != nil {
+		return nil, err
+	}
+
+	cfg, err := google.JWTConfigFromJSON(saKey)
+	if err != nil {
+		return nil, err
+	}
+
+	err = ioutil.WriteFile(GoogleApplicationCredentials+"-private-key", cfg.PrivateKey, 0644)
+	if err != nil {
+		return nil, err
+	}
+
+	os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", GoogleApplicationCredentials)
+
+	ctx := context.Background()
+	bucket, err := blob.OpenBucket(ctx, "gs://kubepack-usercontent?access_id="+cfg.Email+"&private_key_path="+GoogleApplicationCredentials+"-private-key")
+	if err != nil {
+		return nil, err
+	}
+	bucket = blob.PrefixedBucket(bucket, strings.Trim(dir, "/")+"/")
+	defer bucket.Close()
+
+	// Open the key "foo.txt" for reading with the default options.
+	r, err := bucket.NewReader(ctx, filename, nil)
+	if err != nil {
+		return nil, err
+	}
+	defer r.Close()
+
+	var buf bytes.Buffer
+	if _, err := io.Copy(&buf, r); err != nil {
+		return nil, err
+	}
+
+	return buf.Bytes(), nil
 }

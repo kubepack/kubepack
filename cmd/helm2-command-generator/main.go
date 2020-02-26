@@ -32,7 +32,7 @@ import (
 )
 
 var (
-	file = "artifacts/kubedb-bundle/order.yaml"
+	file = "artifacts/kubedb-community/order.yaml"
 )
 
 func main() {

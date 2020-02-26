@@ -4,18 +4,22 @@ go 1.12
 
 require (
 	github.com/Azure/go-autorest/autorest/azure/auth v0.4.2 // indirect
-	github.com/appscode/go v0.0.0-20191119085241-0887d8ec2ecc
+	github.com/Unknwon/com v0.0.0-20190321035513-0fed4efef755 // indirect
+	github.com/appscode/go v0.0.0-20200225060711-86360b91102a
 	github.com/appscode/static-assets v0.4.1
 	github.com/aws/aws-sdk-go v1.20.20 // indirect
 	github.com/coreos/prometheus-operator v0.34.0
 	github.com/evanphx/json-patch v4.5.0+incompatible
 	github.com/gabriel-vasile/mimetype v1.0.2
+	github.com/go-macaron/binding v0.0.0-00010101000000-000000000000
+	github.com/go-macaron/inject v0.0.0-20160627170012-d8a0b8677191 // indirect
 	github.com/go-openapi/spec v0.19.4
 	github.com/gobuffalo/flect v0.1.7
 	github.com/gogo/protobuf v1.3.1
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/google/gofuzz v1.0.0
 	github.com/google/uuid v1.1.1
+	github.com/gorilla/schema v1.1.0 // indirect
 	github.com/gregjones/httpcache v0.0.0-20181110185634-c63ab54fda8f
 	github.com/onsi/ginkgo v1.10.1
 	github.com/onsi/gomega v1.7.0
@@ -26,6 +30,8 @@ require (
 	gocloud.dev v0.18.0
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 	gomodules.xyz/version v0.1.0
+	gopkg.in/ini.v1 v1.52.0 // indirect
+	gopkg.in/macaron.v1 v1.3.5
 	helm.sh/helm/v3 v3.0.3
 	k8s.io/api v0.0.0-20191114100352-16d7abae0d2a
 	k8s.io/apiextensions-apiserver v0.0.0-20191114105449-027877536833
@@ -59,12 +65,14 @@ replace (
 	github.com/Azure/go-autorest/logger => github.com/Azure/go-autorest/logger v0.1.0
 	github.com/Azure/go-autorest/tracing => github.com/Azure/go-autorest/tracing v0.5.0
 	github.com/docker/docker => github.com/docker/docker v0.7.3-0.20190327010347-be7ac8be2ae0
+	github.com/go-macaron/binding => github.com/gomodules/binding v0.0.0-20200226114658-71565367f820
 	github.com/gogo/protobuf => github.com/gogo/protobuf v1.2.2-0.20190723190241-65acae22fc9d
 	github.com/golang/protobuf => github.com/golang/protobuf v1.3.1
 	github.com/kubernetes-csi/external-snapshotter => github.com/kmodules/external-snapshotter v1.2.1-0.20191128100451-0265c5fa679a
 	github.com/prometheus/client_golang => github.com/prometheus/client_golang v0.9.2
 	google.golang.org/api => google.golang.org/api v0.6.1-0.20190607001116-5213b8090861
 	google.golang.org/grpc => github.com/gomodules/grpc-go v1.23.2-0.20191111130652-202dbf267fb7
+	gopkg.in/macaron.v1 => github.com/gomodules/macaron v1.3.2
 	helm.sh/helm/v3 => github.com/kubepack/helm/v3 v3.0.3-0.20200119202455-afb1ef54d569
 	k8s.io/api => k8s.io/api v0.0.0-20191114100352-16d7abae0d2a
 	k8s.io/apiextensions-apiserver => k8s.io/apiextensions-apiserver v0.0.0-20191114105449-027877536833

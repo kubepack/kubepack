@@ -29,7 +29,7 @@ import (
 
 var (
 	url     = "https://kubepack-testcharts.storage.googleapis.com"
-	names   = []string{"kubedb-bundle"}
+	names   = []string{"kubedb-community"}
 	version = "v0.13.0-rc.2"
 )
 

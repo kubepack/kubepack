@@ -38,7 +38,7 @@ import (
 var (
 	masterURL      = ""
 	kubeconfigPath = filepath.Join(homedir.HomeDir(), ".kube", "config")
-	file           = "artifacts/kubedb-bundle/order.yaml"
+	file           = "artifacts/kubedb-community/order.yaml"
 )
 
 func main() {

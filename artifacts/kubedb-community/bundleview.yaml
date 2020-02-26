@@ -1,0 +1,323 @@
+apiVersion: kubepack.com/v1alpha1
+description: KubeDB Community Plan
+displayName: Kubedb Bundle
+kind: BundleView
+name: kubedb-community
+packages:
+- chart:
+    description: KubeDB by AppsCode - Production ready databases on Kubernetes
+    features:
+    - KubeDB by AppsCode - Production ready databases on Kubernetes
+    icons:
+    - src: https://cdn.appscode.com/images/icon/kubedb.png
+      type: image/png
+    links:
+    - description: website
+      url: https://github.com/kubedb/installer
+    maintainers:
+    - email: kubedb@appscode.com
+      name: appscode
+    name: kubedb
+    namespace: kube-system
+    required: true
+    selected: true
+    url: https://charts.appscode.com/stable/
+    versions:
+    - selected: true
+      version: v0.13.0-rc.0
+- chart:
+    description: KubeDB Catalog by AppsCode - Catalog for database versions
+    features:
+    - KubeDB Catalog by AppsCode - Catalog for database versions
+    icons:
+    - src: https://cdn.appscode.com/images/icon/kubedb.png
+      type: image/png
+    links:
+    - description: website
+      url: https://github.com/kubedb/installer
+    maintainers:
+    - email: kubedb@appscode.com
+      name: appscode
+    name: kubedb-catalog
+    namespace: kube-system
+    required: true
+    selected: true
+    url: https://charts.appscode.com/stable/
+    versions:
+    - selected: true
+      version: v0.13.0-rc.0
+- chart:
+    description: A Helm chart for cert-manager
+    features:
+    - A Helm chart for cert-manager
+    icons:
+    - src: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+      type: image/png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    links:
+    - description: website
+      url: https://github.com/jetstack/cert-manager
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    namespace: cert-manager
+    url: https://charts.jetstack.io
+    versions:
+    - selected: true
+      version: v0.13.1
+- bundle:
+    description: Stash Community Plan
+    displayName: Stash Bundle
+    name: stash-community
+    packages:
+    - chart:
+        description: Stash by AppsCode - Backup your Kubernetes Volumes
+        features:
+        - Stash by AppsCode - Backup your Kubernetes Volumes
+        icons:
+        - src: https://cdn.appscode.com/images/products/stash/icons/android-icon-192x192.png
+          type: image/png
+        links:
+        - description: website
+          url: https://appscode.com/products/stash/
+        maintainers:
+        - email: support@appscode.com
+          name: appscode
+        name: stash
+        namespace: kube-system
+        selected: true
+        url: https://kubepack-testcharts.storage.googleapis.com
+        versions:
+        - selected: true
+          version: v0.9.0-rc.6
+    - bundle:
+        description: Stash Elasticsearch Addon Community Plan
+        displayName: Stash Elasticsearch Bundle
+        name: stash-elasticsearch-community
+        packages:
+        - chart:
+            description: stash-elasticsearch - Elasticsearch database backup and restore
+              plugin for Stash by AppsCode
+            features:
+            - stash-elasticsearch - Elasticsearch database backup and restore plugin
+              for Stash  by AppsCode
+            icons:
+            - src: https://cdn.appscode.com/images/icon/stash.png
+              type: image/png
+            links:
+            - description: website
+              url: https://github.com/stashed/elasticsearch
+            maintainers:
+            - email: support@appscode.com
+              name: appscode
+            multiSelect: true
+            name: stash-elasticsearch
+            namespace: kube-system
+            selected: true
+            url: https://charts.appscode.com/stable/
+            versions:
+            - selected: true
+              version: "5.6"
+            - selected: true
+              version: 5.6.4
+            - selected: true
+              version: "6.2"
+            - selected: true
+              version: 6.2.4
+            - selected: true
+              version: "6.3"
+            - selected: true
+              version: 6.3.0
+            - selected: true
+              version: "6.4"
+            - selected: true
+              version: 6.4.0
+            - selected: true
+              version: "6.5"
+            - selected: true
+              version: 6.5.3
+            - selected: true
+              version: "6.8"
+            - selected: true
+              version: 6.8.0
+            - selected: true
+              version: "7.2"
+            - selected: true
+              version: 7.2.0
+            - selected: true
+              version: "7.3"
+            - selected: true
+              version: 7.3.2
+        url: https://kubepack-testcharts.storage.googleapis.com
+        version: v0.1.0
+    - bundle:
+        description: Stash MongoDB Addon Community Plan
+        displayName: Stash MongoDB Bundle
+        name: stash-mongodb-community
+        packages:
+        - chart:
+            description: stash-mongodb - MongoDB database backup and restore plugin
+              for Stash  by AppsCode
+            features:
+            - stash-mongodb - MongoDB database backup and restore plugin for Stash  by
+              AppsCode
+            icons:
+            - src: https://cdn.appscode.com/images/icon/stash.png
+              type: image/png
+            links:
+            - description: website
+              url: https://github.com/stashed/mongodb
+            maintainers:
+            - email: support@appscode.com
+              name: appscode
+            multiSelect: true
+            name: stash-mongodb
+            namespace: kube-system
+            selected: true
+            url: https://charts.appscode.com/stable/
+            versions:
+            - selected: true
+              version: "3.4"
+            - selected: true
+              version: 3.4.17
+            - selected: true
+              version: 3.4.22
+            - selected: true
+              version: "3.6"
+            - selected: true
+              version: 3.6.8
+            - selected: true
+              version: 3.6.13
+            - selected: true
+              version: "4.0"
+            - selected: true
+              version: 4.0.3
+            - selected: true
+              version: 4.0.5
+            - selected: true
+              version: 4.0.11
+            - selected: true
+              version: "4.1"
+            - selected: true
+              version: 4.1.4
+            - selected: true
+              version: 4.1.7
+            - selected: true
+              version: 4.1.13
+            - selected: true
+              version: "4.2"
+            - selected: true
+              version: 4.2.3
+        url: https://kubepack-testcharts.storage.googleapis.com
+        version: v0.1.0
+    - bundle:
+        description: Stash MySQL Addon Community
+        displayName: Stash MySQL Bundle
+        name: stash-mysql-community
+        packages:
+        - chart:
+            description: stash-mysql - MySQL database backup and restore plugin for
+              Stash by AppsCode
+            features:
+            - stash-mysql - MySQL database backup and restore plugin for Stash  by
+              AppsCode
+            icons:
+            - src: https://cdn.appscode.com/images/icon/stash.png
+              type: image/png
+            links:
+            - description: website
+              url: https://github.com/stashed/mysql
+            maintainers:
+            - email: support@appscode.com
+              name: appscode
+            multiSelect: true
+            name: stash-mysql
+            namespace: kube-system
+            selected: true
+            url: https://charts.appscode.com/stable/
+            versions:
+            - selected: true
+              version: 5.7.25
+            - selected: true
+              version: 8.0.3
+            - selected: true
+              version: 8.0.14
+        url: https://kubepack-testcharts.storage.googleapis.com
+        version: v0.1.0
+    - bundle:
+        description: Stash PostgreSQL Addon Community Plan
+        displayName: Stash PostgreSQL Bundle
+        name: stash-postgres-community
+        packages:
+        - chart:
+            description: stash-postgres - PostgreSQL database backup and restore plugin
+              for Stash by AppsCode
+            features:
+            - stash-postgres - PostgreSQL database backup and restore plugin for Stash  by
+              AppsCode
+            icons:
+            - src: https://cdn.appscode.com/images/icon/stash.png
+              type: image/png
+            links:
+            - description: website
+              url: https://github.com/stashed/postgres
+            maintainers:
+            - email: support@appscode.com
+              name: appscode
+            multiSelect: true
+            name: stash-postgres
+            namespace: kube-system
+            selected: true
+            url: https://charts.appscode.com/stable/
+            versions:
+            - selected: true
+              version: "9.6"
+            - selected: true
+              version: "10.2"
+            - selected: true
+              version: "10.6"
+            - selected: true
+              version: "11.1"
+            - selected: true
+              version: "11.2"
+        url: https://kubepack-testcharts.storage.googleapis.com
+        version: v0.1.0
+    - bundle:
+        description: Stash Percona XtraDB Addon Community Plan
+        displayName: Stash Percona XtraDB Bundle
+        name: stash-percona-xtradb-community
+        packages:
+        - chart:
+            description: stash-percona-xtradb - PerconaXtraDB database backup and
+              restore plugin for Stash by AppsCode
+            features:
+            - stash-percona-xtradb - Percona XtraDB database backup and restore plugin
+              for Stash  by AppsCode
+            icons:
+            - src: https://cdn.appscode.com/images/icon/stash.png
+              type: image/png
+            links:
+            - description: website
+              url: https://github.com/stashed/percona-xtradb
+            maintainers:
+            - email: support@appscode.com
+              name: appscode
+            multiSelect: true
+            name: stash-percona-xtradb
+            namespace: kube-system
+            selected: true
+            url: https://charts.appscode.com/stable/
+            versions:
+            - selected: true
+              version: "5.7"
+        url: https://kubepack-testcharts.storage.googleapis.com
+        version: v0.1.0
+    url: https://kubepack-testcharts.storage.googleapis.com
+    version: v0.9.0-rc.6
+url: https://kubepack-testcharts.storage.googleapis.com
+version: v0.13.0-rc.0

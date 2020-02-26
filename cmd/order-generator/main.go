@@ -29,7 +29,7 @@ import (
 )
 
 var (
-	file = "artifacts/kubedb-bundle/bundleview.yaml"
+	file = "artifacts/kubedb-community/bundleview.yaml"
 )
 
 func main() {
