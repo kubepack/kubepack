@@ -502,25 +502,25 @@ message PackageDescriptor {
   repeated ContactData maintainers = 4;
 
   // Keywords is an optional list of key words associated with the application (e.g. MySQL, RDBMS, database).
-  repeated string keywords = 6;
+  repeated string keywords = 5;
 
   // Links are a list of descriptive URLs intended to be used to surface additional documentation, dashboards, etc.
-  repeated Link links = 7;
+  repeated Link links = 6;
 
   // Notes contain a human readable snippets intended as a quick start for the users of the Application.
   // CommonMark markdown syntax may be used for rich text representation.
-  optional string notes = 8;
+  optional string notes = 7;
 }
 
 message PackageMeta {
+  optional PackageDescriptor packageDescriptor = 1;
+
   optional string name = 2;
 
   optional string url = 3;
 
   // Version is an optional version indicator for the Application.
   optional string version = 4;
-
-  optional PackageDescriptor packageDescriptor = 5;
 }
 
 message PackageRef {

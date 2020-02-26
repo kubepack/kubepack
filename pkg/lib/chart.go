@@ -79,7 +79,7 @@ func GetChart(repoURL, chartName, chartVersion string) (*repo.ChartExtended, err
 	return reg.GetChart(repoURL, chartName, chartVersion)
 }
 
-func ToPackageView(url string, chrt *chart.Chart) (*v1alpha1.PackageView, error) {
+func CreatePackageView(url string, chrt *chart.Chart) (*v1alpha1.PackageView, error) {
 	p := v1alpha1.PackageView{
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: v1alpha1.SchemeGroupVersion.String(),
