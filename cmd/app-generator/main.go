@@ -29,7 +29,7 @@ import (
 )
 
 var (
-	file    = "artifacts/kubedb-bundle/order.yaml"
+	file    = "artifacts/kubedb-community/order.yaml"
 	url     = "https://charts.appscode.com/stable/"
 	name    = "kubedb"
 	version = "v0.13.0-rc.0"

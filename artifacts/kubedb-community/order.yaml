@@ -1,15 +1,16 @@
 apiVersion: kubepack.com/v1alpha1
 kind: Order
 metadata:
-  creationTimestamp: null
-  name: kubedb-bundle
+  creationTimestamp: "2020-02-26T10:30:56Z"
+  name: kubedb-community
+  uid: 3ce1ca99-a204-40cf-aec9-4529a840ed78
 spec:
   items:
   - chart:
       bundle:
-        name: kubedb-bundle
+        name: kubedb-community
         url: https://kubepack-testcharts.storage.googleapis.com
-        version: v0.13.0-rc.2
+        version: v0.13.0-rc.0
       name: kubedb
       namespace: kube-system
       releaseName: kubedb
@@ -17,9 +18,9 @@ spec:
       version: v0.13.0-rc.0
   - chart:
       bundle:
-        name: kubedb-bundle
+        name: kubedb-community
         url: https://kubepack-testcharts.storage.googleapis.com
-        version: v0.13.0-rc.2
+        version: v0.13.0-rc.0
       name: kubedb-catalog
       namespace: kube-system
       releaseName: kubedb-catalog

@@ -133,12 +133,12 @@ func GenerateYAMLScript(order v1alpha1.Order) (string, error) {
 		}
 	}
 
-	err = Upload(string(order.UID), "run.sh", buf.Bytes())
+	err = Upload(string(order.UID), "script.sh", buf.Bytes())
 	if err != nil {
 		return "", err
 	}
 
 	fmt.Println(buf.String())
 
-	return fmt.Sprintf("curl -fsSL %s/%s/run.sh  | bash", YAMLHost, order.UID), nil
+	return fmt.Sprintf("curl -fsSL %s/%s/script.sh  | bash", YAMLHost, order.UID), nil
 }

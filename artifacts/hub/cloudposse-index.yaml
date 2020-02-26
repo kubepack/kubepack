@@ -1,0 +1,1893 @@
+apiVersion: v1
+entries:
+  alertmanager:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.496621637Z
+    deprecated: true
+    description: Alertmanager instance created by the CoreOS Prometheus Operator
+    digest: 72801b8b4e8534b1b345e883de902c06a67f2acd0a283ab38e06c066e46c4b78
+    engine: gotpl
+    maintainers:
+    - email: mgoodness@gmail.com
+      name: Michael Goodness
+    name: alertmanager
+    sources:
+    - https://github.com/coreos/prometheus-operator
+    urls:
+    - https://charts.cloudposse.com/incubator/alertmanager-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v1
+    created: 2018-04-04T17:30:39.662355779Z
+    description: Alertmanager instance created by the CoreOS Prometheus Operator
+    digest: 66052da168bc18b0543be55701bd49e82418d359ece6cfd66f5feaefd9a722a1
+    engine: gotpl
+    maintainers:
+    - email: mgoodness@gmail.com
+      name: Michael Goodness
+    name: alertmanager
+    sources:
+    - https://github.com/coreos/prometheus-operator
+    urls:
+    - https://charts.cloudposse.com/incubator/alertmanager-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.011961854Z
+    description: Alertmanager instance created by the CoreOS Prometheus Operator
+    digest: fe2a1d04b5664acd7973223dd5e1371d095a1f6e8690f57a138a44b3ec25cc9b
+    engine: gotpl
+    maintainers:
+    - email: mgoodness@gmail.com
+      name: Michael Goodness
+    name: alertmanager
+    sources:
+    - https://github.com/coreos/prometheus-operator
+    urls:
+    - https://charts.cloudposse.com/incubator/alertmanager-0.1.0.tgz
+    version: 0.1.0
+  apache:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.497111915Z
+    description: Apache Helm chart for Kubernetes
+    digest: 838e8b258534ead859c54ca910ed10e67aed15d44a5790c051627c26dae80aa0
+    name: apache
+    urls:
+    - https://charts.cloudposse.com/incubator/apache-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.012217547Z
+    description: Apache Helm chart for Kubernetes
+    digest: 7d7154fc1880043f8073c139ce85b2fb416ab7cc291197bfffb462edcf9f235d
+    name: apache
+    urls:
+    - https://charts.cloudposse.com/incubator/apache-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.012217547Z
+    description: Apache Helm chart for Kubernetes
+    digest: 0e4d2983850ff9afc06ec302dd1710ba8c9891b215b1aca7835fca7458be6356
+    name: apache
+    urls:
+    - https://charts.cloudposse.com/incubator/apache-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.012217547Z
+    description: Apache Helm chart for Kubernetes
+    digest: 840d7b08c4220d38b362ea3592378a843abaddf9df4485d8cfc57286b01659b9
+    name: apache
+    urls:
+    - https://charts.cloudposse.com/incubator/apache-0.1.0.tgz
+    version: 0.1.0
+  bastion:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.497751689Z
+    description: A Helm chart that implements a secure bastion
+    digest: df65e267234aa1606c8cc21e2c16a5867d5a893746a897c5ffa1eb9b2df16890
+    name: bastion
+    urls:
+    - https://charts.cloudposse.com/incubator/bastion-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
+    created: 2019-04-18T03:46:30.155100143Z
+    description: A Helm chart that implements a secure bastion
+    digest: ff71ae02db86d4ec5ce0decb5aaea4ccdeefd2c9f93cf117bcc30f2b0e6bda41
+    name: bastion
+    urls:
+    - https://charts.cloudposse.com/incubator/bastion-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.012514378Z
+    description: A Helm chart that implements a secure bastion
+    digest: 5fde525835581fd5a624e70b34d177917e5089f4ae2358524abd599426b25fa0
+    name: bastion
+    urls:
+    - https://charts.cloudposse.com/incubator/bastion-0.1.0.tgz
+    version: 0.1.0
+  cert-manager:
+  - appVersion: v0.7.0
+    created: 2020-02-20T01:12:30.499118892Z
+    description: A Helm chart for cert-manager
+    digest: e97137edd379ab2a181eb38a0bae9fd8bf883d888bc235ecd3d8e87c7f6d57a9
+    home: https://github.com/jetstack/cert-manager
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - https://charts.cloudposse.com/incubator/cert-manager-v0.7.0.tgz
+    version: v0.7.0
+  chart-repo:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.499935164Z
+    description: Helm repo (private/public) with protected push gateway
+    digest: a6001c67655a2fd36adccd6c40dfb582de7084b567513c799eb1a6469dd7e856
+    name: chart-repo
+    urls:
+    - https://charts.cloudposse.com/incubator/chart-repo-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v1
+    created: 2018-04-04T16:38:16.019119593Z
+    description: Helm repo (private/public) with protected push gateway
+    digest: 697af4bbcc24d0f26a60ced819cb32993b6f7b6d2f6aea1c408300829c359758
+    name: chart-repo
+    urls:
+    - https://charts.cloudposse.com/incubator/chart-repo-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    created: 2018-03-27T20:27:46.336773947Z
+    description: Helm repo (private/public) with protected push gateway
+    digest: f53cd95f7a45d0da4fc3f2c77d5b7780cc950914e51493ae925f95b29621b5b6
+    name: chart-repo
+    urls:
+    - https://charts.cloudposse.com/incubator/chart-repo-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
+    created: 2018-02-22T05:02:33.234239206Z
+    description: Helm repo (private/public) with protected push gateway
+    digest: 7e382a602eb65f792f7a8be6ecc662c312f27c0deb50ca8a726a8094e242bc37
+    name: chart-repo
+    urls:
+    - https://charts.cloudposse.com/incubator/chart-repo-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2018-01-19T07:19:38.260950588Z
+    description: Helm repo (private/public) with protected push gateway
+    digest: 42475d77b5864f680149009460d4ca49498f9870647ccb76e3eaa62eed6bb499
+    name: chart-repo
+    urls:
+    - https://charts.cloudposse.com/incubator/chart-repo-0.1.0.tgz
+    version: 0.1.0
+  chartmuseum:
+  - apiVersion: v1
+    appVersion: 0.2.7
+    created: 2018-01-19T07:19:38.262166348Z
+    description: Helm Chart Repository with support for Amazon S3 and Google Cloud
+      Storage
+    digest: 64279ee311906214323f014bbb82a443b6867be61af6dd3cc1fbf45d023c3f75
+    home: https://github.com/chartmuseum/chartmuseum
+    icon: https://raw.githubusercontent.com/chartmuseum/chartmuseum/master/logo.png
+    maintainers:
+    - email: chartmuseum@gmail.com
+      name: ChartMuseum
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: chartmuseum
+    urls:
+    - https://charts.cloudposse.com/incubator/chartmuseum-0.2.0.tgz
+    version: 0.2.0
+  codefresh-service-account:
+  - apiVersion: v1
+    appVersion: 0.2.0
+    created: 2020-02-20T01:12:30.50131981Z
+    description: Helm Chart to provision a Service Account for Codefresh
+    digest: 7216e8ae83d547d9018d4b12bad62be3c4dd8f88664da02400b2a0fb10cee8b5
+    home: https://github.com/cloudposse/charts/tree/master/incubator/codefresh-service-account
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/codefresh-service-account/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: codefresh-service-account
+    urls:
+    - https://charts.cloudposse.com/incubator/codefresh-service-account-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: 2019-03-20T03:24:11.839280211Z
+    description: Helm Chart to provision a Service Account for Codefresh
+    digest: 4b2a848320b47fe40184f7375444974a05f579de986d20d46f76fe5830adb700
+    home: https://github.com/cloudposse/charts/tree/master/incubator/codefresh-service-account
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/codefresh-service-account/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: codefresh-service-account
+    urls:
+    - https://charts.cloudposse.com/incubator/codefresh-service-account-0.1.0.tgz
+    version: 0.1.0
+  dockercfg:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2020-02-20T01:12:30.501989376Z
+    description: A Helm chart to deploy a `dockercfg` to a namespace
+    digest: 4e858376532bfb146420f8c3c3d576c619d08268fc91a38a57cf7505af3582b6
+    name: dockercfg
+    urls:
+    - https://charts.cloudposse.com/incubator/dockercfg-0.1.0.tgz
+    version: 0.1.0
+  exporter-kube-api:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.50219913Z
+    deprecated: true
+    description: A Helm chart for Kubernetes
+    digest: a2fac3c8bdd0caf7f79e5dfa45b5d8b0bc76549dce27afe6fd77fd9eeb8e36aa
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: exporter-kube-api
+    urls:
+    - https://charts.cloudposse.com/incubator/exporter-kube-api-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2018-04-04T17:30:39.66434556Z
+    description: A Helm chart for Kubernetes
+    digest: fd69a7e7e0e172655c9084e40f0d4582a65aaac1c6692df40a4def43bf8204b4
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: exporter-kube-api
+    urls:
+    - https://charts.cloudposse.com/incubator/exporter-kube-api-0.1.0.tgz
+    version: 0.1.0
+  exporter-kube-controller-manager:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.502389136Z
+    deprecated: true
+    description: A Helm chart for Kubernetes
+    digest: fde834b2ef63304afc6907c679a1b31db3c07d5d6feced19bbc02ada5da8adb0
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: exporter-kube-controller-manager
+    urls:
+    - https://charts.cloudposse.com/incubator/exporter-kube-controller-manager-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2018-04-04T17:30:39.664590403Z
+    description: A Helm chart for Kubernetes
+    digest: 6382bca3cd6aae4c161325243b4118d5881153c9531e3fbc6db20a107b938357
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: exporter-kube-controller-manager
+    urls:
+    - https://charts.cloudposse.com/incubator/exporter-kube-controller-manager-0.1.0.tgz
+    version: 0.1.0
+  exporter-kube-dns:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.502573917Z
+    deprecated: true
+    description: A Helm chart singleton for kube-state-metrics
+    digest: 03088e06904d4bd2c1824ca50e633101e354f7439557d4973c917d2ec156e1bf
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: exporter-kube-dns
+    urls:
+    - https://charts.cloudposse.com/incubator/exporter-kube-dns-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2018-04-04T17:30:39.664846457Z
+    description: A Helm chart singleton for kube-state-metrics
+    digest: 30efc685b8816be03bc2ad2ea2b718a658057006aa50d5d7acbb990321afc5fe
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: exporter-kube-dns
+    urls:
+    - https://charts.cloudposse.com/incubator/exporter-kube-dns-0.1.0.tgz
+    version: 0.1.0
+  exporter-kube-etcd:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.502833761Z
+    deprecated: true
+    description: A Helm chart for Kubernetes
+    digest: f1b123e906b6343b681bda61675642701806a151bec3175ca2c9e740915a7338
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: exporter-kube-etcd
+    urls:
+    - https://charts.cloudposse.com/incubator/exporter-kube-etcd-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2018-04-04T17:30:39.665105414Z
+    description: A Helm chart for Kubernetes
+    digest: 04f948379a8b52bc849f775469184b76fe763fd183d27873ff3ce00f310a5712
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: exporter-kube-etcd
+    urls:
+    - https://charts.cloudposse.com/incubator/exporter-kube-etcd-0.1.0.tgz
+    version: 0.1.0
+  exporter-kube-scheduler:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.503080831Z
+    deprecated: true
+    description: A Helm chart singleton for kube-state-metrics
+    digest: 55f52975e571a355c2482c91d15b843f5b956828ca4f4c15f63465dda1f07afb
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: exporter-kube-scheduler
+    urls:
+    - https://charts.cloudposse.com/incubator/exporter-kube-scheduler-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2018-04-04T17:30:39.665355821Z
+    description: A Helm chart singleton for kube-state-metrics
+    digest: e4fe386607f6d4322421910a425ff8269fb58d00b55a1fb7caefbe8081427918
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: exporter-kube-scheduler
+    urls:
+    - https://charts.cloudposse.com/incubator/exporter-kube-scheduler-0.1.0.tgz
+    version: 0.1.0
+  exporter-kube-state:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.503332751Z
+    deprecated: true
+    description: A Helm chart singleton for kube-state-metrics
+    digest: a251104e652946a538c169323c60058d09368c870b31e0d6a8b985f8984251de
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: exporter-kube-state
+    urls:
+    - https://charts.cloudposse.com/incubator/exporter-kube-state-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2018-04-04T17:30:39.66566818Z
+    description: A Helm chart singleton for kube-state-metrics
+    digest: 2d35df9a4de2ff94a6c3e0e54319bbc8b6fc6feb94e2da8dcec063b00844b350
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: exporter-kube-state
+    urls:
+    - https://charts.cloudposse.com/incubator/exporter-kube-state-0.1.0.tgz
+    version: 0.1.0
+  exporter-kubelets:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.503549458Z
+    deprecated: true
+    description: A Helm chart for Kubernetes
+    digest: 50966912e0856ab60b6d8e8725d6dea5c1a88f75cb886712e042825ea87baab4
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: exporter-kubelets
+    urls:
+    - https://charts.cloudposse.com/incubator/exporter-kubelets-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2018-04-04T17:30:39.665945337Z
+    description: A Helm chart for Kubernetes
+    digest: e2e24d9a2891ab555dbe5df7b502a450c296daa5931bdec2fa22d707a2619f58
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: exporter-kubelets
+    urls:
+    - https://charts.cloudposse.com/incubator/exporter-kubelets-0.1.0.tgz
+    version: 0.1.0
+  exporter-kubernetes:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.503750402Z
+    deprecated: true
+    description: A Helm chart for Kubernetes
+    digest: 310ca3f91ff0f5c3ba84d2294d1e33faf1f0f53af2c1f4136d483e6807dc56a3
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: exporter-kubernetes
+    urls:
+    - https://charts.cloudposse.com/incubator/exporter-kubernetes-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2018-04-04T17:30:39.666243362Z
+    description: A Helm chart for Kubernetes
+    digest: 31c1f5cfd35887652c212fb2940fa462903378c350950cee5f8e393d741c89f3
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: exporter-kubernetes
+    urls:
+    - https://charts.cloudposse.com/incubator/exporter-kubernetes-0.1.0.tgz
+    version: 0.1.0
+  exporter-node:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.504071804Z
+    deprecated: true
+    description: A Helm chart for Kubernetes
+    digest: 96219838908a1d77313ed13bac746fed3e864d33cbe7ad430e694e443976f409
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: exporter-node
+    urls:
+    - https://charts.cloudposse.com/incubator/exporter-node-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2018-04-04T17:30:39.666561705Z
+    description: A Helm chart for Kubernetes
+    digest: 7fb255753f81134659ba41b5d5ed5c1cd105d987e63fcd87fad128518d72d223
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: exporter-node
+    urls:
+    - https://charts.cloudposse.com/incubator/exporter-node-0.1.0.tgz
+    version: 0.1.0
+  fail-whale:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.504395464Z
+    description: A Helm chart that provides a maintenance backend to be used by nginx-ingress
+      controller
+    digest: cb580775af0eb652d5b5ddf0639eacf68d8d54b7806352537dd252c1bb88f79d
+    name: fail-whale
+    urls:
+    - https://charts.cloudposse.com/incubator/fail-whale-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2017-05-31T00:01:30.246678355Z
+    description: A Helm chart that provides a maintenance backend to be used by nginx-ingress
+      controller
+    digest: 577e4103af1e8dd16bcfb5396d50f274003f1f7e70e5a5300638e86302cc7949
+    name: fail-whale
+    urls:
+    - https://charts.cloudposse.com/incubator/fail-whale-0.1.0.tgz
+    version: 0.1.0
+  fluentd-kubernetes:
+  - apiVersion: v1
+    appVersion: "0.12"
+    created: 2020-02-20T01:12:30.505193727Z
+    description: Kubernetes logs collect and forward with Fluentd.
+    digest: 30e6eeb89c3f7fcefe539c4a9d4b916f0c2918ac0fe4fa9c05e50690777ac3d7
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: cloudposse
+    - email: goruha@gmail.com
+      name: goruha
+    name: fluentd-kubernetes
+    sources:
+    - https://quay.io/repository/coreos/fluentd-kubernetes
+    - https://github.com/coreos/fluentd-kubernetes-daemonset
+    urls:
+    - https://charts.cloudposse.com/incubator/fluentd-kubernetes-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v1
+    appVersion: "0.12"
+    created: 2018-08-14T12:39:11.437184557Z
+    description: Kubernetes logs collect and forward with Fluentd.
+    digest: 605a35eadb061b967e50eca8e85e737ee232013252e7e1f5a86b6e8d7ba9ecfc
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: cloudposse
+    - email: goruha@gmail.com
+      name: goruha
+    name: fluentd-kubernetes
+    sources:
+    - https://quay.io/repository/coreos/fluentd-kubernetes
+    - https://github.com/coreos/fluentd-kubernetes-daemonset
+    urls:
+    - https://charts.cloudposse.com/incubator/fluentd-kubernetes-0.2.0.tgz
+    version: 0.2.0
+  fluentd-kubernetes-aws:
+  - apiVersion: v1
+    appVersion: 1.4.2
+    created: 2020-02-20T01:12:30.505933333Z
+    description: Collect Kubernetes logs with Fluentd and forward to AWS-hosted Elasticsearch.
+    digest: 76838484593828ee9f83d63f7cffe05f4e98eeaf4d47d7ca43d1918103a816d4
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: cloudposse
+    name: fluentd-kubernetes-aws
+    sources:
+    - https://hub.docker.com/r/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    urls:
+    - https://charts.cloudposse.com/incubator/fluentd-kubernetes-aws-0.1.0.tgz
+    version: 0.1.0
+  geoip-api:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.50633134Z
+    description: A Helm chart for Kubernetes that implements a GeoIP API service
+    digest: ff88719db5f3010a791b3df5c5ef2fe79f5b739e3342e52c01814aa9321115ec
+    name: geoip-api
+    urls:
+    - https://charts.cloudposse.com/incubator/geoip-api-0.1.0.tgz
+    version: 0.1.0
+  github-authorized-keys:
+  - created: 2020-02-20T01:12:30.507074386Z
+    description: "Use GitHub teams to manage system user accounts and authorized_keys.\nWARNING:
+      \n* We recommend that you install this chart into the `kube-system` namespace.\n*
+      There should only be one installation per cluster (other releases will fail
+      because of name conflict)"
+    digest: 6caa5475e0acbf1e69c859c319de78493c458d31d0efc39b420ba8f450ab6c24
+    engine: gotpl
+    home: http://cloudposse.com
+    keywords:
+    - ssh
+    - github
+    - pam
+    - authentication
+    - authorized_keys
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: github-authorized-keys
+    sources:
+    - https://github.com/cloudposse/github-authorized-keys
+    - https://github.com/cloudposse/charts/tree/master/incubator/library/github-authorized-keys
+    urls:
+    - https://charts.cloudposse.com/incubator/github-authorized-keys-0.2.2.tgz
+    version: 0.2.2
+  - created: 2017-06-27T02:14:59.228002569Z
+    description: "Use GitHub teams to manage system user accounts and authorized_keys.\nWARNING:
+      \n* We recommend that you install this chart into the `kube-system` namespace.\n*
+      There should only be one installation per cluster (other releases will fail
+      because of name conflict)"
+    digest: 7c84a8366a21264f0048939a2321e4b633cd19f8c1072b4ba220c72dadabe1f5
+    engine: gotpl
+    home: http://cloudposse.com
+    keywords:
+    - ssh
+    - github
+    - pam
+    - authentication
+    - authorized_keys
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: github-authorized-keys
+    sources:
+    - https://github.com/cloudposse/github-authorized-keys
+    - https://github.com/cloudposse/charts/tree/master/incubator/library/github-authorized-keys
+    urls:
+    - https://charts.cloudposse.com/incubator/github-authorized-keys-0.2.1.tgz
+    version: 0.2.1
+  - created: 2017-04-11T08:38:19.0179047Z
+    description: "Use GitHub teams to manage system user accounts and authorized_keys.\nWARNING:
+      \n* We recommend that you install this chart into the `kube-system` namespace.\n*
+      There should only be one installation per cluster (other releases will fail
+      because of name conflict)"
+    digest: 992de4840319816ba1ced50a82038560e06a5282ee496d81cd030017eb179cea
+    engine: gotpl
+    home: http://cloudposse.com
+    keywords:
+    - ssh
+    - github
+    - pam
+    - authentication
+    - authorized_keys
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: github-authorized-keys
+    sources:
+    - https://github.com/cloudposse/github-authorized-keys
+    - https://github.com/cloudposse/charts/tree/master/incubator/library/github-authorized-keys
+    urls:
+    - https://charts.cloudposse.com/incubator/github-authorized-keys-0.2.0.tgz
+    version: 0.2.0
+  - created: 2017-04-11T08:38:19.0179047Z
+    description: "Use GitHub teams to manage system user accounts and authorized_keys.\nWARNING:
+      \n* We recommend that you install this chart into the `kube-system` namespace.\n*
+      There should only be one installation per cluster (other releases will fail
+      because of name conflict)"
+    digest: e4bec63e645aa63f984362aad1a1e390df4912dc25a4b7f0e4019ceb70ebd2ca
+    engine: gotpl
+    home: http://cloudposse.com
+    keywords:
+    - ssh
+    - github
+    - pam
+    - authentication
+    - authorized_keys
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: github-authorized-keys
+    sources:
+    - https://github.com/cloudposse/github-authorized-keys
+    - https://github.com/cloudposse/charts/tree/master/incubator/library/github-authorized-keys
+    urls:
+    - https://charts.cloudposse.com/incubator/github-authorized-keys-0.1.0.tgz
+    version: 0.1.0
+  grafana:
+  - created: 2020-02-20T01:12:30.507979629Z
+    description: The leading tool for querying and visualizing time series and metrics.
+    digest: d2d630e66e55b997763b4bafb1e41036fb6c672be4758dabe4f155406248ec4e
+    engine: gotpl
+    home: https://grafana.net
+    icon: https://raw.githubusercontent.com/grafana/grafana/master/public/img/logo_transparent_400x.png
+    maintainers:
+    - email: zanhsieh@gmail.com
+      name: Ming Hsieh
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: grafana
+    sources:
+    - https://github.com/grafana/grafana
+    urls:
+    - https://charts.cloudposse.com/incubator/grafana-0.2.6.tgz
+    version: 0.2.6
+  - created: 2017-04-11T08:38:19.018430185Z
+    description: The leading tool for querying and visualizing time series and metrics.
+    digest: a984983853661aaa304f357ba208535aebd74caa0cd99d8089851ca76f276930
+    engine: gotpl
+    home: https://grafana.net
+    icon: https://raw.githubusercontent.com/grafana/grafana/master/public/img/logo_transparent_400x.png
+    maintainers:
+    - email: zanhsieh@gmail.com
+      name: Ming Hsieh
+    - email: hello@cloudposse.com
+      name: Cloud Posse LLC
+    name: grafana
+    sources:
+    - https://github.com/grafana/grafana
+    urls:
+    - https://charts.cloudposse.com/incubator/grafana-0.2.5.tgz
+    version: 0.2.5
+  heapster:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.508548068Z
+    description: A Helm chart for heapster (must be installed to kube-system namespace)
+    digest: 995e438a4db76b64855f8d8c0970ff0d41156004707a6d35bc2d29a22799e8d0
+    name: heapster
+    urls:
+    - https://charts.cloudposse.com/incubator/heapster-0.1.0.tgz
+    version: 0.1.0
+  helm-serve:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.509017232Z
+    description: A Helm chart that implements the `helm serve` repository server for
+      Helm on Kubernetes
+    digest: 458a5fb8a7805530ef7b29df9418e6f72112115e07ba22428ed32fa0312a23f2
+    name: helm-serve
+    urls:
+    - https://charts.cloudposse.com/incubator/helm-serve-0.1.0.tgz
+    version: 0.1.0
+  istio:
+  - apiVersion: v1
+    appVersion: 1.1.0
+    created: 2020-02-20T01:12:30.517377842Z
+    description: Helm chart for all istio components
+    digest: a4590e18d2f2fbd9864f2e5410709b237d2465807d67274c2001d80e79da5193
+    engine: gotpl
+    icon: https://istio.io/favicons/android-192x192.png
+    keywords:
+    - istio
+    - security
+    - sidecarInjectorWebhook
+    - mixer
+    - pilot
+    - galley
+    name: istio
+    sources:
+    - http://github.com/istio/istio
+    tillerVersion: '>=2.7.2-0'
+    urls:
+    - https://charts.cloudposse.com/incubator/istio-1.1.0.tgz
+    version: 1.1.0
+  jenkins:
+  - created: 2020-02-20T01:12:30.518304935Z
+    description: A Jenkins Helm chart for Kubernetes
+    digest: be606ca19e7bf79e2510e346d9d6b0d6fbc5b36e0876b67a9f3a048fff53868f
+    home: https://jenkins.io/
+    icon: https://wiki.jenkins-ci.org/download/attachments/2916393/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: jenkins
+    sources:
+    - https://github.com/cloudposse/jenkins
+    - https://github.com/cloudposse/jenkins-slave
+    urls:
+    - https://charts.cloudposse.com/incubator/jenkins-0.1.2.tgz
+    version: 0.1.2
+  - created: 2017-05-31T00:01:30.249266253Z
+    description: A Jenkins Helm chart for Kubernetes
+    digest: 27da54582c052e92732df37522a148771f15f1d5d03daa4fcc334ff1e6ab7069
+    home: https://jenkins.io/
+    icon: https://wiki.jenkins-ci.org/download/attachments/2916393/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: jenkins
+    sources:
+    - https://github.com/cloudposse/jenkins
+    - https://github.com/cloudposse/jenkins-slave
+    urls:
+    - https://charts.cloudposse.com/incubator/jenkins-0.1.1.tgz
+    version: 0.1.1
+  - created: 2017-05-01T20:15:37.774722329Z
+    description: A Jenkins Helm chart for Kubernetes
+    digest: d88f3303ba40cf5810dd5f1129f1fdea97180ecae35627b0eaf55286373f085f
+    home: https://jenkins.io/
+    icon: https://wiki.jenkins-ci.org/download/attachments/2916393/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: jenkins
+    sources:
+    - https://github.com/cloudposse/jenkins
+    - https://github.com/cloudposse/jenkins-slave
+    urls:
+    - https://charts.cloudposse.com/incubator/jenkins-0.1.0.tgz
+    version: 0.1.0
+  kube-lego:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.518855156Z
+    description: A Helm chart for kube-Lego (Automatic Signed Certificates for Ingress
+      Services)
+    digest: 8fe3270664b9424dd52abd9dfd688216e2c2ab6e2c67b35305e17ef624cf0a54
+    name: kube-lego
+    urls:
+    - https://charts.cloudposse.com/incubator/kube-lego-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
+    created: 2017-05-31T00:01:30.249567991Z
+    description: A Helm chart for kube-Lego (Automatic Signed Certificates for Ingress
+      Services)
+    digest: 299421a8241d584ad4d2a28d0d413ae8b6703dc97c7bf369e4ee351b681277a6
+    name: kube-lego
+    urls:
+    - https://charts.cloudposse.com/incubator/kube-lego-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.01976993Z
+    description: A Helm chart for kube-Lego (Automatic Signed Certificates for Ingress
+      Services)
+    digest: 8d6e4a47ee283f21a171a760cfe0c233084c5ae997ef28a93b0781750241f93d
+    name: kube-lego
+    urls:
+    - https://charts.cloudposse.com/incubator/kube-lego-0.1.0.tgz
+    version: 0.1.0
+  kube-prometheus:
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.024254223Z
+    description: Manifests, dashboards, and alerting rules for end-to-end Kubernetes
+      cluster monitoring.
+    digest: cdcde3d3d25c6ea608ecec3f05056a103d1a0dd0d7dcfc7b2093c5810284156a
+    engine: gotpl
+    maintainers:
+    - email: mgoodness@gmail.com
+      name: Michael Goodness
+    name: kube-prometheus
+    sources:
+    - https://github.com/coreos/kube-prometheus
+    urls:
+    - https://charts.cloudposse.com/incubator/kube-prometheus-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.521272049Z
+    description: Manifests, dashboards, and alerting rules for end-to-end Kubernetes
+      cluster monitoring.
+    digest: d6e04d0cd1c75ed9d5ea46793afa1dc46ce1e7edb478aa07528ffeec36a17d7d
+    engine: gotpl
+    maintainers:
+    - email: mgoodness@gmail.com
+      name: Michael Goodness
+    name: kube-prometheus
+    sources:
+    - https://github.com/coreos/kube-prometheus
+    urls:
+    - https://charts.cloudposse.com/incubator/kube-prometheus-0.1.0.tgz
+    version: 0.1.0
+  kube2iam-kops:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.521866051Z
+    deprecated: true
+    description: A Helm chart for Kubernetes
+    digest: 6ccc67573395c2a394c0e6eaa18a676d24af5417c97bb0b55850f310b437394a
+    name: kube2iam-kops
+    urls:
+    - https://charts.cloudposse.com/incubator/kube2iam-kops-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
+    created: 2018-04-04T17:30:39.673261809Z
+    description: A Helm chart for Kubernetes
+    digest: e8b4ca411fd828d6e06254e51653e1fdb6a68d8b7d843080a3c8afbe964b6802
+    name: kube2iam-kops
+    urls:
+    - https://charts.cloudposse.com/incubator/kube2iam-kops-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2017-12-12T05:56:54.607386727Z
+    description: A Helm chart for Kubernetes
+    digest: 4c5f4f51698ed72b2eaf6f4655091761a38690a8dc984f5a1fdd3203a3990b1a
+    name: kube2iam-kops
+    urls:
+    - https://charts.cloudposse.com/incubator/kube2iam-kops-0.1.0.tgz
+    version: 0.1.0
+  kubernetes-dashboard:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.522073316Z
+    deprecated: true
+    description: A Helm chart that implements the Kubernetes Dashboard
+    digest: 258fb80ed431d8618509c9b268293278deac8c7b88803132f1e4f54e5e0204a0
+    name: kubernetes-dashboard
+    urls:
+    - https://charts.cloudposse.com/incubator/kubernetes-dashboard-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2018-04-04T17:30:39.67399414Z
+    description: A Helm chart that implements the Kubernetes Dashboard
+    digest: 2b30e2f77bcedcff4b94abd7a65501092496d8f7db2e0aad6aca492c58410db1
+    name: kubernetes-dashboard
+    urls:
+    - https://charts.cloudposse.com/incubator/kubernetes-dashboard-0.1.0.tgz
+    version: 0.1.0
+  lamp:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.522819035Z
+    description: A Helm chart for Linux, Apache, MySQL, PHP (aka LAMP)
+    digest: 5f6350dbd1477fea1d4a12425a363e9443f34a7df64234e3386701c2f574bcc2
+    name: lamp
+    urls:
+    - https://charts.cloudposse.com/incubator/lamp-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v1
+    created: 2017-08-17T10:10:48.514103661Z
+    description: A Helm chart for Linux, Apache, MySQL, PHP (aka LAMP)
+    digest: 2334ef0f6de4ca13a6a11a773fd8456e1e93cb5dda9a6296453cdc261cf7dc0a
+    name: lamp
+    urls:
+    - https://charts.cloudposse.com/incubator/lamp-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v1
+    created: 2017-05-01T20:15:37.78177672Z
+    description: A Helm chart for Linux, Apache, MySQL, PHP (aka LAMP)
+    digest: 36e6f20e1cb53fe3b08124714d7381e86a8b484c52b81efcae4dcd357604f136
+    name: lamp
+    urls:
+    - https://charts.cloudposse.com/incubator/lamp-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.025217564Z
+    description: A Helm chart for Linux, Apache, MySQL, PHP (aka LAMP)
+    digest: df92f841228cc491cf93af3868904011baa160fa74757492c54c70b46fd4d856
+    name: lamp
+    urls:
+    - https://charts.cloudposse.com/incubator/lamp-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.025217564Z
+    description: A Helm chart for Linux, Apache, MySQL, PHP (aka LAMP)
+    digest: ebe8bde522af3d6c43540a5a44eef3af357f632fc423b2e577fd4a1c4e90b538
+    name: lamp
+    urls:
+    - https://charts.cloudposse.com/incubator/lamp-0.1.0.tgz
+    version: 0.1.0
+  monochart:
+  - apiVersion: v1
+    appVersion: 0.18.4
+    created: 2020-02-20T01:12:30.525194394Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: 0ee3771d356b006672aa45209a8b5cd6c0b5d883a8512b6202399615cb3766c9
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.18.4.tgz
+    version: 0.18.4
+  - apiVersion: v1
+    appVersion: 0.18.3
+    created: 2019-11-26T11:30:27.732144051Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: 22cb79fdc7c69e15c95a032a537782aa3148a66ad2732dfbc77cbe9d40838c1e
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.18.3.tgz
+    version: 0.18.3
+  - apiVersion: v1
+    appVersion: 0.18.2
+    created: 2019-10-16T10:03:12.028898604Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: f2978bdf2cf13fadd628b8c2852714687f10b14ffefa71f3c53ff56ad85b04f9
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.18.2.tgz
+    version: 0.18.2
+  - apiVersion: v1
+    appVersion: 0.18.1
+    created: 2019-10-16T09:18:17.970662728Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: 9145610e7b35a2bff92d10ae2cfe3bf44041e062757f1a3f1507aac5ff0d4085
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.18.1.tgz
+    version: 0.18.1
+  - apiVersion: v1
+    appVersion: 0.18.0
+    created: 2019-10-15T19:01:27.207752875Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: fc4cf7e45f65cffb34e07b25b64a47c60072abf15c0bf723f58ee0a5c50b17f6
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.18.0.tgz
+    version: 0.18.0
+  - apiVersion: v1
+    appVersion: 0.17.0
+    created: 2019-10-07T13:14:15.37123731Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: 706740ea7afb39d72ca93bf43b43c1425cde328085ffeb309869dd74bf3e6cc4
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.17.0.tgz
+    version: 0.17.0
+  - apiVersion: v1
+    appVersion: 0.16.1
+    created: 2019-10-01T18:31:37.998115854Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: 9549cd2894be52a7788bd44af405becd94bb60233fc68018cc009095856705db
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.16.1.tgz
+    version: 0.16.1
+  - apiVersion: v1
+    appVersion: 0.15.0
+    created: 2019-09-19T04:05:09.388053988Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: aec9284bf3149be93162a03ca5c602ffb8e8ee5df1b86aad689335ed9a8b57d0
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.15.0.tgz
+    version: 0.15.0
+  - apiVersion: v1
+    appVersion: 0.14.0
+    created: 2019-09-06T03:24:47.786088848Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: 37b4169b3529e86f10f75382dfabc092bd87731470f7eb87c8220bb566019840
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.14.0.tgz
+    version: 0.14.0
+  - apiVersion: v1
+    appVersion: 0.13.0
+    created: 2019-08-07T03:19:08.241258685Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: 8d1cf4690d2b38f0a4acc347a0ef27b4330aa61d10896921f9df8b2b617f5399
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.13.0.tgz
+    version: 0.13.0
+  - apiVersion: v1
+    appVersion: 0.12.0
+    created: 2019-05-28T16:46:40.317233959Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: 24519b5735fe83b0af6c5863730d41f127b4b66e7e242f9d4481da6477f26f34
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.12.0.tgz
+    version: 0.12.0
+  - apiVersion: v1
+    appVersion: 0.11.0
+    created: 2019-04-30T18:18:13.557928222Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: b27ff5a7b86187a8af97914e6104b5eca226e508befa4ff89c57378628a61c32
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.11.0.tgz
+    version: 0.11.0
+  - apiVersion: v1
+    appVersion: 0.10.0
+    created: 2019-04-30T09:01:14.071431861Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: c77b30c02508240cb752ed2a382674ad53b68c59a54e6f71026115933b9e72f4
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.10.0.tgz
+    version: 0.10.0
+  - apiVersion: v1
+    appVersion: 0.9.0
+    created: 2019-01-11T19:19:52.855557104Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: 0e7cb32b1672c13e9493d225db620e0e3d95af71ff00c8f983d92f21612f4d02
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.9.0.tgz
+    version: 0.9.0
+  - apiVersion: v1
+    appVersion: 0.8.0
+    created: 2018-12-29T19:57:20.30032394Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: 4c17d95724b7e244580924b97525e52eba1c5fa21a964f158780c4f2e779b417
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.8.0.tgz
+    version: 0.8.0
+  - apiVersion: v1
+    appVersion: 0.7.0
+    created: 2018-11-07T13:19:37.534417837Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: d28584570db4fffefea668db832f8e85066f725a9bcb98a043677401bca20f78
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.7.0.tgz
+    version: 0.7.0
+  - apiVersion: v1
+    appVersion: 0.6.2
+    created: 2018-10-22T18:33:20.118703353Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: f91efeb65a98dc33eb882dd3bcf22514c7ccf94dc91d4f3f22196fc110d37668
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.6.2.tgz
+    version: 0.6.2
+  - apiVersion: v1
+    appVersion: 0.6.1
+    created: 2018-10-03T16:52:09.7739979Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: 406044e8e9d7ac93267d189b281f062c84eadcad0204c383d4def351cf776033
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.6.1.tgz
+    version: 0.6.1
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: 2018-09-28T09:13:55.102462494Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: 749fe68982e40bb5aabf6aeccccfbf15bd059759fe8d8a15614d8f36b866b1d3
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.6.0.tgz
+    version: 0.6.0
+  - apiVersion: v1
+    appVersion: 0.5.0
+    created: 2018-09-24T17:39:49.243782875Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: 3467a86d099ec1cacdb2606a9b96caf28b3a7e5de1c655c47493f89fad310cfe
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.5.0.tgz
+    version: 0.5.0
+  - apiVersion: v1
+    appVersion: 0.4.0
+    created: 2018-09-14T06:17:37.801941628Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: f8b3b76246c75777c3d284fd630e4219ad5af77389f28fa3dadd6df66175c950
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v1
+    appVersion: 0.3.0
+    created: 2018-09-04T19:41:32.862961956Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: 39620c3cae41f07a092ec9377812ad8daaf8c6bff0f54c74b83fe59203ca0e1e
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v1
+    appVersion: 0.2.0
+    created: 2018-08-30T16:22:55.762951343Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: 9cdcb1d22bcff0282327953abb2bc85a76e2a4170659e63851338142d5622992
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: 2018-08-29T17:24:50.119486308Z
+    description: A declarative helm chart for deploying common types of services on
+      Kubernetes
+    digest: b5ac5b115f9a54eaab5523e7cd93bb4d68363c6cad046b7581d8605f9d234447
+    home: https://github.com/cloudposse/charts/tree/master/incubator/monochart
+    icon: https://raw.githubusercontent.com/cloudposse/charts/master/incubator/monochart/logo.png
+    maintainers:
+    - email: hello@cloudposse.com
+      name: Cloud Posse
+    name: monochart
+    urls:
+    - https://charts.cloudposse.com/incubator/monochart-0.1.0.tgz
+    version: 0.1.0
+  nfs-provisioner:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.525454125Z
+    description: A Chart to enable provisioning of NFS volumes under Kubernetes.
+    digest: 11824413caa7f5761bb9ff38ba2062b9d377fe073f63ae59a89026d2e504782c
+    name: nfs-provisioner
+    urls:
+    - https://charts.cloudposse.com/incubator/nfs-provisioner-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v1
+    created: 2018-07-26T07:14:38.496939797Z
+    description: A Chart to enable provisioning of NFS volumes under Kubernetes.
+    digest: c1d036f62ec05f49f04f2ec08e259979f06a699a209f865f27df550835d74d43
+    name: nfs-provisioner
+    urls:
+    - https://charts.cloudposse.com/incubator/nfs-provisioner-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.025455964Z
+    description: A Chart to enable provisioning of NFS volumes under Kubernetes.
+    digest: 0a58c608ec0784ecd1d648a738434dcee2050f29e043a9bd945d77024cf76aae
+    name: nfs-provisioner
+    urls:
+    - https://charts.cloudposse.com/incubator/nfs-provisioner-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.025455964Z
+    description: A Chart to enable provisioning of NFS volumes under Kubernetes.
+    digest: 6e9d8321bf51033d49424ce14b2fae794bc09ec30a217081e2f4cbb972544c7c
+    name: nfs-provisioner
+    urls:
+    - https://charts.cloudposse.com/incubator/nfs-provisioner-0.1.0.tgz
+    version: 0.1.0
+  nginx-default-backend:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.52575804Z
+    description: A Helm chart for nginx-default-backend to be used by nginx-ingress
+      controller
+    digest: ad7f6cc46adfab21b9f0931312c133eebd0164b215f37cb806b63883f1a3d70a
+    name: nginx-default-backend
+    urls:
+    - https://charts.cloudposse.com/incubator/nginx-default-backend-0.5.0.tgz
+    version: 0.5.0
+  - apiVersion: v1
+    created: 2020-01-31T10:06:51.953176293Z
+    description: A Helm chart for nginx-default-backend to be used by nginx-ingress
+      controller
+    digest: c53607d03e05aa8b595aebe3fd514c741e4b63b984e56c7563682d0583e76a75
+    name: nginx-default-backend
+    urls:
+    - https://charts.cloudposse.com/incubator/nginx-default-backend-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v1
+    created: 2019-09-05T04:29:53.677612437Z
+    description: A Helm chart for nginx-default-backend to be used by nginx-ingress
+      controller
+    digest: 7122aaa49fcd0eed7b5ee8385bb17104598e34e341f2019cf1ca377b7aacb564
+    name: nginx-default-backend
+    urls:
+    - https://charts.cloudposse.com/incubator/nginx-default-backend-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v1
+    created: 2019-01-08T18:49:40.719135685Z
+    description: A Helm chart for nginx-default-backend to be used by nginx-ingress
+      controller
+    digest: da668e092810f77cacad3c98dcf920bb190f32fb885ff277483d14e96fdcf4b2
+    name: nginx-default-backend
+    urls:
+    - https://charts.cloudposse.com/incubator/nginx-default-backend-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v1
+    created: 2017-05-31T00:01:30.256281416Z
+    description: A Helm chart for nginx-default-backend to be used by nginx-ingress
+      controller
+    digest: 81a21b1a3697a38177c7810cd9da4194140c16cc66a1167ab4f6395a5548a9c9
+    name: nginx-default-backend
+    urls:
+    - https://charts.cloudposse.com/incubator/nginx-default-backend-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.025851302Z
+    description: A Helm chart for nginx-default-backend to be used by nginx-ingress
+      controller
+    digest: 73dcdbfec59c7bd5a5150811083648a74dc534bf63563fc22321a80893c0fba0
+    name: nginx-default-backend
+    urls:
+    - https://charts.cloudposse.com/incubator/nginx-default-backend-0.2.0.tgz
+    version: 0.2.0
+  nginx-ingress:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.526196475Z
+    description: A Helm chart for Nginx Ingress
+    digest: cd27cd6611841406c7c8956c2d0f49a17fcd8870b2e72194b5e2ebb729f7a7a0
+    name: nginx-ingress
+    urls:
+    - https://charts.cloudposse.com/incubator/nginx-ingress-0.1.8.tgz
+    version: 0.1.8
+  - apiVersion: v1
+    created: 2018-09-28T19:23:08.87909056Z
+    description: A Helm chart for Nginx Ingress
+    digest: d923808367f8a2a327b61f352a7b8d777d4af010112dc16f36145bca023d9fbc
+    name: nginx-ingress
+    urls:
+    - https://charts.cloudposse.com/incubator/nginx-ingress-0.1.7.tgz
+    version: 0.1.7
+  - apiVersion: v1
+    created: 2018-03-20T16:17:50.410681144Z
+    description: A Helm chart for Nginx Ingress
+    digest: 674eb04b4811d29972d2f7a9b82a7422ae6cb3b8044f58daabf8df5832ebb3f2
+    name: nginx-ingress
+    urls:
+    - https://charts.cloudposse.com/incubator/nginx-ingress-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v1
+    created: 2017-05-31T00:01:30.25680622Z
+    description: A Helm chart for Nginx Ingress
+    digest: b03c0d617b05920c5256e71bde9ab2807ac2ad70b0745af538fe9978957dd583
+    name: nginx-ingress
+    urls:
+    - https://charts.cloudposse.com/incubator/nginx-ingress-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.026408362Z
+    description: A Helm chart for Nginx Ingress
+    digest: 049ae19cfb37d439a604aba52c3a9a11d7f2b49f4e784ebc2c17e583eadcfe73
+    name: nginx-ingress
+    urls:
+    - https://charts.cloudposse.com/incubator/nginx-ingress-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.026408362Z
+    description: A Helm chart for Nginx Ingress
+    digest: f97f9f9ff6146c6b06cc8dab26889651d4b1ec9a8dee0492750b369f04eacd36
+    name: nginx-ingress
+    urls:
+    - https://charts.cloudposse.com/incubator/nginx-ingress-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.026408362Z
+    description: A Helm chart for Nginx Ingress
+    digest: 568f628ccf32344524a625a47a13fbca7f07c1dee65b5072e4216c24f74efe2d
+    name: nginx-ingress
+    urls:
+    - https://charts.cloudposse.com/incubator/nginx-ingress-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.026408362Z
+    description: A Helm chart for Nginx Ingress
+    digest: ddf70510e7c734ffdf7cf9ded3710697b70c6a605a90df11c08913c3673eae30
+    name: nginx-ingress
+    urls:
+    - https://charts.cloudposse.com/incubator/nginx-ingress-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.026408362Z
+    description: A Helm chart for Nginx Ingress
+    digest: 9b340ae3ec053a96f026243bd67bb0f1ccec6a0c6b1e60f4ef0d4f7a83492dee
+    name: nginx-ingress
+    urls:
+    - https://charts.cloudposse.com/incubator/nginx-ingress-0.1.0.tgz
+    version: 0.1.0
+  oauth2-proxy:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.526483741Z
+    description: A Helm chart for Kubernetes
+    digest: 1d5756670b3589762b1880122197b81ac79209a5dbcb1cbee00b0406c88b12b8
+    name: oauth2-proxy
+    urls:
+    - https://charts.cloudposse.com/incubator/oauth2-proxy-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v1
+    created: 2018-09-07T17:24:29.574247283Z
+    description: A Helm chart for Kubernetes
+    digest: e9919a320dae5b7fbf74ce777d2eb4e5ba742f2a03a7c73e5c22ef94053a033c
+    name: oauth2-proxy
+    urls:
+    - https://charts.cloudposse.com/incubator/oauth2-proxy-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v1
+    created: 2018-03-27T20:23:41.33494092Z
+    description: A Helm chart for Kubernetes
+    digest: 769f0400b48a63bd09137f66689dfd2db589b1ca9c500be95f8ffe34dc000c38
+    name: oauth2-proxy
+    urls:
+    - https://charts.cloudposse.com/incubator/oauth2-proxy-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
+    created: 2018-02-22T05:02:33.250911147Z
+    description: A Helm chart for Kubernetes
+    digest: a398fbfc7f8e6194f2f4c56dde159d80880e52be5ed8a0e5210ac378d09bb973
+    name: oauth2-proxy
+    urls:
+    - https://charts.cloudposse.com/incubator/oauth2-proxy-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2017-05-31T00:01:30.25719977Z
+    description: A Helm chart for Kubernetes
+    digest: 6badebf5a88a71e389ec5cde5f473775d58311a86fca9cb5adbf926fbba0431c
+    name: oauth2-proxy
+    urls:
+    - https://charts.cloudposse.com/incubator/oauth2-proxy-0.1.0.tgz
+    version: 0.1.0
+  openvpn:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.52708148Z
+    description: A Helm chart for OpenVPN
+    digest: 39419c889a55870a9170afc173a23fa234b78f37641b4f91a0cdb3ccfa1da954
+    name: openvpn
+    urls:
+    - https://charts.cloudposse.com/incubator/openvpn-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2017-05-31T00:01:30.257877256Z
+    description: A Helm chart for OpenVPN
+    digest: e2aeec3295f852da6b4d011b697d5b18067c63ba7ae29653b864919f195a80a6
+    name: openvpn
+    urls:
+    - https://charts.cloudposse.com/incubator/openvpn-0.1.0.tgz
+    version: 0.1.0
+  portal:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.528837969Z
+    description: A Helm chart that provides a Portal with OAuth2 to expose internal
+      cluster services
+    digest: 96bacaaa26ea033c4a2e3f87e68366c0e50d1210f207e79d7df5d0bea41997d3
+    name: portal
+    urls:
+    - https://charts.cloudposse.com/incubator/portal-0.2.4.tgz
+    version: 0.2.4
+  - apiVersion: v1
+    created: 2018-09-10T14:12:20.955543959Z
+    description: A Helm chart that provides a Portal with OAuth2 to expose internal
+      cluster services
+    digest: 2b4ce9a779d9bf1ddc3ce339c8e9f39096d23e000d01f6f77f56e652702e81c0
+    name: portal
+    urls:
+    - https://charts.cloudposse.com/incubator/portal-0.2.3.tgz
+    version: 0.2.3
+  - apiVersion: v1
+    created: 2018-09-05T07:59:28.469795083Z
+    description: A Helm chart that provides a Portal with OAuth2 to expose internal
+      cluster services
+    digest: 0f567151bc58cb5ab93d1cd910c5a4aeacaf9b94a08f29ea431ef8c105250f43
+    name: portal
+    urls:
+    - https://charts.cloudposse.com/incubator/portal-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v1
+    created: 2018-09-03T10:07:57.033319893Z
+    description: A Helm chart to provide Portal
+    digest: e744b789592e7a5b01892b5e72bc08f77dd0f91bf03fb17b0f9075dac66a2a8c
+    name: portal
+    urls:
+    - https://charts.cloudposse.com/incubator/portal-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    created: 2018-07-10T14:10:53.909284465Z
+    description: A Helm chart to provide Portal
+    digest: 75950eccc951e6238f7b6a2028573a4a1127d9410d5bcaaf56216da8b7a02108
+    name: portal
+    urls:
+    - https://charts.cloudposse.com/incubator/portal-0.1.0.tgz
+    version: 0.1.0
+  postfix:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.529071495Z
+    description: A Helm chart for postfix smtp
+    digest: 397b3e4f49b0d1e8436b8d3d1926a8aa5c8a64205161a36507a20556ad620899
+    name: postfix
+    urls:
+    - https://charts.cloudposse.com/incubator/postfix-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2017-05-31T00:01:30.258095014Z
+    description: A Helm chart for postfix smtp
+    digest: 69924db5390acf2f0f603f0ce33efe08d68755330c40fbfff9582b993225d615
+    name: postfix
+    urls:
+    - https://charts.cloudposse.com/incubator/postfix-0.1.0.tgz
+    version: 0.1.0
+  prometheus:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.529466672Z
+    description: Prometheus instance created by the CoreOS Prometheus Operator
+    digest: 25f6866f344d316322229a4531a1a94da89c3760123078b0cc64824a224f245b
+    engine: gotpl
+    maintainers:
+    - email: mgoodness@gmail.com
+      name: Michael Goodness
+    name: prometheus
+    sources:
+    - https://github.com/coreos/prometheus-operator
+    urls:
+    - https://charts.cloudposse.com/incubator/prometheus-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.027992175Z
+    description: Prometheus instance created by the CoreOS Prometheus Operator
+    digest: 31b902ced25824da0f56bb23d16079c7a2d4361aa798bfd9d182aedc9149750a
+    engine: gotpl
+    maintainers:
+    - email: mgoodness@gmail.com
+      name: Michael Goodness
+    name: prometheus
+    sources:
+    - https://github.com/coreos/prometheus-operator
+    urls:
+    - https://charts.cloudposse.com/incubator/prometheus-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.027992175Z
+    description: Prometheus instance created by the CoreOS Prometheus Operator
+    digest: 5f38409cd5491335a817fda4da10dd38b727a0677cd18cae77a3ab400d572946
+    engine: gotpl
+    maintainers:
+    - email: mgoodness@gmail.com
+      name: Michael Goodness
+    name: prometheus
+    sources:
+    - https://github.com/coreos/prometheus-operator
+    urls:
+    - https://charts.cloudposse.com/incubator/prometheus-0.1.0.tgz
+    version: 0.1.0
+  prometheus-alerts:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.529631995Z
+    description: A Helm chart provide additional alerts for prometheus
+    digest: a3dadea72c7a8252e3b898998a8dc03530f44e802b0beb1aa99cbe540c1f4014
+    name: prometheus-alerts
+    urls:
+    - https://charts.cloudposse.com/incubator/prometheus-alerts-0.1.0.tgz
+    version: 0.1.0
+  prometheus-operator:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.529890204Z
+    description: Provides easy monitoring definitions for Kubernetes services, and
+      deployment and management of Prometheus instances.
+    digest: 2b2ec6112c10da4519a538034e0d6ba00b33f6bf431c4e7952913bc8fc1ff96f
+    engine: gotpl
+    maintainers:
+    - email: mgoodness@gmail.com
+      name: Michael Goodness
+    name: prometheus-operator
+    sources:
+    - https://github.com/coreos/prometheus-operator
+    urls:
+    - https://charts.cloudposse.com/incubator/prometheus-operator-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.028430647Z
+    description: Provides easy monitoring definitions for Kubernetes services, and
+      deployment and management of Prometheus instances.
+    digest: e180fb735021040141261a4522dd980fb4248b93a4d62f99a0b8a9774310bf19
+    engine: gotpl
+    maintainers:
+    - email: mgoodness@gmail.com
+      name: Michael Goodness
+    name: prometheus-operator
+    sources:
+    - https://github.com/coreos/prometheus-operator
+    urls:
+    - https://charts.cloudposse.com/incubator/prometheus-operator-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.028430647Z
+    description: Provides easy monitoring definitions for Kubernetes services, and
+      deployment and management of Prometheus instances.
+    digest: 6e4d3e355f78aba8d967cb652f7f0a392f4221f43c3d9fd0a4168d1a325b01d7
+    engine: gotpl
+    maintainers:
+    - email: mgoodness@gmail.com
+      name: Michael Goodness
+    name: prometheus-operator
+    sources:
+    - https://github.com/coreos/prometheus-operator
+    urls:
+    - https://charts.cloudposse.com/incubator/prometheus-operator-0.1.0.tgz
+    version: 0.1.0
+  remotecv:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.530348785Z
+    description: A Helm chart for Remotecv to be used with Thumbor
+    digest: cd340ed697ee727165c36c5c88e1e61607e4ade9a604e72103a4c5ccf5c57261
+    name: remotecv
+    urls:
+    - https://charts.cloudposse.com/incubator/remotecv-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2017-05-31T00:01:30.26193928Z
+    description: A Helm chart for Remotecv to be used with Thumbor
+    digest: 8a1d33b166cf394220f20bc183fdda9ddca3321f64e5b84565c447ade03b5a7c
+    name: remotecv
+    urls:
+    - https://charts.cloudposse.com/incubator/remotecv-0.1.0.tgz
+    version: 0.1.0
+  route53-kubernetes:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.530573906Z
+    description: Map k8s services to route53 domains
+    digest: 914a09b73b2420fcab0cec905f17817890ebf5869c0b855464f8f948e3ba66d9
+    name: route53-kubernetes
+    urls:
+    - https://charts.cloudposse.com/incubator/route53-kubernetes-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v1
+    created: 2018-04-04T17:30:39.68159983Z
+    description: Map k8s services to route53 domains
+    digest: 95ed77feeddb98cbe964c982d855eb365b66c3aa08d4146f0e6db1a5c32b31b6
+    name: route53-kubernetes
+    urls:
+    - https://charts.cloudposse.com/incubator/route53-kubernetes-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
+    created: 2018-01-19T07:32:36.381382479Z
+    description: Map k8s services to route53 domains
+    digest: 44678ef136138662e8b7b6acf44e9728b6729189e97f9b3e191f2a4969849744
+    name: route53-kubernetes
+    urls:
+    - https://charts.cloudposse.com/incubator/route53-kubernetes-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.029173747Z
+    description: Map k8s services to route53 domains
+    digest: 2b6cd35e00bb1aa4c3feaa8be47da2402883069c91219a7378d87d4c1f99f2ce
+    name: route53-kubernetes
+    urls:
+    - https://charts.cloudposse.com/incubator/route53-kubernetes-0.1.0.tgz
+    version: 0.1.0
+  service-level-operator:
+  - apiVersion: v1
+    appVersion: v0.2.0
+    created: 2020-02-20T01:12:30.530987792Z
+    description: Service level operator abstracts and automates the service level
+      of Kubernetes applications by generation SLI & SLOs to be consumed easily by
+      dashboards and alerts and allow that the SLI/SLO's live with the application
+      flow.
+    digest: 1b143111917dd8301314fd683b682d25290fd911b7a44981cb11dc8cd5836199
+    home: https://github.com/spotahome/service-level-operator
+    name: service-level-operator
+    sources:
+    - https://github.com/spotahome/service-level-operator
+    urls:
+    - https://charts.cloudposse.com/incubator/service-level-operator-0.1.0.tgz
+    version: 0.1.0
+  superset:
+  - apiVersion: v1
+    appVersion: 0.28.1
+    created: 2020-02-20T01:12:30.532181978Z
+    description: Apache Superset (incubating) is a modern, enterprise-ready business
+      intelligence web application
+    digest: 47924e4aee98b7b1e76d97fa22d954a638874935eaea241ffd9d3b8017e03592
+    home: https://github.com/apache/incubator-superset
+    icon: https://superset.incubator.apache.org/_images/s.png
+    keywords:
+    - bi
+    name: superset
+    sources:
+    - https://github.com/helm/charts/tree/master/stable/superset
+    urls:
+    - https://charts.cloudposse.com/incubator/superset-1.1.9.tgz
+    version: 1.1.9
+  - apiVersion: v1
+    appVersion: 0.28.1
+    created: 2019-11-28T10:26:54.076629347Z
+    description: Apache Superset (incubating) is a modern, enterprise-ready business
+      intelligence web application
+    digest: 98bfb57b92c64683c002f6cb43f087849daa3b10fe36213409df36bb40fab354
+    home: https://github.com/apache/incubator-superset
+    icon: https://superset.incubator.apache.org/_images/s.png
+    keywords:
+    - bi
+    name: superset
+    sources:
+    - https://github.com/helm/charts/tree/master/stable/superset
+    urls:
+    - https://charts.cloudposse.com/incubator/superset-1.1.8.tgz
+    version: 1.1.8
+  syslog-forwarder:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.532722535Z
+    description: A Helm chart to ship logs to a remote syslog server
+    digest: 2831b094bf41118a6577ed94186266135837ceab1ac0efb8751c80e642513630
+    name: syslog-forwarder
+    urls:
+    - https://charts.cloudposse.com/incubator/syslog-forwarder-0.1.0.tgz
+    version: 0.1.0
+  teleport:
+  - created: 2020-02-20T01:12:30.534340239Z
+    description: Teleport Enterprise
+    digest: 2cee78132560bfc9a28fd8353d0a0ea4eee73e3f619242aa008b5e9a499d367e
+    keywords:
+    - Teleport Enterprise
+    name: teleport
+    tillerVersion: '>=2.8.0'
+    urls:
+    - https://charts.cloudposse.com/incubator/teleport-0.0.2.tgz
+    version: 0.0.2
+  teleport-ent-auth:
+  - apiVersion: v1
+    appVersion: 4.0.9
+    created: 2020-02-20T01:12:30.534996366Z
+    description: A Helm chart for Teleport Auth service
+    digest: a3cd376dd70652b3eee6799fe2860fb6b5403fa248ac1212f20843987533177b
+    name: teleport-ent-auth
+    urls:
+    - https://charts.cloudposse.com/incubator/teleport-ent-auth-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    appVersion: 3.1.8
+    created: 2019-09-13T23:17:48.899248824Z
+    description: A Helm chart for Teleport Auth service
+    digest: 2dfc3fd29481650ede086109e138806fc57fb14fcf4ece4a7d1b6fb9a1cf898a
+    name: teleport-ent-auth
+    urls:
+    - https://charts.cloudposse.com/incubator/teleport-ent-auth-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    appVersion: 3.1.8
+    created: 2019-06-29T19:17:03.346744158Z
+    description: A Helm chart for Teleport Auth service
+    digest: 94ae7bb59d71b9c0262ff1a2e241b0f34d3d94ed9da6810d0193c851a697657f
+    name: teleport-ent-auth
+    urls:
+    - https://charts.cloudposse.com/incubator/teleport-ent-auth-0.1.0.tgz
+    version: 0.1.0
+  teleport-ent-proxy:
+  - apiVersion: v1
+    appVersion: 4.0.9
+    created: 2020-02-20T01:12:30.535402829Z
+    description: A Helm chart for Teleport Proxy service
+    digest: d4cd3c11216ade4795a5bb8f4325de75c99fe3a827b94d00ba42b70cb7a8a82e
+    name: teleport-ent-proxy
+    urls:
+    - https://charts.cloudposse.com/incubator/teleport-ent-proxy-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v1
+    appVersion: 3.2.2
+    created: 2019-09-13T23:17:48.899633078Z
+    description: A Helm chart for Teleport Proxy service
+    digest: 10d6b5c70bb48cd4ba80496dbafb15254cc8536d2c223d328462a6d542dae303
+    name: teleport-ent-proxy
+    urls:
+    - https://charts.cloudposse.com/incubator/teleport-ent-proxy-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v1
+    appVersion: 3.1.8
+    created: 2019-03-26T21:10:17.308238449Z
+    description: A Helm chart for Teleport Proxy service
+    digest: 3c3754701bbcaabe11335318e5e8b0a1d6c909b438316bd1cc07aff616dd7d3b
+    name: teleport-ent-proxy
+    urls:
+    - https://charts.cloudposse.com/incubator/teleport-ent-proxy-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    appVersion: 3.1.8
+    created: 2019-03-17T00:34:56.403718846Z
+    description: A Helm chart for Teleport Proxy service
+    digest: 27215839bc22e950e26d19da35b0657ebd704530082e47ffedb77574e199fbb0
+    name: teleport-ent-proxy
+    urls:
+    - https://charts.cloudposse.com/incubator/teleport-ent-proxy-0.1.0.tgz
+    version: 0.1.0
+  thumbor:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.536095803Z
+    description: A Helm chart for Thumbor+RemoteCV thumbnailing service
+    digest: 875bd61e468f3bc3e5de04230662b7b3b0c74c8f18c7d0a1591eb466d708250e
+    name: thumbor
+    urls:
+    - https://charts.cloudposse.com/incubator/thumbor-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v1
+    created: 2018-09-17T21:26:58.871559325Z
+    description: A Helm chart for Thumbor+RemoteCV thumbnailing service
+    digest: c945d9ebd1e694720a84d915aa457be8832669e8f6304796ddb1579deaa0aeb7
+    name: thumbor
+    urls:
+    - https://charts.cloudposse.com/incubator/thumbor-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v1
+    created: 2018-09-14T19:59:18.143423301Z
+    description: A Helm chart for Thumbor+RemoteCV thumbnailing service
+    digest: 517cd08e6ead46f603030a733c04603fae5dc909cafb2113c72ec379a82c8eaf
+    name: thumbor
+    urls:
+    - https://charts.cloudposse.com/incubator/thumbor-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    created: 2018-09-12T09:18:42.65585595Z
+    description: A Helm chart for Thumbor+RemoteCV thumbnailing service
+    digest: 913cd1a4c6778ba8911268d9245ec677b4f28fc78c7bda9ce1a5f24601c46cf7
+    name: thumbor
+    urls:
+    - https://charts.cloudposse.com/incubator/thumbor-0.1.0.tgz
+    version: 0.1.0
+  varnish:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.536488378Z
+    description: A Helm chart Varnish running under Kubernetes
+    digest: 1032f99df4ce9408b8a03df2929eed6bf3b971ed0e454c68a87aca74162a84f6
+    name: varnish
+    urls:
+    - https://charts.cloudposse.com/incubator/varnish-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v1
+    created: 2017-05-31T00:01:30.263530557Z
+    description: A Helm chart Varnish running under Kubernetes
+    digest: b8c4c0fc13a8491b3f02c651c2074c67f14fabc6cc307ef0ff8c07fb71c0e829
+    name: varnish
+    urls:
+    - https://charts.cloudposse.com/incubator/varnish-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.032910833Z
+    description: A Helm chart Varnish running under Kubernetes
+    digest: 6e56fb54b741c6acd22caaf24048bd4b2a1b1a39f31f889661509c276d514710
+    name: varnish
+    urls:
+    - https://charts.cloudposse.com/incubator/varnish-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2017-04-11T08:38:19.032910833Z
+    description: A Helm chart Varnish running under Kubernetes
+    digest: 90544e6db257e8f96ac6c3189ef3ecf889001744afbce7a055dbeee04e071d27
+    name: varnish
+    urls:
+    - https://charts.cloudposse.com/incubator/varnish-0.1.0.tgz
+    version: 0.1.0
+  vps:
+  - apiVersion: v1
+    created: 2020-02-20T01:12:30.536798373Z
+    description: A Helm chart for a standalone SSH/VPS service
+    digest: ad69bcd4c4c32b24e3eb54f5ade69ad540e497943e4a7a4d999c88d0f476a660
+    name: vps
+    urls:
+    - https://charts.cloudposse.com/incubator/vps-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2017-05-31T00:01:30.26375481Z
+    description: A Helm chart for a standalone SSH/VPS service
+    digest: d7289d83203d5cd2b4b3f3f184ae2385e83684d32ae059766e15aebbd718d431
+    name: vps
+    urls:
+    - https://charts.cloudposse.com/incubator/vps-0.1.0.tgz
+    version: 0.1.0
+generated: 2020-02-20T01:12:30.495531401Z

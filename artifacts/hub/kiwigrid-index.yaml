@@ -219,6 +219,34 @@ entries:
   fluentd-elasticsearch:
   - apiVersion: v1
     appVersion: 2.8.0
+    created: "2020-01-28T12:14:49.061133312Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: ba1ded3ae2c13970d99d8b4458a3afea2417a2ce6a6420d0d179b72ec5aab1a7
+    engine: gotpl
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    maintainers:
+    - email: andre.bauer@kiwigrid.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    urls:
+    - https://kiwigrid.github.io/fluentd-elasticsearch-6.1.1.tgz
+    version: 6.1.1
+  - apiVersion: v1
+    appVersion: 2.8.0
     created: "2020-01-15T11:57:54.85162Z"
     description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
     digest: c55154a0aa74adb20849fd370e8b2c6be1b5a52e9c5c9ed6382e48a1174e3df4
@@ -2364,6 +2392,21 @@ entries:
   hawkbit-update-server:
   - apiVersion: v1
     appVersion: 0.3.0M5-mysql
+    created: "2020-01-23T16:17:47.550545961Z"
+    deprecated: true
+    description: A Helm chart for hawkbit update server
+    digest: 31129290e2b51a7ad35d5fc3b8bd1388dd9a9b4ed1ce73ff2647b1642116a47d
+    home: https://www.eclipse.org/hawkbit/
+    icon: https://www.eclipse.org/hawkbit/images/hawkbit_icon.png
+    name: hawkbit-update-server
+    sources:
+    - https://github.com/eclipse/hawkbit
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/hawkbit-update-server
+    urls:
+    - https://kiwigrid.github.io/hawkbit-update-server-2.1.2.tgz
+    version: 2.1.2
+  - apiVersion: v1
+    appVersion: 0.3.0M5-mysql
     created: "2019-11-07T13:27:59.3050771Z"
     description: A Helm chart for hawkbit update server
     digest: d7dd29533d0fd362efa18c8470d38e8a04c0b795a1a276fe805cc5f6a40122a1
@@ -2980,6 +3023,158 @@ entries:
     - https://kiwigrid.github.io/prometheus-pingdom-exporter-2.0.0.tgz
     version: 2.0.0
   prometheus-thanos:
+  - apiVersion: v1
+    appVersion: 0.10.1
+    created: "2020-02-07T12:07:18.467330123Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 24f48402494cb8c519c657f0ed5ccb724586aca1874d49c4ca47028ef09f055f
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-3.0.0.tgz
+    version: 3.0.0
+  - apiVersion: v1
+    appVersion: 0.10.1
+    created: "2020-02-04T09:22:36.367402382Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 5f0b82a975a84f2f995b452e8389bc2b6eeab6171985177c960ac7b75f19eb18
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.10.0.tgz
+    version: 2.10.0
+  - apiVersion: v1
+    appVersion: 0.10.1
+    created: "2020-02-03T14:42:44.190601088Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 0c987a85c92d992b5726931a32231d6e4a7d101da08ea2216e93ceaaf8e536e7
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.9.1.tgz
+    version: 2.9.1
+  - apiVersion: v1
+    appVersion: 0.10.0
+    created: "2020-01-31T09:26:02.945679515Z"
+    description: A Helm chart for thanos monitoring components
+    digest: a92be6ba2eed96b6002346c263bd5b38c6a7cbe79ab238986c4a3d8d6b1b98d3
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.9.0.tgz
+    version: 2.9.0
+  - apiVersion: v1
+    appVersion: 0.10.0
+    created: "2020-01-31T07:33:03.631648692Z"
+    description: A Helm chart for thanos monitoring components
+    digest: a1786f06c77e10bbc6515a3976a152c9a558b855413833ea4964707adc9dc46b
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.8.0.tgz
+    version: 2.8.0
+  - apiVersion: v1
+    appVersion: 0.10.0
+    created: "2020-01-31T06:43:46.370954192Z"
+    description: A Helm chart for thanos monitoring components
+    digest: 21c1288c1f2d25bfa5d4004982537482ad5dee7f1ae15b9dfecabfac748dafa9
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.7.1.tgz
+    version: 2.7.1
+  - apiVersion: v1
+    appVersion: 0.10.0
+    created: "2020-01-28T15:24:22.316417344Z"
+    description: A Helm chart for thanos monitoring components
+    digest: f22d8b180f0fc73716df228f9bf0d68b7f623c03bc3130dd9682180cfd9acda8
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.7.0.tgz
+    version: 2.7.0
+  - apiVersion: v1
+    appVersion: 0.10.0
+    created: "2020-01-23T14:53:17.965563454Z"
+    description: A Helm chart for thanos monitoring components
+    digest: ab1ecbff2e2f23d996ee037c328568ffe6076ef15fb948a293f849d4d084beda
+    home: https://github.com/thanos-io/thanos
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: prometheus-thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/kiwigrid/helm-charts/tree/master/charts/prometheus-thanos
+    urls:
+    - https://kiwigrid.github.io/prometheus-thanos-2.6.1.tgz
+    version: 2.6.1
   - apiVersion: v1
     appVersion: 0.10.0
     created: "2020-01-14T12:46:27.873744485Z"
@@ -3661,6 +3856,21 @@ entries:
   stackdriver-exporter:
   - apiVersion: v1
     appVersion: 0.6.0
+    created: "2020-01-24T12:28:11.757329462Z"
+    description: A Helm chart for exporting stackdriver metrics to prometheus
+    digest: 0bc15e2db3f16b5d63ee87337879118c37a27b2b5912d505fda5a8b9fbb32a9f
+    home: https://github.com/frodenas/stackdriver_exporter
+    maintainers:
+    - email: rico.pahlisch@kiwigrid.com
+      name: rpahli
+    name: stackdriver-exporter
+    sources:
+    - https://github.com/frodenas/stackdriver_exporter
+    urls:
+    - https://kiwigrid.github.io/stackdriver-exporter-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    appVersion: 0.6.0
     created: "2019-03-12T13:00:19.803777074Z"
     description: A Helm chart for exporting stackdriver metrics to prometheus
     digest: fcdc52c3ce5cd5108c7ecfe208a544b2b1848cf2b462f4699f1e8b2c26d66993
@@ -3720,4 +3930,4 @@ entries:
     urls:
     - https://kiwigrid.github.io/zipkin-stackdriver-proxy-0.1.0.tgz
     version: 0.1.0
-generated: "2020-01-21T07:25:27.797830216Z"
+generated: "2020-02-07T12:07:18.464513735Z"

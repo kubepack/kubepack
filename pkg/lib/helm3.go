@@ -129,12 +129,12 @@ func GenerateHelm3Script(order v1alpha1.Order) (string, error) {
 		}
 	}
 
-	err = Upload(string(order.UID), "run.sh", buf.Bytes())
+	err = Upload(string(order.UID), "helm3.sh", buf.Bytes())
 	if err != nil {
 		return "", err
 	}
 
 	fmt.Println(buf.String())
 
-	return fmt.Sprintf("curl -fsSL %s/%s/run.sh  | bash", YAMLHost, order.UID), nil
+	return fmt.Sprintf("curl -fsSL %s/%s/helm3.sh  | bash", YAMLHost, order.UID), nil
 }

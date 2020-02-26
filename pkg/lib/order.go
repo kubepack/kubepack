@@ -17,12 +17,16 @@ limitations under the License.
 package lib
 
 import (
+	"time"
+
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/client/clientset/versioned"
 
+	"github.com/google/uuid"
 	"github.com/pkg/errors"
 	"gomodules.xyz/version"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/apimachinery/pkg/util/sets"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 	"k8s.io/client-go/kubernetes"
@@ -36,10 +40,12 @@ func CreateOrder(bv v1alpha1.BundleView) (*v1alpha1.Order, error) {
 	out := v1alpha1.Order{
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: v1alpha1.SchemeGroupVersion.String(),
-			Kind:       "Order",
+			Kind:       v1alpha1.ResourceKindOrder,
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name: bv.Name,
+			Name:              bv.Name,
+			UID:               types.UID(uuid.New().String()),
+			CreationTimestamp: metav1.NewTime(time.Now()),
 		},
 		Spec: v1alpha1.OrderSpec{
 			Packages: selection,

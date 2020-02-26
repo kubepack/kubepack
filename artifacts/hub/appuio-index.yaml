@@ -3,7 +3,7 @@ entries:
   baas-operator:
   - apiVersion: v1
     appVersion: v0.1.3
-    created: 2020-01-20T16:22:42.171426799Z
+    created: 2020-02-21T08:50:15.923742556Z
     description: Backup as a Service Operator
     digest: 679346b794f56ca65c79571785563e2da738edd50b6d42f888284255ba7781b5
     maintainers:
@@ -15,7 +15,7 @@ entries:
     version: 1.2.4
   - apiVersion: v1
     appVersion: v0.1.3
-    created: 2020-01-20T16:22:42.171226139Z
+    created: 2020-02-21T08:50:15.923479226Z
     description: Backup as a Service Operator
     digest: 5a7696aaf42c6366a82bad7e3c566038736b944f995b083c73fa1cb4ef524fa9
     maintainers:
@@ -27,7 +27,7 @@ entries:
     version: 1.2.3
   - apiVersion: v1
     appVersion: v0.1.3
-    created: 2020-01-20T16:22:42.171022066Z
+    created: 2020-02-21T08:50:15.923275576Z
     description: Backup as a Service Operator
     digest: 42534abd4a8a7ee49166ca4c6acf8fc5525e2b8f9bb4323d61bd9e76cb356951
     maintainers:
@@ -39,7 +39,7 @@ entries:
     version: 1.2.2
   - apiVersion: v1
     appVersion: v0.1.3
-    created: 2020-01-20T16:22:42.170800331Z
+    created: 2020-02-21T08:50:15.923070143Z
     description: Backup as a Service Operator
     digest: 9236755605bcd952be46097a28ea731c4bff88479de49e22998991a818e85bf1
     maintainers:
@@ -51,7 +51,7 @@ entries:
     version: 1.2.1
   - apiVersion: v1
     appVersion: v0.1.0
-    created: 2020-01-20T16:22:42.170545033Z
+    created: 2020-02-21T08:50:15.922853662Z
     description: Backup as a Service Operator
     digest: fb4ff9f57056813ef7a9941bce884198356bf7ccacef39b3347b673223b583fd
     maintainers:
@@ -63,7 +63,7 @@ entries:
     version: 1.2.0
   - apiVersion: v1
     appVersion: v0.0.10
-    created: 2020-01-20T16:22:42.170337751Z
+    created: 2020-02-21T08:50:15.922658445Z
     description: Backup as a Service Operator
     digest: 3d6292c567c675089558674fbdb4de9941f660fe40f93096201d5a49161c80c2
     maintainers:
@@ -75,7 +75,7 @@ entries:
     version: 1.1.1
   - apiVersion: v1
     appVersion: v0.0.9
-    created: 2020-01-20T16:22:42.170103791Z
+    created: 2020-02-21T08:50:15.922441097Z
     description: Backup as a Service Operator
     digest: 0c1e22eb38be15e49f7b6a7e9083689090febca004ebfd324a71faff9142ff27
     maintainers:
@@ -86,7 +86,7 @@ entries:
     - https://charts.appuio.ch/baas-operator-1.1.0.tgz
     version: 1.1.0
   - apiVersion: v1
-    created: 2020-01-20T16:22:42.169680992Z
+    created: 2020-02-21T08:50:15.922235744Z
     description: Backup as a Service Operator
     digest: 4a4174ac224956fc4522afdc08f7060deaadfc44ad5d1a5954e0ac40ab76ca74
     maintainers:
@@ -97,7 +97,7 @@ entries:
     - https://charts.appuio.ch/baas-operator-1.0.2.tgz
     version: 1.0.2
   - apiVersion: v1
-    created: 2020-01-20T16:22:42.169225666Z
+    created: 2020-02-21T08:50:15.922048787Z
     description: Backup as a Service Operator
     digest: 7ed7ffdbf356e4778645492bbe18d1a97a1aa0af79c3c03cd7212d0e9cc9d415
     maintainers:
@@ -108,7 +108,7 @@ entries:
     - https://charts.appuio.ch/baas-operator-1.0.1.tgz
     version: 1.0.1
   - apiVersion: v1
-    created: 2020-01-20T16:22:42.168760417Z
+    created: 2020-02-21T08:50:15.921854256Z
     description: Backup as a Service Operator
     digest: 90f108d28fe79801976074275c43d440797d5ff6b161ec250702aac2e686de5b
     maintainers:
@@ -121,7 +121,7 @@ entries:
   exoip:
   - apiVersion: v1
     appVersion: v0.4.3
-    created: 2020-01-20T16:22:42.172218583Z
+    created: 2020-02-21T08:50:15.924476648Z
     description: Deploy exoip as a DaemonSet
     digest: b79b4efcd566f1b9a21587e8cac550da548c20b8c582fdb581e75fc09bf1b9c7
     maintainers:
@@ -133,7 +133,7 @@ entries:
     version: 1.0.3
   - apiVersion: v1
     appVersion: v0.4.3
-    created: 2020-01-20T16:22:42.172019994Z
+    created: 2020-02-21T08:50:15.924283625Z
     description: Deploy exoip as a DaemonSet
     digest: d37644008fe1774b08d093fedbcaadf94775d30aa06a90986a339322eecd32ca
     name: exoip
@@ -142,7 +142,7 @@ entries:
     version: 1.0.2
   - apiVersion: v1
     appVersion: v0.4.3
-    created: 2020-01-20T16:22:42.171849281Z
+    created: 2020-02-21T08:50:15.92409354Z
     description: Deploy exoip as a DaemonSet
     digest: a6847104f068aee0084ba92c85d4c1654688677a28093484707985f74ce1b214
     name: exoip
@@ -151,7 +151,7 @@ entries:
     version: 1.0.1
   - apiVersion: v1
     appVersion: v0.4.3
-    created: 2020-01-20T16:22:42.171600313Z
+    created: 2020-02-21T08:50:15.923923079Z
     description: Deploy exoip as a DaemonSet
     digest: 7a6bdb5ff48309e0b512f01a372aa16b721b9849e7bb136192187fa62fb7b1e3
     name: exoip
@@ -161,7 +161,7 @@ entries:
   haproxy:
   - apiVersion: v1
     appVersion: "2.1"
-    created: 2020-01-20T16:22:42.173734957Z
+    created: 2020-02-21T08:50:15.927082164Z
     description: A Helm chart for HAProxy which can be customized by a config map.
     digest: 6e15101c5624985dfdd704330c5c1b4fc6c9c5fd119016e9d97b470c98a0d138
     maintainers:
@@ -173,7 +173,7 @@ entries:
     version: 1.1.0
   - apiVersion: v1
     appVersion: "2.1"
-    created: 2020-01-20T16:22:42.173394802Z
+    created: 2020-02-21T08:50:15.926421602Z
     description: A Helm chart for HAProxy which can be customized by a config map.
     digest: 11382acdf1ff63ea5d653a74c23c8b1cec703d844089fc2737045411440276ca
     maintainers:
@@ -185,7 +185,7 @@ entries:
     version: 1.0.2
   - apiVersion: v1
     appVersion: "2.1"
-    created: 2020-01-20T16:22:42.173086598Z
+    created: 2020-02-21T08:50:15.92568842Z
     description: A Helm chart for HAProxy which can be customized by a config map.
     digest: 17e72582d42052327f15b79388649a13f02af778c62141237aa8b573e6f8586e
     maintainers:
@@ -197,7 +197,7 @@ entries:
     version: 1.0.1
   - apiVersion: v1
     appVersion: "2.1"
-    created: 2020-01-20T16:22:42.172782521Z
+    created: 2020-02-21T08:50:15.925099754Z
     description: A Helm chart for HAProxy which can be customized by a config map.
     digest: c2dcb2955b513698685d511ea95f3f5e03047d2e9be0f1752d59b4146f1075c4
     maintainers:
@@ -209,7 +209,7 @@ entries:
     version: 1.0.0
   - apiVersion: v1
     appVersion: "2.1"
-    created: 2020-01-20T16:22:42.172488358Z
+    created: 2020-02-21T08:50:15.924769176Z
     description: A Helm chart for HAProxy which can be customized by a config map.
     digest: 450ccdc9d186d1756927f5dab2545b5ac5b51632fe7778c10fde2f91d221d382
     maintainers:
@@ -222,7 +222,7 @@ entries:
   k8up:
   - apiVersion: v1
     appVersion: v0.1.6
-    created: 2020-01-20T16:22:42.175789185Z
+    created: 2020-02-21T08:50:15.929822271Z
     description: k8up Operator
     digest: 718a8a94b2d3e02528168b05e1f6f8cc00df79576745c5615b2da31092e057d5
     home: https://vshn.github.io/k8up/
@@ -241,7 +241,7 @@ entries:
     version: 0.2.5
   - apiVersion: v1
     appVersion: v0.1.6
-    created: 2020-01-20T16:22:42.175439697Z
+    created: 2020-02-21T08:50:15.929569515Z
     description: k8up Operator
     digest: c3211fd92797df7c301810e5b2927ca9ffc4de9910879272041cac76c7ade772
     home: https://vshn.github.io/k8up/
@@ -260,7 +260,7 @@ entries:
     version: 0.2.4
   - apiVersion: v1
     appVersion: v0.1.4
-    created: 2020-01-20T16:22:42.175142897Z
+    created: 2020-02-21T08:50:15.929323165Z
     description: k8up Operator
     digest: 89d8b79f56f677273ef9350693fcdcb4f563566637a268e74c76cccf444a3aff
     home: https://vshn.github.io/k8up/
@@ -279,7 +279,7 @@ entries:
     version: 0.2.3
   - apiVersion: v1
     appVersion: v0.1.4
-    created: 2020-01-20T16:22:42.174868595Z
+    created: 2020-02-21T08:50:15.929059978Z
     description: k8up Operator
     digest: 439798990c8651403573e76d5b5d92467fd63004382d1580c7ff507c6f097e93
     home: https://vshn.github.io/k8up/
@@ -298,7 +298,7 @@ entries:
     version: 0.2.2
   - apiVersion: v1
     appVersion: v0.1.4
-    created: 2020-01-20T16:22:42.174601288Z
+    created: 2020-02-21T08:50:15.928799959Z
     description: k8up Operator
     digest: 90dfb960075bbda8c24508aca1da8458f4437d1298fa82b3ce134d6565222c77
     home: https://vshn.github.io/k8up/
@@ -317,7 +317,7 @@ entries:
     version: 0.2.1
   - apiVersion: v1
     appVersion: v0.1.4
-    created: 2020-01-20T16:22:42.174290687Z
+    created: 2020-02-21T08:50:15.928304467Z
     description: k8up Operator
     digest: f06fdbc191bad6f249fdc64cefb48469604cbbea0d703aedf9f5c52f02785e4c
     home: https://vshn.github.io/k8up/
@@ -336,7 +336,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: v0.1.4
-    created: 2020-01-20T16:22:42.174013674Z
+    created: 2020-02-21T08:50:15.927706074Z
     description: k8up Operator
     digest: 5ed903843cf7da7b57328e9d5727b76231c3a64dc119e87ae2ec8fd0b4ecd9ef
     home: https://vshn.github.io/k8up/
@@ -355,7 +355,7 @@ entries:
     version: 0.1.0
   keycloak:
   - appVersion: 5.0.0
-    created: 2020-01-20T16:22:42.185127662Z
+    created: 2020-02-21T08:50:15.936911984Z
     deprecated: true
     description: Open Source Identity and Access Management For Modern Applications
       and Services
@@ -383,7 +383,7 @@ entries:
     - https://charts.appuio.ch/keycloak-5.0.0.tgz
     version: 5.0.0
   - appVersion: 5.0.0
-    created: 2020-01-20T16:22:42.182587344Z
+    created: 2020-02-21T08:50:15.934265547Z
     description: Open Source Identity and Access Management For Modern Applications
       and Services
     digest: 5dc42338c8046aa64c10bdfdf819e6de7b1d7b6a8881095e18eed31f0ac7e7a3
@@ -410,7 +410,7 @@ entries:
     - https://charts.appuio.ch/keycloak-4.12.0.tgz
     version: 4.12.0
   - appVersion: 5.0.0
-    created: 2020-01-20T16:22:42.183887136Z
+    created: 2020-02-21T08:50:15.935532323Z
     description: Open Source Identity and Access Management For Modern Applications
       and Services
     digest: 0c079177a3456facc7897e0e0c5801815bae6877da13d4cc0fa18f3bf375528e
@@ -437,7 +437,7 @@ entries:
     - https://charts.appuio.ch/keycloak-4.8.0.tgz
     version: 4.8.0
   - appVersion: 4.8.3.Final
-    created: 2020-01-20T16:22:42.181302356Z
+    created: 2020-02-21T08:50:15.932989677Z
     description: Open Source Identity and Access Management For Modern Applications
       and Services
     digest: a3f6e1e56cb1087795889628e91edd17239164d8fd1858baff858141ea8e8ec6
@@ -464,7 +464,7 @@ entries:
     - https://charts.appuio.ch/keycloak-4.1.1.tgz
     version: 4.1.1
   - appVersion: 4.8.3.Final
-    created: 2020-01-20T16:22:42.179761573Z
+    created: 2020-02-21T08:50:15.931767179Z
     description: Open Source Identity and Access Management For Modern Applications
       and Services
     digest: 55ffcdb3a317e08c1d1c4e0913cdaef3d610e98a8547347aa00c0b46a55b9012
@@ -491,7 +491,7 @@ entries:
     - https://charts.appuio.ch/keycloak-4.1.0.tgz
     version: 4.1.0
   - appVersion: 4.1.0.Final
-    created: 2020-01-20T16:22:42.177185227Z
+    created: 2020-02-21T08:50:15.930413055Z
     description: Open Source Identity and Access Management For Modern Applications
       and Services
     digest: 55867942322f470ffba2c571c713a09869efd96e9c6f1e8d86ce13a44fb05fee
@@ -520,7 +520,7 @@ entries:
   maxscale:
   - apiVersion: v1
     appVersion: 2.2.20
-    created: 2020-01-20T16:22:42.18631333Z
+    created: 2020-02-21T08:50:15.939344376Z
     description: MaxScale Helm Chart
     digest: df2eba6d1d16d1cd6785dfedf7df7bd0bba690e9f6982a2a4f641bca9aff00be
     home: https://mariadb.com/products/technology/maxscale
@@ -533,7 +533,7 @@ entries:
     version: 1.1.1
   - apiVersion: v1
     appVersion: 2.2.20
-    created: 2020-01-20T16:22:42.186064225Z
+    created: 2020-02-21T08:50:15.938797972Z
     description: MaxScale Helm Chart
     digest: 9d336fda297db6d10f8040e649102d8b498302fedae6dce45dcbf52c6dfeb21a
     home: https://mariadb.com/products/technology/maxscale
@@ -546,7 +546,7 @@ entries:
     version: 1.1.0
   - apiVersion: v1
     appVersion: 2.2.19
-    created: 2020-01-20T16:22:42.185810894Z
+    created: 2020-02-21T08:50:15.938269439Z
     description: MaxScale Helm Chart
     digest: a6ae4ae783efdc3a40dcd2c3a568c12c3aa8ee561155692b3118f6a8f6e643b5
     home: https://mariadb.com/products/technology/maxscale
@@ -559,7 +559,7 @@ entries:
     version: 1.0.4
   - apiVersion: v1
     appVersion: 2.2.19
-    created: 2020-01-20T16:22:42.185571485Z
+    created: 2020-02-21T08:50:15.937709602Z
     description: MaxScale Helm Chart
     digest: 6f7ec64bcf4122a2585ea3ca7f52773a36d91c0a8ed81849d12580d6a1f77a6d
     home: https://mariadb.com/products/technology/maxscale
@@ -569,7 +569,7 @@ entries:
     version: 1.0.3
   - apiVersion: v1
     appVersion: 2.2.15
-    created: 2020-01-20T16:22:42.185346884Z
+    created: 2020-02-21T08:50:15.93715361Z
     description: MaxScale Helm Chart
     digest: 82ccb25596ce6c3674880f8179559c2c637878db2fadeb21ec09ad9b1a455689
     home: https://mariadb.com/products/technology/maxscale
@@ -580,7 +580,7 @@ entries:
   openshift-oauth-proxy:
   - apiVersion: v1
     appVersion: 1.1.0
-    created: 2020-01-20T16:22:42.187160896Z
+    created: 2020-02-21T08:50:15.941077288Z
     description: OpenShift oauth-proxy
     digest: ee5c50597a9a7bd81e543071d398a89cefe283cca4ee2dd2fd4982778a963e62
     maintainers:
@@ -592,7 +592,7 @@ entries:
     version: 0.2.2
   - apiVersion: v1
     appVersion: 1.1.0
-    created: 2020-01-20T16:22:42.186962306Z
+    created: 2020-02-21T08:50:15.940838596Z
     description: OpenShift oauth-proxy
     digest: 6798f0d9c132089722b866d9c3d46ebf733f93f7dfdf4fa43fb046a5ae759c57
     maintainers:
@@ -604,7 +604,7 @@ entries:
     version: 0.2.1
   - apiVersion: v1
     appVersion: 1.1.0
-    created: 2020-01-20T16:22:42.186760435Z
+    created: 2020-02-21T08:50:15.940410679Z
     description: OpenShift oauth-proxy
     digest: 8e784d176af6c39fc46d855e4b696efccad8b4165e13dd07075c75e5b78e94b1
     maintainers:
@@ -616,7 +616,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: 1.1.0
-    created: 2020-01-20T16:22:42.186541274Z
+    created: 2020-02-21T08:50:15.939839406Z
     description: OpenShift oauth-proxy
     digest: ee61705b2a0a0d6fb3407308e92b12baff0198489616cbee96991873f8b597f0
     maintainers:
@@ -629,7 +629,7 @@ entries:
   openshift-route:
   - apiVersion: v1
     appVersion: v1
-    created: 2020-01-20T16:22:42.188497214Z
+    created: 2020-02-21T08:50:15.9418267Z
     description: A Helm chart for OpenShift that simply creates a Route object
     digest: e18b62fb258236b5a5434d9fa2beb986656d29ad13c9aedd198b5a66a616621a
     name: openshift-route
@@ -638,7 +638,7 @@ entries:
     version: 1.1.1
   - apiVersion: v1
     appVersion: v1
-    created: 2020-01-20T16:22:42.188036022Z
+    created: 2020-02-21T08:50:15.941648747Z
     description: A Helm chart for OpenShift that simply creates a Route object
     digest: f5f357c50dc80de55c23920aabebd2007db1f7e675014fd7831814ecbb1c2fdb
     name: openshift-route
@@ -647,7 +647,7 @@ entries:
     version: 1.1.0
   - apiVersion: v1
     appVersion: v1
-    created: 2020-01-20T16:22:42.187536035Z
+    created: 2020-02-21T08:50:15.941461649Z
     description: A Helm chart for OpenShift that simply creates a Route object
     digest: d39b026199711bbafb5cc1d90b34a0b39da48dd37874642f27c35209702453e4
     name: openshift-route
@@ -656,7 +656,7 @@ entries:
     version: 1.0.1
   - apiVersion: v1
     appVersion: v1
-    created: 2020-01-20T16:22:42.187340889Z
+    created: 2020-02-21T08:50:15.941263953Z
     description: A Helm chart for OpenShift that simply creates a Route object
     digest: 713c62a8274b5cce63386875c73b4b9b8ac57e78e43fa2f00cec8c2cff236fb0
     name: openshift-route
@@ -666,7 +666,29 @@ entries:
   prometheus:
   - apiVersion: v1
     appVersion: 2.4.2
-    created: 2020-01-20T16:22:42.195442885Z
+    created: 2020-02-21T08:50:15.949192471Z
+    deprecated: true
+    description: Prometheus is a monitoring system and time series database.
+    digest: 9aefe5dc853d603faabd5f858daf9f87525b8c56440d7c6fc4558e74e55be2e6
+    engine: gotpl
+    home: https://prometheus.io/
+    icon: https://raw.githubusercontent.com/prometheus/prometheus.github.io/master/assets/prometheus_logo-cb55bb5c346.png
+    maintainers:
+    - email: info@appuio.ch
+      name: APPUiO Team
+    name: prometheus
+    sources:
+    - https://github.com/prometheus/alertmanager
+    - https://github.com/prometheus/prometheus
+    - https://github.com/prometheus/pushgateway
+    - https://github.com/prometheus/node_exporter
+    - https://github.com/kubernetes/kube-state-metrics
+    urls:
+    - https://charts.appuio.ch/prometheus-0.0.7.tgz
+    version: 0.0.7
+  - apiVersion: v1
+    appVersion: 2.4.2
+    created: 2020-02-21T08:50:15.947183552Z
     description: Prometheus is a monitoring system and time series database.
     digest: 8ff8e022d06b7345b4179e15fe553920d58256e0d4059c2bfa376f090b332be3
     engine: gotpl
@@ -687,7 +709,7 @@ entries:
     version: 0.0.6
   - apiVersion: v1
     appVersion: 2.4.2
-    created: 2020-01-20T16:22:42.194569305Z
+    created: 2020-02-21T08:50:15.946317471Z
     description: Prometheus is a monitoring system and time series database.
     digest: 18f849146fca2ee8796f988c7f695edd242b285907b5674c0b1bf18640788515
     engine: gotpl
@@ -707,7 +729,7 @@ entries:
     - https://charts.appuio.ch/prometheus-0.0.5.tgz
     version: 0.0.5
   - appVersion: 2.4.2
-    created: 2020-01-20T16:22:42.193681649Z
+    created: 2020-02-21T08:50:15.945430114Z
     description: Prometheus is a monitoring system and time series database.
     digest: a972e9daa30fa29359606d89ee18e7c0fc473da1a2ebf1429e7378f4ed1b6fa7
     engine: gotpl
@@ -727,7 +749,7 @@ entries:
     - https://charts.appuio.ch/prometheus-0.0.4.tgz
     version: 0.0.4
   - appVersion: 2.4.2
-    created: 2020-01-20T16:22:42.192792565Z
+    created: 2020-02-21T08:50:15.944519719Z
     description: Prometheus is a monitoring system and time series database.
     digest: 42908b83975324cd52da0fb9c57fab84ae972e6dc99c9d5b83e2425474b95d59
     engine: gotpl
@@ -747,7 +769,7 @@ entries:
     - https://charts.appuio.ch/prometheus-0.0.3.tgz
     version: 0.0.3
   - appVersion: 2.2.1
-    created: 2020-01-20T16:22:42.191899082Z
+    created: 2020-02-21T08:50:15.943596706Z
     description: Prometheus is a monitoring system and time series database.
     digest: 679f5570e1131c69b1de43c1f567ee30463083fe97a4099d43ffc2ea04fa1bbf
     engine: gotpl
@@ -767,7 +789,7 @@ entries:
     - https://charts.appuio.ch/prometheus-0.0.2.tgz
     version: 0.0.2
   - appVersion: 2.2.1
-    created: 2020-01-20T16:22:42.19013369Z
+    created: 2020-02-21T08:50:15.942679268Z
     description: Prometheus is a monitoring system and time series database.
     digest: 5ff214c04376ac8458c78521626bcd71e09a326f6014f10a14096cf7f2378f7a
     engine: gotpl
@@ -788,8 +810,46 @@ entries:
     version: 0.0.1
   prometheus-blackbox-exporter:
   - apiVersion: v1
+    appVersion: 0.16.0
+    created: 2020-02-21T08:50:15.951373067Z
+    description: Prometheus Blackbox Exporter
+    digest: d4a8d7b499a7095453a301566cfc2ee6a3e382a9485f542ad309fef344994d27
+    home: https://github.com/prometheus/blackbox_exporter
+    keywords:
+    - prometheus
+    - blackbox
+    - monitoring
+    maintainers:
+    - email: info@appuio.ch
+      name: APPUiO Team
+    name: prometheus-blackbox-exporter
+    sources:
+    - https://github.com/prometheus/blackbox_exporter
+    urls:
+    - https://charts.appuio.ch/prometheus-blackbox-exporter-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v1
+    appVersion: 0.16.0
+    created: 2020-02-21T08:50:15.951103246Z
+    description: Prometheus Blackbox Exporter
+    digest: 34a8a93939bff9333386b9ed31e61897c148b4de0affffcc26bd2346cd5cf46b
+    home: https://github.com/prometheus/blackbox_exporter
+    keywords:
+    - prometheus
+    - blackbox
+    - monitoring
+    maintainers:
+    - email: info@appuio.ch
+      name: APPUiO Team
+    name: prometheus-blackbox-exporter
+    sources:
+    - https://github.com/prometheus/blackbox_exporter
+    urls:
+    - https://charts.appuio.ch/prometheus-blackbox-exporter-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
     appVersion: 0.12.0
-    created: 2020-01-20T16:22:42.196337581Z
+    created: 2020-02-21T08:50:15.950844693Z
     description: Prometheus Blackbox Exporter
     digest: 743501588cf6128f71edb7cf9ad14d89f5373c4cde5174ec05467526bc328d0c
     home: https://github.com/prometheus/blackbox_exporter
@@ -808,7 +868,7 @@ entries:
     version: 0.1.3
   - apiVersion: v1
     appVersion: 0.12.0
-    created: 2020-01-20T16:22:42.196057522Z
+    created: 2020-02-21T08:50:15.950536561Z
     description: Prometheus Blackbox Exporter
     digest: abc38db36280377e25b3f61b8472b23b140da0c3bb7007d9788da587f249f886
     home: https://github.com/prometheus/blackbox_exporter
@@ -827,7 +887,7 @@ entries:
     version: 0.1.2
   - apiVersion: v1
     appVersion: 0.12.0
-    created: 2020-01-20T16:22:42.195782142Z
+    created: 2020-02-21T08:50:15.949810894Z
     description: Prometheus Blackbox Exporter
     digest: 211fee66093eb0a26e957336b28b5da453d81e3048555d8e06b1334bf4829513
     home: https://github.com/prometheus/blackbox_exporter
@@ -846,7 +906,7 @@ entries:
     version: 0.1.1
   secret:
   - apiVersion: v1
-    created: 2020-01-20T16:22:42.196617856Z
+    created: 2020-02-21T08:50:15.951654819Z
     description: Deploy arbitrary secrets
     digest: 19a6f5c74d430b044ce4295111c4b6ecfe97f3fd96d4bb150a1d79ec8b7a1cb6
     maintainers:
@@ -857,7 +917,7 @@ entries:
     - https://charts.appuio.ch/secret-1.0.1.tgz
     version: 1.0.1
   - apiVersion: v1
-    created: 2020-01-20T16:22:42.196476079Z
+    created: 2020-02-21T08:50:15.951503112Z
     description: Deploy arbitrary secrets
     digest: b7604a17122c6b74679976d911fe6c967f05e775a072e7d00618e37b0ba6460e
     maintainers:
@@ -869,8 +929,28 @@ entries:
     version: 1.0.0
   signalilo:
   - apiVersion: v1
+    appVersion: 0.3.0
+    created: 2020-02-21T08:50:15.953534331Z
+    description: Alertmanager to Icinga2 bridge
+    digest: 1a3f446a81236cd37ab74d9bd17aa8d0384b624bf14ddc1739c6ed630bb23b72
+    home: https://git.vshn.net/vshn/signalilo
+    keywords:
+    - prometheus
+    - alertmanager
+    - webhook
+    - icinga2
+    maintainers:
+    - email: info@appuio.ch
+      name: APPUiO Team
+    name: signalilo
+    sources:
+    - https://git.vshn.net/vshn/signalilo
+    urls:
+    - https://charts.appuio.ch/signalilo-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v1
     appVersion: 0.2.0
-    created: 2020-01-20T16:22:42.198444771Z
+    created: 2020-02-21T08:50:15.953232276Z
     description: Alertmanager to Icinga2 bridge
     digest: 1cbaca3fd20d0bfa5293d7a5576dd68674d7c34561d849bdc1508e77f1691270
     home: https://git.vshn.net/vshn/signalilo
@@ -890,7 +970,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: 0.1.1
-    created: 2020-01-20T16:22:42.197922696Z
+    created: 2020-02-21T08:50:15.952974149Z
     description: Alertmanager to Icinga2 bridge
     digest: f71e5b8b9134c992d35c6f4bf60cf096e8c6772212d9c42d95decefdf4f58afb
     home: https://git.vshn.net/vshn/signalilo
@@ -910,7 +990,7 @@ entries:
     version: 0.1.0
   - apiVersion: v1
     appVersion: 0.1.0
-    created: 2020-01-20T16:22:42.197649885Z
+    created: 2020-02-21T08:50:15.952705446Z
     description: Alertmanager to Icinga2 bridge
     digest: e2ea88228ca680986639ff7914bec368344f17419d60264f779cccefa6e6561a
     home: https://git.vshn.net/vshn/signalilo
@@ -930,7 +1010,7 @@ entries:
     version: 0.0.4
   - apiVersion: v1
     appVersion: 0.0.3
-    created: 2020-01-20T16:22:42.19737909Z
+    created: 2020-02-21T08:50:15.952453647Z
     description: Alertmanager to Icinga2 bridge
     digest: 84618f18d64e2086dcebba47473c7e0cdc99926b1e19c6901463367527785559
     home: https://git.vshn.net/vshn/signalilo
@@ -950,7 +1030,7 @@ entries:
     version: 0.0.3
   - apiVersion: v1
     appVersion: 0.0.2
-    created: 2020-01-20T16:22:42.197123412Z
+    created: 2020-02-21T08:50:15.952177204Z
     description: Alertmanager to Icinga2 bridge
     digest: 4ac4259680d25a84c1ec17a53d9fc53ef6e6bc6a127cea61b96f324e5b6f96e0
     home: https://git.vshn.net/vshn/signalilo
@@ -970,7 +1050,7 @@ entries:
     version: 0.0.2
   - apiVersion: v1
     appVersion: 0.0.1
-    created: 2020-01-20T16:22:42.196860399Z
+    created: 2020-02-21T08:50:15.951898487Z
     description: Alertmanager to Icinga2 bridge
     digest: a57f7fd7b1e2d22b4889e879ea59553cbe39720bc050e8d93b19d8ddac098567
     home: https://git.vshn.net/vshn/signalilo
@@ -991,7 +1071,43 @@ entries:
   snappass:
   - apiVersion: v1
     appVersion: v1.4.2
-    created: 2020-01-20T16:22:42.210918182Z
+    created: 2020-02-21T08:50:15.973944124Z
+    description: A Helm chart for SnapPass
+    digest: 7331e7dfe7b892416bc318565a1edc1bf1a3293119e17579f0f96b7b932d9f49
+    name: snappass
+    urls:
+    - https://charts.appuio.ch/snappass-0.2.7.tgz
+    version: 0.2.7
+  - apiVersion: v1
+    appVersion: v1.4.2
+    created: 2020-02-21T08:50:15.972358119Z
+    description: A Helm chart for SnapPass
+    digest: f01c5c39f5ad03b06899ff46338491c1ca6ea1a0001907ac6a60a5800fe5a701
+    name: snappass
+    urls:
+    - https://charts.appuio.ch/snappass-0.2.6.tgz
+    version: 0.2.6
+  - apiVersion: v1
+    appVersion: v1.4.2
+    created: 2020-02-21T08:50:15.970770088Z
+    description: A Helm chart for SnapPass
+    digest: b39aaa0709febee1f3bdf5937daee1fb07b45bf648d44333480a6f51e3239b40
+    name: snappass
+    urls:
+    - https://charts.appuio.ch/snappass-0.2.5.tgz
+    version: 0.2.5
+  - apiVersion: v1
+    appVersion: v1.4.2
+    created: 2020-02-21T08:50:15.966905449Z
+    description: A Helm chart for SnapPass
+    digest: 5e07012e39a9b0a71e2e0c776e3ee29f558ab0d8d0db2217896c9dc1ef51c7df
+    name: snappass
+    urls:
+    - https://charts.appuio.ch/snappass-0.2.4.tgz
+    version: 0.2.4
+  - apiVersion: v1
+    appVersion: v1.4.2
+    created: 2020-02-21T08:50:15.964806042Z
     description: A Helm chart for SnapPass
     digest: 38c11455a66ad90c11dd77b7f91e8d92ff9899ba263f2933b13ef46c1faf1fa4
     name: snappass
@@ -1000,7 +1116,7 @@ entries:
     version: 0.2.3
   - apiVersion: v1
     appVersion: v1.4.2
-    created: 2020-01-20T16:22:42.207848315Z
+    created: 2020-02-21T08:50:15.962607449Z
     description: A Helm chart for SnapPass
     digest: 0b81c4ee3487a1c1698b00d3aa527a2eb5f633f8bbfee04fa981fefd5c62376e
     name: snappass
@@ -1009,7 +1125,7 @@ entries:
     version: 0.2.2
   - apiVersion: v1
     appVersion: v1.4.2
-    created: 2020-01-20T16:22:42.205968659Z
+    created: 2020-02-21T08:50:15.960777298Z
     description: A Helm chart for SnapPass
     digest: 386f40a673f9390c17fbdc3dc547adf3594c5a1b4c99a098c7892fcd6346cee3
     name: snappass
@@ -1018,7 +1134,7 @@ entries:
     version: 0.2.1
   - apiVersion: v1
     appVersion: v1.4.2
-    created: 2020-01-20T16:22:42.204072528Z
+    created: 2020-02-21T08:50:15.95797478Z
     description: A Helm chart for SnapPass
     digest: febf260503306e7acd7c530d057e3be6470699f0f0aa34f7e9bcf27135df9b74
     name: snappass
@@ -1027,7 +1143,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: v1.4.2
-    created: 2020-01-20T16:22:42.201962938Z
+    created: 2020-02-21T08:50:15.955292475Z
     description: A Helm chart for SnapPass
     digest: f01fecd4040b1a0962bb3d88af76e7d8ba6a86eba895486396ed93fe96988389
     name: snappass
@@ -1037,7 +1153,63 @@ entries:
   stardog:
   - apiVersion: v1
     appVersion: 6.2.3
-    created: 2020-01-20T16:22:42.257318825Z
+    created: 2020-02-21T08:50:16.024942351Z
+    description: Stardog Helm Chart
+    digest: 9e4aed95882f0c6126f0e0a48a7b0db415b55000a8df6d260bcf3b1b4446e2fd
+    home: https://www.stardog.com/
+    icon: https://d33wubrfki0l68.cloudfront.net/img/c920235ff153186ab17617ce2bce193d867fa80c/stardog-logo.png
+    maintainers:
+    - email: info@appuio.ch
+      name: APPUiO Team
+    name: stardog
+    urls:
+    - https://charts.appuio.ch/stardog-0.2.4.tgz
+    version: 0.2.4
+  - apiVersion: v1
+    appVersion: 6.2.3
+    created: 2020-02-21T08:50:16.023688577Z
+    description: Stardog Helm Chart
+    digest: 2ff568147c1a2553d649b6b6747f4be4c574a0c46900c03d1dd9e024361708dd
+    home: https://www.stardog.com/
+    icon: https://d33wubrfki0l68.cloudfront.net/img/c920235ff153186ab17617ce2bce193d867fa80c/stardog-logo.png
+    maintainers:
+    - email: info@appuio.ch
+      name: APPUiO Team
+    name: stardog
+    urls:
+    - https://charts.appuio.ch/stardog-0.2.3.tgz
+    version: 0.2.3
+  - apiVersion: v1
+    appVersion: 6.2.3
+    created: 2020-02-21T08:50:16.022273287Z
+    description: Stardog Helm Chart
+    digest: 299118e323d259e428e2584a691714939e139775d9a347e899da83e3d081583c
+    home: https://www.stardog.com/
+    icon: https://d33wubrfki0l68.cloudfront.net/img/c920235ff153186ab17617ce2bce193d867fa80c/stardog-logo.png
+    maintainers:
+    - email: info@appuio.ch
+      name: APPUiO Team
+    name: stardog
+    urls:
+    - https://charts.appuio.ch/stardog-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v1
+    appVersion: 6.2.3
+    created: 2020-02-21T08:50:16.020869984Z
+    description: Stardog Helm Chart
+    digest: 565e7bbd551084ea0d6ea890a53a1583cf70580ff42d6c1da7ebf7e96509cdbc
+    home: https://www.stardog.com/
+    icon: https://d33wubrfki0l68.cloudfront.net/img/c920235ff153186ab17617ce2bce193d867fa80c/stardog-logo.png
+    maintainers:
+    - email: info@appuio.ch
+      name: APPUiO Team
+    name: stardog
+    urls:
+    - https://charts.appuio.ch/stardog-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v1
+    appVersion: 6.2.3
+    created: 2020-02-21T08:50:16.01944712Z
     description: Stardog Helm Chart
     digest: 45db4cc29956947d6b0cd6b2ed9cffde5f36e29dd9a6d6e16a2488e266327c48
     home: https://www.stardog.com/
@@ -1051,7 +1223,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: 6.2.3
-    created: 2020-01-20T16:22:42.255892624Z
+    created: 2020-02-21T08:50:16.017617343Z
     description: Stardog Helm Chart
     digest: 79535c28c65adefa7cb6c179a308bcd09b4b95b0337d096ba1b87584212be0ae
     home: https://www.stardog.com/
@@ -1065,7 +1237,7 @@ entries:
     version: 0.1.4
   - apiVersion: v1
     appVersion: 6.2.3
-    created: 2020-01-20T16:22:42.254504229Z
+    created: 2020-02-21T08:50:16.014896838Z
     description: Stardog Helm Chart
     digest: f88ca1258bef242b8b06d4c91483bde97c7ce4c3ff57c137a35c4e7b46d97c09
     home: https://www.stardog.com/
@@ -1079,7 +1251,7 @@ entries:
     version: 0.1.3
   - apiVersion: v1
     appVersion: 6.2.3
-    created: 2020-01-20T16:22:42.252881844Z
+    created: 2020-02-21T08:50:16.013545714Z
     description: Stardog Helm Chart
     digest: 21d4f58ce5c10cccb2ae92adf9c9132fedafbc9a102545708b68f766aa5381f0
     home: https://www.stardog.com/
@@ -1093,7 +1265,7 @@ entries:
     version: 0.1.2
   - apiVersion: v1
     appVersion: 6.2.3
-    created: 2020-01-20T16:22:42.25145605Z
+    created: 2020-02-21T08:50:16.012215325Z
     description: Stardog Helm Chart
     digest: 88d2e29bf9d02f52e028fbea7ba47fe9f848f18c9b66b58376e3c14dc4aa5760
     home: https://www.stardog.com/
@@ -1107,7 +1279,7 @@ entries:
     version: 0.1.1
   - apiVersion: v1
     appVersion: 6.2.3
-    created: 2020-01-20T16:22:42.249034292Z
+    created: 2020-02-21T08:50:16.010864405Z
     description: Stardog Helm Chart
     digest: d1ea03bed36ddc424e46a9ee9a629e7ab091639ec33bd6bead956d61c41dac5a
     home: https://www.stardog.com/
@@ -1121,7 +1293,7 @@ entries:
     version: 0.1.0
   - apiVersion: v1
     appVersion: 6.2.3
-    created: 2020-01-20T16:22:42.238868415Z
+    created: 2020-02-21T08:50:16.000155068Z
     description: Stardog Helm Chart
     digest: 422f2afd4d8bdfa162b6389fc5647782ce6dba3da2f54d0f7fb6017c7d5f6e60
     home: https://www.stardog.com/
@@ -1135,7 +1307,7 @@ entries:
     version: 0.0.25
   - apiVersion: v1
     appVersion: 6.2.3
-    created: 2020-01-20T16:22:42.236895873Z
+    created: 2020-02-21T08:50:15.99883718Z
     description: Stardog Helm Chart
     digest: 68fb421a9e7ace558a84bc852ccd47418eccee4e00c447768653155b8ff2f40f
     home: https://www.stardog.com/
@@ -1149,7 +1321,7 @@ entries:
     version: 0.0.24
   - apiVersion: v1
     appVersion: 6.2.3
-    created: 2020-01-20T16:22:42.234214125Z
+    created: 2020-02-21T08:50:15.997561566Z
     description: Stardog Helm Chart
     digest: f5c59196114e3f7346ae361bb0e74fa999d5a6a4aad328bc1cec81b7346ee437
     home: https://www.stardog.com/
@@ -1163,7 +1335,7 @@ entries:
     version: 0.0.23
   - apiVersion: v1
     appVersion: 6.2.3
-    created: 2020-01-20T16:22:42.232899098Z
+    created: 2020-02-21T08:50:15.996173263Z
     description: Stardog Helm Chart
     digest: c9ec60d4118359d5c93886c8e1c9dad8d95d41e701a22c7a5eebf87fe2e8bc18
     home: https://www.stardog.com/
@@ -1177,7 +1349,7 @@ entries:
     version: 0.0.22
   - apiVersion: v1
     appVersion: 6.2.3
-    created: 2020-01-20T16:22:42.231572665Z
+    created: 2020-02-21T08:50:15.994868129Z
     description: Stardog Helm Chart
     digest: 06b4954c55ab9858f98096c409af6ff91ee796728672189a8b2d017a4895aaf5
     home: https://www.stardog.com/
@@ -1191,7 +1363,7 @@ entries:
     version: 0.0.21
   - apiVersion: v1
     appVersion: 6.2.3
-    created: 2020-01-20T16:22:42.230271638Z
+    created: 2020-02-21T08:50:15.993439099Z
     description: Stardog Helm Chart
     digest: b5e641b96a5a736d94696b40eebcb8a6c5b8338f0096d04f4b427b483bd24dd3
     home: https://www.stardog.com/
@@ -1205,7 +1377,7 @@ entries:
     version: 0.0.20
   - apiVersion: v1
     appVersion: 6.2.3
-    created: 2020-01-20T16:22:42.227898628Z
+    created: 2020-02-21T08:50:15.989046727Z
     description: Stardog Helm Chart
     digest: 34c52bffbe5d45ede482a941268952f739abb5e4e548a362a3a640749b6a985f
     home: https://www.stardog.com/
@@ -1219,7 +1391,7 @@ entries:
     version: 0.0.19
   - apiVersion: v1
     appVersion: 6.2.3
-    created: 2020-01-20T16:22:42.226567304Z
+    created: 2020-02-21T08:50:15.987778137Z
     description: Stardog Helm Chart
     digest: e85dd648b8b7a2ce763fcb70ddf30cb7748a9854fb2389cd744ceb6dd589cd16
     home: https://www.stardog.com/
@@ -1233,7 +1405,7 @@ entries:
     version: 0.0.18
   - apiVersion: v1
     appVersion: 6.2.3
-    created: 2020-01-20T16:22:42.224628866Z
+    created: 2020-02-21T08:50:15.98648741Z
     description: Stardog Helm Chart
     digest: ee0b1682f71e3453b2cca252deee843e9162362e29c1673ae3f02165e201c98c
     home: https://www.stardog.com/
@@ -1247,7 +1419,7 @@ entries:
     version: 0.0.17
   - apiVersion: v1
     appVersion: 6.2.2
-    created: 2020-01-20T16:22:42.222071086Z
+    created: 2020-02-21T08:50:15.985261775Z
     description: Stardog Helm Chart
     digest: fb727a77302560c8a9f0d1b5a2956ea5307ac13da7e604c0aee0413de5eca54a
     home: https://www.stardog.com/
@@ -1261,7 +1433,7 @@ entries:
     version: 0.0.16
   - apiVersion: v1
     appVersion: 6.2.2
-    created: 2020-01-20T16:22:42.220564904Z
+    created: 2020-02-21T08:50:15.984011786Z
     description: Stardog Helm Chart
     digest: 64a2b00744dc9d2fd088e3953d248532d591b6f78d2fda98e853b7dc34d15433
     home: https://www.stardog.com/
@@ -1275,7 +1447,7 @@ entries:
     version: 0.0.15
   - apiVersion: v1
     appVersion: 6.2.2
-    created: 2020-01-20T16:22:42.219231348Z
+    created: 2020-02-21T08:50:15.982747367Z
     description: Stardog Helm Chart
     digest: 9a5eda3b17f686a14ab0b06dfaa8cbacde05cda5aa758dbccb4601e3fe5886be
     home: https://www.stardog.com/
@@ -1289,7 +1461,7 @@ entries:
     version: 0.0.14
   - apiVersion: v1
     appVersion: 6.2.2
-    created: 2020-01-20T16:22:42.217973156Z
+    created: 2020-02-21T08:50:15.981555184Z
     description: Stardog Helm Chart
     digest: 4bb9b5f51fd4de280fbcabd2af0f0b594ca7311c1086f2a94f93da7d3d7611bf
     home: https://www.stardog.com/
@@ -1303,7 +1475,7 @@ entries:
     version: 0.0.13
   - apiVersion: v1
     appVersion: 6.2.2
-    created: 2020-01-20T16:22:42.216733905Z
+    created: 2020-02-21T08:50:15.979489733Z
     description: Stardog Helm Chart
     digest: 1007a34af52fb0f532cb9d2108c7c85bf0f363c10f39de759537927bf23c2861
     home: https://www.stardog.com/
@@ -1317,7 +1489,7 @@ entries:
     version: 0.0.12
   - apiVersion: v1
     appVersion: 6.2.1
-    created: 2020-01-20T16:22:42.215343947Z
+    created: 2020-02-21T08:50:15.977287847Z
     description: Stardog Helm Chart
     digest: 6eb6a2b7663f8cc7fa8a185a68ca9ed027d6224d90d340a703e401530f33f1e0
     home: https://www.stardog.com/
@@ -1331,7 +1503,7 @@ entries:
     version: 0.0.11
   - apiVersion: v1
     appVersion: 6.2.1
-    created: 2020-01-20T16:22:42.214120328Z
+    created: 2020-02-21T08:50:15.976099351Z
     description: Stardog Helm Chart
     digest: 3700db0476b97d9c2c22ffee91dae2bc6c9bdd0d121a81a83cfd3f1cd6578cf3
     home: https://www.stardog.com/
@@ -1345,7 +1517,7 @@ entries:
     version: 0.0.10
   - apiVersion: v1
     appVersion: 6.1.3
-    created: 2020-01-20T16:22:42.246565814Z
+    created: 2020-02-21T08:50:16.009566844Z
     description: Stardog Helm Chart
     digest: 7d4bede70dad52325aa3094dcd1e3fd1e823dfee217cf3f2e52c9f1f8988504f
     home: https://www.stardog.com/
@@ -1359,7 +1531,7 @@ entries:
     version: 0.0.9
   - apiVersion: v1
     appVersion: 6.1.3
-    created: 2020-01-20T16:22:42.245437654Z
+    created: 2020-02-21T08:50:16.008456136Z
     description: Stardog Helm Chart
     digest: d91da3ee5f548f5f1bfa1f5943071c3d40294187f6c8dbeba9c9aff599edfc9d
     home: https://www.stardog.com/
@@ -1373,7 +1545,7 @@ entries:
     version: 0.0.8
   - apiVersion: v1
     appVersion: 6.1.3
-    created: 2020-01-20T16:22:42.244340921Z
+    created: 2020-02-21T08:50:16.00731312Z
     description: Stardog Helm Chart
     digest: ab6dba5d6cf802464340ee84fc8d20b84c50b966e89179ef53e289a3d18df50e
     home: https://www.stardog.com/
@@ -1387,7 +1559,7 @@ entries:
     version: 0.0.7
   - apiVersion: v1
     appVersion: 6.1.3
-    created: 2020-01-20T16:22:42.243181779Z
+    created: 2020-02-21T08:50:16.006227291Z
     description: Stardog Helm Chart
     digest: 73ee710f5ec59bd64159de0ec6c627772c28e5042aecd22724ad505b964a61df
     home: https://www.stardog.com/
@@ -1401,7 +1573,7 @@ entries:
     version: 0.0.6
   - apiVersion: v1
     appVersion: 6.1.3
-    created: 2020-01-20T16:22:42.242104908Z
+    created: 2020-02-21T08:50:16.004332909Z
     description: Stardog Helm Chart
     digest: 184987f4d84817932e1412221212811874f615d2826e1d0c94c67ea5f3d795e2
     home: https://www.stardog.com/
@@ -1415,7 +1587,7 @@ entries:
     version: 0.0.5
   - apiVersion: v1
     appVersion: 6.1.3
-    created: 2020-01-20T16:22:42.241029901Z
+    created: 2020-02-21T08:50:16.002232372Z
     description: Stardog Helm Chart
     digest: a7c5da094a2c2ce66adc89cf9d806c636ab129a1336bc2f9442ec8eed9dbc8c1
     home: https://www.stardog.com/
@@ -1429,7 +1601,7 @@ entries:
     version: 0.0.4
   - apiVersion: v1
     appVersion: 6.1.3
-    created: 2020-01-20T16:22:42.239971811Z
+    created: 2020-02-21T08:50:16.001184415Z
     description: Stardog Helm Chart
     digest: 1d123dddc97d24755ac826cef8295151cb3ac69ee09214ad3fb54c80ae0ba866
     home: https://www.stardog.com/
@@ -1443,7 +1615,7 @@ entries:
     version: 0.0.3
   - apiVersion: v1
     appVersion: 6.1.3
-    created: 2020-01-20T16:22:42.228936846Z
+    created: 2020-02-21T08:50:15.990798912Z
     description: Stardog Helm Chart
     digest: 11f73718a4f1856b0726f4a88d5ffca0067b1d10cd3505570ba0fd50e75b6202
     home: https://www.stardog.com/
@@ -1457,7 +1629,7 @@ entries:
     version: 0.0.2
   - apiVersion: v1
     appVersion: 6.1.2
-    created: 2020-01-20T16:22:42.212923931Z
+    created: 2020-02-21T08:50:15.974945879Z
     description: Stardog Helm Chart
     digest: e30a0510c9a7402baedbf42d2ee1908e059d9e9598a4b6b8a91f1d1db3c53139
     home: https://www.stardog.com/
@@ -1471,8 +1643,38 @@ entries:
     version: 0.0.1
   trifid:
   - apiVersion: v1
+    appVersion: 2.3.3
+    created: 2020-02-21T08:50:16.026407393Z
+    description: Trifid Helm chart
+    digest: 1e2440e7d5f3563871d3a31bd55768b73f29fffc1316fbc35ef0fd9ecc11f725
+    home: https://github.com/zazuko/trifid
+    name: trifid
+    urls:
+    - https://charts.appuio.ch/trifid-1.1.2.tgz
+    version: 1.1.2
+  - apiVersion: v1
+    appVersion: 2.3.3
+    created: 2020-02-21T08:50:16.026171067Z
+    description: Trifid Helm chart
+    digest: 06b63630c055eea52fa785005770ac3bd2e9def0ec5eae736ab79e296cf54b0c
+    home: https://github.com/zazuko/trifid
+    name: trifid
+    urls:
+    - https://charts.appuio.ch/trifid-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v1
+    appVersion: 2.3.3
+    created: 2020-02-21T08:50:16.025738678Z
+    description: Trifid Helm chart
+    digest: 3ed7ea91449da958944a88504968e4152790c96581b8e4ede2de701a94ecda0c
+    home: https://github.com/zazuko/trifid
+    name: trifid
+    urls:
+    - https://charts.appuio.ch/trifid-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v1
     appVersion: 2.3.2
-    created: 2020-01-20T16:22:42.257744564Z
+    created: 2020-02-21T08:50:16.025337439Z
     description: Trifid Helm chart
     digest: 746d57fd2a98f2c42b63c67ad20765a9f830bb3e0a4efe24f32c9751055a8672
     home: https://github.com/zazuko/trifid
@@ -1480,4 +1682,4 @@ entries:
     urls:
     - https://charts.appuio.ch/trifid-1.0.0.tgz
     version: 1.0.0
-generated: 2020-01-20T16:22:42.167967532Z
+generated: 2020-02-21T08:50:15.921528614Z

@@ -3,9 +3,30 @@ entries:
   astro:
   - apiVersion: v1
     appVersion: 1.5.3
-    created: "2020-01-21T20:47:16.158133779Z"
+    created: "2020-02-21T08:54:57.512661908Z"
     description: Emit datadog monitors based on kubernetes state.
-    digest: 415dc53ffbaa2b27ad159cbd1083df803ea2be324149573d0464d1084039b7e3
+    digest: 7e09999089416f17022800d27e165647c17c03001dccffac6c4d466802343ab4
+    engine: gotpl
+    icon: https://raw.githubusercontent.com/FairwindsOps/astro/master/img/icon.png
+    keywords:
+    - datadog
+    - monitoring
+    maintainers:
+    - email: micah@fairwinds.com
+      name: mjhuber
+    - email: luke@fairwinds.com
+      name: lucasreed
+    name: astro
+    sources:
+    - https://github.com/FairwindsOps/astro
+    urls:
+    - https://charts.fairwinds.com/stable/astro-1.0.4.tgz
+    version: 1.0.4
+  - apiVersion: v1
+    appVersion: 1.5.3
+    created: "2020-02-14T22:10:30.643376289Z"
+    description: Emit datadog monitors based on kubernetes state.
+    digest: 2ced9ec175b9860ca63b703f4053a3f5ab02d3fe4f8857a8fac6cc794af84430
     engine: gotpl
     icon: https://raw.githubusercontent.com/FairwindsOps/astro/master/img/icon.png
     keywords:
@@ -66,9 +87,31 @@ entries:
   aws-iam-authenticator:
   - apiVersion: v1
     appVersion: v0.4.0
-    created: "2020-01-21T20:47:16.158423727Z"
+    created: "2020-02-21T08:54:57.512972551Z"
     description: Install and configure aws-iam-authenticator on your cluster.
-    digest: 465c3609149a3a544eea661fe5727c18bf29d1195ab82154553256a6dc8092ec
+    digest: d0d2a4615e53ac317e1522d87c9fb04ed80aa9a50491242e8259c205ca5c7484
+    maintainers:
+    - name: sudermanjr
+    name: aws-iam-authenticator
+    urls:
+    - https://charts.fairwinds.com/stable/aws-iam-authenticator-v1.3.1.tgz
+    version: v1.3.1
+  - apiVersion: v1
+    appVersion: v0.4.0
+    created: "2020-02-14T22:10:30.643657263Z"
+    description: Install and configure aws-iam-authenticator on your cluster.
+    digest: 78f931cb78b1f1072dcc1177f44a47b707d8dc20b2c42514bf4e5c7bc1b53fd8
+    maintainers:
+    - name: sudermanjr
+    name: aws-iam-authenticator
+    urls:
+    - https://charts.fairwinds.com/stable/aws-iam-authenticator-v1.3.0.tgz
+    version: v1.3.0
+  - apiVersion: v1
+    appVersion: v0.4.0
+    created: "2020-02-05T16:59:03.714017397Z"
+    description: Install and configure aws-iam-authenticator on your cluster.
+    digest: 8c5b11f95dd160b3af0cef79efb028d57c8e9e021aa396cfcb6c2cfcc7c26791
     maintainers:
     - name: sudermanjr
     name: aws-iam-authenticator
@@ -114,9 +157,20 @@ entries:
   ecr-cleanup:
   - apiVersion: v1
     appVersion: 0.1.7
-    created: "2020-01-21T20:47:16.158671252Z"
+    created: "2020-02-21T08:54:57.513252046Z"
     description: A Helm chart to run ecr cleanup controller
-    digest: af32f1ce3fce9403c65a2ca4b7725ef5804dc46455dbca7398f4556212e10079
+    digest: 5501449e44b9cab1a42a818bf247c574346dc9978ddbbd0e728e513e0e9546af
+    maintainers:
+    - name: sudermanjr
+    name: ecr-cleanup
+    urls:
+    - https://charts.fairwinds.com/stable/ecr-cleanup-1.2.1.tgz
+    version: 1.2.1
+  - apiVersion: v1
+    appVersion: 0.1.7
+    created: "2020-02-14T22:10:30.643936794Z"
+    description: A Helm chart to run ecr cleanup controller
+    digest: 06c0651dbe70f5c08a6db6c9d03a2101ea47fe37cdcf9731aa932e8078029e74
     maintainers:
     - name: sudermanjr
     name: ecr-cleanup
@@ -147,10 +201,48 @@ entries:
     version: 1.0.0
   goldilocks:
   - apiVersion: v1
-    appVersion: v2.1.1
-    created: "2020-01-21T20:47:16.159323548Z"
+    appVersion: v2.2.0
+    created: "2020-02-21T08:54:57.513852781Z"
     description: A Helm chart for running Fairwinds Goldilocks
-    digest: 1d064734de39ea2349e9b837fef1cec108d5ca599875b92d43cbe25df5557230
+    digest: deb627b9e8e549f3ae0e2fb16844ea61242e31383936415b5eb4c33961441b0e
+    icon: https://raw.githubusercontent.com/FairwindsOps/charts/master/stable/goldilocks/icon.png
+    keywords:
+    - goldilocks
+    - resources
+    maintainers:
+    - name: sudermanjr
+    - name: dosullivan
+    - name: mgoodhart5
+    name: goldilocks
+    sources:
+    - https://github.com/FairwindsOps/goldilocks
+    urls:
+    - https://charts.fairwinds.com/stable/goldilocks-2.2.1.tgz
+    version: 2.2.1
+  - apiVersion: v1
+    appVersion: v2.2.0
+    created: "2020-02-14T22:10:30.644519347Z"
+    description: A Helm chart for running Fairwinds Goldilocks
+    digest: 40d4c20ba55e170c6ae648e333e32853b93eabe2f95d8aacc4f1d33c3e0ffe86
+    icon: https://raw.githubusercontent.com/FairwindsOps/charts/master/stable/goldilocks/icon.png
+    keywords:
+    - goldilocks
+    - resources
+    maintainers:
+    - name: sudermanjr
+    - name: dosullivan
+    - name: mgoodhart5
+    name: goldilocks
+    sources:
+    - https://github.com/FairwindsOps/goldilocks
+    urls:
+    - https://charts.fairwinds.com/stable/goldilocks-2.2.0.tgz
+    version: 2.2.0
+  - apiVersion: v1
+    appVersion: v2.1.1
+    created: "2020-01-29T17:53:36.464484073Z"
+    description: A Helm chart for running Fairwinds Goldilocks
+    digest: 1e47587c6eb809a5cadf1b99b413af1f84742bab67adcdd6186757c5b53c5bb9
     icon: https://raw.githubusercontent.com/FairwindsOps/charts/master/stable/goldilocks/icon.png
     keywords:
     - goldilocks
@@ -301,9 +393,142 @@ entries:
   insights-agent:
   - apiVersion: v1
     appVersion: 0.6.0
-    created: "2020-01-21T20:47:16.161158681Z"
+    created: "2020-02-21T08:54:57.515640343Z"
     description: A Helm chart to run the Fairwinds Insights agent
-    digest: ea30a955e7c2bbd4a3bb56877f55ffe79f5bcd1dd0bc1f672763c87b8c425401
+    digest: c350af91ddb0547c6e397de2c439af6071ab56bbb1024282f6378a3478f09661
+    maintainers:
+    - name: rbren
+    - name: makoscafee
+    - name: baderbuddy
+    name: insights-agent
+    urls:
+    - https://charts.fairwinds.com/stable/insights-agent-0.13.0.tgz
+    version: 0.13.0
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: "2020-02-20T16:32:15.660256246Z"
+    description: A Helm chart to run the Fairwinds Insights agent
+    digest: 37f7cfc8dc5bd2a6c93705079ef16dea8dfc43e52dac05b59ab5477487502f8a
+    maintainers:
+    - name: rbren
+    - name: makoscafee
+    name: insights-agent
+    urls:
+    - https://charts.fairwinds.com/stable/insights-agent-0.12.10.tgz
+    version: 0.12.10
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: "2020-02-14T22:10:30.645831999Z"
+    description: A Helm chart to run the Fairwinds Insights agent
+    digest: bb678a99b23a0e7ae6a109e49c3aafcbf3eec07bc7cf4fe39bfef63207432d4f
+    maintainers:
+    - name: rbren
+    - name: makoscafee
+    name: insights-agent
+    urls:
+    - https://charts.fairwinds.com/stable/insights-agent-0.12.8.tgz
+    version: 0.12.8
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: "2020-02-12T20:04:51.712829642Z"
+    description: A Helm chart to run the Fairwinds Insights agent
+    digest: fbdc71ee29183f28e914d809245935c40f018f9a73225ea3960d1b976e94148e
+    maintainers:
+    - name: rbren
+    - name: makoscafee
+    name: insights-agent
+    urls:
+    - https://charts.fairwinds.com/stable/insights-agent-0.12.7.tgz
+    version: 0.12.7
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: "2020-02-12T19:17:46.444361013Z"
+    description: A Helm chart to run the Fairwinds Insights agent
+    digest: 8df2d7c14cbb2830eb2b1b421e14df5122b5c3c188c6d5ec3757b16972e797aa
+    maintainers:
+    - name: rbren
+    - name: makoscafee
+    name: insights-agent
+    urls:
+    - https://charts.fairwinds.com/stable/insights-agent-0.12.6.tgz
+    version: 0.12.6
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: "2020-02-12T18:52:46.845034764Z"
+    description: A Helm chart to run the Fairwinds Insights agent
+    digest: b7a819b13ed1c7b7403ab170857324c848fa265cef197f63b271b993c6330dff
+    maintainers:
+    - name: rbren
+    - name: makoscafee
+    name: insights-agent
+    urls:
+    - https://charts.fairwinds.com/stable/insights-agent-0.12.5.tgz
+    version: 0.12.5
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: "2020-02-11T15:35:21.240714437Z"
+    description: A Helm chart to run the Fairwinds Insights agent
+    digest: 3e5c382fdee8bdd705cbbe5d2d0ff0ec396043fbc4c6257b6411a00b82b017dc
+    maintainers:
+    - name: rbren
+    - name: makoscafee
+    name: insights-agent
+    urls:
+    - https://charts.fairwinds.com/stable/insights-agent-0.12.4.tgz
+    version: 0.12.4
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: "2020-02-07T18:40:29.805136473Z"
+    description: A Helm chart to run the Fairwinds Insights agent
+    digest: 7a5734dbd389667300fa085e2ea88b3d8d0ce2fa004898ffa709e4a7cd6e58e7
+    maintainers:
+    - name: rbren
+    - name: makoscafee
+    name: insights-agent
+    urls:
+    - https://charts.fairwinds.com/stable/insights-agent-0.12.3.tgz
+    version: 0.12.3
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: "2020-02-05T22:00:33.382039646Z"
+    description: A Helm chart to run the Fairwinds Insights agent
+    digest: 65486e786f128ba085a2a0a05a693c9400aafcf02e0877c8ea1adbae81f6c5a5
+    maintainers:
+    - name: rbren
+    - name: makoscafee
+    name: insights-agent
+    urls:
+    - https://charts.fairwinds.com/stable/insights-agent-0.12.2.tgz
+    version: 0.12.2
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: "2020-02-03T16:56:13.794405143Z"
+    description: A Helm chart to run the Fairwinds Insights agent
+    digest: 44bb0bbb47e4dbd02614a870d84e173cc7ab4bf61b87f22b6104449bde0be07d
+    maintainers:
+    - name: rbren
+    - name: makoscafee
+    name: insights-agent
+    urls:
+    - https://charts.fairwinds.com/stable/insights-agent-0.12.1.tgz
+    version: 0.12.1
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: "2020-01-28T22:44:22.930739808Z"
+    description: A Helm chart to run the Fairwinds Insights agent
+    digest: 5093684d4e0b803ef558df6fb497e0e232e21a2e31963849a7ff5d0e8380692f
+    maintainers:
+    - name: rbren
+    - name: makoscafee
+    name: insights-agent
+    urls:
+    - https://charts.fairwinds.com/stable/insights-agent-0.12.0.tgz
+    version: 0.12.0
+  - apiVersion: v1
+    appVersion: 0.6.0
+    created: "2020-01-27T18:28:18.151209496Z"
+    description: A Helm chart to run the Fairwinds Insights agent
+    digest: 07b401e0b94c7bde15059876f48082e99db0d4a08ff4c569b7f5f535a8719e74
     maintainers:
     - name: rbren
     - name: makoscafee
@@ -626,9 +851,61 @@ entries:
   polaris:
   - apiVersion: v1
     appVersion: "0.6"
-    created: "2020-01-21T20:47:16.161624625Z"
+    created: "2020-02-21T08:54:57.516069437Z"
     description: Validation of best practices in your Kubernetes clusters
-    digest: 04cc3c8ea8788d70af2d7b5c5d7dc24916cb777cb4d717d1fa9d896bf8750b43
+    digest: b2b32e1722c8a3408e1cf8b531e0473de58c6998d69fad409b5d7c71b8c5d486
+    icon: https://raw.githubusercontent.com/FairwindsOps/polaris/master/pkg/dashboard/assets/favicon-32x32.png
+    maintainers:
+    - email: robertb@fairwinds.com
+      name: bobby-brennan
+    name: polaris
+    urls:
+    - https://charts.fairwinds.com/stable/polaris-0.10.1.tgz
+    version: 0.10.1
+  - apiVersion: v1
+    appVersion: "0.6"
+    created: "2020-02-14T22:10:30.646567556Z"
+    description: Validation of best practices in your Kubernetes clusters
+    digest: a074083f3dc2e92ad11147c1860f4e64054a8f0e802b0755be081d2da14cca64
+    icon: https://raw.githubusercontent.com/FairwindsOps/polaris/master/pkg/dashboard/assets/favicon-32x32.png
+    maintainers:
+    - email: robertb@fairwinds.com
+      name: bobby-brennan
+    name: polaris
+    urls:
+    - https://charts.fairwinds.com/stable/polaris-0.10.0.tgz
+    version: 0.10.0
+  - apiVersion: v1
+    appVersion: "0.6"
+    created: "2020-02-05T16:59:03.717788883Z"
+    description: Validation of best practices in your Kubernetes clusters
+    digest: b546297cd66d702ff44cf62d94b9e6829647b115f98ecc056be073766ae708fb
+    icon: https://raw.githubusercontent.com/FairwindsOps/polaris/master/pkg/dashboard/assets/favicon-32x32.png
+    maintainers:
+    - email: robertb@fairwinds.com
+      name: bobby-brennan
+    name: polaris
+    urls:
+    - https://charts.fairwinds.com/stable/polaris-0.9.0.tgz
+    version: 0.9.0
+  - apiVersion: v1
+    appVersion: "0.6"
+    created: "2020-01-28T18:14:12.748132624Z"
+    description: Validation of best practices in your Kubernetes clusters
+    digest: 82d12685dc703f79a83af08a908e04846525290659f629f17daa6c7a48e779bb
+    icon: https://raw.githubusercontent.com/FairwindsOps/polaris/master/pkg/dashboard/assets/favicon-32x32.png
+    maintainers:
+    - email: robertb@fairwinds.com
+      name: bobby-brennan
+    name: polaris
+    urls:
+    - https://charts.fairwinds.com/stable/polaris-0.7.2.tgz
+    version: 0.7.2
+  - apiVersion: v1
+    appVersion: "0.6"
+    created: "2020-01-27T18:29:25.303595161Z"
+    description: Validation of best practices in your Kubernetes clusters
+    digest: e5c44727970dc9dc8af7d7d63cb2ea2c9de358ae819c4496aebba3b43e2426ea
     maintainers:
     - email: robertb@fairwinds.com
       name: bobby-brennan
@@ -782,11 +1059,89 @@ entries:
     version: 0.1.4
   rbac-manager:
   - apiVersion: v1
-    appVersion: 0.8.4
-    created: "2020-01-21T20:47:16.161998689Z"
+    appVersion: 0.9.1
+    created: "2020-02-21T08:54:57.516590482Z"
     description: A Kubernetes operator that simplifies the management of Role Bindings
       and Service Accounts.
-    digest: 5d49e0aac11229b7186caaa44cb286675b8dfe9e9e9c9a0bdacf32958950e16e
+    digest: 5f2f21f4ab64e54640f9bb6595a2ff4e3229f6170c6fa9fa234a5d420925d6d2
+    engine: gotpl
+    home: https://fairwindsops.github.io/rbac-manager/
+    icon: https://raw.githubusercontent.com/FairwindsOps/charts/master/stable/rbac-manager/icon.png
+    keywords:
+    - rbac
+    - authorization
+    maintainers:
+    - email: ej@fairwinds.com
+      name: ejether
+    - name: robscott
+    - email: andy@fairwinds.com
+      name: sudermanjr
+    - name: mjhuber
+    name: rbac-manager
+    sources:
+    - https://github.com/FairwindsOps/charts/tree/master/stable/rbac-manager
+    - https://github.com/FairwindsOps/rbac-manager
+    urls:
+    - https://charts.fairwinds.com/stable/rbac-manager-1.5.1.tgz
+    version: 1.5.1
+  - apiVersion: v1
+    appVersion: 0.9.1
+    created: "2020-02-14T22:10:30.647100052Z"
+    description: A Kubernetes operator that simplifies the management of Role Bindings
+      and Service Accounts.
+    digest: 3988b72c53fa88366234714bc6939ddd093467e79bbe66be8e44113d6bc3c36d
+    engine: gotpl
+    home: https://fairwindsops.github.io/rbac-manager/
+    icon: https://raw.githubusercontent.com/FairwindsOps/charts/master/stable/rbac-manager/icon.png
+    keywords:
+    - rbac
+    - authorization
+    maintainers:
+    - email: ej@fairwinds.com
+      name: ejether
+    - name: robscott
+    - email: andy@fairwinds.com
+      name: sudermanjr
+    - name: mjhuber
+    name: rbac-manager
+    sources:
+    - https://github.com/FairwindsOps/charts/tree/master/stable/rbac-manager
+    - https://github.com/FairwindsOps/rbac-manager
+    urls:
+    - https://charts.fairwinds.com/stable/rbac-manager-1.5.0.tgz
+    version: 1.5.0
+  - apiVersion: v1
+    appVersion: 0.8.4
+    created: "2020-02-05T13:16:58.222492793Z"
+    description: A Kubernetes operator that simplifies the management of Role Bindings
+      and Service Accounts.
+    digest: 484f5a50c78fcd61a75eeff2d43529fcd001d0431538e2ef87ebd6008250f18f
+    engine: gotpl
+    home: https://fairwindsops.github.io/rbac-manager/
+    icon: https://raw.githubusercontent.com/FairwindsOps/charts/master/stable/rbac-manager/icon.png
+    keywords:
+    - rbac
+    - authorization
+    maintainers:
+    - email: ej@fairwinds.com
+      name: ejether
+    - name: robscott
+    - email: andy@fairwinds.com
+      name: sudermanjr
+    - name: mjhuber
+    name: rbac-manager
+    sources:
+    - https://github.com/FairwindsOps/charts/tree/master/stable/rbac-manager
+    - https://github.com/FairwindsOps/rbac-manager
+    urls:
+    - https://charts.fairwinds.com/stable/rbac-manager-1.4.6.tgz
+    version: 1.4.6
+  - apiVersion: v1
+    appVersion: 0.8.4
+    created: "2020-01-27T18:29:25.303959103Z"
+    description: A Kubernetes operator that simplifies the management of Role Bindings
+      and Service Accounts.
+    digest: db1ecb72a2371ab15ffe7155a201b32ae8b361d589cdae00390ed9d3b0fece5f
     engine: gotpl
     home: https://fairwindsops.github.io/rbac-manager/
     keywords:
@@ -1153,4 +1508,4 @@ entries:
     urls:
     - https://charts.reactiveops.com/stable/rbac-manager-0.1.0.tgz
     version: 0.1.0
-generated: "2020-01-21T20:47:16.157457143Z"
+generated: "2020-02-21T08:54:57.511987401Z"

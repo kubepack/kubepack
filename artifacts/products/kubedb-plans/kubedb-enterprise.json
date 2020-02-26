@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "kubedb-enterprise",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "plan_GnwGFLUOMYlmfJ",
+    "name": "KubeDB Enterprise",
+    "productID": "prod_Gnc33bJka9iRl9",
+    "phase": "Active",
+    "bundle": {
+      "url": "https://kubepack-testcharts.storage.googleapis.com",
+      "name": "kubedb-enterprise"
+    },
+    "amount": 299,
+    "currency": "usd",
+    "interval": "month"
+  },
+  "status": {}
+}

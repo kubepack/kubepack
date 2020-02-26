@@ -2,6 +2,230 @@ apiVersion: v1
 entries:
   artifactory:
   - apiVersion: v1
+    appVersion: 7.2.1
+    created: 2020-02-25T08:34:30.721Z
+    description: Universal Repository Manager supporting all major packaging formats,
+      build tools and CI servers.
+    digest: 34982fb2f59b2516f7e5b6e2a615e9ef7e58815823e02d5ced1f4d8a4ce00f52
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory/logo/artifactory-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory
+    sources:
+    - https://bintray.com/jfrog/product/JFrog-Artifactory-Pro/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-9.0.14.tgz
+    version: 9.0.14
+  - apiVersion: v1
+    appVersion: 6.17.0
+    created: 2020-02-18T09:26:46.100Z
+    description: Universal Repository Manager supporting all major packaging formats,
+      build tools and CI servers.
+    digest: bd8f71fc1100c36586ef2d03003b59afcc2a31c5575864d1b8eaf7cdae82ca25
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory/logo/artifactory-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory
+    sources:
+    - https://bintray.com/jfrog/product/JFrog-Artifactory-Pro/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-8.4.8.tgz
+    version: 8.4.8
+  - apiVersion: v1
+    appVersion: 6.17.0
+    created: 2020-02-12T19:26:45.858Z
+    description: Universal Repository Manager supporting all major packaging formats,
+      build tools and CI servers.
+    digest: a382c1574feb03d1fa07bcc06e10244a6fd9e6086b1ad5cbc7809af42fe3d982
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory/logo/artifactory-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory
+    sources:
+    - https://bintray.com/jfrog/product/JFrog-Artifactory-Pro/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-8.4.7.tgz
+    version: 8.4.7
+  - apiVersion: v1
+    appVersion: 6.17.0
+    created: 2020-02-09T14:46:59.818Z
+    description: Universal Repository Manager supporting all major packaging formats,
+      build tools and CI servers.
+    digest: 1ac6c3cf7f38dae41a77676a855332960c5a496c190b45c204d343a6c4f59c98
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory/logo/artifactory-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory
+    sources:
+    - https://bintray.com/jfrog/product/JFrog-Artifactory-Pro/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-8.4.6.tgz
+    version: 8.4.6
+  - apiVersion: v1
+    appVersion: 6.17.0
+    created: 2020-02-04T18:26:31.790Z
+    description: Universal Repository Manager supporting all major packaging formats,
+      build tools and CI servers.
+    digest: 0f9980167e43ddad544e065873420118a4dcbf485c04a9352fab84f0a1b91cc9
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory/logo/artifactory-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory
+    sources:
+    - https://bintray.com/jfrog/product/JFrog-Artifactory-Pro/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-8.4.5.tgz
+    version: 8.4.5
+  - apiVersion: v1
+    appVersion: 6.17.0
+    created: 2020-02-03T13:11:49.327Z
+    description: Universal Repository Manager supporting all major packaging formats,
+      build tools and CI servers.
+    digest: 07c5d73e4029bc0533721cd27b2320585e311071369cbec0f0b93676144cda32
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory/logo/artifactory-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory
+    sources:
+    - https://bintray.com/jfrog/product/JFrog-Artifactory-Pro/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-8.4.4.tgz
+    version: 8.4.4
+  - apiVersion: v1
+    appVersion: 6.17.0
+    created: 2020-02-01T17:51:28.391Z
+    description: Universal Repository Manager supporting all major packaging formats,
+      build tools and CI servers.
+    digest: 0a025ca7b6d47cabd53fd20a514f89b96f8d257b6144da37420270842f419ef9
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory/logo/artifactory-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory
+    sources:
+    - https://bintray.com/jfrog/product/JFrog-Artifactory-Pro/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-8.4.3.tgz
+    version: 8.4.3
+  - apiVersion: v1
+    appVersion: 6.17.0
+    created: 2020-01-31T20:41:29.533Z
+    description: Universal Repository Manager supporting all major packaging formats,
+      build tools and CI servers.
+    digest: 6841ed6d82a78e89624054ce61182076450797d72c3ad5d5dcff5d38c8de3b8a
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory/logo/artifactory-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory
+    sources:
+    - https://bintray.com/jfrog/product/JFrog-Artifactory-Pro/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-8.4.2.tgz
+    version: 8.4.2
+  - apiVersion: v1
     appVersion: 6.17.0
     created: 2020-01-19T08:41:26.201Z
     description: Universal Repository Manager supporting all major packaging formats,
@@ -4332,6 +4556,258 @@ entries:
     - https://charts.jfrog.io/artifactory/helm/artifactory-7.4.1.tgz
     version: 7.4.1
   artifactory-ha:
+  - apiVersion: v1
+    appVersion: 7.2.1
+    created: 2020-02-25T08:36:43.860Z
+    description: Universal Repository Manager supporting all major packaging formats,
+      build tools and CI servers.
+    digest: ff1a4b8add16bb79303a6d2812838f79976bfd0e8ded0c9bcd3127a08a441eab
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory-ha/logo/artifactory-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory-ha
+    sources:
+    - https://bintray.com/jfrog/product/JFrog-Artifactory-Pro/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-ha-2.0.18.tgz
+    version: 2.0.18
+  - apiVersion: v1
+    appVersion: 6.17.0
+    created: 2020-02-18T09:26:46.874Z
+    description: Universal Repository Manager supporting all major packaging formats,
+      build tools and CI servers.
+    digest: fe32e4bd612d2d6a115ddc23ea1cba0e30807932f8e9eb000ba99b3a5e84046d
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory-ha/logo/artifactory-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory-ha
+    sources:
+    - https://bintray.com/jfrog/product/JFrog-Artifactory-Pro/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-ha-1.4.10.tgz
+    version: 1.4.10
+  - apiVersion: v1
+    appVersion: 6.17.0
+    created: 2020-02-11T07:31:42.240Z
+    description: Universal Repository Manager supporting all major packaging formats,
+      build tools and CI servers.
+    digest: c20cd9fbab12ec6d95371b00b11ae628866b37ac4a8e77127f1c102212a6ad20
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory-ha/logo/artifactory-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory-ha
+    sources:
+    - https://bintray.com/jfrog/product/JFrog-Artifactory-Pro/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-ha-1.4.9.tgz
+    version: 1.4.9
+  - apiVersion: v1
+    appVersion: 6.17.0
+    created: 2020-02-09T14:47:00.623Z
+    description: Universal Repository Manager supporting all major packaging formats,
+      build tools and CI servers.
+    digest: 3dc1916a3baf96204b8871b0a44d5b43e8f75995cf575808df534263e85bea45
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory-ha/logo/artifactory-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory-ha
+    sources:
+    - https://bintray.com/jfrog/product/JFrog-Artifactory-Pro/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-ha-1.4.8.tgz
+    version: 1.4.8
+  - apiVersion: v1
+    appVersion: 6.17.0
+    created: 2020-02-04T18:26:32.579Z
+    description: Universal Repository Manager supporting all major packaging formats,
+      build tools and CI servers.
+    digest: ba9fb2e6648a002db77e04002d9c040ed21f89971f3dde2a022f8aecea3c32a9
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory-ha/logo/artifactory-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory-ha
+    sources:
+    - https://bintray.com/jfrog/product/JFrog-Artifactory-Pro/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-ha-1.4.7.tgz
+    version: 1.4.7
+  - apiVersion: v1
+    appVersion: 6.17.0
+    created: 2020-02-03T13:11:50.023Z
+    description: Universal Repository Manager supporting all major packaging formats,
+      build tools and CI servers.
+    digest: 43c0ff3e5ed0fbc1b110d4a307ebe168dad1caf8ef57d4cf9a1ad1dc69041280
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory-ha/logo/artifactory-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory-ha
+    sources:
+    - https://bintray.com/jfrog/product/JFrog-Artifactory-Pro/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-ha-1.4.6.tgz
+    version: 1.4.6
+  - apiVersion: v1
+    appVersion: 6.17.0
+    created: 2020-02-03T12:31:36.501Z
+    description: Universal Repository Manager supporting all major packaging formats,
+      build tools and CI servers.
+    digest: 34598b8a7cbbb629387b49f165c56f9da3148311804ad5cab090ebfe32b1351b
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory-ha/logo/artifactory-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory-ha
+    sources:
+    - https://bintray.com/jfrog/product/JFrog-Artifactory-Pro/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-ha-1.4.5.tgz
+    version: 1.4.5
+  - apiVersion: v1
+    appVersion: 6.17.0
+    created: 2020-02-01T17:51:29.568Z
+    description: Universal Repository Manager supporting all major packaging formats,
+      build tools and CI servers.
+    digest: 8994a186ae217b4591d9b9bb4f8fa4463ebdba141b5ce9a80280b4e65ddbb477
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory-ha/logo/artifactory-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory-ha
+    sources:
+    - https://bintray.com/jfrog/product/JFrog-Artifactory-Pro/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-ha-1.4.4.tgz
+    version: 1.4.4
+  - apiVersion: v1
+    appVersion: 6.17.0
+    created: 2020-01-31T20:41:30.600Z
+    description: Universal Repository Manager supporting all major packaging formats,
+      build tools and CI servers.
+    digest: 9c0ea82938a37ba32a67e8e76c39fe24954642b5fffc94ce7f1277433f883abb
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory-ha/logo/artifactory-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory-ha
+    sources:
+    - https://bintray.com/jfrog/product/JFrog-Artifactory-Pro/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-ha-1.4.3.tgz
+    version: 1.4.3
   - apiVersion: v1
     appVersion: 6.17.0
     created: 2020-01-22T14:11:34.448Z
@@ -9112,6 +9588,162 @@ entries:
     version: 0.4.1
   distribution:
   - apiVersion: v1
+    appVersion: 2.2.0
+    created: 2020-02-25T08:37:58.740Z
+    description: A Helm chart for JFrog Distribution
+    digest: 75acf21adb7bdf5b6772ea6d6919caef735de83e51f88d616601567540bf7f88
+    home: https://jfrog.com/platform/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/distribution/logo/distribution-logo.png
+    keywords:
+    - distribution
+    - jfrog
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: distribution
+    sources:
+    - https://bintray.com/jfrog/product/distribution/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/distribution-5.0.11.tgz
+    version: 5.0.11
+  - apiVersion: v1
+    appVersion: 1.8.0
+    created: 2020-02-18T09:46:52.572Z
+    description: A Helm chart for JFrog Distribution
+    digest: 7f2b9571c2e7d653b046aab5be21155d56534d66731432fed9d7993c19b82238
+    home: https://jfrog.com/platform/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/distribution/logo/distribution-logo.png
+    keywords:
+    - distribution
+    - jfrog
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: distribution
+    sources:
+    - https://bintray.com/jfrog/product/distribution/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/distribution-3.6.0.tgz
+    version: 3.6.0
+  - apiVersion: v1
+    appVersion: 1.8.0
+    created: 2020-02-18T09:26:50.697Z
+    description: A Helm chart for JFrog Distribution
+    digest: 230bdea8258542f3de63c8bd239d718e3572e18a407b6366da6a580a219ebc32
+    home: https://jfrog.com/platform/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/distribution/logo/distribution-logo.png
+    keywords:
+    - distribution
+    - jfrog
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: distribution
+    sources:
+    - https://bintray.com/jfrog/product/distribution/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/distribution-3.5.4.tgz
+    version: 3.5.4
+  - apiVersion: v1
+    appVersion: 1.8.0
+    created: 2020-02-13T07:36:34.963Z
+    description: A Helm chart for JFrog Distribution
+    digest: b2a7888bba65001636c3009e63a067f45724ea0a4a567c232cd923e5d6de39da
+    home: https://jfrog.com/platform/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/distribution/logo/distribution-logo.png
+    keywords:
+    - distribution
+    - jfrog
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: distribution
+    sources:
+    - https://bintray.com/jfrog/product/distribution/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/distribution-3.5.3.tgz
+    version: 3.5.3
+  - apiVersion: v1
+    appVersion: 1.8.0
+    created: 2020-02-03T13:11:50.834Z
+    description: A Helm chart for JFrog Distribution
+    digest: f44337e323fa82fc00df6c4ff2535dbbc43763f72b264b09133d702784620966
+    home: https://jfrog.com/platform/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/distribution/logo/distribution-logo.png
+    keywords:
+    - distribution
+    - jfrog
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: distribution
+    sources:
+    - https://bintray.com/jfrog/product/distribution/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/distribution-3.5.2.tgz
+    version: 3.5.2
+  - apiVersion: v1
+    appVersion: 1.8.0
+    created: 2020-02-01T17:51:30.392Z
+    description: A Helm chart for JFrog Distribution
+    digest: cdd5552016381420733054f8d1341f5d7a66b574ce8af6e60252e1de359cc511
+    home: https://jfrog.com/platform/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/distribution/logo/distribution-logo.png
+    keywords:
+    - distribution
+    - jfrog
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: distribution
+    sources:
+    - https://bintray.com/jfrog/product/distribution/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/distribution-3.5.1.tgz
+    version: 3.5.1
+  - apiVersion: v1
     appVersion: 1.8.0
     created: 2020-01-09T07:11:27.459Z
     description: A Helm chart for JFrog Distribution
@@ -10044,6 +10676,188 @@ entries:
     version: 0.4.1
   mission-control:
   - apiVersion: v1
+    appVersion: 4.2.0
+    created: 2020-02-25T08:39:17.176Z
+    description: A Helm chart for JFrog Mission Control
+    digest: bbd84568c9824de209db3e716f3cbf13ff09b204fdb0fc531d0da6cde2f9988e
+    home: https://jfrog.com/mission-control/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/mission-control/logo/jfmc-logo.png
+    keywords:
+    - mission-control
+    - jfrog
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: mission-control
+    sources:
+    - https://bintray.com/jfrog/product/mission-control/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/mission-control-3.0.12.tgz
+    version: 3.0.12
+  - apiVersion: v1
+    appVersion: 3.5.6
+    created: 2020-02-18T09:26:51.436Z
+    description: A Helm chart for JFrog Mission Control
+    digest: d57257e9a080adebf2e89eaf88fbc30a17920c87dd4ab95763e8373bb6eaae7d
+    home: https://jfrog.com/mission-control/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/mission-control/logo/jfmc-logo.png
+    keywords:
+    - mission-control
+    - jfrog
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: mission-control
+    sources:
+    - https://bintray.com/jfrog/product/mission-control/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/mission-control-1.1.17.tgz
+    version: 1.1.17
+  - apiVersion: v1
+    appVersion: 3.5.6
+    created: 2020-02-13T07:36:35.625Z
+    description: A Helm chart for JFrog Mission Control
+    digest: a2a5aa2aa4bb4f75d8d90bebd2a5f59e79d72ad27ffed8267b5c3060a7d327a9
+    home: https://jfrog.com/mission-control/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/mission-control/logo/jfmc-logo.png
+    keywords:
+    - mission-control
+    - jfrog
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: mission-control
+    sources:
+    - https://bintray.com/jfrog/product/mission-control/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/mission-control-1.1.16.tgz
+    version: 1.1.16
+  - apiVersion: v1
+    appVersion: 3.5.6
+    created: 2020-02-06T15:33:07.023Z
+    description: A Helm chart for JFrog Mission Control
+    digest: 7943fd19ab2e0b8f54960ab181f2a8ae843f8de263ad7566b14149158713000c
+    home: https://jfrog.com/mission-control/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/mission-control/logo/jfmc-logo.png
+    keywords:
+    - mission-control
+    - jfrog
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: mission-control
+    sources:
+    - https://bintray.com/jfrog/product/mission-control/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/mission-control-1.1.15.tgz
+    version: 1.1.15
+  - apiVersion: v1
+    appVersion: 3.5.6
+    created: 2020-02-03T13:11:51.677Z
+    description: A Helm chart for JFrog Mission Control
+    digest: bce76a229e213939ae0300ce5a542d93f3ee6786deed635f79c70538712067f5
+    home: https://jfrog.com/mission-control/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/mission-control/logo/jfmc-logo.png
+    keywords:
+    - mission-control
+    - jfrog
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: mission-control
+    sources:
+    - https://bintray.com/jfrog/product/mission-control/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/mission-control-1.1.14.tgz
+    version: 1.1.14
+  - apiVersion: v1
+    appVersion: 3.5.6
+    created: 2020-02-01T17:51:31.288Z
+    description: A Helm chart for JFrog Mission Control
+    digest: 8ab531ff5819daa19562ff3009fdd03995c944c491e942fad0d74422dc64441e
+    home: https://jfrog.com/mission-control/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/mission-control/logo/jfmc-logo.png
+    keywords:
+    - mission-control
+    - jfrog
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: mission-control
+    sources:
+    - https://bintray.com/jfrog/product/mission-control/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/mission-control-1.1.13.tgz
+    version: 1.1.13
+  - apiVersion: v1
+    appVersion: 3.5.6
+    created: 2020-01-23T01:46:27.490Z
+    description: A Helm chart for JFrog Mission Control
+    digest: 5a1079ff12986d44007cebe16424bc1d0f0c3b63efb124832ea57015e2d2b3f0
+    home: https://jfrog.com/mission-control/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/mission-control/logo/jfmc-logo.png
+    keywords:
+    - mission-control
+    - jfrog
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: mission-control
+    sources:
+    - https://bintray.com/jfrog/product/mission-control/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/mission-control-1.1.12.tgz
+    version: 1.1.12
+  - apiVersion: v1
     appVersion: 3.5.6
     created: 2020-01-19T08:06:28.103Z
     description: A Helm chart for JFrog Mission Control
@@ -10970,6 +11784,168 @@ entries:
     - https://charts.jfrog.io/artifactory/helm/mission-control-0.4.2.tgz
     version: 0.4.2
   xray:
+  - apiVersion: v1
+    appVersion: 3.2.0
+    created: 2020-02-25T08:38:15.340Z
+    description: Universal component scan for security and license inventory and impact
+      analysis
+    digest: 69f601a2a190b3dc3adcab50ccc373d86858be0601da3a59621b5b22aeb82b75
+    home: https://www.jfrog.com/xray/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/xray/logo/xray-logo.png
+    keywords:
+    - xray
+    - jfrog
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: xray
+    sources:
+    - https://bintray.com/jfrog/product/xray/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/xray-3.0.12.tgz
+    version: 3.0.12
+  - apiVersion: v1
+    appVersion: 2.11.4
+    created: 2020-02-18T14:36:59.568Z
+    description: Universal component scan for security and license inventory and impact
+      analysis
+    digest: ad2c049759a43253adf89337b6b26c78429cd32c8c8fe252e757d249a1d48d60
+    home: https://www.jfrog.com/xray/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/xray/logo/xray-logo.png
+    keywords:
+    - xray
+    - jfrog
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: xray
+    sources:
+    - https://bintray.com/jfrog/product/xray/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/xray-1.3.8.tgz
+    version: 1.3.8
+  - apiVersion: v1
+    appVersion: 2.11.3
+    created: 2020-02-18T09:26:52.735Z
+    description: Universal component scan for security and license inventory and impact
+      analysis
+    digest: 4b674005d878eb1620daf27f549d22cc11ed70504aab1c62a298aedcb33e87fb
+    home: https://www.jfrog.com/xray/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/xray/logo/xray-logo.png
+    keywords:
+    - xray
+    - jfrog
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: xray
+    sources:
+    - https://bintray.com/jfrog/product/xray/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/xray-1.3.7.tgz
+    version: 1.3.7
+  - apiVersion: v1
+    appVersion: 2.11.3
+    created: 2020-02-13T07:36:36.344Z
+    description: Universal component scan for security and license inventory and impact
+      analysis
+    digest: 9cbba817ca252c9c48e4989912a091d2e6783bf7e77a6fc8f5a6110cd862dee4
+    home: https://www.jfrog.com/xray/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/xray/logo/xray-logo.png
+    keywords:
+    - xray
+    - jfrog
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: xray
+    sources:
+    - https://bintray.com/jfrog/product/xray/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/xray-1.3.6.tgz
+    version: 1.3.6
+  - apiVersion: v1
+    appVersion: 2.11.3
+    created: 2020-02-03T13:11:52.443Z
+    description: Universal component scan for security and license inventory and impact
+      analysis
+    digest: a5d36893a64f0ce8c50bf3334af4c36d881889b4dd9a04c97b17ca75442b68a2
+    home: https://www.jfrog.com/xray/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/xray/logo/xray-logo.png
+    keywords:
+    - xray
+    - jfrog
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: xray
+    sources:
+    - https://bintray.com/jfrog/product/xray/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/xray-1.3.5.tgz
+    version: 1.3.5
+  - apiVersion: v1
+    appVersion: 2.11.3
+    created: 2020-02-01T17:51:31.924Z
+    description: Universal component scan for security and license inventory and impact
+      analysis
+    digest: 856ce88186720a679d32faba235bd86cadfaabf8c78d2e7fb87b13356b8c39b2
+    home: https://www.jfrog.com/xray/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/xray/logo/xray-logo.png
+    keywords:
+    - xray
+    - jfrog
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: xray
+    sources:
+    - https://bintray.com/jfrog/product/xray/view
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/xray-1.3.4.tgz
+    version: 1.3.4
   - apiVersion: v1
     appVersion: 2.11.3
     created: 2019-12-31T09:06:36.348Z
@@ -12919,6 +13895,35 @@ entries:
   kubexray:
   - apiVersion: v1
     appVersion: 0.1.5
+    created: 2020-02-20T10:41:41.062Z
+    deprecated: true
+    description: DEPRECATED - KubeXray Helm chart
+    digest: a3e4264d664439f3113c948c4131a0d30cc0ad1a539fa8edd86b4413c8fe525e
+    home: https://github.com/jfrog/kubexray
+    icon: https://raw.githubusercontent.com/jfrog/kubexray/master/images/kubexray-logo.png
+    keywords:
+    - xray
+    - jfrog
+    - security
+    - scan
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: kubexray
+    sources:
+    - https://github.com/jfrog/kubexray
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/kubexray-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v1
+    appVersion: 0.1.5
     created: 2019-09-27T09:21:05.635Z
     description: KubeXray Helm chart
     digest: 49072d8f9c52a856d7cf014e967f20f4538095118586d70f9b84260b1d183ad6
@@ -13365,6 +14370,68 @@ entries:
     version: 0.1.0
   artifactory-jcr:
   - apiVersion: v1
+    appVersion: 7.2.1
+    created: 2020-02-25T09:03:16.751Z
+    description: JFrog Container Registry
+    digest: 92c9f69a13578d27cc2c1ca2df427f2e5e5d584ac15e7becaaa344294865a276
+    home: https://jfrog.com/container-registry/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory-jcr/logo/jcr-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - container
+    - registry
+    - devops
+    - jfrog-container-registry
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    - email: vinaya@jfrog.com
+      name: vinaya
+    name: artifactory-jcr
+    sources:
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-jcr-2.0.8.tgz
+    version: 2.0.8
+  - apiVersion: v1
+    appVersion: 6.17.0
+    created: 2020-02-03T13:36:36.853Z
+    description: JFrog Container Registry
+    digest: 6a3acbe977711a82a0c83951a048fb311009a4ae0fd9c13d9ca860894c105313
+    home: https://jfrog.com/container-registry/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory-jcr/logo/jcr-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - container
+    - registry
+    - devops
+    - jfrog-container-registry
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    - email: vinaya@jfrog.com
+      name: vinaya
+    name: artifactory-jcr
+    sources:
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-jcr-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v1
     appVersion: 6.17.0
     created: 2020-01-19T09:11:32.283Z
     description: JFrog Container Registry
@@ -13706,6 +14773,62 @@ entries:
     version: 0.1.0
   artifactory-cpp-ce:
   - apiVersion: v1
+    appVersion: 7.2.1
+    created: 2020-02-25T09:03:06.870Z
+    description: JFrog Artifactory CE for C++
+    digest: bfcc89ba66de32cc78755adde820b958e077849f39d5fa03f15cdaf7d81bd490
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory-cpp-ce/logo/conan.png
+    keywords:
+    - artifactory
+    - jfrog
+    - container
+    - registry
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory-cpp-ce
+    sources:
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-cpp-ce-2.0.8.tgz
+    version: 2.0.8
+  - apiVersion: v1
+    appVersion: 6.17.0
+    created: 2020-02-03T13:36:35.952Z
+    description: JFrog Artifactory CE for C++
+    digest: 66cdc76bd0d7f6530ec6d0900a1cf951fa0a88acd1b8659602a7d6d5c5eac9c4
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory-cpp-ce/logo/conan.png
+    keywords:
+    - artifactory
+    - jfrog
+    - container
+    - registry
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory-cpp-ce
+    sources:
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-cpp-ce-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v1
     appVersion: 6.17.0
     created: 2020-01-19T09:11:31.546Z
     description: JFrog Artifactory CE for C++
@@ -13931,6 +15054,62 @@ entries:
     version: 0.1.1
   artifactory-oss:
   - apiVersion: v1
+    appVersion: 7.2.1
+    created: 2020-02-25T09:02:51.301Z
+    description: JFrog Artifactory OSS
+    digest: 198a63006cb37e3773b9318a5fac8441c6acf9768938c4a7a6aea0d57afb8119
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory/logo/artifactory-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - container
+    - registry
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory-oss
+    sources:
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-oss-2.0.8.tgz
+    version: 2.0.8
+  - apiVersion: v1
+    appVersion: 6.17.0
+    created: 2020-02-03T13:36:37.714Z
+    description: JFrog Artifactory OSS
+    digest: 531785175b99114a31d5636fe41233c99724f34596128092b3c273e75886455e
+    home: https://www.jfrog.com/artifactory/
+    icon: https://raw.githubusercontent.com/jfrog/charts/master/stable/artifactory/logo/artifactory-logo.png
+    keywords:
+    - artifactory
+    - jfrog
+    - container
+    - registry
+    - devops
+    maintainers:
+    - email: amithk@jfrog.com
+      name: amithins
+    - email: daniele@jfrog.com
+      name: danielezer
+    - email: eldada@jfrog.com
+      name: eldada
+    - email: rimasm@jfrog.com
+      name: rimusz
+    name: artifactory-oss
+    sources:
+    - https://github.com/jfrog/charts
+    urls:
+    - https://charts.jfrog.io/artifactory/helm/artifactory-oss-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v1
     appVersion: 6.17.0
     created: 2020-01-19T09:11:33.107Z
     description: JFrog Artifactory OSS
@@ -14126,4 +15305,4 @@ entries:
     urls:
     - https://charts.jfrog.io/artifactory/helm/artifactory-oss-0.1.1.tgz
     version: 0.1.1
-generated: 2020-01-22T14:12:15.165Z
+generated: 2020-02-25T09:03:16.751Z

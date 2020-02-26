@@ -2,6 +2,78 @@ apiVersion: v1
 entries:
   anchore-policy-validator:
   - apiVersion: v1
+    appVersion: 0.4.0
+    created: "2020-01-31T20:50:59.05Z"
+    description: A Helm chart for anchore-policy-validator admission controller
+    digest: 9479efd4f5b1d2749f70e3fff632b37760278d8e6045b0cabda9eab9b28e81fd
+    engine: gotpl
+    keywords:
+    - analysis
+    - anchore-policy-validator
+    - image
+    - security
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: anchore-policy-validator
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/anchore-policy-validator-0.5.3.tgz
+    version: 0.5.3
+  - apiVersion: v1
+    appVersion: 0.4.0
+    created: "2020-01-30T14:39:56.914Z"
+    description: A Helm chart for anchore-policy-validator admission controller
+    digest: bfa985ef75c596cfee17a96cfd94604561aef7d39d58b6df09dc8c7c23ff0252
+    engine: gotpl
+    keywords:
+    - analysis
+    - anchore-policy-validator
+    - image
+    - security
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: anchore-policy-validator
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/anchore-policy-validator-0.5.2.tgz
+    version: 0.5.2
+  - apiVersion: v1
+    appVersion: 0.4.0
+    created: "2020-01-30T11:41:12.01Z"
+    description: A Helm chart for anchore-policy-validator admission controller
+    digest: c34175e77cf111e132133d91cf1f20a8de745d7e062d4d886b5b69d4224731d7
+    engine: gotpl
+    keywords:
+    - analysis
+    - anchore-policy-validator
+    - image
+    - security
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: anchore-policy-validator
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/anchore-policy-validator-0.5.1.tgz
+    version: 0.5.1
+  - apiVersion: v1
+    appVersion: 0.4.0
+    created: "2020-01-24T15:12:44.39Z"
+    description: A Helm chart for anchore-policy-validator admission controller
+    digest: 43ef514655112aad556001ca1467ce5393130d1bd029c08dc1976d93543fee0d
+    engine: gotpl
+    keywords:
+    - analysis
+    - anchore-policy-validator
+    - image
+    - security
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: anchore-policy-validator
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/anchore-policy-validator-0.5.0.tgz
+    version: 0.5.0
+  - apiVersion: v1
     appVersion: 0.3.6
     created: "2019-09-23T13:56:25.018Z"
     description: A Helm chart for anchore-policy-validator admission controller
@@ -140,6 +212,24 @@ entries:
     - https://kubernetes-charts.banzaicloud.com/charts/ark-1.2.2.tgz
     version: 1.2.2
   aws-autoscaling-exporter:
+  - created: "2020-01-26T19:44:28.288Z"
+    description: An aws autoscaling exporter Helm chart for Kubernetes
+    digest: 0cbedaaa0bd91cdae967537c5344d0db61aaabcd14e96597639b291c63ceee54
+    home: https://banzaicloud.com
+    keywords:
+    - autoscaling
+    - aws
+    - exporter
+    - lifecycle
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: aws-autoscaling-exporter
+    sources:
+    - https://github.com/banzaicloud/banzai-charts
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/aws-autoscaling-exporter-0.0.3.tgz
+    version: 0.0.3
   - created: "2019-03-25T20:39:40.268Z"
     description: An aws autoscaling exporter Helm chart for Kubernetes
     digest: 6ab15e418fb61c980672ec5eaf7ebee1d5621ba6f145e5eb064401e574e0a175
@@ -159,6 +249,23 @@ entries:
     - https://kubernetes-charts.banzaicloud.com/charts/aws-autoscaling-exporter-0.0.2.tgz
     version: 0.0.2
   aws-spot-price-history-poller:
+  - created: "2020-02-13T10:06:12.48Z"
+    description: AWS Spot Price History Poller
+    digest: 1d5e61b6f929e02a8407738ae8c89bfc521c7d5f28225088b5cb0898e5ea430a
+    home: https://banzaicloud.com
+    keywords:
+    - spot
+    - aws
+    - amazon
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: aws-spot-price-history-poller
+    sources:
+    - https://github.com/banzaicloud/banzai-charts
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/aws-spot-price-history-poller-0.0.3.tgz
+    version: 0.0.3
   - created: "2019-03-25T20:39:43.569Z"
     description: AWS Spot Price History Poller
     digest: f00474e1ded065df6a65a32e0590134d3ceaaaa3ca7c8c629f0981192f2441b2
@@ -176,20 +283,127 @@ entries:
     urls:
     - https://kubernetes-charts.banzaicloud.com/charts/aws-spot-price-history-poller-0.0.2.tgz
     version: 0.0.2
-  azure-output:
+  backyards:
   - apiVersion: v1
-    appVersion: 0.0.1
-    created: "2019-03-25T20:39:58.318Z"
-    description: Azure output helper chart for logging operator
-    digest: 98f77345de9952fcb237941ad65e658ef5bb117d71d406baa774e05307ab4e23
+    appVersion: 1.1.3
+    created: "2020-02-21T22:08:27.644Z"
+    description: Backyards manages hybrid clusters connected with Istio
+    digest: 18fd43880730547ffe8a4a6a6437a1c175717b8b8d46bceab98196f9a9950a31
+    home: https://banzaicloud.com
     maintainers:
     - email: info@banzaicloud.com
       name: Banzai Cloud
-    name: azure-output
+    name: backyards
+    sources:
+    - https://github.com/banzaicloud/backyards
     urls:
-    - https://kubernetes-charts.banzaicloud.com/charts/azure-output-0.0.3.tgz
-    version: 0.0.3
-  backyards:
+    - https://kubernetes-charts.banzaicloud.com/charts/backyards-1.2.1.tgz
+    version: 1.2.1
+  - apiVersion: v1
+    appVersion: 1.1.3
+    created: "2020-02-21T13:56:44.803Z"
+    description: Backyards manages hybrid clusters connected with Istio
+    digest: e3417adebf21290e2f323a6e16ea55b8f1906cb99458c3e0990697540bfc27cb
+    home: https://banzaicloud.com
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: backyards
+    sources:
+    - https://github.com/banzaicloud/backyards
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/backyards-1.2.0.tgz
+    version: 1.2.0
+  - apiVersion: v1
+    appVersion: 1.1.3
+    created: "2020-02-17T12:34:33.551Z"
+    description: Backyards manages hybrid clusters connected with Istio
+    digest: 72a2f7b75f7dc9a7982178cd80f30c5d7188d916dd248aa57f3454a91e2e275e
+    home: https://banzaicloud.com
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: backyards
+    sources:
+    - https://github.com/banzaicloud/backyards
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/backyards-1.2.0-dev.2.tgz
+    version: 1.2.0-dev.2
+  - apiVersion: v1
+    appVersion: 1.1.3
+    created: "2020-02-17T12:17:23.001Z"
+    description: Backyards manages hybrid clusters connected with Istio
+    digest: d205c721064deba1946a3ed1840bb7f819be470978e84d799bcae56799a1d267
+    home: https://banzaicloud.com
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: backyards
+    sources:
+    - https://github.com/banzaicloud/backyards
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/backyards-1.2.0-dev.1.tgz
+    version: 1.2.0-dev.1
+  - apiVersion: v1
+    appVersion: 1.1.2
+    created: "2020-02-14T19:38:11.289Z"
+    description: Backyards manages hybrid clusters connected with Istio
+    digest: 4dfa838bf3b49cb00b43db1445605f999a26c7a1c8aaf71b138b2b48bb9995d3
+    home: https://banzaicloud.com
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: backyards
+    sources:
+    - https://github.com/banzaicloud/backyards
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/backyards-1.2.0-dev.0.tgz
+    version: 1.2.0-dev.0
+  - apiVersion: v1
+    appVersion: 1.1.3
+    created: "2020-02-06T10:46:27.884Z"
+    description: Backyards manages hybrid clusters connected with Istio
+    digest: 946034b99b26e0ce7aae0b6178306a4a54d8d2987f406dcf6008017a7f7ae98c
+    home: https://banzaicloud.com
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: backyards
+    sources:
+    - https://github.com/banzaicloud/backyards
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/backyards-1.1.3.tgz
+    version: 1.1.3
+  - apiVersion: v1
+    appVersion: 1.1.2
+    created: "2020-02-03T16:45:12.929Z"
+    description: Backyards manages hybrid clusters connected with Istio
+    digest: b71f7f5a3b875d6eed406691f9b01dbf5b36d6ec5edcc1237dc511dcd5998a8a
+    home: https://banzaicloud.com
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: backyards
+    sources:
+    - https://github.com/banzaicloud/backyards
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/backyards-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v1
+    appVersion: 1.1.2
+    created: "2020-02-03T14:33:46.591Z"
+    description: Backyards manages hybrid clusters connected with Istio
+    digest: b1644a6e2efa173bb9ea48b958ab66c33bacd1e093260a8341fc01c59e48430d
+    home: https://banzaicloud.com
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: backyards
+    sources:
+    - https://github.com/banzaicloud/backyards
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/backyards-1.1.1-dev.1.tgz
+    version: 1.1.1-dev.1
   - apiVersion: v1
     appVersion: 1.1.0
     created: "2020-01-20T09:56:31.664Z"
@@ -782,6 +996,20 @@ entries:
   backyards-demo:
   - apiVersion: v1
     appVersion: 0.1.2
+    created: "2020-01-31T13:28:53.181Z"
+    description: Backyards demo app chart
+    digest: 517cbec155f8c3e1da9fd1f3341264c652eb7249c3d6cce1fc6ef550aeb07205
+    home: https://banzaicloud.com
+    icon: https://banzaicloud.com/img/banzai-cloud-logo.png
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: backyards-demo
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/backyards-demo-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v1
+    appVersion: 0.1.2
     created: "2020-01-13T12:17:15.078Z"
     description: Backyards demo app chart
     digest: f6a48d5ade353e6a0ad6283f172ef80b79983cf496bf17018832ab6b203cc64c
@@ -1186,6 +1414,17 @@ entries:
     - https://kubernetes-charts.banzaicloud.com/charts/cadence-0.1.5.tgz
     version: 0.1.5
   canary-operator:
+  - apiVersion: v1
+    appVersion: 0.1.7
+    created: "2020-02-20T09:53:20.417Z"
+    description: canary-operator manages canary deployments
+    digest: e9fc2068856e7cd858deef076ac2a053f0501ec901ea85e28742f3ac6d4b917e
+    name: canary-operator
+    sources:
+    - https://github.com/banzaicloud/canary-operator
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/canary-operator-0.1.9.tgz
+    version: 0.1.9
   - apiVersion: v1
     appVersion: 0.1.6
     created: "2019-11-26T13:42:14.585Z"
@@ -1722,6 +1961,23 @@ entries:
   cluster-autoscaler:
   - apiVersion: v1
     appVersion: 1.13.1
+    created: "2020-01-26T19:46:09.213Z"
+    description: Scales worker nodes within autoscaling groups.
+    digest: d93ae3a031bd1df3b849fcb1f9c2103c11246548c52669640781191f1c399453
+    engine: gotpl
+    home: https://github.com/kubernetes/autoscaler
+    icon: https://github.com/kubernetes/kubernetes/blob/master/logo/logo.png
+    maintainers:
+    - email: szander@banzaicloud.com
+      name: szander
+    name: cluster-autoscaler
+    sources:
+    - https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/cluster-autoscaler-0.12.4.tgz
+    version: 0.12.4
+  - apiVersion: v1
+    appVersion: 1.13.1
     created: "2019-04-30T15:41:47.356Z"
     description: Scales worker nodes within autoscaling groups.
     digest: 517885c1a5141bacfbf5d4c0698747f866f0dde22a07515c39fd48d2f8f1eff2
@@ -1755,6 +2011,24 @@ entries:
     - https://kubernetes-charts.banzaicloud.com/charts/cluster-autoscaler-0.6.4.tgz
     version: 0.6.4
   dex:
+  - apiVersion: v1
+    appVersion: 0.5.0
+    created: "2020-01-31T14:27:47.921Z"
+    description: OpenID Connect Identity (OIDC) and OAuth 2.0 Provider with Pluggable
+      Connectors
+    digest: 65cc7b7d9f5e25cf063f6a04b020688cd0101472c1433e51c6210fe0c52b33e5
+    home: https://github.com/dexidp/dex
+    icon: https://raw.githubusercontent.com/dexidp/dex/master/Documentation/logos/dex-glyph-color.png
+    keywords:
+    - dex
+    - oidc
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: dex
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/dex-0.2.0.tgz
+    version: 0.2.0
   - appVersion: 0.4.2
     created: "2019-12-02T09:31:27.727Z"
     description: dexidp Dex
@@ -1948,20 +2222,26 @@ entries:
     urls:
     - https://kubernetes-charts.banzaicloud.com/charts/fn-0.1.0.tgz
     version: 0.1.0
-  gcs-output:
-  - apiVersion: v1
-    appVersion: 0.0.1
-    created: "2019-03-25T20:41:13.207Z"
-    description: GCS output helper chart for logging operator
-    digest: 0ce65da2dcdf0d713f502d34da59974ee6b53ffe26825c0ef05ff48008cd4af0
+  hollowtrees:
+  - created: "2020-02-13T10:10:35.443Z"
+    description: Hollowtrees Helm chart for Kubernetes
+    digest: 0c87e3c333fea6c9d7d90b8762fd1889f2d7d144836b172f946a62d415d3053c
+    home: https://banzaicloud.com
+    keywords:
+    - autoscaling
+    - aws
+    - exporter
+    - lifecycle
+    - hollowtrees
     maintainers:
     - email: info@banzaicloud.com
       name: Banzai Cloud
-    name: gcs-output
+    name: hollowtrees
+    sources:
+    - https://github.com/banzaicloud/banzai-charts
     urls:
-    - https://kubernetes-charts.banzaicloud.com/charts/gcs-output-0.0.3.tgz
-    version: 0.0.3
-  hollowtrees:
+    - https://kubernetes-charts.banzaicloud.com/charts/hollowtrees-0.0.5.tgz
+    version: 0.0.5
   - created: "2019-03-26T10:06:53.759Z"
     description: Hollowtrees Helm chart for Kubernetes
     digest: d3913828672228aceca3c6fe50d14b7f4abbd2a5188cdc1cb6cdcba891e92072
@@ -1982,6 +2262,25 @@ entries:
     - https://kubernetes-charts.banzaicloud.com/charts/hollowtrees-0.0.3.tgz
     version: 0.0.3
   hollowtrees-with-ps:
+  - apiVersion: v1
+    appVersion: 0.1.1
+    created: "2020-01-23T00:32:20.023Z"
+    description: Hollowtrees with Pipeline Scaler plugin
+    digest: ea89cea74d983675da2874daa88c707149bc7eff5f27e2bd5f6131d28da09372
+    home: https://banzaicloud.com
+    icon: https://banzaicloud.com/img/banzai-cloud-logo.png
+    keywords:
+    - scaling
+    - hollowtrees
+    name: hollowtrees-with-ps
+    sources:
+    - https://banzaicloud.com
+    - https://github.com/banzaicloud
+    - https://github.com/banzaicloud/hollowtrees
+    - https://github.com/banzaicloud/hollowtrees/charts/hollowtrees-with-ps
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/hollowtrees-with-ps-0.2.1.tgz
+    version: 0.2.1
   - created: "2019-08-27T18:12:53.596Z"
     description: Hollowtrees with Pipeline Scaler plugin
     digest: 29341cb36038a9e46a3a4020cc724638b58e372aa1a7ec275209e45b7b03fb84
@@ -2198,6 +2497,21 @@ entries:
     - https://kubernetes-charts.banzaicloud.com/charts/ht-k8s-action-plugin-0.0.3.tgz
     version: 0.0.3
   ingressauthgenerator:
+  - created: "2020-02-13T10:10:31.763Z"
+    description: Ingressauthgenerator Helm chart for Kubernetes
+    digest: f3bd04188a4b9bcfae73395820c5ec5d20b5785ccd6ebc905cb8566c33f07a82
+    home: https://banzaicloud.com
+    keywords:
+    - basicauth
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: ingressauthgenerator
+    sources:
+    - https://github.com/banzaicloud/banzai-charts
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/ingressauthgenerator-0.0.3.tgz
+    version: 0.0.3
   - created: "2019-03-25T20:41:44.176Z"
     description: Ingressauthgenerator Helm chart for Kubernetes
     digest: a2a39362d2ea0c6150441b167d781ce14c6e6112c95b8a20266ad9fa8ca57247
@@ -2309,6 +2623,54 @@ entries:
     - https://kubernetes-charts.banzaicloud.com/charts/istio-1.0.5.tgz
     version: 1.0.5
   istio-operator:
+  - apiVersion: v1
+    appVersion: 0.4.9
+    created: "2020-02-20T14:26:11.18Z"
+    description: istio-operator manages Istio deployments on Kubernetes
+    digest: bb36f078e7e3addd016a91f54d36ee1281c046991eacb7124e7cbfc219b62fbc
+    icon: https://istio.io/img/istio-logo-social-blue-background.svg
+    name: istio-operator
+    sources:
+    - https://github.com/banzaicloud/istio-operator
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/istio-operator-0.0.36.tgz
+    version: 0.0.36
+  - apiVersion: v1
+    appVersion: 0.4.8
+    created: "2020-02-12T13:15:44.064Z"
+    description: istio-operator manages Istio deployments on Kubernetes
+    digest: 59bd5e58a0d51eee0953c03b23f371f6518f2d0a10e4525226014a48bda1211f
+    icon: https://istio.io/img/istio-logo-social-blue-background.svg
+    name: istio-operator
+    sources:
+    - https://github.com/banzaicloud/istio-operator
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/istio-operator-0.0.35.tgz
+    version: 0.0.35
+  - apiVersion: v1
+    appVersion: 0.4.7
+    created: "2020-02-06T10:52:19.252Z"
+    description: istio-operator manages Istio deployments on Kubernetes
+    digest: 6b8ff41860dba9879085e55c673424a44eb6506d4fdf4ef7cac05de1041e2e05
+    icon: https://istio.io/img/istio-logo-social-blue-background.svg
+    name: istio-operator
+    sources:
+    - https://github.com/banzaicloud/istio-operator
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/istio-operator-0.0.34.tgz
+    version: 0.0.34
+  - apiVersion: v1
+    appVersion: 0.4.7
+    created: "2020-02-06T10:25:11.693Z"
+    description: istio-operator manages Istio deployments on Kubernetes
+    digest: 6bda3114c56ccb9de5cec5197facfa618981073d6f2698e42677349258d38d4c
+    icon: https://istio.io/img/istio-logo-social-blue-background.svg
+    name: istio-operator
+    sources:
+    - https://github.com/banzaicloud/istio-operator
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/istio-operator-0.0.33.tgz
+    version: 0.0.33
   - apiVersion: v1
     appVersion: 0.4.6
     created: "2020-01-20T10:07:01.328Z"
@@ -2749,6 +3111,39 @@ entries:
     version: 0.3.2
   kafka-operator:
   - apiVersion: v1
+    appVersion: 0.10.0
+    created: "2020-02-19T10:28:11.206Z"
+    description: kafka-operator manages Kafka deployments on Kubernetes
+    digest: 4d9a224be1d77cc76128ff44c43099a8c3c537702514f31421abf4e5404362be
+    name: kafka-operator
+    sources:
+    - https://github.com/banzaicloud/kafka-operator
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/kafka-operator-0.2.14.tgz
+    version: 0.2.14
+  - apiVersion: v1
+    appVersion: 0.9.2
+    created: "2020-01-27T15:21:29.294Z"
+    description: kafka-operator manages Kafka deployments on Kubernetes
+    digest: 0794dcda3ad72f4825a2314ea7d74b12b49679b43bf66c4cf5c044479e80183a
+    name: kafka-operator
+    sources:
+    - https://github.com/banzaicloud/kafka-operator
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/kafka-operator-0.2.13.tgz
+    version: 0.2.13
+  - apiVersion: v1
+    appVersion: 0.9.1
+    created: "2020-01-23T20:42:59.334Z"
+    description: kafka-operator manages Kafka deployments on Kubernetes
+    digest: 07905c20dbbafdb32e2a38406b5ef08c56afd2d0127e9bc66cc4e9dd150cdb11
+    name: kafka-operator
+    sources:
+    - https://github.com/banzaicloud/kafka-operator
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/kafka-operator-0.2.12.tgz
+    version: 0.2.12
+  - apiVersion: v1
     appVersion: 0.9.0
     created: "2020-01-19T19:41:52.146Z"
     description: kafka-operator manages Kafka deployments on Kubernetes
@@ -3169,6 +3564,16 @@ entries:
     version: 0.1.0
   logging-demo:
   - apiVersion: v1
+    appVersion: 3.0.0
+    created: "2020-02-20T14:08:50.271Z"
+    description: A Helm chart for Kubernetes
+    digest: 8f93991bd888a36251874f78fa10e84184286305b3db3c4ca899e28e8b92141b
+    icon: https://raw.githubusercontent.com/banzaicloud/logging-operator/master/docs/img/icon.png
+    name: logging-demo
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/logging-demo-3.0.0.tgz
+    version: 3.0.0
+  - apiVersion: v1
     appVersion: 2.7.0
     created: "2020-01-15T17:20:22.822Z"
     description: A Helm chart for Kubernetes
@@ -3209,6 +3614,15 @@ entries:
     - https://kubernetes-charts.banzaicloud.com/charts/logging-demo-2.4.0.tgz
     version: 2.4.0
   logging-operator:
+  - apiVersion: v1
+    appVersion: 3.0.0
+    created: "2020-02-20T14:08:01.518Z"
+    description: A Helm chart to install Banzai Cloud logging-operator
+    digest: 86b9335dd41b662221673a535ee4a153ce14ff354828873a031d6176681d07ca
+    name: logging-operator
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/logging-operator-3.0.0.tgz
+    version: 3.0.0
   - apiVersion: v1
     appVersion: 2.7.1
     created: "2020-01-15T17:18:06.447Z"
@@ -3877,6 +4291,74 @@ entries:
     - https://kubernetes-charts.banzaicloud.com/charts/logging-operator-logging-2.0.0.tgz
     version: 2.0.0
   loki:
+  - appVersion: v1.3.0
+    created: "2020-02-20T16:28:00.262Z"
+    description: 'Loki: like Prometheus, but for logs.'
+    digest: 97f7b249989c7cfe1b4c57d5a8c2026933a985dd3d6d2547ec646dddaa57fe72
+    engine: gotpl
+    home: https://grafana.com/loki
+    icon: https://github.com/grafana/loki/raw/master/docs/logo.png
+    kubeVersion: ^1.10.0-0
+    maintainers:
+    - email: lokiproject@googlegroups.com
+      name: Loki Maintainers
+    name: loki
+    sources:
+    - https://github.com/grafana/loki
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/loki-0.17.3.tgz
+    version: 0.17.3
+  - appVersion: v1.3.0
+    created: "2020-02-20T13:21:29.76Z"
+    description: 'Loki: like Prometheus, but for logs.'
+    digest: 4c9af93d758dddb0a06c6212648c3cc04f30cb0809bb0ed41405de8a2e260af8
+    engine: gotpl
+    home: https://grafana.com/loki
+    icon: https://github.com/grafana/loki/raw/master/docs/logo.png
+    kubeVersion: ^1.10.0-0
+    maintainers:
+    - email: lokiproject@googlegroups.com
+      name: Loki Maintainers
+    name: loki
+    sources:
+    - https://github.com/grafana/loki
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/loki-0.17.2.tgz
+    version: 0.17.2
+  - appVersion: v1.3.0
+    created: "2020-02-19T10:35:56.723Z"
+    description: 'Loki: like Prometheus, but for logs.'
+    digest: e6ceb827c0fb2059a70b60a556207043cc990a7a268683a0c50703e6e479a58f
+    engine: gotpl
+    home: https://grafana.com/loki
+    icon: https://github.com/grafana/loki/raw/master/docs/logo.png
+    kubeVersion: ^1.10.0-0
+    maintainers:
+    - email: lokiproject@googlegroups.com
+      name: Loki Maintainers
+    name: loki
+    sources:
+    - https://github.com/grafana/loki
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/loki-0.17.1.tgz
+    version: 0.17.1
+  - appVersion: v1.3.0
+    created: "2020-01-24T20:06:24.801Z"
+    description: 'Loki: like Prometheus, but for logs.'
+    digest: 5f16d5831c9fe9acf0a06a8aa553180534bb63311e103b3838f146475b596a4b
+    engine: gotpl
+    home: https://grafana.com/loki
+    icon: https://github.com/grafana/loki/raw/master/docs/logo.png
+    kubeVersion: ^1.10.0-0
+    maintainers:
+    - email: lokiproject@googlegroups.com
+      name: Loki Maintainers
+    name: loki
+    sources:
+    - https://github.com/grafana/loki
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/loki-0.17.0.tgz
+    version: 0.17.0
   - appVersion: v0.3.0
     created: "2019-11-18T15:38:16.77Z"
     description: 'Loki: like Prometheus, but for logs.'
@@ -4229,6 +4711,24 @@ entries:
     version: 0.2.0
   nodejs:
   - apiVersion: v1
+    created: "2020-02-02T20:50:04.958Z"
+    description: Universal helm chart for Node.js applications
+    digest: 2728307b1f88163ef99bdb42082c4b18016fcfe203ab3dfd798b38d99a0b316a
+    icon: https://banzaicloud.com/img/banzai-cloud-logo.png
+    keywords:
+    - nodejs
+    - node
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: nodejs
+    sources:
+    - https://banzaicloud.com
+    - https://github.com/banzaicloud
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/nodejs-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
     created: "2019-03-25T20:43:28.879Z"
     description: Universal helm chart for Node.js applications
     digest: e5b7fe313c93409c7648e215cb3aaef7d329f00d91b4123232f8b0af433e43eb
@@ -4265,20 +4765,55 @@ entries:
     urls:
     - https://kubernetes-charts.banzaicloud.com/charts/nodepool-labels-operator-0.0.2.tgz
     version: 0.0.2
-  oss-output:
-  - apiVersion: v1
-    appVersion: 0.0.1
-    created: "2019-03-25T20:43:52.706Z"
-    description: Alibaba output helper chart for logging operator
-    digest: 6714831f61b139d3a5abad606282f0cb6d9550ac46112053d2a76546b0cbe253
+  pipeline:
+  - appVersion: 0.32.0
+    created: "2020-01-29T12:50:13.23Z"
+    description: A Helm chart for Banzai Cloud Pipeline, a solution-oriented application
+      platform which allows enterprises to develop, deploy and securely scale container-based
+      applications in multi- and hybrid-cloud environments.
+    digest: ad6c39e476c9e525caa0a503fe952c65cf5d518140d8c49279805fe6f8710498
+    home: https://banzaicloud.com
+    icon: https://banzaicloud.com/img/banzai-cloud-logo.png
+    keywords:
+    - pipeline
+    - kubernetes
+    - banzaicloud
+    - cloud
     maintainers:
     - email: info@banzaicloud.com
       name: Banzai Cloud
-    name: oss-output
+    name: pipeline
+    sources:
+    - https://banzaicloud.com
+    - https://github.com/banzaicloud
+    - https://github.com/banzaicloud/pipeline
     urls:
-    - https://kubernetes-charts.banzaicloud.com/charts/oss-output-0.0.3.tgz
-    version: 0.0.3
-  pipeline:
+    - https://kubernetes-charts.banzaicloud.com/charts/pipeline-0.5.3.tgz
+    version: 0.5.3
+  - appVersion: 0.32.0
+    created: "2020-01-24T13:46:12.639Z"
+    description: A Helm chart for Banzai Cloud Pipeline, a solution-oriented application
+      platform which allows enterprises to develop, deploy and securely scale container-based
+      applications in multi- and hybrid-cloud environments.
+    digest: b41f2051a16e6a21f0555534c801ed77436814c14fdfb04befa0b959887bd767
+    home: https://banzaicloud.com
+    icon: https://banzaicloud.com/img/banzai-cloud-logo.png
+    keywords:
+    - pipeline
+    - kubernetes
+    - banzaicloud
+    - cloud
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: pipeline
+    sources:
+    - https://banzaicloud.com
+    - https://github.com/banzaicloud
+    - https://github.com/banzaicloud/pipeline
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/pipeline-0.5.1.tgz
+    version: 0.5.1
   - appVersion: 0.32.0
     created: "2020-01-13T19:09:02.829Z"
     description: A Helm chart for Banzai Cloud Pipeline, a solution-oriented application
@@ -4975,26 +5510,6 @@ entries:
     urls:
     - https://kubernetes-charts.banzaicloud.com/charts/pipeline-cluster-ingress-0.0.8.tgz
     version: 0.0.8
-  pipeline-cluster-monitor:
-  - apiVersion: v1
-    created: "2019-03-25T20:44:38.19Z"
-    description: Monitoring chart to deploy on clusters managed by Banzai Cloud Pipeline
-    digest: 1db59c51d8eb96ca0d148bc8b4529381d201f5ec4ec8dea7322177b3b3236fdd
-    home: https://banzaicloud.com
-    keywords:
-    - pipeline
-    - cluster
-    - prometheus
-    - monitor
-    maintainers:
-    - email: info@banzaicloud.com
-      name: Banzai Cloud
-    name: pipeline-cluster-monitor
-    sources:
-    - https://github.com/banzaicloud/banzai-charts/
-    urls:
-    - https://kubernetes-charts.banzaicloud.com/charts/pipeline-cluster-monitor-0.1.17.tgz
-    version: 0.1.17
   pipeline-cp-monitor:
   - apiVersion: v1
     created: "2019-03-25T20:44:34.387Z"
@@ -5015,6 +5530,24 @@ entries:
     - https://kubernetes-charts.banzaicloud.com/charts/pipeline-cp-monitor-0.0.3.tgz
     version: 0.0.3
   pipeline-ui:
+  - apiVersion: v1
+    appVersion: 0.28.0
+    created: "2020-02-12T11:31:54.864Z"
+    description: Helm chart for Kubernetes. Provides the Graphical User Interface
+      for Pipeline PaaS
+    digest: 30e93bc3e76e4efc8f236dc7ea86b7b52bd1bd8f4c6b31ac1bdf1a8a9a05d311
+    home: https://banzaicloud.com
+    keywords:
+    - pipeline-ui
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: pipeline-ui
+    sources:
+    - https://github.com/banzaicloud/banzai-charts/
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/pipeline-ui-1.2.0.tgz
+    version: 1.2.0
   - appVersion: 0.14.0
     created: "2019-10-29T20:45:47.369Z"
     description: Helm chart for Kubernetes. Provides the Graphical User Interface
@@ -5362,6 +5895,23 @@ entries:
     - https://kubernetes-charts.banzaicloud.com/charts/prometheus-mysql-exporter-0.2.4.tgz
     version: 0.2.4
   pvc-operator:
+  - appVersion: 0.0.6
+    created: "2020-02-13T10:10:42.007Z"
+    description: A Helm chart for pvc-operator
+    digest: 6d8cf419ba3a0d0cea8feaf1b12bc02d4511b1cb55d8a46e4ecfae017d774fff
+    home: https://banzaicloud.com
+    keywords:
+    - pvc
+    - storageclass
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: pvc-operator
+    sources:
+    - https://github.com/banzaicloud/pvc-operator
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/pvc-operator-0.0.10.tgz
+    version: 0.0.10
   - appVersion: 0.0.5
     created: "2019-03-25T20:45:13.208Z"
     description: A Helm chart for pvc-operator
@@ -5379,43 +5929,6 @@ entries:
     urls:
     - https://kubernetes-charts.banzaicloud.com/charts/pvc-operator-0.0.7.tgz
     version: 0.0.7
-  s3-output:
-  - apiVersion: v1
-    appVersion: 0.0.1
-    created: "2019-05-08T12:06:16.517Z"
-    description: S3 output helper chart for logging operator
-    digest: ce4ad65c81384b9e1e73ee585e8f9840dff8738f3bdec8969dde56715a91f48c
-    maintainers:
-    - email: info@banzaicloud.com
-      name: Banzai Cloud
-    name: s3-output
-    urls:
-    - https://kubernetes-charts.banzaicloud.com/charts/s3-output-0.0.6.tgz
-    version: 0.0.6
-  - apiVersion: v1
-    appVersion: 0.0.1
-    created: "2019-05-06T09:33:47.955Z"
-    description: S3 output helper chart for logging operator
-    digest: 16394e7582b1fc5badbd4b601a23711e12b614e0a9b30fa2a98ac1140301011f
-    maintainers:
-    - email: info@banzaicloud.com
-      name: Banzai Cloud
-    name: s3-output
-    urls:
-    - https://kubernetes-charts.banzaicloud.com/charts/s3-output-0.0.5.tgz
-    version: 0.0.5
-  - apiVersion: v1
-    appVersion: 0.0.1
-    created: "2019-03-22T12:33:33.083Z"
-    description: S3 output helper chart for logging operator
-    digest: 4658fdaf952ab3c4095fca0bd8b41bb244a775b2cc938cf8fb458c275898b39d
-    maintainers:
-    - email: info@banzaicloud.com
-      name: Banzai Cloud
-    name: s3-output
-    urls:
-    - https://kubernetes-charts.banzaicloud.com/charts/s3-output-0.0.4.tgz
-    version: 0.0.4
   satellite:
   - created: "2019-03-25T20:45:15.689Z"
     description: A Helm chart for satellite
@@ -5444,6 +5957,26 @@ entries:
     - https://kubernetes-charts.banzaicloud.com/charts/slackin-0.1.0.tgz
     version: 0.1.0
   sonarqube:
+  - appVersion: 6.7.3
+    created: "2020-02-13T10:10:57.604Z"
+    description: Sonarqube is an open sourced code quality scanning tool
+    digest: c339964a8be0455a3c940e150658555c05a141851885a2dd1c3d92fdf081a043
+    home: https://www.sonarqube.org/
+    icon: https://www.sonarqube.org/assets/logo-31ad3115b1b4b120f3d1efd63e6b13ac9f1f89437f0cf6881cc4d8b5603a52b4.svg
+    keywords:
+    - coverage
+    - security
+    - code
+    - quality
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: sonarqube
+    sources:
+    - https://github.com/SonarSource/docker-sonarqube
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/sonarqube-0.8.1.tgz
+    version: 0.8.1
   - appVersion: 6.7.3
     created: "2020-01-14T14:55:10.579Z"
     description: Sonarqube is an open sourced code quality scanning tool
@@ -5721,6 +6254,23 @@ entries:
     - https://kubernetes-charts.banzaicloud.com/charts/spot-termination-handler-0.0.3.tgz
     version: 0.0.3
   spring-boot:
+  - created: "2020-02-02T20:48:52.571Z"
+    description: Run the simple spring-boot application
+    digest: 326819d73d5a6c0d7cc78291af5d7860c717dcc23f6bec06efef45b923c1369d
+    home: https://banzaicloud.com
+    keywords:
+    - java
+    - tomcat
+    - spring-boot
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: spring-boot
+    sources:
+    - https://github.com/banzaicloud/banzai-charts
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/spring-boot-0.0.4.tgz
+    version: 0.0.4
   - created: "2019-03-25T20:47:09.573Z"
     description: Run the simple spring-boot application
     digest: 9549a8a9a0580b1b2432821873f80ded7ab1697c5194a08dda87ef0e5f19dbd3
@@ -5739,6 +6289,27 @@ entries:
     - https://kubernetes-charts.banzaicloud.com/charts/spring-boot-0.0.3.tgz
     version: 0.0.3
   telescopes:
+  - apiVersion: v1
+    appVersion: 0.5.3
+    created: "2020-02-18T18:21:09.21Z"
+    description: A Telescopes Helm chart for Kubernetes
+    digest: ccdaad4a1eb3f739b5cdcae50f4c80d7c72458621c1b0c1768b9a352373958bb
+    home: https://banzaicloud.com
+    icon: https://banzaicloud.com/img/banzai-cloud-logo.svg
+    keywords:
+    - spot
+    - aws
+    - telescopes
+    - lifecycle
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: telescopes
+    sources:
+    - https://github.com/banzaicloud/banzai-charts
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/telescopes-0.2.1.tgz
+    version: 0.2.1
   - apiVersion: v2
     appVersion: 0.5.3
     created: "2020-01-21T21:46:29.285Z"
@@ -5780,6 +6351,116 @@ entries:
     - https://kubernetes-charts.banzaicloud.com/charts/telescopes-0.1.13.tgz
     version: 0.1.13
   thanos:
+  - apiVersion: v1
+    appVersion: 0.10.1
+    created: "2020-02-24T09:45:14.697Z"
+    description: Thanos is a set of components that can be composed into a highly
+      available metric system with unlimited storage capacity, which can be added
+      seamlessly on top of existing Prometheus deployments.
+    digest: b54ccd53c9fb6d92f49d5a7381422617a7526f7b32a975d7f112084681dff483
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    keywords:
+    - thanos
+    - prometheus
+    - metrics
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/banzaicloud/banzai-charts/tree/master/thanos
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/thanos-0.3.17.tgz
+    version: 0.3.17
+  - apiVersion: v1
+    appVersion: 0.10.1
+    created: "2020-02-18T14:18:36.538Z"
+    description: Thanos is a set of components that can be composed into a highly
+      available metric system with unlimited storage capacity, which can be added
+      seamlessly on top of existing Prometheus deployments.
+    digest: 7b8fb2188021c501728467c502bef3bf17b8c0102869fe29476386b254e33d35
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    keywords:
+    - thanos
+    - prometheus
+    - metrics
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/banzaicloud/banzai-charts/tree/master/thanos
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/thanos-0.3.16.tgz
+    version: 0.3.16
+  - apiVersion: v1
+    appVersion: 0.10.1
+    created: "2020-02-13T09:37:17.229Z"
+    description: Thanos is a set of components that can be composed into a highly
+      available metric system with unlimited storage capacity, which can be added
+      seamlessly on top of existing Prometheus deployments.
+    digest: 816b7f5b878c1b162bc378b4e6e7b2b696e05687e30057745be98fb555a777d3
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    keywords:
+    - thanos
+    - prometheus
+    - metrics
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/banzaicloud/banzai-charts/tree/master/thanos
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/thanos-0.3.15.tgz
+    version: 0.3.15
+  - apiVersion: v1
+    appVersion: 0.10.1
+    created: "2020-02-06T12:55:22.377Z"
+    description: Thanos is a set of components that can be composed into a highly
+      available metric system with unlimited storage capacity, which can be added
+      seamlessly on top of existing Prometheus deployments.
+    digest: c44575b8482888f5e78d58997f5acaa5a67fe9e524f57c61512509f5cfbfc574
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    keywords:
+    - thanos
+    - prometheus
+    - metrics
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/banzaicloud/banzai-charts/tree/master/thanos
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/thanos-0.3.14.tgz
+    version: 0.3.14
+  - apiVersion: v1
+    appVersion: 0.9.0
+    created: "2020-02-02T20:46:27.423Z"
+    description: Thanos is a set of components that can be composed into a highly
+      available metric system with unlimited storage capacity, which can be added
+      seamlessly on top of existing Prometheus deployments.
+    digest: e73b7d3ddd81b98c96f5145be06a33dc4a6a672d264fd3bfb8f9bffcda18059d
+    icon: https://raw.githubusercontent.com/thanos-io/thanos/master/docs/img/Thanos-logo_fullmedium.png
+    keywords:
+    - thanos
+    - prometheus
+    - metrics
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: thanos
+    sources:
+    - https://github.com/thanos-io/thanos
+    - https://github.com/banzaicloud/banzai-charts/tree/master/thanos
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/thanos-0.3.13.tgz
+    version: 0.3.13
   - apiVersion: v1
     appVersion: 0.9.0
     created: "2020-01-07T22:49:07.069Z"
@@ -6114,6 +6795,16 @@ entries:
     urls:
     - https://kubernetes-charts.banzaicloud.com/charts/thanos-0.2.1.tgz
     version: 0.2.1
+  thanos-operator:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2020-02-10T12:44:21.683Z"
+    description: A Helm chart for Kubernetes
+    digest: b2efde10d0a19afdaae5a63fff785402355706c0ed39ce06cd5741f26d488f84
+    name: thanos-operator
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/thanos-operator-0.1.0.tgz
+    version: 0.1.0
   tidb:
   - created: "2019-03-25T20:47:25.976Z"
     description: A TiDB Helm chart for Kubernetes
@@ -6165,6 +6856,119 @@ entries:
     urls:
     - https://kubernetes-charts.banzaicloud.com/charts/traefik-1.75.1.tgz
     version: 1.75.1
+  turbonomic-importer:
+  - apiVersion: v1
+    appVersion: 0.1.6
+    created: "2020-02-21T22:41:15.274Z"
+    description: Turbonomic importer for backyards
+    digest: 49e5c33c8178bea05c79a8c9589b224905a3cb6cb802b5f89d726c2b1ef0153a
+    home: https://banzaicloud.com
+    icon: https://banzaicloud.com/img/banzai-cloud-logo.png
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: turbonomic-importer
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/turbonomic-importer-0.1.7.tgz
+    version: 0.1.7
+  - apiVersion: v1
+    appVersion: 0.1.5
+    created: "2020-02-21T16:03:20.299Z"
+    description: Turbonomic importer for backyards
+    digest: 1b7049033b92f197dd3a8346d95ce46d5fb24f49b9994fb230121e187f15d698
+    home: https://banzaicloud.com
+    icon: https://banzaicloud.com/img/banzai-cloud-logo.png
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: turbonomic-importer
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/turbonomic-importer-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v1
+    appVersion: 0.1.4
+    created: "2020-02-21T10:15:30.767Z"
+    description: Turbonomic importer for backyards
+    digest: 6faaa3519a45d22addaa27b313e7f03220d2e9d8b9b8a24c791b6d38dda84929
+    home: https://banzaicloud.com
+    icon: https://banzaicloud.com/img/banzai-cloud-logo.png
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: turbonomic-importer
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/turbonomic-importer-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v1
+    appVersion: 0.1.4
+    created: "2020-02-18T13:08:17.182Z"
+    description: Turbonomic importer for backyards
+    digest: 0f67c6bda4b6248a180e1f2a7b5d059606c3c04b29e15316fef1acb38e42cb65
+    home: https://banzaicloud.com
+    icon: https://banzaicloud.com/img/banzai-cloud-logo.png
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: turbonomic-importer
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/turbonomic-importer-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v1
+    appVersion: 0.1.3
+    created: "2020-02-18T12:54:05.313Z"
+    description: Turbonomic importer for backyards
+    digest: 179c1539b10d562105ec18c862ebae670f2665258201f4dd91a1e43fd93a9bf7
+    home: https://banzaicloud.com
+    icon: https://banzaicloud.com/img/banzai-cloud-logo.png
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: turbonomic-importer
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/turbonomic-importer-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v1
+    appVersion: 0.1.2
+    created: "2020-02-11T14:04:22.993Z"
+    description: Turbonomic importer for backyards
+    digest: a61178df2a19fc11406fdaabc6cd5980dc9e2df26f1466ee44bf9b6861eab64b
+    home: https://banzaicloud.com
+    icon: https://banzaicloud.com/img/banzai-cloud-logo.png
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: turbonomic-importer
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/turbonomic-importer-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
+    appVersion: 0.1.1
+    created: "2020-02-11T13:40:30.902Z"
+    description: Turbonomic importer for backyards
+    digest: e655d926dd7e50e5d430162ca65acdff5f01b8f42bf1b1e999d5feb7d78d9cca
+    home: https://banzaicloud.com
+    icon: https://banzaicloud.com/img/banzai-cloud-logo.png
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: turbonomic-importer
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/turbonomic-importer-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: "2020-02-11T13:07:17.211Z"
+    description: Turbonomic importer for backyards
+    digest: 530fef91d9d9e45cdbc863ccf9596ac3ef85b3e3635fb23a8932d803f011840e
+    home: https://banzaicloud.com
+    icon: https://banzaicloud.com/img/banzai-cloud-logo.png
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: turbonomic-importer
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/turbonomic-importer-0.1.0.tgz
+    version: 0.1.0
   uistio:
   - apiVersion: v1
     appVersion: 0.3.10
@@ -6343,6 +7147,42 @@ entries:
     - https://kubernetes-charts.banzaicloud.com/charts/uistio-0.0.1.tgz
     version: 0.0.1
   vault:
+  - apiVersion: v1
+    appVersion: 1.3.1
+    created: "2020-02-19T11:36:22.467Z"
+    description: A Helm chart for Vault, a tool for managing secrets
+    digest: ff6419497433b84240df1b396daf18f2f3dad92a37667425547497fa189b5407
+    home: https://www.vaultproject.io/
+    icon: https://www.vaultproject.io/assets/images/mega-nav/logo-vault-0f83e3d2.svg
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: vault
+    sources:
+    - https://github.com/hashicorp/vault
+    - https://github.com/banzaicloud/bank-vaults
+    - https://github.com/banzaicloud/banzai-charts
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/vault-0.11.1.tgz
+    version: 0.11.1
+  - apiVersion: v1
+    appVersion: 1.3.1
+    created: "2020-02-12T14:54:11.887Z"
+    description: A Helm chart for Vault, a tool for managing secrets
+    digest: 1969447cd5c06a7680040fbeeba296d0573025d442fc3138a81e8adf6bf99596
+    home: https://www.vaultproject.io/
+    icon: https://www.vaultproject.io/assets/images/mega-nav/logo-vault-0f83e3d2.svg
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: vault
+    sources:
+    - https://github.com/hashicorp/vault
+    - https://github.com/banzaicloud/bank-vaults
+    - https://github.com/banzaicloud/banzai-charts
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/vault-0.11.0.tgz
+    version: 0.11.0
   - apiVersion: v1
     appVersion: 1.3.1
     created: "2020-01-22T13:21:26.514Z"
@@ -6812,6 +7652,24 @@ entries:
     - https://kubernetes-charts.banzaicloud.com/charts/vault-0.6.0.tgz
     version: 0.6.0
   vault-operator:
+  - apiVersion: v1
+    appVersion: 0.9.0
+    created: "2020-02-19T11:44:03.753Z"
+    description: A Helm chart for banzaicloud/bank-vaults operator
+    digest: 005d018cd5318eda3b5eed00bffb9c4658728451995b7c1e58e49c702b107c2b
+    home: https://www.vaultproject.io/
+    icon: https://www.vaultproject.io/assets/images/mega-nav/logo-vault-0f83e3d2.svg
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: vault-operator
+    sources:
+    - https://github.com/hashicorp/vault
+    - https://github.com/banzaicloud/bank-vaults
+    - https://github.com/banzaicloud/banzai-charts
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/vault-operator-0.6.5.tgz
+    version: 0.6.5
   - apiVersion: v1
     appVersion: 0.8.0
     created: "2020-01-21T14:00:27.203Z"
@@ -7299,6 +8157,32 @@ entries:
     - https://kubernetes-charts.banzaicloud.com/charts/vault-operator-0.2.7.tgz
     version: 0.2.7
   vault-secrets-webhook:
+  - apiVersion: v1
+    appVersion: 0.9.0
+    created: "2020-02-23T18:29:07.327Z"
+    description: A Helm chart that deploys a mutating admission webhook that configures
+      applications to request env vars from Vault Secrets
+    digest: a29c9b8f04619e7b08e7d1b92c9307399f22e8a31c0ed163b1ae97b589270fa0
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: vault-secrets-webhook
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/vault-secrets-webhook-0.8.0.tgz
+    version: 0.8.0
+  - apiVersion: v1
+    appVersion: 0.9.0
+    created: "2020-02-19T11:38:25.119Z"
+    description: A Helm chart that deploys a mutating admission webhook that configures
+      applications to request env vars from Vault Secrets
+    digest: 6638e83384bd4d12caee6b5bef264f31cbac6c2313aa3fe211b1cda665b7b6b4
+    maintainers:
+    - email: info@banzaicloud.com
+      name: Banzai Cloud
+    name: vault-secrets-webhook
+    urls:
+    - https://kubernetes-charts.banzaicloud.com/charts/vault-secrets-webhook-0.7.2.tgz
+    version: 0.7.2
   - apiVersion: v1
     appVersion: 0.8.0
     created: "2020-01-21T14:00:43.765Z"
@@ -7926,5 +8810,5 @@ entries:
     urls:
     - https://kubernetes-charts.banzaicloud.com/charts/zookeeper-operator-0.0.1.tgz
     version: 0.0.1
-generated: "2020-01-22T13:21:30Z"
+generated: "2020-02-24T09:45:16Z"
 serverInfo: {}

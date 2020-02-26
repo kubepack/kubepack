@@ -23,13 +23,13 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-func CreateBundleView(url, name, version string) (*v1alpha1.BundleView, error) {
+func CreateBundleViewForBundle(ref *v1alpha1.ChartRepoRef) (*v1alpha1.BundleView, error) {
 	view, err := toBundleOptionView(&v1alpha1.BundleOption{
 		BundleRef: v1alpha1.BundleRef{
-			URL:  url,
-			Name: name,
+			URL:  ref.URL,
+			Name: ref.Name,
 		},
-		Version: version,
+		Version: ref.Version,
 	}, 0)
 	if err != nil {
 		return nil, err
@@ -128,4 +128,50 @@ func toBundleOptionView(in *v1alpha1.BundleOption, level int) (*v1alpha1.BundleO
 	}
 
 	return &bv, nil
+}
+
+func CreateBundleViewForChart(ref *v1alpha1.ChartRepoRef) (*v1alpha1.BundleView, error) {
+	pkgChart, err := GetChart(ref.URL, ref.Name, ref.Version)
+	if err != nil {
+		return nil, err
+	}
+
+	return &v1alpha1.BundleView{
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: v1alpha1.SchemeGroupVersion.String(),
+			Kind:       "BundleView",
+		},
+		BundleOptionView: v1alpha1.BundleOptionView{
+			PackageMeta: v1alpha1.PackageMeta{
+				PackageDescriptor: GetPackageDescriptor(pkgChart.Chart),
+				URL:               ref.URL,
+				Name:              ref.Name,
+				Version:           ref.Version,
+			},
+			DisplayName: flect.Titleize(flect.Humanize(ref.Name)),
+			//Features:    nil,
+			Packages: []v1alpha1.PackageCard{
+				{
+					Chart: &v1alpha1.ChartCard{
+						ChartRef: v1alpha1.ChartRef{
+							URL:  ref.URL,
+							Name: ref.Name,
+						},
+						PackageDescriptor: GetPackageDescriptor(pkgChart.Chart),
+						Features:          []string{pkgChart.Metadata.Description},
+						Namespace:         "default",
+						Versions: []v1alpha1.VersionOption{
+							{
+								Version:  ref.Version,
+								Selected: true,
+							},
+						},
+						MultiSelect: false,
+						Required:    true,
+						Selected:    true,
+					},
+				},
+			},
+		},
+	}, nil
 }
