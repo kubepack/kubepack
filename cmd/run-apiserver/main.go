@@ -21,6 +21,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"path/filepath"
+	"sort"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/artifacts/products"
@@ -37,6 +38,39 @@ func main() {
 	m.Use(macaron.Recovery())
 	m.Use(macaron.Renderer())
 
+	// PUBLIC
+	m.Get("/bundleview", binding.Json(v1alpha1.ChartRepoRef{}), func(ctx *macaron.Context, params v1alpha1.ChartRepoRef) {
+		// TODO: verify params
+
+		bv, err := lib.CreateBundleViewForChart(&params)
+		if err != nil {
+			ctx.Error(http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		ctx.JSON(http.StatusOK, bv)
+	})
+
+	// PUBLIC
+	m.Get("/packageview", binding.Json(v1alpha1.ChartRepoRef{}), func(ctx *macaron.Context, params v1alpha1.ChartRepoRef) {
+		// TODO: verify params
+
+		chrt, err := lib.GetChart(params.URL, params.Name, params.Version)
+		if err != nil {
+			ctx.Error(http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		pv, err := lib.CreatePackageView(params.URL, chrt.Chart)
+		if err != nil {
+			ctx.Error(http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		ctx.JSON(http.StatusOK, pv)
+	})
+
+	// PUBLIC
 	m.Get("/products", func(ctx *macaron.Context) {
 		// /products
 
@@ -61,6 +95,7 @@ func main() {
 		ctx.JSON(http.StatusOK, out)
 	})
 
+	// PUBLIC
 	m.Get("/products/:owner/:key", func(ctx *macaron.Context) {
 		// /products/appscode/kubedb
 		// TODO: get product by (owner, key)
@@ -73,6 +108,7 @@ func main() {
 		_, _ = ctx.Write(data)
 	})
 
+	// PUBLIC
 	m.Get("/products/:owner/:key/plans", func(ctx *macaron.Context) {
 		// /products/appscode/kubedb
 		// TODO: get product by (owner, key)
@@ -102,6 +138,7 @@ func main() {
 		ctx.JSON(http.StatusOK, out)
 	})
 
+	// PUBLIC
 	m.Get("/products/:owner/:key/plans/:plan", func(ctx *macaron.Context) {
 		// /products/appscode/kubedb
 		// TODO: get product by (owner, key)
@@ -122,7 +159,67 @@ func main() {
 		ctx.JSON(http.StatusOK, plaan)
 	})
 
-	m.Get("/products/:owner/:key/plans/:plan/bundle", func(ctx *macaron.Context) {
+	// PUBLIC
+	m.Get("/products/:owner/:key/compare", func(ctx *macaron.Context) {
+		// /products/appscode/kubedb
+		// TODO: get product by (owner, key)
+
+		// product
+		data, err := products.Asset(ctx.Params(":key") + ".json")
+		if err != nil {
+			ctx.Error(http.StatusInternalServerError, err.Error())
+			return
+		}
+		var p v1alpha1.Product
+		err = json.Unmarshal(data, &p)
+		if err != nil {
+			ctx.Error(http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		var url string
+		version := p.Spec.LatestVersion
+		var names []string
+		var plaans []v1alpha1.Plan
+
+		dir := "artifacts/products/kubedb-plans"
+		files, err := ioutil.ReadDir(dir)
+		if err != nil {
+			ctx.Error(http.StatusInternalServerError, err.Error())
+			return
+		}
+		for idx, file := range files {
+			data, err := ioutil.ReadFile(filepath.Join(dir, file.Name()))
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+			var plaan v1alpha1.Plan
+			err = json.Unmarshal(data, &plaan)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+			if idx == 0 {
+				url = plaan.Spec.Bundle.URL
+			}
+			names = append(names, plaan.Spec.Bundle.Name)
+			plaans = append(plaans, plaan)
+		}
+
+		sort.Slice(names, func(i, j int) bool {
+			if plaans[i].Spec.Weight == plaans[j].Spec.Weight {
+				return plaans[i].Spec.NickName < plaans[j].Spec.NickName
+			}
+			return plaans[i].Spec.Weight < plaans[j].Spec.Weight
+		})
+
+		table := lib.ComparePlans(url, names, version)
+		ctx.JSON(http.StatusOK, table)
+	})
+
+	// PUBLIC
+	m.Get("/products/:owner/:key/plans/:plan/bundleview", func(ctx *macaron.Context) {
 		// /products/appscode/kubedb
 		// TODO: get product by (owner, key)
 
@@ -165,6 +262,7 @@ func main() {
 		ctx.JSON(http.StatusOK, bv)
 	})
 
+	// PUBLIC
 	m.Get("/product_id/:id", func(ctx *macaron.Context) {
 		// TODO: get product by id
 
@@ -176,6 +274,8 @@ func main() {
 		_, _ = ctx.Write(data)
 	})
 
+	// PRIVATE
+	// Should we store Order UID in a table per User?
 	m.Group("/deploy/orders", func() {
 		m.Post("", binding.Json(v1alpha1.BundleView{}), func(ctx *macaron.Context, params v1alpha1.BundleView) {
 			order, err := lib.CreateOrder(params)
@@ -190,7 +290,13 @@ func main() {
 				return
 			}
 
-			err = lib.Upload(string(order.UID), "order.yaml", data)
+			bs, err := lib.NewTestBlobStore()
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+
+			err = bs.Upload(ctx.Req.Context(), string(order.UID), "order.yaml", data)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
@@ -198,7 +304,13 @@ func main() {
 			ctx.JSON(http.StatusOK, order)
 		})
 		m.Get("/:id/helm2", func(ctx *macaron.Context) {
-			data, err := lib.Download(ctx.Params(":id"), "order.yaml")
+			bs, err := lib.NewTestBlobStore()
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+
+			data, err := bs.Download(ctx.Req.Context(), ctx.Params(":id"), "order.yaml")
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
@@ -211,7 +323,7 @@ func main() {
 				return
 			}
 
-			script, err := lib.GenerateHelm2Script(order)
+			script, err := lib.GenerateHelm2Script(bs, order)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
@@ -223,7 +335,13 @@ func main() {
 			})
 		})
 		m.Get("/:id/helm3", func(ctx *macaron.Context) {
-			data, err := lib.Download(ctx.Params(":id"), "order.yaml")
+			bs, err := lib.NewTestBlobStore()
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+
+			data, err := bs.Download(ctx.Req.Context(), ctx.Params(":id"), "order.yaml")
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
@@ -236,7 +354,7 @@ func main() {
 				return
 			}
 
-			script, err := lib.GenerateHelm3Script(order)
+			script, err := lib.GenerateHelm3Script(bs, order)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
@@ -248,7 +366,13 @@ func main() {
 			})
 		})
 		m.Get("/:id/yaml", func(ctx *macaron.Context) {
-			data, err := lib.Download(ctx.Params(":id"), "order.yaml")
+			bs, err := lib.NewTestBlobStore()
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+
+			data, err := bs.Download(ctx.Req.Context(), ctx.Params(":id"), "order.yaml")
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
@@ -261,7 +385,7 @@ func main() {
 				return
 			}
 
-			script, err := lib.GenerateYAMLScript(order)
+			script, err := lib.GenerateYAMLScript(bs, order)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
@@ -272,40 +396,15 @@ func main() {
 				"darwin": script,
 			})
 		})
-		m.Post("/:id/clusters/:cluster", func(ctx *macaron.Context) {
+	})
+
+	m.Group("/clusters/:cluster", func() {
+		m.Post("/deploy/:id", func(ctx *macaron.Context) {
 		})
-		m.Delete("/:id/clusters/:cluster", func(ctx *macaron.Context) {
-
+		m.Delete("/deploy/:id", func(ctx *macaron.Context) {
 		})
 	})
-	m.Get("/bundleview", binding.Json(v1alpha1.ChartRepoRef{}), func(ctx *macaron.Context, params v1alpha1.ChartRepoRef) {
-		// TODO: verify params
 
-		bv, err := lib.CreateBundleViewForChart(&params)
-		if err != nil {
-			ctx.Error(http.StatusInternalServerError, err.Error())
-			return
-		}
-
-		ctx.JSON(http.StatusOK, bv)
-	})
-	m.Get("/packageview", binding.Json(v1alpha1.ChartRepoRef{}), func(ctx *macaron.Context, params v1alpha1.ChartRepoRef) {
-		// TODO: verify params
-
-		chrt, err := lib.GetChart(params.URL, params.Name, params.Version)
-		if err != nil {
-			ctx.Error(http.StatusInternalServerError, err.Error())
-			return
-		}
-
-		pv, err := lib.CreatePackageView(params.URL, chrt.Chart)
-		if err != nil {
-			ctx.Error(http.StatusInternalServerError, err.Error())
-			return
-		}
-
-		ctx.JSON(http.StatusOK, pv)
-	})
 	m.Get("/", func() string {
 		return "Hello world!"
 	})

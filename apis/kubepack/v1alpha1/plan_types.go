@@ -43,28 +43,29 @@ type Plan struct {
 }
 
 type PlanSpec struct {
-	StripeID string `json:"id" protobuf:"bytes,1,opt,name=id"`
-	NickName string `json:"name" protobuf:"bytes,2,opt,name=name"`
-
+	StripeID  string `json:"id" protobuf:"bytes,1,opt,name=id"`
+	NickName  string `json:"name" protobuf:"bytes,2,opt,name=name"`
 	ProductID string `json:"productID" protobuf:"bytes,3,opt,name=productID"`
 	Phase     Phase  `json:"phase" protobuf:"bytes,4,opt,name=phase,casttype=Phase"`
+	// Plans for sorted by weight before displaying to users
+	Weight int32 `json:"weight" protobuf:"varint,5,opt,name=weight"`
 
-	Bundle *ChartRef `json:"bundle,omitempty" protobuf:"bytes,5,opt,name=bundle"`
+	Bundle *ChartRef `json:"bundle,omitempty" protobuf:"bytes,6,opt,name=bundle"`
 	//+optional
-	IncludedPlans []string `json:"includedPlans,omitempty" protobuf:"bytes,6,rep,name=includedPlans"`
+	IncludedPlans []string `json:"includedPlans,omitempty" protobuf:"bytes,7,rep,name=includedPlans"`
 
-	AggregateUsage  *string             `json:"aggregateUsage,omitempty" protobuf:"bytes,7,opt,name=aggregateUsage"`
-	Amount          *int64              `json:"amount,omitempty" protobuf:"varint,8,opt,name=amount"`
-	AmountDecimal   *float64            `json:"amountDecimal,string,omitempty" protobuf:"fixed64,9,opt,name=amountDecimal"`
-	BillingScheme   *string             `json:"billingScheme,omitempty" protobuf:"bytes,10,opt,name=billingScheme"`
-	Currency        *string             `json:"currency,omitempty" protobuf:"bytes,11,opt,name=currency"`
-	Interval        *string             `json:"interval,omitempty" protobuf:"bytes,12,opt,name=interval"`
-	IntervalCount   *int64              `json:"intervalCount,omitempty" protobuf:"varint,13,opt,name=intervalCount"`
-	Tiers           []*PlanTier         `json:"tiers,omitempty" protobuf:"bytes,14,rep,name=tiers"`
-	TiersMode       *string             `json:"tiersMode,omitempty" protobuf:"bytes,15,opt,name=tiersMode"`
-	TransformUsage  *PlanTransformUsage `json:"transformUsage,omitempty" protobuf:"bytes,16,opt,name=transformUsage"`
-	TrialPeriodDays *int64              `json:"trialPeriodDays,omitempty" protobuf:"varint,17,opt,name=trialPeriodDays"`
-	UsageType       *string             `json:"usageType,omitempty" protobuf:"bytes,18,opt,name=usageType"`
+	AggregateUsage  *string             `json:"aggregateUsage,omitempty" protobuf:"bytes,8,opt,name=aggregateUsage"`
+	Amount          *int64              `json:"amount,omitempty" protobuf:"varint,9,opt,name=amount"`
+	AmountDecimal   *float64            `json:"amountDecimal,string,omitempty" protobuf:"fixed64,10,opt,name=amountDecimal"`
+	BillingScheme   *string             `json:"billingScheme,omitempty" protobuf:"bytes,11,opt,name=billingScheme"`
+	Currency        *string             `json:"currency,omitempty" protobuf:"bytes,12,opt,name=currency"`
+	Interval        *string             `json:"interval,omitempty" protobuf:"bytes,13,opt,name=interval"`
+	IntervalCount   *int64              `json:"intervalCount,omitempty" protobuf:"varint,14,opt,name=intervalCount"`
+	Tiers           []*PlanTier         `json:"tiers,omitempty" protobuf:"bytes,15,rep,name=tiers"`
+	TiersMode       *string             `json:"tiersMode,omitempty" protobuf:"bytes,16,opt,name=tiersMode"`
+	TransformUsage  *PlanTransformUsage `json:"transformUsage,omitempty" protobuf:"bytes,17,opt,name=transformUsage"`
+	TrialPeriodDays *int64              `json:"trialPeriodDays,omitempty" protobuf:"varint,18,opt,name=trialPeriodDays"`
+	UsageType       *string             `json:"usageType,omitempty" protobuf:"bytes,19,opt,name=usageType"`
 }
 
 // PlanTier configures tiered pricing

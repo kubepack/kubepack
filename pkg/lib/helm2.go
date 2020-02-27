@@ -18,6 +18,7 @@ package lib
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
@@ -25,7 +26,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/sets"
 )
 
-func GenerateHelm2Script(order v1alpha1.Order) (string, error) {
+func GenerateHelm2Script(bs *BlobStore, order v1alpha1.Order) (string, error) {
 	var buf bytes.Buffer
 	_, err := buf.WriteString("#!/usr/bin/env bash\n")
 	if err != nil {
@@ -114,8 +115,8 @@ func GenerateHelm2Script(order v1alpha1.Order) (string, error) {
 		f7 := &ApplicationUploader{
 			App:       f6.Result(),
 			UID:       string(order.UID),
-			BucketURL: YAMLBucket,
-			PublicURL: YAMLHost,
+			BucketURL: bs.Bucket,
+			PublicURL: bs.Host,
 			W:         &buf,
 		}
 		err = f7.Do()
@@ -129,12 +130,12 @@ func GenerateHelm2Script(order v1alpha1.Order) (string, error) {
 		}
 	}
 
-	err = Upload(string(order.UID), "helm2.sh", buf.Bytes())
+	err = bs.Upload(context.TODO(), string(order.UID), "helm2.sh", buf.Bytes())
 	if err != nil {
 		return "", err
 	}
 
 	fmt.Println(buf.String())
 
-	return fmt.Sprintf("curl -fsSL %s/%s/helm2.sh  | bash", YAMLHost, order.UID), nil
+	return fmt.Sprintf("curl -fsSL %s/%s/helm2.sh  | bash", bs.Host, order.UID), nil
 }

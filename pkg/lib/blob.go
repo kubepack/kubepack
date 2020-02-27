@@ -26,30 +26,51 @@ import (
 
 	"gocloud.dev/blob"
 	"golang.org/x/oauth2/google"
+	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 )
 
+const YAMLHost2 = "https://usercontent.kubepack.com"
+const YAMLBucket2 = "gs://kubepack-usercontent"
 const GoogleApplicationCredentials = "/home/tamal/Downloads/appscode-domains-1577f17c3fd8.json"
 
-func Upload(dir, filename string, data []byte) error {
-	saKey, err := ioutil.ReadFile(GoogleApplicationCredentials)
+type BlobStore struct {
+	URL    string
+	Host   string
+	Bucket string
+}
+
+func NewTestBlobStore() (*BlobStore, error) {
+	credential := GoogleApplicationCredentials
+	if v, ok := os.LookupEnv("GOOGLE_APPLICATION_CREDENTIALS"); ok {
+		credential = v
+	} else {
+		utilruntime.Must(os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", credential))
+	}
+
+	saKey, err := ioutil.ReadFile(credential)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	cfg, err := google.JWTConfigFromJSON(saKey)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	err = ioutil.WriteFile(GoogleApplicationCredentials+"-private-key", cfg.PrivateKey, 0644)
+	err = ioutil.WriteFile(credential+"-private-key", cfg.PrivateKey, 0644)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", GoogleApplicationCredentials)
+	return &BlobStore{
+		URL:    "gs://kubepack-usercontent?access_id=" + cfg.Email + "&private_key_path=" + credential + "-private-key",
+		Host:   YAMLHost2,
+		Bucket: YAMLBucket2,
+	}, nil
+}
 
-	ctx := context.Background()
-	bucket, err := blob.OpenBucket(ctx, "gs://kubepack-usercontent?access_id="+cfg.Email+"&private_key_path="+GoogleApplicationCredentials+"-private-key")
+func (b BlobStore) Upload(ctx context.Context, dir, filename string, data []byte) error {
+	bucket, err := blob.OpenBucket(ctx, b.URL)
 	if err != nil {
 		return err
 	}
@@ -72,26 +93,8 @@ func Upload(dir, filename string, data []byte) error {
 	return nil
 }
 
-func Download(dir, filename string) ([]byte, error) {
-	saKey, err := ioutil.ReadFile(GoogleApplicationCredentials)
-	if err != nil {
-		return nil, err
-	}
-
-	cfg, err := google.JWTConfigFromJSON(saKey)
-	if err != nil {
-		return nil, err
-	}
-
-	err = ioutil.WriteFile(GoogleApplicationCredentials+"-private-key", cfg.PrivateKey, 0644)
-	if err != nil {
-		return nil, err
-	}
-
-	os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", GoogleApplicationCredentials)
-
-	ctx := context.Background()
-	bucket, err := blob.OpenBucket(ctx, "gs://kubepack-usercontent?access_id="+cfg.Email+"&private_key_path="+GoogleApplicationCredentials+"-private-key")
+func (b BlobStore) Download(ctx context.Context, dir, filename string) ([]byte, error) {
+	bucket, err := blob.OpenBucket(ctx, b.URL)
 	if err != nil {
 		return nil, err
 	}

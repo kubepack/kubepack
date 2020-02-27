@@ -112,11 +112,16 @@ spec:
               type: integer
             usageType:
               type: string
+            weight:
+              description: Plans for sorted by weight before displaying to users
+              format: int32
+              type: integer
           required:
           - id
           - name
           - phase
           - productID
+          - weight
           type: object
         status:
           properties:
