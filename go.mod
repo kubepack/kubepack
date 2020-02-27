@@ -29,6 +29,7 @@ require (
 	github.com/stripe/stripe-go v68.20.0+incompatible
 	gocloud.dev v0.18.0
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
+	gomodules.xyz/jsonpatch/v2 v2.1.0
 	gomodules.xyz/version v0.1.0
 	gopkg.in/ini.v1 v1.52.0 // indirect
 	gopkg.in/macaron.v1 v1.3.2

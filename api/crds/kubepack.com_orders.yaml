@@ -225,8 +225,6 @@ spec:
               description: KubeVersion is a SemVer constraint specifying the version
                 of Kubernetes required.
               type: string
-            licenseKey:
-              type: string
           required:
           - items
           type: object

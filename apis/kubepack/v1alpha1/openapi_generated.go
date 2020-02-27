@@ -15589,6 +15589,12 @@ func schema_kubepack_apis_kubepack_v1alpha1_BundleView(ref common.ReferenceCallb
 							},
 						},
 					},
+					"licenseKey": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
 				},
 				Required: []string{"name", "url", "displayName", "packages"},
 			},
@@ -16886,12 +16892,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_OrderSpec(ref common.ReferenceCallba
 							Description: "KubeVersion is a SemVer constraint specifying the version of Kubernetes required.",
 							Type:        []string{"string"},
 							Format:      "",
-						},
-					},
-					"licenseKey": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
 						},
 					},
 				},

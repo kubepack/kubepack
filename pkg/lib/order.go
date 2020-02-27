@@ -17,6 +17,7 @@ limitations under the License.
 package lib
 
 import (
+	"encoding/json"
 	"time"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
@@ -24,8 +25,10 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
+	"gomodules.xyz/jsonpatch/v2"
 	"gomodules.xyz/version"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/apimachinery/pkg/util/sets"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
@@ -33,7 +36,7 @@ import (
 )
 
 func CreateOrder(bv v1alpha1.BundleView) (*v1alpha1.Order, error) {
-	selection, err := toPackageSelection(&bv.BundleOptionView)
+	selection, err := toPackageSelection(&bv.BundleOptionView, bv.LicenseKey)
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +65,7 @@ func CreateOrder(bv v1alpha1.BundleView) (*v1alpha1.Order, error) {
 // xref: helm.sh/helm/v3/pkg/action/install.go
 const releaseNameMaxLen = 53
 
-func toPackageSelection(in *v1alpha1.BundleOptionView) ([]v1alpha1.PackageSelection, error) {
+func toPackageSelection(in *v1alpha1.BundleOptionView, licenseKey string) ([]v1alpha1.PackageSelection, error) {
 	var out []v1alpha1.PackageSelection
 
 	_, bundle := GetBundle(&v1alpha1.BundleOption{
@@ -81,7 +84,7 @@ func toPackageSelection(in *v1alpha1.BundleOptionView) ([]v1alpha1.PackageSelect
 
 			for _, v := range pkg.Chart.Versions {
 				if v.Selected {
-					crds, waitFors := FindChartData(bundle, pkg.Chart.ChartRef, v.Version)
+					crds, waitFors, licenseKeyPath := FindChartData(bundle, pkg.Chart.ChartRef, v.Version)
 
 					releaseName := pkg.Chart.Name
 					if pkg.Chart.MultiSelect {
@@ -89,6 +92,24 @@ func toPackageSelection(in *v1alpha1.BundleOptionView) ([]v1alpha1.PackageSelect
 					}
 					if len(releaseName) > releaseNameMaxLen {
 						return nil, errors.Errorf("release name %q exceeds max length of %d", releaseName, releaseNameMaxLen)
+					}
+
+					if len(licenseKeyPath) > 0 {
+						var patch []jsonpatch.Operation
+						if v.ValuesPatch != nil {
+							err := json.Unmarshal(v.ValuesPatch.Raw, &patch)
+							if err != nil {
+								return nil, err
+							}
+						}
+						injectLicenseKey := jsonpatch.NewOperation("replace", licenseKeyPath, licenseKey)
+						patch = append(patch, injectLicenseKey)
+
+						data, err := json.Marshal(patch)
+						if err != nil {
+							return nil, err
+						}
+						v.ValuesPatch = &runtime.RawExtension{Raw: data}
 					}
 
 					selection := v1alpha1.PackageSelection{
@@ -111,7 +132,7 @@ func toPackageSelection(in *v1alpha1.BundleOptionView) ([]v1alpha1.PackageSelect
 				}
 			}
 		} else if pkg.Bundle != nil {
-			selections, err := toPackageSelection(pkg.Bundle)
+			selections, err := toPackageSelection(pkg.Bundle, licenseKey)
 			if err != nil {
 				return nil, err
 			}
@@ -124,7 +145,7 @@ func toPackageSelection(in *v1alpha1.BundleOptionView) ([]v1alpha1.PackageSelect
 	return out, nil
 }
 
-func FindChartData(bundle *v1alpha1.Bundle, chrtRef v1alpha1.ChartRef, chrtVersion string) (*v1alpha1.ResourceDefinitions, []v1alpha1.WaitFlags) {
+func FindChartData(bundle *v1alpha1.Bundle, chrtRef v1alpha1.ChartRef, chrtVersion string) (*v1alpha1.ResourceDefinitions, []v1alpha1.WaitFlags, string) {
 	for _, pkg := range bundle.Spec.Packages {
 		if pkg.Chart != nil &&
 			pkg.Chart.URL == chrtRef.URL &&
@@ -132,12 +153,12 @@ func FindChartData(bundle *v1alpha1.Bundle, chrtRef v1alpha1.ChartRef, chrtVersi
 
 			for _, v := range pkg.Chart.Versions {
 				if v.Version == chrtVersion {
-					return v.Resources, v.WaitFors
+					return v.Resources, v.WaitFors, v.LicenseKeyPath
 				}
 			}
 		}
 	}
-	return nil, nil
+	return nil, nil, ""
 }
 
 func InstallOrder(getter genericclioptions.RESTClientGetter, order v1alpha1.Order) error {

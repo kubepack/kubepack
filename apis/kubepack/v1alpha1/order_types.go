@@ -46,7 +46,6 @@ type OrderSpec struct {
 	Packages []PackageSelection `json:"items" protobuf:"bytes,1,rep,name=items"`
 	// KubeVersion is a SemVer constraint specifying the version of Kubernetes required.
 	KubeVersion string `json:"kubeVersion,omitempty" protobuf:"bytes,2,opt,name=kubeVersion"`
-	LicenseKey  string `json:"licenseKey,omitempty" protobuf:"bytes,3,opt,name=licenseKey"`
 }
 
 type PackageSelection struct {
