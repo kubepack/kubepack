@@ -16888,6 +16888,12 @@ func schema_kubepack_apis_kubepack_v1alpha1_OrderSpec(ref common.ReferenceCallba
 							Format:      "",
 						},
 					},
+					"licenseKey": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
 				},
 				Required: []string{"items"},
 			},
@@ -17441,6 +17447,13 @@ func schema_kubepack_apis_kubepack_v1alpha1_PlanSpec(ref common.ReferenceCallbac
 							Format: "",
 						},
 					},
+					"weight": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Plans for sorted by weight before displaying to users",
+							Type:        []string{"integer"},
+							Format:      "int32",
+						},
+					},
 					"bundle": {
 						SchemaProps: spec.SchemaProps{
 							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRef"),
@@ -17537,7 +17550,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_PlanSpec(ref common.ReferenceCallbac
 						},
 					},
 				},
-				Required: []string{"id", "name", "productID", "phase"},
+				Required: []string{"id", "name", "productID", "phase", "weight"},
 			},
 		},
 		Dependencies: []string{

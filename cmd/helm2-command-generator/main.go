@@ -20,7 +20,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"os"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/pkg/lib"
@@ -39,6 +38,11 @@ func main() {
 	flag.StringVar(&file, "file", file, "Path to Order file")
 	flag.Parse()
 
+	bs, err := lib.NewTestBlobStore()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	data, err := ioutil.ReadFile(file)
 	if err != nil {
 		log.Fatal(err)
@@ -50,9 +54,7 @@ func main() {
 	}
 	order.UID = types.UID(uuid.New().String())
 
-	os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", lib.GoogleApplicationCredentials)
-
-	script, err := lib.GenerateHelm2Script(order)
+	script, err := lib.GenerateHelm2Script(bs, order)
 	if err != nil {
 		log.Fatal(err)
 	}

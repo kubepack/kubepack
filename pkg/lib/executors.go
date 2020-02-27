@@ -532,9 +532,6 @@ func (x *Helm2CommandPrinter) Do() error {
 	return err
 }
 
-const YAMLHost = "https://usercontent.kubepack.com"
-const YAMLBucket = "gs://kubepack-usercontent"
-
 type YAMLPrinter struct {
 	ChartRef    v1alpha1.ChartRef
 	Version     string

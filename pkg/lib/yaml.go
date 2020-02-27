@@ -18,6 +18,7 @@ package lib
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
@@ -25,7 +26,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/sets"
 )
 
-func GenerateYAMLScript(order v1alpha1.Order) (string, error) {
+func GenerateYAMLScript(bs *BlobStore, order v1alpha1.Order) (string, error) {
 	var buf bytes.Buffer
 	_, err := buf.WriteString("#!/usr/bin/env bash\n")
 	if err != nil {
@@ -74,9 +75,9 @@ func GenerateYAMLScript(order v1alpha1.Order) (string, error) {
 			Namespace:   pkg.Chart.Namespace,
 			KubeVersion: "v1.17.0",
 			ValuesPatch: pkg.Chart.ValuesPatch,
-			BucketURL:   YAMLBucket,
+			BucketURL:   bs.Bucket,
 			UID:         string(order.UID),
-			PublicURL:   YAMLHost,
+			PublicURL:   bs.Host,
 			W:           &buf,
 		}
 		err = f3.Do()
@@ -118,8 +119,8 @@ func GenerateYAMLScript(order v1alpha1.Order) (string, error) {
 		f7 := &ApplicationUploader{
 			App:       f6.Result(),
 			UID:       string(order.UID),
-			BucketURL: YAMLBucket,
-			PublicURL: YAMLHost,
+			BucketURL: bs.Bucket,
+			PublicURL: bs.Host,
 			W:         &buf,
 		}
 		err = f7.Do()
@@ -133,12 +134,12 @@ func GenerateYAMLScript(order v1alpha1.Order) (string, error) {
 		}
 	}
 
-	err = Upload(string(order.UID), "script.sh", buf.Bytes())
+	err = bs.Upload(context.TODO(), string(order.UID), "script.sh", buf.Bytes())
 	if err != nil {
 		return "", err
 	}
 
 	fmt.Println(buf.String())
 
-	return fmt.Sprintf("curl -fsSL %s/%s/script.sh  | bash", YAMLHost, order.UID), nil
+	return fmt.Sprintf("curl -fsSL %s/%s/script.sh  | bash", bs.Host, order.UID), nil
 }

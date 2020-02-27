@@ -469,6 +469,8 @@ message OrderSpec {
 
   // KubeVersion is a SemVer constraint specifying the version of Kubernetes required.
   optional string kubeVersion = 2;
+
+  optional string licenseKey = 3;
 }
 
 message OrderStatus {
@@ -573,34 +575,37 @@ message PlanSpec {
 
   optional string phase = 4;
 
-  optional ChartRef bundle = 5;
+  // Plans for sorted by weight before displaying to users
+  optional int32 weight = 5;
+
+  optional ChartRef bundle = 6;
 
   // +optional
-  repeated string includedPlans = 6;
+  repeated string includedPlans = 7;
 
-  optional string aggregateUsage = 7;
+  optional string aggregateUsage = 8;
 
-  optional int64 amount = 8;
+  optional int64 amount = 9;
 
-  optional double amountDecimal = 9;
+  optional double amountDecimal = 10;
 
-  optional string billingScheme = 10;
+  optional string billingScheme = 11;
 
-  optional string currency = 11;
+  optional string currency = 12;
 
-  optional string interval = 12;
+  optional string interval = 13;
 
-  optional int64 intervalCount = 13;
+  optional int64 intervalCount = 14;
 
-  repeated PlanTier tiers = 14;
+  repeated PlanTier tiers = 15;
 
-  optional string tiersMode = 15;
+  optional string tiersMode = 16;
 
-  optional PlanTransformUsage transformUsage = 16;
+  optional PlanTransformUsage transformUsage = 17;
 
-  optional int64 trialPeriodDays = 17;
+  optional int64 trialPeriodDays = 18;
 
-  optional string usageType = 18;
+  optional string usageType = 19;
 }
 
 message PlanStatus {
