@@ -120,6 +120,7 @@ func main() {
 			return
 		}
 
+		phase := ctx.Params(":phase")
 		var out v1alpha1.PlanList
 		for _, file := range files {
 			data, err := ioutil.ReadFile(filepath.Join(dir, file.Name()))
@@ -133,7 +134,9 @@ func main() {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
 			}
-			out.Items = append(out.Items, plaan)
+			if phase == "" || plaan.Spec.Phase == v1alpha1.Phase(phase) {
+				out.Items = append(out.Items, plaan)
+			}
 		}
 		ctx.JSON(http.StatusOK, out)
 	})
@@ -164,6 +167,8 @@ func main() {
 		// /products/appscode/kubedb
 		// TODO: get product by (owner, key)
 
+		phase := ctx.Params(":phase")
+
 		// product
 		data, err := products.Asset(ctx.Params(":key") + ".json")
 		if err != nil {
@@ -182,7 +187,7 @@ func main() {
 		var names []string
 		var plaans []v1alpha1.Plan
 
-		dir := "artifacts/products/kubedb-plans"
+		dir := "artifacts/products/" + ctx.Params(":key") + "-plans"
 		files, err := ioutil.ReadDir(dir)
 		if err != nil {
 			ctx.Error(http.StatusInternalServerError, err.Error())
@@ -203,8 +208,11 @@ func main() {
 			if idx == 0 {
 				url = plaan.Spec.Bundle.URL
 			}
-			names = append(names, plaan.Spec.Bundle.Name)
-			plaans = append(plaans, plaan)
+
+			if phase == "" || plaan.Spec.Phase == v1alpha1.Phase(phase) {
+				names = append(names, plaan.Spec.Bundle.Name)
+				plaans = append(plaans, plaan)
+			}
 		}
 
 		sort.Slice(names, func(i, j int) bool {
@@ -398,6 +406,7 @@ func main() {
 		})
 	})
 
+	// PRIVATE
 	m.Group("/clusters/:cluster", func() {
 		m.Post("/deploy/:id", func(ctx *macaron.Context) {
 		})

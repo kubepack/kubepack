@@ -173,6 +173,8 @@ message BundleStatus {
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 message BundleView {
   optional BundleOptionView bundleOptionView = 1;
+
+  optional string licenseKey = 2;
 }
 
 message ChartCard {
@@ -469,8 +471,6 @@ message OrderSpec {
 
   // KubeVersion is a SemVer constraint specifying the version of Kubernetes required.
   optional string kubeVersion = 2;
-
-  optional string licenseKey = 3;
 }
 
 message OrderStatus {

@@ -24,6 +24,7 @@ import (
 type BundleView struct {
 	metav1.TypeMeta  `json:",inline"`
 	BundleOptionView `json:",inline" protobuf:"bytes,1,opt,name=bundleOptionView"`
+	LicenseKey       string `json:"licenseKey,omitempty" protobuf:"bytes,2,opt,name=licenseKey"`
 }
 
 type BundleOptionView struct {

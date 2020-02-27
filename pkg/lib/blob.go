@@ -29,8 +29,8 @@ import (
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 )
 
-const YAMLHost2 = "https://usercontent.kubepack.com"
-const YAMLBucket2 = "gs://kubepack-usercontent"
+const YAMLHost = "https://usercontent.kubepack.com"
+const YAMLBucket = "gs://kubepack-usercontent"
 const GoogleApplicationCredentials = "/home/tamal/Downloads/appscode-domains-1577f17c3fd8.json"
 
 type BlobStore struct {
@@ -64,8 +64,8 @@ func NewTestBlobStore() (*BlobStore, error) {
 
 	return &BlobStore{
 		URL:    "gs://kubepack-usercontent?access_id=" + cfg.Email + "&private_key_path=" + credential + "-private-key",
-		Host:   YAMLHost2,
-		Bucket: YAMLBucket2,
+		Host:   YAMLHost,
+		Bucket: YAMLBucket,
 	}, nil
 }
 
