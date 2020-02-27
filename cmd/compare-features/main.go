@@ -29,8 +29,8 @@ import (
 
 var (
 	url     = "https://kubepack-testcharts.storage.googleapis.com"
-	names   = []string{"kubedb-community"}
-	version = "v0.13.0-rc.2"
+	names   = []string{"kubedb-community", "kubedb-enterprise"}
+	version = "v0.13.0-rc.0"
 )
 
 func main() {

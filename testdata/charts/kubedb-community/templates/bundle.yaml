@@ -6,6 +6,21 @@ metadata:
 spec:
   description: KubeDB by AppsCode - Production ready databases on Kubernetes
   displayName: Kubedb Bundle
+  features: [
+    { "trait": "Recommended for", "value": "Recommended if you are experimenting or testing" },
+    { "trait": "Response Times", "value": "Best effort" },
+    { "trait": "Support Coverage", "value": "N/A" },
+    { "trait": "Emergency patches", "value": "x" },
+    { "trait": "Unlimited Incidents", "value": "x" },
+    { "trait": "Contacts for Ticketing", "value": "x" },
+    { "trait": "Community Support", "value": "Included (Public Slack & GitHub issues)" },
+    { "trait": "Remote Hands (Debug via Zoom)", "value": "Yes (charged at $200/hr)" },
+    { "trait": "Production Runbook", "value": "x" },
+    { "trait": "Dedicated Private chat (via Slack)", "value": "x" },
+    { "trait": "Phone support", "value": "x" },
+    { "trait": "Architectural Guidance", "value": "x" },
+    { "trait": "Professional Services", "value": "Additional fees" }
+  ]
   icons:
   - src: https://cdn.appscode.com/images/icon/kubedb.png
     type: image/png
