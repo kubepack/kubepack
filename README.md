@@ -112,23 +112,29 @@ $ go run cmd/helm-hub-reader/main.go
 - http://localhost:4000/products/appscode/kubedb
 - http://localhost:4000/product_id/prod_Gnc33bJka9iRl9
 - http://localhost:4000/products/appscode/kubedb/plans
+- http://localhost:4000/products/appscode/kubedb/compare
 - http://localhost:4000/products/appscode/kubedb/plans/kubedb-community
 - http://localhost:4000/products/appscode/kubedb/plans/kubedb-community/bundle
+
+### Generate PackageView
 
 - http://localhost:4000/packageview?url=https://charts.appscode.com/stable/&name=kubedb&version=v0.13.0-rc.0
 - http://localhost:4000/packageview?url=https://kubepack-testcharts.storage.googleapis.com&name=stash&version=v0.9.0-rc.2
 
+### Generate BundleView for Chart
+
 - http://localhost:4000/bundleview?url=https://charts.appscode.com/stable/&name=kubedb&version=v0.13.0-rc.0
 
 ### Generate order
-curl -X POST -H "Content-Type: application/json" -d @artifacts/kubedb-community/bundleview.json http://localhost:4000/deploy/orders
 
+```console
+curl -X POST -H "Content-Type: application/json" -d @artifacts/kubedb-community/bundleview.json http://localhost:4000/deploy/orders
 ```
+
+```json
 {"kind":"Order","apiVersion":"kubepack.com/v1alpha1","metadata":{"name":"kubedb-community","uid":"1f1d149b-5226-4659-8feb-165face489b3","creationTimestamp":"2020-02-26T12:00:24Z"},"spec":{"items":[{"chart":{"url":"https://charts.appscode.com/stable/","name":"kubedb","version":"v0.13.0-rc.0","releaseName":"kubedb","namespace":"kube-system","bundle":{"name":"kubedb-community","url":"https://kubepack-testcharts.storage.googleapis.com","version":"v0.13.0-rc.0"}}},{"chart":{"url":"https://charts.appscode.com/stable/","name":"kubedb-catalog","version":"v0.13.0-rc.0","releaseName":"kubedb-catalog","namespace":"kube-system","bundle":{"name":"kubedb-community","url":"https://kubepack-testcharts.storage.googleapis.com","version":"v0.13.0-rc.0"}}}]},"status":{}}
 ```
 
 - http://localhost:4000/deploy/orders/1f1d149b-5226-4659-8feb-165face489b3/helm2
 - http://localhost:4000/deploy/orders/1f1d149b-5226-4659-8feb-165face489b3/helm3
 - http://localhost:4000/deploy/orders/1f1d149b-5226-4659-8feb-165face489b3/yaml
-
-
