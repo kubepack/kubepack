@@ -41,7 +41,7 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	bv, err := lib.CreateBundleViewForBundle(&v1alpha1.ChartRepoRef{
+	bv, err := lib.CreateBundleViewForBundle(lib.DefaultRegistry, &v1alpha1.ChartRepoRef{
 		URL:     url,
 		Name:    name,
 		Version: version,

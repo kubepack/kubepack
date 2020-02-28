@@ -37,8 +37,8 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-func CreateOrder(bv v1alpha1.BundleView) (*v1alpha1.Order, error) {
-	selection, err := toPackageSelection(&bv.BundleOptionView, bv.LicenseKey)
+func CreateOrder(reg *repo.Registry, bv v1alpha1.BundleView) (*v1alpha1.Order, error) {
+	selection, err := toPackageSelection(reg, &bv.BundleOptionView, bv.LicenseKey)
 	if err != nil {
 		return nil, err
 	}
@@ -67,10 +67,10 @@ func CreateOrder(bv v1alpha1.BundleView) (*v1alpha1.Order, error) {
 // xref: helm.sh/helm/v3/pkg/action/install.go
 const releaseNameMaxLen = 53
 
-func toPackageSelection(in *v1alpha1.BundleOptionView, licenseKey string) ([]v1alpha1.PackageSelection, error) {
+func toPackageSelection(reg *repo.Registry, in *v1alpha1.BundleOptionView, licenseKey string) ([]v1alpha1.PackageSelection, error) {
 	var out []v1alpha1.PackageSelection
 
-	_, bundle := GetBundle(&v1alpha1.BundleOption{
+	_, bundle := GetBundle(reg, &v1alpha1.BundleOption{
 		BundleRef: v1alpha1.BundleRef{
 			URL:  in.URL,
 			Name: in.Name,
@@ -134,7 +134,7 @@ func toPackageSelection(in *v1alpha1.BundleOptionView, licenseKey string) ([]v1a
 				}
 			}
 		} else if pkg.Bundle != nil {
-			selections, err := toPackageSelection(pkg.Bundle, licenseKey)
+			selections, err := toPackageSelection(reg, pkg.Bundle, licenseKey)
 			if err != nil {
 				return nil, err
 			}
@@ -252,6 +252,7 @@ func InstallOrder(getter genericclioptions.RESTClientGetter, reg *repo.Registry,
 		}
 
 		f6 := &ApplicationGenerator{
+			Registry:    reg,
 			Chart:       *pkg.Chart,
 			KubeVersion: kubeVersion,
 		}

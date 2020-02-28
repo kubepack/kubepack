@@ -54,7 +54,7 @@ func main() {
 	}
 	order.UID = types.UID(uuid.New().String())
 
-	script, err := lib.GenerateHelm3Script(bs, order)
+	script, err := lib.GenerateHelm3Script(bs, lib.DefaultRegistry, order)
 	if err != nil {
 		log.Fatal(err)
 	}

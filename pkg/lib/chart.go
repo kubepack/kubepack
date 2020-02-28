@@ -75,10 +75,6 @@ func GetPackageDescriptor(pkgChart *chart.Chart) v1alpha1.PackageDescriptor {
 
 var DefaultRegistry = repo.NewDiskCacheRegistry()
 
-func GetChart(repoURL, chartName, chartVersion string) (*repo.ChartExtended, error) {
-	return DefaultRegistry.GetChart(repoURL, chartName, chartVersion)
-}
-
 func CreatePackageView(url string, chrt *chart.Chart) (*v1alpha1.PackageView, error) {
 	p := v1alpha1.PackageView{
 		TypeMeta: metav1.TypeMeta{

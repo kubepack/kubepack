@@ -18,9 +18,10 @@ package lib
 
 import (
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+	"kubepack.dev/lib-helm/repo"
 )
 
-func ComparePlans(url string, names []string, version string) v1alpha1.FeatureTable {
+func ComparePlans(reg *repo.Registry, url string, names []string, version string) v1alpha1.FeatureTable {
 	var table v1alpha1.FeatureTable
 	table.Plans = names
 
@@ -28,7 +29,7 @@ func ComparePlans(url string, names []string, version string) v1alpha1.FeatureTa
 	idx := 0
 
 	for bundleIdx, bundleName := range names {
-		_, bundle := GetBundle(&v1alpha1.BundleOption{
+		_, bundle := GetBundle(reg, &v1alpha1.BundleOption{
 			BundleRef: v1alpha1.BundleRef{
 				URL:  url,
 				Name: bundleName,

@@ -22,18 +22,19 @@ import (
 	"text/tabwriter"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+	"kubepack.dev/lib-helm/repo"
 
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 	"kmodules.xyz/resource-metadata/hub"
 )
 
-func CheckPermissions(getter genericclioptions.RESTClientGetter, order v1alpha1.Order) (bool, error) {
-	reg := hub.NewRegistry(string(order.UID), hub.KnownResources)
+func CheckPermissions(getter genericclioptions.RESTClientGetter, reg *repo.Registry, order v1alpha1.Order) (bool, error) {
+	resRegistry := hub.NewRegistry(string(order.UID), hub.KnownResources)
 	config, err := getter.ToRESTConfig()
 	if err != nil {
 		return false, err
 	}
-	err = reg.DiscoverResources(config)
+	err = resRegistry.DiscoverResources(config)
 	if err != nil {
 		return false, err
 	}
@@ -45,15 +46,16 @@ func CheckPermissions(getter genericclioptions.RESTClientGetter, order v1alpha1.
 
 		// TODO: What does permission check mean for non-existent resources?
 		checker := &PermissionChecker{
+			Registry:    reg,
 			ChartRef:    pkg.Chart.ChartRef,
 			Version:     pkg.Chart.Version,
 			ReleaseName: pkg.Chart.ReleaseName,
 			Namespace:   pkg.Chart.Namespace,
 			Verb:        "create",
 
-			Config:       config,
-			ClientGetter: getter,
-			Registry:     reg,
+			Config:           config,
+			ClientGetter:     getter,
+			ResourceRegistry: resRegistry,
 		}
 		err = checker.Do()
 		if err != nil {

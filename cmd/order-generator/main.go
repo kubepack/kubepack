@@ -46,7 +46,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	out, err := lib.CreateOrder(bv)
+	out, err := lib.CreateOrder(lib.DefaultRegistry, bv)
 	if err != nil {
 		log.Fatal(err)
 	}

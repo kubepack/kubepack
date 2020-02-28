@@ -22,11 +22,12 @@ import (
 	"fmt"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+	"kubepack.dev/lib-helm/repo"
 
 	"k8s.io/apimachinery/pkg/util/sets"
 )
 
-func GenerateHelm3Script(bs *BlobStore, order v1alpha1.Order) (string, error) {
+func GenerateHelm3Script(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order) (string, error) {
 	var buf bytes.Buffer
 	_, err := buf.WriteString("#!/usr/bin/env bash\n")
 	if err != nil {
@@ -69,6 +70,7 @@ func GenerateHelm3Script(bs *BlobStore, order v1alpha1.Order) (string, error) {
 		}
 
 		f3 := &Helm3CommandPrinter{
+			Registry:    reg,
 			ChartRef:    pkg.Chart.ChartRef,
 			Version:     pkg.Chart.Version,
 			ReleaseName: pkg.Chart.ReleaseName,
@@ -104,6 +106,7 @@ func GenerateHelm3Script(bs *BlobStore, order v1alpha1.Order) (string, error) {
 		}
 
 		f6 := &ApplicationGenerator{
+			Registry:    reg,
 			Chart:       *pkg.Chart,
 			KubeVersion: "v1.17.0",
 		}

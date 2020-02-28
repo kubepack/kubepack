@@ -54,7 +54,7 @@ func main() {
 	}
 	order.UID = types.UID(uuid.New().String())
 
-	script, err := lib.GenerateYAMLScript(bs, order)
+	script, err := lib.GenerateYAMLScript(bs, lib.DefaultRegistry, order)
 	if err != nil {
 		log.Fatal(err)
 	}
