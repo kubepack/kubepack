@@ -1,4 +1,59 @@
 plans:
 - Kubedb Bundle
 - Kubedb Bundle
-rows: null
+rows:
+- trait: Recommended for
+  values:
+  - Recommended if you are experimenting or testing
+  - Recommended if you have business and/or mission critical workloads.
+- trait: Response Times
+  values:
+  - Best effort
+  - |-
+    General guidance: < 48 business hours
+    System impaired: < 24 business hours
+    Production system impaired: < 2 hours
+- trait: Support Coverage
+  values:
+  - N/A
+  - 24x7x365
+- trait: Emergency patches
+  values:
+  - x
+  - Yes (as required)
+- trait: Unlimited Incidents
+  values:
+  - x
+  - "Yes"
+- trait: Contacts for Ticketing
+  values:
+  - x
+  - "10"
+- trait: Community Support
+  values:
+  - Included (Public Slack & GitHub issues)
+  - Included (Public Slack & GitHub issues)
+- trait: Remote Hands (Debug via Zoom)
+  values:
+  - Yes (charged at $200/hr)
+  - Included (as negotiated)
+- trait: Production Runbook
+  values:
+  - x
+  - "Yes"
+- trait: Dedicated Private chat (via Slack)
+  values:
+  - x
+  - "Yes"
+- trait: Phone support
+  values:
+  - x
+  - "Yes"
+- trait: Architectural Guidance
+  values:
+  - x
+  - Consultative review and guidance based on your applications
+- trait: Professional Services
+  values:
+  - Additional fees
+  - Additional fees

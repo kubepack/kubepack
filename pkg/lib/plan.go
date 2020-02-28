@@ -25,7 +25,6 @@ func ComparePlans(url string, names []string, version string) v1alpha1.FeatureTa
 	table.Plans = names
 
 	var ids = map[string]int{} // trait -> idx
-	var rows []*v1alpha1.Row
 	idx := 0
 
 	for bundleIdx, bundleName := range names {
@@ -43,14 +42,15 @@ func ComparePlans(url string, names []string, version string) v1alpha1.FeatureTa
 			if !ok {
 				id = idx
 				ids[feature.Trait] = id
-				rows = append(rows, &v1alpha1.Row{
+				table.Rows = append(table.Rows, &v1alpha1.Row{
 					Trait:  feature.Trait,
 					Values: make([]string, len(table.Plans)),
 				})
 				idx++
 			}
-			rows[id].Values[bundleIdx] = feature.Value
+			table.Rows[id].Values[bundleIdx] = feature.Value
 		}
 	}
+
 	return table
 }
