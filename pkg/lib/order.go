@@ -23,6 +23,7 @@ import (
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/client/clientset/versioned"
 	"kubepack.dev/lib-helm/action"
+	"kubepack.dev/lib-helm/repo"
 
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
@@ -162,7 +163,7 @@ func FindChartData(bundle *v1alpha1.Bundle, chrtRef v1alpha1.ChartRef, chrtVersi
 	return nil, nil, ""
 }
 
-func InstallOrder(getter genericclioptions.RESTClientGetter, order v1alpha1.Order) error {
+func InstallOrder(getter genericclioptions.RESTClientGetter, reg *repo.Registry, order v1alpha1.Order) error {
 	config, err := getter.ToRESTConfig()
 	if err != nil {
 		return err

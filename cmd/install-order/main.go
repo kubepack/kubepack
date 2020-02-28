@@ -63,7 +63,7 @@ func main() {
 	}
 	getter := clientcmdutil.NewClientGetter(&kubeconfig)
 
-	err = lib.InstallOrder(getter, order)
+	err = lib.InstallOrder(getter, lib.DefaultRegistry, order)
 	if err != nil {
 		log.Fatal(err)
 	}
