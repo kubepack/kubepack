@@ -22,6 +22,7 @@ import (
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/client/clientset/versioned"
+	"kubepack.dev/lib-helm/action"
 
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
@@ -209,14 +210,20 @@ func InstallOrder(getter genericclioptions.RESTClientGetter, order v1alpha1.Orde
 			namespaces.Insert(pkg.Chart.Namespace)
 		}
 
-		f3 := &ChartInstaller{
-			ChartRef:     pkg.Chart.ChartRef,
-			Version:      pkg.Chart.Version,
-			ReleaseName:  pkg.Chart.ReleaseName,
-			Namespace:    pkg.Chart.Namespace,
-			ValuesPatch:  pkg.Chart.ValuesPatch,
-			ClientGetter: getter,
+		f3, err := action.NewInstaller(getter, pkg.Chart.Namespace, "secret")
+		if err != nil {
+			return err
 		}
+		f3.
+			WithRegistry(reg).
+			WithOptions(action.InstallOptions{
+				ChartURL:    pkg.Chart.ChartRef.URL,
+				ChartName:   pkg.Chart.ChartRef.Name,
+				Version:     pkg.Chart.Version,
+				ValuesPatch: pkg.Chart.ValuesPatch,
+				Namespace:   pkg.Chart.Namespace,
+				ReleaseName: pkg.Chart.ReleaseName,
+			})
 		err = f3.Do()
 		if err != nil {
 			return err
@@ -270,12 +277,12 @@ func UninstallOrder(getter genericclioptions.RESTClientGetter, order v1alpha1.Or
 			continue
 		}
 
-		f1 := &ChartUninstaller{
-			ReleaseName:  pkg.Chart.ReleaseName,
-			Namespace:    pkg.Chart.Namespace,
-			ClientGetter: getter,
+		f1, err := action.NewUninstaller(getter, pkg.Chart.Namespace, "secret")
+		if err != nil {
+			return err
 		}
-		err := f1.Do()
+		f1.WithReleaseName(pkg.Chart.ReleaseName)
+		err = f1.Do()
 		if err != nil {
 			return err
 		}
