@@ -88,7 +88,11 @@ func (r *Registry) Get(url string) (*Entry, bool, error) {
 			URL: url,
 		}
 	}
-	entry.Cache = r.cache
+	if entry.Username != "" || entry.Password != "" || entry.CAFile != "" || entry.CertFile != "" || entry.KeyFile != "" {
+		entry.Cache = nil
+	} else {
+		entry.Cache = r.cache
+	}
 	r.m.RUnlock()
 
 	return entry, ok, nil
