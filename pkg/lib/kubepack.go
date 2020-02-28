@@ -21,6 +21,7 @@ import (
 	"strings"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+	"kubepack.dev/lib-helm/repo"
 
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chartutil"
@@ -29,8 +30,8 @@ import (
 	"sigs.k8s.io/yaml"
 )
 
-func GetBundle(in *v1alpha1.BundleOption) (*chart.Chart, *v1alpha1.Bundle) {
-	chrt, err := GetChart(in.URL, in.Name, in.Version)
+func GetBundle(reg *repo.Registry, in *v1alpha1.BundleOption) (*chart.Chart, *v1alpha1.Bundle) {
+	chrt, err := reg.GetChart(in.URL, in.Name, in.Version)
 	if err != nil {
 		log.Fatal(err)
 	}

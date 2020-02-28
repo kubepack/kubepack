@@ -44,7 +44,7 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	pkgChart, err := lib.GetChart(url, name, version)
+	pkgChart, err := lib.DefaultRegistry.GetChart(url, name, version)
 	if err != nil {
 		log.Fatalln(err)
 	}

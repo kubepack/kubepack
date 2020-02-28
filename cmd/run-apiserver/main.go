@@ -42,7 +42,7 @@ func main() {
 	m.Get("/bundleview", binding.Json(v1alpha1.ChartRepoRef{}), func(ctx *macaron.Context, params v1alpha1.ChartRepoRef) {
 		// TODO: verify params
 
-		bv, err := lib.CreateBundleViewForChart(&params)
+		bv, err := lib.CreateBundleViewForChart(lib.DefaultRegistry, &params)
 		if err != nil {
 			ctx.Error(http.StatusInternalServerError, err.Error())
 			return
@@ -55,7 +55,7 @@ func main() {
 	m.Get("/packageview", binding.Json(v1alpha1.ChartRepoRef{}), func(ctx *macaron.Context, params v1alpha1.ChartRepoRef) {
 		// TODO: verify params
 
-		chrt, err := lib.GetChart(params.URL, params.Name, params.Version)
+		chrt, err := lib.DefaultRegistry.GetChart(params.URL, params.Name, params.Version)
 		if err != nil {
 			ctx.Error(http.StatusInternalServerError, err.Error())
 			return
@@ -222,7 +222,7 @@ func main() {
 			return plaans[i].Spec.Weight < plaans[j].Spec.Weight
 		})
 
-		table := lib.ComparePlans(url, names, version)
+		table := lib.ComparePlans(lib.DefaultRegistry, url, names, version)
 		ctx.JSON(http.StatusOK, table)
 	})
 
@@ -258,7 +258,7 @@ func main() {
 			return
 		}
 
-		bv, err := lib.CreateBundleViewForBundle(&v1alpha1.ChartRepoRef{
+		bv, err := lib.CreateBundleViewForBundle(lib.DefaultRegistry, &v1alpha1.ChartRepoRef{
 			URL:     plaan.Spec.Bundle.URL,
 			Name:    plaan.Spec.Bundle.Name,
 			Version: p.Spec.LatestVersion,
@@ -286,7 +286,7 @@ func main() {
 	// Should we store Order UID in a table per User?
 	m.Group("/deploy/orders", func() {
 		m.Post("", binding.Json(v1alpha1.BundleView{}), func(ctx *macaron.Context, params v1alpha1.BundleView) {
-			order, err := lib.CreateOrder(params)
+			order, err := lib.CreateOrder(lib.DefaultRegistry, params)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
@@ -331,7 +331,7 @@ func main() {
 				return
 			}
 
-			script, err := lib.GenerateHelm2Script(bs, order)
+			script, err := lib.GenerateHelm2Script(bs, lib.DefaultRegistry, order)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
@@ -362,7 +362,7 @@ func main() {
 				return
 			}
 
-			script, err := lib.GenerateHelm3Script(bs, order)
+			script, err := lib.GenerateHelm3Script(bs, lib.DefaultRegistry, order)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
@@ -393,7 +393,7 @@ func main() {
 				return
 			}
 
-			script, err := lib.GenerateYAMLScript(bs, order)
+			script, err := lib.GenerateYAMLScript(bs, lib.DefaultRegistry, order)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return

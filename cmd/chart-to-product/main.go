@@ -45,7 +45,7 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	chrt, err := lib.GetChart(url, name, version)
+	chrt, err := lib.DefaultRegistry.GetChart(url, name, version)
 	if err != nil {
 		log.Fatalln(err)
 	}

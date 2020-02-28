@@ -94,7 +94,7 @@ func main() {
 			ns = strings.TrimSpace(parts[5])
 		}
 
-		pkgChart, err := lib.GetChart(url, chartName, primaryVersion)
+		pkgChart, err := lib.DefaultRegistry.GetChart(url, chartName, primaryVersion)
 		if err != nil {
 			log.Fatalln(err)
 		}
@@ -138,7 +138,7 @@ func main() {
 		bundleName := parts[1]
 		version := parts[2]
 
-		chart, err := lib.GetChart(url, bundleName, version)
+		chart, err := lib.DefaultRegistry.GetChart(url, bundleName, version)
 		if err != nil {
 			log.Fatalln(err)
 		}

@@ -18,13 +18,14 @@ package lib
 
 import (
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+	"kubepack.dev/lib-helm/repo"
 
 	"github.com/gobuffalo/flect"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-func CreateBundleViewForBundle(ref *v1alpha1.ChartRepoRef) (*v1alpha1.BundleView, error) {
-	view, err := toBundleOptionView(&v1alpha1.BundleOption{
+func CreateBundleViewForBundle(reg *repo.Registry, ref *v1alpha1.ChartRepoRef) (*v1alpha1.BundleView, error) {
+	view, err := toBundleOptionView(reg, &v1alpha1.BundleOption{
 		BundleRef: v1alpha1.BundleRef{
 			URL:  ref.URL,
 			Name: ref.Name,
@@ -44,8 +45,8 @@ func CreateBundleViewForBundle(ref *v1alpha1.ChartRepoRef) (*v1alpha1.BundleView
 	return &bv, nil
 }
 
-func toBundleOptionView(in *v1alpha1.BundleOption, level int) (*v1alpha1.BundleOptionView, error) {
-	chrt, bundle := GetBundle(in)
+func toBundleOptionView(reg *repo.Registry, in *v1alpha1.BundleOption, level int) (*v1alpha1.BundleOptionView, error) {
+	chrt, bundle := GetBundle(reg, in)
 
 	bv := v1alpha1.BundleOptionView{
 		PackageMeta: v1alpha1.PackageMeta{
@@ -69,7 +70,7 @@ func toBundleOptionView(in *v1alpha1.BundleOption, level int) (*v1alpha1.BundleO
 			if chartVersion == "" {
 				chartVersion = pkg.Chart.Versions[0].Version
 			}
-			pkgChart, err := GetChart(pkg.Chart.URL, pkg.Chart.Name, chartVersion)
+			pkgChart, err := reg.GetChart(pkg.Chart.URL, pkg.Chart.Name, chartVersion)
 			if err != nil {
 				return nil, err
 			}
@@ -102,7 +103,7 @@ func toBundleOptionView(in *v1alpha1.BundleOption, level int) (*v1alpha1.BundleO
 			}
 			bv.Packages = append(bv.Packages, card)
 		} else if pkg.Bundle != nil {
-			view, err := toBundleOptionView(pkg.Bundle, level+1)
+			view, err := toBundleOptionView(reg, pkg.Bundle, level+1)
 			if err != nil {
 				return nil, err
 			}
@@ -112,7 +113,7 @@ func toBundleOptionView(in *v1alpha1.BundleOption, level int) (*v1alpha1.BundleO
 		} else if pkg.OneOf != nil {
 			bovs := make([]*v1alpha1.BundleOptionView, 0, len(pkg.OneOf.Bundles))
 			for _, bo := range pkg.OneOf.Bundles {
-				view, err := toBundleOptionView(bo, level+1)
+				view, err := toBundleOptionView(reg, bo, level+1)
 				if err != nil {
 					return nil, err
 				}
@@ -130,8 +131,8 @@ func toBundleOptionView(in *v1alpha1.BundleOption, level int) (*v1alpha1.BundleO
 	return &bv, nil
 }
 
-func CreateBundleViewForChart(ref *v1alpha1.ChartRepoRef) (*v1alpha1.BundleView, error) {
-	pkgChart, err := GetChart(ref.URL, ref.Name, ref.Version)
+func CreateBundleViewForChart(reg *repo.Registry, ref *v1alpha1.ChartRepoRef) (*v1alpha1.BundleView, error) {
+	pkgChart, err := reg.GetChart(ref.URL, ref.Name, ref.Version)
 	if err != nil {
 		return nil, err
 	}

@@ -71,7 +71,7 @@ func main() {
 	}
 	order.UID = types.UID(uuid.New().String())
 
-	allowed, err := lib.CheckPermissions(getter, order)
+	allowed, err := lib.CheckPermissions(getter, lib.DefaultRegistry, order)
 	if err != nil {
 		log.Fatal(err)
 	}

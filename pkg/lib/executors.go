@@ -317,6 +317,7 @@ func (x *CRDReadinessChecker) Do() error {
 }
 
 type Helm3CommandPrinter struct {
+	Registry    *repo.Registry
 	ChartRef    v1alpha1.ChartRef
 	Version     string
 	ReleaseName string
@@ -329,7 +330,7 @@ type Helm3CommandPrinter struct {
 const indent = "  "
 
 func (x *Helm3CommandPrinter) Do() error {
-	chrt, err := GetChart(x.ChartRef.URL, x.ChartRef.Name, x.Version)
+	chrt, err := x.Registry.GetChart(x.ChartRef.URL, x.ChartRef.Name, x.Version)
 	if err != nil {
 		return err
 	}
@@ -426,6 +427,7 @@ func (x *Helm3CommandPrinter) Do() error {
 }
 
 type Helm2CommandPrinter struct {
+	Registry    *repo.Registry
 	ChartRef    v1alpha1.ChartRef
 	Version     string
 	ReleaseName string
@@ -436,7 +438,7 @@ type Helm2CommandPrinter struct {
 }
 
 func (x *Helm2CommandPrinter) Do() error {
-	chrt, err := GetChart(x.ChartRef.URL, x.ChartRef.Name, x.Version)
+	chrt, err := x.Registry.GetChart(x.ChartRef.URL, x.ChartRef.Name, x.Version)
 	if err != nil {
 		return err
 	}
@@ -533,6 +535,7 @@ func (x *Helm2CommandPrinter) Do() error {
 }
 
 type YAMLPrinter struct {
+	Registry    *repo.Registry
 	ChartRef    v1alpha1.ChartRef
 	Version     string
 	ReleaseName string
@@ -560,7 +563,7 @@ func (x *YAMLPrinter) Do() error {
 
 	var buf bytes.Buffer
 
-	chrt, err := GetChart(x.ChartRef.URL, x.ChartRef.Name, x.Version)
+	chrt, err := x.Registry.GetChart(x.ChartRef.URL, x.ChartRef.Name, x.Version)
 	if err != nil {
 		return err
 	}
@@ -754,15 +757,16 @@ type ResourcePermission struct {
 }
 
 type PermissionChecker struct {
+	Registry    *repo.Registry
 	ChartRef    v1alpha1.ChartRef
 	Version     string
 	ReleaseName string
 	Namespace   string
 	Verb        string
 
-	Config       *rest.Config
-	ClientGetter genericclioptions.RESTClientGetter
-	Registry     *hub.Registry
+	Config           *rest.Config
+	ClientGetter     genericclioptions.RESTClientGetter
+	ResourceRegistry *hub.Registry
 
 	attrs map[authorization.ResourceAttributes]*ResourcePermission
 	m     sync.Mutex
@@ -773,7 +777,7 @@ func (x *PermissionChecker) Do() error {
 		x.attrs = make(map[authorization.ResourceAttributes]*ResourcePermission)
 	}
 
-	chrt, err := GetChart(x.ChartRef.URL, x.ChartRef.Name, x.Version)
+	chrt, err := x.Registry.GetChart(x.ChartRef.URL, x.ChartRef.Name, x.Version)
 	if err != nil {
 		return err
 	}
@@ -892,7 +896,7 @@ func (x *PermissionChecker) Do() error {
 
 	for _, hook := range hooks {
 		if IsEvent(hook.Events, release.HookPreInstall) {
-			err = ExtractResourceAttributes([]byte(hook.Manifest), x.Verb, x.Registry, x.attrs)
+			err = ExtractResourceAttributes([]byte(hook.Manifest), x.Verb, x.ResourceRegistry, x.attrs)
 			if err != nil {
 				return err
 			}
@@ -900,7 +904,7 @@ func (x *PermissionChecker) Do() error {
 	}
 
 	for _, m := range manifests {
-		err = ExtractResourceAttributes([]byte(m.Content), x.Verb, x.Registry, x.attrs)
+		err = ExtractResourceAttributes([]byte(m.Content), x.Verb, x.ResourceRegistry, x.attrs)
 		if err != nil {
 			return err
 		}
@@ -908,7 +912,7 @@ func (x *PermissionChecker) Do() error {
 
 	for _, hook := range hooks {
 		if IsEvent(hook.Events, release.HookPostInstall) {
-			err = ExtractResourceAttributes([]byte(hook.Manifest), x.Verb, x.Registry, x.attrs)
+			err = ExtractResourceAttributes([]byte(hook.Manifest), x.Verb, x.ResourceRegistry, x.attrs)
 			if err != nil {
 				return err
 			}
@@ -1043,8 +1047,9 @@ func (x *ApplicationCreator) Do() error {
 }
 
 type ApplicationGenerator struct {
-	Chart v1alpha1.ChartSelection
-	chrt  *chart.Chart
+	Registry *repo.Registry
+	Chart    v1alpha1.ChartSelection
+	chrt     *chart.Chart
 
 	KubeVersion string
 
@@ -1061,7 +1066,7 @@ func (x *ApplicationGenerator) Do() error {
 		x.commonLabels = make(map[string]string)
 	}
 
-	chrt, err := GetChart(x.Chart.URL, x.Chart.Name, x.Chart.Version)
+	chrt, err := x.Registry.GetChart(x.Chart.URL, x.Chart.Name, x.Chart.Version)
 	x.chrt = chrt.Chart
 	if err != nil {
 		return err
