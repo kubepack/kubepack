@@ -62,10 +62,15 @@ type PackageView struct {
 	metav1.TypeMeta `json:",inline"`
 	PackageMeta     `json:",inline" protobuf:"bytes,1,opt,name=packageMeta"`
 
-	// Default chart values
-	Values *runtime.RawExtension `json:"values,omitempty" protobuf:"bytes,2,opt,name=values"`
+	// Chart value files
+	ValuesFiles []ValuesFile `json:"valuesFiles,omitempty" protobuf:"bytes,2,rep,name=valuesFiles"`
 
 	// openAPIV3Schema describes the schema used for validation and pruning of the Values file.
 	// +optional
 	OpenAPIV3Schema *crdv1beta1.JSONSchemaProps `json:"openAPIV3Schema,omitempty" protobuf:"bytes,3,opt,name=openAPIV3Schema"`
+}
+
+type ValuesFile struct {
+	Filename string                `json:"filename" protobuf:"bytes,1,opt,name=filename"`
+	Values   *runtime.RawExtension `json:"values,omitempty" protobuf:"bytes,2,opt,name=values"`
 }

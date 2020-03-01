@@ -75,6 +75,7 @@ func GenerateHelm3Script(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 			Version:     pkg.Chart.Version,
 			ReleaseName: pkg.Chart.ReleaseName,
 			Namespace:   pkg.Chart.Namespace,
+			ValuesFile:  pkg.Chart.ValuesFile,
 			ValuesPatch: pkg.Chart.ValuesPatch,
 			W:           &buf,
 		}

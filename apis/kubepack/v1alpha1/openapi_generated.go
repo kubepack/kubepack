@@ -380,6 +380,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Row":                                                schema_kubepack_apis_kubepack_v1alpha1_Row(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.SecretKeySelector":                                  schema_kubepack_apis_kubepack_v1alpha1_SecretKeySelector(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ServiceSelector":                                    schema_kubepack_apis_kubepack_v1alpha1_ServiceSelector(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ValuesFile":                                         schema_kubepack_apis_kubepack_v1alpha1_ValuesFile(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.VersionDetail":                                      schema_kubepack_apis_kubepack_v1alpha1_VersionDetail(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.VersionOption":                                      schema_kubepack_apis_kubepack_v1alpha1_VersionOption(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.WaitFlags":                                          schema_kubepack_apis_kubepack_v1alpha1_WaitFlags(ref),
@@ -15923,6 +15924,12 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartSelection(ref common.ReferenceC
 							Ref:         ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRepoRef"),
 						},
 					},
+					"valuesFile": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
 					"valuesPatch": {
 						SchemaProps: spec.SchemaProps{
 							Description: "RFC 6902 compatible json patch. ref: http://jsonpatch.com",
@@ -17308,10 +17315,17 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageView(ref common.ReferenceCall
 							Format:      "",
 						},
 					},
-					"values": {
+					"valuesFiles": {
 						SchemaProps: spec.SchemaProps{
-							Description: "Default chart values",
-							Ref:         ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
+							Description: "Chart value files",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ValuesFile"),
+									},
+								},
+							},
 						},
 					},
 					"openAPIV3Schema": {
@@ -17325,7 +17339,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_PackageView(ref common.ReferenceCall
 			},
 		},
 		Dependencies: []string{
-			"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1.JSONSchemaProps", "k8s.io/apimachinery/pkg/runtime.RawExtension", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link"},
+			"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1.JSONSchemaProps", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ValuesFile"},
 	}
 }
 
@@ -18233,6 +18247,32 @@ func schema_kubepack_apis_kubepack_v1alpha1_ServiceSelector(ref common.Reference
 	}
 }
 
+func schema_kubepack_apis_kubepack_v1alpha1_ValuesFile(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"filename": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"values": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
+						},
+					},
+				},
+				Required: []string{"filename"},
+			},
+		},
+		Dependencies: []string{
+			"k8s.io/apimachinery/pkg/runtime.RawExtension"},
+	}
+}
+
 func schema_kubepack_apis_kubepack_v1alpha1_VersionDetail(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -18248,6 +18288,12 @@ func schema_kubepack_apis_kubepack_v1alpha1_VersionDetail(ref common.ReferenceCa
 					"selected": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"boolean"},
+							Format: "",
+						},
+					},
+					"valuesFile": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
 							Format: "",
 						},
 					},
@@ -18305,6 +18351,12 @@ func schema_kubepack_apis_kubepack_v1alpha1_VersionOption(ref common.ReferenceCa
 					"selected": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"boolean"},
+							Format: "",
+						},
+					},
+					"valuesFile": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
 							Format: "",
 						},
 					},

@@ -88,12 +88,13 @@ type BundleOption struct {
 }
 
 type VersionOption struct {
-	Version  string `json:"version" protobuf:"bytes,1,opt,name=version"`
-	Selected bool   `json:"selected,omitempty" protobuf:"varint,2,opt,name=selected"`
+	Version    string `json:"version" protobuf:"bytes,1,opt,name=version"`
+	Selected   bool   `json:"selected,omitempty" protobuf:"varint,2,opt,name=selected"`
+	ValuesFile string `json:"valuesFile,omitempty" protobuf:"bytes,3,opt,name=valuesFile"`
 	// RFC 6902 compatible json patch. ref: http://jsonpatch.com
 	// +optional
 	// +kubebuilder:pruning:PreserveUnknownFields
-	ValuesPatch *runtime.RawExtension `json:"valuesPatch,omitempty" protobuf:"bytes,3,opt,name=valuesPatch"`
+	ValuesPatch *runtime.RawExtension `json:"valuesPatch,omitempty" protobuf:"bytes,4,opt,name=valuesPatch"`
 }
 
 type VersionDetail struct {

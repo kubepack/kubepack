@@ -13,12 +13,14 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 	"kubepack.dev/lib-helm/repo"
+	"sigs.k8s.io/yaml"
 )
 
 type InstallOptions struct {
 	ChartURL     string                `json:"chartURL"`
 	ChartName    string                `json:"chartName"`
 	Version      string                `json:"version"`
+	ValuesFile   string                `json:"valuesFile"`
 	ValuesPatch  *runtime.RawExtension `json:"valuesPatch"`
 	DryRun       bool                  `json:"dryRun"`
 	DisableHooks bool                  `json:"disableHooks"`
@@ -121,9 +123,25 @@ func (x *Installer) Run() (*release.Release, error) {
 
 	vals := chrt.Values
 	if x.opts.ValuesPatch != nil {
-		values, err := json.Marshal(chrt.Values)
-		if err != nil {
-			return nil, err
+		var values []byte
+		if x.opts.ValuesFile == "" {
+			values, err = json.Marshal(vals)
+			if err != nil {
+				return nil, err
+			}
+		} else {
+			for _, f := range chrt.Files {
+				if f.Name == x.opts.ValuesFile {
+					if err := yaml.Unmarshal(f.Data, &vals); err != nil {
+						return nil, fmt.Errorf("cannot load %s. Reason: %v", f.Name, err.Error())
+					}
+					values, err = yaml.YAMLToJSON(f.Data)
+					if err != nil {
+						return nil, err
+					}
+					break
+				}
+			}
 		}
 
 		patchData, err := json.Marshal(x.opts.ValuesPatch)
