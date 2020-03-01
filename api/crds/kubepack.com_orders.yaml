@@ -129,6 +129,8 @@ spec:
                         type: object
                       url:
                         type: string
+                      valuesFile:
+                        type: string
                       valuesPatch:
                         description: 'RFC 6902 compatible json patch. ref: http://jsonpatch.com'
                         type: object

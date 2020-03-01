@@ -322,6 +322,7 @@ type Helm3CommandPrinter struct {
 	Version     string
 	ReleaseName string
 	Namespace   string
+	ValuesFile  string
 	ValuesPatch *runtime.RawExtension
 
 	W io.Writer
@@ -385,7 +386,19 @@ func (x *Helm3CommandPrinter) Do() error {
 	}
 
 	if x.ValuesPatch != nil {
-		values, err := json.Marshal(chrt.Values)
+		vals := chrt.Values
+
+		if x.ValuesFile != "" {
+			for _, f := range chrt.Files {
+				if f.Name == x.ValuesFile {
+					if err := yamllib.Unmarshal(f.Data, &vals); err != nil {
+						return fmt.Errorf("cannot load %s. Reason: %v", f.Name, err.Error())
+					}
+					break
+				}
+			}
+		}
+		values, err := json.Marshal(vals)
 		if err != nil {
 			return err
 		}
@@ -432,6 +445,7 @@ type Helm2CommandPrinter struct {
 	Version     string
 	ReleaseName string
 	Namespace   string
+	ValuesFile  string
 	ValuesPatch *runtime.RawExtension
 
 	W io.Writer
@@ -493,7 +507,19 @@ func (x *Helm2CommandPrinter) Do() error {
 	}
 
 	if x.ValuesPatch != nil {
-		values, err := json.Marshal(chrt.Values)
+		vals := chrt.Values
+
+		if x.ValuesFile != "" {
+			for _, f := range chrt.Files {
+				if f.Name == x.ValuesFile {
+					if err := yamllib.Unmarshal(f.Data, &vals); err != nil {
+						return fmt.Errorf("cannot load %s. Reason: %v", f.Name, err.Error())
+					}
+					break
+				}
+			}
+		}
+		values, err := json.Marshal(vals)
 		if err != nil {
 			return err
 		}
@@ -541,6 +567,7 @@ type YAMLPrinter struct {
 	ReleaseName string
 	Namespace   string
 	KubeVersion string
+	ValuesFile  string
 	ValuesPatch *runtime.RawExtension
 
 	BucketURL string
@@ -604,7 +631,17 @@ func (x *YAMLPrinter) Do() error {
 
 	vals := chrt.Values
 	if x.ValuesPatch != nil {
-		values, err := json.Marshal(chrt.Values)
+		if x.ValuesFile != "" {
+			for _, f := range chrt.Files {
+				if f.Name == x.ValuesFile {
+					if err := yamllib.Unmarshal(f.Data, &vals); err != nil {
+						return fmt.Errorf("cannot load %s. Reason: %v", f.Name, err.Error())
+					}
+					break
+				}
+			}
+		}
+		values, err := json.Marshal(vals)
 		if err != nil {
 			return err
 		}

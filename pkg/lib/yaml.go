@@ -76,6 +76,7 @@ func GenerateYAMLScript(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order)
 			ReleaseName: pkg.Chart.ReleaseName,
 			Namespace:   pkg.Chart.Namespace,
 			KubeVersion: "v1.17.0",
+			ValuesFile:  pkg.Chart.ValuesFile,
 			ValuesPatch: pkg.Chart.ValuesPatch,
 			BucketURL:   bs.Bucket,
 			UID:         string(order.UID),

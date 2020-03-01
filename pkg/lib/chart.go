@@ -19,6 +19,7 @@ package lib
 import (
 	"bytes"
 	"net/http"
+	"strings"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/lib-helm/repo"
@@ -30,6 +31,7 @@ import (
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/yaml"
+	yamllib "sigs.k8s.io/yaml"
 )
 
 func GetPackageDescriptor(pkgChart *chart.Chart) v1alpha1.PackageDescriptor {
@@ -87,12 +89,23 @@ func CreatePackageView(url string, chrt *chart.Chart) (*v1alpha1.PackageView, er
 			Version:           chrt.Metadata.Version,
 			PackageDescriptor: GetPackageDescriptor(chrt),
 		},
-		Values: &runtime.RawExtension{
-			Object: &unstructured.Unstructured{Object: chrt.Values},
-		},
 	}
 
 	for _, f := range chrt.Files {
+		if f.Name == "values.yaml" || (strings.HasPrefix(f.Name, "values-") && strings.HasSuffix(f.Name, ".yaml")) {
+			var values map[string]interface{}
+			err := yamllib.Unmarshal(f.Data, &values)
+			if err != nil {
+				return nil, err
+			}
+
+			p.ValuesFiles = append(p.ValuesFiles, v1alpha1.ValuesFile{
+				Filename: f.Name,
+				Values: &runtime.RawExtension{
+					Object: &unstructured.Unstructured{Object: values},
+				},
+			})
+		}
 		if f.Name == "values.openapiv3_schema.json" || f.Name == "values.openapiv3_schema.yaml" || f.Name == "values.openapiv3_schema.yml" {
 			var schema crdv1beta1.JSONSchemaProps
 			reader := yaml.NewYAMLOrJSONDecoder(bytes.NewReader(f.Data), 2048)

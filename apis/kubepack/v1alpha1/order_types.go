@@ -60,14 +60,15 @@ type ChartSelection struct {
 
 	// Bundle points to the parent bundle which was used to install this, if any.
 	// If the chart was installed directly it will be unset.
-	Bundle *ChartRepoRef `json:"bundle,omitempty" protobuf:"bytes,8,opt,name=bundle"`
+	Bundle *ChartRepoRef `json:"bundle,omitempty" protobuf:"bytes,5,opt,name=bundle"`
 
+	ValuesFile string `json:"valuesFile,omitempty" protobuf:"bytes,6,opt,name=valuesFile"`
 	// RFC 6902 compatible json patch. ref: http://jsonpatch.com
 	// +optional
 	// +kubebuilder:pruning:PreserveUnknownFields
-	ValuesPatch *runtime.RawExtension `json:"valuesPatch,omitempty" protobuf:"bytes,5,opt,name=valuesPatch"`
-	Resources   *ResourceDefinitions  `json:"resources,omitempty" protobuf:"bytes,6,opt,name=resources"`
-	WaitFors    []WaitFlags           `json:"waitFors,omitempty" protobuf:"bytes,7,rep,name=waitFors"`
+	ValuesPatch *runtime.RawExtension `json:"valuesPatch,omitempty" protobuf:"bytes,7,opt,name=valuesPatch"`
+	Resources   *ResourceDefinitions  `json:"resources,omitempty" protobuf:"bytes,8,opt,name=resources"`
+	WaitFors    []WaitFlags           `json:"waitFors,omitempty" protobuf:"bytes,9,rep,name=waitFors"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

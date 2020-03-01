@@ -235,16 +235,18 @@ message ChartSelection {
 
   // Bundle points to the parent bundle which was used to install this, if any.
   // If the chart was installed directly it will be unset.
-  optional ChartRepoRef bundle = 8;
+  optional ChartRepoRef bundle = 5;
+
+  optional string valuesFile = 6;
 
   // RFC 6902 compatible json patch. ref: http://jsonpatch.com
   // +optional
   // +kubebuilder:pruning:PreserveUnknownFields
-  optional k8s.io.apimachinery.pkg.runtime.RawExtension valuesPatch = 5;
+  optional k8s.io.apimachinery.pkg.runtime.RawExtension valuesPatch = 7;
 
-  optional ResourceDefinitions resources = 6;
+  optional ResourceDefinitions resources = 8;
 
-  repeated WaitFlags waitFors = 7;
+  repeated WaitFlags waitFors = 9;
 }
 
 // ComponentList is a generic status holder for the top level resource
@@ -541,8 +543,8 @@ message PackageSelection {
 message PackageView {
   optional PackageMeta packageMeta = 1;
 
-  // Default chart values
-  optional k8s.io.apimachinery.pkg.runtime.RawExtension values = 2;
+  // Chart value files
+  repeated ValuesFile valuesFiles = 2;
 
   // openAPIV3Schema describes the schema used for validation and pruning of the Values file.
   // +optional
@@ -769,6 +771,12 @@ message ServiceSelector {
   optional string path = 3;
 }
 
+message ValuesFile {
+  optional string filename = 1;
+
+  optional k8s.io.apimachinery.pkg.runtime.RawExtension values = 2;
+}
+
 message VersionDetail {
   optional VersionOption versionOption = 1;
 
@@ -786,10 +794,12 @@ message VersionOption {
 
   optional bool selected = 2;
 
+  optional string valuesFile = 3;
+
   // RFC 6902 compatible json patch. ref: http://jsonpatch.com
   // +optional
   // +kubebuilder:pruning:PreserveUnknownFields
-  optional k8s.io.apimachinery.pkg.runtime.RawExtension valuesPatch = 3;
+  optional k8s.io.apimachinery.pkg.runtime.RawExtension valuesPatch = 4;
 }
 
 message WaitFlags {
