@@ -71,7 +71,7 @@ func NewTestBlobStore() (*BlobStore, error) {
 	}
 
 	return &BlobStore{
-		URL:    "gs://kubepack-usercontent?access_id=" + cfg.Email + "&private_key_path=" + credential + "-private-key",
+		URL:    YAMLBucket + "?access_id=" + cfg.Email + "&private_key_path=" + credential + "-private-key",
 		Host:   YAMLHost,
 		Bucket: YAMLBucket,
 	}, nil
