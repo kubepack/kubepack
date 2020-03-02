@@ -39,6 +39,14 @@ type BlobStore struct {
 	Bucket string
 }
 
+func NewBlobStore(url, host, bucket string) *BlobStore {
+	return &BlobStore{
+		URL:    url,
+		Host:   host,
+		Bucket: bucket,
+	}
+}
+
 func NewTestBlobStore() (*BlobStore, error) {
 	credential := GoogleApplicationCredentials
 	if v, ok := os.LookupEnv("GOOGLE_APPLICATION_CREDENTIALS"); ok {
