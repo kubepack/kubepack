@@ -671,33 +671,36 @@ message ProductSpec {
   optional int64 owner = 7;
 
   // +optional
-  optional string description = 8;
+  optional string ownerName = 8;
 
   // +optional
-  optional string unitLabel = 9;
-
-  optional string phase = 10;
+  optional string description = 9;
 
   // +optional
-  repeated MediaSpec icons = 11;
+  optional string unitLabel = 10;
+
+  optional string phase = 11;
 
   // +optional
-  repeated ContactData maintainers = 12;
+  repeated MediaSpec icons = 12;
 
   // +optional
-  repeated string keywords = 13;
+  repeated ContactData maintainers = 13;
 
   // +optional
-  repeated Link links = 14;
+  repeated string keywords = 14;
 
   // +optional
-  repeated Badge badges = 15;
+  repeated Link links = 15;
 
   // +optional
-  repeated ProductVersion versions = 16;
+  repeated Badge badges = 16;
 
   // +optional
-  optional string latestVersion = 17;
+  repeated ProductVersion versions = 17;
+
+  // +optional
+  optional string latestVersion = 18;
 }
 
 message ProductStatus {

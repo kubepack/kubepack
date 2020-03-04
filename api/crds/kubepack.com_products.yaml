@@ -122,6 +122,8 @@ spec:
             owner:
               format: int64
               type: integer
+            ownerName:
+              type: string
             phase:
               type: string
             shortName:
