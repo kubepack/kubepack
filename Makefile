@@ -254,10 +254,12 @@ gen-bindata:
 		--env HTTPS_PROXY=$(HTTPS_PROXY)                        \
 		$(BUILD_IMAGE)                                          \
 		/bin/bash -c "                                          \
-			cd /src/api/crds;                                                                                                \
-			go-bindata -ignore='\\.go$$' -ignore=\\.DS_Store -mode=0644 -modtime=1573722179 -o bindata.go -pkg crds ./...;   \
-			cd /src/artifacts/products;                                                                                      \
-			go-bindata -ignore='\\.go$$' -ignore=\\.DS_Store -mode=0644 -modtime=1573722179 -o bindata.go -pkg products .;   \
+			cd /src/api/crds;                                                                                                           \
+			go-bindata -ignore='\\.go$$' -ignore=\\.DS_Store -mode=0644 -modtime=1573722179 -o bindata.go -pkg crds ./...;              \
+			cd /src/artifacts/products;                                                                                                 \
+			go-bindata -ignore='\\.go$$' -ignore=\\.DS_Store -mode=0644 -modtime=1573722179 -o bindata.go -pkg products .;              \
+			cd /src/artifacts/products;                                                                                                 \
+			go-bindata -ignore='\\.go$$' -ignore=\\.DS_Store -mode=0644 -modtime=1573722179 -o plans/bindata.go -pkg plans *-plans/*;   \
 		"
 
 .PHONY: manifests
