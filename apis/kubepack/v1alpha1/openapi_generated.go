@@ -17449,6 +17449,18 @@ func schema_kubepack_apis_kubepack_v1alpha1_PlanSpec(ref common.ReferenceCallbac
 							Format: "",
 						},
 					},
+					"displayName": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"description": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
 					"productID": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
@@ -17564,7 +17576,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_PlanSpec(ref common.ReferenceCallbac
 						},
 					},
 				},
-				Required: []string{"id", "name", "productID", "phase", "weight"},
+				Required: []string{"id", "name", "displayName", "description", "productID", "phase", "weight"},
 			},
 		},
 		Dependencies: []string{
