@@ -6,6 +6,8 @@
   "spec": {
     "id": "plan_Gnc3qvbF5rIQ7X",
     "name": "KubeDB Community",
+    "displayName": "Kubedb Community",
+    "description": "Free open source edition for test and development",
     "productID": "prod_Gnc33bJka9iRl9",
     "phase": "Active",
     "bundle": {

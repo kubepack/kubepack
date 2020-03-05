@@ -1,6 +1,6 @@
 plans:
-- Kubedb Bundle
-- Kubedb Bundle
+- Kubedb Community
+- Kubedb Enterprise
 rows:
 - trait: Recommended for
   values:

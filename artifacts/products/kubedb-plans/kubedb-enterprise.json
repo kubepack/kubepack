@@ -6,6 +6,8 @@
   "spec": {
     "id": "plan_GnwGFLUOMYlmfJ",
     "name": "KubeDB Enterprise",
+    "displayName": "Kubedb Enterprise",
+    "description": "Production ready Databases with Day 2 operation automation",
     "productID": "prod_Gnc33bJka9iRl9",
     "phase": "Active",
     "bundle": {
