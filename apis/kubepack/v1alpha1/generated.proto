@@ -573,41 +573,45 @@ message PlanSpec {
 
   optional string name = 2;
 
-  optional string productID = 3;
+  optional string displayName = 3;
 
-  optional string phase = 4;
+  optional string description = 4;
+
+  optional string productID = 5;
+
+  optional string phase = 6;
 
   // Plans for sorted by weight before displaying to users
-  optional int32 weight = 5;
+  optional int32 weight = 7;
 
-  optional ChartRef bundle = 6;
+  optional ChartRef bundle = 8;
 
   // +optional
-  repeated string includedPlans = 7;
+  repeated string includedPlans = 9;
 
-  optional string aggregateUsage = 8;
+  optional string aggregateUsage = 10;
 
-  optional int64 amount = 9;
+  optional int64 amount = 11;
 
-  optional double amountDecimal = 10;
+  optional double amountDecimal = 12;
 
-  optional string billingScheme = 11;
+  optional string billingScheme = 13;
 
-  optional string currency = 12;
+  optional string currency = 14;
 
-  optional string interval = 13;
+  optional string interval = 15;
 
-  optional int64 intervalCount = 14;
+  optional int64 intervalCount = 16;
 
-  repeated PlanTier tiers = 15;
+  repeated PlanTier tiers = 17;
 
-  optional string tiersMode = 16;
+  optional string tiersMode = 18;
 
-  optional PlanTransformUsage transformUsage = 17;
+  optional PlanTransformUsage transformUsage = 19;
 
-  optional int64 trialPeriodDays = 18;
+  optional int64 trialPeriodDays = 20;
 
-  optional string usageType = 19;
+  optional string usageType = 21;
 }
 
 message PlanStatus {
