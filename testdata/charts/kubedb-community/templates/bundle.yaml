@@ -4,8 +4,8 @@ metadata:
   creationTimestamp: null
   name: '{{ include "kubedb-community.fullname" . }}'
 spec:
-  description: KubeDB by AppsCode - Production ready databases on Kubernetes
-  displayName: Kubedb Bundle
+  description: Free open source edition for test and development
+  displayName: Kubedb Community
   features: [
     { "trait": "Recommended for", "value": "Recommended if you are experimenting or testing" },
     { "trait": "Response Times", "value": "Best effort" },
