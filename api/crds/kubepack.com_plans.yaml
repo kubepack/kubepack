@@ -58,6 +58,10 @@ spec:
               type: object
             currency:
               type: string
+            description:
+              type: string
+            displayName:
+              type: string
             id:
               type: string
             includedPlans:
@@ -117,6 +121,8 @@ spec:
               format: int32
               type: integer
           required:
+          - description
+          - displayName
           - id
           - name
           - phase
