@@ -184,7 +184,6 @@ func main() {
 
 		var url string
 		version := p.Spec.LatestVersion
-		var names []string
 		var plaans []v1alpha1.Plan
 
 		dir := "artifacts/products/" + ctx.Params(":key") + "-plans"
@@ -210,19 +209,26 @@ func main() {
 			}
 
 			if phase == "" || plaan.Spec.Phase == v1alpha1.Phase(phase) {
-				names = append(names, plaan.Spec.Bundle.Name)
 				plaans = append(plaans, plaan)
 			}
 		}
 
-		sort.Slice(names, func(i, j int) bool {
+		sort.Slice(plaans, func(i, j int) bool {
 			if plaans[i].Spec.Weight == plaans[j].Spec.Weight {
 				return plaans[i].Spec.NickName < plaans[j].Spec.NickName
 			}
 			return plaans[i].Spec.Weight < plaans[j].Spec.Weight
 		})
 
+		var names []string
+		for _, plaan := range plaans {
+			names = append(names, plaan.Spec.Bundle.Name)
+		}
+
 		table := lib.ComparePlans(lib.DefaultRegistry, url, names, version)
+		for i, plaan := range plaans {
+			table.Plans[i] = plaan.Spec.DisplayName
+		}
 		ctx.JSON(http.StatusOK, table)
 	})
 

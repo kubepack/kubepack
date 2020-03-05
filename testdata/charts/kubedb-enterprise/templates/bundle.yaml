@@ -4,8 +4,8 @@ metadata:
   creationTimestamp: null
   name: '{{ include "kubedb-enterprise.fullname" . }}'
 spec:
-  description: KubeDB by AppsCode - Production ready databases on Kubernetes
-  displayName: Kubedb Bundle
+  description: Production ready Databases with Day 2 operation automation
+  displayName: Kubedb Enterprise
   features: [
     { "trait": "Recommended for", "value": "Recommended if you have business and/or mission critical workloads." },
     { "trait": "Response Times", "value": "General guidance: < 48 business hours\nSystem impaired: < 24 business hours\nProduction system impaired: < 2 hours" },
