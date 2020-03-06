@@ -21,20 +21,23 @@ import (
 	"kubepack.dev/lib-helm/repo"
 )
 
-func ComparePlans(reg *repo.Registry, url string, names []string, version string) v1alpha1.FeatureTable {
+func ComparePlans(reg *repo.Registry, url string, names []string, version string) (v1alpha1.FeatureTable, error) {
 	var table v1alpha1.FeatureTable
 
 	var ids = map[string]int{} // trait -> idx
 	idx := 0
 
 	for bundleIdx, bundleName := range names {
-		_, bundle := GetBundle(reg, &v1alpha1.BundleOption{
+		_, bundle, err := GetBundle(reg, &v1alpha1.BundleOption{
 			BundleRef: v1alpha1.BundleRef{
 				URL:  url,
 				Name: bundleName,
 			},
 			Version: version,
 		})
+		if err != nil {
+			return v1alpha1.FeatureTable{}, err
+		}
 		for _, feature := range bundle.Spec.Features {
 			id, ok := ids[feature.Trait]
 			if !ok {
@@ -50,5 +53,5 @@ func ComparePlans(reg *repo.Registry, url string, names []string, version string
 		}
 	}
 
-	return table
+	return table, nil
 }

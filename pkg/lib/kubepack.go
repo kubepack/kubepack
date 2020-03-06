@@ -17,7 +17,6 @@ limitations under the License.
 package lib
 
 import (
-	"log"
 	"strings"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
@@ -30,10 +29,10 @@ import (
 	"sigs.k8s.io/yaml"
 )
 
-func GetBundle(reg *repo.Registry, in *v1alpha1.BundleOption) (*chart.Chart, *v1alpha1.Bundle) {
+func GetBundle(reg *repo.Registry, in *v1alpha1.BundleOption) (*chart.Chart, *v1alpha1.Bundle, error) {
 	chrt, err := reg.GetChart(in.URL, in.Name, in.Version)
 	if err != nil {
-		log.Fatal(err)
+		return nil, nil, err
 	}
 	options := chartutil.ReleaseOptions{
 		Name:      chrt.Name(),
@@ -43,11 +42,11 @@ func GetBundle(reg *repo.Registry, in *v1alpha1.BundleOption) (*chart.Chart, *v1
 	}
 	values, err := chartutil.ToRenderValues(chrt.Chart, chrt.Values, options, chartutil.DefaultCapabilities)
 	if err != nil {
-		log.Fatalln(err)
+		return nil, nil, err
 	}
 	files, err := engine.Render(chrt.Chart, values)
 	if err != nil {
-		log.Fatalln(err)
+		return nil, nil, err
 	}
 	for filename, data := range files {
 		if strings.HasSuffix(filename, chartutil.NotesName) {
@@ -65,12 +64,12 @@ func GetBundle(reg *repo.Registry, in *v1alpha1.BundleOption) (*chart.Chart, *v1
 			var bundle v1alpha1.Bundle
 			err = yaml.Unmarshal([]byte(data), &bundle)
 			if err != nil {
-				log.Fatalln(err)
+				return nil, nil, err
 			}
-			return chrt.Chart, &bundle
+			return chrt.Chart, &bundle, nil
 		}
 	}
-	return chrt.Chart, nil
+	return chrt.Chart, nil, nil
 }
 
 func XorY(x, y string) string {

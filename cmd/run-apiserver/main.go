@@ -225,7 +225,11 @@ func main() {
 			names = append(names, plaan.Spec.Bundle.Name)
 		}
 
-		table := lib.ComparePlans(lib.DefaultRegistry, url, names, version)
+		table, err := lib.ComparePlans(lib.DefaultRegistry, url, names, version)
+		if err != nil {
+			ctx.Error(http.StatusInternalServerError, err.Error())
+			return
+		}
 		table.Plans = plaans
 		ctx.JSON(http.StatusOK, table)
 	})
