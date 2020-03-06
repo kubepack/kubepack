@@ -627,8 +627,10 @@ func (in *FeatureTable) DeepCopyInto(out *FeatureTable) {
 	*out = *in
 	if in.Plans != nil {
 		in, out := &in.Plans, &out.Plans
-		*out = make([]string, len(*in))
-		copy(*out, *in)
+		*out = make([]Plan, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
 	}
 	if in.Rows != nil {
 		in, out := &in.Rows, &out.Rows

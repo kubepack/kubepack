@@ -16295,8 +16295,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_FeatureTable(ref common.ReferenceCal
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Type:   []string{"string"},
-										Format: "",
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.Plan"),
 									},
 								},
 							},
@@ -16319,7 +16318,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_FeatureTable(ref common.ReferenceCal
 			},
 		},
 		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Row"},
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Plan", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Row"},
 	}
 }
 

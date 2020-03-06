@@ -322,7 +322,7 @@ message Feature {
 }
 
 message FeatureTable {
-  repeated string plans = 1;
+  repeated Plan plans = 1;
 
   repeated Row rows = 2;
 }
