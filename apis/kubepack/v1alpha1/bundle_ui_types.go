@@ -57,8 +57,8 @@ type ChartCard struct {
 }
 
 type FeatureTable struct {
-	Plans []string `json:"plans" protobuf:"bytes,1,rep,name=plans"`
-	Rows  []*Row   `json:"rows" protobuf:"bytes,2,rep,name=rows"`
+	Plans []Plan `json:"plans" protobuf:"bytes,1,rep,name=plans"`
+	Rows  []*Row `json:"rows" protobuf:"bytes,2,rep,name=rows"`
 }
 
 type Row struct {
