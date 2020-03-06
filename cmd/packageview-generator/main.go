@@ -33,7 +33,7 @@ var (
 	//name    = "kubedb"
 	//version = "v0.13.0-rc.0"
 
-	url     = "https://kubepack-testcharts.storage.googleapis.com"
+	url     = "https://bundles.kubepack.com"
 	name    = "stash"
 	version = "v0.9.0-rc.2"
 )

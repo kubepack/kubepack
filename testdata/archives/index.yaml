@@ -3,51 +3,51 @@ entries:
   cert-manager-community:
   - apiVersion: v2
     appVersion: v0.13.1
-    created: "2020-03-05T06:11:35.983016379-08:00"
+    created: "2020-03-06T04:23:16.009908764-08:00"
     description: Jetstack cert-manager Community Plan
     digest: a65c57b03e48397daf6017e0fa82b04ba623f23a8ba17d1343868cf468c6bf5d
     name: cert-manager-community
     type: application
     urls:
-    - https://kubepack-testcharts.storage.googleapis.com/cert-manager-community-v0.13.1.tgz
+    - https://bundles.kubepack.com/cert-manager-community-v0.13.1.tgz
     version: v0.13.1
   csi-vault-community:
   - apiVersion: v2
     appVersion: v0.3.0
-    created: "2020-03-05T06:11:35.983278096-08:00"
+    created: "2020-03-06T04:23:16.010410145-08:00"
     description: CSI Vault Community Plan
     digest: bc99a3f8c2b4fb133f5f674d17a26900b5d3e54c21c5ffcdc88ed13344afb2a5
     name: csi-vault-community
     type: application
     urls:
-    - https://kubepack-testcharts.storage.googleapis.com/csi-vault-community-v0.3.0.tgz
+    - https://bundles.kubepack.com/csi-vault-community-v0.3.0.tgz
     version: v0.3.0
   kubedb-community:
   - apiVersion: v2
     appVersion: v0.13.0-rc.0
-    created: "2020-03-05T06:11:35.983543773-08:00"
+    created: "2020-03-06T04:23:16.010932466-08:00"
     description: KubeDB Community Plan
-    digest: e449fbe910eefd5e7e229c5f23cbee3258b98bd0416aaee02ecf3f701522f138
+    digest: c67011ffb9688bba6ebc2210fd7e8c0c59654dd836549434e6d341c78a85e0c0
     name: kubedb-community
     type: application
     urls:
-    - https://kubepack-testcharts.storage.googleapis.com/kubedb-community-v0.13.0-rc.0.tgz
+    - https://bundles.kubepack.com/kubedb-community-v0.13.0-rc.0.tgz
     version: v0.13.0-rc.0
   kubedb-enterprise:
   - apiVersion: v2
     appVersion: v0.13.0-rc.0
-    created: "2020-03-05T06:11:35.98381741-08:00"
+    created: "2020-03-06T04:23:16.012330563-08:00"
     description: KubeDB Enterprise Plan
-    digest: 07850f4a8fdb9fce217d620208b07c6c04434f711f4e4184903a2effb19f514b
+    digest: 3f25fdc73c6d6c4cdfb17f43b661d5a24171db93e5650508dd0a072a25c5f518
     name: kubedb-enterprise
     type: application
     urls:
-    - https://kubepack-testcharts.storage.googleapis.com/kubedb-enterprise-v0.13.0-rc.0.tgz
+    - https://bundles.kubepack.com/kubedb-enterprise-v0.13.0-rc.0.tgz
     version: v0.13.0-rc.0
   stash:
   - apiVersion: v1
     appVersion: v0.9.0-rc.6
-    created: "2020-03-05T06:11:35.998170512-08:00"
+    created: "2020-03-06T04:23:16.018524616-08:00"
     description: Stash by AppsCode - Backup your Kubernetes Volumes
     digest: ab1622fa917fcf59f2c784e9afc0aa66b4d671277d5099dadba49547dc256908
     home: https://appscode.com/products/stash/
@@ -59,83 +59,83 @@ entries:
     sources:
     - https://github.com/stashed/stash
     urls:
-    - https://kubepack-testcharts.storage.googleapis.com/stash-v0.9.0-rc.6.tgz
+    - https://bundles.kubepack.com/stash-v0.9.0-rc.6.tgz
     version: v0.9.0-rc.6
   stash-community:
   - apiVersion: v2
     appVersion: v0.9.0-rc.6
-    created: "2020-03-05T06:11:35.984249078-08:00"
+    created: "2020-03-06T04:23:16.013338824-08:00"
     description: Stash Community Plan
-    digest: ef00e6b790182120b9dab1b95c41ab18328551c0c64c09f12242151b8a2f0192
+    digest: 8bc74e9e880b53489779daeb48e3b2bdf1793d0e3ad42834a835adbe2a60d7f0
     name: stash-community
     type: application
     urls:
-    - https://kubepack-testcharts.storage.googleapis.com/stash-community-v0.9.0-rc.6.tgz
+    - https://bundles.kubepack.com/stash-community-v0.9.0-rc.6.tgz
     version: v0.9.0-rc.6
   stash-elasticsearch-community:
   - apiVersion: v2
     appVersion: v0.1.0
-    created: "2020-03-05T06:11:35.984510954-08:00"
+    created: "2020-03-06T04:23:16.013998044-08:00"
     description: Stash Elasticsearch Addon Community Plan
     digest: e5e263cdd0b3e997be0c96e7d4536f34d4b75b3953c1eb007b39b58db1f81bfd
     name: stash-elasticsearch-community
     type: application
     urls:
-    - https://kubepack-testcharts.storage.googleapis.com/stash-elasticsearch-community-v0.1.0.tgz
+    - https://bundles.kubepack.com/stash-elasticsearch-community-v0.1.0.tgz
     version: v0.1.0
   stash-mongodb-community:
   - apiVersion: v2
     appVersion: v0.1.0
-    created: "2020-03-05T06:11:35.98474624-08:00"
+    created: "2020-03-06T04:23:16.014532089-08:00"
     description: Stash MongoDB Addon Community Plan
     digest: 7df197a68fd2715b1dcefc065cc92db5ad04a9b7a12a0895bf2c36e6cdeba571
     name: stash-mongodb-community
     type: application
     urls:
-    - https://kubepack-testcharts.storage.googleapis.com/stash-mongodb-community-v0.1.0.tgz
+    - https://bundles.kubepack.com/stash-mongodb-community-v0.1.0.tgz
     version: v0.1.0
   stash-mysql-community:
   - apiVersion: v2
     appVersion: v0.1.0
-    created: "2020-03-05T06:11:35.98502787-08:00"
+    created: "2020-03-06T04:23:16.015038381-08:00"
     description: Stash MySQL Addon Community
     digest: f598f24cf6a52958c8e7630db729c306707f81ad0a6349b39bb82cd1b05ea786
     name: stash-mysql-community
     type: application
     urls:
-    - https://kubepack-testcharts.storage.googleapis.com/stash-mysql-community-v0.1.0.tgz
+    - https://bundles.kubepack.com/stash-mysql-community-v0.1.0.tgz
     version: v0.1.0
   stash-percona-xtradb-community:
   - apiVersion: v2
     appVersion: v0.1.0
-    created: "2020-03-05T06:11:35.985267261-08:00"
+    created: "2020-03-06T04:23:16.015564578-08:00"
     description: Stash Percona XtraDB Addon Community Plan
     digest: 7d22bc41d4a8a8da741410fcbfd8af359d5fd86f39007158727df2ea8388e5fb
     name: stash-percona-xtradb-community
     type: application
     urls:
-    - https://kubepack-testcharts.storage.googleapis.com/stash-percona-xtradb-community-v0.1.0.tgz
+    - https://bundles.kubepack.com/stash-percona-xtradb-community-v0.1.0.tgz
     version: v0.1.0
   stash-postgres-community:
   - apiVersion: v2
     appVersion: v0.1.0
-    created: "2020-03-05T06:11:35.985512282-08:00"
+    created: "2020-03-06T04:23:16.016368611-08:00"
     description: Stash PostgreSQL Addon Community Plan
     digest: c9043eea77bda64391d2fe722811310421558e0d40a73bfa3bc12e318d7f4c1a
     name: stash-postgres-community
     type: application
     urls:
-    - https://kubepack-testcharts.storage.googleapis.com/stash-postgres-community-v0.1.0.tgz
+    - https://bundles.kubepack.com/stash-postgres-community-v0.1.0.tgz
     version: v0.1.0
   vault-operator-community:
   - apiVersion: v2
     appVersion: v0.3.0
-    created: "2020-03-05T06:11:35.998534487-08:00"
+    created: "2020-03-06T04:23:16.018820694-08:00"
     description: Vault Operator Community Plan
-    digest: 8399282fb15c20682775a36a2d1c374b8adf42dc3eeb4cf37b5c29408c7aae17
+    digest: aafd8c92958096379029ecc542cb8afca3a1aa3cea90818852a728787b65bb34
     name: vault-operator-community
     type: application
     urls:
-    - https://kubepack-testcharts.storage.googleapis.com/vault-operator-community-v0.3.0.tgz
+    - https://bundles.kubepack.com/vault-operator-community-v0.3.0.tgz
     version: v0.3.0
-generated: "2020-03-05T06:11:35.982539057-08:00"
+generated: "2020-03-06T04:23:16.009004278-08:00"

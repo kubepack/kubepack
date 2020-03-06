@@ -9,7 +9,7 @@ spec:
   - chart:
       bundle:
         name: kubedb-community
-        url: https://kubepack-testcharts.storage.googleapis.com
+        url: https://bundles.kubepack.com
         version: v0.13.0-rc.0
       name: kubedb
       namespace: kube-system
@@ -19,7 +19,7 @@ spec:
   - chart:
       bundle:
         name: kubedb-community
-        url: https://kubepack-testcharts.storage.googleapis.com
+        url: https://bundles.kubepack.com
         version: v0.13.0-rc.0
       name: kubedb-catalog
       namespace: kube-system

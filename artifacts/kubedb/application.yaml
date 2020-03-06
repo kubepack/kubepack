@@ -45,7 +45,7 @@ spec:
   package:
     bundle:
       name: kubedb-bundle
-      url: https://kubepack-testcharts.storage.googleapis.com
+      url: https://bundles.kubepack.com
       version: v0.13.0-rc.0
     channel: Regular
     chart:
