@@ -9,7 +9,7 @@
     "productID": "prod_Gnc30PSfV1FKGB",
     "phase": "Active",
     "bundle": {
-      "url": "https://kubepack-testcharts.storage.googleapis.com",
+      "url": "https://bundles.kubepack.com",
       "name": "bytebuilders-community"
     },
     "amount": 0,

@@ -24,12 +24,12 @@ find testdata/charts -maxdepth 1 -mindepth 1 -type d -exec helm package {} \;
 mkdir -p testdata/archives
 mv *.tgz testdata/archives
 
-helm repo index testdata/archives/ --url https://kubepack-testcharts.storage.googleapis.com
+helm repo index testdata/archives/ --url https://bundles.kubepack.com
 
-gsutil rsync -d -r testdata/archives gs://kubepack-testcharts
-gsutil acl ch -u AllUsers:R -r gs://kubepack-testcharts
+gsutil rsync -d -r testdata/archives gs://kubepack-bundles
+gsutil acl ch -u AllUsers:R -r gs://kubepack-bundles
 
 # https://cloud.google.com/storage/docs/gsutil/commands/setmeta
-gsutil setmeta -h "Cache-Control:public, max-age=60" gs://kubepack-testcharts/index.yaml
+gsutil setmeta -h "Cache-Control:public, max-age=60" gs://kubepack-bundles/index.yaml
 
 popd

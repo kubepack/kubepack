@@ -58,6 +58,6 @@ spec:
       - version: v0.13.1
   - bundle:
       name: stash-community
-      url: https://kubepack-testcharts.storage.googleapis.com
+      url: https://bundles.kubepack.com
       version: v0.9.0-rc.6
 status: {}

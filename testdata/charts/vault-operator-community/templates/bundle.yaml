@@ -35,6 +35,6 @@ spec:
       - version: v0.3.0
   - bundle:
       name: csi-vault-community
-      url: https://kubepack-testcharts.storage.googleapis.com
+      url: https://bundles.kubepack.com
       version: v0.3.0
 status: {}

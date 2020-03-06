@@ -10,7 +10,7 @@
 ## Configure Helm
 
 ```console
-helm repo add kubepack-testcharts https://kubepack-testcharts.storage.googleapis.com
+helm repo add kubepack-bundles https://bundles.kubepack.com
 helm repo add stable https://kubernetes-charts.storage.googleapis.com
 helm repo update
 ```
@@ -24,14 +24,14 @@ $ go run cmd/bundle-generator/main.go --name=csi-vault-bundle --charts https://c
 $ go run cmd/bundle-generator/main.go --name=vault-operator-bundle \
   --charts https://charts.appscode.com/stable/@vault-operator@v0.3.0 \
   --charts https://charts.appscode.com/stable/@vault-catalog@v0.3.0 \
-  --bundles https://kubepack-testcharts.storage.googleapis.com@csi-vault-bundle@v0.3.0
+  --bundles https://bundles.kubepack.com@csi-vault-bundle@v0.3.0
 
 $ go run cmd/bundle-generator/main.go --name=stash-mongodb-bundle \
   --charts https://charts.appscode.com/stable/@stash-mongodb@3.4.22:true,3.6.13:true,4.0.11:true,4.1.13:true@required@anyof
 
 $ go run cmd/bundle-generator/main.go --name=stash-bundle \
-  --charts https://kubepack-testcharts.storage.googleapis.com@stash@v0.9.0-rc.2 \
-  --bundles https://kubepack-testcharts.storage.googleapis.com@stash-mongodb-bundle@v0.9.0-rc.2
+  --charts https://bundles.kubepack.com@stash@v0.9.0-rc.2 \
+  --bundles https://bundles.kubepack.com@stash-mongodb-bundle@v0.9.0-rc.2
 
 # $ go run cmd/bundle-generator/main.go --name=cert-manager-bundle --charts https://charts.jetstack.io@cert-manager@v0.12.0@@@cert-manager
 
@@ -39,7 +39,7 @@ $ go run cmd/bundle-generator/main.go --name=kubedb-bundle \
   --charts https://charts.appscode.com/stable/@kubedb@v0.13.0-rc.0 \
   --charts https://charts.appscode.com/stable/@kubedb-catalog@v0.13.0-rc.0 \
   --charts https://charts.jetstack.io@cert-manager@v0.12.0@optional@@cert-manager \
-  --bundles https://kubepack-testcharts.storage.googleapis.com@stash-bundle@v0.9.0-rc.2
+  --bundles https://bundles.kubepack.com@stash-bundle@v0.9.0-rc.2
 
 $ ./hack/publish-testcharts.sh
 ```
@@ -119,7 +119,7 @@ $ go run cmd/helm-hub-reader/main.go
 ### Generate PackageView
 
 - http://localhost:4000/packageview?url=https://charts.appscode.com/stable/&name=kubedb&version=v0.13.0-rc.0
-- http://localhost:4000/packageview?url=https://kubepack-testcharts.storage.googleapis.com&name=stash&version=v0.9.0-rc.2
+- http://localhost:4000/packageview?url=https://bundles.kubepack.com&name=stash&version=v0.9.0-rc.2
 
 ### Generate BundleView for Chart
 
@@ -132,7 +132,7 @@ curl -X POST -H "Content-Type: application/json" -d @artifacts/kubedb-community/
 ```
 
 ```json
-{"kind":"Order","apiVersion":"kubepack.com/v1alpha1","metadata":{"name":"kubedb-community","uid":"1f1d149b-5226-4659-8feb-165face489b3","creationTimestamp":"2020-02-26T12:00:24Z"},"spec":{"items":[{"chart":{"url":"https://charts.appscode.com/stable/","name":"kubedb","version":"v0.13.0-rc.0","releaseName":"kubedb","namespace":"kube-system","bundle":{"name":"kubedb-community","url":"https://kubepack-testcharts.storage.googleapis.com","version":"v0.13.0-rc.0"}}},{"chart":{"url":"https://charts.appscode.com/stable/","name":"kubedb-catalog","version":"v0.13.0-rc.0","releaseName":"kubedb-catalog","namespace":"kube-system","bundle":{"name":"kubedb-community","url":"https://kubepack-testcharts.storage.googleapis.com","version":"v0.13.0-rc.0"}}}]},"status":{}}
+{"kind":"Order","apiVersion":"kubepack.com/v1alpha1","metadata":{"name":"kubedb-community","uid":"1f1d149b-5226-4659-8feb-165face489b3","creationTimestamp":"2020-02-26T12:00:24Z"},"spec":{"items":[{"chart":{"url":"https://charts.appscode.com/stable/","name":"kubedb","version":"v0.13.0-rc.0","releaseName":"kubedb","namespace":"kube-system","bundle":{"name":"kubedb-community","url":"https://bundles.kubepack.com","version":"v0.13.0-rc.0"}}},{"chart":{"url":"https://charts.appscode.com/stable/","name":"kubedb-catalog","version":"v0.13.0-rc.0","releaseName":"kubedb-catalog","namespace":"kube-system","bundle":{"name":"kubedb-community","url":"https://bundles.kubepack.com","version":"v0.13.0-rc.0"}}}]},"status":{}}
 ```
 
 - http://localhost:4000/deploy/orders/1f1d149b-5226-4659-8feb-165face489b3/helm2

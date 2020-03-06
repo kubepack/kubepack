@@ -793,7 +793,7 @@ openAPIV3Schema:
       - serviceAccount
       type: object
   type: object
-url: https://kubepack-testcharts.storage.googleapis.com
+url: https://bundles.kubepack.com
 values:
   additionalPodSecurityPolicies: []
   affinity: {}

@@ -30,7 +30,7 @@ import (
 )
 
 var (
-	url     = "https://kubepack-testcharts.storage.googleapis.com"
+	url     = "https://bundles.kubepack.com"
 	name    = "kubedb-community"
 	version = "v0.13.0-rc.0"
 )

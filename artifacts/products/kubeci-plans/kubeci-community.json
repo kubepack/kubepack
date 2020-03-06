@@ -9,7 +9,7 @@
     "productID": "prod_Gnc3ViHyPjg4ea",
     "phase": "Active",
     "bundle": {
-      "url": "https://kubepack-testcharts.storage.googleapis.com",
+      "url": "https://bundles.kubepack.com",
       "name": "kubeci-community"
     },
     "amount": 0,

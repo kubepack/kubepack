@@ -3,7 +3,7 @@
   "apiVersion": "kubepack.com/v1alpha1",
   "description": "KubeDB Community Plan",
   "name": "kubedb-community",
-  "url": "https://kubepack-testcharts.storage.googleapis.com",
+  "url": "https://bundles.kubepack.com",
   "version": "v0.13.0-rc.0",
   "displayName": "Kubedb Bundle",
   "packages": [
@@ -126,13 +126,13 @@
       "bundle": {
         "description": "Stash Community Plan",
         "name": "stash-community",
-        "url": "https://kubepack-testcharts.storage.googleapis.com",
+        "url": "https://bundles.kubepack.com",
         "version": "v0.9.0-rc.6",
         "displayName": "Stash Bundle",
         "packages": [
           {
             "chart": {
-              "url": "https://kubepack-testcharts.storage.googleapis.com",
+              "url": "https://bundles.kubepack.com",
               "name": "stash",
               "description": "Stash by AppsCode - Backup your Kubernetes Volumes",
               "icons": [
@@ -170,7 +170,7 @@
             "bundle": {
               "description": "Stash Elasticsearch Addon Community Plan",
               "name": "stash-elasticsearch-community",
-              "url": "https://kubepack-testcharts.storage.googleapis.com",
+              "url": "https://bundles.kubepack.com",
               "version": "v0.1.0",
               "displayName": "Stash Elasticsearch Bundle",
               "packages": [
@@ -278,7 +278,7 @@
             "bundle": {
               "description": "Stash MongoDB Addon Community Plan",
               "name": "stash-mongodb-community",
-              "url": "https://kubepack-testcharts.storage.googleapis.com",
+              "url": "https://bundles.kubepack.com",
               "version": "v0.1.0",
               "displayName": "Stash MongoDB Bundle",
               "packages": [
@@ -386,7 +386,7 @@
             "bundle": {
               "description": "Stash MySQL Addon Community",
               "name": "stash-mysql-community",
-              "url": "https://kubepack-testcharts.storage.googleapis.com",
+              "url": "https://bundles.kubepack.com",
               "version": "v0.1.0",
               "displayName": "Stash MySQL Bundle",
               "packages": [
@@ -442,7 +442,7 @@
             "bundle": {
               "description": "Stash PostgreSQL Addon Community Plan",
               "name": "stash-postgres-community",
-              "url": "https://kubepack-testcharts.storage.googleapis.com",
+              "url": "https://bundles.kubepack.com",
               "version": "v0.1.0",
               "displayName": "Stash PostgreSQL Bundle",
               "packages": [
@@ -506,7 +506,7 @@
             "bundle": {
               "description": "Stash Percona XtraDB Addon Community Plan",
               "name": "stash-percona-xtradb-community",
-              "url": "https://kubepack-testcharts.storage.googleapis.com",
+              "url": "https://bundles.kubepack.com",
               "version": "v0.1.0",
               "displayName": "Stash Percona XtraDB Bundle",
               "packages": [
