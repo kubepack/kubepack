@@ -42,7 +42,7 @@ func ComparePlans(reg *repo.Registry, url string, names []string, version string
 				ids[feature.Trait] = id
 				table.Rows = append(table.Rows, &v1alpha1.Row{
 					Trait:  feature.Trait,
-					Values: make([]string, len(table.Plans)),
+					Values: make([]string, len(names)),
 				})
 				idx++
 			}

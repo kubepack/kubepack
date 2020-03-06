@@ -226,9 +226,7 @@ func main() {
 		}
 
 		table := lib.ComparePlans(lib.DefaultRegistry, url, names, version)
-		for i, plaan := range plaans {
-			table.Plans[i] = plaan
-		}
+		table.Plans = plaans
 		ctx.JSON(http.StatusOK, table)
 	})
 
