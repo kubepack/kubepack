@@ -11,7 +11,7 @@
     "productID": "prod_Gnc33bJka9iRl9",
     "phase": "Active",
     "bundle": {
-      "url": "https://kubepack-testcharts.storage.googleapis.com",
+      "url": "https://bundles.kubepack.com",
       "name": "kubedb-enterprise"
     },
     "amount": 299,

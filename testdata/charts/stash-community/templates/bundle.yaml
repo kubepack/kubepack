@@ -22,27 +22,27 @@ spec:
       - Stash by AppsCode - Backup your Kubernetes Volumes
       name: stash
       required: true
-      url: https://kubepack-testcharts.storage.googleapis.com
+      url: https://bundles.kubepack.com
       versions:
       - version: v0.9.0-rc.6
   - bundle:
       name: stash-elasticsearch-community
-      url: https://kubepack-testcharts.storage.googleapis.com
+      url: https://bundles.kubepack.com
       version: v0.1.0
   - bundle:
       name: stash-mongodb-community
-      url: https://kubepack-testcharts.storage.googleapis.com
+      url: https://bundles.kubepack.com
       version: v0.1.0
   - bundle:
       name: stash-mysql-community
-      url: https://kubepack-testcharts.storage.googleapis.com
+      url: https://bundles.kubepack.com
       version: v0.1.0
   - bundle:
       name: stash-postgres-community
-      url: https://kubepack-testcharts.storage.googleapis.com
+      url: https://bundles.kubepack.com
       version: v0.1.0
   - bundle:
       name: stash-percona-xtradb-community
-      url: https://kubepack-testcharts.storage.googleapis.com
+      url: https://bundles.kubepack.com
       version: v0.1.0
 status: {}

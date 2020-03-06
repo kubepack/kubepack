@@ -28,7 +28,7 @@ import (
 )
 
 var (
-	url     = "https://kubepack-testcharts.storage.googleapis.com"
+	url     = "https://bundles.kubepack.com"
 	names   = []string{"kubedb-community", "kubedb-enterprise"}
 	version = "v0.13.0-rc.0"
 )

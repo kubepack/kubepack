@@ -91,7 +91,7 @@ packages:
         name: stash
         namespace: kube-system
         selected: true
-        url: https://kubepack-testcharts.storage.googleapis.com
+        url: https://bundles.kubepack.com
         versions:
         - selected: true
           version: v0.9.0-rc.6
@@ -153,7 +153,7 @@ packages:
               version: "7.3"
             - selected: true
               version: 7.3.2
-        url: https://kubepack-testcharts.storage.googleapis.com
+        url: https://bundles.kubepack.com
         version: v0.1.0
     - bundle:
         description: Stash MongoDB Addon Community Plan
@@ -213,7 +213,7 @@ packages:
               version: "4.2"
             - selected: true
               version: 4.2.3
-        url: https://kubepack-testcharts.storage.googleapis.com
+        url: https://bundles.kubepack.com
         version: v0.1.0
     - bundle:
         description: Stash MySQL Addon Community
@@ -247,7 +247,7 @@ packages:
               version: 8.0.3
             - selected: true
               version: 8.0.14
-        url: https://kubepack-testcharts.storage.googleapis.com
+        url: https://bundles.kubepack.com
         version: v0.1.0
     - bundle:
         description: Stash PostgreSQL Addon Community Plan
@@ -285,7 +285,7 @@ packages:
               version: "11.1"
             - selected: true
               version: "11.2"
-        url: https://kubepack-testcharts.storage.googleapis.com
+        url: https://bundles.kubepack.com
         version: v0.1.0
     - bundle:
         description: Stash Percona XtraDB Addon Community Plan
@@ -315,9 +315,9 @@ packages:
             versions:
             - selected: true
               version: "5.7"
-        url: https://kubepack-testcharts.storage.googleapis.com
+        url: https://bundles.kubepack.com
         version: v0.1.0
-    url: https://kubepack-testcharts.storage.googleapis.com
+    url: https://bundles.kubepack.com
     version: v0.9.0-rc.6
-url: https://kubepack-testcharts.storage.googleapis.com
+url: https://bundles.kubepack.com
 version: v0.13.0-rc.0
