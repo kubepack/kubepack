@@ -6,6 +6,7 @@ on:
       - 'release-*'
     tags-ignore:
       - '*.*'
+  pull_request:
 
 jobs:
 
