@@ -70,13 +70,16 @@ const releaseNameMaxLen = 53
 func toPackageSelection(reg *repo.Registry, in *v1alpha1.BundleOptionView, licenseKey string) ([]v1alpha1.PackageSelection, error) {
 	var out []v1alpha1.PackageSelection
 
-	_, bundle := GetBundle(reg, &v1alpha1.BundleOption{
+	_, bundle, err := GetBundle(reg, &v1alpha1.BundleOption{
 		BundleRef: v1alpha1.BundleRef{
 			URL:  in.URL,
 			Name: in.Name,
 		},
 		Version: in.Version,
 	})
+	if err != nil {
+		return nil, err
+	}
 
 	for _, pkg := range in.Packages {
 		if pkg.Chart != nil {

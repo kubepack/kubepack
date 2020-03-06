@@ -46,7 +46,10 @@ func CreateBundleViewForBundle(reg *repo.Registry, ref *v1alpha1.ChartRepoRef) (
 }
 
 func toBundleOptionView(reg *repo.Registry, in *v1alpha1.BundleOption, level int) (*v1alpha1.BundleOptionView, error) {
-	chrt, bundle := GetBundle(reg, in)
+	chrt, bundle, err := GetBundle(reg, in)
+	if err != nil {
+		return nil, err
+	}
 
 	bv := v1alpha1.BundleOptionView{
 		PackageMeta: v1alpha1.PackageMeta{

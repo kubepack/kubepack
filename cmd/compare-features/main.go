@@ -39,7 +39,10 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	table := lib.ComparePlans(lib.DefaultRegistry, url, names, version)
+	table, err := lib.ComparePlans(lib.DefaultRegistry, url, names, version)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	data, err := yaml.Marshal(table)
 	if err != nil {
