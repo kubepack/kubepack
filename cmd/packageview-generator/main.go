@@ -33,6 +33,14 @@ var (
 	//name    = "kubedb"
 	//version = "v0.13.0-rc.0"
 
+	//url     = "https://kubernetes-charts.storage.googleapis.com"
+	//name    = "wordpress"
+	//version = "9.0.1"
+
+	//url     = "https://kubernetes-charts.storage.googleapis.com"
+	//name    = "mariadb"
+	//version = "7.3.12"
+
 	url     = "https://bundles.kubepack.com"
 	name    = "stash"
 	version = "v0.9.0-rc.6"
