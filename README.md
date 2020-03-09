@@ -30,8 +30,8 @@ $ go run cmd/bundle-generator/main.go --name=stash-mongodb-bundle \
   --charts https://charts.appscode.com/stable/@stash-mongodb@3.4.22:true,3.6.13:true,4.0.11:true,4.1.13:true@required@anyof
 
 $ go run cmd/bundle-generator/main.go --name=stash-bundle \
-  --charts https://bundles.kubepack.com@stash@v0.9.0-rc.2 \
-  --bundles https://bundles.kubepack.com@stash-mongodb-bundle@v0.9.0-rc.2
+  --charts https://bundles.kubepack.com@stash@v0.9.0-rc.6 \
+  --bundles https://bundles.kubepack.com@stash-mongodb-bundle@v0.9.0-rc.6
 
 # $ go run cmd/bundle-generator/main.go --name=cert-manager-bundle --charts https://charts.jetstack.io@cert-manager@v0.12.0@@@cert-manager
 
@@ -39,7 +39,7 @@ $ go run cmd/bundle-generator/main.go --name=kubedb-bundle \
   --charts https://charts.appscode.com/stable/@kubedb@v0.13.0-rc.0 \
   --charts https://charts.appscode.com/stable/@kubedb-catalog@v0.13.0-rc.0 \
   --charts https://charts.jetstack.io@cert-manager@v0.12.0@optional@@cert-manager \
-  --bundles https://bundles.kubepack.com@stash-bundle@v0.9.0-rc.2
+  --bundles https://bundles.kubepack.com@stash-bundle@v0.9.0-rc.6
 
 $ ./hack/publish-testcharts.sh
 ```
@@ -119,7 +119,7 @@ $ go run cmd/helm-hub-reader/main.go
 ### Generate PackageView
 
 - http://localhost:4000/packageview?url=https://charts.appscode.com/stable/&name=kubedb&version=v0.13.0-rc.0
-- http://localhost:4000/packageview?url=https://bundles.kubepack.com&name=stash&version=v0.9.0-rc.2
+- http://localhost:4000/packageview?url=https://bundles.kubepack.com&name=stash&version=v0.9.0-rc.6
 
 ### Generate BundleView for Chart
 

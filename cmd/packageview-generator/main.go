@@ -35,7 +35,7 @@ var (
 
 	url     = "https://bundles.kubepack.com"
 	name    = "stash"
-	version = "v0.9.0-rc.2"
+	version = "v0.9.0-rc.6"
 )
 
 func main() {
