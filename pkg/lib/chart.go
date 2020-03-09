@@ -91,7 +91,7 @@ func CreatePackageView(url string, chrt *chart.Chart) (*v1alpha1.PackageView, er
 		},
 	}
 
-	for _, f := range chrt.Files {
+	for _, f := range chrt.Raw {
 		if f.Name == "values.yaml" || (strings.HasPrefix(f.Name, "values-") && strings.HasSuffix(f.Name, ".yaml")) {
 			var values map[string]interface{}
 			err := yamllib.Unmarshal(f.Data, &values)
