@@ -114,7 +114,7 @@ $ go run cmd/helm-hub-reader/main.go
 - http://localhost:4000/products/appscode/kubedb/plans
 - http://localhost:4000/products/appscode/kubedb/compare
 - http://localhost:4000/products/appscode/kubedb/plans/kubedb-community
-- http://localhost:4000/products/appscode/kubedb/plans/kubedb-community/bundle
+- http://localhost:4000/products/appscode/kubedb/plans/kubedb-community/bundleview
 
 ### Generate PackageView
 
