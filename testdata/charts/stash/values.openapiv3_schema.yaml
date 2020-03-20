@@ -597,6 +597,19 @@ properties:
           enabled:
             type: boolean
         type: object
+      servingCerts:
+        properties:
+          caCrt:
+            type: string
+          generate:
+            type: boolean
+          serverCrt:
+            type: string
+          serverKey:
+            type: string
+        required:
+        - generate
+        type: object
       useKubeapiserverFqdnForAks:
         type: boolean
       versionPriority:
@@ -608,6 +621,7 @@ properties:
     - enableValidatingWebhook
     - groupPriorityMinimum
     - healthcheck
+    - servingCerts
     - useKubeapiserverFqdnForAks
     - versionPriority
     type: object
@@ -649,8 +663,6 @@ properties:
         properties:
           namespace:
             type: string
-        required:
-        - namespace
         type: object
       serviceMonitor:
         properties:
@@ -658,13 +670,9 @@ properties:
             additionalProperties:
               type: string
             type: object
-        required:
-        - labels
         type: object
     required:
     - agent
-    - backup
-    - operator
     - prometheus
     - serviceMonitor
     type: object
@@ -689,8 +697,6 @@ properties:
     properties:
       openshift:
         type: boolean
-    required:
-    - openshift
     type: object
   pushgateway:
     properties:
@@ -716,7 +722,6 @@ properties:
         type: string
     required:
     - create
-    - name
     type: object
   tolerations:
     description: If specified, the pod's tolerations.
@@ -759,16 +764,11 @@ properties:
       type: object
     type: array
 required:
-- additionalPodSecurityPolicies
 - apiserver
 - cleaner
-- enableAnalytics
 - imagePullPolicy
-- imagePullSecrets
-- logLevel
 - monitoring
 - operator
-- platform
 - pushgateway
 - replicaCount
 - serviceAccount
