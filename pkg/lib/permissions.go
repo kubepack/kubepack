@@ -28,8 +28,8 @@ import (
 	"kmodules.xyz/resource-metadata/hub"
 )
 
-func CheckPermissions(getter genericclioptions.RESTClientGetter, reg *repo.Registry, order v1alpha1.Order) (bool, error) {
-	resRegistry := hub.NewRegistry(string(order.UID), hub.KnownResources)
+func CheckPermissions(getter genericclioptions.RESTClientGetter, reg *repo.Registry, order v1alpha1.Order, helm hub.HelmVersion) (bool, error) {
+	resRegistry := hub.NewRegistry(string(order.UID), helm, hub.KnownResources)
 	config, err := getter.ToRESTConfig()
 	if err != nil {
 		return false, err
