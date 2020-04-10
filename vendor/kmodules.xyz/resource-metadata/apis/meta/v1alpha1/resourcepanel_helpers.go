@@ -27,3 +27,19 @@ func (section *PanelSection) Contains(rd *ResourceDescriptor) bool {
 	}
 	return false
 }
+
+func (a *ResourcePanel) Minus(b *ResourcePanel) {
+	for _, bs := range b.Sections {
+	NEXT_ENTRY:
+		for _, be := range bs.Entries {
+			for _, as := range a.Sections {
+				for idx, ae := range as.Entries {
+					if ae.Entry.Equals(be.Entry) {
+						as.Entries = append(as.Entries[:idx], as.Entries[idx+1:]...)
+						continue NEXT_ENTRY
+					}
+				}
+			}
+		}
+	}
+}
