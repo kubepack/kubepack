@@ -32,6 +32,7 @@ import (
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 	"k8s.io/client-go/util/homedir"
 	clientcmdutil "kmodules.xyz/client-go/tools/clientcmd"
+	"kmodules.xyz/resource-metadata/hub"
 	"sigs.k8s.io/yaml"
 )
 
@@ -71,7 +72,7 @@ func main() {
 	}
 	order.UID = types.UID(uuid.New().String())
 
-	allowed, err := lib.CheckPermissions(getter, lib.DefaultRegistry, order)
+	allowed, err := lib.CheckPermissions(getter, lib.DefaultRegistry, order, hub.Helm3)
 	if err != nil {
 		log.Fatal(err)
 	}

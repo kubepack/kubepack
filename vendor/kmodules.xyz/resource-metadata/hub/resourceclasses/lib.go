@@ -22,15 +22,28 @@ import (
 	"kmodules.xyz/resource-metadata/apis/meta/v1alpha1"
 
 	"github.com/gobuffalo/flect"
+	"golang.org/x/net/publicsuffix"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"sigs.k8s.io/yaml"
 )
 
 func ResourceClassName(apiGroup string) string {
 	name := apiGroup
+	name = strings.TrimSuffix(name, ".k8s.io")
+	name = strings.TrimSuffix(name, ".x-k8s.io")
+
 	idx := strings.IndexRune(name, '.')
 	if idx >= 0 {
-		name = name[0:idx]
+		eTLD, icann := publicsuffix.PublicSuffix(name)
+		if icann {
+			name = strings.TrimSuffix(name, "."+eTLD)
+		}
+		parts := strings.Split(name, ".")
+		for i := 0; i < len(parts)/2; i++ {
+			j := len(parts) - i - 1
+			parts[i], parts[j] = parts[j], parts[i]
+		}
+		name = strings.Join(parts, " ")
 	}
 	if name != "" {
 		name = flect.Titleize(flect.Humanize(flect.Singularize(name)))

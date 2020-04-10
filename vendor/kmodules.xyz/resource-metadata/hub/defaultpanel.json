@@ -104,6 +104,12 @@
             "resource": "replicationcontrollers"
           },
           "required": true,
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "type": "image/svg+xml"
+            }
+          ],
           "namespaced": true
         },
         {
@@ -188,7 +194,7 @@
       ]
     },
     {
-      "name": "Helm",
+      "name": "Helm 3",
       "icons": [
         {
           "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/helm.svg",
@@ -197,16 +203,15 @@
       ],
       "entries": [
         {
-          "name": "Release",
-          "path": "/tiller/v2/releases",
-          "required": true,
+          "name": "Releases",
+          "path": "/helm/v3/releases",
           "icons": [
             {
               "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/release.svg",
               "type": "image/svg+xml"
             }
           ],
-          "namespaced": false
+          "namespaced": true
         }
       ]
     },
@@ -221,21 +226,6 @@
       ],
       "entries": [
         {
-          "name": "DormantDatabase",
-          "type": {
-            "group": "kubedb.com",
-            "version": "v1alpha1",
-            "resource": "dormantdatabases"
-          },
-          "icons": [
-            {
-              "src": "https://cdn.appscode.com/k8s/icons/kubedb.com/dormant-database.svg",
-              "type": "image/svg+xml"
-            }
-          ],
-          "namespaced": true
-        },
-        {
           "name": "Elasticsearch",
           "type": {
             "group": "kubedb.com",
@@ -249,159 +239,6 @@
               "type": "image/svg+xml"
             }
           ],
-          "namespaced": true
-        },
-        {
-          "name": "Etcd",
-          "type": {
-            "group": "kubedb.com",
-            "version": "v1alpha1",
-            "resource": "etcds"
-          },
-          "icons": [
-            {
-              "src": "https://cdn.appscode.com/k8s/icons/kubedb.com/etcd.svg",
-              "type": "image/svg+xml"
-            }
-          ],
-          "namespaced": true
-        },
-        {
-          "name": "MariaDB",
-          "type": {
-            "group": "kubedb.com",
-            "version": "v1alpha1",
-            "resource": "mariadbs"
-          },
-          "icons": [
-            {
-              "src": "https://cdn.appscode.com/k8s/icons/kubedb.com/mariadbs.svg",
-              "type": "image/svg+xml"
-            }
-          ],
-          "namespaced": true
-        },
-        {
-          "name": "Memcached",
-          "type": {
-            "group": "kubedb.com",
-            "version": "v1alpha1",
-            "resource": "memcacheds"
-          },
-          "icons": [
-            {
-              "src": "https://cdn.appscode.com/k8s/icons/kubedb.com/memcached.svg",
-              "type": "image/svg+xml"
-            }
-          ],
-          "namespaced": true
-        },
-        {
-          "name": "MongoDB",
-          "type": {
-            "group": "kubedb.com",
-            "version": "v1alpha1",
-            "resource": "mongodbs"
-          },
-          "icons": [
-            {
-              "src": "https://cdn.appscode.com/k8s/icons/kubedb.com/mongodb.svg",
-              "type": "image/svg+xml"
-            }
-          ],
-          "namespaced": true
-        },
-        {
-          "name": "MySQL",
-          "type": {
-            "group": "kubedb.com",
-            "version": "v1alpha1",
-            "resource": "mysqls"
-          },
-          "icons": [
-            {
-              "src": "https://cdn.appscode.com/k8s/icons/kubedb.com/mysql.svg",
-              "type": "image/svg+xml"
-            }
-          ],
-          "namespaced": true
-        },
-        {
-          "name": "PerconaXtraDB",
-          "type": {
-            "group": "kubedb.com",
-            "version": "v1alpha1",
-            "resource": "perconaxtradbs"
-          },
-          "icons": [
-            {
-              "src": "https://cdn.appscode.com/k8s/icons/kubedb.com/perconaxtradbs.svg",
-              "type": "image/svg+xml"
-            }
-          ],
-          "namespaced": true
-        },
-        {
-          "name": "PgBouncer",
-          "type": {
-            "group": "kubedb.com",
-            "version": "v1alpha1",
-            "resource": "pgbouncers"
-          },
-          "icons": [
-            {
-              "src": "https://cdn.appscode.com/k8s/icons/kubedb.com/pgbouncer.svg",
-              "type": "image/svg+xml"
-            }
-          ],
-          "namespaced": true
-        },
-        {
-          "name": "Postgres",
-          "type": {
-            "group": "kubedb.com",
-            "version": "v1alpha1",
-            "resource": "postgreses"
-          },
-          "icons": [
-            {
-              "src": "https://cdn.appscode.com/k8s/icons/kubedb.com/postgresql.svg",
-              "type": "image/svg+xml"
-            }
-          ],
-          "namespaced": true
-        },
-        {
-          "name": "ProxySQL",
-          "type": {
-            "group": "kubedb.com",
-            "version": "v1alpha1",
-            "resource": "proxysqls"
-          },
-          "namespaced": true
-        },
-        {
-          "name": "Redis",
-          "type": {
-            "group": "kubedb.com",
-            "version": "v1alpha1",
-            "resource": "redises"
-          },
-          "icons": [
-            {
-              "src": "https://cdn.appscode.com/k8s/icons/kubedb.com/redis.svg",
-              "type": "image/svg+xml"
-            }
-          ],
-          "namespaced": true
-        },
-        {
-          "name": "Snapshot",
-          "type": {
-            "group": "kubedb.com",
-            "version": "v1alpha1",
-            "resource": "snapshots"
-          },
           "namespaced": true
         }
       ]
@@ -594,24 +431,6 @@
       ],
       "entries": [
         {
-          "name": "Alertmanager",
-          "type": {
-            "group": "monitoring.coreos.com",
-            "version": "v1",
-            "resource": "alertmanagers"
-          },
-          "namespaced": true
-        },
-        {
-          "name": "PodMonitor",
-          "type": {
-            "group": "monitoring.coreos.com",
-            "version": "v1",
-            "resource": "podmonitors"
-          },
-          "namespaced": true
-        },
-        {
           "name": "Prometheus",
           "type": {
             "group": "monitoring.coreos.com",
@@ -622,30 +441,6 @@
           "icons": [
             {
               "src": "https://cdn.appscode.com/k8s/icons/monitoring.coreos.com/prometheus.svg",
-              "type": "image/svg+xml"
-            }
-          ],
-          "namespaced": true
-        },
-        {
-          "name": "PrometheusRule",
-          "type": {
-            "group": "monitoring.coreos.com",
-            "version": "v1",
-            "resource": "prometheusrules"
-          },
-          "namespaced": true
-        },
-        {
-          "name": "ServiceMonitor",
-          "type": {
-            "group": "monitoring.coreos.com",
-            "version": "v1",
-            "resource": "servicemonitors"
-          },
-          "icons": [
-            {
-              "src": "https://cdn.appscode.com/k8s/icons/monitoring.coreos.com/servicemonitor.svg",
               "type": "image/svg+xml"
             }
           ],
@@ -806,6 +601,12 @@
             "version": "v1beta1",
             "resource": "csidrivers"
           },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "type": "image/svg+xml"
+            }
+          ],
           "namespaced": false
         }
       ]
