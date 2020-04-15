@@ -21,6 +21,7 @@ import (
 	"context"
 	"io"
 	"io/ioutil"
+	"net/url"
 	"os"
 	"strings"
 
@@ -65,13 +66,22 @@ func NewTestBlobStore() (*BlobStore, error) {
 		return nil, err
 	}
 
-	err = ioutil.WriteFile(credential+"-private-key", cfg.PrivateKey, 0644)
+	filename := credential + "-private-key"
+	err = ioutil.WriteFile(filename, cfg.PrivateKey, 0644)
 	if err != nil {
 		return nil, err
 	}
 
+	u, err := url.Parse(YAMLBucket)
+	if err != nil {
+		return nil, err
+	}
+	q := u.Query()
+	q.Set("access_id", cfg.Email)
+	q.Set("private_key_path", filename)
+	u.RawQuery = q.Encode()
 	return &BlobStore{
-		URL:    YAMLBucket + "?access_id=" + cfg.Email + "&private_key_path=" + credential + "-private-key",
+		URL:    u.String(),
 		Host:   YAMLHost,
 		Bucket: YAMLBucket,
 	}, nil
