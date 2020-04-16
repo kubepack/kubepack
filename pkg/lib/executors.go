@@ -1000,7 +1000,7 @@ type ApplicationCRDRegPrinter struct {
 }
 
 func (x *ApplicationCRDRegPrinter) Do() error {
-	_, err := fmt.Fprintln(x.W, "kubectl apply -f https://github.com/kubepack/kubepack/raw/prototype/api/crds/kubepack.com_applications.yaml")
+	_, err := fmt.Fprintln(x.W, "kubectl apply -f https://github.com/kubepack/kubepack/raw/master/api/crds/kubepack.com_applications.yaml")
 	if err != nil {
 		return err
 	}
