@@ -339,16 +339,12 @@ func main() {
 				return
 			}
 
-			script, err := lib.GenerateHelm2Script(bs, lib.DefaultRegistry, order)
+			scripts, err := lib.GenerateHelm2Script(bs, lib.DefaultRegistry, order)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
 			}
-
-			ctx.JSON(http.StatusOK, map[string]string{
-				"linux":  script,
-				"darwin": script,
-			})
+			ctx.JSON(http.StatusOK, scripts)
 		})
 		m.Get("/:id/helm3", func(ctx *macaron.Context) {
 			bs, err := lib.NewTestBlobStore()
@@ -370,16 +366,13 @@ func main() {
 				return
 			}
 
-			script, err := lib.GenerateHelm3Script(bs, lib.DefaultRegistry, order)
+			scripts, err := lib.GenerateHelm3Script(bs, lib.DefaultRegistry, order)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
 			}
 
-			ctx.JSON(http.StatusOK, map[string]string{
-				"linux":  script,
-				"darwin": script,
-			})
+			ctx.JSON(http.StatusOK, scripts)
 		})
 		m.Get("/:id/yaml", func(ctx *macaron.Context) {
 			bs, err := lib.NewTestBlobStore()
@@ -401,16 +394,13 @@ func main() {
 				return
 			}
 
-			script, err := lib.GenerateYAMLScript(bs, lib.DefaultRegistry, order)
+			scripts, err := lib.GenerateYAMLScript(bs, lib.DefaultRegistry, order)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
 			}
 
-			ctx.JSON(http.StatusOK, map[string]string{
-				"linux":  script,
-				"darwin": script,
-			})
+			ctx.JSON(http.StatusOK, scripts)
 		})
 	})
 

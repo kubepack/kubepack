@@ -27,15 +27,15 @@ import (
 	"k8s.io/apimachinery/pkg/util/sets"
 )
 
-func GenerateHelm2Script(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order) (string, error) {
+func GenerateHelm2Script(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order) ([]ScriptRef, error) {
 	var buf bytes.Buffer
 	_, err := buf.WriteString("#!/usr/bin/env bash\n")
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	_, err = buf.WriteString("set -xeou pipefail\n\n")
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	namespaces := sets.NewString("default", "kube-system")
@@ -45,11 +45,11 @@ func GenerateHelm2Script(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 	}
 	err = f1.Do()
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	_, err = buf.WriteRune('\n')
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	for _, pkg := range order.Spec.Packages {
@@ -64,7 +64,7 @@ func GenerateHelm2Script(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 			}
 			err = f2.Do()
 			if err != nil {
-				return "", err
+				return nil, err
 			}
 			namespaces.Insert(pkg.Chart.Namespace)
 		}
@@ -81,7 +81,7 @@ func GenerateHelm2Script(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 		}
 		err = f3.Do()
 		if err != nil {
-			return "", err
+			return nil, err
 		}
 
 		f4 := &WaitForPrinter{
@@ -92,7 +92,7 @@ func GenerateHelm2Script(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 		}
 		err = f4.Do()
 		if err != nil {
-			return "", err
+			return nil, err
 		}
 
 		if pkg.Chart.Resources != nil && len(pkg.Chart.Resources.Owned) > 0 {
@@ -102,7 +102,7 @@ func GenerateHelm2Script(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 			}
 			err = f5.Do()
 			if err != nil {
-				return "", err
+				return nil, err
 			}
 		}
 
@@ -113,7 +113,7 @@ func GenerateHelm2Script(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 		}
 		err = f6.Do()
 		if err != nil {
-			return "", err
+			return nil, err
 		}
 
 		f7 := &ApplicationUploader{
@@ -125,21 +125,31 @@ func GenerateHelm2Script(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 		}
 		err = f7.Do()
 		if err != nil {
-			return "", err
+			return nil, err
 		}
 
 		_, err = buf.WriteRune('\n')
 		if err != nil {
-			return "", err
+			return nil, err
 		}
 	}
 
 	err = bs.Upload(context.TODO(), string(order.UID), "helm2.sh", buf.Bytes())
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	fmt.Println(buf.String())
-
-	return fmt.Sprintf("curl -fsSL %s/%s/helm2.sh  | bash", bs.Host, order.UID), nil
+	scriptURL := fmt.Sprintf("%s/%s/helm2.sh", bs.Host, order.UID)
+	return []ScriptRef{
+		{
+			OS:      Linux,
+			URL:     scriptURL,
+			Command: fmt.Sprintf("curl -fsSL %s | bash", scriptURL),
+		},
+		{
+			OS:      MacOS,
+			URL:     scriptURL,
+			Command: fmt.Sprintf("curl -fsSL %s | bash", scriptURL),
+		},
+	}, nil
 }
