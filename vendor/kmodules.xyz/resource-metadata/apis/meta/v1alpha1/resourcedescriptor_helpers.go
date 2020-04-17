@@ -55,7 +55,18 @@ func (v ResourceDescriptor) IsValid() error {
 }
 
 func (r ResourceID) IsOfficialType() bool {
-	return r.Group == "" ||
-		!strings.ContainsRune(r.Group, '.') ||
-		strings.HasSuffix(r.Group, ".k8s.io")
+	switch {
+	case r.Group == "":
+		return true
+	case !strings.ContainsRune(r.Group, '.'):
+		return true
+	case r.Group == "k8s.io" || strings.HasSuffix(r.Group, ".k8s.io"):
+		return true
+	case r.Group == "kubernetes.io" || strings.HasSuffix(r.Group, ".kubernetes.io"):
+		return true
+	case r.Group == "x-k8s.io" || strings.HasSuffix(r.Group, ".x-k8s.io"):
+		return true
+	default:
+		return false
+	}
 }
