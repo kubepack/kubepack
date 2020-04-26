@@ -29,7 +29,11 @@ helm repo index testdata/archives/ --url https://bundles.kubepack.com
 gsutil rsync -d -r testdata/archives gs://kubepack-bundles
 gsutil acl ch -u AllUsers:R -r gs://kubepack-bundles
 
-# https://cloud.google.com/storage/docs/gsutil/commands/setmeta
-gsutil setmeta -h "Cache-Control:public, max-age=60" gs://kubepack-bundles/index.yaml
+sleep 10
+
+gcloud compute url-maps invalidate-cdn-cache cdn \
+  --project appscode-domains \
+  --host bundles.kubepack.com \
+  --path "/index.yaml"
 
 popd
