@@ -32,8 +32,8 @@ gsutil acl ch -u AllUsers:R -r gs://kubepack-bundles
 sleep 10
 
 gcloud compute url-maps invalidate-cdn-cache cdn \
-  --project appscode-domains \
-  --host bundles.kubepack.com \
-  --path "/index.yaml"
+    --project appscode-domains \
+    --host bundles.kubepack.com \
+    --path "/index.yaml"
 
 popd
