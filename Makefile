@@ -483,7 +483,7 @@ install:
 		--set operator.tag=$(TAG) \
 		--set imagePullPolicy=Always \
 		$(IMAGE_PULL_SECRETS); \
-	kubectl wait --for=condition=Ready pods -n kube-system -l app=kubepack-operator --timeout=5m
+	kubectl wait --for=condition=Ready pods -n kube-system -l 'app.kubernetes.io/name=kubepack-operator,app.kubernetes.io/instance=kubepack-operator' --timeout=5m
 
 .PHONY: uninstall
 uninstall:
