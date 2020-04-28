@@ -19,8 +19,6 @@ import (
 	"bytes"
 	"io"
 	"net/url"
-	"path/filepath"
-	"strings"
 
 	"github.com/pkg/errors"
 	"kubepack.dev/lib-helm/getter"
@@ -74,12 +72,4 @@ func (c *ChartDownloader) DownloadTo(ref, version string) (*bytes.Reader, error)
 	}
 
 	return g.Get(u.String(), c.Options...)
-}
-
-// isTar tests whether the given file is a tar file.
-//
-// Currently, this simply checks extension, since a subsequent function will
-// untar the file and validate its binary format.
-func isTar(filename string) bool {
-	return strings.EqualFold(filepath.Ext(filename), ".tgz")
 }

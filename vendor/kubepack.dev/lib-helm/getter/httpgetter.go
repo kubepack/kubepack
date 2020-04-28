@@ -24,6 +24,7 @@ import (
 
 	"github.com/gregjones/httpcache"
 	"github.com/pkg/errors"
+	utilerrors "k8s.io/apimachinery/pkg/util/errors"
 	"kubepack.dev/lib-helm/internal/tlsutil"
 	"kubepack.dev/lib-helm/internal/urlutil"
 	"kubepack.dev/lib-helm/internal/version"
@@ -42,7 +43,7 @@ func (g *HTTPGetter) Get(href string, options ...Option) (*bytes.Reader, error) 
 	return g.get(href)
 }
 
-func (g *HTTPGetter) get(href string) (*bytes.Reader, error) {
+func (g *HTTPGetter) get(href string) (out *bytes.Reader, err error) {
 	// Set a helm specific user agent so that a repo server and metrics can
 	// separate helm calls from other tools interacting with repos.
 	req, err := http.NewRequest("GET", href, nil)
@@ -68,12 +69,15 @@ func (g *HTTPGetter) get(href string) (*bytes.Reader, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer func() {
+		e2 := resp.Body.Close()
+		err = utilerrors.NewAggregate([]error{err, e2})
+	}()
 	if resp.StatusCode != 200 {
 		return nil, errors.Errorf("failed to fetch %s : %s", href, resp.Status)
 	}
 
 	data, err := ioutil.ReadAll(resp.Body)
-	err = resp.Body.Close()
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +101,7 @@ func (g *HTTPGetter) httpClient() (*http.Client, error) {
 		if err != nil {
 			return nil, errors.Wrap(err, "can't create TLS config for client")
 		}
-		tlsConf.BuildNameToCertificate()
+		// tlsConf.BuildNameToCertificate()
 
 		sni, err := urlutil.ExtractHostname(g.opts.url)
 		if err != nil {
