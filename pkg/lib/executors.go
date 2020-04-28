@@ -420,7 +420,10 @@ func (x *Helm3CommandPrinter) Do() error {
 		if err != nil {
 			return err
 		}
-		setValues := chart2.GetChangedValues(chrt.Values, modified)
+		setValues, err := chart2.GetChangedValues(chrt.Values, modified)
+		if err != nil {
+			return err
+		}
 		for _, v := range setValues {
 			_, err = fmt.Fprintf(&buf, `%s--set %s \\n`, indent, v)
 			if err != nil {
@@ -541,7 +544,10 @@ func (x *Helm2CommandPrinter) Do() error {
 		if err != nil {
 			return err
 		}
-		setValues := chart2.GetChangedValues(chrt.Values, modified)
+		setValues, err := chart2.GetChangedValues(chrt.Values, modified)
+		if err != nil {
+			return err
+		}
 		for _, v := range setValues {
 			_, err = fmt.Fprintf(&buf, `%s--set %s \\n`, indent, v)
 			if err != nil {

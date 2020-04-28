@@ -30,6 +30,7 @@ import (
 	"github.com/gabriel-vasile/mimetype"
 	"github.com/pkg/errors"
 	"helm.sh/helm/v3/pkg/chart"
+	utilerrors "k8s.io/apimachinery/pkg/util/errors"
 )
 
 var drivePathPattern = regexp.MustCompile(`^[a-zA-Z]:/`)
@@ -99,15 +100,20 @@ func LoadReader(reader *bytes.Reader) (*chart.Chart, error) {
 // Sometimes users will provide a values.yaml for an argument where a chart is expected. One common occurrence
 // of this is invoking `helm template values.yaml mychart` which would otherwise produce a confusing error
 // if we didn't check for this.
-func ensureArchive(name string, raw io.ReadSeeker) error {
-	defer raw.Seek(0, io.SeekStart) // reset read offset to allow archive loading to proceed.
+func ensureArchive(name string, raw io.ReadSeeker) (err error) {
+	defer func() {
+		_, e2 := raw.Seek(0, io.SeekStart) // reset read offset to allow archive loading to proceed.
+		err = utilerrors.NewAggregate([]error{err, e2})
+	}()
 
 	mime, err := mimetype.DetectReader(raw)
 	if err != nil && err != io.EOF {
-		return fmt.Errorf("file '%s' cannot be read: %s", name, err)
+		err = fmt.Errorf("file '%s' cannot be read: %s", name, err)
+		return
 	}
 	if !mime.Is("application/x-gzip") {
-		return fmt.Errorf("archive does not appear to be a gzipped archive; got '%s'", mime.String())
+		err = fmt.Errorf("archive does not appear to be a gzipped archive; got '%s'", mime.String())
+		return
 	}
 	return nil
 }
