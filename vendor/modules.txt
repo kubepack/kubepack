@@ -60,6 +60,8 @@ github.com/PuerkitoBio/purell
 github.com/PuerkitoBio/urlesc
 # github.com/Unknwon/com v0.0.0-20190321035513-0fed4efef755
 github.com/Unknwon/com
+# github.com/alessio/shellescape v1.2.2
+github.com/alessio/shellescape
 # github.com/appscode/go v0.0.0-20200225060711-86360b91102a
 github.com/appscode/go/analytics
 github.com/appscode/go/context
@@ -1204,7 +1206,7 @@ kmodules.xyz/resource-metadata/hub/resourcedescriptors
 # kmodules.xyz/webhook-runtime v0.0.0-20191127075323-d4bfdee6974d
 kmodules.xyz/webhook-runtime/admission/v1beta1
 kmodules.xyz/webhook-runtime/registry/admissionreview/v1beta1
-# kubepack.dev/lib-helm v0.0.0-20200428040826-50f00acc69d4
+# kubepack.dev/lib-helm v0.0.0-20200430031031-b2685a6f57e2
 kubepack.dev/lib-helm/action
 kubepack.dev/lib-helm/chart
 kubepack.dev/lib-helm/chart/loader

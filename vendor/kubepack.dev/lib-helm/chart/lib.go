@@ -7,6 +7,8 @@ import (
 	"reflect"
 	"sort"
 	"strings"
+
+	"github.com/alessio/shellescape"
 )
 
 func GetChangedValues(original, modified map[string]interface{}) ([]string, error) {
@@ -87,15 +89,15 @@ func getChangedValues(original, modified map[string]interface{}, prefix string, 
 
 // kubernetes.io/role becomes "kubernetes\.io/role"
 func escapeKey(s string) string {
-	if !strings.ContainsRune(s, '.') {
-		return s
+	if !strings.ContainsRune(s, '.') && !strings.ContainsRune(s, '\\') {
+		return shellescape.Quote(s)
 	}
-	return `"` + strings.ReplaceAll(strings.ReplaceAll(s, `\`, `\\`), `.`, `\.`) + `"`
+	return shellescape.Quote(strings.ReplaceAll(strings.ReplaceAll(s, `\`, `\\`), `.`, `\.`))
 }
 
 // "value1,value2" becomes value1\,value2
 func escapeValue(s string) string {
-	return strings.ReplaceAll(strings.ReplaceAll(s, `\`, `\\`), `,`, `\,`)
+	return shellescape.Quote(strings.ReplaceAll(strings.ReplaceAll(s, `\`, `\\`), `,`, `\,`))
 }
 
 func isSimpleArray(a []interface{}) bool {
