@@ -89,9 +89,6 @@ func getChangedValues(original, modified map[string]interface{}, prefix string, 
 
 // kubernetes.io/role becomes "kubernetes\.io/role"
 func escapeKey(s string) string {
-	if !strings.ContainsRune(s, '.') && !strings.ContainsRune(s, '\\') {
-		return shellescape.Quote(s)
-	}
 	return shellescape.Quote(strings.ReplaceAll(strings.ReplaceAll(s, `\`, `\\`), `.`, `\.`))
 }
 
