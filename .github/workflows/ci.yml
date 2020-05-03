@@ -1,12 +1,12 @@
 name: CI
 
 on:
+  pull_request:
+    branches:
+      - '*'
   push:
     branches:
       - master
-    tags-ignore:
-      - '*.*'
-  pull_request:
 
 jobs:
 
@@ -21,8 +21,7 @@ jobs:
         go-version: 1.14
       id: go
 
-    - name: Check out code into the Go module directory
-      uses: actions/checkout@v1
+    - uses: actions/checkout@v2
 
     - name: Set up Docker Buildx
       id: buildx

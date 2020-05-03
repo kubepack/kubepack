@@ -477,13 +477,12 @@ endif
 .PHONY: install
 install:
 	@cd ../installer; \
-	helm install kubepack-operator charts/kubepack-operator \
+	helm install kubepack-operator charts/kubepack-operator --wait \
 		--namespace=kube-system \
 		--set operator.registry=$(REGISTRY) \
 		--set operator.tag=$(TAG) \
 		--set imagePullPolicy=Always \
 		$(IMAGE_PULL_SECRETS); \
-	kubectl wait --for=condition=Ready pods -n kube-system -l 'app.kubernetes.io/name=kubepack-operator,app.kubernetes.io/instance=kubepack-operator' --timeout=5m
 
 .PHONY: uninstall
 uninstall:
