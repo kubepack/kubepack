@@ -8,21 +8,21 @@ import (
 )
 
 type ListOptions struct {
-	All           bool          `json:"all"`
-	AllNamespaces bool          `json:"allNamespaces"`
-	Sort          action.Sorter `json:"sort"`
-	ByDate        bool          `json:"byDate"`
-	SortReverse   bool          `json:"sortReverse"`
-	Limit         int           `json:"limit"`
-	Offset        int           `json:"offset"`
-	Filter        string        `json:"filter"`
-	Short         bool          `json:"short"`
-	Uninstalled   bool          `json:"uninstalled"`
-	Superseded    bool          `json:"superseded"`
-	Uninstalling  bool          `json:"uninstalling"`
-	Deployed      bool          `json:"deployed"`
-	Failed        bool          `json:"failed"`
-	Pending       bool          `json:"pending"`
+	All          bool          `json:"all"`
+	Namespace    string        `json:"namespace"`
+	Sort         action.Sorter `json:"sort"`
+	ByDate       bool          `json:"byDate"`
+	SortReverse  bool          `json:"sortReverse"`
+	Limit        int           `json:"limit"`
+	Offset       int           `json:"offset"`
+	Filter       string        `json:"filter"`
+	Short        bool          `json:"short"`
+	Uninstalled  bool          `json:"uninstalled"`
+	Superseded   bool          `json:"superseded"`
+	Uninstalling bool          `json:"uninstalling"`
+	Deployed     bool          `json:"deployed"`
+	Failed       bool          `json:"failed"`
+	Pending      bool          `json:"pending"`
 }
 
 type Lister struct {
@@ -58,7 +58,7 @@ func (x *Lister) WithOptions(opts ListOptions) *Lister {
 func (x *Lister) Run() ([]*release.Release, error) {
 	cmd := action.NewList(x.cfg)
 	cmd.All = x.opts.All
-	cmd.AllNamespaces = x.opts.AllNamespaces
+	cmd.AllNamespaces = x.opts.Namespace == ""
 	cmd.Sort = x.opts.Sort
 	cmd.ByDate = x.opts.ByDate
 	cmd.SortReverse = x.opts.SortReverse
