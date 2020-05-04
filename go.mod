@@ -47,7 +47,7 @@ require (
 	kmodules.xyz/custom-resources v0.0.0-20191130062942-f41b54f62419
 	kmodules.xyz/resource-metadata v0.3.10
 	kmodules.xyz/webhook-runtime v0.0.0-20191127075323-d4bfdee6974d
-	kubepack.dev/lib-helm v0.0.0-20200430114938-bb329c6b34fe
+	kubepack.dev/lib-helm v0.0.0-20200504094923-bc0cad41adea
 	sigs.k8s.io/yaml v1.1.0
 )
 

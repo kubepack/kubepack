@@ -92,7 +92,7 @@ func (x *Installer) Run() (*release.Release, error) {
 	cmd.ReleaseName = x.opts.ReleaseName
 	cmd.Namespace = x.opts.Namespace
 	cmd.Replace = x.opts.Replace // Skip the name check
-	cmd.ClientOnly = true
+	cmd.ClientOnly = false
 	cmd.APIVersions = chartutil.VersionSet(extraAPIs)
 	cmd.Version = x.opts.Version
 	cmd.DisableHooks = x.opts.DisableHooks
