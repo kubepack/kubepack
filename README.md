@@ -141,5 +141,5 @@ curl -X POST -H "Content-Type: application/json" -d @artifacts/kubedb-community/
 
 ### List charts and Chart Versions
 
-- http://localhost:4000/registry/charts/?url=https://charts.appscode.com/stable/
-- http://localhost:4000/registry/charts/voyager/versions/?url=https://charts.appscode.com/stable/
+- http://localhost:4000/chartrepositories/charts/?url=https://charts.appscode.com/stable/
+- http://localhost:4000/chartrepositories/charts/voyager/versions/?url=https://charts.appscode.com/stable/
