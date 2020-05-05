@@ -414,7 +414,7 @@ func main() {
 		})
 	})
 
-	m.Get("/registry/charts", func(ctx *macaron.Context) {
+	m.Get("/chartrepositories/charts", func(ctx *macaron.Context) {
 		url := ctx.Query("url")
 		if url == "" {
 			ctx.Error(http.StatusBadRequest, "missing url")
@@ -438,7 +438,7 @@ func main() {
 		}
 		ctx.JSON(http.StatusOK, cr.ListCharts())
 	})
-	m.Get("/registry/charts/:name/versions", func(ctx *macaron.Context) {
+	m.Get("/chartrepositories/charts/:name/versions", func(ctx *macaron.Context) {
 		url := ctx.Query("url")
 		name := ctx.Params("name")
 
