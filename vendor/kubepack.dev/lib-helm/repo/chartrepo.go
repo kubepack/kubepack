@@ -21,12 +21,12 @@ import (
 	"fmt"
 	"net/url"
 	"path"
+	"sort"
 	"strings"
+	"time"
 
 	"github.com/gregjones/httpcache"
 	"github.com/pkg/errors"
-	"helm.sh/helm/v3/pkg/chart/loader"
-	"helm.sh/helm/v3/pkg/provenance"
 	"kubepack.dev/lib-helm/getter"
 )
 
@@ -91,30 +91,50 @@ func (r *ChartRepository) DownloadIndexFile() (*bytes.Reader, error) {
 	)
 }
 
-// Index generates an index for the chart repository and writes an index.yaml file.
-func (r *ChartRepository) Index() error {
-	return r.generateIndex()
+// Load loads the index for the chart repository
+func (r *ChartRepository) Load() error {
+	idx, err := r.DownloadIndexFile()
+	if err != nil {
+		return errors.Wrapf(err, "looks like %q is not a valid chart repository or cannot be reached", r.Config.URL)
+	}
+
+	// Read the index file for the repository to get chart information and return chart URL
+	repoIndex, err := LoadIndexFile(idx)
+	if err != nil {
+		return err
+	}
+	r.IndexFile = repoIndex
+
+	return nil
 }
 
-func (r *ChartRepository) generateIndex() error {
-	for _, path := range r.ChartPaths {
-		ch, err := loader.Load(path)
-		if err != nil {
-			return err
+func (r *ChartRepository) ListCharts() []string {
+	charts := []string{}
+	for name, varsions := range r.IndexFile.Entries {
+		if varsions[0].Type == "" || varsions[0].Type == "application" {
+			charts = append(charts, name)
 		}
-
-		digest, err := provenance.DigestFile(path)
-		if err != nil {
-			return err
-		}
-
-		if !r.IndexFile.Has(ch.Name(), ch.Metadata.Version) {
-			r.IndexFile.Add(ch.Metadata, path, r.Config.URL, digest)
-		}
-		// TODO: If a chart exists, but has a different Digest, should we error?
 	}
-	r.IndexFile.SortEntries()
-	return nil
+	sort.Strings(charts)
+	return charts
+}
+
+func (r *ChartRepository) ListVersions(name string) []VersionView {
+	versions := []VersionView{}
+	for _, v := range r.IndexFile.Entries[name] {
+		if v.Removed {
+			continue
+		}
+		versions = append(versions, VersionView{
+			Version:     v.Version,
+			AppVersion:  v.AppVersion,
+			Deprecated:  v.Deprecated,
+			KubeVersion: v.KubeVersion,
+			Created:     v.Created,
+			Removed:     v.Removed,
+		})
+	}
+	return versions
 }
 
 // FindChartInAuthRepoURL finds chart in chart repository pointed by repoURL
@@ -177,4 +197,18 @@ func ResolveReferenceURL(baseURL, refURL string) (string, error) {
 	// We need a trailing slash for ResolveReference to work, but make sure there isn't already one
 	parsedBaseURL.Path = strings.TrimSuffix(parsedBaseURL.Path, "/") + "/"
 	return parsedBaseURL.ResolveReference(parsedRefURL).String(), nil
+}
+
+// VersionView represents a chart version entry in the IndexFile
+type VersionView struct {
+	// A SemVer 2 conformant version string of the chart
+	Version string `json:"version,omitempty"`
+	// The version of the application enclosed inside of this chart.
+	AppVersion string `json:"appVersion,omitempty"`
+	// Whether or not this chart is deprecated
+	Deprecated bool `json:"deprecated,omitempty"`
+	// KubeVersion is a SemVer constraint specifying the version of Kubernetes required.
+	KubeVersion string    `json:"kubeVersion,omitempty"`
+	Created     time.Time `json:"created,omitempty"`
+	Removed     bool      `json:"removed,omitempty"`
 }

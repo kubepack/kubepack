@@ -26,6 +26,8 @@ import (
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/artifacts/products"
 	"kubepack.dev/kubepack/pkg/lib"
+	"kubepack.dev/lib-helm/getter"
+	"kubepack.dev/lib-helm/repo"
 
 	"github.com/go-macaron/binding"
 	"gopkg.in/macaron.v1"
@@ -410,6 +412,61 @@ func main() {
 		})
 		m.Delete("/deploy/:id", func(ctx *macaron.Context) {
 		})
+	})
+
+	m.Get("/registry/charts", func(ctx *macaron.Context) {
+		url := ctx.Query("url")
+		if url == "" {
+			ctx.Error(http.StatusBadRequest, "missing url")
+			return
+		}
+
+		cfg, _, err := lib.DefaultRegistry.Get(url)
+		if err != nil {
+			ctx.Error(http.StatusInternalServerError, err.Error())
+			return
+		}
+		cr, err := repo.NewChartRepository(cfg, getter.All())
+		if err != nil {
+			ctx.Error(http.StatusInternalServerError, err.Error())
+			return
+		}
+		err = cr.Load()
+		if err != nil {
+			ctx.Error(http.StatusInternalServerError, err.Error())
+			return
+		}
+		ctx.JSON(http.StatusOK, cr.ListCharts())
+	})
+	m.Get("/registry/charts/:name/versions", func(ctx *macaron.Context) {
+		url := ctx.Query("url")
+		name := ctx.Params("name")
+
+		if url == "" {
+			ctx.Error(http.StatusBadRequest, "missing url")
+			return
+		}
+		if name == "" {
+			ctx.Error(http.StatusBadRequest, "missing chart name")
+			return
+		}
+
+		cfg, _, err := lib.DefaultRegistry.Get(url)
+		if err != nil {
+			ctx.Error(http.StatusInternalServerError, err.Error())
+			return
+		}
+		cr, err := repo.NewChartRepository(cfg, getter.All())
+		if err != nil {
+			ctx.Error(http.StatusInternalServerError, err.Error())
+			return
+		}
+		err = cr.Load()
+		if err != nil {
+			ctx.Error(http.StatusInternalServerError, err.Error())
+			return
+		}
+		ctx.JSON(http.StatusOK, cr.ListVersions(name))
 	})
 
 	m.Get("/", func() string {
