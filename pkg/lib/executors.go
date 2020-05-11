@@ -389,7 +389,7 @@ func (x *Helm3CommandPrinter) Do() error {
 		vals := chrt.Values
 
 		if x.ValuesFile != "" {
-			for _, f := range chrt.Files {
+			for _, f := range chrt.Raw {
 				if f.Name == x.ValuesFile {
 					if err := yamllib.Unmarshal(f.Data, &vals); err != nil {
 						return fmt.Errorf("cannot load %s. Reason: %v", f.Name, err.Error())
@@ -513,7 +513,7 @@ func (x *Helm2CommandPrinter) Do() error {
 		vals := chrt.Values
 
 		if x.ValuesFile != "" {
-			for _, f := range chrt.Files {
+			for _, f := range chrt.Raw {
 				if f.Name == x.ValuesFile {
 					if err := yamllib.Unmarshal(f.Data, &vals); err != nil {
 						return fmt.Errorf("cannot load %s. Reason: %v", f.Name, err.Error())
@@ -638,7 +638,7 @@ func (x *YAMLPrinter) Do() error {
 	vals := chrt.Values
 	if x.ValuesPatch != nil {
 		if x.ValuesFile != "" {
-			for _, f := range chrt.Files {
+			for _, f := range chrt.Raw {
 				if f.Name == x.ValuesFile {
 					if err := yamllib.Unmarshal(f.Data, &vals); err != nil {
 						return fmt.Errorf("cannot load %s. Reason: %v", f.Name, err.Error())
