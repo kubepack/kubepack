@@ -67,6 +67,7 @@ github.com/appscode/go/analytics
 github.com/appscode/go/context
 github.com/appscode/go/crypto/rand
 github.com/appscode/go/encoding/json/types
+github.com/appscode/go/env
 github.com/appscode/go/flags
 github.com/appscode/go/homedir
 github.com/appscode/go/log
@@ -74,6 +75,7 @@ github.com/appscode/go/log/golog
 github.com/appscode/go/net
 github.com/appscode/go/runtime
 github.com/appscode/go/sets
+github.com/appscode/go/term
 github.com/appscode/go/types
 github.com/appscode/go/version
 # github.com/appscode/static-assets v0.4.1
@@ -248,6 +250,8 @@ github.com/emicklei/go-restful/log
 github.com/evanphx/json-patch
 # github.com/exponent-io/jsonpath v0.0.0-20151013193312-d6023ce2651d
 github.com/exponent-io/jsonpath
+# github.com/fatih/color v1.7.0
+github.com/fatih/color
 # github.com/fatih/structs v1.1.0
 github.com/fatih/structs
 # github.com/gabriel-vasile/mimetype v1.0.2
@@ -347,6 +351,8 @@ github.com/grpc-ecosystem/go-grpc-prometheus
 # github.com/hashicorp/golang-lru v0.5.3
 github.com/hashicorp/golang-lru
 github.com/hashicorp/golang-lru/simplelru
+# github.com/howeyc/gopass v0.0.0-20170109162249-bf9dde6d0d2c
+github.com/howeyc/gopass
 # github.com/hpcloud/tail v1.0.0
 github.com/hpcloud/tail
 github.com/hpcloud/tail/ratelimiter
@@ -371,8 +377,12 @@ github.com/konsorten/go-windows-terminal-sequences
 github.com/mailru/easyjson/buffer
 github.com/mailru/easyjson/jlexer
 github.com/mailru/easyjson/jwriter
+# github.com/mattn/go-colorable v0.1.2
+github.com/mattn/go-colorable
 # github.com/mattn/go-ieproxy v0.0.0-20190610004146-91bb50d98149
 github.com/mattn/go-ieproxy
+# github.com/mattn/go-isatty v0.0.8
+github.com/mattn/go-isatty
 # github.com/mattn/go-runewidth v0.0.4
 github.com/mattn/go-runewidth
 # github.com/matttproud/golang_protobuf_extensions v1.0.1
@@ -1206,7 +1216,7 @@ kmodules.xyz/resource-metadata/hub/resourcedescriptors
 # kmodules.xyz/webhook-runtime v0.0.0-20191127075323-d4bfdee6974d
 kmodules.xyz/webhook-runtime/admission/v1beta1
 kmodules.xyz/webhook-runtime/registry/admissionreview/v1beta1
-# kubepack.dev/lib-helm v0.0.0-20200505071404-19bd9fbbe522
+# kubepack.dev/lib-helm v0.0.0-20200511025348-5b81ec42ae3e
 kubepack.dev/lib-helm/action
 kubepack.dev/lib-helm/chart
 kubepack.dev/lib-helm/chart/loader

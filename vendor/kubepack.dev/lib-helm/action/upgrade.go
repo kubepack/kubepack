@@ -141,7 +141,7 @@ func (x *Upgrader) Run() (*release.Release, error) {
 				return nil, err
 			}
 		} else {
-			for _, f := range chrt.Files {
+			for _, f := range chrt.Raw {
 				if f.Name == x.opts.ValuesFile {
 					if err := yaml.Unmarshal(f.Data, &vals); err != nil {
 						return nil, fmt.Errorf("cannot load %s. Reason: %v", f.Name, err.Error())
