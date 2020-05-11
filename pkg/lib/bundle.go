@@ -25,7 +25,9 @@ import (
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chartutil"
 	"helm.sh/helm/v3/pkg/engine"
+	kerr "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"sigs.k8s.io/yaml"
 )
 
@@ -34,17 +36,22 @@ func GetBundle(reg *repo.Registry, in *v1alpha1.BundleOption) (*chart.Chart, *v1
 	if err != nil {
 		return nil, nil, err
 	}
+
+	return getBundle(chrt.Chart)
+}
+
+func getBundle(chrt *chart.Chart) (*chart.Chart, *v1alpha1.Bundle, error) {
 	options := chartutil.ReleaseOptions{
 		Name:      chrt.Name(),
 		Namespace: "",
 		Revision:  1,
 		IsInstall: true,
 	}
-	values, err := chartutil.ToRenderValues(chrt.Chart, chrt.Values, options, chartutil.DefaultCapabilities)
+	values, err := chartutil.ToRenderValues(chrt, chrt.Values, options, chartutil.DefaultCapabilities)
 	if err != nil {
 		return nil, nil, err
 	}
-	files, err := engine.Render(chrt.Chart, values)
+	files, err := engine.Render(chrt, values)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -66,10 +73,13 @@ func GetBundle(reg *repo.Registry, in *v1alpha1.BundleOption) (*chart.Chart, *v1
 			if err != nil {
 				return nil, nil, err
 			}
-			return chrt.Chart, &bundle, nil
+			return chrt, &bundle, nil
 		}
 	}
-	return chrt.Chart, nil, nil
+	return chrt, nil, kerr.NewNotFound(schema.GroupResource{
+		Group:    v1alpha1.SchemeGroupVersion.Group,
+		Resource: v1alpha1.ResourceBundles,
+	}, "bundle")
 }
 
 func XorY(x, y string) string {

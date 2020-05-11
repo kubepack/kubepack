@@ -21,6 +21,7 @@ import (
 	"kubepack.dev/lib-helm/repo"
 
 	"github.com/gobuffalo/flect"
+	kerr "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -137,6 +138,13 @@ func toBundleOptionView(reg *repo.Registry, in *v1alpha1.BundleOption, level int
 func CreateBundleViewForChart(reg *repo.Registry, ref *v1alpha1.ChartRepoRef) (*v1alpha1.BundleView, error) {
 	pkgChart, err := reg.GetChart(ref.URL, ref.Name, ref.Version)
 	if err != nil {
+		return nil, err
+	}
+
+	_, _, err = getBundle(pkgChart.Chart)
+	if err == nil {
+		return CreateBundleViewForBundle(reg, ref)
+	} else if !kerr.IsNotFound(err) {
 		return nil, err
 	}
 
