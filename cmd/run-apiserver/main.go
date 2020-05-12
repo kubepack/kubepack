@@ -414,6 +414,14 @@ func main() {
 		})
 	})
 
+	m.Get("/chartrepositories", func(ctx *macaron.Context) {
+		repos, err := repo.DefaultNamer.ListHelmHubRepositories()
+		if err != nil {
+			ctx.Error(http.StatusInternalServerError, err.Error())
+			return
+		}
+		ctx.JSON(http.StatusOK, repos)
+	})
 	m.Get("/chartrepositories/charts", func(ctx *macaron.Context) {
 		url := ctx.Query("url")
 		if url == "" {
