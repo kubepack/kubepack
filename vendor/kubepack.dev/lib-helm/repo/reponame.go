@@ -22,6 +22,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"sort"
 	"strings"
 	"sync"
 
@@ -45,7 +46,8 @@ type Repository struct {
 type RepoNamer struct {
 	client *http.Client
 	repos  map[string]string // url -> name
-	m      sync.Mutex
+	loaded bool
+	m      sync.RWMutex
 }
 
 func NewCachedRepoNamer() *RepoNamer {
@@ -57,35 +59,105 @@ func NewCachedRepoNamer() *RepoNamer {
 	}
 }
 
-func (r *RepoNamer) getHelmHubAlias(chartURL string) (string, bool) {
+func (r *RepoNamer) setAlias(url, alias string) {
+	r.m.Lock()
+	r.repos[url] = alias
+	r.m.Unlock()
+}
+
+func (r *RepoNamer) getAlias(url string) (string, bool) {
+	r.m.RLock()
+	alias, ok := r.repos[url]
+	r.m.RUnlock()
+	return alias, ok
+}
+
+func (r *RepoNamer) listRepos() []Repository {
+	r.m.RLock()
+
+	repos := make([]Repository, 0, len(r.repos))
+	for u, name := range r.repos {
+		repos = append(repos, Repository{
+			Name: name,
+			URL:  u,
+		})
+	}
+	sort.Slice(repos, func(i, j int) bool { return repos[i].Name < repos[j].Name })
+
+	defer r.m.RUnlock()
+	return repos
+}
+
+func (r *RepoNamer) helmHubAliasesLoaded() bool {
+	r.m.RLock()
+	defer r.m.RUnlock()
+
+	return r.loaded
+}
+
+func (r *RepoNamer) loadHelmHubAliases() error {
+	if r.helmHubAliasesLoaded() {
+		return nil
+	}
+
 	resp, err := r.client.Get("https://raw.githubusercontent.com/helm/hub/master/repos.yaml")
 	if err != nil {
-		return "", false
+		return err
 	}
 	defer resp.Body.Close()
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return "", false
+		return err
 	}
 
 	var hub Hub
 	err = yaml.Unmarshal(data, &hub)
 	if err != nil {
-		return "", false
+		return err
 	}
 
-	r.m.Lock()
+	newRepos := make(map[string]string, len(hub.Repositories))
+	r.m.RLock()
 	for _, repo := range hub.Repositories {
 		u, err := purell.NormalizeURLString(repo.URL, purell.FlagsUsuallySafeGreedy)
 		if err != nil {
-			return "", false
+			return err
 		}
-		r.repos[u] = repo.Name
+		if _, found := r.repos[u]; !found {
+			newRepos[u] = repo.Name
+		}
 	}
-	r.m.Unlock()
+	r.m.RUnlock()
 
-	name, ok := r.repos[chartURL]
-	return name, ok
+	if len(newRepos) > 0 {
+		r.m.Lock()
+
+		for u, alias := range newRepos {
+			r.repos[u] = alias
+		}
+		r.loaded = true
+
+		r.m.Unlock()
+	}
+
+	return nil
+}
+
+func (r *RepoNamer) ListHelmHubRepositories() ([]Repository, error) {
+	err := r.loadHelmHubAliases()
+	if err != nil {
+		return nil, err
+	}
+
+	return r.listRepos(), nil
+}
+
+func (r *RepoNamer) getHelmHubAlias(chartURL string) (string, bool) {
+	err := r.loadHelmHubAliases()
+	if err != nil {
+		return "", false
+	}
+	return r.getAlias(chartURL)
 }
 
 func (r *RepoNamer) Name(chartURL string) (string, error) {
@@ -95,9 +167,7 @@ func (r *RepoNamer) Name(chartURL string) (string, error) {
 		return "", err
 	}
 
-	r.m.Lock()
-	name, ok := r.repos[chartURL]
-	r.m.Unlock()
+	name, ok := r.getAlias(chartURL)
 	if ok {
 		return name, nil
 	}
@@ -116,9 +186,7 @@ func (r *RepoNamer) Name(chartURL string) (string, error) {
 	ip := net.ParseIP(hostname)
 	if ip == nil {
 		name = r.nameForDomain(hostname)
-		r.m.Lock()
-		r.repos[chartURL] = name
-		r.m.Unlock()
+		r.setAlias(chartURL, name)
 		return name, nil
 	} else if ipv4 := ip.To4(); ipv4 != nil {
 		return strings.ReplaceAll(ipv4.String(), ".", "-"), nil
