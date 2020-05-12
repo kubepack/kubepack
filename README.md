@@ -139,7 +139,8 @@ curl -X POST -H "Content-Type: application/json" -d @artifacts/kubedb-community/
 - http://localhost:4000/deploy/orders/1f1d149b-5226-4659-8feb-165face489b3/helm3
 - http://localhost:4000/deploy/orders/1f1d149b-5226-4659-8feb-165face489b3/yaml
 
-### List charts and Chart Versions
+### List Helm Hub repositories, Charts and Chart Versions
 
+- http://localhost:4000/chartrepositories
 - http://localhost:4000/chartrepositories/charts/?url=https://charts.appscode.com/stable/
 - http://localhost:4000/chartrepositories/charts/voyager/versions/?url=https://charts.appscode.com/stable/

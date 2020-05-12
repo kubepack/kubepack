@@ -913,8 +913,8 @@ kmodules.xyz/resource-metadata v0.3.10 h1:Vr9m/ZKBV463113h9vtbrPsqyakVsQ0N9MaMjA
 kmodules.xyz/resource-metadata v0.3.10/go.mod h1:KYl4aWTn2yw+vchJXbmpdNtlT5w4tNcM4X/NE1MUcOc=
 kmodules.xyz/webhook-runtime v0.0.0-20191127075323-d4bfdee6974d h1:qLWf0Xk2sAWT9qWBcodkinrzt0jkYTKhuHCsbwpXutE=
 kmodules.xyz/webhook-runtime v0.0.0-20191127075323-d4bfdee6974d/go.mod h1:aaaxyAmKOpw0ey3LrpBkqWq0LTl35f9PW6mhwVDBMow=
-kubepack.dev/lib-helm v0.0.0-20200511025348-5b81ec42ae3e h1:0KOmcPQAvOP2e2fsh1tqXggghNLE9KiUWKgAhApzwRs=
-kubepack.dev/lib-helm v0.0.0-20200511025348-5b81ec42ae3e/go.mod h1:dT1NO2uAvQ11qE8p3W6NVsYgEUeGlKGjzQB4FnF7OZ0=
+kubepack.dev/lib-helm v0.0.0-20200512045041-17085b5266db h1:jjX8g7Ofqj5AyjK6U4uxMRdX5ajxGOxry4sK34kSUrU=
+kubepack.dev/lib-helm v0.0.0-20200512045041-17085b5266db/go.mod h1:dT1NO2uAvQ11qE8p3W6NVsYgEUeGlKGjzQB4FnF7OZ0=
 modernc.org/cc v1.0.0/go.mod h1:1Sk4//wdnYJiUIxnW8ddKpaOJCF37yAdqYnkxUpaYxw=
 modernc.org/golex v1.0.0/go.mod h1:b/QX9oBD/LhixY6NDh+IdGv17hgB+51fET1i2kPSmvk=
 modernc.org/mathutil v1.0.0/go.mod h1:wU0vUrJsVWBZ4P6e7xtFJEhFSNsfRLJ8H458uRjg03k=
