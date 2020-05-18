@@ -121,7 +121,7 @@ func UpdateApplicationStatus(
 	err = wait.PollImmediate(kutil.RetryInterval, kutil.RetryTimeout, func() (bool, error) {
 		attempt++
 		var e2 error
-		result, e2 = c.Applications(meta.Namespace).UpdateStatus(apply(cur, false))
+		result, e2 = c.Applications(meta.Namespace).UpdateStatus(apply(cur))
 		if kerr.IsConflict(e2) {
 			latest, e3 := c.Applications(meta.Namespace).Get(meta.Name, metav1.GetOptions{})
 			switch {
