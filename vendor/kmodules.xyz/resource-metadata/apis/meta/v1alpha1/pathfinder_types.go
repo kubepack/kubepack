@@ -66,8 +66,12 @@ type Edge struct {
 	Forward    bool                   `json:"forward"`
 }
 
-// GroupVersionResource unambiguously identifies a resource.  It doesn't anonymously include GroupVersion
-// to avoid automatic coercion.  It doesn't use a GroupVersion to avoid custom marshalling
+type GroupResources struct {
+	Groups   []string `json:"groups"`
+	Resource string   `json:"resource"`
+}
+
+// GroupVersionResource unambiguously identifies a resource.
 type GroupVersionResource struct {
 	Group    string `json:"group"`
 	Version  string `json:"version"`

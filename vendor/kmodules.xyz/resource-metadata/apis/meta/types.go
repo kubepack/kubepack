@@ -163,10 +163,15 @@ type ResourceDescriptorList struct {
 	Items []ResourceDescriptor
 }
 
+type GroupResources struct {
+	Groups   []string
+	Resource string
+}
+
 type GroupVersionResource struct {
-	Group    string `json:"group"`
-	Version  string `json:"version"`
-	Resource string `json:"resource"`
+	Group    string
+	Version  string
+	Resource string
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
@@ -274,7 +279,7 @@ type ResourceClassInfo struct {
 type Entry struct {
 	Name     string
 	Path     string
-	Type     *GroupVersionResource
+	Type     *GroupResources
 	Required bool
 	Icons    []ImageSpec
 }

@@ -2,27 +2,9 @@ package matchers
 
 import "bytes"
 
-// Zip matches a zip archive.
-func Zip(in []byte) bool {
-	return len(in) > 3 &&
-		in[0] == 0x50 && in[1] == 0x4B &&
-		(in[2] == 0x3 || in[2] == 0x5 || in[2] == 0x7) &&
-		(in[3] == 0x4 || in[3] == 0x6 || in[3] == 0x8)
-}
-
 // SevenZ matches a 7z archive.
 func SevenZ(in []byte) bool {
 	return bytes.HasPrefix(in, []byte{0x37, 0x7A, 0xBC, 0xAF, 0x27, 0x1C})
-}
-
-// Epub matches an EPUB file.
-func Epub(in []byte) bool {
-	return len(in) > 58 && bytes.Equal(in[30:58], []byte("mimetypeapplication/epub+zip"))
-}
-
-// Jar matches a Java archive file.
-func Jar(in []byte) bool {
-	return bytes.Contains(in, []byte("META-INF/MANIFEST.MF"))
 }
 
 // Gzip matched gzip files based on http://www.zlib.org/rfc-gzip.html#header-trailer.
@@ -74,10 +56,8 @@ func Deb(in []byte) bool {
 
 // Rar matches a RAR archive file.
 func Rar(in []byte) bool {
-	if !bytes.HasPrefix(in, []byte{0x52, 0x61, 0x72, 0x21, 0x1A, 0x07}) {
-		return false
-	}
-	return len(in) > 8 && (bytes.Equal(in[6:8], []byte{0x01, 0x00}) || in[6] == 0x00)
+	return bytes.HasPrefix(in, []byte("Rar!\x1A\x07\x00")) ||
+		bytes.HasPrefix(in, []byte("Rar!\x1A\x07\x01\x00"))
 }
 
 // Warc matches a Web ARChive file.
@@ -95,4 +75,20 @@ func Zstd(in []byte) bool {
 // Cab matches a Cabinet archive file.
 func Cab(in []byte) bool {
 	return bytes.HasPrefix(in, []byte("MSCF"))
+}
+
+// Rpm matches an RPM or Delta RPM package file.
+func Rpm(in []byte) bool {
+	return len(in) > 4 &&
+		(bytes.HasPrefix(in, []byte{0xed, 0xab, 0xee, 0xdb}) ||
+			bytes.HasPrefix(in, []byte("drpm")))
+}
+
+// Xz matches an xz compressed stream based on https://tukaani.org/xz/xz-file-format.txt.
+func Xz(in []byte) bool {
+	return bytes.HasPrefix(in, []byte{0xFD, 0x37, 0x7A, 0x58, 0x5A, 0x00})
+}
+
+func Lzip(in []byte) bool {
+	return len(in) > 3 && in[0] == 0x4C && in[1] == 0x5A && in[2] == 0x49 && in[3] == 0x50
 }

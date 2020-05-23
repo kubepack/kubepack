@@ -143,7 +143,7 @@ func Utf16le(in []byte) bool {
 	return bytes.HasPrefix(in, []byte{0xFF, 0xFE})
 }
 
-// Utf8 matches a UTF-8 text file.
+// Utf8 matches an UTF-8 text file.
 func Utf8(in []byte) bool {
 	in = trimLWS(in)
 	for _, b := range in {
@@ -193,36 +193,40 @@ func Json(in []byte) bool {
 
 // GeoJson matches a RFC 7946 GeoJSON file.
 //
+// GeoJson detection implies searching for key:value pairs like: `"type": "Feature"`
+// in the input.
 // BUG(gabriel-vasile): The "type" key should be searched for in the root object.
 func GeoJson(in []byte) bool {
 	in = trimLWS(in)
 	if len(in) == 0 {
 		return false
 	}
-	// geojson is always an object
+	// GeoJSON is always a JSON object.
 	if in[0] != '{' {
 		return false
 	}
 
 	s := []byte(`"type"`)
-	si := bytes.Index(in, s)
-	sl := len(s)
+	si, sl := bytes.Index(in, s), len(s)
 
 	if si == -1 {
 		return false
 	}
 
-	// if the "type" string is the suffix of the input
-	// there is no need to search for the value of the key
+	// If the "type" string is the suffix of the input,
+	// there is no need to search for the value of the key.
 	if si+sl == len(in) {
 		return false
 	}
-	// skip the "type" part
+	// Skip the "type" part.
 	in = in[si+sl:]
-	// skip any whitespace before the colon
+	// Skip any whitespace before the colon.
 	in = trimLWS(in)
-	// skip any whitesapce after the colon
-	// not checking if char is colon because json matcher already did check
+	// Check for colon.
+	if len(in) == 0 || in[0] != ':' {
+		return false
+	}
+	// Skip any whitespace after the colon.
 	in = trimLWS(in[1:])
 
 	geoJsonTypes := [][]byte{
@@ -247,34 +251,30 @@ func GeoJson(in []byte) bool {
 
 // NdJson matches a Newline delimited JSON file.
 func NdJson(in []byte) bool {
-	// Separator with carriage return and new line `\r\n`
+	// Separator with carriage return and new line `\r\n`.
 	srn := []byte{0x0D, 0x0A}
 
-	// Separator with only new line `\n`
+	// Separator with only new line `\n`.
 	sn := []byte{0x0A}
 
-	// total bytes scanned
+	// Total bytes scanned.
 	parsed := 0
 
-	// Split by `srn`
+	// Split by `srn`.
 	for rni, insrn := range bytes.Split(in, srn) {
-		// separator byte count should be added only after the first split
+		// Separator byte count should be added only after the first split.
 		if rni != 0 {
-			// Add two as `\r\n` is used for split
+			// Add two as `\r\n` is used for split.
 			parsed += 2
 		}
-		// Return false if there is a carriage return `\r`
-		if bytes.Contains(insrn, []byte{0x0D}) {
-			return false
-		}
-		// Split again by `sn`
+		// Split again by `sn`.
 		for ni, insn := range bytes.Split(insrn, sn) {
-			// separator byte count should be added only after the first split
+			// Separator byte count should be added only after the first split.
 			if ni != 0 {
-				// Add one as `\n` is used for split
+				// Add one as `\n` is used for split.
 				parsed++
 			}
-			// Empty line is valid
+			// Empty line is valid.
 			if len(insn) == 0 {
 				continue
 			}
@@ -285,7 +285,9 @@ func NdJson(in []byte) bool {
 			}
 		}
 	}
-	return parsed == len(in)
+
+	// Empty inputs should not pass as valid NDJSON with 0 lines.
+	return parsed > 0 && parsed == len(in)
 }
 
 // Js matches a Javascript file.

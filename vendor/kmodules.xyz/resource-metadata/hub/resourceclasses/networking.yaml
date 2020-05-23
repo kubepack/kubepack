@@ -11,24 +11,20 @@ spec:
   - name: Services
     required: true
     type:
-      group: ""
+      groups: [""]
       resource: services
-      version: v1
   - name: Ingresses
     required: true
     type:
-      group: networking.k8s.io
+      groups: ["networking.k8s.io", "extensions"]
       resource: ingresses
-      version: v1beta1
   - name: Voyager Ingresses
     required: true
     type:
-      group: voyager.appscode.com
+      groups: ["voyager.appscode.com"]
       resource: ingresses
-      version: v1beta1
   - name: Network Policies
     required: true
     type:
-      group: networking.k8s.io
+      groups: ["networking.k8s.io"]
       resource: networkpolicies
-      version: v1

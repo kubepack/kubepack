@@ -27,6 +27,15 @@
   </a>
 </p>
 
+## Features
+- fast and precise MIME type and file extension detection
+- long list of [supported MIME types](supported_mimes.md)
+- common file formats are prioritized
+- small and simple API
+- handles MIME type aliases
+- thread safe
+- low memory usage: besides the file header, almost zero allocs
+
 ## Install
 ```bash
 go get github.com/gabriel-vasile/mimetype
@@ -36,20 +45,6 @@ go get github.com/gabriel-vasile/mimetype
 There are quick [examples](EXAMPLES.md) and
 [GoDoc](https://godoc.org/github.com/gabriel-vasile/mimetype) for full reference.
 
-## Upgrade from v0.3.x to v1.x
-In v1.x the detect functions no longer return the MIME type and extension as
-strings. Instead they return a [MIME](https://godoc.org/github.com/gabriel-vasile/mimetype#MIME)
-struct. To get the string value of the MIME and the extension, call the
-`String()` and the `Extension()` methods.
-
-In order to play better with the stdlib `mime` package, v1.x file extensions
-include the leading dot, as in ".html".
-
-In v1.x the `text/plain` MIME type is `text/plain; charset=utf-8`.
-
-## Supported MIME types
-See [supported mimes](supported_mimes.md) for the list of detected MIME types.
-If support is needed for a specific file format, please open an [issue](https://github.com/gabriel-vasile/mimetype/issues/new/choose).
 
 ## Structure
 **mimetype** uses an hierarchical structure to keep the MIME type detection logic.
@@ -63,12 +58,26 @@ it is an Microsoft Office file.
 To prevent loading entire files into memory, when detecting from a
 [reader](https://godoc.org/github.com/gabriel-vasile/mimetype#DetectReader)
 or from a [file](https://godoc.org/github.com/gabriel-vasile/mimetype#DetectFile)
-**mimetype** limits itself to reading only the first
-[3072](https://github.com/gabriel-vasile/mimetype/blob/master/internal/matchers/matchers.go#L6)
-bytes from the input.
+**mimetype** limits itself to reading only the header of the input.
 <div align="center">
-  <img alt="structure" src="mimetype.gif" width="88%">
+  <img alt="structure" src="https://github.com/gabriel-vasile/mimetype/blob/33abbe6cb78fe1a8486c92f95008a9e0fcef10a1/mimetype.gif?raw=true" width="88%">
 </div>
+
+## Performance
+Thanks to the hierarchical structure, searching for common formats first,
+and careful memory allocations **mimetype** has an order of magnitude faster
+detections.
+
+[Benchmarks](https://github.com/gabriel-vasile/mimetype/blob/d8628c314b5e59259afc7b0f4f84e6b31931b316/mimetype_test.go#L267)
+were run on an Intel Xeon Gold 6136 24 core CPU @ 3.00GHz.
+```bash
+                                 filetype            mimetype
+BenchmarkMatchTar-24            3778 ns/op          250 ns/op
+BenchmarkMatchZip-24            4884 ns/op          524 ns/op
+BenchmarkMatchJpeg-24            839 ns/op          103 ns/op
+BenchmarkMatchGif-24             751 ns/op          139 ns/op
+BenchmarkMatchPng-24            1176 ns/op          165 ns/op
+```
 
 ## Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md).

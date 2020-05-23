@@ -11,18 +11,15 @@ spec:
   - name: Persistent Volume Claims
     required: true
     type:
-      group: ""
+      groups: [""]
       resource: persistentvolumeclaims
-      version: v1
   - name: Persistent Volulmes
     required: true
     type:
-      group: ""
+      groups: [""]
       resource: persistentvolumes
-      version: v1
   - name: Storage Classes
     required: true
     type:
-      group: storage.k8s.io
+      groups: ["storage.k8s.io"]
       resource: storageclasses
-      version: v1

@@ -28,13 +28,22 @@ func (section *PanelSection) Contains(rd *ResourceDescriptor) bool {
 	return false
 }
 
+func (e PanelEntry) Equals(other PanelEntry) bool {
+	if e.Type != nil && other.Type != nil {
+		return *e.Type == *other.Type
+	} else if e.Type == nil && other.Type == nil {
+		return e.Path == other.Path
+	}
+	return false
+}
+
 func (a *ResourcePanel) Minus(b *ResourcePanel) {
 	for _, bs := range b.Sections {
 	NEXT_ENTRY:
 		for _, be := range bs.Entries {
 			for _, as := range a.Sections {
 				for idx, ae := range as.Entries {
-					if ae.Entry.Equals(be.Entry) {
+					if ae.Equals(be) {
 						as.Entries = append(as.Entries[:idx], as.Entries[idx+1:]...)
 						continue NEXT_ENTRY
 					}

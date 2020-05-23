@@ -9,7 +9,7 @@ Middleware binding provides request data binding and validation for [Macaron](ht
 ## Getting Help
 
 - [API Reference](https://gowalker.org/github.com/go-macaron/binding)
-- [Documentation](http://go-macaron.com/docs/middlewares/binding)
+- [Documentation](https://go-macaron.com/middlewares/binding)
 
 ## Credits
 

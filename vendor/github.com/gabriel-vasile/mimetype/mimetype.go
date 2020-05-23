@@ -9,6 +9,7 @@ package mimetype
 
 import (
 	"io"
+	"mime"
 	"os"
 
 	"github.com/gabriel-vasile/mimetype/internal/matchers"
@@ -19,10 +20,6 @@ import (
 // The result is always a valid MIME type, with application/octet-stream
 // returned when identification failed.
 func Detect(in []byte) (mime *MIME) {
-	if len(in) == 0 {
-		return newMIME("inode/x-empty", "", matchers.True)
-	}
-
 	return root.match(in, root)
 }
 
@@ -40,8 +37,8 @@ func Detect(in []byte) (mime *MIME) {
 // matchers.ReadLimit bytes from the reader.
 func DetectReader(r io.Reader) (mime *MIME, err error) {
 	in := make([]byte, matchers.ReadLimit)
-	n, err := r.Read(in)
-	if err != nil && err != io.EOF {
+	n, err := io.ReadFull(r, in)
+	if err != nil && err != io.EOF && err != io.ErrUnexpectedEOF {
 		return root, err
 	}
 	in = in[:n]
@@ -56,7 +53,7 @@ func DetectReader(r io.Reader) (mime *MIME, err error) {
 // Any error returned is related to the opening and reading from the input file.
 //
 // To prevent loading entire files into memory, DetectFile reads at most
-// matchers.ReadLimit bytes from the reader.
+// matchers.ReadLimit bytes from the input file.
 func DetectFile(file string) (mime *MIME, err error) {
 	f, err := os.Open(file)
 	if err != nil {
@@ -65,4 +62,20 @@ func DetectFile(file string) (mime *MIME, err error) {
 	defer f.Close()
 
 	return DetectReader(f)
+}
+
+// EqualsAny reports whether s MIME type is equal to any MIME type in mimes.
+// MIME type equality test is done on the "type/subtype" section, ignores
+// any optional MIME parameters, ignores any leading and trailing whitespace,
+// and is case insensitive.
+func EqualsAny(s string, mimes ...string) bool {
+	s, _, _ = mime.ParseMediaType(s)
+	for _, m := range mimes {
+		m, _, _ = mime.ParseMediaType(m)
+		if s == m {
+			return true
+		}
+	}
+
+	return false
 }

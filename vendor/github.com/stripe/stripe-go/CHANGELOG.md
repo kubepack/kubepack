@@ -1,5 +1,80 @@
 # Changelog
 
+## 70.15.0 - 2020-04-14
+* [#1066](https://github.com/stripe/stripe-go/pull/1066) Add support for `SecondaryColor` on `Account`
+
+## 70.14.0 - 2020-04-13
+* [#1062](https://github.com/stripe/stripe-go/pull/1062) Add `Description` on `WebhookEndpoint`
+
+## 70.13.0 - 2020-04-10
+* [#1060](https://github.com/stripe/stripe-go/pull/1060) Add support for `CancellationReason` on Issuing `Card`
+* [#1058](https://github.com/stripe/stripe-go/pull/1058) Add support for `TaxIDTypeSGGST` on `TaxId`
+
+## 70.12.0 - 2020-04-09
+* [#1057](https://github.com/stripe/stripe-go/pull/1057) Add missing properties on `Review`
+
+## 70.11.0 - 2020-04-03
+* [#1056](https://github.com/stripe/stripe-go/pull/1056) Add `CalculatedStatementDescriptor` on `Charge`
+
+## 70.10.0 - 2020-03-30
+* [#1053](https://github.com/stripe/stripe-go/pull/1053) Add `AccountCapabilityCardIssuing` as a `Capability`
+
+## 70.9.0 - 2020-03-26
+* [#1050](https://github.com/stripe/stripe-go/pull/1050) Multiple API changes for Issuing
+  * Add support for `SpendingControls` on `Card` and `Cardholder`
+  * Add new values for `Reason` on `Authorization`
+  * Add new value for `Type` on `Cardholder`
+  * Add new value for `Service` on `Card`
+  * Mark many classes and other fields as deprecated for the next major
+
+## 70.8.0 - 2020-03-24
+* [#1049](https://github.com/stripe/stripe-go/pull/1049) Add support for `PauseCollection` on `Subscription`
+
+## 70.7.0 - 2020-03-23
+* [#1048](https://github.com/stripe/stripe-go/pull/1048) Add new capabilities for AU Becs Debit and tax reporting
+
+## 70.6.0 - 2020-03-20
+* [#1046](https://github.com/stripe/stripe-go/pull/1046) Add new fields to Issuing `Card` and `Authorization`
+
+## 70.5.0 - 2020-03-13
+* [#1044](https://github.com/stripe/stripe-go/pull/1044) Multiple changes for Issuing APIs
+  * Rename `Speed` to `Service` on Issuing `Card`
+  * Rename `WalletProvider` to `Wallet` and `AddressZipCheck` to `AddressPostalCodeCheck` on Issuing `Authorization`
+  * Mark `IsDefault` as deprecated on Issuing `Cardholder`
+
+## 70.4.0 - 2020-03-12
+* [#1043](https://github.com/stripe/stripe-go/pull/1043) Add support for `Shipping` and `ShippingAddressCollection` on Checkout `Session`
+
+## 70.3.0 - 2020-03-12
+* [#1042](https://github.com/stripe/stripe-go/pull/1042) Add support for `ThreeDSecure` on Issuing `Authorization`
+
+## 70.2.0 - 2020-03-04
+* [#1041](https://github.com/stripe/stripe-go/pull/1041) Add new reason values and `ExpiryCheck` for Issuing `authorization
+
+## 70.1.0 - 2020-03-04
+* [#1040](https://github.com/stripe/stripe-go/pull/1040) Add support for `Errors` in `Requirements` on `Account`, `Capability` and `Person`
+
+## 70.0.0 - 2020-03-03
+* [#1039](https://github.com/stripe/stripe-go/pull/1039) Multiple API changes:
+  * Move to latest API version `2020-03-02`
+  * Add support for `NextInvoiceSequence` on `Customer`
+
+## 69.4.0 - 2020-02-28
+* [#1038](https://github.com/stripe/stripe-go/pull/1038) Add `TaxIDTypeMYSST` for `TaxId`
+
+## 69.3.0 - 2020-02-24
+* [#1037](https://github.com/stripe/stripe-go/pull/1037) Add new enum values for `IssuingDisputeReason`
+
+## 69.2.0 - 2020-02-24
+* [#1036](https://github.com/stripe/stripe-go/pull/1036) Add support for listing Checkout `Session` and passing tax rate information
+
+## 69.1.0 - 2020-02-21
+* [#1035](https://github.com/stripe/stripe-go/pull/1035) Add support for `ProrationBehavior` on `SubscriptionSchedule`
+* [#1034](https://github.com/stripe/stripe-go/pull/1034) Add support for `Timezone` on `ReportRun`
+
+## 69.0.0 - 2020-02-20
+* [#1033](https://github.com/stripe/stripe-go/pull/1033) Make `Subscription` expandable on `Invoice`
+
 ## 68.20.0 - 2020-02-12
 * [#1029](https://github.com/stripe/stripe-go/pull/1029) Add support for `Amount` in `CheckoutSessionPaymentIntentDataTransferDataParams`
 

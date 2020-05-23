@@ -11,48 +11,40 @@ spec:
   - name: Deployments
     required: true
     type:
-      group: apps
+      groups: ["apps"]
       resource: deployments
-      version: v1
   - name: Replica Sets
     required: true
     type:
-      group: apps
+      groups: ["apps"]
       resource: replicasets
-      version: v1
   - name: Replication Controllers
     required: true
     type:
-      group: ""
+      groups: [""]
       resource: replicationcontrollers
-      version: v1
   - name: Stateful Sets
     required: true
     type:
-      group: apps
+      groups: ["apps"]
       resource: statefulsets
-      version: v1
   - name: Daemon Sets
     required: true
     type:
-      group: apps
+      groups: ["apps"]
       resource: daemonsets
-      version: v1
   - name: Jobs
     required: true
     type:
-      group: batch
+      groups: ["batch"]
       resource: jobs
-      version: v1
   - name: Cron Jobs
     required: false
     type:
-      group: batch
+      groups: ["batch"]
       resource: cronjobs
-      version: v1beta1
   - name: Pods
     required: true
     type:
-      group: ""
+      groups: [""]
       resource: pods
-      version: v1

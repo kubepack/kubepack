@@ -35,6 +35,15 @@ type PanelSection struct {
 }
 
 type PanelEntry struct {
-	Entry      `json:",inline"`
-	Namespaced bool `json:"namespaced"`
+	Name string `json:"name"`
+	// +optional
+	Path string                `json:"path,omitempty"`
+	Type *GroupVersionResource `json:"type,omitempty"`
+	// +optional
+	Required bool `json:"required,omitempty"`
+	// +optional
+	Icons      []ImageSpec           `json:"icons,omitempty"`
+	Namespaced bool                  `json:"namespaced"`
+	Missing    bool                  `json:"missing,omitempty"`
+	Installer  *DeploymentParameters `json:"installer,omitempty"`
 }

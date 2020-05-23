@@ -19,6 +19,8 @@ limitations under the License.
 package fake
 
 import (
+	"context"
+
 	v1alpha1 "kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -39,7 +41,7 @@ var bundlesResource = schema.GroupVersionResource{Group: "kubepack.com", Version
 var bundlesKind = schema.GroupVersionKind{Group: "kubepack.com", Version: "v1alpha1", Kind: "Bundle"}
 
 // Get takes name of the bundle, and returns the corresponding bundle object, and an error if there is any.
-func (c *FakeBundles) Get(name string, options v1.GetOptions) (result *v1alpha1.Bundle, err error) {
+func (c *FakeBundles) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.Bundle, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootGetAction(bundlesResource, name), &v1alpha1.Bundle{})
 	if obj == nil {
@@ -49,7 +51,7 @@ func (c *FakeBundles) Get(name string, options v1.GetOptions) (result *v1alpha1.
 }
 
 // List takes label and field selectors, and returns the list of Bundles that match those selectors.
-func (c *FakeBundles) List(opts v1.ListOptions) (result *v1alpha1.BundleList, err error) {
+func (c *FakeBundles) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.BundleList, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootListAction(bundlesResource, bundlesKind, opts), &v1alpha1.BundleList{})
 	if obj == nil {
@@ -70,13 +72,13 @@ func (c *FakeBundles) List(opts v1.ListOptions) (result *v1alpha1.BundleList, er
 }
 
 // Watch returns a watch.Interface that watches the requested bundles.
-func (c *FakeBundles) Watch(opts v1.ListOptions) (watch.Interface, error) {
+func (c *FakeBundles) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	return c.Fake.
 		InvokesWatch(testing.NewRootWatchAction(bundlesResource, opts))
 }
 
 // Create takes the representation of a bundle and creates it.  Returns the server's representation of the bundle, and an error, if there is any.
-func (c *FakeBundles) Create(bundle *v1alpha1.Bundle) (result *v1alpha1.Bundle, err error) {
+func (c *FakeBundles) Create(ctx context.Context, bundle *v1alpha1.Bundle, opts v1.CreateOptions) (result *v1alpha1.Bundle, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootCreateAction(bundlesResource, bundle), &v1alpha1.Bundle{})
 	if obj == nil {
@@ -86,7 +88,7 @@ func (c *FakeBundles) Create(bundle *v1alpha1.Bundle) (result *v1alpha1.Bundle, 
 }
 
 // Update takes the representation of a bundle and updates it. Returns the server's representation of the bundle, and an error, if there is any.
-func (c *FakeBundles) Update(bundle *v1alpha1.Bundle) (result *v1alpha1.Bundle, err error) {
+func (c *FakeBundles) Update(ctx context.Context, bundle *v1alpha1.Bundle, opts v1.UpdateOptions) (result *v1alpha1.Bundle, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootUpdateAction(bundlesResource, bundle), &v1alpha1.Bundle{})
 	if obj == nil {
@@ -97,7 +99,7 @@ func (c *FakeBundles) Update(bundle *v1alpha1.Bundle) (result *v1alpha1.Bundle, 
 
 // UpdateStatus was generated because the type contains a Status member.
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeBundles) UpdateStatus(bundle *v1alpha1.Bundle) (*v1alpha1.Bundle, error) {
+func (c *FakeBundles) UpdateStatus(ctx context.Context, bundle *v1alpha1.Bundle, opts v1.UpdateOptions) (*v1alpha1.Bundle, error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootUpdateSubresourceAction(bundlesResource, "status", bundle), &v1alpha1.Bundle{})
 	if obj == nil {
@@ -107,22 +109,22 @@ func (c *FakeBundles) UpdateStatus(bundle *v1alpha1.Bundle) (*v1alpha1.Bundle, e
 }
 
 // Delete takes name of the bundle and deletes it. Returns an error if one occurs.
-func (c *FakeBundles) Delete(name string, options *v1.DeleteOptions) error {
+func (c *FakeBundles) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	_, err := c.Fake.
 		Invokes(testing.NewRootDeleteAction(bundlesResource, name), &v1alpha1.Bundle{})
 	return err
 }
 
 // DeleteCollection deletes a collection of objects.
-func (c *FakeBundles) DeleteCollection(options *v1.DeleteOptions, listOptions v1.ListOptions) error {
-	action := testing.NewRootDeleteCollectionAction(bundlesResource, listOptions)
+func (c *FakeBundles) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
+	action := testing.NewRootDeleteCollectionAction(bundlesResource, listOpts)
 
 	_, err := c.Fake.Invokes(action, &v1alpha1.BundleList{})
 	return err
 }
 
 // Patch applies the patch and returns the patched bundle.
-func (c *FakeBundles) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1alpha1.Bundle, err error) {
+func (c *FakeBundles) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.Bundle, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootPatchSubresourceAction(bundlesResource, name, pt, data, subresources...), &v1alpha1.Bundle{})
 	if obj == nil {

@@ -74,20 +74,16 @@ spec:
                   required:
                     type: boolean
                   type:
-                    description: GroupVersionResource unambiguously identifies a resource.  It
-                      doesn't anonymously include GroupVersion to avoid automatic
-                      coercion.  It doesn't use a GroupVersion to avoid custom marshalling
                     properties:
-                      group:
-                        type: string
+                      groups:
+                        items:
+                          type: string
+                        type: array
                       resource:
                         type: string
-                      version:
-                        type: string
                     required:
-                    - group
+                    - groups
                     - resource
-                    - version
                     type: object
                 required:
                 - name
