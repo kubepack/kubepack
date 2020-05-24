@@ -24,12 +24,3 @@ func (s ResourceClass) IsRequired() bool {
 	}
 	return false
 }
-
-func (e Entry) Equals(other Entry) bool {
-	if e.Type != nil && other.Type != nil {
-		return *e.Type == *other.Type
-	} else if e.Type == nil && other.Type == nil {
-		return e.Path == other.Path
-	}
-	return false
-}

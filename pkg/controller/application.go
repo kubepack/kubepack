@@ -17,11 +17,14 @@ limitations under the License.
 package controller
 
 import (
+	"context"
+
 	api "kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/client/clientset/versioned/typed/kubepack/v1alpha1/util"
 
 	"github.com/golang/glog"
 	"github.com/pkg/errors"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	core_util "kmodules.xyz/client-go/core/v1"
 	"kmodules.xyz/client-go/tools/queue"
 )
@@ -56,10 +59,10 @@ func (c *KubepackController) runAppInjector(key string) error {
 		} else {
 			if !core_util.HasFinalizer(vPolicy.ObjectMeta, AppFinalizer) {
 				// Add finalizer
-				_, _, err := util.PatchApplication(c.extClient.KubepackV1alpha1(), vPolicy, func(vp *api.Application) *api.Application {
+				_, _, err := util.PatchApplication(context.TODO(), c.extClient.KubepackV1alpha1(), vPolicy, func(vp *api.Application) *api.Application {
 					vp.ObjectMeta = core_util.AddFinalizer(vPolicy.ObjectMeta, AppFinalizer)
 					return vp
-				})
+				}, metav1.PatchOptions{})
 				if err != nil {
 					return errors.Wrapf(err, "failed to set Application finalizer for %s/%s", vPolicy.Namespace, vPolicy.Name)
 				}

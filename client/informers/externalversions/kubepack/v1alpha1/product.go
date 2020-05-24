@@ -19,6 +19,7 @@ limitations under the License.
 package v1alpha1
 
 import (
+	"context"
 	time "time"
 
 	kubepackv1alpha1 "kubepack.dev/kubepack/apis/kubepack/v1alpha1"
@@ -61,13 +62,13 @@ func NewFilteredProductInformer(client versioned.Interface, resyncPeriod time.Du
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.KubepackV1alpha1().Products().List(options)
+				return client.KubepackV1alpha1().Products().List(context.TODO(), options)
 			},
 			WatchFunc: func(options v1.ListOptions) (watch.Interface, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.KubepackV1alpha1().Products().Watch(options)
+				return client.KubepackV1alpha1().Products().Watch(context.TODO(), options)
 			},
 		},
 		&kubepackv1alpha1.Product{},

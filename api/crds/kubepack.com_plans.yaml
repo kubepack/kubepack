@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   creationTimestamp: null
   labels:
-    app: kubepack
+    app.kubernetes.io/name: kubepack
   name: plans.kubepack.com
 spec:
   group: kubepack.com

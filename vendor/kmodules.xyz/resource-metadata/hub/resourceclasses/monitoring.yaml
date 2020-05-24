@@ -12,6 +12,5 @@ spec:
   - name: Prometheus
     required: true
     type:
-      group: monitoring.coreos.com
+      groups: ["monitoring.coreos.com"]
       resource: prometheuses
-      version: v1

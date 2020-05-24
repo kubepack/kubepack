@@ -21,9 +21,13 @@ type AccountCapability string
 
 // List of values that AccountCapability can take.
 const (
-	AccountCapabilityCardPayments   AccountCapability = "card_payments"
-	AccountCapabilityLegacyPayments AccountCapability = "legacy_payments"
-	AccountCapabilityTransfers      AccountCapability = "transfers"
+	AccountCapabilityAUBECSDebitPayments    AccountCapability = "au_becs_debit_payments"
+	AccountCapabilityCardIssuing            AccountCapability = "card_issuing"
+	AccountCapabilityCardPayments           AccountCapability = "card_payments"
+	AccountCapabilityLegacyPayments         AccountCapability = "legacy_payments"
+	AccountCapabilityTaxReportingUS1099K    AccountCapability = "tax_reporting_us_1099_k"
+	AccountCapabilityTaxReportingUS1099MISC AccountCapability = "tax_reporting_us_1099_misc"
+	AccountCapabilityTransfers              AccountCapability = "transfers"
 )
 
 // AccountCapabilityStatus is the status a given capability can have
@@ -180,9 +184,10 @@ type AccountDeclineSettingsParams struct {
 // AccountSettingsBrandingParams represent allowed parameters to configure settings specific to the
 // account’s branding.
 type AccountSettingsBrandingParams struct {
-	Icon         *string `form:"icon"`
-	Logo         *string `form:"logo"`
-	PrimaryColor *string `form:"primary_color"`
+	Icon           *string `form:"icon"`
+	Logo           *string `form:"logo"`
+	PrimaryColor   *string `form:"primary_color"`
+	SecondaryColor *string `form:"secondary_color"`
 }
 
 // AccountSettingsCardPaymentsParams represent allowed parameters to configure settings specific to
@@ -330,9 +335,12 @@ type AccountBusinessProfile struct {
 
 // AccountCapabilities is the resource representing the capabilities enabled on that account.
 type AccountCapabilities struct {
-	CardPayments   AccountCapabilityStatus `json:"card_payments"`
-	LegacyPayments AccountCapabilityStatus `json:"legacy_payments"`
-	Transfers      AccountCapabilityStatus `json:"transfers"`
+	AUBECSDebitPayments    AccountCapabilityStatus `json:"au_becs_debit_payments"`
+	CardPayments           AccountCapabilityStatus `json:"card_payments"`
+	LegacyPayments         AccountCapabilityStatus `json:"legacy_payments"`
+	TaxReportingUS1099K    AccountCapabilityStatus `json:"tax_reporting_us_1099_k"`
+	TaxReportingUS1099MISC AccountCapabilityStatus `json:"tax_reporting_us_1099_misc"`
+	Transfers              AccountCapabilityStatus `json:"transfers"`
 }
 
 // AccountCompanyVerificationDocument represents details about a company's verification state.
@@ -381,11 +389,19 @@ type AccountPayoutSchedule struct {
 	WeeklyAnchor  string         `json:"weekly_anchor"`
 }
 
+// AccountRequirementsError represents details about an error with a requirement.
+type AccountRequirementsError struct {
+	Code        string `json:"code"`
+	Reason      string `json:"reason"`
+	Requirement string `json:"requirement"`
+}
+
 // AccountRequirements represents information that needs to be collected for an account.
 type AccountRequirements struct {
 	CurrentDeadline     int64                             `json:"current_deadline"`
 	CurrentlyDue        []string                          `json:"currently_due"`
 	DisabledReason      AccountRequirementsDisabledReason `json:"disabled_reason"`
+	Errors              []*AccountRequirementsError       `json:"errors"`
 	EventuallyDue       []string                          `json:"eventually_due"`
 	PastDue             []string                          `json:"past_due"`
 	PendingVerification []string                          `json:"pending_verification"`
@@ -393,9 +409,10 @@ type AccountRequirements struct {
 
 // AccountSettingsBranding represents settings specific to the account's branding.
 type AccountSettingsBranding struct {
-	Icon         *File  `json:"icon"`
-	Logo         *File  `json:"logo"`
-	PrimaryColor string `json:"primary_color"`
+	Icon           *File  `json:"icon"`
+	Logo           *File  `json:"logo"`
+	PrimaryColor   string `json:"primary_color"`
+	SecondaryColor string `json:"secondary_color"`
 }
 
 // AccountSettingsCardPayments represents settings specific to card charging on the account.

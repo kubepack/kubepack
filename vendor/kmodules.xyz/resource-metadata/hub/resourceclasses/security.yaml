@@ -11,18 +11,15 @@ spec:
   - name: Policy
     required: true
     type:
-      group: policy
+      groups: ["policy"]
       resource: podsecuritypolicies
-      version: v1beta1
   - name: Certificates
     required: true
     type:
-      group: voyager.appscode.com
+      groups: ["voyager.appscode.com"]
       resource: certificates
-      version: v1beta1
   - name: Service Accounts
     required: true
     type:
-      group: ""
+      groups: [""]
       resource: serviceaccounts
-      version: v1

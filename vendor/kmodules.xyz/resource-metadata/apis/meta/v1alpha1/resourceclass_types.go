@@ -68,8 +68,8 @@ type ResourceClassInfo struct {
 type Entry struct {
 	Name string `json:"name"`
 	// +optional
-	Path string                `json:"path,omitempty"`
-	Type *GroupVersionResource `json:"type,omitempty"`
+	Path string          `json:"path,omitempty"`
+	Type *GroupResources `json:"type,omitempty"`
 	// +optional
 	Required bool `json:"required,omitempty"`
 	// +optional

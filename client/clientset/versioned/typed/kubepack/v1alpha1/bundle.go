@@ -19,6 +19,7 @@ limitations under the License.
 package v1alpha1
 
 import (
+	"context"
 	"time"
 
 	v1alpha1 "kubepack.dev/kubepack/apis/kubepack/v1alpha1"
@@ -38,15 +39,15 @@ type BundlesGetter interface {
 
 // BundleInterface has methods to work with Bundle resources.
 type BundleInterface interface {
-	Create(*v1alpha1.Bundle) (*v1alpha1.Bundle, error)
-	Update(*v1alpha1.Bundle) (*v1alpha1.Bundle, error)
-	UpdateStatus(*v1alpha1.Bundle) (*v1alpha1.Bundle, error)
-	Delete(name string, options *v1.DeleteOptions) error
-	DeleteCollection(options *v1.DeleteOptions, listOptions v1.ListOptions) error
-	Get(name string, options v1.GetOptions) (*v1alpha1.Bundle, error)
-	List(opts v1.ListOptions) (*v1alpha1.BundleList, error)
-	Watch(opts v1.ListOptions) (watch.Interface, error)
-	Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1alpha1.Bundle, err error)
+	Create(ctx context.Context, bundle *v1alpha1.Bundle, opts v1.CreateOptions) (*v1alpha1.Bundle, error)
+	Update(ctx context.Context, bundle *v1alpha1.Bundle, opts v1.UpdateOptions) (*v1alpha1.Bundle, error)
+	UpdateStatus(ctx context.Context, bundle *v1alpha1.Bundle, opts v1.UpdateOptions) (*v1alpha1.Bundle, error)
+	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
+	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.Bundle, error)
+	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.BundleList, error)
+	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.Bundle, err error)
 	BundleExpansion
 }
 
@@ -63,19 +64,19 @@ func newBundles(c *KubepackV1alpha1Client) *bundles {
 }
 
 // Get takes name of the bundle, and returns the corresponding bundle object, and an error if there is any.
-func (c *bundles) Get(name string, options v1.GetOptions) (result *v1alpha1.Bundle, err error) {
+func (c *bundles) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.Bundle, err error) {
 	result = &v1alpha1.Bundle{}
 	err = c.client.Get().
 		Resource("bundles").
 		Name(name).
 		VersionedParams(&options, scheme.ParameterCodec).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }
 
 // List takes label and field selectors, and returns the list of Bundles that match those selectors.
-func (c *bundles) List(opts v1.ListOptions) (result *v1alpha1.BundleList, err error) {
+func (c *bundles) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.BundleList, err error) {
 	var timeout time.Duration
 	if opts.TimeoutSeconds != nil {
 		timeout = time.Duration(*opts.TimeoutSeconds) * time.Second
@@ -85,13 +86,13 @@ func (c *bundles) List(opts v1.ListOptions) (result *v1alpha1.BundleList, err er
 		Resource("bundles").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }
 
 // Watch returns a watch.Interface that watches the requested bundles.
-func (c *bundles) Watch(opts v1.ListOptions) (watch.Interface, error) {
+func (c *bundles) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	var timeout time.Duration
 	if opts.TimeoutSeconds != nil {
 		timeout = time.Duration(*opts.TimeoutSeconds) * time.Second
@@ -101,81 +102,84 @@ func (c *bundles) Watch(opts v1.ListOptions) (watch.Interface, error) {
 		Resource("bundles").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
-		Watch()
+		Watch(ctx)
 }
 
 // Create takes the representation of a bundle and creates it.  Returns the server's representation of the bundle, and an error, if there is any.
-func (c *bundles) Create(bundle *v1alpha1.Bundle) (result *v1alpha1.Bundle, err error) {
+func (c *bundles) Create(ctx context.Context, bundle *v1alpha1.Bundle, opts v1.CreateOptions) (result *v1alpha1.Bundle, err error) {
 	result = &v1alpha1.Bundle{}
 	err = c.client.Post().
 		Resource("bundles").
+		VersionedParams(&opts, scheme.ParameterCodec).
 		Body(bundle).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }
 
 // Update takes the representation of a bundle and updates it. Returns the server's representation of the bundle, and an error, if there is any.
-func (c *bundles) Update(bundle *v1alpha1.Bundle) (result *v1alpha1.Bundle, err error) {
+func (c *bundles) Update(ctx context.Context, bundle *v1alpha1.Bundle, opts v1.UpdateOptions) (result *v1alpha1.Bundle, err error) {
 	result = &v1alpha1.Bundle{}
 	err = c.client.Put().
 		Resource("bundles").
 		Name(bundle.Name).
+		VersionedParams(&opts, scheme.ParameterCodec).
 		Body(bundle).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }
 
 // UpdateStatus was generated because the type contains a Status member.
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-
-func (c *bundles) UpdateStatus(bundle *v1alpha1.Bundle) (result *v1alpha1.Bundle, err error) {
+func (c *bundles) UpdateStatus(ctx context.Context, bundle *v1alpha1.Bundle, opts v1.UpdateOptions) (result *v1alpha1.Bundle, err error) {
 	result = &v1alpha1.Bundle{}
 	err = c.client.Put().
 		Resource("bundles").
 		Name(bundle.Name).
 		SubResource("status").
+		VersionedParams(&opts, scheme.ParameterCodec).
 		Body(bundle).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }
 
 // Delete takes name of the bundle and deletes it. Returns an error if one occurs.
-func (c *bundles) Delete(name string, options *v1.DeleteOptions) error {
+func (c *bundles) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	return c.client.Delete().
 		Resource("bundles").
 		Name(name).
-		Body(options).
-		Do().
+		Body(&opts).
+		Do(ctx).
 		Error()
 }
 
 // DeleteCollection deletes a collection of objects.
-func (c *bundles) DeleteCollection(options *v1.DeleteOptions, listOptions v1.ListOptions) error {
+func (c *bundles) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
 	var timeout time.Duration
-	if listOptions.TimeoutSeconds != nil {
-		timeout = time.Duration(*listOptions.TimeoutSeconds) * time.Second
+	if listOpts.TimeoutSeconds != nil {
+		timeout = time.Duration(*listOpts.TimeoutSeconds) * time.Second
 	}
 	return c.client.Delete().
 		Resource("bundles").
-		VersionedParams(&listOptions, scheme.ParameterCodec).
+		VersionedParams(&listOpts, scheme.ParameterCodec).
 		Timeout(timeout).
-		Body(options).
-		Do().
+		Body(&opts).
+		Do(ctx).
 		Error()
 }
 
 // Patch applies the patch and returns the patched bundle.
-func (c *bundles) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1alpha1.Bundle, err error) {
+func (c *bundles) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.Bundle, err error) {
 	result = &v1alpha1.Bundle{}
 	err = c.client.Patch(pt).
 		Resource("bundles").
-		SubResource(subresources...).
 		Name(name).
+		SubResource(subresources...).
+		VersionedParams(&opts, scheme.ParameterCodec).
 		Body(data).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }

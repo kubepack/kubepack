@@ -149,8 +149,9 @@ func staticHandler(ctx *Context, log *log.Logger, opt StaticOptions) bool {
 	// Try to serve index file
 	if fi.IsDir() {
 		// Redirect if missing trailing slash.
-		if !strings.HasSuffix(ctx.Req.URL.Path, "/") {
-			http.Redirect(ctx.Resp, ctx.Req.Request, ctx.Req.URL.Path+"/", http.StatusFound)
+		redirPath := path.Clean(ctx.Req.URL.Path)
+		if !strings.HasSuffix(redirPath, "/") {
+			http.Redirect(ctx.Resp, ctx.Req.Request, redirPath+"/", http.StatusFound)
 			return true
 		}
 
@@ -177,8 +178,12 @@ func staticHandler(ctx *Context, log *log.Logger, opt StaticOptions) bool {
 	}
 
 	if opt.ETag {
-		tag := GenerateETag(string(fi.Size()), fi.Name(), fi.ModTime().UTC().Format(http.TimeFormat))
+		tag := `"` + GenerateETag(string(fi.Size()), fi.Name(), fi.ModTime().UTC().Format(http.TimeFormat)) + `"`
 		ctx.Resp.Header().Set("ETag", tag)
+		if ctx.Req.Header.Get("If-None-Match") == tag {
+			ctx.Resp.WriteHeader(http.StatusNotModified)
+			return true
+		}
 	}
 
 	http.ServeContent(ctx.Resp, ctx.Req.Request, file, fi.ModTime(), f)

@@ -17,6 +17,7 @@ limitations under the License.
 package controller
 
 import (
+	"context"
 	"fmt"
 
 	api "kubepack.dev/kubepack/apis/kubepack/v1alpha1"
@@ -69,7 +70,7 @@ func (c *KubepackController) ensureCustomResourceDefinitions() error {
 		api.Application{}.CustomResourceDefinition(),
 		appcat.AppBinding{}.CustomResourceDefinition(),
 	}
-	return crdutils.RegisterCRDs(c.kubeClient.Discovery(), c.crdClient, crds)
+	return crdutils.RegisterCRDs(context.TODO(), c.kubeClient.Discovery(), c.crdClient, crds)
 }
 
 func (c *KubepackController) Run(stopCh <-chan struct{}) {

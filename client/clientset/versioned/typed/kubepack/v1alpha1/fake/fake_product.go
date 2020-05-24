@@ -19,6 +19,8 @@ limitations under the License.
 package fake
 
 import (
+	"context"
+
 	v1alpha1 "kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -39,7 +41,7 @@ var productsResource = schema.GroupVersionResource{Group: "kubepack.com", Versio
 var productsKind = schema.GroupVersionKind{Group: "kubepack.com", Version: "v1alpha1", Kind: "Product"}
 
 // Get takes name of the product, and returns the corresponding product object, and an error if there is any.
-func (c *FakeProducts) Get(name string, options v1.GetOptions) (result *v1alpha1.Product, err error) {
+func (c *FakeProducts) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.Product, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootGetAction(productsResource, name), &v1alpha1.Product{})
 	if obj == nil {
@@ -49,7 +51,7 @@ func (c *FakeProducts) Get(name string, options v1.GetOptions) (result *v1alpha1
 }
 
 // List takes label and field selectors, and returns the list of Products that match those selectors.
-func (c *FakeProducts) List(opts v1.ListOptions) (result *v1alpha1.ProductList, err error) {
+func (c *FakeProducts) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.ProductList, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootListAction(productsResource, productsKind, opts), &v1alpha1.ProductList{})
 	if obj == nil {
@@ -70,13 +72,13 @@ func (c *FakeProducts) List(opts v1.ListOptions) (result *v1alpha1.ProductList, 
 }
 
 // Watch returns a watch.Interface that watches the requested products.
-func (c *FakeProducts) Watch(opts v1.ListOptions) (watch.Interface, error) {
+func (c *FakeProducts) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	return c.Fake.
 		InvokesWatch(testing.NewRootWatchAction(productsResource, opts))
 }
 
 // Create takes the representation of a product and creates it.  Returns the server's representation of the product, and an error, if there is any.
-func (c *FakeProducts) Create(product *v1alpha1.Product) (result *v1alpha1.Product, err error) {
+func (c *FakeProducts) Create(ctx context.Context, product *v1alpha1.Product, opts v1.CreateOptions) (result *v1alpha1.Product, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootCreateAction(productsResource, product), &v1alpha1.Product{})
 	if obj == nil {
@@ -86,7 +88,7 @@ func (c *FakeProducts) Create(product *v1alpha1.Product) (result *v1alpha1.Produ
 }
 
 // Update takes the representation of a product and updates it. Returns the server's representation of the product, and an error, if there is any.
-func (c *FakeProducts) Update(product *v1alpha1.Product) (result *v1alpha1.Product, err error) {
+func (c *FakeProducts) Update(ctx context.Context, product *v1alpha1.Product, opts v1.UpdateOptions) (result *v1alpha1.Product, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootUpdateAction(productsResource, product), &v1alpha1.Product{})
 	if obj == nil {
@@ -97,7 +99,7 @@ func (c *FakeProducts) Update(product *v1alpha1.Product) (result *v1alpha1.Produ
 
 // UpdateStatus was generated because the type contains a Status member.
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeProducts) UpdateStatus(product *v1alpha1.Product) (*v1alpha1.Product, error) {
+func (c *FakeProducts) UpdateStatus(ctx context.Context, product *v1alpha1.Product, opts v1.UpdateOptions) (*v1alpha1.Product, error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootUpdateSubresourceAction(productsResource, "status", product), &v1alpha1.Product{})
 	if obj == nil {
@@ -107,22 +109,22 @@ func (c *FakeProducts) UpdateStatus(product *v1alpha1.Product) (*v1alpha1.Produc
 }
 
 // Delete takes name of the product and deletes it. Returns an error if one occurs.
-func (c *FakeProducts) Delete(name string, options *v1.DeleteOptions) error {
+func (c *FakeProducts) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	_, err := c.Fake.
 		Invokes(testing.NewRootDeleteAction(productsResource, name), &v1alpha1.Product{})
 	return err
 }
 
 // DeleteCollection deletes a collection of objects.
-func (c *FakeProducts) DeleteCollection(options *v1.DeleteOptions, listOptions v1.ListOptions) error {
-	action := testing.NewRootDeleteCollectionAction(productsResource, listOptions)
+func (c *FakeProducts) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
+	action := testing.NewRootDeleteCollectionAction(productsResource, listOpts)
 
 	_, err := c.Fake.Invokes(action, &v1alpha1.ProductList{})
 	return err
 }
 
 // Patch applies the patch and returns the patched product.
-func (c *FakeProducts) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1alpha1.Product, err error) {
+func (c *FakeProducts) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.Product, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootPatchSubresourceAction(productsResource, name, pt, data, subresources...), &v1alpha1.Product{})
 	if obj == nil {

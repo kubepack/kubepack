@@ -17,6 +17,7 @@ limitations under the License.
 package util
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 
@@ -32,29 +33,49 @@ import (
 	kutil "kmodules.xyz/client-go"
 )
 
-func CreateOrPatchOrder(c cs.KubepackV1alpha1Interface, meta metav1.ObjectMeta, transform func(in *api.Order) *api.Order) (*api.Order, kutil.VerbType, error) {
-	cur, err := c.Orders().Get(meta.Name, metav1.GetOptions{})
+func CreateOrPatchOrder(
+	ctx context.Context,
+	c cs.KubepackV1alpha1Interface,
+	meta metav1.ObjectMeta,
+	transform func(in *api.Order) *api.Order,
+	opts metav1.PatchOptions,
+) (*api.Order, kutil.VerbType, error) {
+	cur, err := c.Orders().Get(ctx, meta.Name, metav1.GetOptions{})
 	if kerr.IsNotFound(err) {
 		glog.V(3).Infof("Creating Order %s/%s.", meta.Namespace, meta.Name)
-		out, err := c.Orders().Create(transform(&api.Order{
+		out, err := c.Orders().Create(ctx, transform(&api.Order{
 			TypeMeta: metav1.TypeMeta{
 				Kind:       "Order",
 				APIVersion: api.SchemeGroupVersion.String(),
 			},
 			ObjectMeta: meta,
-		}))
+		}), metav1.CreateOptions{
+			DryRun:       opts.DryRun,
+			FieldManager: opts.FieldManager,
+		})
 		return out, kutil.VerbCreated, err
 	} else if err != nil {
 		return nil, kutil.VerbUnchanged, err
 	}
-	return PatchOrder(c, cur, transform)
+	return PatchOrder(ctx, c, cur, transform, opts)
 }
 
-func PatchOrder(c cs.KubepackV1alpha1Interface, cur *api.Order, transform func(*api.Order) *api.Order) (*api.Order, kutil.VerbType, error) {
-	return PatchOrderObject(c, cur, transform(cur.DeepCopy()))
+func PatchOrder(
+	ctx context.Context,
+	c cs.KubepackV1alpha1Interface,
+	cur *api.Order,
+	transform func(*api.Order) *api.Order,
+	opts metav1.PatchOptions,
+) (*api.Order, kutil.VerbType, error) {
+	return PatchOrderObject(ctx, c, cur, transform(cur.DeepCopy()), opts)
 }
 
-func PatchOrderObject(c cs.KubepackV1alpha1Interface, cur, mod *api.Order) (*api.Order, kutil.VerbType, error) {
+func PatchOrderObject(
+	ctx context.Context,
+	c cs.KubepackV1alpha1Interface,
+	cur, mod *api.Order,
+	opts metav1.PatchOptions,
+) (*api.Order, kutil.VerbType, error) {
 	curJson, err := json.Marshal(cur)
 	if err != nil {
 		return nil, kutil.VerbUnchanged, err
@@ -73,19 +94,25 @@ func PatchOrderObject(c cs.KubepackV1alpha1Interface, cur, mod *api.Order) (*api
 		return cur, kutil.VerbUnchanged, nil
 	}
 	glog.V(3).Infof("Patching Order %s with %s.", cur.Name, string(patch))
-	out, err := c.Orders().Patch(cur.Name, types.MergePatchType, patch)
+	out, err := c.Orders().Patch(ctx, cur.Name, types.MergePatchType, patch, opts)
 	return out, kutil.VerbPatched, err
 }
 
-func TryUpdateOrder(c cs.KubepackV1alpha1Interface, meta metav1.ObjectMeta, transform func(*api.Order) *api.Order) (result *api.Order, err error) {
+func TryUpdateOrder(
+	ctx context.Context,
+	c cs.KubepackV1alpha1Interface,
+	meta metav1.ObjectMeta,
+	transform func(*api.Order) *api.Order,
+	opts metav1.UpdateOptions,
+) (result *api.Order, err error) {
 	attempt := 0
 	err = wait.PollImmediate(kutil.RetryInterval, kutil.RetryTimeout, func() (bool, error) {
 		attempt++
-		cur, e2 := c.Orders().Get(meta.Name, metav1.GetOptions{})
+		cur, e2 := c.Orders().Get(ctx, meta.Name, metav1.GetOptions{})
 		if kerr.IsNotFound(e2) {
 			return false, e2
 		} else if e2 == nil {
-			result, e2 = c.Orders().Update(transform(cur.DeepCopy()))
+			result, e2 = c.Orders().Update(ctx, transform(cur.DeepCopy()), opts)
 			return e2 == nil, nil
 		}
 		glog.Errorf("Attempt %d failed to update Order %s due to %v.", attempt, cur.Name, e2)

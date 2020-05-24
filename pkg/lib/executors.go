@@ -96,11 +96,11 @@ type NamespaceCreator struct {
 }
 
 func (x *NamespaceCreator) Do() error {
-	_, err := x.Client.CoreV1().Namespaces().Create(&core.Namespace{
+	_, err := x.Client.CoreV1().Namespaces().Create(context.TODO(), &core.Namespace{
 		ObjectMeta: v1.ObjectMeta{
 			Name: x.Namespace,
 		},
-	})
+	}, metav1.CreateOptions{})
 	if err != nil && !kerr.IsAlreadyExists(err) {
 		return err
 	}
@@ -973,11 +973,11 @@ func (x *PermissionChecker) Do() error {
 		go func(attr authorization.ResourceAttributes) {
 			defer wg.Done()
 
-			result, err := ac.SelfSubjectAccessReviews().Create(&authorization.SelfSubjectAccessReview{
+			result, err := ac.SelfSubjectAccessReviews().Create(context.TODO(), &authorization.SelfSubjectAccessReview{
 				Spec: authorization.SelfSubjectAccessReviewSpec{
 					ResourceAttributes: &attr,
 				},
-			})
+			}, metav1.CreateOptions{})
 			if err != nil {
 				panic(err) // TODO: return err
 			}
@@ -1030,7 +1030,7 @@ func (x *ApplicationCRDRegistrar) Do() error {
 	if err != nil {
 		return err
 	}
-	return v1beta1.RegisterCRDs(kc.Discovery(), apiextClient, []*crdv1beta1.CustomResourceDefinition{
+	return v1beta1.RegisterCRDs(context.TODO(), kc.Discovery(), apiextClient, []*crdv1beta1.CustomResourceDefinition{
 		v1alpha1.Application{}.CustomResourceDefinition(),
 	})
 }
@@ -1085,7 +1085,7 @@ type ApplicationCreator struct {
 }
 
 func (x *ApplicationCreator) Do() error {
-	_, err := x.Client.KubepackV1alpha1().Applications(x.App.Namespace).Create(x.App)
+	_, err := x.Client.KubepackV1alpha1().Applications(x.App.Namespace).Create(context.TODO(), x.App, metav1.CreateOptions{})
 	return err
 }
 

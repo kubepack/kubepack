@@ -20,9 +20,12 @@ import (
 	"strings"
 	"sync"
 
+	"kmodules.xyz/apiversion"
 	"kmodules.xyz/resource-metadata/apis/meta/v1alpha1"
 	"kmodules.xyz/resource-metadata/hub/resourceclasses"
 	"kmodules.xyz/resource-metadata/hub/resourcedescriptors"
+
+	"k8s.io/apimachinery/pkg/runtime/schema"
 )
 
 type KV interface {
@@ -104,6 +107,7 @@ var (
 		cache: make(map[string]*v1alpha1.ResourceDescriptor),
 	}
 	KnownClasses = make(map[string]*v1alpha1.ResourceClass)
+	LatestGVRs   = make(map[schema.GroupResource]schema.GroupVersionResource)
 )
 
 func init() {
@@ -113,6 +117,13 @@ func init() {
 			panic(err)
 		}
 		KnownResources.Set(filename, rd)
+
+		gvr := rd.Spec.Resource.GroupVersionResource()
+		if existing, ok := LatestGVRs[gvr.GroupResource()]; !ok {
+			LatestGVRs[gvr.GroupResource()] = gvr
+		} else if diff, _ := apiversion.Compare(existing.Version, gvr.Version); diff < 0 {
+			LatestGVRs[gvr.GroupResource()] = gvr
+		}
 	}
 
 	for _, filename := range resourceclasses.AssetNames() {
