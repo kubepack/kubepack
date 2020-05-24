@@ -17,6 +17,7 @@ limitations under the License.
 package framework
 
 import (
+	"context"
 	"errors"
 	"time"
 
@@ -28,15 +29,15 @@ import (
 func (f *Framework) EventuallyCRD() GomegaAsyncAssertion {
 	return Eventually(
 		func() error {
-			if _, err := f.client.KubepackV1alpha1().Bundles().List(metav1.ListOptions{}); err != nil {
+			if _, err := f.client.KubepackV1alpha1().Bundles().List(context.TODO(), metav1.ListOptions{}); err != nil {
 				return errors.New("CRD Bundle is not ready")
 			}
 
-			if _, err := f.client.KubepackV1alpha1().Orders().List(metav1.ListOptions{}); err != nil {
+			if _, err := f.client.KubepackV1alpha1().Orders().List(context.TODO(), metav1.ListOptions{}); err != nil {
 				return errors.New("CRD Order is not ready")
 			}
 
-			if _, err := f.client.KubepackV1alpha1().Applications(core.NamespaceAll).List(metav1.ListOptions{}); err != nil {
+			if _, err := f.client.KubepackV1alpha1().Applications(core.NamespaceAll).List(context.TODO(), metav1.ListOptions{}); err != nil {
 				return errors.New("CRD Application is not ready")
 			}
 			return nil

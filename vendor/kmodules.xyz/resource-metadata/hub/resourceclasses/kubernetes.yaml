@@ -17,12 +17,10 @@ spec:
   - name: Machines
     required: true
     type:
-      group: cluster.k8s.io
+      groups: ["cluster.x-k8s.io", "cluster.k8s.io"]
       resource: machines
-      version: v1alpha1
   - name: Machine Sets
     required: true
     type:
-      group: cluster.k8s.io
+      groups: ["cluster.x-k8s.io", "cluster.k8s.io"]
       resource: machinesets
-      version: v1alpha1

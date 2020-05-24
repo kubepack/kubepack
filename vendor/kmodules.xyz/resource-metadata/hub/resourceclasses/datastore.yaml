@@ -12,6 +12,5 @@ spec:
   - name: Elasticsearch
     required: true
     type:
-      group: kubedb.com
+      groups: ["kubedb.com"]
       resource: elasticsearches
-      version: v1alpha1

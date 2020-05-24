@@ -17,6 +17,7 @@ limitations under the License.
 package util
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 
@@ -32,29 +33,49 @@ import (
 	kutil "kmodules.xyz/client-go"
 )
 
-func CreateOrPatchBundle(c cs.KubepackV1alpha1Interface, meta metav1.ObjectMeta, transform func(in *api.Bundle) *api.Bundle) (*api.Bundle, kutil.VerbType, error) {
-	cur, err := c.Bundles().Get(meta.Name, metav1.GetOptions{})
+func CreateOrPatchBundle(
+	ctx context.Context,
+	c cs.KubepackV1alpha1Interface,
+	meta metav1.ObjectMeta,
+	transform func(in *api.Bundle) *api.Bundle,
+	opts metav1.PatchOptions,
+) (*api.Bundle, kutil.VerbType, error) {
+	cur, err := c.Bundles().Get(ctx, meta.Name, metav1.GetOptions{})
 	if kerr.IsNotFound(err) {
 		glog.V(3).Infof("Creating Bundle %s/%s.", meta.Namespace, meta.Name)
-		out, err := c.Bundles().Create(transform(&api.Bundle{
+		out, err := c.Bundles().Create(ctx, transform(&api.Bundle{
 			TypeMeta: metav1.TypeMeta{
 				Kind:       "Bundle",
 				APIVersion: api.SchemeGroupVersion.String(),
 			},
 			ObjectMeta: meta,
-		}))
+		}), metav1.CreateOptions{
+			DryRun:       opts.DryRun,
+			FieldManager: opts.FieldManager,
+		})
 		return out, kutil.VerbCreated, err
 	} else if err != nil {
 		return nil, kutil.VerbUnchanged, err
 	}
-	return PatchBundle(c, cur, transform)
+	return PatchBundle(ctx, c, cur, transform, opts)
 }
 
-func PatchBundle(c cs.KubepackV1alpha1Interface, cur *api.Bundle, transform func(*api.Bundle) *api.Bundle) (*api.Bundle, kutil.VerbType, error) {
-	return PatchBundleObject(c, cur, transform(cur.DeepCopy()))
+func PatchBundle(
+	ctx context.Context,
+	c cs.KubepackV1alpha1Interface,
+	cur *api.Bundle,
+	transform func(*api.Bundle) *api.Bundle,
+	opts metav1.PatchOptions,
+) (*api.Bundle, kutil.VerbType, error) {
+	return PatchBundleObject(ctx, c, cur, transform(cur.DeepCopy()), opts)
 }
 
-func PatchBundleObject(c cs.KubepackV1alpha1Interface, cur, mod *api.Bundle) (*api.Bundle, kutil.VerbType, error) {
+func PatchBundleObject(
+	ctx context.Context,
+	c cs.KubepackV1alpha1Interface,
+	cur, mod *api.Bundle,
+	opts metav1.PatchOptions,
+) (*api.Bundle, kutil.VerbType, error) {
 	curJson, err := json.Marshal(cur)
 	if err != nil {
 		return nil, kutil.VerbUnchanged, err
@@ -73,19 +94,25 @@ func PatchBundleObject(c cs.KubepackV1alpha1Interface, cur, mod *api.Bundle) (*a
 		return cur, kutil.VerbUnchanged, nil
 	}
 	glog.V(3).Infof("Patching Bundle %s with %s.", cur.Name, string(patch))
-	out, err := c.Bundles().Patch(cur.Name, types.MergePatchType, patch)
+	out, err := c.Bundles().Patch(ctx, cur.Name, types.MergePatchType, patch, opts)
 	return out, kutil.VerbPatched, err
 }
 
-func TryUpdateBundle(c cs.KubepackV1alpha1Interface, meta metav1.ObjectMeta, transform func(*api.Bundle) *api.Bundle) (result *api.Bundle, err error) {
+func TryUpdateBundle(
+	ctx context.Context,
+	c cs.KubepackV1alpha1Interface,
+	meta metav1.ObjectMeta,
+	transform func(*api.Bundle) *api.Bundle,
+	opts metav1.UpdateOptions,
+) (result *api.Bundle, err error) {
 	attempt := 0
 	err = wait.PollImmediate(kutil.RetryInterval, kutil.RetryTimeout, func() (bool, error) {
 		attempt++
-		cur, e2 := c.Bundles().Get(meta.Name, metav1.GetOptions{})
+		cur, e2 := c.Bundles().Get(ctx, meta.Name, metav1.GetOptions{})
 		if kerr.IsNotFound(e2) {
 			return false, e2
 		} else if e2 == nil {
-			result, e2 = c.Bundles().Update(transform(cur.DeepCopy()))
+			result, e2 = c.Bundles().Update(ctx, transform(cur.DeepCopy()), opts)
 			return e2 == nil, nil
 		}
 		glog.Errorf("Attempt %d failed to update Bundle %s due to %v.", attempt, cur.Name, e2)

@@ -12,12 +12,10 @@ spec:
   - name: Config Maps
     required: true
     type:
-      group: ""
+      groups: [""]
       resource: configmaps
-      version: v1
   - name: Secrets
     required: true
     type:
-      group: ""
+      groups: [""]
       resource: secrets
-      version: v1

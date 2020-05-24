@@ -22,7 +22,7 @@ COMPRESS ?= no
 
 # Produce CRDs that work back to Kubernetes 1.11 (no version conversion)
 CRD_OPTIONS          ?= "crd:trivialVersions=true,preserveUnknownFields=false"
-CODE_GENERATOR_IMAGE ?= appscode/gengo:release-1.16
+CODE_GENERATOR_IMAGE ?= appscode/gengo:release-1.18
 API_GROUPS           ?= kubepack:v1alpha1
 
 # Where to push the docker image.
@@ -72,7 +72,7 @@ TAG              := $(VERSION)_$(OS)_$(ARCH)
 TAG_PROD         := $(TAG)
 TAG_DBG          := $(VERSION)-dbg_$(OS)_$(ARCH)
 
-GO_VERSION       ?= 1.14.2
+GO_VERSION       ?= 1.14
 BUILD_IMAGE      ?= appscode/golang-dev:$(GO_VERSION)
 CHART_TEST_IMAGE ?= quay.io/helmpack/chart-testing:v3.0.0-rc.1
 
@@ -204,7 +204,7 @@ gen-crds:
 			paths="./apis/..."              \
 			output:crd:artifacts:config=api/crds
 
-crds_to_patch := 
+crds_to_patch :=
 
 .PHONY: patch-crds
 patch-crds: $(addprefix patch-crd-, $(crds_to_patch))
@@ -216,8 +216,8 @@ patch-crd-%: $(BUILD_DIRS)
 .PHONY: label-crds
 label-crds: $(BUILD_DIRS)
 	@for f in api/crds/*.yaml; do \
-		echo "applying app=kubepack label to $$f"; \
-		kubectl label --overwrite -f $$f --local=true -o yaml app=kubepack > bin/crd.yaml; \
+		echo "applying app.kubernetes.io/name=kubepack label to $$f"; \
+		kubectl label --overwrite -f $$f --local=true -o yaml app.kubernetes.io/name=kubepack > bin/crd.yaml; \
 		mv bin/crd.yaml $$f; \
 	done
 
@@ -491,7 +491,7 @@ uninstall:
 
 .PHONY: purge
 purge: uninstall
-	kubectl delete crds -l app=kubepack
+	kubectl delete crds -l app.kubernetes.io/name=kubepack
 
 .PHONY: dev
 dev: gen fmt push

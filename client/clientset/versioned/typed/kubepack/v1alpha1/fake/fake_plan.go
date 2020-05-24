@@ -19,6 +19,8 @@ limitations under the License.
 package fake
 
 import (
+	"context"
+
 	v1alpha1 "kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -39,7 +41,7 @@ var plansResource = schema.GroupVersionResource{Group: "kubepack.com", Version: 
 var plansKind = schema.GroupVersionKind{Group: "kubepack.com", Version: "v1alpha1", Kind: "Plan"}
 
 // Get takes name of the plan, and returns the corresponding plan object, and an error if there is any.
-func (c *FakePlans) Get(name string, options v1.GetOptions) (result *v1alpha1.Plan, err error) {
+func (c *FakePlans) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.Plan, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootGetAction(plansResource, name), &v1alpha1.Plan{})
 	if obj == nil {
@@ -49,7 +51,7 @@ func (c *FakePlans) Get(name string, options v1.GetOptions) (result *v1alpha1.Pl
 }
 
 // List takes label and field selectors, and returns the list of Plans that match those selectors.
-func (c *FakePlans) List(opts v1.ListOptions) (result *v1alpha1.PlanList, err error) {
+func (c *FakePlans) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.PlanList, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootListAction(plansResource, plansKind, opts), &v1alpha1.PlanList{})
 	if obj == nil {
@@ -70,13 +72,13 @@ func (c *FakePlans) List(opts v1.ListOptions) (result *v1alpha1.PlanList, err er
 }
 
 // Watch returns a watch.Interface that watches the requested plans.
-func (c *FakePlans) Watch(opts v1.ListOptions) (watch.Interface, error) {
+func (c *FakePlans) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	return c.Fake.
 		InvokesWatch(testing.NewRootWatchAction(plansResource, opts))
 }
 
 // Create takes the representation of a plan and creates it.  Returns the server's representation of the plan, and an error, if there is any.
-func (c *FakePlans) Create(plan *v1alpha1.Plan) (result *v1alpha1.Plan, err error) {
+func (c *FakePlans) Create(ctx context.Context, plan *v1alpha1.Plan, opts v1.CreateOptions) (result *v1alpha1.Plan, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootCreateAction(plansResource, plan), &v1alpha1.Plan{})
 	if obj == nil {
@@ -86,7 +88,7 @@ func (c *FakePlans) Create(plan *v1alpha1.Plan) (result *v1alpha1.Plan, err erro
 }
 
 // Update takes the representation of a plan and updates it. Returns the server's representation of the plan, and an error, if there is any.
-func (c *FakePlans) Update(plan *v1alpha1.Plan) (result *v1alpha1.Plan, err error) {
+func (c *FakePlans) Update(ctx context.Context, plan *v1alpha1.Plan, opts v1.UpdateOptions) (result *v1alpha1.Plan, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootUpdateAction(plansResource, plan), &v1alpha1.Plan{})
 	if obj == nil {
@@ -97,7 +99,7 @@ func (c *FakePlans) Update(plan *v1alpha1.Plan) (result *v1alpha1.Plan, err erro
 
 // UpdateStatus was generated because the type contains a Status member.
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakePlans) UpdateStatus(plan *v1alpha1.Plan) (*v1alpha1.Plan, error) {
+func (c *FakePlans) UpdateStatus(ctx context.Context, plan *v1alpha1.Plan, opts v1.UpdateOptions) (*v1alpha1.Plan, error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootUpdateSubresourceAction(plansResource, "status", plan), &v1alpha1.Plan{})
 	if obj == nil {
@@ -107,22 +109,22 @@ func (c *FakePlans) UpdateStatus(plan *v1alpha1.Plan) (*v1alpha1.Plan, error) {
 }
 
 // Delete takes name of the plan and deletes it. Returns an error if one occurs.
-func (c *FakePlans) Delete(name string, options *v1.DeleteOptions) error {
+func (c *FakePlans) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	_, err := c.Fake.
 		Invokes(testing.NewRootDeleteAction(plansResource, name), &v1alpha1.Plan{})
 	return err
 }
 
 // DeleteCollection deletes a collection of objects.
-func (c *FakePlans) DeleteCollection(options *v1.DeleteOptions, listOptions v1.ListOptions) error {
-	action := testing.NewRootDeleteCollectionAction(plansResource, listOptions)
+func (c *FakePlans) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
+	action := testing.NewRootDeleteCollectionAction(plansResource, listOpts)
 
 	_, err := c.Fake.Invokes(action, &v1alpha1.PlanList{})
 	return err
 }
 
 // Patch applies the patch and returns the patched plan.
-func (c *FakePlans) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1alpha1.Plan, err error) {
+func (c *FakePlans) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.Plan, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootPatchSubresourceAction(plansResource, name, pt, data, subresources...), &v1alpha1.Plan{})
 	if obj == nil {

@@ -20,38 +20,6 @@
             }
           ],
           "namespaced": false
-        },
-        {
-          "name": "Machines",
-          "type": {
-            "group": "cluster.k8s.io",
-            "version": "v1alpha1",
-            "resource": "machines"
-          },
-          "required": true,
-          "icons": [
-            {
-              "src": "https://cdn.appscode.com/k8s/icons/cluster.k8s.io/machine.svg",
-              "type": "image/svg+xml"
-            }
-          ],
-          "namespaced": true
-        },
-        {
-          "name": "Machine Sets",
-          "type": {
-            "group": "cluster.k8s.io",
-            "version": "v1alpha1",
-            "resource": "machinesets"
-          },
-          "required": true,
-          "icons": [
-            {
-              "src": "https://cdn.appscode.com/k8s/icons/cluster.k8s.io/machinesset.svg",
-              "type": "image/svg+xml"
-            }
-          ],
-          "namespaced": true
         }
       ]
     },
@@ -239,7 +207,11 @@
               "type": "image/svg+xml"
             }
           ],
-          "namespaced": true
+          "namespaced": true,
+          "missing": true,
+          "installer": {
+            "productID": "prod_Gnc33bJka9iRl9"
+          }
         }
       ]
     },
@@ -298,7 +270,8 @@
               "type": "image/svg+xml"
             }
           ],
-          "namespaced": true
+          "namespaced": true,
+          "missing": true
         },
         {
           "name": "Network Policies",
@@ -444,7 +417,8 @@
               "type": "image/svg+xml"
             }
           ],
-          "namespaced": true
+          "namespaced": true,
+          "missing": true
         }
       ]
     },
@@ -487,7 +461,8 @@
               "type": "image/svg+xml"
             }
           ],
-          "namespaced": true
+          "namespaced": true,
+          "missing": true
         },
         {
           "name": "Service Accounts",
@@ -598,7 +573,7 @@
           "name": "CSI Drivers",
           "type": {
             "group": "storage.k8s.io",
-            "version": "v1beta1",
+            "version": "v1",
             "resource": "csidrivers"
           },
           "icons": [

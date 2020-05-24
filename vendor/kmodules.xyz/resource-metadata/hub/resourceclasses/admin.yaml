@@ -11,33 +11,27 @@ spec:
   - name: Namespaces
     required: true
     type:
-      group: ""
+      groups: [""]
       resource: namespaces
-      version: v1
   - name: Limit Ranges
     type:
-      group: ""
+      groups: [""]
       resource: limitranges
-      version: v1
   - name: Resource Quotas
     type:
-      group: ""
+      groups: [""]
       resource: resourcequotas
-      version: v1
   - name: Cluster Roles
     required: true
     type:
-      group: rbac.authorization.k8s.io
+      groups: ["rbac.authorization.k8s.io"]
       resource: clusterroles
-      version: v1
   - name: Roles
     required: true
     type:
-      group: rbac.authorization.k8s.io
+      groups: ["rbac.authorization.k8s.io"]
       resource: roles
-      version: v1
   - name: CSI Drivers
     type:
-      group: storage.k8s.io
+      groups: ["storage.k8s.io"]
       resource: csidrivers
-      version: v1beta1

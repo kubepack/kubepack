@@ -19,6 +19,8 @@ limitations under the License.
 package fake
 
 import (
+	"context"
+
 	v1alpha1 "kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -39,7 +41,7 @@ var ordersResource = schema.GroupVersionResource{Group: "kubepack.com", Version:
 var ordersKind = schema.GroupVersionKind{Group: "kubepack.com", Version: "v1alpha1", Kind: "Order"}
 
 // Get takes name of the order, and returns the corresponding order object, and an error if there is any.
-func (c *FakeOrders) Get(name string, options v1.GetOptions) (result *v1alpha1.Order, err error) {
+func (c *FakeOrders) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.Order, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootGetAction(ordersResource, name), &v1alpha1.Order{})
 	if obj == nil {
@@ -49,7 +51,7 @@ func (c *FakeOrders) Get(name string, options v1.GetOptions) (result *v1alpha1.O
 }
 
 // List takes label and field selectors, and returns the list of Orders that match those selectors.
-func (c *FakeOrders) List(opts v1.ListOptions) (result *v1alpha1.OrderList, err error) {
+func (c *FakeOrders) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.OrderList, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootListAction(ordersResource, ordersKind, opts), &v1alpha1.OrderList{})
 	if obj == nil {
@@ -70,13 +72,13 @@ func (c *FakeOrders) List(opts v1.ListOptions) (result *v1alpha1.OrderList, err 
 }
 
 // Watch returns a watch.Interface that watches the requested orders.
-func (c *FakeOrders) Watch(opts v1.ListOptions) (watch.Interface, error) {
+func (c *FakeOrders) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	return c.Fake.
 		InvokesWatch(testing.NewRootWatchAction(ordersResource, opts))
 }
 
 // Create takes the representation of a order and creates it.  Returns the server's representation of the order, and an error, if there is any.
-func (c *FakeOrders) Create(order *v1alpha1.Order) (result *v1alpha1.Order, err error) {
+func (c *FakeOrders) Create(ctx context.Context, order *v1alpha1.Order, opts v1.CreateOptions) (result *v1alpha1.Order, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootCreateAction(ordersResource, order), &v1alpha1.Order{})
 	if obj == nil {
@@ -86,7 +88,7 @@ func (c *FakeOrders) Create(order *v1alpha1.Order) (result *v1alpha1.Order, err 
 }
 
 // Update takes the representation of a order and updates it. Returns the server's representation of the order, and an error, if there is any.
-func (c *FakeOrders) Update(order *v1alpha1.Order) (result *v1alpha1.Order, err error) {
+func (c *FakeOrders) Update(ctx context.Context, order *v1alpha1.Order, opts v1.UpdateOptions) (result *v1alpha1.Order, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootUpdateAction(ordersResource, order), &v1alpha1.Order{})
 	if obj == nil {
@@ -97,7 +99,7 @@ func (c *FakeOrders) Update(order *v1alpha1.Order) (result *v1alpha1.Order, err 
 
 // UpdateStatus was generated because the type contains a Status member.
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeOrders) UpdateStatus(order *v1alpha1.Order) (*v1alpha1.Order, error) {
+func (c *FakeOrders) UpdateStatus(ctx context.Context, order *v1alpha1.Order, opts v1.UpdateOptions) (*v1alpha1.Order, error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootUpdateSubresourceAction(ordersResource, "status", order), &v1alpha1.Order{})
 	if obj == nil {
@@ -107,22 +109,22 @@ func (c *FakeOrders) UpdateStatus(order *v1alpha1.Order) (*v1alpha1.Order, error
 }
 
 // Delete takes name of the order and deletes it. Returns an error if one occurs.
-func (c *FakeOrders) Delete(name string, options *v1.DeleteOptions) error {
+func (c *FakeOrders) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	_, err := c.Fake.
 		Invokes(testing.NewRootDeleteAction(ordersResource, name), &v1alpha1.Order{})
 	return err
 }
 
 // DeleteCollection deletes a collection of objects.
-func (c *FakeOrders) DeleteCollection(options *v1.DeleteOptions, listOptions v1.ListOptions) error {
-	action := testing.NewRootDeleteCollectionAction(ordersResource, listOptions)
+func (c *FakeOrders) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
+	action := testing.NewRootDeleteCollectionAction(ordersResource, listOpts)
 
 	_, err := c.Fake.Invokes(action, &v1alpha1.OrderList{})
 	return err
 }
 
 // Patch applies the patch and returns the patched order.
-func (c *FakeOrders) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1alpha1.Order, err error) {
+func (c *FakeOrders) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.Order, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewRootPatchSubresourceAction(ordersResource, name, pt, data, subresources...), &v1alpha1.Order{})
 	if obj == nil {

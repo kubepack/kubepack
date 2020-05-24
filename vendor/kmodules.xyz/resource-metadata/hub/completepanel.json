@@ -24,34 +24,36 @@
         {
           "name": "Machines",
           "type": {
-            "group": "cluster.k8s.io",
-            "version": "v1alpha1",
+            "group": "cluster.x-k8s.io",
+            "version": "v1alpha3",
             "resource": "machines"
           },
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/cluster.k8s.io/machine.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/cluster.x-k8s.io/machine.svg",
               "type": "image/svg+xml"
             }
           ],
-          "namespaced": true
+          "namespaced": true,
+          "missing": true
         },
         {
           "name": "Machine Sets",
           "type": {
-            "group": "cluster.k8s.io",
-            "version": "v1alpha1",
+            "group": "cluster.x-k8s.io",
+            "version": "v1alpha3",
             "resource": "machinesets"
           },
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/cluster.k8s.io/machinesset.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/cluster.x-k8s.io/machinesset.svg",
               "type": "image/svg+xml"
             }
           ],
-          "namespaced": true
+          "namespaced": true,
+          "missing": true
         }
       ]
     },
@@ -239,7 +241,11 @@
               "type": "image/svg+xml"
             }
           ],
-          "namespaced": true
+          "namespaced": true,
+          "missing": true,
+          "installer": {
+            "productID": "prod_Gnc33bJka9iRl9"
+          }
         }
       ]
     },
@@ -298,7 +304,8 @@
               "type": "image/svg+xml"
             }
           ],
-          "namespaced": true
+          "namespaced": true,
+          "missing": true
         },
         {
           "name": "Network Policies",
@@ -444,7 +451,8 @@
               "type": "image/svg+xml"
             }
           ],
-          "namespaced": true
+          "namespaced": true,
+          "missing": true
         }
       ]
     },
@@ -487,7 +495,8 @@
               "type": "image/svg+xml"
             }
           ],
-          "namespaced": true
+          "namespaced": true,
+          "missing": true
         },
         {
           "name": "Service Accounts",
@@ -598,7 +607,7 @@
           "name": "CSI Drivers",
           "type": {
             "group": "storage.k8s.io",
-            "version": "v1beta1",
+            "version": "v1",
             "resource": "csidrivers"
           },
           "icons": [
@@ -735,105 +744,6 @@
       ]
     },
     {
-      "name": "Authentication",
-      "apiGroup": "authentication.k8s.io",
-      "icons": [
-        {
-          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
-          "type": "image/svg+xml"
-        }
-      ],
-      "entries": [
-        {
-          "name": "TokenReview",
-          "type": {
-            "group": "authentication.k8s.io",
-            "version": "v1",
-            "resource": "tokenreviews"
-          },
-          "icons": [
-            {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
-              "type": "image/svg+xml"
-            }
-          ],
-          "namespaced": false
-        }
-      ]
-    },
-    {
-      "name": "Authorization",
-      "apiGroup": "authorization.k8s.io",
-      "icons": [
-        {
-          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
-          "type": "image/svg+xml"
-        }
-      ],
-      "entries": [
-        {
-          "name": "LocalSubjectAccessReview",
-          "type": {
-            "group": "authorization.k8s.io",
-            "version": "v1",
-            "resource": "localsubjectaccessreviews"
-          },
-          "icons": [
-            {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
-              "type": "image/svg+xml"
-            }
-          ],
-          "namespaced": true
-        },
-        {
-          "name": "SelfSubjectAccessReview",
-          "type": {
-            "group": "authorization.k8s.io",
-            "version": "v1",
-            "resource": "selfsubjectaccessreviews"
-          },
-          "icons": [
-            {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
-              "type": "image/svg+xml"
-            }
-          ],
-          "namespaced": false
-        },
-        {
-          "name": "SelfSubjectRulesReview",
-          "type": {
-            "group": "authorization.k8s.io",
-            "version": "v1",
-            "resource": "selfsubjectrulesreviews"
-          },
-          "icons": [
-            {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
-              "type": "image/svg+xml"
-            }
-          ],
-          "namespaced": false
-        },
-        {
-          "name": "SubjectAccessReview",
-          "type": {
-            "group": "authorization.k8s.io",
-            "version": "v1",
-            "resource": "subjectaccessreviews"
-          },
-          "icons": [
-            {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
-              "type": "image/svg+xml"
-            }
-          ],
-          "namespaced": false
-        }
-      ]
-    },
-    {
       "name": "Authorization Rbac",
       "apiGroup": "rbac.authorization.k8s.io",
       "icons": [
@@ -965,21 +875,6 @@
         }
       ],
       "entries": [
-        {
-          "name": "Binding",
-          "type": {
-            "group": "",
-            "version": "v1",
-            "resource": "bindings"
-          },
-          "icons": [
-            {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
-              "type": "image/svg+xml"
-            }
-          ],
-          "namespaced": true
-        },
         {
           "name": "ComponentStatus",
           "type": {
@@ -1120,6 +1015,33 @@
             }
           ],
           "namespaced": true
+        }
+      ]
+    },
+    {
+      "name": "Networking",
+      "apiGroup": "networking.k8s.io",
+      "icons": [
+        {
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+          "type": "image/svg+xml"
+        }
+      ],
+      "entries": [
+        {
+          "name": "IngressClass",
+          "type": {
+            "group": "networking.k8s.io",
+            "version": "v1beta1",
+            "resource": "ingressclasses"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": false
         }
       ]
     },
