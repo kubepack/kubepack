@@ -53,7 +53,7 @@ import (
 	authorization "k8s.io/api/authorization/v1"
 	core "k8s.io/api/core/v1"
 	crdv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
-	crd_cs "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/typed/apiextensions/v1beta1"
+	crd_cs "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	kerr "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -68,7 +68,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 	authv1client "k8s.io/client-go/kubernetes/typed/authorization/v1"
 	"k8s.io/client-go/rest"
-	"kmodules.xyz/client-go/apiextensions/v1beta1"
+	"kmodules.xyz/client-go/apiextensions"
 	wait2 "kmodules.xyz/client-go/tools/wait"
 	"kmodules.xyz/resource-metadata/hub"
 	yamllib "sigs.k8s.io/yaml"
@@ -291,29 +291,31 @@ type CRDReadinessChecker struct {
 }
 
 func (x *CRDReadinessChecker) Do() error {
-	crds := make([]*crdv1beta1.CustomResourceDefinition, 0, len(x.CRDs))
+	crds := make([]*apiextensions.CustomResourceDefinition, 0, len(x.CRDs))
 	for _, crd := range x.CRDs {
-		crds = append(crds, &crdv1beta1.CustomResourceDefinition{
-			ObjectMeta: v1.ObjectMeta{
-				Name: fmt.Sprintf("%s.%s", crd.Name, crd.Group),
-			},
-			Spec: crdv1beta1.CustomResourceDefinitionSpec{
-				Group:   crd.Group,
-				Version: crd.Version,
-				Names: crdv1beta1.CustomResourceDefinitionNames{
-					Plural: crd.Name,
-					Kind:   crd.Kind,
+		crds = append(crds, &apiextensions.CustomResourceDefinition{
+			V1beta1: &crdv1beta1.CustomResourceDefinition{
+				ObjectMeta: v1.ObjectMeta{
+					Name: fmt.Sprintf("%s.%s", crd.Name, crd.Group),
 				},
-				Scope: crdv1beta1.ResourceScope(string(crd.Scope)),
-				Versions: []crdv1beta1.CustomResourceDefinitionVersion{
-					{
-						Name: crd.Version,
+				Spec: crdv1beta1.CustomResourceDefinitionSpec{
+					Group:   crd.Group,
+					Version: crd.Version,
+					Names: crdv1beta1.CustomResourceDefinitionNames{
+						Plural: crd.Name,
+						Kind:   crd.Kind,
+					},
+					Scope: crdv1beta1.ResourceScope(string(crd.Scope)),
+					Versions: []crdv1beta1.CustomResourceDefinitionVersion{
+						{
+							Name: crd.Version,
+						},
 					},
 				},
 			},
 		})
 	}
-	return v1beta1.WaitForCRDReady(x.Client, crds)
+	return apiextensions.WaitForCRDReady(x.Client, crds)
 }
 
 type Helm3CommandPrinter struct {
@@ -1022,15 +1024,11 @@ type ApplicationCRDRegistrar struct {
 }
 
 func (x *ApplicationCRDRegistrar) Do() error {
-	kc, err := kubernetes.NewForConfig(x.Config)
-	if err != nil {
-		return err
-	}
 	apiextClient, err := crd_cs.NewForConfig(x.Config)
 	if err != nil {
 		return err
 	}
-	return v1beta1.RegisterCRDs(context.TODO(), kc.Discovery(), apiextClient, []*crdv1beta1.CustomResourceDefinition{
+	return apiextensions.RegisterCRDs(apiextClient, []*apiextensions.CustomResourceDefinition{
 		v1alpha1.Application{}.CustomResourceDefinition(),
 	})
 }
