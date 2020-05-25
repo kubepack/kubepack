@@ -37,9 +37,9 @@ require (
 	k8s.io/client-go v12.0.0+incompatible
 	k8s.io/kube-openapi v0.0.0-20200410145947-61e04a5be9a6
 	k8s.io/kubernetes v1.18.3
-	kmodules.xyz/client-go v0.0.0-20200522120609-c6430d66212f
+	kmodules.xyz/client-go v0.0.0-20200525112657-3b8ebfcb5e19
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20200521005638-2433a187de95
-	kmodules.xyz/custom-resources v0.0.0-20200521070540-2221c4957ef6
+	kmodules.xyz/custom-resources v0.0.0-20200525025248-c2afe49bbec6
 	kmodules.xyz/resource-metadata v0.4.0
 	kmodules.xyz/webhook-runtime v0.0.0-20200522123600-ca70a7e28ed0
 	kubepack.dev/lib-helm v0.1.1-0.20200523122332-5ee9165e4a58
@@ -48,7 +48,7 @@ require (
 
 replace (
 	bitbucket.org/ww/goautoneg => gomodules.xyz/goautoneg v0.0.0-20120707110453-a547fc61f48d
-	git.apache.org/thrift.git => github.com/apache/thrift v0.12.0
+	git.apache.org/thrift.git => github.com/apache/thrift v0.13.0
 	github.com/Azure/azure-sdk-for-go => github.com/Azure/azure-sdk-for-go v35.0.0+incompatible
 	github.com/Azure/go-ansiterm => github.com/Azure/go-ansiterm v0.0.0-20170929234023-d6e3b3328b78
 	github.com/Azure/go-autorest => github.com/Azure/go-autorest v13.0.0+incompatible
@@ -65,6 +65,7 @@ replace (
 	go.etcd.io/etcd => go.etcd.io/etcd v0.0.0-20191023171146-3cf2f69b5738
 	google.golang.org/grpc => google.golang.org/grpc v1.26.0
 	helm.sh/helm/v3 => github.com/kubepack/helm/v3 v3.2.2-0.20200523120511-a86fc03a6a93
+	k8s.io/api => github.com/kmodules/api v0.18.4-0.20200524125823-c8bc107809b9
 	k8s.io/apimachinery => github.com/kmodules/apimachinery v0.19.0-alpha.0.0.20200520235721-10b58e57a423
 	k8s.io/apiserver => github.com/kmodules/apiserver v0.18.4-0.20200521000930-14c5f6df9625
 	k8s.io/client-go => k8s.io/client-go v0.18.3
