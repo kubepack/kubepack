@@ -1496,12 +1496,12 @@ kmodules.xyz/crd-schema-fuzz v0.0.0-20200521005638-2433a187de95/go.mod h1:jpu8xF
 kmodules.xyz/custom-resources v0.0.0-20200604135349-9e9f5c4fdba9 h1:W+k1qhU0W1rptia2PWPOb7IWUvWnf31EMnatXt7MW6w=
 kmodules.xyz/custom-resources v0.0.0-20200604135349-9e9f5c4fdba9/go.mod h1:bu1V7HdnuHc1hgvbqAdcwTViQ0TfZwF3Nu/SjB4vai4=
 kmodules.xyz/openshift v0.0.0-20200522123204-ce4abf5433c8/go.mod h1:nVhGcoB3Bi7Ots5+g972Ap/vtyIrrtoK3Z3aulNux7w=
-kmodules.xyz/resource-metadata v0.4.0 h1:UZL+nKLU7fUyX1Iak3B3UohHH5kSfDnkk9foYPjnEWI=
-kmodules.xyz/resource-metadata v0.4.0/go.mod h1:6zFLlOM3tcNNVRAFoZzzq+vrLde83bXHzCsidenpBEY=
+kmodules.xyz/resource-metadata v0.4.2 h1:bOfP0Z/fgwdWQQ0BS+lYSh3sYCAUWHeuSR0JJbN82rg=
+kmodules.xyz/resource-metadata v0.4.2/go.mod h1:9syoyhGsLaPkZf1GyRUoNARl2Gf3iIqOFzW7aj7cOpE=
 kmodules.xyz/webhook-runtime v0.0.0-20200522123600-ca70a7e28ed0 h1:rEOWPdiRYShJdJxX0sf76JYWOMzPQH4v8ByT+DRCmVY=
 kmodules.xyz/webhook-runtime v0.0.0-20200522123600-ca70a7e28ed0/go.mod h1:9hUftUcjvzDSiO5LIbe2U8Naz4tyS9Ndf1LRzsytMzs=
-kubepack.dev/lib-helm v0.1.1-0.20200523122332-5ee9165e4a58 h1:o9leyXoq9cLdSPpDaKq5LlM7pvtXmpAWu4iEGdS9GWk=
-kubepack.dev/lib-helm v0.1.1-0.20200523122332-5ee9165e4a58/go.mod h1:KvMJJt+HgXZnDWnl42m83NCbi5RbKqmaCB8dB+Gn1gk=
+kubepack.dev/lib-helm v0.2.0 h1:2RTwTT1Oq3D+gt+KIcAbVgL38VUKIW2kNTF8xu5CR/I=
+kubepack.dev/lib-helm v0.2.0/go.mod h1:9cL/arXhJVP3wSHOj4eh/St4w8D8d8FHxHRp3S/wGa4=
 modernc.org/cc v1.0.0/go.mod h1:1Sk4//wdnYJiUIxnW8ddKpaOJCF37yAdqYnkxUpaYxw=
 modernc.org/golex v1.0.0/go.mod h1:b/QX9oBD/LhixY6NDh+IdGv17hgB+51fET1i2kPSmvk=
 modernc.org/mathutil v1.0.0/go.mod h1:wU0vUrJsVWBZ4P6e7xtFJEhFSNsfRLJ8H458uRjg03k=
