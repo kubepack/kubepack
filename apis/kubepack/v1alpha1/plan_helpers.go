@@ -17,7 +17,7 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"kubepack.dev/kubepack/api/crds"
+	"kubepack.dev/kubepack/crds"
 
 	"kmodules.xyz/client-go/apiextensions"
 )

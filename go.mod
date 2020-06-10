@@ -40,9 +40,9 @@ require (
 	kmodules.xyz/client-go v0.0.0-20200525195850-2fd180961371
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20200521005638-2433a187de95
 	kmodules.xyz/custom-resources v0.0.0-20200604135349-9e9f5c4fdba9
-	kmodules.xyz/resource-metadata v0.4.0
+	kmodules.xyz/resource-metadata v0.4.2
 	kmodules.xyz/webhook-runtime v0.0.0-20200522123600-ca70a7e28ed0
-	kubepack.dev/lib-helm v0.1.1-0.20200523122332-5ee9165e4a58
+	kubepack.dev/lib-helm v0.2.0
 	sigs.k8s.io/yaml v1.2.0
 )
 

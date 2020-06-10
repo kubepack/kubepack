@@ -19,9 +19,9 @@ package v1alpha1
 import (
 	"strings"
 
-	"kmodules.xyz/resource-metadata/api/crds"
+	"kmodules.xyz/client-go/apiextensions"
+	"kmodules.xyz/resource-metadata/crds"
 
-	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 )

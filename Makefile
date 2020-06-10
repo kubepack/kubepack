@@ -52,7 +52,7 @@ endif
 ### These variables should not need tweaking.
 ###
 
-SRC_PKGS := api apis client cmd pkg # directories which hold app source excluding tests (not vendored)
+SRC_PKGS := apis client cmd crds pkg # directories which hold app source excluding tests (not vendored)
 SRC_DIRS := $(SRC_PKGS) test hack/gencrd hack/gendocs # directories which hold app source (not vendored)
 
 DOCKER_PLATFORMS := linux/amd64 linux/arm linux/arm64
@@ -156,7 +156,7 @@ clientset:
 # Generate openapi schema
 .PHONY: openapi
 openapi: $(addprefix openapi-, $(subst :,_, $(API_GROUPS)))
-	@echo "Generating api/openapi-spec/swagger.json"
+	@echo "Generating openapi/swagger.json"
 	@docker run --rm                                     \
 		-u $$(id -u):$$(id -g)                           \
 		-v /tmp:/.cache                                  \
@@ -171,7 +171,7 @@ openapi: $(addprefix openapi-, $(subst :,_, $(API_GROUPS)))
 
 openapi-%:
 	@echo "Generating openapi schema for $(subst _,/,$*)"
-	@mkdir -p api/api-rules
+	@mkdir -p .config/api-rules
 	@docker run --rm                                     \
 		-u $$(id -u):$$(id -g)                           \
 		-v /tmp:/.cache                                  \
@@ -185,7 +185,7 @@ openapi-%:
 			--go-header-file "./hack/license/go.txt" \
 			--input-dirs "$(GO_PKG)/$(REPO)/apis/$(subst _,/,$*),k8s.io/apimachinery/pkg/apis/meta/v1,k8s.io/apimachinery/pkg/api/resource,k8s.io/apimachinery/pkg/runtime,k8s.io/apimachinery/pkg/util/intstr,k8s.io/apimachinery/pkg/version,k8s.io/api/core/v1,k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1" \
 			--output-package "$(GO_PKG)/$(REPO)/apis/$(subst _,/,$*)" \
-			--report-filename api/api-rules/violation_exceptions.list
+			--report-filename .config/api-rules/violation_exceptions.list
 
 # Generate CRD manifests
 .PHONY: gen-crds
@@ -202,7 +202,7 @@ gen-crds:
 		controller-gen                      \
 			$(CRD_OPTIONS)                  \
 			paths="./apis/..."              \
-			output:crd:artifacts:config=api/crds
+			output:crd:artifacts:config=crds
 
 crds_to_patch :=
 
@@ -210,12 +210,12 @@ crds_to_patch :=
 patch-crds: $(addprefix patch-crd-, $(crds_to_patch))
 patch-crd-%: $(BUILD_DIRS)
 	@echo "patching $*"
-	@kubectl patch -f api/crds/$* -p "$$(cat hack/crd-patch.json)" --type=json --local=true -o yaml > bin/$*
-	@mv bin/$* api/crds/$*
+	@kubectl patch -f crds/$* -p "$$(cat hack/crd-patch.json)" --type=json --local=true -o yaml > bin/$*
+	@mv bin/$* crds/$*
 
 .PHONY: label-crds
 label-crds: $(BUILD_DIRS)
-	@for f in api/crds/*.yaml; do \
+	@for f in crds/*.yaml; do \
 		echo "applying app.kubernetes.io/name=kubepack label to $$f"; \
 		kubectl label --overwrite -f $$f --local=true -o yaml app.kubernetes.io/name=kubepack > bin/crd.yaml; \
 		mv bin/crd.yaml $$f; \
@@ -254,7 +254,7 @@ gen-bindata:
 		--env HTTPS_PROXY=$(HTTPS_PROXY)                        \
 		$(BUILD_IMAGE)                                          \
 		/bin/bash -c "                                          \
-			cd /src/api/crds;                                                                                                           \
+			cd /src/crds;                                                                                                           \
 			go-bindata -ignore='\\.go$$' -ignore=\\.DS_Store -mode=0644 -modtime=1573722179 -o bindata.go -pkg crds ./...;              \
 			cd /src/artifacts/products;                                                                                                 \
 			go-bindata -ignore='\\.go$$' -ignore=\\.DS_Store -mode=0644 -modtime=1573722179 -o bindata.go -pkg products .;              \
