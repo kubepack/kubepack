@@ -69,7 +69,7 @@ func generateSwaggerJson() {
 		glog.Fatal(err)
 	}
 
-	filename := gort.GOPath() + "/src/kubepack.dev/kubepack/api/openapi-spec/swagger.json"
+	filename := gort.GOPath() + "/src/kubepack.dev/kubepack/openapi/swagger.json"
 	err = os.MkdirAll(filepath.Dir(filename), 0755)
 	if err != nil {
 		glog.Fatal(err)
