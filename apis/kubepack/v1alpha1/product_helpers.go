@@ -17,11 +17,43 @@ limitations under the License.
 package v1alpha1
 
 import (
+	"strconv"
+
+	"kubepack.dev/kubepack/apis"
 	"kubepack.dev/kubepack/crds"
 
+	"k8s.io/apimachinery/pkg/labels"
 	"kmodules.xyz/client-go/apiextensions"
 )
 
 func (_ Product) CustomResourceDefinition() *apiextensions.CustomResourceDefinition {
 	return crds.MustCustomResourceDefinition(SchemeGroupVersion.WithResource(ResourceProducts))
+}
+
+func (prod *Product) SetLabels(prodID, prodKey, phase string, ownerID int64) {
+	labelMap := map[string]string{
+		apis.LabelProductID:      prodID,
+		apis.LabelProductKey:     prodKey,
+		apis.LabelProductPhase:   phase,
+		apis.LabelProductOwnerID: strconv.FormatInt(ownerID, 10),
+	}
+	prod.ObjectMeta.SetLabels(labelMap)
+}
+
+func (_ Product) FormatLabels(prodID, prodKey, phase string, ownerID int64) string {
+	labelMap := make(map[string]string)
+	if prodID != "" {
+		labelMap[apis.LabelProductID] = prodID
+	}
+	if prodKey != "" {
+		labelMap[apis.LabelProductKey] = prodKey
+	}
+	if phase != "" {
+		labelMap[apis.LabelProductPhase] = phase
+	}
+	if ownerID != 0 {
+		labelMap[apis.LabelProductOwnerID] = strconv.FormatInt(ownerID, 10)
+	}
+
+	return labels.FormatLabels(labelMap)
 }

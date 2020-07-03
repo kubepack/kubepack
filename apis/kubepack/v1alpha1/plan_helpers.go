@@ -17,11 +17,37 @@ limitations under the License.
 package v1alpha1
 
 import (
+	"kubepack.dev/kubepack/apis"
 	"kubepack.dev/kubepack/crds"
 
+	"k8s.io/apimachinery/pkg/labels"
 	"kmodules.xyz/client-go/apiextensions"
 )
 
 func (_ Plan) CustomResourceDefinition() *apiextensions.CustomResourceDefinition {
 	return crds.MustCustomResourceDefinition(SchemeGroupVersion.WithResource(ResourcePlans))
+}
+
+func (plan *Plan) SetLabels(planID, prodID, phase string) {
+	labelMap := map[string]string{
+		apis.LabelPlanID:    planID,
+		apis.LabelProductID: prodID,
+		apis.LabelPlanPhase: phase,
+	}
+	plan.ObjectMeta.SetLabels(labelMap)
+}
+
+func (_ Plan) FormatLabels(planID, prodID, phase string) string {
+	labelMap := make(map[string]string)
+	if planID != "" {
+		labelMap[apis.LabelPlanID] = planID
+	}
+	if prodID != "" {
+		labelMap[apis.LabelProductID] = prodID
+	}
+	if phase != "" {
+		labelMap[apis.LabelPlanPhase] = phase
+	}
+
+	return labels.FormatLabels(labelMap)
 }

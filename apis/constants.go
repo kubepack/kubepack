@@ -22,4 +22,11 @@ const (
 	StripeAPIKey = "STRIPE_API_KEY"
 
 	StripeMetadataKeyUserID = "client_id"
+
+	LabelPlanID         = "byte.builders/plan-id"
+	LabelPlanPhase      = "byte.builders/plan-phase"
+	LabelProductID      = "byte.builders/product-id"
+	LabelProductKey     = "byte.builders/product-key"
+	LabelProductPhase   = "byte.builders/product-phase"
+	LabelProductOwnerID = "byte.builders/product-owner-id"
 )
