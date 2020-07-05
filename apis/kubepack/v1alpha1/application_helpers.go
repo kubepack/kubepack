@@ -17,11 +17,64 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"kubepack.dev/kubepack/crds"
+	"fmt"
 
 	"kmodules.xyz/client-go/apiextensions"
+	"sigs.k8s.io/application/api/app/v1beta1"
+	"sigs.k8s.io/yaml"
 )
 
-func (_ Application) CustomResourceDefinition() *apiextensions.CustomResourceDefinition {
-	return crds.MustCustomResourceDefinition(SchemeGroupVersion.WithResource(ResourceApplications))
+func ConvertImageSpec(in []ImageSpec) []v1beta1.ImageSpec {
+	out := make([]v1beta1.ImageSpec, len(in))
+	for i := range in {
+		out[i] = v1beta1.ImageSpec{
+			Source: in[i].Source,
+			Size:   in[i].TotalSize,
+			Type:   in[i].Type,
+		}
+	}
+	return out
+}
+
+func ConvertContactData(in []ContactData) []v1beta1.ContactData {
+	out := make([]v1beta1.ContactData, len(in))
+	for i := range in {
+		out[i] = v1beta1.ContactData{
+			Name:  in[i].Name,
+			URL:   in[i].URL,
+			Email: in[i].Email,
+		}
+	}
+	return out
+}
+
+func ConvertLink(in []Link) []v1beta1.Link {
+	out := make([]v1beta1.Link, len(in))
+	for i := range in {
+		out[i] = v1beta1.Link{
+			Description: string(in[i].Description),
+			URL:         in[i].URL,
+		}
+	}
+	return out
+}
+
+func ApplicationCustomResourceDefinition() *apiextensions.CustomResourceDefinition {
+	var out apiextensions.CustomResourceDefinition
+
+	v1file := fmt.Sprintf("%s_%s.v1.yaml", v1beta1.GroupVersion.Group, "applications")
+	if err := yaml.Unmarshal(v1beta1.MustAsset(v1file), &out.V1); err != nil {
+		panic(err)
+	}
+
+	v1beta1file := fmt.Sprintf("%s_%s.yaml", v1beta1.GroupVersion.Group, "applications")
+	if err := yaml.Unmarshal(v1beta1.MustAsset(v1beta1file), &out.V1beta1); err != nil {
+		panic(err)
+	}
+
+	if out.V1 == nil && out.V1beta1 == nil {
+		panic(fmt.Errorf("missing crd yamls for gvr: %s", v1beta1.GroupVersion.WithResource("applications")))
+	}
+
+	return &out
 }

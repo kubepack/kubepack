@@ -17,17 +17,19 @@ limitations under the License.
 package framework
 
 import (
-	kfclient "kubepack.dev/kubepack/client/clientset/versioned"
+	cs "kubepack.dev/kubepack/client/clientset/versioned"
 
 	"github.com/appscode/go/crypto/rand"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
+	app_cs "sigs.k8s.io/application/client/clientset/versioned"
 )
 
 type Framework struct {
 	restConfig *rest.Config
 	kubeClient kubernetes.Interface
-	client     kfclient.Interface
+	client     cs.Interface
+	appClient  app_cs.Interface
 	namespace  string
 	name       string
 }
@@ -35,21 +37,23 @@ type Framework struct {
 func New(
 	restConfig *rest.Config,
 	kubeClient kubernetes.Interface,
-	client kfclient.Interface,
+	client cs.Interface,
+	appClient app_cs.Interface,
 ) *Framework {
 	return &Framework{
 		restConfig: restConfig,
 		kubeClient: kubeClient,
 		client:     client,
+		appClient:  appClient,
 		name:       "kfc",
-		namespace:  rand.WithUniqSuffix("kubeform"),
+		namespace:  rand.WithUniqSuffix("kubepack"),
 	}
 }
 
 func (f *Framework) Invoke() *Invocation {
 	return &Invocation{
 		Framework: f,
-		app:       rand.WithUniqSuffix("kfc-e2e"),
+		app:       rand.WithUniqSuffix("kp-e2e"),
 	}
 }
 
@@ -61,7 +65,7 @@ func (fi *Invocation) RestConfig() *rest.Config {
 	return fi.restConfig
 }
 
-func (fi *Invocation) KubeformClient() kfclient.Interface {
+func (fi *Invocation) KubeformClient() cs.Interface {
 	return fi.client
 }
 

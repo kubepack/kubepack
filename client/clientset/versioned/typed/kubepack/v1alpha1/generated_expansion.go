@@ -18,8 +18,6 @@ limitations under the License.
 
 package v1alpha1
 
-type ApplicationExpansion interface{}
-
 type BundleExpansion interface{}
 
 type OrderExpansion interface{}

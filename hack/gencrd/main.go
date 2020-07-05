@@ -45,7 +45,7 @@ func generateSwaggerJson() {
 		Scheme: Scheme,
 		Codecs: Codecs,
 		Info: spec.InfoProps{
-			Title:   "KubeVault",
+			Title:   "Kubepack",
 			Version: "v0.2.0",
 			Contact: &spec.ContactInfo{
 				Name:  "AppsCode Inc.",
@@ -62,7 +62,7 @@ func generateSwaggerJson() {
 		},
 		//nolint:govet
 		Resources: []openapi.TypeInfo{
-			{v1alpha1.SchemeGroupVersion, v1alpha1.ResourceApplications, v1alpha1.ResourceKindApplication, true},
+			{v1alpha1.SchemeGroupVersion, v1alpha1.ResourceBundles, v1alpha1.ResourceKindBundle, false},
 		},
 	})
 	if err != nil {

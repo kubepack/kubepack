@@ -1368,6 +1368,18 @@ kubepack.dev/lib-helm/repo
 # sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.0.7
 sigs.k8s.io/apiserver-network-proxy/konnectivity-client/pkg/client
 sigs.k8s.io/apiserver-network-proxy/konnectivity-client/proto/client
+# sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4 => github.com/kubepack/application v0.8.4-0.20200705202912-9d241d6484e3
+sigs.k8s.io/application/api/app/v1beta1
+sigs.k8s.io/application/client/clientset/versioned
+sigs.k8s.io/application/client/clientset/versioned/scheme
+sigs.k8s.io/application/client/clientset/versioned/typed/app/v1beta1
+sigs.k8s.io/application/client/informers/externalversions
+sigs.k8s.io/application/client/informers/externalversions/app
+sigs.k8s.io/application/client/informers/externalversions/app/v1beta1
+sigs.k8s.io/application/client/informers/externalversions/internalinterfaces
+sigs.k8s.io/application/client/listers/app/v1beta1
+# sigs.k8s.io/controller-runtime v0.6.0
+sigs.k8s.io/controller-runtime/pkg/scheme
 # sigs.k8s.io/kustomize v2.0.3+incompatible
 sigs.k8s.io/kustomize/pkg/commands/build
 sigs.k8s.io/kustomize/pkg/constants
