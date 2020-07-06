@@ -20,7 +20,6 @@ import (
 	"time"
 
 	cs "kubepack.dev/kubepack/client/clientset/versioned"
-	kubepackinformers "kubepack.dev/kubepack/client/informers/externalversions"
 	"kubepack.dev/kubepack/pkg/eventer"
 
 	pcm "github.com/coreos/prometheus-operator/pkg/client/versioned/typed/monitoring/v1"
@@ -32,6 +31,8 @@ import (
 	reg_util "kmodules.xyz/client-go/admissionregistration/v1beta1"
 	"kmodules.xyz/client-go/discovery"
 	appcat_cs "kmodules.xyz/custom-resources/client/clientset/versioned/typed/appcatalog/v1alpha1"
+	app_cs "sigs.k8s.io/application/client/clientset/versioned"
+	appinformers "sigs.k8s.io/application/client/informers/externalversions"
 )
 
 const (
@@ -55,6 +56,7 @@ type Config struct {
 	ClientConfig     *rest.Config
 	KubeClient       kubernetes.Interface
 	ExtClient        cs.Interface
+	AppClient        app_cs.Interface
 	CRDClient        crd_cs.Interface
 	AppCatalogClient appcat_cs.AppcatalogV1alpha1Interface
 	PromClient       pcm.MonitoringV1Interface
@@ -76,6 +78,7 @@ func (c *Config) New() (*KubepackController, error) {
 		clientConfig:     c.ClientConfig,
 		kubeClient:       c.KubeClient,
 		extClient:        c.ExtClient,
+		appClient:        c.AppClient,
 		crdClient:        c.CRDClient,
 		promClient:       c.PromClient,
 		appCatalogClient: c.AppCatalogClient,
@@ -83,7 +86,7 @@ func (c *Config) New() (*KubepackController, error) {
 			c.KubeClient,
 			c.ResyncPeriod,
 			informers.WithNamespace(core.NamespaceAll)),
-		extInformerFactory: kubepackinformers.NewSharedInformerFactory(c.ExtClient, c.ResyncPeriod),
+		extInformerFactory: appinformers.NewSharedInformerFactory(c.AppClient, c.ResyncPeriod),
 		recorder:           eventer.NewEventRecorder(c.KubeClient, "kubepack"),
 	}
 

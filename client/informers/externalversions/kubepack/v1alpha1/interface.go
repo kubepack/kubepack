@@ -24,8 +24,6 @@ import (
 
 // Interface provides access to all the informers in this group version.
 type Interface interface {
-	// Applications returns a ApplicationInformer.
-	Applications() ApplicationInformer
 	// Bundles returns a BundleInformer.
 	Bundles() BundleInformer
 	// Orders returns a OrderInformer.
@@ -45,11 +43,6 @@ type version struct {
 // New returns a new Interface.
 func New(f internalinterfaces.SharedInformerFactory, namespace string, tweakListOptions internalinterfaces.TweakListOptionsFunc) Interface {
 	return &version{factory: f, namespace: namespace, tweakListOptions: tweakListOptions}
-}
-
-// Applications returns a ApplicationInformer.
-func (v *version) Applications() ApplicationInformer {
-	return &applicationInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }
 
 // Bundles returns a BundleInformer.

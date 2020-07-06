@@ -23,7 +23,7 @@ import (
 	"testing"
 	"time"
 
-	kfclient "kubepack.dev/kubepack/client/clientset/versioned"
+	cs "kubepack.dev/kubepack/client/clientset/versioned"
 	"kubepack.dev/kubepack/test/e2e/framework"
 
 	. "github.com/onsi/ginkgo"
@@ -37,6 +37,7 @@ import (
 	"k8s.io/client-go/util/homedir"
 	"kmodules.xyz/client-go/logs"
 	"kmodules.xyz/client-go/tools/clientcmd"
+	app_cs "sigs.k8s.io/application/client/clientset/versioned"
 )
 
 var (
@@ -85,13 +86,13 @@ var _ = BeforeSuite(func() {
 	config.Burst = 100
 	config.QPS = 100
 
-	// Clients
-	kubeClient := kubernetes.NewForConfigOrDie(config)
-
-	client := kfclient.NewForConfigOrDie(config)
-
 	// Framework
-	root = framework.New(config, kubeClient, client)
+	root = framework.New(
+		config,
+		kubernetes.NewForConfigOrDie(config),
+		cs.NewForConfigOrDie(config),
+		app_cs.NewForConfigOrDie(config),
+	)
 
 	// Create namespace
 	By("Using namespace " + root.Namespace())

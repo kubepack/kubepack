@@ -37,7 +37,7 @@ func (f *Framework) EventuallyCRD() GomegaAsyncAssertion {
 				return errors.New("CRD Order is not ready")
 			}
 
-			if _, err := f.client.KubepackV1alpha1().Applications(core.NamespaceAll).List(context.TODO(), metav1.ListOptions{}); err != nil {
+			if _, err := f.appClient.AppV1beta1().Applications(core.NamespaceAll).List(context.TODO(), metav1.ListOptions{}); err != nil {
 				return errors.New("CRD Application is not ready")
 			}
 			return nil

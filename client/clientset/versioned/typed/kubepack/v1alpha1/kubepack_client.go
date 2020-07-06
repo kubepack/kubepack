@@ -27,7 +27,6 @@ import (
 
 type KubepackV1alpha1Interface interface {
 	RESTClient() rest.Interface
-	ApplicationsGetter
 	BundlesGetter
 	OrdersGetter
 	PlansGetter
@@ -37,10 +36,6 @@ type KubepackV1alpha1Interface interface {
 // KubepackV1alpha1Client is used to interact with features provided by the kubepack.com group.
 type KubepackV1alpha1Client struct {
 	restClient rest.Interface
-}
-
-func (c *KubepackV1alpha1Client) Applications(namespace string) ApplicationInterface {
-	return newApplications(c, namespace)
 }
 
 func (c *KubepackV1alpha1Client) Bundles() BundleInterface {

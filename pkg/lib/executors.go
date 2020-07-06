@@ -32,7 +32,6 @@ import (
 	"time"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/kubepack/client/clientset/versioned"
 	chart2 "kubepack.dev/lib-helm/chart"
 	"kubepack.dev/lib-helm/repo"
 
@@ -71,6 +70,8 @@ import (
 	"kmodules.xyz/client-go/apiextensions"
 	wait2 "kmodules.xyz/client-go/tools/wait"
 	"kmodules.xyz/resource-metadata/hub"
+	"sigs.k8s.io/application/api/app/v1beta1"
+	"sigs.k8s.io/application/client/clientset/versioned"
 	yamllib "sigs.k8s.io/yaml"
 )
 
@@ -1008,11 +1009,11 @@ type ApplicationCRDRegPrinter struct {
 }
 
 func (x *ApplicationCRDRegPrinter) Do() error {
-	_, err := fmt.Fprintln(x.W, "kubectl apply -f https://github.com/kubepack/kubepack/raw/master/api/crds/kubepack.com_applications.yaml")
+	_, err := fmt.Fprintln(x.W, "kubectl apply -f https://github.com/kubepack/application/raw/k-1.18.3/config/crd/bases/app.k8s.io_applications.yaml")
 	if err != nil {
 		return err
 	}
-	_, err = fmt.Fprintln(x.W, "kubectl wait --for=condition=Established crds/applications.kubepack.com --timeout=5m")
+	_, err = fmt.Fprintln(x.W, "kubectl wait --for=condition=Established crds/applications.app.k8s.io --timeout=5m")
 	if err != nil {
 		return err
 	}
@@ -1029,12 +1030,12 @@ func (x *ApplicationCRDRegistrar) Do() error {
 		return err
 	}
 	return apiextensions.RegisterCRDs(apiextClient, []*apiextensions.CustomResourceDefinition{
-		v1alpha1.Application{}.CustomResourceDefinition(),
+		v1alpha1.ApplicationCustomResourceDefinition(),
 	})
 }
 
 type ApplicationUploader struct {
-	App       *v1alpha1.Application
+	App       *v1beta1.Application
 	UID       string
 	BucketURL string
 	PublicURL string
@@ -1078,12 +1079,12 @@ func (x *ApplicationUploader) Do() error {
 }
 
 type ApplicationCreator struct {
-	App    *v1alpha1.Application
+	App    *v1beta1.Application
 	Client *versioned.Clientset
 }
 
 func (x *ApplicationCreator) Do() error {
-	_, err := x.Client.KubepackV1alpha1().Applications(x.App.Namespace).Create(context.TODO(), x.App, metav1.CreateOptions{})
+	_, err := x.Client.AppV1beta1().Applications(x.App.Namespace).Create(context.TODO(), x.App, metav1.CreateOptions{})
 	return err
 }
 
@@ -1248,46 +1249,55 @@ func (x *ApplicationGenerator) Do() error {
 	return nil
 }
 
-func (x *ApplicationGenerator) Result() *v1alpha1.Application {
+func (x *ApplicationGenerator) Result() *v1beta1.Application {
 	desc := GetPackageDescriptor(x.chrt)
 
-	b := &v1alpha1.Application{
+	p := v1alpha1.ApplicationPackage{
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: v1alpha1.SchemeGroupVersion.String(),
-			Kind:       v1alpha1.ResourceKindApplication,
+			Kind:       "ApplicationPackage",
+		},
+		Bundle: x.Chart.Bundle,
+		Chart: v1alpha1.ChartRepoRef{
+			Name:    x.Chart.Name,
+			URL:     x.Chart.URL,
+			Version: x.Chart.Version,
+		},
+		Channel: v1alpha1.RegularChannel,
+	}
+	data, err := json.Marshal(p)
+	if err != nil {
+		panic(err)
+	}
+
+	b := &v1beta1.Application{
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: v1alpha1.SchemeGroupVersion.String(),
+			Kind:       "Application",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:        x.Chart.ReleaseName,
-			Namespace:   x.Chart.Namespace,
-			Labels:      nil, // TODO: ?
-			Annotations: nil, // TODO: ?
+			Name:      x.Chart.ReleaseName,
+			Namespace: x.Chart.Namespace,
+			Labels:    nil, // TODO: ?
+			Annotations: map[string]string{
+				"kubepack.com/package": string(data),
+			},
 		},
-		Spec: v1alpha1.ApplicationSpec{
-			Description: v1alpha1.Descriptor{
-				PackageDescriptor: v1alpha1.PackageDescriptor{
-					Type:        x.chrt.Name(),
-					Description: desc.Description,
-					Icons:       desc.Icons,
-					Maintainers: desc.Maintainers,
-					Keywords:    desc.Keywords,
-					Links:       desc.Links,
-					Notes:       "",
-				},
-				Version: x.chrt.Metadata.AppVersion,
-				Owners:  nil, // TODO: Add the user email who is installing this app
+		Spec: v1beta1.ApplicationSpec{
+			Descriptor: v1beta1.Descriptor{
+				Type:        x.chrt.Name(),
+				Description: desc.Description,
+				Icons:       v1alpha1.ConvertImageSpec(desc.Icons),
+				Maintainers: v1alpha1.ConvertContactData(desc.Maintainers),
+				Keywords:    desc.Keywords,
+				Links:       v1alpha1.ConvertLink(desc.Links),
+				Notes:       "",
+				Version:     x.chrt.Metadata.AppVersion,
+				Owners:      nil, // TODO: Add the user email who is installing this app
 			},
 			AddOwnerRef:   false,
 			Info:          nil,
-			AssemblyPhase: v1alpha1.Ready,
-			Package: v1alpha1.ApplicationPackage{
-				Bundle: x.Chart.Bundle,
-				Chart: v1alpha1.ChartRepoRef{
-					Name:    x.Chart.Name,
-					URL:     x.Chart.URL,
-					Version: x.Chart.Version,
-				},
-				Channel: v1alpha1.RegularChannel,
-			},
+			AssemblyPhase: v1beta1.Ready,
 		},
 	}
 

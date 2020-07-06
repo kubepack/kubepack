@@ -21,7 +21,6 @@ import (
 	"time"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/kubepack/client/clientset/versioned"
 	"kubepack.dev/lib-helm/action"
 	"kubepack.dev/lib-helm/repo"
 
@@ -35,6 +34,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/sets"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 	"k8s.io/client-go/kubernetes"
+	"sigs.k8s.io/application/client/clientset/versioned"
 )
 
 func CreateOrder(reg *repo.Registry, bv v1alpha1.BundleView) (*v1alpha1.Order, error) {

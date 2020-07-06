@@ -315,11 +315,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"k8s.io/apimachinery/pkg/runtime.Unknown":                                                         schema_k8sio_apimachinery_pkg_runtime_Unknown(ref),
 		"k8s.io/apimachinery/pkg/util/intstr.IntOrString":                                                 schema_apimachinery_pkg_util_intstr_IntOrString(ref),
 		"k8s.io/apimachinery/pkg/version.Info":                                                            schema_k8sio_apimachinery_pkg_version_Info(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Application":                                        schema_kubepack_apis_kubepack_v1alpha1_Application(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ApplicationList":                                    schema_kubepack_apis_kubepack_v1alpha1_ApplicationList(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ApplicationPackage":                                 schema_kubepack_apis_kubepack_v1alpha1_ApplicationPackage(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ApplicationSpec":                                    schema_kubepack_apis_kubepack_v1alpha1_ApplicationSpec(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ApplicationStatus":                                  schema_kubepack_apis_kubepack_v1alpha1_ApplicationStatus(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Badge":                                              schema_kubepack_apis_kubepack_v1alpha1_Badge(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Bundle":                                             schema_kubepack_apis_kubepack_v1alpha1_Bundle(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.BundleList":                                         schema_kubepack_apis_kubepack_v1alpha1_BundleList(ref),
@@ -334,23 +330,15 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRef":                                           schema_kubepack_apis_kubepack_v1alpha1_ChartRef(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRepoRef":                                       schema_kubepack_apis_kubepack_v1alpha1_ChartRepoRef(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartSelection":                                     schema_kubepack_apis_kubepack_v1alpha1_ChartSelection(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ComponentList":                                      schema_kubepack_apis_kubepack_v1alpha1_ComponentList(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Condition":                                          schema_kubepack_apis_kubepack_v1alpha1_Condition(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ConfigMapKeySelector":                               schema_kubepack_apis_kubepack_v1alpha1_ConfigMapKeySelector(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData":                                        schema_kubepack_apis_kubepack_v1alpha1_ContactData(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Descriptor":                                         schema_kubepack_apis_kubepack_v1alpha1_Descriptor(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Feature":                                            schema_kubepack_apis_kubepack_v1alpha1_Feature(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.FeatureTable":                                       schema_kubepack_apis_kubepack_v1alpha1_FeatureTable(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.GroupResource":                                      schema_kubepack_apis_kubepack_v1alpha1_GroupResource(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.GroupVersionResource":                               schema_kubepack_apis_kubepack_v1alpha1_GroupVersionResource(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Hub":                                                schema_kubepack_apis_kubepack_v1alpha1_Hub(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec":                                          schema_kubepack_apis_kubepack_v1alpha1_ImageSpec(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.InfoItem":                                           schema_kubepack_apis_kubepack_v1alpha1_InfoItem(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.InfoItemSource":                                     schema_kubepack_apis_kubepack_v1alpha1_InfoItemSource(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.IngressSelector":                                    schema_kubepack_apis_kubepack_v1alpha1_IngressSelector(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link":                                               schema_kubepack_apis_kubepack_v1alpha1_Link(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.MediaSpec":                                          schema_kubepack_apis_kubepack_v1alpha1_MediaSpec(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ObjectStatus":                                       schema_kubepack_apis_kubepack_v1alpha1_ObjectStatus(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.OneOfBundleOption":                                  schema_kubepack_apis_kubepack_v1alpha1_OneOfBundleOption(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.OneOfBundleOptionView":                              schema_kubepack_apis_kubepack_v1alpha1_OneOfBundleOptionView(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Order":                                              schema_kubepack_apis_kubepack_v1alpha1_Order(ref),
@@ -378,8 +366,6 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions":                                schema_kubepack_apis_kubepack_v1alpha1_ResourceDefinitions(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceID":                                         schema_kubepack_apis_kubepack_v1alpha1_ResourceID(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Row":                                                schema_kubepack_apis_kubepack_v1alpha1_Row(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.SecretKeySelector":                                  schema_kubepack_apis_kubepack_v1alpha1_SecretKeySelector(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ServiceSelector":                                    schema_kubepack_apis_kubepack_v1alpha1_ServiceSelector(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ValuesFile":                                         schema_kubepack_apis_kubepack_v1alpha1_ValuesFile(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.VersionDetail":                                      schema_kubepack_apis_kubepack_v1alpha1_VersionDetail(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.VersionOption":                                      schema_kubepack_apis_kubepack_v1alpha1_VersionOption(ref),
@@ -14784,103 +14770,26 @@ func schema_k8sio_apimachinery_pkg_version_Info(ref common.ReferenceCallback) co
 	}
 }
 
-func schema_kubepack_apis_kubepack_v1alpha1_Application(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "Application is the Schema for the applications API",
-				Type:        []string{"object"},
-				Properties: map[string]spec.Schema{
-					"kind": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"apiVersion": {
-						SchemaProps: spec.SchemaProps{
-							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"metadata": {
-						SchemaProps: spec.SchemaProps{
-							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
-						},
-					},
-					"spec": {
-						SchemaProps: spec.SchemaProps{
-							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ApplicationSpec"),
-						},
-					},
-					"status": {
-						SchemaProps: spec.SchemaProps{
-							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ApplicationStatus"),
-						},
-					},
-				},
-			},
-		},
-		Dependencies: []string{
-			"k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ApplicationSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ApplicationStatus"},
-	}
-}
-
-func schema_kubepack_apis_kubepack_v1alpha1_ApplicationList(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "ApplicationList contains a list of Application",
-				Type:        []string{"object"},
-				Properties: map[string]spec.Schema{
-					"kind": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"apiVersion": {
-						SchemaProps: spec.SchemaProps{
-							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"metadata": {
-						SchemaProps: spec.SchemaProps{
-							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"),
-						},
-					},
-					"items": {
-						SchemaProps: spec.SchemaProps{
-							Type: []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.Application"),
-									},
-								},
-							},
-						},
-					},
-				},
-				Required: []string{"items"},
-			},
-		},
-		Dependencies: []string{
-			"k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Application"},
-	}
-}
-
 func schema_kubepack_apis_kubepack_v1alpha1_ApplicationPackage(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
 			SchemaProps: spec.SchemaProps{
 				Type: []string{"object"},
 				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
 					"bundle": {
 						SchemaProps: spec.SchemaProps{
 							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRepoRef"),
@@ -14903,154 +14812,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_ApplicationPackage(ref common.Refere
 		},
 		Dependencies: []string{
 			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRepoRef"},
-	}
-}
-
-func schema_kubepack_apis_kubepack_v1alpha1_ApplicationSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "ApplicationSpec defines the specification for an Application.",
-				Type:        []string{"object"},
-				Properties: map[string]spec.Schema{
-					"componentKinds": {
-						SchemaProps: spec.SchemaProps{
-							Description: "ComponentGroupKinds is a list of Kinds for Application's components (e.g. Deployments, Pods, Services, CRDs). It can be used in conjunction with the Application's Selector to list or watch the Applications components.",
-							Type:        []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.GroupKind"),
-									},
-								},
-							},
-						},
-					},
-					"description": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Description regroups information and metadata about an application.",
-							Ref:         ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.Descriptor"),
-						},
-					},
-					"selector": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Selector is a label query over kinds that created by the application. It must match the component objects' labels. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors",
-							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.LabelSelector"),
-						},
-					},
-					"addOwnerRef": {
-						SchemaProps: spec.SchemaProps{
-							Description: "AddOwnerRef objects - flag to indicate if we need to add OwnerRefs to matching objects Matching is done by using Selector to query all ComponentGroupKinds",
-							Type:        []string{"boolean"},
-							Format:      "",
-						},
-					},
-					"info": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Info contains human readable key,value pairs for the Application.",
-							Type:        []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.InfoItem"),
-									},
-								},
-							},
-						},
-					},
-					"assemblyPhase": {
-						SchemaProps: spec.SchemaProps{
-							Description: "AssemblyPhase represents the current phase of the application's assembly. An empty value is equivalent to \"Succeeded\".",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"package": {
-						SchemaProps: spec.SchemaProps{
-							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ApplicationPackage"),
-						},
-					},
-				},
-				Required: []string{"package"},
-			},
-		},
-		Dependencies: []string{
-			"k8s.io/apimachinery/pkg/apis/meta/v1.GroupKind", "k8s.io/apimachinery/pkg/apis/meta/v1.LabelSelector", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ApplicationPackage", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Descriptor", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.InfoItem"},
-	}
-}
-
-func schema_kubepack_apis_kubepack_v1alpha1_ApplicationStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "ApplicationStatus defines controller's the observed state of Application",
-				Type:        []string{"object"},
-				Properties: map[string]spec.Schema{
-					"observedGeneration": {
-						SchemaProps: spec.SchemaProps{
-							Description: "ObservedGeneration is the most recent generation observed. It corresponds to the Object's generation, which is updated on mutation by the API Server.",
-							Type:        []string{"integer"},
-							Format:      "int64",
-						},
-					},
-					"conditions": {
-						VendorExtensible: spec.VendorExtensible{
-							Extensions: spec.Extensions{
-								"x-kubernetes-patch-merge-key": "type",
-								"x-kubernetes-patch-strategy":  "merge",
-							},
-						},
-						SchemaProps: spec.SchemaProps{
-							Description: "Conditions represents the latest state of the object",
-							Type:        []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.Condition"),
-									},
-								},
-							},
-						},
-					},
-					"components": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Object status array for all matching objects",
-							Type:        []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ObjectStatus"),
-									},
-								},
-							},
-						},
-					},
-					"healthy": {
-						SchemaProps: spec.SchemaProps{
-							Description: "CommonStatus taken from addon-operators. See: https://github.com/kubernetes-sigs/kubebuilder-declarative-pattern/blob/d91f6348488657f8606a6941f755aa530dd1b656/pkg/patterns/addon/pkg/apis/v1alpha1/common_types.go",
-							Type:        []string{"boolean"},
-							Format:      "",
-						},
-					},
-					"errors": {
-						SchemaProps: spec.SchemaProps{
-							Type: []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Type:   []string{"string"},
-										Format: "",
-									},
-								},
-							},
-						},
-					},
-				},
-				Required: []string{"healthy"},
-			},
-		},
-		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Condition", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ObjectStatus"},
 	}
 }
 
@@ -16026,159 +15787,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_ChartSelection(ref common.ReferenceC
 	}
 }
 
-func schema_kubepack_apis_kubepack_v1alpha1_ComponentList(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "ComponentList is a generic status holder for the top level resource",
-				Type:        []string{"object"},
-				Properties: map[string]spec.Schema{
-					"components": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Object status array for all matching objects",
-							Type:        []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ObjectStatus"),
-									},
-								},
-							},
-						},
-					},
-				},
-			},
-		},
-		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ObjectStatus"},
-	}
-}
-
-func schema_kubepack_apis_kubepack_v1alpha1_Condition(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "Condition describes the state of an object at a certain point.",
-				Type:        []string{"object"},
-				Properties: map[string]spec.Schema{
-					"type": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Type of condition.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"status": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Status of the condition, one of True, False, Unknown.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"reason": {
-						SchemaProps: spec.SchemaProps{
-							Description: "The reason for the condition's last transition.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"message": {
-						SchemaProps: spec.SchemaProps{
-							Description: "A human readable message indicating details about the transition.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"lastUpdateTime": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Last time the condition was probed",
-							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
-						},
-					},
-					"lastTransitionTime": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Last time the condition transitioned from one status to another.",
-							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
-						},
-					},
-				},
-				Required: []string{"type", "status"},
-			},
-		},
-		Dependencies: []string{
-			"k8s.io/apimachinery/pkg/apis/meta/v1.Time"},
-	}
-}
-
-func schema_kubepack_apis_kubepack_v1alpha1_ConfigMapKeySelector(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "ConfigMapKeySelector selects a key from a ConfigMap.",
-				Type:        []string{"object"},
-				Properties: map[string]spec.Schema{
-					"kind": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"namespace": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"name": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"uid": {
-						SchemaProps: spec.SchemaProps{
-							Description: "UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"apiVersion": {
-						SchemaProps: spec.SchemaProps{
-							Description: "API version of the referent.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"resourceVersion": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"fieldPath": {
-						SchemaProps: spec.SchemaProps{
-							Description: "If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: \"spec.containers{name}\" (where \"name\" refers to the name of the container that triggered the event) or if no container name is specified \"spec.containers[2]\" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"key": {
-						SchemaProps: spec.SchemaProps{
-							Description: "The key to select.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-				},
-			},
-		},
-	}
-}
-
 func schema_kubepack_apis_kubepack_v1alpha1_ContactData(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -16210,115 +15818,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_ContactData(ref common.ReferenceCall
 				},
 			},
 		},
-	}
-}
-
-func schema_kubepack_apis_kubepack_v1alpha1_Descriptor(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "Descriptor defines the Metadata and informations about the Application.",
-				Type:        []string{"object"},
-				Properties: map[string]spec.Schema{
-					"type": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Type is the type of the application (e.g. WordPress, MySQL, Cassandra).",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"description": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Description is a brief string description of the Application.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"icons": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Icons is an optional list of icons for an application. Icon information includes the source, size, and mime type.",
-							Type:        []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec"),
-									},
-								},
-							},
-						},
-					},
-					"maintainers": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Maintainers is an optional list of maintainers of the application. The maintainers in this list maintain the the source code, images, and package for the application.",
-							Type:        []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData"),
-									},
-								},
-							},
-						},
-					},
-					"keywords": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Keywords is an optional list of key words associated with the application (e.g. MySQL, RDBMS, database).",
-							Type:        []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Type:   []string{"string"},
-										Format: "",
-									},
-								},
-							},
-						},
-					},
-					"links": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Links are a list of descriptive URLs intended to be used to surface additional documentation, dashboards, etc.",
-							Type:        []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link"),
-									},
-								},
-							},
-						},
-					},
-					"notes": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Notes contain a human readable snippets intended as a quick start for the users of the Application. CommonMark markdown syntax may be used for rich text representation.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"version": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Version is an optional version indicator for the Application.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"owners": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Owners is an optional list of the owners of the installed application. The owners of the application should be contacted in the event of a orderned or unorderned disruption affecting the application.",
-							Type:        []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData"),
-									},
-								},
-							},
-						},
-					},
-				},
-			},
-		},
-		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link"},
 	}
 }
 
@@ -16504,170 +16003,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_ImageSpec(ref common.ReferenceCallba
 	}
 }
 
-func schema_kubepack_apis_kubepack_v1alpha1_InfoItem(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "InfoItem is a human readable key,value pair containing important information about how to access the Application.",
-				Type:        []string{"object"},
-				Properties: map[string]spec.Schema{
-					"name": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Name is a human readable title for this piece of information.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"type": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Type of the value for this InfoItem.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"value": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Value is human readable content.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"valueFrom": {
-						SchemaProps: spec.SchemaProps{
-							Description: "ValueFrom defines a reference to derive the value from another source.",
-							Ref:         ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.InfoItemSource"),
-						},
-					},
-				},
-			},
-		},
-		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.InfoItemSource"},
-	}
-}
-
-func schema_kubepack_apis_kubepack_v1alpha1_InfoItemSource(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "InfoItemSource represents a source for the value of an InfoItem.",
-				Type:        []string{"object"},
-				Properties: map[string]spec.Schema{
-					"type": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Type of source.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"secretKeyRef": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Selects a key of a Secret.",
-							Ref:         ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.SecretKeySelector"),
-						},
-					},
-					"configMapKeyRef": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Selects a key of a ConfigMap.",
-							Ref:         ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ConfigMapKeySelector"),
-						},
-					},
-					"serviceRef": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Select a Service.",
-							Ref:         ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ServiceSelector"),
-						},
-					},
-					"ingressRef": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Select an Ingress.",
-							Ref:         ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.IngressSelector"),
-						},
-					},
-				},
-			},
-		},
-		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ConfigMapKeySelector", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.IngressSelector", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.SecretKeySelector", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.ServiceSelector"},
-	}
-}
-
-func schema_kubepack_apis_kubepack_v1alpha1_IngressSelector(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "IngressSelector selects an Ingress.",
-				Type:        []string{"object"},
-				Properties: map[string]spec.Schema{
-					"kind": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"namespace": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"name": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"uid": {
-						SchemaProps: spec.SchemaProps{
-							Description: "UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"apiVersion": {
-						SchemaProps: spec.SchemaProps{
-							Description: "API version of the referent.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"resourceVersion": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"fieldPath": {
-						SchemaProps: spec.SchemaProps{
-							Description: "If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: \"spec.containers{name}\" (where \"name\" refers to the name of the container that triggered the event) or if no container name is specified \"spec.containers[2]\" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"host": {
-						SchemaProps: spec.SchemaProps{
-							Description: "The optional host to select.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"path": {
-						SchemaProps: spec.SchemaProps{
-							Description: "The optional HTTP path.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-				},
-			},
-		},
-	}
-}
-
 func schema_kubepack_apis_kubepack_v1alpha1_Link(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -16732,54 +16067,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_MediaSpec(ref common.ReferenceCallba
 					},
 				},
 				Required: []string{"src"},
-			},
-		},
-	}
-}
-
-func schema_kubepack_apis_kubepack_v1alpha1_ObjectStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "ObjectStatus is a generic status holder for objects",
-				Type:        []string{"object"},
-				Properties: map[string]spec.Schema{
-					"link": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Link to object",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"name": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Name of object",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"kind": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Kind of object",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"group": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Object group",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"status": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Status. Values: InProgress, Ready, Unknown",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-				},
 			},
 		},
 	}
@@ -18178,151 +17465,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_Row(ref common.ReferenceCallback) co
 					},
 				},
 				Required: []string{"trait", "values"},
-			},
-		},
-	}
-}
-
-func schema_kubepack_apis_kubepack_v1alpha1_SecretKeySelector(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "SecretKeySelector selects a key from a Secret.",
-				Type:        []string{"object"},
-				Properties: map[string]spec.Schema{
-					"kind": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"namespace": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"name": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"uid": {
-						SchemaProps: spec.SchemaProps{
-							Description: "UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"apiVersion": {
-						SchemaProps: spec.SchemaProps{
-							Description: "API version of the referent.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"resourceVersion": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"fieldPath": {
-						SchemaProps: spec.SchemaProps{
-							Description: "If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: \"spec.containers{name}\" (where \"name\" refers to the name of the container that triggered the event) or if no container name is specified \"spec.containers[2]\" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"key": {
-						SchemaProps: spec.SchemaProps{
-							Description: "The key to select.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-				},
-			},
-		},
-	}
-}
-
-func schema_kubepack_apis_kubepack_v1alpha1_ServiceSelector(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "ServiceSelector selects a Service.",
-				Type:        []string{"object"},
-				Properties: map[string]spec.Schema{
-					"kind": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"namespace": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"name": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"uid": {
-						SchemaProps: spec.SchemaProps{
-							Description: "UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"apiVersion": {
-						SchemaProps: spec.SchemaProps{
-							Description: "API version of the referent.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"resourceVersion": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"fieldPath": {
-						SchemaProps: spec.SchemaProps{
-							Description: "If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: \"spec.containers{name}\" (where \"name\" refers to the name of the container that triggered the event) or if no container name is specified \"spec.containers[2]\" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"port": {
-						SchemaProps: spec.SchemaProps{
-							Description: "The optional port to select.",
-							Type:        []string{"integer"},
-							Format:      "int32",
-						},
-					},
-					"path": {
-						SchemaProps: spec.SchemaProps{
-							Description: "The optional HTTP path.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-				},
 			},
 		},
 	}

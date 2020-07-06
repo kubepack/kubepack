@@ -21,7 +21,6 @@ syntax = 'proto2';
 
 package kubepack.dev.kubepack.apis.kubepack.v1alpha1;
 
-import "k8s.io/api/core/v1/generated.proto";
 import "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1/generated.proto";
 import "k8s.io/apimachinery/pkg/apis/meta/v1/generated.proto";
 import "k8s.io/apimachinery/pkg/runtime/generated.proto";
@@ -30,78 +29,12 @@ import "k8s.io/apimachinery/pkg/runtime/schema/generated.proto";
 // Package-wide variables from generator "generated".
 option go_package = "v1alpha1";
 
-// Application is the Schema for the applications API
-message Application {
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
-
-  optional ApplicationSpec spec = 2;
-
-  optional ApplicationStatus status = 3;
-}
-
-// ApplicationList contains a list of Application
-message ApplicationList {
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.ListMeta metadata = 1;
-
-  repeated Application items = 2;
-}
-
 message ApplicationPackage {
-  optional ChartRepoRef bundle = 4;
+  optional ChartRepoRef bundle = 1;
 
   optional ChartRepoRef chart = 2;
 
   optional string channel = 3;
-}
-
-// ApplicationSpec defines the specification for an Application.
-message ApplicationSpec {
-  // ComponentGroupKinds is a list of Kinds for Application's components (e.g. Deployments, Pods, Services, CRDs). It
-  // can be used in conjunction with the Application's Selector to list or watch the Applications components.
-  repeated k8s.io.apimachinery.pkg.apis.meta.v1.GroupKind componentKinds = 1;
-
-  // Description regroups information and metadata about an application.
-  optional Descriptor description = 2;
-
-  // Selector is a label query over kinds that created by the application. It must match the component objects' labels.
-  // More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelector selector = 3;
-
-  // AddOwnerRef objects - flag to indicate if we need to add OwnerRefs to matching objects
-  // Matching is done by using Selector to query all ComponentGroupKinds
-  optional bool addOwnerRef = 4;
-
-  // Info contains human readable key,value pairs for the Application.
-  repeated InfoItem info = 5;
-
-  // AssemblyPhase represents the current phase of the application's assembly.
-  // An empty value is equivalent to "Succeeded".
-  optional string assemblyPhase = 6;
-
-  optional ApplicationPackage package = 7;
-}
-
-// ApplicationStatus defines controller's the observed state of Application
-message ApplicationStatus {
-  // ObservedGeneration is the most recent generation observed. It corresponds to the
-  // Object's generation, which is updated on mutation by the API Server.
-  // +optional
-  optional int64 observedGeneration = 1;
-
-  // Conditions represents the latest state of the object
-  // +optional
-  // +patchMergeKey=type
-  // +patchStrategy=merge
-  repeated Condition conditions = 10;
-
-  // Resources embeds a list of object statuses
-  // +optional
-  optional ComponentList componentList = 11;
-
-  // CommonStatus taken from addon-operators. See: https://github.com/kubernetes-sigs/kubebuilder-declarative-pattern/blob/d91f6348488657f8606a6941f755aa530dd1b656/pkg/patterns/addon/pkg/apis/v1alpha1/common_types.go
-  optional bool healthy = 12;
-
-  repeated string errors = 13;
 }
 
 message Badge {
@@ -249,48 +182,6 @@ message ChartSelection {
   repeated WaitFlags waitFors = 9;
 }
 
-// ComponentList is a generic status holder for the top level resource
-// +k8s:deepcopy-gen=true
-message ComponentList {
-  // Object status array for all matching objects
-  repeated ObjectStatus components = 1;
-}
-
-// Condition describes the state of an object at a certain point.
-// +k8s:deepcopy-gen=true
-message Condition {
-  // Type of condition.
-  optional string type = 1;
-
-  // Status of the condition, one of True, False, Unknown.
-  optional string status = 2;
-
-  // The reason for the condition's last transition.
-  // +optional
-  optional string reason = 3;
-
-  // A human readable message indicating details about the transition.
-  // +optional
-  optional string message = 4;
-
-  // Last time the condition was probed
-  // +optional
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.Time lastUpdateTime = 5;
-
-  // Last time the condition transitioned from one status to another.
-  // +optional
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.Time lastTransitionTime = 6;
-}
-
-// ConfigMapKeySelector selects a key from a ConfigMap.
-message ConfigMapKeySelector {
-  // The ConfigMap to select from.
-  optional k8s.io.api.core.v1.ObjectReference objectReference = 1;
-
-  // The key to select.
-  optional string key = 2;
-}
-
 // ContactData contains information about an individual or organization.
 message ContactData {
   // Name is the descriptive name.
@@ -301,18 +192,6 @@ message ContactData {
 
   // Email is the email address.
   optional string email = 3;
-}
-
-// Descriptor defines the Metadata and informations about the Application.
-message Descriptor {
-  optional PackageDescriptor packageDescriptor = 7;
-
-  // Version is an optional version indicator for the Application.
-  optional string version = 2;
-
-  // Owners is an optional list of the owners of the installed application. The owners of the application should be
-  // contacted in the event of a orderned or unorderned disruption affecting the application.
-  repeated ContactData owners = 6;
 }
 
 message Feature {
@@ -358,51 +237,6 @@ message ImageSpec {
   optional string type = 3;
 }
 
-// InfoItem is a human readable key,value pair containing important information about how to access the Application.
-message InfoItem {
-  // Name is a human readable title for this piece of information.
-  optional string name = 1;
-
-  // Type of the value for this InfoItem.
-  optional string type = 2;
-
-  // Value is human readable content.
-  optional string value = 3;
-
-  // ValueFrom defines a reference to derive the value from another source.
-  optional InfoItemSource valueFrom = 4;
-}
-
-// InfoItemSource represents a source for the value of an InfoItem.
-message InfoItemSource {
-  // Type of source.
-  optional string type = 1;
-
-  // Selects a key of a Secret.
-  optional SecretKeySelector secretKeyRef = 2;
-
-  // Selects a key of a ConfigMap.
-  optional ConfigMapKeySelector configMapKeyRef = 3;
-
-  // Select a Service.
-  optional ServiceSelector serviceRef = 4;
-
-  // Select an Ingress.
-  optional IngressSelector ingressRef = 5;
-}
-
-// IngressSelector selects an Ingress.
-message IngressSelector {
-  // The Ingress to select from.
-  optional k8s.io.api.core.v1.ObjectReference objectReference = 1;
-
-  // The optional host to select.
-  optional string host = 2;
-
-  // The optional HTTP path.
-  optional string path = 3;
-}
-
 // Link contains information about an URL to surface documentation, dashboards, etc.
 message Link {
   // Description is human readable content explaining the purpose of the link.
@@ -418,25 +252,6 @@ message MediaSpec {
   optional string description = 1;
 
   optional ImageSpec imageSpec = 2;
-}
-
-// ObjectStatus is a generic status holder for objects
-// +k8s:deepcopy-gen=true
-message ObjectStatus {
-  // Link to object
-  optional string link = 1;
-
-  // Name of object
-  optional string name = 2;
-
-  // Kind of object
-  optional string kind = 3;
-
-  // Object group
-  optional string group = 4;
-
-  // Status. Values: InProgress, Ready, Unknown
-  optional string status = 5;
 }
 
 message OneOfBundleOption {
@@ -755,27 +570,6 @@ message Row {
   optional string trait = 1;
 
   repeated string values = 2;
-}
-
-// SecretKeySelector selects a key from a Secret.
-message SecretKeySelector {
-  // The Secret to select from.
-  optional k8s.io.api.core.v1.ObjectReference objectReference = 1;
-
-  // The key to select.
-  optional string key = 2;
-}
-
-// ServiceSelector selects a Service.
-message ServiceSelector {
-  // The Service to select from.
-  optional k8s.io.api.core.v1.ObjectReference objectReference = 1;
-
-  // The optional port to select.
-  optional int32 port = 2;
-
-  // The optional HTTP path.
-  optional string path = 3;
 }
 
 message ValuesFile {

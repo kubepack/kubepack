@@ -43,8 +43,11 @@ require (
 	kmodules.xyz/resource-metadata v0.4.2
 	kmodules.xyz/webhook-runtime v0.0.0-20200522123600-ca70a7e28ed0
 	kubepack.dev/lib-helm v0.2.0
+	sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4
 	sigs.k8s.io/yaml v1.2.0
 )
+
+replace sigs.k8s.io/application => github.com/kubepack/application v0.8.4-0.20200705202912-9d241d6484e3
 
 replace helm.sh/helm/v3 => github.com/kubepack/helm/v3 v3.2.2-0.20200523120511-a86fc03a6a93
 
