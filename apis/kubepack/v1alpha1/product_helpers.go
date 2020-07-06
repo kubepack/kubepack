@@ -55,5 +55,5 @@ func (_ Product) FormatLabels(prodID, prodKey, phase string, ownerID int64) stri
 		labelMap[apis.LabelProductOwnerID] = strconv.FormatInt(ownerID, 10)
 	}
 
-	return labels.FormatLabels(labelMap)
+	return labels.Set(labelMap).String()
 }

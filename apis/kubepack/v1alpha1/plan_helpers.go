@@ -49,5 +49,5 @@ func (_ Plan) FormatLabels(planID, prodID, phase string) string {
 		labelMap[apis.LabelPlanPhase] = phase
 	}
 
-	return labels.FormatLabels(labelMap)
+	return labels.Set(labelMap).String()
 }
