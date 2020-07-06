@@ -21,8 +21,6 @@ import (
 
 	api "kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	cs "kubepack.dev/kubepack/client/clientset/versioned"
-	kubepackinformers "kubepack.dev/kubepack/client/informers/externalversions"
-	kubepack_listers "kubepack.dev/kubepack/client/listers/kubepack/v1alpha1"
 
 	pcm "github.com/coreos/prometheus-operator/pkg/client/versioned/typed/monitoring/v1"
 	"github.com/golang/glog"
@@ -38,6 +36,9 @@ import (
 	"kmodules.xyz/client-go/tools/queue"
 	appcat "kmodules.xyz/custom-resources/apis/appcatalog/v1alpha1"
 	appcat_cs "kmodules.xyz/custom-resources/client/clientset/versioned/typed/appcatalog/v1alpha1"
+	app_cs "sigs.k8s.io/application/client/clientset/versioned"
+	appinformers "sigs.k8s.io/application/client/informers/externalversions"
+	app_listers "sigs.k8s.io/application/client/listers/app/v1beta1"
 )
 
 type KubepackController struct {
@@ -46,6 +47,7 @@ type KubepackController struct {
 
 	kubeClient       kubernetes.Interface
 	extClient        cs.Interface
+	appClient        app_cs.Interface
 	appCatalogClient appcat_cs.AppcatalogV1alpha1Interface
 	crdClient        crd_cs.Interface
 	recorder         record.EventRecorder
@@ -53,19 +55,19 @@ type KubepackController struct {
 	promClient pcm.MonitoringV1Interface
 
 	kubeInformerFactory informers.SharedInformerFactory
-	extInformerFactory  kubepackinformers.SharedInformerFactory
+	extInformerFactory  appinformers.SharedInformerFactory
 
 	// for Application
 	appQueue    *queue.Worker
 	appInformer cache.SharedIndexInformer
-	appLister   kubepack_listers.ApplicationLister
+	appLister   app_listers.ApplicationLister
 }
 
 func (c *KubepackController) ensureCustomResourceDefinitions() error {
 	crds := []*apiextensions.CustomResourceDefinition{
 		api.Bundle{}.CustomResourceDefinition(),
 		api.Order{}.CustomResourceDefinition(),
-		api.Application{}.CustomResourceDefinition(),
+		api.ApplicationCustomResourceDefinition(),
 		appcat.AppBinding{}.CustomResourceDefinition(),
 	}
 	return apiextensions.RegisterCRDs(c.crdClient, crds)

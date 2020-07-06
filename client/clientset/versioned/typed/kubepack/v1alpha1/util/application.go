@@ -21,9 +21,6 @@ import (
 	"encoding/json"
 	"fmt"
 
-	api "kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	cs "kubepack.dev/kubepack/client/clientset/versioned/typed/kubepack/v1alpha1"
-
 	jsonpatch "github.com/evanphx/json-patch"
 	"github.com/golang/glog"
 	"github.com/pkg/errors"
@@ -32,11 +29,13 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/apimachinery/pkg/util/wait"
 	kutil "kmodules.xyz/client-go"
+	api "sigs.k8s.io/application/api/app/v1beta1"
+	cs "sigs.k8s.io/application/client/clientset/versioned/typed/app/v1beta1"
 )
 
 func CreateOrPatchApplication(
 	ctx context.Context,
-	c cs.KubepackV1alpha1Interface,
+	c cs.AppV1beta1Interface,
 	meta metav1.ObjectMeta,
 	transform func(*api.Application) *api.Application,
 	opts metav1.PatchOptions,
@@ -46,8 +45,8 @@ func CreateOrPatchApplication(
 		glog.V(3).Infof("Creating Application %s/%s.", meta.Namespace, meta.Name)
 		out, err := c.Applications(meta.Namespace).Create(ctx, transform(&api.Application{
 			TypeMeta: metav1.TypeMeta{
-				Kind:       api.ResourceKindApplication,
-				APIVersion: api.SchemeGroupVersion.String(),
+				Kind:       "Application",
+				APIVersion: api.GroupVersion.String(),
 			},
 			ObjectMeta: meta,
 		}), metav1.CreateOptions{
@@ -63,7 +62,7 @@ func CreateOrPatchApplication(
 
 func PatchApplication(
 	ctx context.Context,
-	c cs.KubepackV1alpha1Interface,
+	c cs.AppV1beta1Interface,
 	cur *api.Application,
 	transform func(*api.Application) *api.Application,
 	opts metav1.PatchOptions,
@@ -73,7 +72,7 @@ func PatchApplication(
 
 func PatchApplicationObject(
 	ctx context.Context,
-	c cs.KubepackV1alpha1Interface,
+	c cs.AppV1beta1Interface,
 	cur, mod *api.Application,
 	opts metav1.PatchOptions,
 ) (*api.Application, kutil.VerbType, error) {
@@ -101,7 +100,7 @@ func PatchApplicationObject(
 
 func TryUpdateApplication(
 	ctx context.Context,
-	c cs.KubepackV1alpha1Interface,
+	c cs.AppV1beta1Interface,
 	meta metav1.ObjectMeta,
 	transform func(*api.Application) *api.Application,
 	opts metav1.UpdateOptions,
@@ -128,7 +127,7 @@ func TryUpdateApplication(
 
 func UpdateApplicationStatus(
 	ctx context.Context,
-	c cs.KubepackV1alpha1Interface,
+	c cs.AppV1beta1Interface,
 	meta metav1.ObjectMeta,
 	transform func(*api.ApplicationStatus) *api.ApplicationStatus,
 	opts metav1.UpdateOptions,

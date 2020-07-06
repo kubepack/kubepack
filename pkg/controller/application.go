@@ -19,7 +19,6 @@ package controller
 import (
 	"context"
 
-	api "kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/client/clientset/versioned/typed/kubepack/v1alpha1/util"
 
 	"github.com/golang/glog"
@@ -27,6 +26,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	core_util "kmodules.xyz/client-go/core/v1"
 	"kmodules.xyz/client-go/tools/queue"
+	api "sigs.k8s.io/application/api/app/v1beta1"
 )
 
 const (
@@ -34,10 +34,10 @@ const (
 )
 
 func (c *KubepackController) initAppWatcher() {
-	c.appInformer = c.extInformerFactory.Kubepack().V1alpha1().Applications().Informer()
-	c.appQueue = queue.New(api.ResourceKindApplication, c.MaxNumRequeues, c.NumThreads, c.runAppInjector)
+	c.appInformer = c.extInformerFactory.App().V1beta1().Applications().Informer()
+	c.appQueue = queue.New("Application", c.MaxNumRequeues, c.NumThreads, c.runAppInjector)
 	c.appInformer.AddEventHandler(queue.NewReconcilableHandler(c.appQueue.GetQueue()))
-	c.appLister = c.extInformerFactory.Kubepack().V1alpha1().Applications().Lister()
+	c.appLister = c.extInformerFactory.App().V1beta1().Applications().Lister()
 }
 
 // runAppInjector gets the vault policy object indexed by the key from cache
@@ -59,7 +59,7 @@ func (c *KubepackController) runAppInjector(key string) error {
 		} else {
 			if !core_util.HasFinalizer(vPolicy.ObjectMeta, AppFinalizer) {
 				// Add finalizer
-				_, _, err := util.PatchApplication(context.TODO(), c.extClient.KubepackV1alpha1(), vPolicy, func(vp *api.Application) *api.Application {
+				_, _, err := util.PatchApplication(context.TODO(), c.appClient.AppV1beta1(), vPolicy, func(vp *api.Application) *api.Application {
 					vp.ObjectMeta = core_util.AddFinalizer(vPolicy.ObjectMeta, AppFinalizer)
 					return vp
 				}, metav1.PatchOptions{})

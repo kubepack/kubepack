@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "KubeVault",
+    "title": "Kubepack",
     "contact": {
       "name": "AppsCode Inc.",
       "url": "https://appscode.com",
@@ -104,9 +104,9 @@
         }
       }
     },
-    "/apis/kubepack.com/v1alpha1/applications": {
+    "/apis/kubepack.com/v1alpha1/bundles": {
       "get": {
-        "description": "list or watch objects of kind Application",
+        "description": "list or watch objects of kind Bundle",
         "consumes": [
           "*/*"
         ],
@@ -123,108 +123,7 @@
         "tags": [
           "kubepackCom_v1alpha1"
         ],
-        "operationId": "listKubepackComV1alpha1ApplicationForAllNamespaces",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.ApplicationList"
-            }
-          }
-        },
-        "x-kubernetes-action": "list",
-        "x-kubernetes-group-version-kind": {
-          "group": "kubepack.com",
-          "version": "v1alpha1",
-          "kind": "Application"
-        }
-      },
-      "parameters": [
-        {
-          "uniqueItems": true,
-          "type": "boolean",
-          "description": "allowWatchBookmarks requests watch events with type \"BOOKMARK\". Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server's discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored.",
-          "name": "allowWatchBookmarks",
-          "in": "query"
-        },
-        {
-          "uniqueItems": true,
-          "type": "string",
-          "description": "The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \"next key\".\n\nThis field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.",
-          "name": "continue",
-          "in": "query"
-        },
-        {
-          "uniqueItems": true,
-          "type": "string",
-          "description": "A selector to restrict the list of returned objects by their fields. Defaults to everything.",
-          "name": "fieldSelector",
-          "in": "query"
-        },
-        {
-          "uniqueItems": true,
-          "type": "string",
-          "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything.",
-          "name": "labelSelector",
-          "in": "query"
-        },
-        {
-          "uniqueItems": true,
-          "type": "integer",
-          "description": "limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.\n\nThe server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.",
-          "name": "limit",
-          "in": "query"
-        },
-        {
-          "uniqueItems": true,
-          "type": "string",
-          "description": "If 'true', then the output is pretty printed.",
-          "name": "pretty",
-          "in": "query"
-        },
-        {
-          "uniqueItems": true,
-          "type": "string",
-          "description": "When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.",
-          "name": "resourceVersion",
-          "in": "query"
-        },
-        {
-          "uniqueItems": true,
-          "type": "integer",
-          "description": "Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.",
-          "name": "timeoutSeconds",
-          "in": "query"
-        },
-        {
-          "uniqueItems": true,
-          "type": "boolean",
-          "description": "Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.",
-          "name": "watch",
-          "in": "query"
-        }
-      ]
-    },
-    "/apis/kubepack.com/v1alpha1/namespaces/{namespace}/applications": {
-      "get": {
-        "description": "list or watch objects of kind Application",
-        "consumes": [
-          "*/*"
-        ],
-        "produces": [
-          "application/json",
-          "application/yaml",
-          "application/vnd.kubernetes.protobuf",
-          "application/json;stream=watch",
-          "application/vnd.kubernetes.protobuf;stream=watch"
-        ],
-        "schemes": [
-          "https"
-        ],
-        "tags": [
-          "kubepackCom_v1alpha1"
-        ],
-        "operationId": "listKubepackComV1alpha1NamespacedApplication",
+        "operationId": "listKubepackComV1alpha1Bundle",
         "parameters": [
           {
             "uniqueItems": true,
@@ -287,7 +186,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.ApplicationList"
+              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.BundleList"
             }
           }
         },
@@ -295,11 +194,11 @@
         "x-kubernetes-group-version-kind": {
           "group": "kubepack.com",
           "version": "v1alpha1",
-          "kind": "Application"
+          "kind": "Bundle"
         }
       },
       "post": {
-        "description": "create an Application",
+        "description": "create a Bundle",
         "consumes": [
           "*/*"
         ],
@@ -314,14 +213,14 @@
         "tags": [
           "kubepackCom_v1alpha1"
         ],
-        "operationId": "createKubepackComV1alpha1NamespacedApplication",
+        "operationId": "createKubepackComV1alpha1Bundle",
         "parameters": [
           {
             "name": "body",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Application"
+              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Bundle"
             }
           },
           {
@@ -343,19 +242,19 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Application"
+              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Bundle"
             }
           },
           "201": {
             "description": "Created",
             "schema": {
-              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Application"
+              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Bundle"
             }
           },
           "202": {
             "description": "Accepted",
             "schema": {
-              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Application"
+              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Bundle"
             }
           }
         },
@@ -363,11 +262,11 @@
         "x-kubernetes-group-version-kind": {
           "group": "kubepack.com",
           "version": "v1alpha1",
-          "kind": "Application"
+          "kind": "Bundle"
         }
       },
       "delete": {
-        "description": "delete collection of Application",
+        "description": "delete collection of Bundle",
         "consumes": [
           "*/*"
         ],
@@ -382,7 +281,7 @@
         "tags": [
           "kubepackCom_v1alpha1"
         ],
-        "operationId": "deleteKubepackComV1alpha1CollectionNamespacedApplication",
+        "operationId": "deleteKubepackComV1alpha1CollectionBundle",
         "parameters": [
           {
             "uniqueItems": true,
@@ -488,18 +387,10 @@
         "x-kubernetes-group-version-kind": {
           "group": "kubepack.com",
           "version": "v1alpha1",
-          "kind": "Application"
+          "kind": "Bundle"
         }
       },
       "parameters": [
-        {
-          "uniqueItems": true,
-          "type": "string",
-          "description": "object name and auth scope, such as for teams and projects",
-          "name": "namespace",
-          "in": "path",
-          "required": true
-        },
         {
           "uniqueItems": true,
           "type": "string",
@@ -509,9 +400,9 @@
         }
       ]
     },
-    "/apis/kubepack.com/v1alpha1/namespaces/{namespace}/applications/{name}": {
+    "/apis/kubepack.com/v1alpha1/bundles/{name}": {
       "get": {
-        "description": "read the specified Application",
+        "description": "read the specified Bundle",
         "consumes": [
           "*/*"
         ],
@@ -526,12 +417,12 @@
         "tags": [
           "kubepackCom_v1alpha1"
         ],
-        "operationId": "readKubepackComV1alpha1NamespacedApplication",
+        "operationId": "readKubepackComV1alpha1Bundle",
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Application"
+              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Bundle"
             }
           }
         },
@@ -539,11 +430,11 @@
         "x-kubernetes-group-version-kind": {
           "group": "kubepack.com",
           "version": "v1alpha1",
-          "kind": "Application"
+          "kind": "Bundle"
         }
       },
       "put": {
-        "description": "replace the specified Application",
+        "description": "replace the specified Bundle",
         "consumes": [
           "*/*"
         ],
@@ -558,14 +449,14 @@
         "tags": [
           "kubepackCom_v1alpha1"
         ],
-        "operationId": "replaceKubepackComV1alpha1NamespacedApplication",
+        "operationId": "replaceKubepackComV1alpha1Bundle",
         "parameters": [
           {
             "name": "body",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Application"
+              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Bundle"
             }
           },
           {
@@ -587,13 +478,13 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Application"
+              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Bundle"
             }
           },
           "201": {
             "description": "Created",
             "schema": {
-              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Application"
+              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Bundle"
             }
           }
         },
@@ -601,11 +492,11 @@
         "x-kubernetes-group-version-kind": {
           "group": "kubepack.com",
           "version": "v1alpha1",
-          "kind": "Application"
+          "kind": "Bundle"
         }
       },
       "delete": {
-        "description": "delete an Application",
+        "description": "delete a Bundle",
         "consumes": [
           "*/*"
         ],
@@ -620,7 +511,7 @@
         "tags": [
           "kubepackCom_v1alpha1"
         ],
-        "operationId": "deleteKubepackComV1alpha1NamespacedApplication",
+        "operationId": "deleteKubepackComV1alpha1Bundle",
         "parameters": [
           {
             "name": "body",
@@ -676,11 +567,11 @@
         "x-kubernetes-group-version-kind": {
           "group": "kubepack.com",
           "version": "v1alpha1",
-          "kind": "Application"
+          "kind": "Bundle"
         }
       },
       "patch": {
-        "description": "partially update the specified Application",
+        "description": "partially update the specified Bundle",
         "consumes": [
           "application/json-patch+json",
           "application/merge-patch+json",
@@ -698,7 +589,7 @@
         "tags": [
           "kubepackCom_v1alpha1"
         ],
-        "operationId": "patchKubepackComV1alpha1NamespacedApplication",
+        "operationId": "patchKubepackComV1alpha1Bundle",
         "parameters": [
           {
             "name": "body",
@@ -734,7 +625,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Application"
+              "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Bundle"
             }
           }
         },
@@ -742,14 +633,14 @@
         "x-kubernetes-group-version-kind": {
           "group": "kubepack.com",
           "version": "v1alpha1",
-          "kind": "Application"
+          "kind": "Bundle"
         }
       },
       "parameters": [
         {
           "uniqueItems": true,
           "type": "string",
-          "description": "name of the Application",
+          "description": "name of the Bundle",
           "name": "name",
           "in": "path",
           "required": true
@@ -757,23 +648,15 @@
         {
           "uniqueItems": true,
           "type": "string",
-          "description": "object name and auth scope, such as for teams and projects",
-          "name": "namespace",
-          "in": "path",
-          "required": true
-        },
-        {
-          "uniqueItems": true,
-          "type": "string",
           "description": "If 'true', then the output is pretty printed.",
           "name": "pretty",
           "in": "query"
         }
       ]
     },
-    "/apis/kubepack.com/v1alpha1/watch/applications": {
+    "/apis/kubepack.com/v1alpha1/watch/bundles": {
       "get": {
-        "description": "watch individual changes to a list of Application. deprecated: use the 'watch' parameter with a list operation instead.",
+        "description": "watch individual changes to a list of Bundle. deprecated: use the 'watch' parameter with a list operation instead.",
         "consumes": [
           "*/*"
         ],
@@ -790,7 +673,7 @@
         "tags": [
           "kubepackCom_v1alpha1"
         ],
-        "operationId": "watchKubepackComV1alpha1ApplicationListForAllNamespaces",
+        "operationId": "watchKubepackComV1alpha1BundleList",
         "responses": {
           "200": {
             "description": "OK",
@@ -803,7 +686,7 @@
         "x-kubernetes-group-version-kind": {
           "group": "kubepack.com",
           "version": "v1alpha1",
-          "kind": "Application"
+          "kind": "Bundle"
         }
       },
       "parameters": [
@@ -872,9 +755,9 @@
         }
       ]
     },
-    "/apis/kubepack.com/v1alpha1/watch/namespaces/{namespace}/applications": {
+    "/apis/kubepack.com/v1alpha1/watch/bundles/{name}": {
       "get": {
-        "description": "watch individual changes to a list of Application. deprecated: use the 'watch' parameter with a list operation instead.",
+        "description": "watch changes to an object of kind Bundle. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.",
         "consumes": [
           "*/*"
         ],
@@ -891,116 +774,7 @@
         "tags": [
           "kubepackCom_v1alpha1"
         ],
-        "operationId": "watchKubepackComV1alpha1NamespacedApplicationList",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent"
-            }
-          }
-        },
-        "x-kubernetes-action": "watchlist",
-        "x-kubernetes-group-version-kind": {
-          "group": "kubepack.com",
-          "version": "v1alpha1",
-          "kind": "Application"
-        }
-      },
-      "parameters": [
-        {
-          "uniqueItems": true,
-          "type": "boolean",
-          "description": "allowWatchBookmarks requests watch events with type \"BOOKMARK\". Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server's discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored.",
-          "name": "allowWatchBookmarks",
-          "in": "query"
-        },
-        {
-          "uniqueItems": true,
-          "type": "string",
-          "description": "The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \"next key\".\n\nThis field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.",
-          "name": "continue",
-          "in": "query"
-        },
-        {
-          "uniqueItems": true,
-          "type": "string",
-          "description": "A selector to restrict the list of returned objects by their fields. Defaults to everything.",
-          "name": "fieldSelector",
-          "in": "query"
-        },
-        {
-          "uniqueItems": true,
-          "type": "string",
-          "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything.",
-          "name": "labelSelector",
-          "in": "query"
-        },
-        {
-          "uniqueItems": true,
-          "type": "integer",
-          "description": "limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.\n\nThe server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.",
-          "name": "limit",
-          "in": "query"
-        },
-        {
-          "uniqueItems": true,
-          "type": "string",
-          "description": "object name and auth scope, such as for teams and projects",
-          "name": "namespace",
-          "in": "path",
-          "required": true
-        },
-        {
-          "uniqueItems": true,
-          "type": "string",
-          "description": "If 'true', then the output is pretty printed.",
-          "name": "pretty",
-          "in": "query"
-        },
-        {
-          "uniqueItems": true,
-          "type": "string",
-          "description": "When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.",
-          "name": "resourceVersion",
-          "in": "query"
-        },
-        {
-          "uniqueItems": true,
-          "type": "integer",
-          "description": "Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.",
-          "name": "timeoutSeconds",
-          "in": "query"
-        },
-        {
-          "uniqueItems": true,
-          "type": "boolean",
-          "description": "Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.",
-          "name": "watch",
-          "in": "query"
-        }
-      ]
-    },
-    "/apis/kubepack.com/v1alpha1/watch/namespaces/{namespace}/applications/{name}": {
-      "get": {
-        "description": "watch changes to an object of kind Application. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.",
-        "consumes": [
-          "*/*"
-        ],
-        "produces": [
-          "application/json",
-          "application/yaml",
-          "application/vnd.kubernetes.protobuf",
-          "application/json;stream=watch",
-          "application/vnd.kubernetes.protobuf;stream=watch"
-        ],
-        "schemes": [
-          "https"
-        ],
-        "tags": [
-          "kubepackCom_v1alpha1"
-        ],
-        "operationId": "watchKubepackComV1alpha1NamespacedApplication",
+        "operationId": "watchKubepackComV1alpha1Bundle",
         "responses": {
           "200": {
             "description": "OK",
@@ -1013,7 +787,7 @@
         "x-kubernetes-group-version-kind": {
           "group": "kubepack.com",
           "version": "v1alpha1",
-          "kind": "Application"
+          "kind": "Bundle"
         }
       },
       "parameters": [
@@ -1055,16 +829,8 @@
         {
           "uniqueItems": true,
           "type": "string",
-          "description": "name of the Application",
+          "description": "name of the Bundle",
           "name": "name",
-          "in": "path",
-          "required": true
-        },
-        {
-          "uniqueItems": true,
-          "type": "string",
-          "description": "object name and auth scope, such as for teams and projects",
-          "name": "namespace",
           "in": "path",
           "required": true
         },
@@ -1100,8 +866,7 @@
     }
   },
   "definitions": {
-    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.Application": {
-      "description": "Application is the Schema for the applications API",
+    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.Bundle": {
       "type": "object",
       "properties": {
         "apiVersion": {
@@ -1116,26 +881,22 @@
           "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta"
         },
         "spec": {
-          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.ApplicationSpec"
+          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.BundleSpec"
         },
         "status": {
-          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.ApplicationStatus"
+          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.BundleStatus"
         }
       },
       "x-kubernetes-group-version-kind": [
         {
           "group": "kubepack.com",
-          "kind": "Application",
+          "kind": "Bundle",
           "version": "v1alpha1"
         }
       ]
     },
-    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.ApplicationList": {
-      "description": "ApplicationList contains a list of Application",
+    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.BundleList": {
       "type": "object",
-      "required": [
-        "items"
-      ],
       "properties": {
         "apiVersion": {
           "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -1144,7 +905,7 @@
         "items": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Application"
+            "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Bundle"
           }
         },
         "kind": {
@@ -1158,117 +919,16 @@
       "x-kubernetes-group-version-kind": [
         {
           "group": "kubepack.com",
-          "kind": "ApplicationList",
+          "kind": "BundleList",
           "version": "v1alpha1"
         }
       ]
     },
-    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.ApplicationPackage": {
+    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.BundleOption": {
       "type": "object",
       "required": [
-        "chart",
-        "channel"
-      ],
-      "properties": {
-        "bundle": {
-          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.ChartRepoRef"
-        },
-        "channel": {
-          "type": "string"
-        },
-        "chart": {
-          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.ChartRepoRef"
-        }
-      }
-    },
-    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.ApplicationSpec": {
-      "description": "ApplicationSpec defines the specification for an Application.",
-      "type": "object",
-      "required": [
-        "package"
-      ],
-      "properties": {
-        "addOwnerRef": {
-          "description": "AddOwnerRef objects - flag to indicate if we need to add OwnerRefs to matching objects Matching is done by using Selector to query all ComponentGroupKinds",
-          "type": "boolean"
-        },
-        "assemblyPhase": {
-          "description": "AssemblyPhase represents the current phase of the application's assembly. An empty value is equivalent to \"Succeeded\".",
-          "type": "string"
-        },
-        "componentKinds": {
-          "description": "ComponentGroupKinds is a list of Kinds for Application's components (e.g. Deployments, Pods, Services, CRDs). It can be used in conjunction with the Application's Selector to list or watch the Applications components.",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.GroupKind"
-          }
-        },
-        "description": {
-          "description": "Description regroups information and metadata about an application.",
-          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Descriptor"
-        },
-        "info": {
-          "description": "Info contains human readable key,value pairs for the Application.",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.InfoItem"
-          }
-        },
-        "package": {
-          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.ApplicationPackage"
-        },
-        "selector": {
-          "description": "Selector is a label query over kinds that created by the application. It must match the component objects' labels. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors",
-          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.LabelSelector"
-        }
-      }
-    },
-    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.ApplicationStatus": {
-      "description": "ApplicationStatus defines controller's the observed state of Application",
-      "type": "object",
-      "required": [
-        "healthy"
-      ],
-      "properties": {
-        "components": {
-          "description": "Object status array for all matching objects",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.ObjectStatus"
-          }
-        },
-        "conditions": {
-          "description": "Conditions represents the latest state of the object",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Condition"
-          },
-          "x-kubernetes-patch-merge-key": "type",
-          "x-kubernetes-patch-strategy": "merge"
-        },
-        "errors": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "healthy": {
-          "description": "CommonStatus taken from addon-operators. See: https://github.com/kubernetes-sigs/kubebuilder-declarative-pattern/blob/d91f6348488657f8606a6941f755aa530dd1b656/pkg/patterns/addon/pkg/apis/v1alpha1/common_types.go",
-          "type": "boolean"
-        },
-        "observedGeneration": {
-          "description": "ObservedGeneration is the most recent generation observed. It corresponds to the Object's generation, which is updated on mutation by the API Server.",
-          "type": "integer",
-          "format": "int64"
-        }
-      }
-    },
-    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.ChartRepoRef": {
-      "description": "ChartRepoRef references to a single version of a Chart",
-      "type": "object",
-      "required": [
-        "name",
         "url",
+        "name",
         "version"
       ],
       "properties": {
@@ -1283,103 +943,25 @@
         }
       }
     },
-    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.Condition": {
-      "description": "Condition describes the state of an object at a certain point.",
+    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.BundleSpec": {
       "type": "object",
       "required": [
-        "type",
-        "status"
+        "namespace",
+        "packages"
       ],
-      "properties": {
-        "lastTransitionTime": {
-          "description": "Last time the condition transitioned from one status to another.",
-          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time"
-        },
-        "lastUpdateTime": {
-          "description": "Last time the condition was probed",
-          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time"
-        },
-        "message": {
-          "description": "A human readable message indicating details about the transition.",
-          "type": "string"
-        },
-        "reason": {
-          "description": "The reason for the condition's last transition.",
-          "type": "string"
-        },
-        "status": {
-          "description": "Status of the condition, one of True, False, Unknown.",
-          "type": "string"
-        },
-        "type": {
-          "description": "Type of condition.",
-          "type": "string"
-        }
-      }
-    },
-    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.ConfigMapKeySelector": {
-      "description": "ConfigMapKeySelector selects a key from a ConfigMap.",
-      "type": "object",
-      "properties": {
-        "apiVersion": {
-          "description": "API version of the referent.",
-          "type": "string"
-        },
-        "fieldPath": {
-          "description": "If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: \"spec.containers{name}\" (where \"name\" refers to the name of the container that triggered the event) or if no container name is specified \"spec.containers[2]\" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object.",
-          "type": "string"
-        },
-        "key": {
-          "description": "The key to select.",
-          "type": "string"
-        },
-        "kind": {
-          "description": "Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
-          "type": "string"
-        },
-        "name": {
-          "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
-          "type": "string"
-        },
-        "namespace": {
-          "description": "Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/",
-          "type": "string"
-        },
-        "resourceVersion": {
-          "description": "Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency",
-          "type": "string"
-        },
-        "uid": {
-          "description": "UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids",
-          "type": "string"
-        }
-      }
-    },
-    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.ContactData": {
-      "description": "ContactData contains information about an individual or organization.",
-      "type": "object",
-      "properties": {
-        "email": {
-          "description": "Email is the email address.",
-          "type": "string"
-        },
-        "name": {
-          "description": "Name is the descriptive name.",
-          "type": "string"
-        },
-        "url": {
-          "description": "Url could typically be a website address.",
-          "type": "string"
-        }
-      }
-    },
-    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.Descriptor": {
-      "description": "Descriptor defines the Metadata and informations about the Application.",
-      "type": "object",
       "properties": {
         "description": {
           "description": "Description is a brief string description of the Application.",
           "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.Feature"
+          }
         },
         "icons": {
           "description": "Icons is an optional list of icons for an application. Icon information includes the source, size, and mime type.",
@@ -1409,23 +991,116 @@
             "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.ContactData"
           }
         },
+        "namespace": {
+          "type": "string"
+        },
         "notes": {
           "description": "Notes contain a human readable snippets intended as a quick start for the users of the Application. CommonMark markdown syntax may be used for rich text representation.",
           "type": "string"
         },
-        "owners": {
-          "description": "Owners is an optional list of the owners of the installed application. The owners of the application should be contacted in the event of a orderned or unorderned disruption affecting the application.",
+        "packages": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.ContactData"
+            "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.PackageRef"
           }
         },
         "type": {
           "description": "Type is the type of the application (e.g. WordPress, MySQL, Cassandra).",
           "type": "string"
+        }
+      }
+    },
+    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.BundleStatus": {
+      "type": "object",
+      "properties": {
+        "observedGeneration": {
+          "description": "ObservedGeneration is the most recent generation observed for this resource. It corresponds to the resource's generation, which is updated on mutation by the API Server.",
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.ChartOption": {
+      "type": "object",
+      "required": [
+        "url",
+        "name",
+        "versions"
+      ],
+      "properties": {
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
-        "version": {
-          "description": "Version is an optional version indicator for the Application.",
+        "multiSelect": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "url": {
+          "type": "string"
+        },
+        "versions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.VersionDetail"
+          }
+        }
+      }
+    },
+    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.ContactData": {
+      "description": "ContactData contains information about an individual or organization.",
+      "type": "object",
+      "properties": {
+        "email": {
+          "description": "Email is the email address.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name is the descriptive name.",
+          "type": "string"
+        },
+        "url": {
+          "description": "Url could typically be a website address.",
+          "type": "string"
+        }
+      }
+    },
+    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.Feature": {
+      "type": "object",
+      "required": [
+        "trait",
+        "value"
+      ],
+      "properties": {
+        "trait": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.GroupResource": {
+      "type": "object",
+      "required": [
+        "group",
+        "name"
+      ],
+      "properties": {
+        "group": {
+          "type": "string"
+        },
+        "name": {
           "type": "string"
         }
       }
@@ -1451,96 +1126,6 @@
         }
       }
     },
-    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.InfoItem": {
-      "description": "InfoItem is a human readable key,value pair containing important information about how to access the Application.",
-      "type": "object",
-      "properties": {
-        "name": {
-          "description": "Name is a human readable title for this piece of information.",
-          "type": "string"
-        },
-        "type": {
-          "description": "Type of the value for this InfoItem.",
-          "type": "string"
-        },
-        "value": {
-          "description": "Value is human readable content.",
-          "type": "string"
-        },
-        "valueFrom": {
-          "description": "ValueFrom defines a reference to derive the value from another source.",
-          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.InfoItemSource"
-        }
-      }
-    },
-    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.InfoItemSource": {
-      "description": "InfoItemSource represents a source for the value of an InfoItem.",
-      "type": "object",
-      "properties": {
-        "configMapKeyRef": {
-          "description": "Selects a key of a ConfigMap.",
-          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.ConfigMapKeySelector"
-        },
-        "ingressRef": {
-          "description": "Select an Ingress.",
-          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.IngressSelector"
-        },
-        "secretKeyRef": {
-          "description": "Selects a key of a Secret.",
-          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.SecretKeySelector"
-        },
-        "serviceRef": {
-          "description": "Select a Service.",
-          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.ServiceSelector"
-        },
-        "type": {
-          "description": "Type of source.",
-          "type": "string"
-        }
-      }
-    },
-    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.IngressSelector": {
-      "description": "IngressSelector selects an Ingress.",
-      "type": "object",
-      "properties": {
-        "apiVersion": {
-          "description": "API version of the referent.",
-          "type": "string"
-        },
-        "fieldPath": {
-          "description": "If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: \"spec.containers{name}\" (where \"name\" refers to the name of the container that triggered the event) or if no container name is specified \"spec.containers[2]\" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object.",
-          "type": "string"
-        },
-        "host": {
-          "description": "The optional host to select.",
-          "type": "string"
-        },
-        "kind": {
-          "description": "Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
-          "type": "string"
-        },
-        "name": {
-          "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
-          "type": "string"
-        },
-        "namespace": {
-          "description": "Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/",
-          "type": "string"
-        },
-        "path": {
-          "description": "The optional HTTP path.",
-          "type": "string"
-        },
-        "resourceVersion": {
-          "description": "Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency",
-          "type": "string"
-        },
-        "uid": {
-          "description": "UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids",
-          "type": "string"
-        }
-      }
-    },
     "dev.kubepack.kubepack.apis.kubepack.v1alpha1.Link": {
       "description": "Link contains information about an URL to surface documentation, dashboards, etc.",
       "type": "object",
@@ -1555,110 +1140,146 @@
         }
       }
     },
-    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.ObjectStatus": {
-      "description": "ObjectStatus is a generic status holder for objects",
+    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.OneOfBundleOption": {
       "type": "object",
+      "required": [
+        "description"
+      ],
+      "properties": {
+        "bundles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.BundleOption"
+          }
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.PackageRef": {
+      "type": "object",
+      "properties": {
+        "bundle": {
+          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.BundleOption"
+        },
+        "chart": {
+          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.ChartOption"
+        },
+        "oneOf": {
+          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.OneOfBundleOption"
+        }
+      }
+    },
+    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.ResourceDefinitions": {
+      "type": "object",
+      "required": [
+        "owned",
+        "required"
+      ],
+      "properties": {
+        "owned": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.ResourceID"
+          }
+        },
+        "required": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.ResourceID"
+          }
+        }
+      }
+    },
+    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.ResourceID": {
+      "description": "ResourceID identifies a resource",
+      "type": "object",
+      "required": [
+        "group",
+        "version",
+        "name",
+        "kind",
+        "scope"
+      ],
       "properties": {
         "group": {
-          "description": "Object group",
           "type": "string"
         },
         "kind": {
-          "description": "Kind of object",
-          "type": "string"
-        },
-        "link": {
-          "description": "Link to object",
+          "description": "Kind is the serialized kind of the resource.  It is normally CamelCase and singular.",
           "type": "string"
         },
         "name": {
-          "description": "Name of object",
+          "description": "Name is the plural name of the resource to serve.  It must match the name of the CustomResourceDefinition-registration too: plural.group and it must be all lowercase.",
           "type": "string"
         },
-        "status": {
-          "description": "Status. Values: InProgress, Ready, Unknown",
+        "scope": {
+          "type": "string"
+        },
+        "version": {
           "type": "string"
         }
       }
     },
-    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.SecretKeySelector": {
-      "description": "SecretKeySelector selects a key from a Secret.",
+    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.VersionDetail": {
       "type": "object",
+      "required": [
+        "version"
+      ],
       "properties": {
-        "apiVersion": {
-          "description": "API version of the referent.",
+        "licenseKeyPath": {
+          "description": "jsonpatch path in Values where the license key will be set using replace operation, if defined. See: http://jsonpatch.com",
           "type": "string"
         },
-        "fieldPath": {
-          "description": "If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: \"spec.containers{name}\" (where \"name\" refers to the name of the container that triggered the event) or if no container name is specified \"spec.containers[2]\" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object.",
+        "resources": {
+          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.ResourceDefinitions"
+        },
+        "selected": {
+          "type": "boolean"
+        },
+        "valuesFile": {
           "type": "string"
         },
-        "key": {
-          "description": "The key to select.",
+        "valuesPatch": {
+          "description": "RFC 6902 compatible json patch. ref: http://jsonpatch.com",
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.runtime.RawExtension"
+        },
+        "version": {
           "type": "string"
         },
-        "kind": {
-          "description": "Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
-          "type": "string"
-        },
-        "name": {
-          "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
-          "type": "string"
-        },
-        "namespace": {
-          "description": "Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/",
-          "type": "string"
-        },
-        "resourceVersion": {
-          "description": "Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency",
-          "type": "string"
-        },
-        "uid": {
-          "description": "UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids",
-          "type": "string"
+        "waitFors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.WaitFlags"
+          }
         }
       }
     },
-    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.ServiceSelector": {
-      "description": "ServiceSelector selects a Service.",
+    "dev.kubepack.kubepack.apis.kubepack.v1alpha1.WaitFlags": {
       "type": "object",
+      "required": [
+        "resource",
+        "labels",
+        "all",
+        "timeout",
+        "for"
+      ],
       "properties": {
-        "apiVersion": {
-          "description": "API version of the referent.",
+        "all": {
+          "type": "boolean"
+        },
+        "for": {
           "type": "string"
         },
-        "fieldPath": {
-          "description": "If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: \"spec.containers{name}\" (where \"name\" refers to the name of the container that triggered the event) or if no container name is specified \"spec.containers[2]\" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object.",
-          "type": "string"
+        "labels": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.LabelSelector"
         },
-        "kind": {
-          "description": "Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
-          "type": "string"
+        "resource": {
+          "$ref": "#/definitions/dev.kubepack.kubepack.apis.kubepack.v1alpha1.GroupResource"
         },
-        "name": {
-          "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
-          "type": "string"
-        },
-        "namespace": {
-          "description": "Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/",
-          "type": "string"
-        },
-        "path": {
-          "description": "The optional HTTP path.",
-          "type": "string"
-        },
-        "port": {
-          "description": "The optional port to select.",
-          "type": "integer",
-          "format": "int32"
-        },
-        "resourceVersion": {
-          "description": "Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency",
-          "type": "string"
-        },
-        "uid": {
-          "description": "UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids",
-          "type": "string"
+        "timeout": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Duration"
         }
       }
     },
@@ -1888,25 +1509,13 @@
         }
       ]
     },
+    "io.k8s.apimachinery.pkg.apis.meta.v1.Duration": {
+      "description": "Duration is a wrapper around time.Duration which supports correct marshaling to YAML and JSON. In particular, it marshals into strings, which can be used as map keys in json.",
+      "type": "string"
+    },
     "io.k8s.apimachinery.pkg.apis.meta.v1.FieldsV1": {
       "description": "FieldsV1 stores a set of fields in a data structure like a Trie, in JSON format.\n\nEach key is either a '.' representing the field itself, and will always map to an empty set, or a string representing a sub-field or item. The string will follow one of these four formats: 'f:\u003cname\u003e', where \u003cname\u003e is the name of a field in a struct, or key in a map 'v:\u003cvalue\u003e', where \u003cvalue\u003e is the exact json formatted value of a list item 'i:\u003cindex\u003e', where \u003cindex\u003e is position of a item in a list 'k:\u003ckeys\u003e', where \u003ckeys\u003e is a map of  a list item's key fields to their unique values If a key maps to an empty Fields value, the field that key represents is part of the set.\n\nThe exact format is defined in sigs.k8s.io/structured-merge-diff",
       "type": "object"
-    },
-    "io.k8s.apimachinery.pkg.apis.meta.v1.GroupKind": {
-      "description": "GroupKind specifies a Group and a Kind, but does not force a version.  This is useful for identifying concepts during lookup stages without having partially valid types",
-      "type": "object",
-      "required": [
-        "group",
-        "kind"
-      ],
-      "properties": {
-        "group": {
-          "type": "string"
-        },
-        "kind": {
-          "type": "string"
-        }
-      }
     },
     "io.k8s.apimachinery.pkg.apis.meta.v1.GroupVersionForDiscovery": {
       "description": "GroupVersion contains the \"group/version\" and \"version\" string of a version. It is made a struct to keep extensibility.",

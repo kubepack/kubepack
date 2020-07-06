@@ -30,9 +30,6 @@ func TestPruneTypes(t *testing.T) {
 	Install(clientsetscheme.Scheme)
 
 	// CRD v1
-	if crd := (v1alpha1.Application{}).CustomResourceDefinition(); crd.V1 != nil {
-		crdfuzz.SchemaFuzzTestForV1CRD(t, clientsetscheme.Scheme, crd.V1, fuzzer.Funcs)
-	}
 	if crd := (v1alpha1.Bundle{}).CustomResourceDefinition(); crd.V1 != nil {
 		crdfuzz.SchemaFuzzTestForV1CRD(t, clientsetscheme.Scheme, crd.V1, fuzzer.Funcs)
 	}
@@ -41,9 +38,6 @@ func TestPruneTypes(t *testing.T) {
 	}
 
 	// CRD v1beta1
-	if crd := (v1alpha1.Application{}).CustomResourceDefinition(); crd.V1beta1 != nil {
-		crdfuzz.SchemaFuzzTestForV1beta1CRD(t, clientsetscheme.Scheme, crd.V1beta1, fuzzer.Funcs)
-	}
 	if crd := (v1alpha1.Bundle{}).CustomResourceDefinition(); crd.V1beta1 != nil {
 		crdfuzz.SchemaFuzzTestForV1beta1CRD(t, clientsetscheme.Scheme, crd.V1beta1, fuzzer.Funcs)
 	}

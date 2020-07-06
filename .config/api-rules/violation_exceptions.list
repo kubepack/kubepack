@@ -163,11 +163,6 @@ API rule violation: list_type_missing,k8s.io/apimachinery/pkg/apis/meta/v1,Table
 API rule violation: list_type_missing,k8s.io/apimachinery/pkg/apis/meta/v1,UpdateOptions,DryRun
 API rule violation: list_type_missing,k8s.io/apimachinery/pkg/runtime,RawExtension,Raw
 API rule violation: list_type_missing,k8s.io/apimachinery/pkg/runtime,Unknown,Raw
-API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ApplicationList,Items
-API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ApplicationSpec,ComponentGroupKinds
-API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ApplicationSpec,Info
-API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ApplicationStatus,Conditions
-API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ApplicationStatus,Errors
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,BundleList,Items
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,BundleOptionView,Features
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,BundleOptionView,Packages
@@ -178,8 +173,6 @@ API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alph
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ChartOption,Features
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ChartOption,Versions
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ChartSelection,WaitFors
-API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ComponentList,Objects
-API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Descriptor,Owners
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,FeatureTable,Plans
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,FeatureTable,Rows
 API rule violation: list_type_missing,kubepack.dev/kubepack/apis/kubepack/v1alpha1,Hub,Repositories
@@ -268,8 +261,6 @@ API rule violation: names_match,k8s.io/apimachinery/pkg/runtime,Unknown,Raw
 API rule violation: names_match,k8s.io/apimachinery/pkg/util/intstr,IntOrString,IntVal
 API rule violation: names_match,k8s.io/apimachinery/pkg/util/intstr,IntOrString,StrVal
 API rule violation: names_match,k8s.io/apimachinery/pkg/util/intstr,IntOrString,Type
-API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ApplicationSpec,ComponentGroupKinds
-API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ComponentList,Objects
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ImageSpec,Source
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,ImageSpec,TotalSize
 API rule violation: names_match,kubepack.dev/kubepack/apis/kubepack/v1alpha1,OrderSpec,Packages

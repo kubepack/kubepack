@@ -29,10 +29,6 @@ type FakeKubepackV1alpha1 struct {
 	*testing.Fake
 }
 
-func (c *FakeKubepackV1alpha1) Applications(namespace string) v1alpha1.ApplicationInterface {
-	return &FakeApplications{c, namespace}
-}
-
 func (c *FakeKubepackV1alpha1) Bundles() v1alpha1.BundleInterface {
 	return &FakeBundles{c}
 }
