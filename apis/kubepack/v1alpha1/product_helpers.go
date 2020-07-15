@@ -22,7 +22,7 @@ import (
 	"kubepack.dev/kubepack/apis"
 	"kubepack.dev/kubepack/crds"
 
-	"k8s.io/apimachinery/pkg/labels"
+	"k8s.io/apimachinery/pkg/fields"
 	"kmodules.xyz/client-go/apiextensions"
 )
 
@@ -54,6 +54,5 @@ func (_ Product) FormatLabels(prodID, prodKey, phase string, ownerID int64) stri
 	if ownerID != 0 {
 		labelMap[apis.LabelProductOwnerID] = strconv.FormatInt(ownerID, 10)
 	}
-
-	return labels.Set(labelMap).String()
+	return fields.SelectorFromSet(labelMap).String()
 }

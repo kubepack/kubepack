@@ -20,7 +20,7 @@ import (
 	"kubepack.dev/kubepack/apis"
 	"kubepack.dev/kubepack/crds"
 
-	"k8s.io/apimachinery/pkg/labels"
+	"k8s.io/apimachinery/pkg/fields"
 	"kmodules.xyz/client-go/apiextensions"
 )
 
@@ -48,6 +48,5 @@ func (_ Plan) FormatLabels(planID, prodID, phase string) string {
 	if phase != "" {
 		labelMap[apis.LabelPlanPhase] = phase
 	}
-
-	return labels.Set(labelMap).String()
+	return fields.SelectorFromSet(labelMap).String()
 }
