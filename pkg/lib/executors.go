@@ -31,6 +31,7 @@ import (
 	"sync"
 	"time"
 
+	"kubepack.dev/kubepack/apis"
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	chart2 "kubepack.dev/lib-helm/chart"
 	"kubepack.dev/lib-helm/repo"
@@ -1280,7 +1281,7 @@ func (x *ApplicationGenerator) Result() *v1beta1.Application {
 			Namespace: x.Chart.Namespace,
 			Labels:    nil, // TODO: ?
 			Annotations: map[string]string{
-				"kubepack.com/package": string(data),
+				apis.LabelPackage: string(data),
 			},
 		},
 		Spec: v1beta1.ApplicationSpec{
@@ -1321,6 +1322,8 @@ func (x *ApplicationGenerator) Result() *v1beta1.Application {
 	return b
 }
 
+var empty = struct{}{}
+
 func (x *ApplicationGenerator) extractComponentAttributes(data []byte) error {
 	reader := yaml.NewYAMLOrJSONDecoder(bytes.NewReader(data), 2048)
 	for {
@@ -1339,7 +1342,7 @@ func (x *ApplicationGenerator) extractComponentAttributes(data []byte) error {
 				if err != nil {
 					return err
 				}
-				x.components[metav1.GroupKind{Group: gv.Group, Kind: castItem.GetKind()}] = struct{}{}
+				x.components[metav1.GroupKind{Group: gv.Group, Kind: castItem.GetKind()}] = empty
 
 				if !x.init {
 					x.commonLabels = castItem.GetLabels()
@@ -1361,7 +1364,7 @@ func (x *ApplicationGenerator) extractComponentAttributes(data []byte) error {
 			if err != nil {
 				return err
 			}
-			x.components[metav1.GroupKind{Group: gv.Group, Kind: obj.GetKind()}] = struct{}{}
+			x.components[metav1.GroupKind{Group: gv.Group, Kind: obj.GetKind()}] = empty
 
 			if !x.init {
 				x.commonLabels = obj.GetLabels()
