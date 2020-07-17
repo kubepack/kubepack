@@ -23,6 +23,8 @@ const (
 
 	StripeMetadataKeyUserID = "client_id"
 
+	LabelPackage = "kubepack.com/package"
+
 	LabelPlanID         = "byte.builders/plan-id"
 	LabelPlanPhase      = "byte.builders/plan-phase"
 	LabelProductID      = "byte.builders/product-id"
