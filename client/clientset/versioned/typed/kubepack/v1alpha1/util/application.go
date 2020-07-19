@@ -35,7 +35,7 @@ import (
 
 func CreateOrPatchApplication(
 	ctx context.Context,
-	c cs.AppV1beta1Interface,
+	c cs.ApplicationsGetter,
 	meta metav1.ObjectMeta,
 	transform func(*api.Application) *api.Application,
 	opts metav1.PatchOptions,
@@ -62,7 +62,7 @@ func CreateOrPatchApplication(
 
 func PatchApplication(
 	ctx context.Context,
-	c cs.AppV1beta1Interface,
+	c cs.ApplicationsGetter,
 	cur *api.Application,
 	transform func(*api.Application) *api.Application,
 	opts metav1.PatchOptions,
@@ -72,7 +72,7 @@ func PatchApplication(
 
 func PatchApplicationObject(
 	ctx context.Context,
-	c cs.AppV1beta1Interface,
+	c cs.ApplicationsGetter,
 	cur, mod *api.Application,
 	opts metav1.PatchOptions,
 ) (*api.Application, kutil.VerbType, error) {
@@ -100,7 +100,7 @@ func PatchApplicationObject(
 
 func TryUpdateApplication(
 	ctx context.Context,
-	c cs.AppV1beta1Interface,
+	c cs.ApplicationsGetter,
 	meta metav1.ObjectMeta,
 	transform func(*api.Application) *api.Application,
 	opts metav1.UpdateOptions,
@@ -127,7 +127,7 @@ func TryUpdateApplication(
 
 func UpdateApplicationStatus(
 	ctx context.Context,
-	c cs.AppV1beta1Interface,
+	c cs.ApplicationsGetter,
 	meta metav1.ObjectMeta,
 	transform func(*api.ApplicationStatus) *api.ApplicationStatus,
 	opts metav1.UpdateOptions,
