@@ -1,0 +1,147 @@
+# Default values for zero.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+
+x:
+  Release:
+    Name: &release_name zero
+    Namespace: &release_namespace default
+    Service: &release_service Helm
+  Chart:
+    Name: &chart_name zero
+    Version: &chart_version 0.1.0
+    AppVersion: &chart_app_version 1.16.0
+    selector: &selectorLabels
+      app.kubernetes.io/instance: zero
+      app.kubernetes.io/name: *release_name
+    labels: &labels
+      <<: *selectorLabels
+      app.kubernetes.io/managed-by: *release_service
+      app.kubernetes.io/version: 1.16.0
+      helm.sh/chart: zero-0.1.0
+    fullname: &fullname zero
+
+v1:
+  Service:
+    metadata:
+      labels:
+        <<: *labels
+      name: *fullname
+      namespace: *release_namespace
+    spec:
+      ports:
+      - name: http
+        port: 80
+        protocol: TCP
+        targetPort: http
+      selector:
+        <<: *selectorLabels
+      type: ClusterIP
+  ServiceAccount:
+    metadata:
+      labels:
+        <<: *labels
+      name: *fullname
+      namespace: *release_namespace
+
+apps/v1:
+  Deployment:
+    metadata:
+      labels:
+        <<: *labels
+      name: *fullname
+      namespace: *release_namespace
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app.kubernetes.io/instance: zero
+          app.kubernetes.io/name: zero
+      strategy:
+        rollingUpdate:
+          maxSurge: 25%
+          maxUnavailable: 25%
+        type: RollingUpdate
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/instance: zero
+            app.kubernetes.io/name: zero
+        spec:
+          containers:
+          - image: nginx:1.16.0
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /
+                port: http
+                scheme: HTTP
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 1
+            name: zero
+            ports:
+            - containerPort: 80
+              name: http
+              protocol: TCP
+            readinessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /
+                port: http
+                scheme: HTTP
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 1
+            resources: {}
+            securityContext: {}
+          restartPolicy: Always
+          securityContext: {}
+          serviceAccountName: zero
+
+
+autoscaling/v1:
+  HorizontalPodAutoscaler:
+    metadata:
+      labels:
+        <<: *labels
+      name: *fullname
+      namespace: *release_namespace
+    spec:
+      maxReplicas: 100
+      minReplicas: 1
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: zero
+      targetCPUUtilizationPercentage: 80
+
+networking.k8s.io/v1beta1:
+  Ingress:
+    metadata:
+      labels:
+        <<: *labels
+      name: *fullname
+      namespace: *release_namespace
+    spec:
+      rules:
+      - host: chart-example.local
+        http:
+          paths:
+          - backend:
+              serviceName: zero
+              servicePort: 80
+            path: /
+            pathType: ImplementationSpecific

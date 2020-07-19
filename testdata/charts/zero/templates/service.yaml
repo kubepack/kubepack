@@ -1,0 +1,10 @@
+{{- with .Values.v1 }}
+{{- with .Service }}
+apiVersion: v1
+kind: Service
+metadata:
+  {{- toYaml .metadata | nindent 2 }}
+spec:
+  {{- toYaml .spec | nindent 2 }}
+{{- end }}
+{{- end }}
