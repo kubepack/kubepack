@@ -1,0 +1,10 @@
+{{- with (index .Values "networking.k8s.io/v1beta1") }}
+{{- with .Ingress }}
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  {{- .metadata | toYaml | nindent 2 }}
+spec:
+  {{- .spec | toYaml | nindent 2 }}
+{{- end }}
+{{- end }}

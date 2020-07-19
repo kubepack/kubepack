@@ -16,7 +16,7 @@
 
 set -xeou pipefail
 
-REPO_ROOT=$(dirname "${BASH_SOURCE[0]}")/..
+REPO_ROOT=$(dirname "${BASH_SOURCE[0]}")/../..
 
 pushd $REPO_ROOT
 
