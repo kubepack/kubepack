@@ -18,9 +18,7 @@ package lib
 
 import (
 	"gomodules.xyz/blobfs"
-	_ "gomodules.xyz/blobfs"
 	"gomodules.xyz/blobfs/testing"
-	_ "gomodules.xyz/blobfs/testing"
 )
 
 const YAMLHost = "https://usercontent.kubepack.com"
