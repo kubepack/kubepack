@@ -17,17 +17,10 @@ limitations under the License.
 package lib
 
 import (
-	"bytes"
-	"context"
-	"io"
-	"io/ioutil"
-	"net/url"
-	"os"
-	"strings"
-
-	"gocloud.dev/blob"
-	"golang.org/x/oauth2/google"
-	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
+	"gomodules.xyz/blobfs"
+	_ "gomodules.xyz/blobfs"
+	"gomodules.xyz/blobfs/testing"
+	_ "gomodules.xyz/blobfs/testing"
 )
 
 const YAMLHost = "https://usercontent.kubepack.com"
@@ -35,101 +28,19 @@ const YAMLBucket = "gs://kubepack-usercontent"
 const GoogleApplicationCredentials = "/home/tamal/Downloads/appscode-domains-1577f17c3fd8.json"
 
 type BlobStore struct {
-	URL    string
 	Host   string
 	Bucket string
-}
-
-func NewBlobStore(url, host, bucket string) *BlobStore {
-	return &BlobStore{
-		URL:    url,
-		Host:   host,
-		Bucket: bucket,
-	}
+	*blobfs.BlobFS
 }
 
 func NewTestBlobStore() (*BlobStore, error) {
-	credential := GoogleApplicationCredentials
-	if v, ok := os.LookupEnv("GOOGLE_APPLICATION_CREDENTIALS"); ok {
-		credential = v
-	} else {
-		utilruntime.Must(os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", credential))
-	}
-
-	saKey, err := ioutil.ReadFile(credential)
+	fs, err := testing.NewTestGCS(YAMLBucket, GoogleApplicationCredentials)
 	if err != nil {
 		return nil, err
 	}
-
-	cfg, err := google.JWTConfigFromJSON(saKey)
-	if err != nil {
-		return nil, err
-	}
-
-	filename := credential + "-private-key"
-	err = ioutil.WriteFile(filename, cfg.PrivateKey, 0644)
-	if err != nil {
-		return nil, err
-	}
-
-	u, err := url.Parse(YAMLBucket)
-	if err != nil {
-		return nil, err
-	}
-	q := u.Query()
-	q.Set("access_id", cfg.Email)
-	q.Set("private_key_path", filename)
-	u.RawQuery = q.Encode()
 	return &BlobStore{
-		URL:    u.String(),
+		BlobFS: fs,
 		Host:   YAMLHost,
 		Bucket: YAMLBucket,
 	}, nil
-}
-
-func (b BlobStore) Upload(ctx context.Context, dir, filename string, data []byte) error {
-	bucket, err := blob.OpenBucket(ctx, b.URL)
-	if err != nil {
-		return err
-	}
-	bucket = blob.PrefixedBucket(bucket, strings.Trim(dir, "/")+"/")
-	defer bucket.Close()
-
-	w, err := bucket.NewWriter(ctx, filename, nil)
-	if err != nil {
-		return err
-	}
-	_, writeErr := w.Write(data)
-	// Always check the return value of Close when writing.
-	closeErr := w.Close()
-	if writeErr != nil {
-		return writeErr
-	}
-	if closeErr != nil {
-		return closeErr
-	}
-	return nil
-}
-
-func (b BlobStore) Download(ctx context.Context, dir, filename string) ([]byte, error) {
-	bucket, err := blob.OpenBucket(ctx, b.URL)
-	if err != nil {
-		return nil, err
-	}
-	bucket = blob.PrefixedBucket(bucket, strings.Trim(dir, "/")+"/")
-	defer bucket.Close()
-
-	// Open the key "foo.txt" for reading with the default options.
-	r, err := bucket.NewReader(ctx, filename, nil)
-	if err != nil {
-		return nil, err
-	}
-	defer r.Close()
-
-	var buf bytes.Buffer
-	if _, err := io.Copy(&buf, r); err != nil {
-		return nil, err
-	}
-
-	return buf.Bytes(), nil
 }

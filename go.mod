@@ -3,7 +3,6 @@ module kubepack.dev/kubepack
 go 1.12
 
 require (
-	github.com/Azure/go-autorest/autorest/azure/auth v0.0.0-00010101000000-000000000000 // indirect
 	github.com/appscode/go v0.0.0-20200323182826-54e98e09185a
 	github.com/appscode/static-assets v0.4.1
 	github.com/coreos/prometheus-operator v0.39.0
@@ -23,8 +22,8 @@ require (
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/pflag v1.0.5
 	github.com/stripe/stripe-go v70.15.0+incompatible
-	gocloud.dev v0.19.0
-	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
+	gocloud.dev v0.20.0
+	gomodules.xyz/blobfs v0.1.2
 	gomodules.xyz/jsonpatch/v2 v2.1.0
 	gomodules.xyz/version v0.1.0
 	gopkg.in/macaron.v1 v1.3.8
@@ -46,6 +45,12 @@ require (
 	sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4
 	sigs.k8s.io/yaml v1.2.0
 )
+
+replace google.golang.org/api => google.golang.org/api v0.14.0
+
+replace google.golang.org/genproto => google.golang.org/genproto v0.0.0-20191115194625-c23dd37a84c9
+
+replace cloud.google.com/go => cloud.google.com/go v0.49.0
 
 replace sigs.k8s.io/application => github.com/kubepack/application v0.8.4-0.20200705202912-9d241d6484e3
 

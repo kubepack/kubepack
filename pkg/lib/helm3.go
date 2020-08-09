@@ -20,6 +20,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"path"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/lib-helm/repo"
@@ -134,7 +135,7 @@ func GenerateHelm3Script(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 		}
 	}
 
-	err = bs.Upload(context.TODO(), string(order.UID), "helm3.sh", buf.Bytes())
+	err = bs.WriteFile(context.TODO(), path.Join(string(order.UID), "helm3.sh"), buf.Bytes())
 	if err != nil {
 		return nil, err
 	}
