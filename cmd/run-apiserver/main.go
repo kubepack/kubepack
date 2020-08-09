@@ -20,6 +20,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"path"
 	"path/filepath"
 	"sort"
 
@@ -314,7 +315,7 @@ func main() {
 				return
 			}
 
-			err = bs.Upload(ctx.Req.Context(), string(order.UID), "order.yaml", data)
+			err = bs.WriteFile(ctx.Req.Context(), path.Join(string(order.UID), "order.yaml"), data)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
@@ -328,7 +329,7 @@ func main() {
 				return
 			}
 
-			data, err := bs.Download(ctx.Req.Context(), ctx.Params(":id"), "order.yaml")
+			data, err := bs.ReadFile(ctx.Req.Context(), path.Join(ctx.Params(":id"), "order.yaml"))
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
@@ -355,7 +356,7 @@ func main() {
 				return
 			}
 
-			data, err := bs.Download(ctx.Req.Context(), ctx.Params(":id"), "order.yaml")
+			data, err := bs.ReadFile(ctx.Req.Context(), path.Join(ctx.Params(":id"), "order.yaml"))
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
@@ -383,7 +384,7 @@ func main() {
 				return
 			}
 
-			data, err := bs.Download(ctx.Req.Context(), ctx.Params(":id"), "order.yaml")
+			data, err := bs.ReadFile(ctx.Req.Context(), path.Join(ctx.Params(":id"), "order.yaml"))
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
