@@ -4,7 +4,7 @@ go 1.12
 
 require (
 	github.com/Azure/go-autorest/autorest v0.10.2 // indirect
-	github.com/appscode/go v0.0.0-20200323182826-54e98e09185a
+	github.com/appscode/go v0.0.0-20200928211031-cc0c23082d91
 	github.com/appscode/static-assets v0.4.1
 	github.com/coreos/prometheus-operator v0.39.0
 	github.com/evanphx/json-patch v4.9.0+incompatible
@@ -54,7 +54,7 @@ require (
 	k8s.io/kube-openapi v0.0.0-20200410145947-61e04a5be9a6
 	k8s.io/kubernetes v1.18.9
 	k8s.io/utils v0.0.0-20200414100711-2df71ebbae66 // indirect
-	kmodules.xyz/client-go v0.0.0-20200924114038-ef01fa7ccbed
+	kmodules.xyz/client-go v0.0.0-20200929030759-cce6a3c623c1
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20200922204806-c1426cd7fcf4
 	kmodules.xyz/custom-resources v0.0.0-20200922210108-70f2815a43bb
 	kmodules.xyz/resource-metadata v0.4.2
