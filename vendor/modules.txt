@@ -73,7 +73,6 @@ github.com/alessio/shellescape
 github.com/appscode/go/analytics
 github.com/appscode/go/context
 github.com/appscode/go/crypto/rand
-github.com/appscode/go/encoding/json/types
 github.com/appscode/go/env
 github.com/appscode/go/flags
 github.com/appscode/go/homedir
@@ -1364,7 +1363,7 @@ k8s.io/utils/pointer
 k8s.io/utils/trace
 # kmodules.xyz/apiversion v0.2.0
 kmodules.xyz/apiversion
-# kmodules.xyz/client-go v0.0.0-20201008164401-74d81f261ec5
+# kmodules.xyz/client-go v0.0.0-20201013083546-b17c1e15f1a3
 kmodules.xyz/client-go
 kmodules.xyz/client-go/admissionregistration/v1beta1
 kmodules.xyz/client-go/apiextensions
