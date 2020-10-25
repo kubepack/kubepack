@@ -10,7 +10,7 @@
 ## Configure Helm
 
 ```console
-helm repo add bundles.kubepack.com https://bundles.kubepack.com
+helm repo add kubepack-bundles https://bundles.kubepack.com
 helm repo add stable https://kubernetes-charts.storage.googleapis.com
 helm repo update
 ```
