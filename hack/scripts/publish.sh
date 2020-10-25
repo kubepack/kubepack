@@ -26,8 +26,8 @@ mv *.tgz testdata/archives
 
 helm repo index testdata/archives/ --url https://bundles.kubepack.com
 
-gsutil rsync -d -r testdata/archives gs://kubepack-bundles
-gsutil acl ch -u AllUsers:R -r gs://kubepack-bundles
+gsutil rsync -d -r testdata/archives gs://bundles.kubepack.com
+gsutil acl ch -u AllUsers:R -r gs://bundles.kubepack.com
 
 sleep 10
 

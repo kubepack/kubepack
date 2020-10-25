@@ -2,7 +2,7 @@
 
 ## Apply CROS Config
 ```console
-gsutil cors set cors-config.json gs://kubepack-usercontent
+gsutil cors set cors-config.json gs://usercontent.kubepack.com
 ```
 
 ## Links
