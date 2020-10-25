@@ -22,7 +22,7 @@ import (
 )
 
 const YAMLHost = "https://usercontent.kubepack.com"
-const YAMLBucket = "gs://kubepack-usercontent"
+const YAMLBucket = "gs://usercontent.kubepack.com"
 const GoogleApplicationCredentials = "/home/tamal/Downloads/appscode-domains-1577f17c3fd8.json"
 
 type BlobStore struct {

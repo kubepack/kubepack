@@ -10,7 +10,7 @@
 ## Configure Helm
 
 ```console
-helm repo add kubepack-bundles https://bundles.kubepack.com
+helm repo add bundles.kubepack.com https://bundles.kubepack.com
 helm repo add stable https://kubernetes-charts.storage.googleapis.com
 helm repo update
 ```
@@ -72,7 +72,7 @@ $ go run cmd/packageview-generator/main.go
 
 **Site for Hosting User YAMLs & Scripts**
 
-[https://usercontent.kubepack.com](https://usercontent.kubepack.com). These files are *public* and hosted on Google Cloud Storage Bucket `gs://kubepack-usercontent`.
+[https://usercontent.kubepack.com](https://usercontent.kubepack.com). These files are *public* and hosted on Google Cloud Storage Bucket `gs://usercontent.kubepack.com`.
 
 **Helm 3**
 ```console
