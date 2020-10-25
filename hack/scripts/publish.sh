@@ -31,9 +31,12 @@ gsutil acl ch -u AllUsers:R -r gs://bundles.kubepack.com
 
 sleep 10
 
-gcloud compute url-maps invalidate-cdn-cache cdn \
-    --project appscode-domains \
-    --host bundles.kubepack.com \
-    --path "/index.yaml"
+CLOUDFLARE_ZONE_ID=1f3fd19c5978408c379ea806ec81f85c
+index_url="https://bundles.kubepack.com/index.yaml"
+echo "purging $index_url"
+curl -X POST "https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONE_ID}/purge_cache" \
+    -H "Authorization: Bearer ${CLOUDFLARE_TOKEN}" \
+    -H "Content-Type: application/json" \
+    --data '{"files":["'${index_url}'"]}'
 
 popd
