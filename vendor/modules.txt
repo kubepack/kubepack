@@ -69,17 +69,6 @@ github.com/PuerkitoBio/purell
 github.com/PuerkitoBio/urlesc
 # github.com/alessio/shellescape v1.2.2
 github.com/alessio/shellescape
-# github.com/appscode/go v0.0.0-20200928211031-cc0c23082d91
-github.com/appscode/go/context
-github.com/appscode/go/crypto/rand
-github.com/appscode/go/env
-github.com/appscode/go/flags
-github.com/appscode/go/log
-github.com/appscode/go/runtime
-github.com/appscode/go/sets
-github.com/appscode/go/strings
-github.com/appscode/go/term
-github.com/appscode/go/version
 # github.com/appscode/static-assets v0.4.1
 github.com/appscode/static-assets/api
 github.com/appscode/static-assets/data/products
@@ -708,11 +697,23 @@ gomodules.xyz/jsonpatch/v2
 gomodules.xyz/password-generator
 # gomodules.xyz/pointer v0.0.0-20201105071923-daf60fa55209
 gomodules.xyz/pointer
+# gomodules.xyz/runtime v0.0.0-20201104200926-d838b09dda8b
+gomodules.xyz/runtime
+# gomodules.xyz/sets v0.0.0-20200930152147-4f4543544799
+gomodules.xyz/sets
 # gomodules.xyz/version v0.1.0
 gomodules.xyz/version
 # gomodules.xyz/x v0.0.0-20201105065653-91c568df6331
 gomodules.xyz/x/analytics
+gomodules.xyz/x/context
+gomodules.xyz/x/crypto/rand
+gomodules.xyz/x/env
+gomodules.xyz/x/flags
+gomodules.xyz/x/log
 gomodules.xyz/x/log/golog
+gomodules.xyz/x/strings
+gomodules.xyz/x/term
+gomodules.xyz/x/version
 # google.golang.org/api v0.26.0 => google.golang.org/api v0.14.0
 google.golang.org/api/googleapi
 google.golang.org/api/googleapi/transport
@@ -1393,7 +1394,7 @@ kmodules.xyz/custom-resources/apis/appcatalog/v1alpha1
 kmodules.xyz/custom-resources/client/clientset/versioned/scheme
 kmodules.xyz/custom-resources/client/clientset/versioned/typed/appcatalog/v1alpha1
 kmodules.xyz/custom-resources/crds
-# kmodules.xyz/resource-metadata v0.4.2
+# kmodules.xyz/resource-metadata v0.4.7-0.20201105081319-510a60f2767b
 kmodules.xyz/resource-metadata/apis/meta
 kmodules.xyz/resource-metadata/apis/meta/v1alpha1
 kmodules.xyz/resource-metadata/crds
@@ -1403,7 +1404,7 @@ kmodules.xyz/resource-metadata/hub/resourcedescriptors
 # kmodules.xyz/webhook-runtime v0.0.0-20201105073856-2dc7382b88c6
 kmodules.xyz/webhook-runtime/admission/v1beta1
 kmodules.xyz/webhook-runtime/registry/admissionreview/v1beta1
-# kubepack.dev/lib-helm v0.2.0
+# kubepack.dev/lib-helm v0.2.1-0.20201106183741-d08993d00639
 kubepack.dev/lib-helm/action
 kubepack.dev/lib-helm/chart
 kubepack.dev/lib-helm/chart/loader

@@ -24,8 +24,8 @@ import (
 	"kubepack.dev/kubepack/pkg/lib"
 	"kubepack.dev/lib-helm/action"
 
-	"github.com/appscode/go/crypto/rand"
 	flag "github.com/spf13/pflag"
+	"gomodules.xyz/x/crypto/rand"
 	"k8s.io/client-go/tools/clientcmd"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 	"k8s.io/client-go/util/homedir"
