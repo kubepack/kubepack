@@ -4,45 +4,38 @@ go 1.12
 
 require (
 	github.com/Azure/go-autorest/autorest v0.10.2 // indirect
-	github.com/appscode/go v0.0.0-20200928211031-cc0c23082d91
 	github.com/appscode/static-assets v0.4.1
 	github.com/coreos/prometheus-operator v0.39.0
 	github.com/evanphx/json-patch v4.9.0+incompatible
 	github.com/gabriel-vasile/mimetype v1.1.1
 	github.com/go-macaron/binding v1.1.0
 	github.com/go-openapi/spec v0.19.8
-	github.com/go-openapi/swag v0.19.9 // indirect
 	github.com/gobuffalo/flect v0.2.1
 	github.com/gogo/protobuf v1.3.1
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/google/gofuzz v1.1.0
 	github.com/google/uuid v1.1.2
-	github.com/googleapis/gnostic v0.4.0 // indirect
 	github.com/gophercloud/gophercloud v0.11.0 // indirect
 	github.com/gregjones/httpcache v0.0.0-20180305231024-9cad4c3443a7
 	github.com/grpc-ecosystem/grpc-gateway v1.14.6 // indirect
-	github.com/hashicorp/golang-lru v0.5.4 // indirect
-	github.com/kr/pretty v0.2.0 // indirect
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/mitchellh/mapstructure v1.2.2 // indirect
 	github.com/onsi/ginkgo v1.11.0
 	github.com/onsi/gomega v1.8.1
-	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/pkg/errors v0.9.1
-	github.com/prometheus/client_golang v1.6.0 // indirect
 	github.com/spf13/cobra v1.1.1
 	github.com/spf13/pflag v1.0.5
 	github.com/stripe/stripe-go v70.15.0+incompatible
 	go.uber.org/atomic v1.6.0 // indirect
 	go.uber.org/zap v1.13.0 // indirect
 	gocloud.dev v0.20.0
-	golang.org/x/time v0.0.0-20200416051211-89c76fbcd5d1 // indirect
 	gomodules.xyz/blobfs v0.1.2
 	gomodules.xyz/jsonpatch/v2 v2.1.0
 	gomodules.xyz/pointer v0.0.0-20201105071923-daf60fa55209 // indirect
+	gomodules.xyz/runtime v0.0.0-20201104200926-d838b09dda8b
 	gomodules.xyz/version v0.1.0
+	gomodules.xyz/x v0.0.0-20201105065653-91c568df6331
 	gopkg.in/macaron.v1 v1.3.8
-	gopkg.in/yaml.v2 v2.3.0 // indirect
 	helm.sh/helm/v3 v3.2.1
 	k8s.io/api v0.18.9
 	k8s.io/apiextensions-apiserver v0.18.9
@@ -52,13 +45,12 @@ require (
 	k8s.io/client-go v12.0.0+incompatible
 	k8s.io/kube-openapi v0.0.0-20200410145947-61e04a5be9a6
 	k8s.io/kubernetes v1.18.9
-	k8s.io/utils v0.0.0-20200414100711-2df71ebbae66 // indirect
 	kmodules.xyz/client-go v0.0.0-20201105071625-0b277310b9b8
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20200922204806-c1426cd7fcf4
 	kmodules.xyz/custom-resources v0.0.0-20201105075444-3c6af51b4f79
-	kmodules.xyz/resource-metadata v0.4.2
+	kmodules.xyz/resource-metadata v0.4.7-0.20201105081319-510a60f2767b
 	kmodules.xyz/webhook-runtime v0.0.0-20201105073856-2dc7382b88c6
-	kubepack.dev/lib-helm v0.2.0
+	kubepack.dev/lib-helm v0.2.1-0.20201106183741-d08993d00639
 	sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4
 	sigs.k8s.io/yaml v1.2.0
 )

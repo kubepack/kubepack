@@ -1,5 +1,5 @@
 /*
-Copyright The Kmodules Authors.
+Copyright AppsCode Inc. and Contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import (
 	"kmodules.xyz/resource-metadata/hub/resourceclasses"
 	"kmodules.xyz/resource-metadata/hub/resourcedescriptors"
 
-	stringz "github.com/appscode/go/strings"
+	stringz "gomodules.xyz/x/strings"
 	crd_cs "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/typed/apiextensions/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
@@ -46,6 +46,7 @@ const (
 	HelmUnused HelmVersion = ""
 	Helm2      HelmVersion = "Helm 2"
 	Helm3      HelmVersion = "Helm 3"
+	crdIconSVG             = "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg"
 )
 
 // ttl for cached preferred list
@@ -484,7 +485,7 @@ func toPanel(in map[string]*v1alpha1.PanelSection) (*v1alpha1.ResourcePanel, err
 			// TODO: Use a different icon for section
 			section.Icons = []v1alpha1.ImageSpec{
 				{
-					Source: "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+					Source: crdIconSVG,
 					Type:   "image/svg+xml",
 				},
 			}
@@ -494,7 +495,7 @@ func toPanel(in map[string]*v1alpha1.PanelSection) (*v1alpha1.ResourcePanel, err
 			if len(section.Entries[i].Icons) == 0 {
 				section.Entries[i].Icons = []v1alpha1.ImageSpec{
 					{
-						Source: "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+						Source: crdIconSVG,
 						Type:   "image/svg+xml",
 					},
 				}

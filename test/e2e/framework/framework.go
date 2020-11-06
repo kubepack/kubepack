@@ -19,7 +19,7 @@ package framework
 import (
 	cs "kubepack.dev/kubepack/client/clientset/versioned"
 
-	"github.com/appscode/go/crypto/rand"
+	"gomodules.xyz/x/crypto/rand"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	app_cs "sigs.k8s.io/application/client/clientset/versioned"
