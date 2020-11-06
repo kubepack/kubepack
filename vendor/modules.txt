@@ -70,19 +70,15 @@ github.com/PuerkitoBio/urlesc
 # github.com/alessio/shellescape v1.2.2
 github.com/alessio/shellescape
 # github.com/appscode/go v0.0.0-20200928211031-cc0c23082d91
-github.com/appscode/go/analytics
 github.com/appscode/go/context
 github.com/appscode/go/crypto/rand
 github.com/appscode/go/env
 github.com/appscode/go/flags
-github.com/appscode/go/homedir
 github.com/appscode/go/log
-github.com/appscode/go/log/golog
 github.com/appscode/go/runtime
 github.com/appscode/go/sets
 github.com/appscode/go/strings
 github.com/appscode/go/term
-github.com/appscode/go/types
 github.com/appscode/go/version
 # github.com/appscode/static-assets v0.4.1
 github.com/appscode/static-assets/api
@@ -246,7 +242,7 @@ github.com/emicklei/go-restful/log
 github.com/evanphx/json-patch
 # github.com/exponent-io/jsonpath v0.0.0-20151013193312-d6023ce2651d
 github.com/exponent-io/jsonpath
-# github.com/fatih/color v1.9.0
+# github.com/fatih/color v1.10.0
 github.com/fatih/color
 # github.com/fatih/structs v1.1.0
 github.com/fatih/structs
@@ -291,7 +287,7 @@ github.com/gogo/protobuf/sortkeys
 github.com/golang/glog
 # github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e
 github.com/golang/groupcache/lru
-# github.com/golang/protobuf v1.4.2 => github.com/golang/protobuf v1.3.2
+# github.com/golang/protobuf v1.4.3 => github.com/golang/protobuf v1.3.2
 github.com/golang/protobuf/jsonpb
 github.com/golang/protobuf/proto
 github.com/golang/protobuf/protoc-gen-go
@@ -317,7 +313,7 @@ github.com/google/go-cmp/cmp/internal/function
 github.com/google/go-cmp/cmp/internal/value
 # github.com/google/gofuzz v1.1.0
 github.com/google/gofuzz
-# github.com/google/uuid v1.1.1
+# github.com/google/uuid v1.1.2
 github.com/google/uuid
 # github.com/google/wire v0.4.0
 github.com/google/wire
@@ -354,7 +350,7 @@ github.com/grpc-ecosystem/go-grpc-prometheus
 # github.com/hashicorp/golang-lru v0.5.4
 github.com/hashicorp/golang-lru
 github.com/hashicorp/golang-lru/simplelru
-# github.com/howeyc/gopass v0.0.0-20170109162249-bf9dde6d0d2c
+# github.com/howeyc/gopass v0.0.0-20190910152052-7cb4b85ec19c
 github.com/howeyc/gopass
 # github.com/hpcloud/tail v1.0.0
 github.com/hpcloud/tail
@@ -397,7 +393,7 @@ github.com/liggitt/tabwriter
 github.com/mailru/easyjson/buffer
 github.com/mailru/easyjson/jlexer
 github.com/mailru/easyjson/jwriter
-# github.com/mattn/go-colorable v0.1.6
+# github.com/mattn/go-colorable v0.1.8
 github.com/mattn/go-colorable
 # github.com/mattn/go-ieproxy v0.0.1
 github.com/mattn/go-ieproxy
@@ -498,7 +494,7 @@ github.com/shurcooL/sanitized_anchor_name
 github.com/sirupsen/logrus
 # github.com/spf13/cast v1.3.1
 github.com/spf13/cast
-# github.com/spf13/cobra v1.0.0
+# github.com/spf13/cobra v1.1.1
 github.com/spf13/cobra
 github.com/spf13/cobra/doc
 # github.com/spf13/pflag v1.0.5
@@ -704,12 +700,19 @@ golang.org/x/xerrors/internal
 # gomodules.xyz/blobfs v0.1.2
 gomodules.xyz/blobfs
 gomodules.xyz/blobfs/testing
+# gomodules.xyz/homedir v0.0.0-20201104190528-bcd4d5d94b84
+gomodules.xyz/homedir
 # gomodules.xyz/jsonpatch/v2 v2.1.0
 gomodules.xyz/jsonpatch/v2
-# gomodules.xyz/password-generator v0.2.3
+# gomodules.xyz/password-generator v0.2.6
 gomodules.xyz/password-generator
+# gomodules.xyz/pointer v0.0.0-20201105071923-daf60fa55209
+gomodules.xyz/pointer
 # gomodules.xyz/version v0.1.0
 gomodules.xyz/version
+# gomodules.xyz/x v0.0.0-20201105065653-91c568df6331
+gomodules.xyz/x/analytics
+gomodules.xyz/x/log/golog
 # google.golang.org/api v0.26.0 => google.golang.org/api v0.14.0
 google.golang.org/api/googleapi
 google.golang.org/api/googleapi/transport
@@ -1363,7 +1366,7 @@ k8s.io/utils/pointer
 k8s.io/utils/trace
 # kmodules.xyz/apiversion v0.2.0
 kmodules.xyz/apiversion
-# kmodules.xyz/client-go v0.0.0-20201027113349-01a6d453d836
+# kmodules.xyz/client-go v0.0.0-20201105071625-0b277310b9b8
 kmodules.xyz/client-go
 kmodules.xyz/client-go/admissionregistration/v1beta1
 kmodules.xyz/client-go/apiextensions
@@ -1384,7 +1387,7 @@ kmodules.xyz/client-go/tools/queue
 kmodules.xyz/client-go/tools/wait
 # kmodules.xyz/crd-schema-fuzz v0.0.0-20200922204806-c1426cd7fcf4
 kmodules.xyz/crd-schema-fuzz
-# kmodules.xyz/custom-resources v0.0.0-20201008012351-6d8090f759d4
+# kmodules.xyz/custom-resources v0.0.0-20201105075444-3c6af51b4f79
 kmodules.xyz/custom-resources/apis/appcatalog
 kmodules.xyz/custom-resources/apis/appcatalog/v1alpha1
 kmodules.xyz/custom-resources/client/clientset/versioned/scheme
@@ -1397,7 +1400,7 @@ kmodules.xyz/resource-metadata/crds
 kmodules.xyz/resource-metadata/hub
 kmodules.xyz/resource-metadata/hub/resourceclasses
 kmodules.xyz/resource-metadata/hub/resourcedescriptors
-# kmodules.xyz/webhook-runtime v0.0.0-20200922211931-8337935590de
+# kmodules.xyz/webhook-runtime v0.0.0-20201105073856-2dc7382b88c6
 kmodules.xyz/webhook-runtime/admission/v1beta1
 kmodules.xyz/webhook-runtime/registry/admissionreview/v1beta1
 # kubepack.dev/lib-helm v0.2.0
