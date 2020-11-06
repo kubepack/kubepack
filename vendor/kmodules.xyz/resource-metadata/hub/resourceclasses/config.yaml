@@ -1,21 +1,25 @@
 apiVersion: meta.appscode.com/v1alpha1
 kind: ResourceClass
 metadata:
+  creationTimestamp: null
   name: Config
 spec:
-  apiGroup: ""
-  weight: 6
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/resourceclasses/config.svg
-    type: image/svg+xml
   entries:
   - name: Config Maps
     required: true
     type:
-      groups: [""]
+      groups:
+      - ""
       resource: configmaps
   - name: Secrets
     required: true
     type:
-      groups: [""]
+      groups:
+      - ""
       resource: secrets
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/resourceclasses/config.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/resourceclasses/config.png
+    type: image/png
+  weight: 6

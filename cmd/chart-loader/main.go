@@ -21,7 +21,7 @@ import (
 
 	"kubepack.dev/kubepack/pkg/lib"
 
-	"github.com/appscode/go/term"
+	"gomodules.xyz/x/term"
 )
 
 func main() {
