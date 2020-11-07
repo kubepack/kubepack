@@ -48,17 +48,13 @@ func generateSwaggerJson() {
 			Title:   "Kubepack",
 			Version: "v0.2.0",
 			Contact: &spec.ContactInfo{
-				ContactInfoProps: spec.ContactInfoProps{
-					Name:  "AppsCode Inc.",
-					URL:   "https://appscode.com",
-					Email: "support@appscode.com",
-				},
+				Name:  "AppsCode Inc.",
+				URL:   "https://appscode.com",
+				Email: "support@appscode.com",
 			},
 			License: &spec.License{
-				LicenseProps: spec.LicenseProps{
-					Name: "Apache 2.0",
-					URL:  "https://www.apache.org/licenses/LICENSE-2.0.html",
-				},
+				Name: "Apache 2.0",
+				URL:  "https://www.apache.org/licenses/LICENSE-2.0.html",
 			},
 		},
 		OpenAPIDefinitions: []common.GetOpenAPIDefinitions{
