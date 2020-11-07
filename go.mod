@@ -28,6 +28,7 @@ require (
 	go.uber.org/atomic v1.6.0 // indirect
 	go.uber.org/zap v1.13.0 // indirect
 	gocloud.dev v0.20.0
+	golang.org/x/net v0.0.0-20200625001655-4c5254603344 // indirect
 	gomodules.xyz/blobfs v0.1.2
 	gomodules.xyz/jsonpatch/v2 v2.1.0
 	gomodules.xyz/pointer v0.0.0-20201105071923-daf60fa55209 // indirect
