@@ -11,7 +11,6 @@
     "tagline": "Cloud reimagined \u003cbr /\u003efor the age of Kubernetes",
     "summary": "Deploy, manage, upgrade Kubernetes on any cloud and automate deployment, \u003cbr /\u003escaling, and management of containerized applications.",
     "owner": 1,
-    "unitLabel": "Cluster",
     "phase": "Active",
     "maintainers": [
       {
