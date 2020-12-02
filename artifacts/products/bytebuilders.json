@@ -12,6 +12,28 @@
     "summary": "Deploy, manage, upgrade Kubernetes on any cloud and automate deployment, \u003cbr /\u003escaling, and management of containerized applications.",
     "owner": 1,
     "phase": "Active",
+    "icons": [
+      {
+        "description": "hero_image",
+        "src": "https://cdn.appscode.com/images/products/bytebuilders/bytebuilders-hero.gif"
+      },
+      {
+        "description": "logo",
+        "src": "https://cdn.appscode.com/images/products/bytebuilders/bytebuilders.png"
+      },
+      {
+        "description": "logo_white",
+        "src": "https://cdn.appscode.com/images/products/bytebuilders/bytebuilders-white.png"
+      },
+      {
+        "description": "icon",
+        "src": "https://cdn.appscode.com/images/products/bytebuilders/bytebuilders-icon.png"
+      },
+      {
+        "description": "icon_192x192",
+        "src": "https://cdn.appscode.com/images/products/bytebuilders/icons/android-icon-192x192.png"
+      }
+    ],
     "maintainers": [
       {
         "name": "AppsCode Inc.",

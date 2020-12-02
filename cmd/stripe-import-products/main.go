@@ -100,6 +100,11 @@ func main() {
 				}
 			}
 		}
+
+		for k := range media {
+			nu.Spec.Media = append(nu.Spec.Media, media[k])
+		}
+
 		nu.Spec.Maintainers = []v1alpha1.ContactData{
 			{
 				Name:  old.Author,
