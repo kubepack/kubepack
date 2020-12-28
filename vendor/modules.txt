@@ -622,7 +622,7 @@ golang.org/x/oauth2/jwt
 golang.org/x/sync/errgroup
 golang.org/x/sync/semaphore
 golang.org/x/sync/singleflight
-# golang.org/x/sys v0.0.0-20200615200032-f1bc736245b1
+# golang.org/x/sys v0.0.0-20200814200057-3d37ad5750ed
 golang.org/x/sys/cpu
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
@@ -652,7 +652,7 @@ golang.org/x/text/unicode/norm
 golang.org/x/text/width
 # golang.org/x/time v0.0.0-20200416051211-89c76fbcd5d1
 golang.org/x/time/rate
-# golang.org/x/tools v0.0.0-20200608174601-1b747fd94509
+# golang.org/x/tools v0.0.0-20200616195046-dc31b401abb5
 golang.org/x/tools/cmd/goimports
 golang.org/x/tools/go/analysis
 golang.org/x/tools/go/analysis/passes/inspect
@@ -677,6 +677,7 @@ golang.org/x/tools/internal/gocommand
 golang.org/x/tools/internal/gopathwalk
 golang.org/x/tools/internal/imports
 golang.org/x/tools/internal/packagesinternal
+golang.org/x/tools/internal/typesinternal
 # golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543
 golang.org/x/xerrors
 golang.org/x/xerrors/internal
@@ -1411,7 +1412,7 @@ kubepack.dev/lib-helm/repo
 # sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.0.7
 sigs.k8s.io/apiserver-network-proxy/konnectivity-client/pkg/client
 sigs.k8s.io/apiserver-network-proxy/konnectivity-client/proto/client
-# sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4 => github.com/kubepack/application v0.8.4-0.20200705202912-9d241d6484e3
+# sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4 => github.com/kubepack/application v0.8.4-0.20201117013009-57cb1e10e2ed
 sigs.k8s.io/application/api/app/v1beta1
 sigs.k8s.io/application/client/clientset/versioned
 sigs.k8s.io/application/client/clientset/versioned/scheme
