@@ -28,7 +28,6 @@ require (
 	go.uber.org/atomic v1.6.0 // indirect
 	go.uber.org/zap v1.13.0 // indirect
 	gocloud.dev v0.20.0
-	golang.org/x/net v0.0.0-20200625001655-4c5254603344 // indirect
 	gomodules.xyz/blobfs v0.1.2
 	gomodules.xyz/jsonpatch/v2 v2.1.0
 	gomodules.xyz/pointer v0.0.0-20201105071923-daf60fa55209 // indirect
@@ -48,9 +47,9 @@ require (
 	kmodules.xyz/client-go v0.0.0-20201208053851-a1d7be95e006
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20200922204806-c1426cd7fcf4
 	kmodules.xyz/custom-resources v0.0.0-20201124062543-bd8d35c21b0c
-	kmodules.xyz/resource-metadata v0.4.7-0.20201105081319-510a60f2767b
+	kmodules.xyz/resource-metadata v0.4.7
 	kmodules.xyz/webhook-runtime v0.0.0-20201105073856-2dc7382b88c6
-	kubepack.dev/lib-helm v0.2.1-0.20201106183741-d08993d00639
+	kubepack.dev/lib-helm v0.2.1
 	sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4
 	sigs.k8s.io/yaml v1.2.0
 )
