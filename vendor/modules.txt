@@ -239,9 +239,6 @@ github.com/fatih/structs
 github.com/gabriel-vasile/mimetype
 github.com/gabriel-vasile/mimetype/internal/json
 github.com/gabriel-vasile/mimetype/internal/matchers
-# github.com/garyburd/redigo v0.0.0-20150301180006-535138d7bcd7
-github.com/garyburd/redigo/internal
-github.com/garyburd/redigo/redis
 # github.com/ghodss/yaml v1.0.0
 github.com/ghodss/yaml
 # github.com/go-macaron/binding v1.1.0
@@ -290,8 +287,6 @@ github.com/golang/protobuf/ptypes/any
 github.com/golang/protobuf/ptypes/duration
 github.com/golang/protobuf/ptypes/struct
 github.com/golang/protobuf/ptypes/timestamp
-# github.com/gomodule/redigo v1.8.1
-github.com/gomodule/redigo/redis
 # github.com/google/btree v1.0.0
 github.com/google/btree
 # github.com/google/go-cmp v0.4.1
@@ -333,7 +328,6 @@ github.com/gosuri/uitable/util/wordwrap
 # github.com/gregjones/httpcache v0.0.0-20180305231024-9cad4c3443a7
 github.com/gregjones/httpcache
 github.com/gregjones/httpcache/diskcache
-github.com/gregjones/httpcache/redis
 # github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
 github.com/grpc-ecosystem/go-grpc-prometheus
 # github.com/hashicorp/golang-lru v0.5.4
@@ -440,7 +434,7 @@ github.com/onsi/gomega/matchers/support/goraph/edge
 github.com/onsi/gomega/matchers/support/goraph/node
 github.com/onsi/gomega/matchers/support/goraph/util
 github.com/onsi/gomega/types
-# github.com/opencontainers/go-digest v1.0.0
+# github.com/opencontainers/go-digest v1.0.0-rc1
 github.com/opencontainers/go-digest
 # github.com/opencontainers/image-spec v1.0.1
 github.com/opencontainers/image-spec/specs-go
@@ -1394,7 +1388,7 @@ kmodules.xyz/custom-resources/apis/appcatalog/v1alpha1
 kmodules.xyz/custom-resources/client/clientset/versioned/scheme
 kmodules.xyz/custom-resources/client/clientset/versioned/typed/appcatalog/v1alpha1
 kmodules.xyz/custom-resources/crds
-# kmodules.xyz/resource-metadata v0.4.7-0.20201105081319-510a60f2767b
+# kmodules.xyz/resource-metadata v0.4.7
 kmodules.xyz/resource-metadata/apis/meta
 kmodules.xyz/resource-metadata/apis/meta/v1alpha1
 kmodules.xyz/resource-metadata/crds
@@ -1404,7 +1398,7 @@ kmodules.xyz/resource-metadata/hub/resourcedescriptors
 # kmodules.xyz/webhook-runtime v0.0.0-20201105073856-2dc7382b88c6
 kmodules.xyz/webhook-runtime/admission/v1beta1
 kmodules.xyz/webhook-runtime/registry/admissionreview/v1beta1
-# kubepack.dev/lib-helm v0.2.1-0.20201106183741-d08993d00639
+# kubepack.dev/lib-helm v0.2.1
 kubepack.dev/lib-helm/action
 kubepack.dev/lib-helm/chart
 kubepack.dev/lib-helm/chart/loader

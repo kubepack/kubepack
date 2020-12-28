@@ -21,7 +21,7 @@ limitations under the License.
 package v1alpha1
 
 import (
-	v1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
@@ -694,7 +694,7 @@ func (in *ResourceDescriptorSpec) DeepCopyInto(out *ResourceDescriptorSpec) {
 	}
 	if in.Validation != nil {
 		in, out := &in.Validation, &out.Validation
-		*out = new(v1beta1.CustomResourceValidation)
+		*out = new(apiextensionsv1.CustomResourceValidation)
 		(*in).DeepCopyInto(*out)
 	}
 	if in.Icons != nil {
