@@ -17,7 +17,7 @@ limitations under the License.
 package v1alpha1
 
 import (
-	crdv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	crdv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -56,7 +56,7 @@ type ResourceDescriptorSpec struct {
 	// If present, this validation schema is used to validate all versions.
 	// Top-level and per-version schemas are mutually exclusive.
 	// +optional
-	Validation *crdv1beta1.CustomResourceValidation `json:"validation,omitempty"`
+	Validation *crdv1.CustomResourceValidation `json:"validation,omitempty"`
 
 	// Icons is an optional list of icons for an application. Icon information includes the source, size,
 	// and mime type.

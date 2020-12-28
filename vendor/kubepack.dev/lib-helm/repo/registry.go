@@ -26,10 +26,8 @@ import (
 	"time"
 
 	"github.com/PuerkitoBio/purell"
-	"github.com/gomodule/redigo/redis"
 	"github.com/gregjones/httpcache"
 	"github.com/gregjones/httpcache/diskcache"
-	rediscache "github.com/gregjones/httpcache/redis"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/helmpath"
 	"kubepack.dev/lib-helm/chart/loader"
@@ -43,22 +41,22 @@ type Registry struct {
 	m     sync.RWMutex
 }
 
+func NewCachedRegistry(cache httpcache.Cache) *Registry {
+	return &Registry{repos: make(map[string]*Entry), cache: cache}
+}
+
 func NewRegistry() *Registry {
-	return &Registry{repos: make(map[string]*Entry)}
+	return NewCachedRegistry(nil)
 }
 
 func NewMemoryCacheRegistry() *Registry {
-	return &Registry{repos: make(map[string]*Entry), cache: httpcache.NewMemoryCache()}
+	return NewCachedRegistry(httpcache.NewMemoryCache())
 }
 
 func NewDiskCacheRegistry() *Registry {
 	dir := helmpath.CachePath("kubepack")
 	_ = os.MkdirAll(dir, 0755)
-	return &Registry{repos: make(map[string]*Entry), cache: diskcache.New(dir)}
-}
-
-func NewRedisCacheRegistry(client redis.Conn) *Registry {
-	return &Registry{repos: make(map[string]*Entry), cache: rediscache.NewWithClient(client)}
+	return NewCachedRegistry(diskcache.New(dir))
 }
 
 func (r *Registry) Add(e *Entry) error {

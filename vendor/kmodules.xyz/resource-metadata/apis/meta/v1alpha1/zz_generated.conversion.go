@@ -26,7 +26,7 @@ import (
 	meta "kmodules.xyz/resource-metadata/apis/meta"
 
 	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions"
-	v1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	conversion "k8s.io/apimachinery/pkg/conversion"
 	runtime "k8s.io/apimachinery/pkg/runtime"
@@ -1066,7 +1066,7 @@ func autoConvert_meta_ResourceDescriptorSpec_To_v1alpha1_ResourceDescriptorSpec(
 	out.KeyTargets = *(*[]v1.TypeMeta)(unsafe.Pointer(&in.KeyTargets))
 	if in.Validation != nil {
 		in, out := &in.Validation, &out.Validation
-		*out = new(v1beta1.CustomResourceValidation)
+		*out = new(apiextensionsv1.CustomResourceValidation)
 		// TODO: Inefficient conversion - can we improve it?
 		if err := s.Convert(*in, *out, 0); err != nil {
 			return err
