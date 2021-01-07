@@ -21,6 +21,7 @@ require (
 	github.com/mitchellh/mapstructure v1.2.2 // indirect
 	github.com/onsi/ginkgo v1.11.0
 	github.com/onsi/gomega v1.8.1
+	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.1.1
 	github.com/spf13/pflag v1.0.5
@@ -44,7 +45,7 @@ require (
 	k8s.io/client-go v12.0.0+incompatible
 	k8s.io/kube-openapi v0.0.0-20200410145947-61e04a5be9a6
 	k8s.io/kubernetes v1.18.9
-	kmodules.xyz/client-go v0.0.0-20201208053851-a1d7be95e006
+	kmodules.xyz/client-go v0.0.0-20201230092550-8ca15cfcbefa
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20200922204806-c1426cd7fcf4
 	kmodules.xyz/custom-resources v0.0.0-20201124062543-bd8d35c21b0c
 	kmodules.xyz/resource-metadata v0.4.7
@@ -53,6 +54,10 @@ require (
 	sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4
 	sigs.k8s.io/yaml v1.2.0
 )
+
+replace helm.sh/helm/v3 => github.com/kubepack/helm/v3 v3.2.2-0.20200523120511-a86fc03a6a93
+
+replace sigs.k8s.io/application => github.com/kubepack/application v0.8.4-0.20201117013009-57cb1e10e2ed
 
 replace bitbucket.org/ww/goautoneg => gomodules.xyz/goautoneg v0.0.0-20120707110453-a547fc61f48d
 
@@ -126,8 +131,6 @@ replace google.golang.org/genproto => google.golang.org/genproto v0.0.0-20191115
 
 replace google.golang.org/grpc => google.golang.org/grpc v1.26.0
 
-replace helm.sh/helm/v3 => github.com/kubepack/helm/v3 v3.2.2-0.20200523120511-a86fc03a6a93
-
 replace k8s.io/api => github.com/kmodules/api v0.18.10-0.20200922195318-d60fe725dea0
 
 replace k8s.io/apimachinery => github.com/kmodules/apimachinery v0.19.0-alpha.0.0.20200922195535-0c9a1b86beec
@@ -145,5 +148,3 @@ replace k8s.io/kube-openapi => k8s.io/kube-openapi v0.0.0-20200410145947-61e04a5
 replace k8s.io/kubernetes => github.com/kmodules/kubernetes v1.19.0-alpha.0.0.20200922200158-8b13196d8dc4
 
 replace k8s.io/utils => k8s.io/utils v0.0.0-20200324210504-a9aa75ae1b89
-
-replace sigs.k8s.io/application => github.com/kubepack/application v0.8.4-0.20201117013009-57cb1e10e2ed
