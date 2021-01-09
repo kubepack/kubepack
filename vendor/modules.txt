@@ -156,6 +156,8 @@ github.com/coreos/prometheus-operator/pkg/client/versioned/scheme
 github.com/coreos/prometheus-operator/pkg/client/versioned/typed/monitoring/v1
 # github.com/cpuguy83/go-md2man/v2 v2.0.0
 github.com/cpuguy83/go-md2man/v2/md2man
+# github.com/cubewise-code/go-mime v0.0.0-20200519001935-8c5762b177d8
+github.com/cubewise-code/go-mime
 # github.com/cyphar/filepath-securejoin v0.2.2
 github.com/cyphar/filepath-securejoin
 # github.com/davecgh/go-spew v1.1.1
@@ -241,7 +243,7 @@ github.com/gabriel-vasile/mimetype/internal/json
 github.com/gabriel-vasile/mimetype/internal/matchers
 # github.com/ghodss/yaml v1.0.0
 github.com/ghodss/yaml
-# github.com/go-macaron/binding v1.1.0
+# github.com/go-macaron/binding v1.1.0 => github.com/gomodules/binding v0.0.0-20200811095614-c752727d2156
 github.com/go-macaron/binding
 # github.com/go-macaron/inject v0.0.0-20160627170012-d8a0b8677191
 github.com/go-macaron/inject
@@ -321,6 +323,8 @@ github.com/gophercloud/gophercloud/openstack/utils
 github.com/gophercloud/gophercloud/pagination
 # github.com/gorilla/mux v1.7.3
 github.com/gorilla/mux
+# github.com/gorilla/schema v1.2.0
+github.com/gorilla/schema
 # github.com/gosuri/uitable v0.0.4
 github.com/gosuri/uitable
 github.com/gosuri/uitable/util/strutil

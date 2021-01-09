@@ -30,6 +30,8 @@ import (
 	"kubepack.dev/lib-helm/getter"
 	"kubepack.dev/lib-helm/repo"
 
+	gomime "github.com/cubewise-code/go-mime"
+	"github.com/gabriel-vasile/mimetype"
 	"github.com/go-macaron/binding"
 	"gopkg.in/macaron.v1"
 	"sigs.k8s.io/yaml"
@@ -71,6 +73,53 @@ func main() {
 		}
 
 		ctx.JSON(http.StatusOK, pv)
+	})
+
+	// PUBLIC
+	m.Get("/packageview/files", binding.Json(v1alpha1.ChartRepoRef{}), func(ctx *macaron.Context, params v1alpha1.ChartRepoRef) {
+		// TODO: verify params
+
+		chrt, err := lib.DefaultRegistry.GetChart(params.URL, params.Name, params.Version)
+		if err != nil {
+			ctx.Error(http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		files := make([]string, 0, len(chrt.Raw))
+		for _, f := range chrt.Raw {
+			files = append(files, f.Name)
+		}
+		sort.Strings(files)
+
+		ctx.JSON(http.StatusOK, files)
+	})
+
+	// PUBLIC
+	m.Get("/packageview/files/*", binding.Json(v1alpha1.ChartRepoRef{}), func(ctx *macaron.Context, params v1alpha1.ChartRepoRef) {
+		// TODO: verify params
+
+		chrt, err := lib.DefaultRegistry.GetChart(params.URL, params.Name, params.Version)
+		if err != nil {
+			ctx.Error(http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		filename := ctx.Params("*")
+		for _, f := range chrt.Raw {
+			if f.Name == filename {
+				ext := filepath.Ext(f.Name)
+				if ct := gomime.TypeByExtension(ext); ct != "" {
+					ctx.Header().Set("Content-Type", ct)
+				} else {
+					ct := mimetype.Detect(f.Data)
+					ctx.Header().Set("Content-Type", ct.String())
+				}
+				ctx.Write(f.Data)
+				return
+			}
+		}
+
+		ctx.WriteHeader(http.StatusNotFound)
 	})
 
 	// PUBLIC

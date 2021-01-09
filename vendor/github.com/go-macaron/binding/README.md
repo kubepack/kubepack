@@ -1,4 +1,9 @@
-# binding [![Build Status](https://travis-ci.org/go-macaron/binding.svg?branch=master)](https://travis-ci.org/go-macaron/binding) [![Sourcegraph](https://sourcegraph.com/github.com/go-macaron/binding/-/badge.svg)](https://sourcegraph.com/github.com/go-macaron/binding?badge)
+# binding
+
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/go-macaron/binding/Go?logo=github&style=for-the-badge)](https://github.com/go-macaron/binding/actions?query=workflow%3AGo)
+[![codecov](https://img.shields.io/codecov/c/github/go-macaron/binding/master?logo=codecov&style=for-the-badge)](https://codecov.io/gh/go-macaron/binding)
+[![GoDoc](https://img.shields.io/badge/GoDoc-Reference-blue?style=for-the-badge&logo=go)](https://pkg.go.dev/github.com/go-macaron/binding?tab=doc)
+[![Sourcegraph](https://img.shields.io/badge/view%20on-Sourcegraph-brightgreen.svg?style=for-the-badge&logo=sourcegraph)](https://sourcegraph.com/github.com/go-macaron/binding)
 
 Middleware binding provides request data binding and validation for [Macaron](https://github.com/go-macaron/macaron).
 

@@ -37,3 +37,5 @@ gopkg.in/ini.v1 v1.46.0 h1:VeDZbLYGaupuvIrsYCEOe/L/2Pcs5n7hdO1ZTjporag=
 gopkg.in/ini.v1 v1.46.0/go.mod h1:pNLf8WUiyNEtQjuu5G5vTm06TEv9tsIgeAvK8hOrP4k=
 gopkg.in/macaron.v1 v1.3.4 h1:HvIscOwxhFhx3swWM/979wh2QMYyuXrNmrF9l+j3HZs=
 gopkg.in/macaron.v1 v1.3.4/go.mod h1:/RoHTdC8ALpyJ3+QR36mKjwnT1F1dyYtsGM9Ate6ZFI=
+gopkg.in/macaron.v1 v1.3.5 h1:FUA16VFBojxzfU75KqWrV/6BPv9O2R1GnybSGRie9QQ=
+gopkg.in/macaron.v1 v1.3.5/go.mod h1:uMZCFccv9yr5TipIalVOyAyZQuOH3OkmXvgcWwhJuP4=
