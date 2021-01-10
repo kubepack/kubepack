@@ -371,6 +371,13 @@ func main() {
 			}
 			ctx.JSON(http.StatusOK, order)
 		})
+		m.Get("/:id/template", func(ctx *macaron.Context) {
+
+		})
+		m.Get("/:id/editor-values", func(ctx *macaron.Context) {
+
+		})
+
 		m.Get("/:id/helm2", func(ctx *macaron.Context) {
 			bs, err := lib.NewTestBlobStore()
 			if err != nil {
