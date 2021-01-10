@@ -19,14 +19,17 @@ package lib
 import (
 	"bytes"
 	"fmt"
+	"strings"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/lib-helm/repo"
 
+	"github.com/gobuffalo/flect"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"kmodules.xyz/resource-metadata/hub"
+	"sigs.k8s.io/yaml"
 )
 
 type EditorParameters struct {
@@ -164,10 +167,43 @@ func GenerateEditorModel(reg *repo.Registry, opts EditorOptions) (string, error)
 		return "", err
 	}
 
-	manifest := f1.Result()
-	err = ProcessResources(manifest, func(obj *unstructured.Unstructured) error {
+	modelValues := map[string]*unstructured.Unstructured{}
+	err = ProcessResources(f1.Result(), func(obj *unstructured.Unstructured) error {
+		rsKey, err := resourceKey(obj.GetAPIVersion(), obj.GetKind(), rd.Spec.UI.Options.Name, obj.GetName())
+		if err != nil {
+			return err
+		}
 
+		// values
+		modelValues[rsKey] = obj
 		return nil
 	})
-	return string(manifest), err
+
+	data, err := yaml.Marshal(modelValues)
+	if err != nil {
+		panic(err)
+	}
+	return string(data), err
+}
+
+func resourceKey(apiVersion, kind, chartName, name string) (string, error) {
+	gv, err := schema.ParseGroupVersion(apiVersion)
+	if err != nil {
+		return "", err
+	}
+
+	groupPrefix := gv.Group
+	groupPrefix = strings.TrimSuffix(groupPrefix, ".k8s.io")
+	groupPrefix = strings.TrimSuffix(groupPrefix, ".kubernetes.io")
+	groupPrefix = strings.TrimSuffix(groupPrefix, ".x-k8s.io")
+	groupPrefix = strings.Replace(groupPrefix, ".", "_", -1)
+	groupPrefix = flect.Pascalize(groupPrefix)
+
+	var nameSuffix string
+	nameSuffix = strings.TrimPrefix(chartName, name)
+	nameSuffix = strings.Replace(nameSuffix, ".", "-", -1)
+	nameSuffix = strings.Trim(nameSuffix, "-")
+	nameSuffix = flect.Pascalize(nameSuffix)
+
+	return flect.Camelize(groupPrefix + kind + nameSuffix), nil
 }
