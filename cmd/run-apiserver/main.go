@@ -157,6 +157,24 @@ func main() {
 	})
 
 	// PUBLIC
+	m.Post("/editor/:group/:version/namespaces/:namespace/:resource", binding.Json(lib.EditorParameters{}), func(ctx *macaron.Context, params lib.EditorParameters) {
+		opts := lib.EditorOptions{
+			Group:       ctx.Params(":group"),
+			Version:     ctx.Params(":version"),
+			Resource:    ctx.Params(":resource"),
+			Namespace:   ctx.Params(":namespace"),
+			ValuesFile:  params.ValuesFile,
+			ValuesPatch: params.ValuesPatch,
+		}
+		model, err := lib.GenerateEditorModel(lib.DefaultRegistry, opts)
+		if err != nil {
+			ctx.Error(http.StatusInternalServerError, err.Error())
+			return
+		}
+		_, _ = ctx.Write([]byte(model))
+	})
+
+	// PUBLIC
 	m.Get("/products", func(ctx *macaron.Context) {
 		// /products
 
@@ -417,13 +435,60 @@ func main() {
 			}
 			ctx.JSON(http.StatusOK, order)
 		})
-		m.Get("/:id/template", func(ctx *macaron.Context) {
+		m.Get("/:id/render/manifest", func(ctx *macaron.Context) {
+			bs, err := lib.NewTestBlobStore()
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
 
+			data, err := bs.ReadFile(ctx.Req.Context(), path.Join(ctx.Params(":id"), "order.yaml"))
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+
+			var order v1alpha1.Order
+			err = yaml.Unmarshal(data, &order)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+
+			manifest, _, err := lib.RenderChartTemplate(bs, lib.DefaultRegistry, order)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+			ctx.Write([]byte(manifest))
 		})
-		m.Get("/:id/editor-values", func(ctx *macaron.Context) {
+		m.Get("/:id/render/resources", func(ctx *macaron.Context) {
+			bs, err := lib.NewTestBlobStore()
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
 
+			data, err := bs.ReadFile(ctx.Req.Context(), path.Join(ctx.Params(":id"), "order.yaml"))
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+
+			var order v1alpha1.Order
+			err = yaml.Unmarshal(data, &order)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+
+			_, tpls, err := lib.RenderChartTemplate(bs, lib.DefaultRegistry, order)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+			ctx.JSON(http.StatusOK, tpls)
 		})
-
 		m.Get("/:id/helm2", func(ctx *macaron.Context) {
 			bs, err := lib.NewTestBlobStore()
 			if err != nil {

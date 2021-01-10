@@ -60,7 +60,6 @@ import (
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 	"k8s.io/cli-runtime/pkg/printers"
 	"k8s.io/cli-runtime/pkg/resource"
@@ -676,7 +675,7 @@ func (x *YAMLPrinter) Do() error {
 
 	// Pre-install anything in the crd/ directory. We do this before Helm
 	// contacts the upstream server and builds the capabilities object.
-	if crds := chrt.CRDs(); len(crds) > 0 {
+	if crds := chrt.CRDObjects(); len(crds) > 0 {
 		_, err = fmt.Fprintln(&buf, "# install CRDs")
 		if err != nil {
 			return err
@@ -688,7 +687,7 @@ func (x *YAMLPrinter) Do() error {
 			if err != nil {
 				return err
 			}
-			_, writeErr := w.Write(crd.Data)
+			_, writeErr := w.Write(crd.File.Data)
 			// Always check the return value of Close when writing.
 			closeErr := w.Close()
 			if writeErr != nil {
@@ -895,7 +894,7 @@ func (x *PermissionChecker) Do() error {
 
 	// Pre-install anything in the crd/ directory. We do this before Helm
 	// contacts the upstream server and builds the capabilities object.
-	if crds := chrt.CRDs(); len(crds) > 0 {
+	if crds := chrt.CRDObjects(); len(crds) > 0 {
 		attr := authorization.ResourceAttributes{
 			Verb:     x.Verb,
 			Group:    "apiextensions.k8s.io",
@@ -909,7 +908,7 @@ func (x *PermissionChecker) Do() error {
 		}
 
 		for _, crd := range crds {
-			items, err := ExtractResources(crd.Data)
+			items, err := ExtractResources(crd.File.Data)
 			if err != nil {
 				return err
 			}
@@ -1181,7 +1180,7 @@ func (x *ApplicationGenerator) Do() error {
 
 	// Pre-install anything in the crd/ directory. We do this before Helm
 	// contacts the upstream server and builds the capabilities object.
-	//if crds := chrt.CRDs(); len(crds) > 0 {
+	//if crds := chrt.CRDObjects(); len(crds) > 0 {
 	//	attr := metav1.GroupKind{
 	//		Group:    "apiextensions.k8s.io",
 	//		Kind: "CustomResourceDefinition",
@@ -1325,163 +1324,76 @@ func (x *ApplicationGenerator) Result() *v1beta1.Application {
 var empty = struct{}{}
 
 func (x *ApplicationGenerator) extractComponentAttributes(data []byte) error {
-	reader := yaml.NewYAMLOrJSONDecoder(bytes.NewReader(data), 2048)
-	for {
-		var obj unstructured.Unstructured
-		err := reader.Decode(&obj)
-		if err == io.EOF {
-			break
-		} else if err != nil {
+	return ProcessResources(data, func(obj *unstructured.Unstructured) error {
+		gv, err := schema.ParseGroupVersion(obj.GetAPIVersion())
+		if err != nil {
 			return err
 		}
-		if obj.IsList() {
-			err := obj.EachListItem(func(item runtime.Object) error {
-				castItem := item.(*unstructured.Unstructured)
+		x.components[metav1.GroupKind{Group: gv.Group, Kind: obj.GetKind()}] = empty
 
-				gv, err := schema.ParseGroupVersion(castItem.GetAPIVersion())
-				if err != nil {
-					return err
-				}
-				x.components[metav1.GroupKind{Group: gv.Group, Kind: castItem.GetKind()}] = empty
-
-				if !x.init {
-					x.commonLabels = castItem.GetLabels()
-					x.init = true
-				} else {
-					for k, v := range castItem.GetLabels() {
-						if existing, found := x.commonLabels[k]; found && existing != v {
-							delete(x.commonLabels, k)
-						}
-					}
-				}
-				return nil
-			})
-			if err != nil {
-				return err
-			}
+		if !x.init {
+			x.commonLabels = obj.GetLabels()
+			x.init = true
 		} else {
-			gv, err := schema.ParseGroupVersion(obj.GetAPIVersion())
-			if err != nil {
-				return err
-			}
-			x.components[metav1.GroupKind{Group: gv.Group, Kind: obj.GetKind()}] = empty
-
-			if !x.init {
-				x.commonLabels = obj.GetLabels()
-				x.init = true
-			} else {
-				for k, v := range obj.GetLabels() {
-					if existing, found := x.commonLabels[k]; found && existing != v {
-						delete(x.commonLabels, k)
-					}
+			for k, v := range obj.GetLabels() {
+				if existing, found := x.commonLabels[k]; found && existing != v {
+					delete(x.commonLabels, k)
 				}
 			}
 		}
-	}
-	return nil
+		return nil
+	})
 }
 
 func ExtractResourceAttributes(data []byte, verb string, reg *hub.Registry, attrs map[authorization.ResourceAttributes]*ResourcePermission) error {
-	reader := yaml.NewYAMLOrJSONDecoder(bytes.NewReader(data), 2048)
-	for {
-		var obj unstructured.Unstructured
-		err := reader.Decode(&obj)
-		if err == io.EOF {
-			break
-		} else if err != nil {
+	return ProcessResources(data, func(obj *unstructured.Unstructured) error {
+		gvr, err := reg.GVR(schema.FromAPIVersionAndKind(obj.GetAPIVersion(), obj.GetKind()))
+		if err != nil {
 			return err
 		}
-		if obj.IsList() {
-			err := obj.EachListItem(func(item runtime.Object) error {
-				castItem := item.(*unstructured.Unstructured)
 
-				gvr, err := reg.GVR(schema.FromAPIVersionAndKind(castItem.GetAPIVersion(), castItem.GetKind()))
-				if err != nil {
-					return err
-				}
+		ns := XorY(obj.GetNamespace(), core.NamespaceDefault)
+		obj.SetNamespace(ns)
 
-				ns := XorY(castItem.GetNamespace(), core.NamespaceDefault)
-				castItem.SetNamespace(ns)
-
-				attr := authorization.ResourceAttributes{
-					Namespace: ns,
-					Verb:      verb,
-					Group:     gvr.Group,
-					Version:   gvr.Version,
-					Resource:  gvr.Resource,
-					// Name:      castItem.GetName(), // TODO: needed for delete
-				}
-				info, found := attrs[attr]
-				if !found {
-					info = new(ResourcePermission)
-					attrs[attr] = info
-				}
-				info.Items = append(info.Items, castItem)
-
-				return nil
-			})
-			if err != nil {
-				return err
-			}
-		} else {
-			gvr, err := reg.GVR(schema.FromAPIVersionAndKind(obj.GetAPIVersion(), obj.GetKind()))
-			if err != nil {
-				return err
-			}
-
-			ns := XorY(obj.GetNamespace(), core.NamespaceDefault)
-			obj.SetNamespace(ns)
-
-			attr := authorization.ResourceAttributes{
-				Namespace: ns,
-				Verb:      verb,
-				Group:     gvr.Group,
-				Version:   gvr.Version,
-				Resource:  gvr.Resource,
-				// Name:      obj.GetName(), // TODO: needed for delete
-			}
-			info, found := attrs[attr]
-			if !found {
-				info = new(ResourcePermission)
-				attrs[attr] = info
-			}
-			info.Items = append(info.Items, &obj)
+		attr := authorization.ResourceAttributes{
+			Namespace: ns,
+			Verb:      verb,
+			Group:     gvr.Group,
+			Version:   gvr.Version,
+			Resource:  gvr.Resource,
+			// Name:      obj.GetName(), // TODO: needed for delete
 		}
-	}
-	return nil
+		info, found := attrs[attr]
+		if !found {
+			info = new(ResourcePermission)
+			attrs[attr] = info
+		}
+		info.Items = append(info.Items, obj)
+
+		return nil
+	})
 }
 
 func ExtractResources(data []byte) ([]*unstructured.Unstructured, error) {
 	var resources []*unstructured.Unstructured
 
-	reader := yaml.NewYAMLOrJSONDecoder(bytes.NewReader(data), 2048)
-	for {
-		var obj unstructured.Unstructured
-		err := reader.Decode(&obj)
-		if err == io.EOF {
-			break
-		} else if err != nil {
-			return nil, err
+	err := ProcessResources(data, func(obj *unstructured.Unstructured) error {
+		if obj.GetNamespace() == "" {
+			obj.SetNamespace(core.NamespaceDefault)
 		}
-		if obj.IsList() {
-			err := obj.EachListItem(func(item runtime.Object) error {
-				castItem := item.(*unstructured.Unstructured)
-				if castItem.GetNamespace() == "" {
-					castItem.SetNamespace(core.NamespaceDefault)
-				}
-				resources = append(resources, castItem)
-				return nil
-			})
-			if err != nil {
-				return nil, err
-			}
-		} else {
-			if obj.GetNamespace() == "" {
-				obj.SetNamespace(core.NamespaceDefault)
-			}
-			resources = append(resources, &obj)
-		}
+		resources = append(resources, obj)
+		return nil
+	})
+	if err != nil {
+		return nil, err
 	}
+
+	sort.Slice(resources, func(i, j int) bool {
+		if resources[i].GetAPIVersion() == resources[j].GetAPIVersion() {
+			return resources[i].GetKind() < resources[j].GetKind()
+		}
+		return resources[i].GetAPIVersion() < resources[j].GetAPIVersion()
+	})
 
 	return resources, nil
 }

@@ -209,20 +209,22 @@ spec:
             installer:
               properties:
                 chart:
+                  description: ChartRepoRef references to a single version of a Chart
                   properties:
                     name:
                       type: string
                     url:
                       type: string
+                    version:
+                      type: string
                   required:
                   - name
                   - url
+                  - version
                   type: object
                 planID:
                   type: string
                 productID:
-                  type: string
-                version:
                   type: string
               type: object
             keyTargets:
@@ -308,6 +310,22 @@ spec:
               - scope
               - version
               type: object
+            resourceRequirements:
+              items:
+                properties:
+                  resources:
+                    description: Json path to resources of type core.ResourceRequirements
+                    type: string
+                  shards:
+                    description: Shards represents number of shards not available
+                      for all resources
+                    type: string
+                  units:
+                    description: json path to replicas of type int if missing or zero(0),
+                      then don't extract resources.
+                    type: string
+                type: object
+              type: array
             subTables:
               items:
                 properties:
@@ -361,6 +379,37 @@ spec:
                 - name
                 type: object
               type: array
+            ui:
+              properties:
+                editor:
+                  description: ChartRepoRef references to a single version of a Chart
+                  properties:
+                    name:
+                      type: string
+                    url:
+                      type: string
+                    version:
+                      type: string
+                  required:
+                  - name
+                  - url
+                  - version
+                  type: object
+                options:
+                  description: ChartRepoRef references to a single version of a Chart
+                  properties:
+                    name:
+                      type: string
+                    url:
+                      type: string
+                    version:
+                      type: string
+                  required:
+                  - name
+                  - url
+                  - version
+                  type: object
+              type: object
             validation:
               description: validation describes the schema used for validation and
                 pruning of the custom resource. If present, this validation schema

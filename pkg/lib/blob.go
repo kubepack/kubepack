@@ -21,8 +21,8 @@ import (
 	"gomodules.xyz/blobfs/testing"
 )
 
-const YAMLHost = "https://usercontent.bytebuilders.xyz"
-const YAMLBucket = "gs://usercontent.bytebuilders.xyz"
+const YAMLHost = "https://pkg.bytebuilders.xyz"
+const YAMLBucket = "gs://pkg.bytebuilders.xyz"
 const GoogleApplicationCredentials = "/personal/AppsCode/credentials/bytebuilders@byte-builders.json"
 
 type BlobStore struct {
