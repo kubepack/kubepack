@@ -23,6 +23,7 @@ import (
 	"path"
 	"path/filepath"
 	"sort"
+	"time"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/artifacts/products"
@@ -33,7 +34,10 @@ import (
 	gomime "github.com/cubewise-code/go-mime"
 	"github.com/gabriel-vasile/mimetype"
 	"github.com/go-macaron/binding"
+	"github.com/google/uuid"
 	"gopkg.in/macaron.v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/yaml"
 )
 
@@ -44,16 +48,46 @@ func main() {
 	m.Use(macaron.Renderer())
 
 	// PUBLIC
-	m.Get("/bundleview", binding.Json(v1alpha1.ChartRepoRef{}), func(ctx *macaron.Context, params v1alpha1.ChartRepoRef) {
-		// TODO: verify params
+	m.Group("/bundleview", func() {
+		m.Get("", binding.Json(v1alpha1.ChartRepoRef{}), func(ctx *macaron.Context, params v1alpha1.ChartRepoRef) {
+			// TODO: verify params
 
-		bv, err := lib.CreateBundleViewForChart(lib.DefaultRegistry, &params)
-		if err != nil {
-			ctx.Error(http.StatusInternalServerError, err.Error())
-			return
-		}
+			bv, err := lib.CreateBundleViewForChart(lib.DefaultRegistry, &params)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
 
-		ctx.JSON(http.StatusOK, bv)
+			ctx.JSON(http.StatusOK, bv)
+		})
+
+		// Generate Order for a BundleView
+		m.Post("/orders", binding.Json(v1alpha1.BundleView{}), func(ctx *macaron.Context, params v1alpha1.BundleView) {
+			order, err := lib.CreateOrder(lib.DefaultRegistry, params)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+
+			data, err := yaml.Marshal(order)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+
+			bs, err := lib.NewTestBlobStore()
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+
+			err = bs.WriteFile(ctx.Req.Context(), path.Join(string(order.UID), "order.yaml"), data)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+			ctx.JSON(http.StatusOK, order)
+		})
 	})
 
 	// PUBLIC
@@ -345,11 +379,23 @@ func main() {
 	// PRIVATE
 	// Should we store Order UID in a table per User?
 	m.Group("/deploy/orders", func() {
-		m.Post("", binding.Json(v1alpha1.BundleView{}), func(ctx *macaron.Context, params v1alpha1.BundleView) {
-			order, err := lib.CreateOrder(lib.DefaultRegistry, params)
-			if err != nil {
-				ctx.Error(http.StatusInternalServerError, err.Error())
+		// Generate Order for a single chart and optional values patch
+		m.Post("", binding.Json(v1alpha1.Order{}), func(ctx *macaron.Context, order v1alpha1.Order) {
+			if len(order.Spec.Packages) == 0 {
+				ctx.Error(http.StatusBadRequest, "missing package selection for order")
 				return
+			}
+
+			order.TypeMeta = metav1.TypeMeta{
+				APIVersion: v1alpha1.SchemeGroupVersion.String(),
+				Kind:       v1alpha1.ResourceKindOrder,
+			}
+			order.ObjectMeta = metav1.ObjectMeta{
+				UID:               types.UID(uuid.New().String()),
+				CreationTimestamp: metav1.NewTime(time.Now()),
+			}
+			if order.Name == "" {
+				order.Name = order.Spec.Packages[0].Chart.ReleaseName
 			}
 
 			data, err := yaml.Marshal(order)

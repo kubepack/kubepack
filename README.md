@@ -128,7 +128,7 @@ $ go run cmd/helm-hub-reader/main.go
 ### Generate order
 
 ```console
-curl -X POST -H "Content-Type: application/json" -d @artifacts/kubedb-community/bundleview.json http://localhost:4000/deploy/orders
+curl -X POST -H "Content-Type: application/json" -d @artifacts/kubedb-community/bundleview.json http://localhost:4000/bundleview/orders
 ```
 
 ```json
