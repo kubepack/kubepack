@@ -91,22 +91,52 @@ func main() {
 	})
 
 	// PUBLIC
-	m.Get("/packageview", binding.Json(v1alpha1.ChartRepoRef{}), func(ctx *macaron.Context, params v1alpha1.ChartRepoRef) {
-		// TODO: verify params
+	m.Group("/packageview", func() {
+		m.Get("", binding.Json(v1alpha1.ChartRepoRef{}), func(ctx *macaron.Context, params v1alpha1.ChartRepoRef) {
+			// TODO: verify params
 
-		chrt, err := lib.DefaultRegistry.GetChart(params.URL, params.Name, params.Version)
-		if err != nil {
-			ctx.Error(http.StatusInternalServerError, err.Error())
-			return
-		}
+			chrt, err := lib.DefaultRegistry.GetChart(params.URL, params.Name, params.Version)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
 
-		pv, err := lib.CreatePackageView(params.URL, chrt.Chart)
-		if err != nil {
-			ctx.Error(http.StatusInternalServerError, err.Error())
-			return
-		}
+			pv, err := lib.CreatePackageView(params.URL, chrt.Chart)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
 
-		ctx.JSON(http.StatusOK, pv)
+			ctx.JSON(http.StatusOK, pv)
+		})
+
+		// Generate Order for a Packageview / Chart
+		m.Post("/orders", binding.Json(lib.EditResourceOrder{}), func(ctx *macaron.Context, params lib.EditResourceOrder) {
+			order, err := lib.CreateEditResourceOrder(lib.DefaultRegistry, params)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+
+			data, err := yaml.Marshal(order)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+
+			bs, err := lib.NewTestBlobStore()
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+
+			err = bs.WriteFile(ctx.Req.Context(), path.Join(string(order.UID), "order.yaml"), data)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+			ctx.JSON(http.StatusOK, order)
+		})
 	})
 
 	// PUBLIC
@@ -157,11 +187,12 @@ func main() {
 	})
 
 	// PUBLIC
-	m.Post("/editor/:group/:version/namespaces/:namespace/:resource", binding.Json(lib.EditorParameters{}), func(ctx *macaron.Context, params lib.EditorParameters) {
+	m.Post("/editor/:group/:version/namespaces/:namespace/:resource/:releaseName", binding.Json(lib.EditorParameters{}), func(ctx *macaron.Context, params lib.EditorParameters) {
 		opts := lib.EditorOptions{
 			Group:       ctx.Params(":group"),
 			Version:     ctx.Params(":version"),
 			Resource:    ctx.Params(":resource"),
+			ReleaseName: ctx.Params(":releaseName"),
 			Namespace:   ctx.Params(":namespace"),
 			ValuesFile:  params.ValuesFile,
 			ValuesPatch: params.ValuesPatch,

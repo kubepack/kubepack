@@ -18,16 +18,23 @@ package lib
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"strings"
+	"time"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/lib-helm/repo"
 
 	"github.com/gobuffalo/flect"
+	"github.com/google/uuid"
+	"gomodules.xyz/jsonpatch/v3"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/apimachinery/pkg/types"
+	ylib "k8s.io/apimachinery/pkg/util/yaml"
 	"kmodules.xyz/resource-metadata/hub"
 	"sigs.k8s.io/yaml"
 )
@@ -40,15 +47,25 @@ type EditorParameters struct {
 	ValuesPatch *runtime.RawExtension `json:"valuesPatch,omitempty"`
 }
 
-type EditorOptions struct {
-	Group    string
-	Version  string
-	Resource string
+type EditResourceOrder struct {
+	Group    string `json:"group"`
+	Version  string `json:"version"`
+	Resource string `json:"resource"`
 
-	// Release
-	Namespace   string
-	ValuesFile  string
-	ValuesPatch *runtime.RawExtension
+	ReleaseName string `json:"releaseName"`
+	Namespace   string `json:"namespace"`
+	Values      string `json:"values"`
+}
+
+type EditorOptions struct {
+	Group    string `json:"group"`
+	Version  string `json:"version"`
+	Resource string `json:"resource"`
+
+	ReleaseName string                `json:"releaseName"`
+	Namespace   string                `json:"namespace"`
+	ValuesFile  string                `json:"valuesFile"`
+	ValuesPatch *runtime.RawExtension `json:"valuesPatch"`
 }
 
 type ChartTemplate struct {
@@ -156,7 +173,7 @@ func GenerateEditorModel(reg *repo.Registry, opts EditorOptions) (string, error)
 			Name: rd.Spec.UI.Options.Name,
 		},
 		Version:     rd.Spec.UI.Options.Version,
-		ReleaseName: rd.Spec.UI.Options.Name,
+		ReleaseName: opts.ReleaseName,
 		Namespace:   opts.Namespace,
 		KubeVersion: "v1.17.0",
 		ValuesFile:  opts.ValuesFile,
@@ -206,4 +223,74 @@ func resourceKey(apiVersion, kind, chartName, name string) (string, error) {
 	nameSuffix = flect.Pascalize(nameSuffix)
 
 	return flect.Camelize(groupPrefix + kind + nameSuffix), nil
+}
+
+func CreateEditResourceOrder(reg *repo.Registry, opts EditResourceOrder) (*v1alpha1.Order, error) {
+	rd, err := hub.NewRegistryOfKnownResources().LoadByGVR(schema.GroupVersionResource{
+		Group:    opts.Group,
+		Version:  opts.Version,
+		Resource: opts.Resource,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	// editor chart
+	chrt, err := reg.GetChart(rd.Spec.UI.Editor.URL, rd.Spec.UI.Editor.Name, rd.Spec.UI.Editor.Version)
+	if err != nil {
+		return nil, err
+	}
+	originalValues, err := json.Marshal(chrt.Values["values.yaml"])
+	if err != nil {
+		return nil, err
+	}
+
+	modifiedValues, err := ylib.ToJSON([]byte(opts.Values))
+	if err != nil {
+		return nil, err
+	}
+	patch, err := jsonpatch.CreatePatch(originalValues, modifiedValues)
+	if err != nil {
+		return nil, err
+	}
+	patchData, err := json.Marshal(patch)
+	if err != nil {
+		return nil, err
+	}
+
+	order := v1alpha1.Order{
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: v1alpha1.SchemeGroupVersion.String(),
+			Kind:       v1alpha1.ResourceKindOrder,
+		}, ObjectMeta: metav1.ObjectMeta{
+			Name:              opts.ReleaseName,
+			Namespace:         opts.Namespace,
+			UID:               types.UID(uuid.New().String()),
+			CreationTimestamp: metav1.NewTime(time.Now()),
+		},
+		Spec: v1alpha1.OrderSpec{
+			Packages: []v1alpha1.PackageSelection{
+				{
+					Chart: &v1alpha1.ChartSelection{
+						ChartRef: v1alpha1.ChartRef{
+							URL:  rd.Spec.UI.Editor.URL,
+							Name: rd.Spec.UI.Editor.Name,
+						},
+						Version:     rd.Spec.UI.Editor.Version,
+						ReleaseName: opts.ReleaseName,
+						Namespace:   opts.Namespace,
+						Bundle:      nil,
+						ValuesFile:  "values.yaml",
+						ValuesPatch: &runtime.RawExtension{
+							Raw: patchData,
+						},
+						Resources: nil,
+						WaitFors:  nil,
+					},
+				},
+			},
+			KubeVersion: "",
+		},
+	}
+	return &order, err
 }
