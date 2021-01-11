@@ -613,29 +613,39 @@ func main() {
 
 	// PRIVATE
 	m.Group("/clusters/:cluster", func() {
+		m.Group("/editor/:group/:version/namespaces/:namespace/:resource/:releaseName", func() {
+			// GET Model from Existing Installations
+			m.Get("", func(ctx *macaron.Context) {
+				cfg, err := clientcmd.BuildConfigFromContext("", filepath.Join(homedir.HomeDir(), ".kube", "config"))
+				if err != nil {
+					ctx.Error(http.StatusInternalServerError, err.Error())
+					return
+				}
+				opts := lib.EditorOptions{
+					Group:       ctx.Params(":group"),
+					Version:     ctx.Params(":version"),
+					Resource:    ctx.Params(":resource"),
+					ReleaseName: ctx.Params(":releaseName"),
+					Namespace:   ctx.Params(":namespace"),
+					//ValuesFile:  params.ValuesFile,
+					//ValuesPatch: params.ValuesPatch,
+				}
+				model, err := lib.LoadEditorModel(cfg, lib.DefaultRegistry, opts)
+				if err != nil {
+					ctx.Error(http.StatusInternalServerError, err.Error())
+					return
+				}
+				_, _ = ctx.Write([]byte(model))
+			})
 
-		// GET Model from Existing Installations
-		m.Get("/editor/:group/:version/namespaces/:namespace/:resource/:releaseName", func(ctx *macaron.Context) {
-			cfg, err := clientcmd.BuildConfigFromContext("", filepath.Join(homedir.HomeDir(), ".kube", "config"))
-			if err != nil {
-				ctx.Error(http.StatusInternalServerError, err.Error())
-				return
-			}
-			opts := lib.EditorOptions{
-				Group:       ctx.Params(":group"),
-				Version:     ctx.Params(":version"),
-				Resource:    ctx.Params(":resource"),
-				ReleaseName: ctx.Params(":releaseName"),
-				Namespace:   ctx.Params(":namespace"),
-				//ValuesFile:  params.ValuesFile,
-				//ValuesPatch: params.ValuesPatch,
-			}
-			model, err := lib.LoadEditorModel(cfg, lib.DefaultRegistry, opts)
-			if err != nil {
-				ctx.Error(http.StatusInternalServerError, err.Error())
-				return
-			}
-			_, _ = ctx.Write([]byte(model))
+			// create / update / apply / install
+			m.Put("", func() {
+
+			})
+
+			m.Delete("", func() {
+
+			})
 		})
 
 		m.Post("/deploy/:id", func(ctx *macaron.Context) {

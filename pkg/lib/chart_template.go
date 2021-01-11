@@ -21,13 +21,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"strings"
 	"time"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/lib-helm/repo"
 
-	"github.com/gobuffalo/flect"
 	"github.com/google/uuid"
 	"gomodules.xyz/jsonpatch/v3"
 	"k8s.io/apimachinery/pkg/api/meta"
@@ -213,7 +211,7 @@ func LoadEditorModel(cfg *rest.Config, reg *repo.Registry, opts EditorOptions) (
 			return "", err
 		}
 		for _, obj := range result.Items {
-			rsKey, err := resourceKey(obj.GetAPIVersion(), obj.GetKind(), opts.ReleaseName, obj.GetName())
+			rsKey, err := ResourceKey(obj.GetAPIVersion(), obj.GetKind(), opts.ReleaseName, obj.GetName())
 			if err != nil {
 				return "", err
 			}
@@ -261,7 +259,7 @@ func GenerateEditorModel(reg *repo.Registry, opts EditorOptions) (string, error)
 
 	modelValues := map[string]*unstructured.Unstructured{}
 	err = ProcessResources(f1.Result(), func(obj *unstructured.Unstructured) error {
-		rsKey, err := resourceKey(obj.GetAPIVersion(), obj.GetKind(), rd.Spec.UI.Options.Name, obj.GetName())
+		rsKey, err := ResourceKey(obj.GetAPIVersion(), obj.GetKind(), rd.Spec.UI.Options.Name, obj.GetName())
 		if err != nil {
 			return err
 		}
@@ -279,28 +277,6 @@ func GenerateEditorModel(reg *repo.Registry, opts EditorOptions) (string, error)
 		panic(err)
 	}
 	return string(data), err
-}
-
-func resourceKey(apiVersion, kind, chartName, name string) (string, error) {
-	gv, err := schema.ParseGroupVersion(apiVersion)
-	if err != nil {
-		return "", err
-	}
-
-	groupPrefix := gv.Group
-	groupPrefix = strings.TrimSuffix(groupPrefix, ".k8s.io")
-	groupPrefix = strings.TrimSuffix(groupPrefix, ".kubernetes.io")
-	// groupPrefix = strings.TrimSuffix(groupPrefix, ".x-k8s.io")
-	groupPrefix = strings.Replace(groupPrefix, ".", "_", -1)
-	groupPrefix = flect.Pascalize(groupPrefix)
-
-	var nameSuffix string
-	nameSuffix = strings.TrimPrefix(chartName, name)
-	nameSuffix = strings.Replace(nameSuffix, ".", "-", -1)
-	nameSuffix = strings.Trim(nameSuffix, "-")
-	nameSuffix = flect.Pascalize(nameSuffix)
-
-	return flect.Camelize(groupPrefix + kind + nameSuffix), nil
 }
 
 func CreateEditResourceOrder(reg *repo.Registry, opts EditResourceOrder) (*v1alpha1.Order, error) {
