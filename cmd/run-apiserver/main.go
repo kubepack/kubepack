@@ -38,6 +38,8 @@ import (
 	"gopkg.in/macaron.v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
+	"k8s.io/client-go/util/homedir"
+	"kmodules.xyz/client-go/tools/clientcmd"
 	"sigs.k8s.io/yaml"
 )
 
@@ -110,7 +112,7 @@ func main() {
 			ctx.JSON(http.StatusOK, pv)
 		})
 
-		// Generate Order for a Packageview / Chart
+		// Generate Order for a PackageView / Chart
 		m.Post("/orders", binding.Json(lib.EditResourceOrder{}), func(ctx *macaron.Context, params lib.EditResourceOrder) {
 			order, err := lib.CreateEditResourceOrder(lib.DefaultRegistry, params)
 			if err != nil {
@@ -187,6 +189,10 @@ func main() {
 	})
 
 	// PUBLIC
+	// INITIAL Model (Values)
+	// GET vs POST (Get makes more sense, but do we send so much data via query string?)
+	// With POST, we can send large payloads without any non-standard limits
+	// https://stackoverflow.com/a/812962
 	m.Post("/editor/:group/:version/namespaces/:namespace/:resource/:releaseName", binding.Json(lib.EditorParameters{}), func(ctx *macaron.Context, params lib.EditorParameters) {
 		opts := lib.EditorOptions{
 			Group:       ctx.Params(":group"),
@@ -607,6 +613,31 @@ func main() {
 
 	// PRIVATE
 	m.Group("/clusters/:cluster", func() {
+
+		// GET Model from Existing Installations
+		m.Get("/editor/:group/:version/namespaces/:namespace/:resource/:releaseName", func(ctx *macaron.Context) {
+			cfg, err := clientcmd.BuildConfigFromContext("", filepath.Join(homedir.HomeDir(), ".kube", "config"))
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+			opts := lib.EditorOptions{
+				Group:       ctx.Params(":group"),
+				Version:     ctx.Params(":version"),
+				Resource:    ctx.Params(":resource"),
+				ReleaseName: ctx.Params(":releaseName"),
+				Namespace:   ctx.Params(":namespace"),
+				//ValuesFile:  params.ValuesFile,
+				//ValuesPatch: params.ValuesPatch,
+			}
+			model, err := lib.LoadEditorModel(cfg, lib.DefaultRegistry, opts)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+			_, _ = ctx.Write([]byte(model))
+		})
+
 		m.Post("/deploy/:id", func(ctx *macaron.Context) {
 		})
 		m.Delete("/deploy/:id", func(ctx *macaron.Context) {
