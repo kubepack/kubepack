@@ -75,6 +75,10 @@ type EditorOptions struct {
 	ValuesPatch *runtime.RawExtension `json:"valuesPatch"`
 }
 
+type EditorModel struct {
+	Values map[string]interface{} `json:"values"`
+}
+
 type ChartTemplate struct {
 	v1alpha1.ChartRef `json:",inline"`
 	Version           string                       `json:"version"`

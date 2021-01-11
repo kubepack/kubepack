@@ -18,6 +18,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"io/ioutil"
 	"net/http"
 	"path"
@@ -35,15 +36,35 @@ import (
 	"github.com/gabriel-vasile/mimetype"
 	"github.com/go-macaron/binding"
 	"github.com/google/uuid"
+	"github.com/spf13/pflag"
 	"gopkg.in/macaron.v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
+	"k8s.io/cli-runtime/pkg/genericclioptions"
 	"k8s.io/client-go/util/homedir"
+	cliflag "k8s.io/component-base/cli/flag"
+	cmdutil "k8s.io/kubectl/pkg/cmd/util"
+	"kmodules.xyz/client-go/logs"
 	"kmodules.xyz/client-go/tools/clientcmd"
 	"sigs.k8s.io/yaml"
 )
 
 func main() {
+	flags := pflag.CommandLine
+	// Normalize all flags that are coming from other packages or pre-configurations
+	// a.k.a. change all "_" to "-". e.g. glog package
+	flags.SetNormalizeFunc(cliflag.WordSepNormalizeFunc)
+
+	kubeConfigFlags := genericclioptions.NewConfigFlags(true)
+	kubeConfigFlags.AddFlags(flags)
+	matchVersionKubeConfigFlags := cmdutil.NewMatchVersionFlags(kubeConfigFlags)
+	matchVersionKubeConfigFlags.AddFlags(flags)
+
+	flags.AddGoFlagSet(flag.CommandLine)
+	logs.ParseFlags()
+
+	f := cmdutil.NewFactory(matchVersionKubeConfigFlags)
+
 	m := macaron.New()
 	m.Use(macaron.Logger())
 	m.Use(macaron.Recovery())
@@ -615,7 +636,7 @@ func main() {
 	m.Group("/clusters/:cluster", func() {
 		m.Group("/editor/:group/:version/namespaces/:namespace/:resource/:releaseName", func() {
 			// GET Model from Existing Installations
-			m.Get("", func(ctx *macaron.Context) {
+			m.Get("/model", func(ctx *macaron.Context) {
 				cfg, err := clientcmd.BuildConfigFromContext("", filepath.Join(homedir.HomeDir(), ".kube", "config"))
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
@@ -639,12 +660,22 @@ func main() {
 			})
 
 			// create / update / apply / install
-			m.Put("", func() {
-
+			m.Put("", binding.Json(lib.EditorModel{}), func(ctx *macaron.Context, model lib.EditorModel) {
+				rls, err := lib.ApplyResource(ctx, model, f)
+				if err != nil {
+					ctx.Error(http.StatusInternalServerError, err.Error())
+					return
+				}
+				ctx.JSON(http.StatusOK, rls)
 			})
 
-			m.Delete("", func() {
-
+			m.Put("", func(ctx *macaron.Context) {
+				rls, err := lib.DeleteResource(ctx, f)
+				if err != nil {
+					ctx.Error(http.StatusInternalServerError, err.Error())
+					return
+				}
+				ctx.JSON(http.StatusOK, rls)
 			})
 		})
 

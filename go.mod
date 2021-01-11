@@ -3,7 +3,6 @@ module kubepack.dev/kubepack
 go 1.12
 
 require (
-	github.com/Azure/go-autorest/autorest v0.10.2 // indirect
 	github.com/appscode/static-assets v0.4.1
 	github.com/coreos/prometheus-operator v0.39.0
 	github.com/cubewise-code/go-mime v0.0.0-20200519001935-8c5762b177d8
@@ -11,48 +10,43 @@ require (
 	github.com/gabriel-vasile/mimetype v1.1.1
 	github.com/go-macaron/binding v1.1.0
 	github.com/go-openapi/spec v0.19.8
-	github.com/gobuffalo/flect v0.2.1
+	github.com/gobuffalo/flect v0.2.2
 	github.com/gogo/protobuf v1.3.1
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/google/gofuzz v1.1.0
 	github.com/google/uuid v1.1.2
-	github.com/gophercloud/gophercloud v0.11.0 // indirect
-	github.com/gorilla/schema v1.2.0 // indirect
 	github.com/gregjones/httpcache v0.0.0-20180305231024-9cad4c3443a7
-	github.com/grpc-ecosystem/grpc-gateway v1.14.6 // indirect
-	github.com/mitchellh/mapstructure v1.2.2 // indirect
 	github.com/onsi/ginkgo v1.11.0
 	github.com/onsi/gomega v1.8.1
-	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.1.1
 	github.com/spf13/pflag v1.0.5
 	github.com/stripe/stripe-go v70.15.0+incompatible
-	go.uber.org/atomic v1.6.0 // indirect
-	go.uber.org/zap v1.13.0 // indirect
 	gocloud.dev v0.20.0
 	gomodules.xyz/blobfs v0.1.2
 	gomodules.xyz/jsonpatch/v2 v2.1.0
 	gomodules.xyz/jsonpatch/v3 v3.0.1
-	gomodules.xyz/pointer v0.0.0-20201105071923-daf60fa55209 // indirect
 	gomodules.xyz/runtime v0.0.0-20201104200926-d838b09dda8b
 	gomodules.xyz/version v0.1.0
 	gomodules.xyz/x v0.0.0-20201105065653-91c568df6331
 	gopkg.in/macaron.v1 v1.3.8
-	helm.sh/helm/v3 v3.2.1
+	helm.sh/helm/v3 v3.4.1
 	k8s.io/api v0.18.9
 	k8s.io/apiextensions-apiserver v0.18.9
 	k8s.io/apimachinery v0.18.9
 	k8s.io/apiserver v0.18.9
 	k8s.io/cli-runtime v0.18.9
 	k8s.io/client-go v12.0.0+incompatible
+	k8s.io/component-base v0.18.9
 	k8s.io/kube-openapi v0.0.0-20200410145947-61e04a5be9a6
+	k8s.io/kubectl v0.18.9
 	k8s.io/kubernetes v1.18.9
 	kmodules.xyz/client-go v0.0.0-20201230092550-8ca15cfcbefa
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20200922204806-c1426cd7fcf4
 	kmodules.xyz/custom-resources v0.0.0-20201124062543-bd8d35c21b0c
 	kmodules.xyz/resource-metadata v0.4.8-0.20210109211859-ee04a80b905a
 	kmodules.xyz/webhook-runtime v0.0.0-20201105073856-2dc7382b88c6
+	kubepack.dev/cli v0.0.0-20210111222208-11641a4bf3ba
 	kubepack.dev/lib-helm v0.2.1
 	sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4
 	sigs.k8s.io/yaml v1.2.0
