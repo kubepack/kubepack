@@ -178,7 +178,7 @@ func main() {
 					ct := mimetype.Detect(f.Data)
 					ctx.Header().Set("Content-Type", ct.String())
 				}
-				ctx.Write(f.Data)
+				_, _ = ctx.Write(f.Data)
 				return
 			}
 		}
@@ -491,7 +491,7 @@ func main() {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
 			}
-			ctx.Write([]byte(manifest))
+			_, _ = ctx.Write([]byte(manifest))
 		})
 		m.Get("/:id/render/resources", func(ctx *macaron.Context) {
 			bs, err := lib.NewTestBlobStore()

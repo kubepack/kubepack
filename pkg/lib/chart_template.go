@@ -195,6 +195,9 @@ func GenerateEditorModel(reg *repo.Registry, opts EditorOptions) (string, error)
 		modelValues[rsKey] = obj
 		return nil
 	})
+	if err != nil {
+		return "", err
+	}
 
 	data, err := yaml.Marshal(modelValues)
 	if err != nil {
