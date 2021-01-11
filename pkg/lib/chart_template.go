@@ -41,6 +41,7 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/restmapper"
 	"kmodules.xyz/resource-metadata/hub"
+	"sigs.k8s.io/application/api/app/v1beta1"
 	app_cs "sigs.k8s.io/application/client/clientset/versioned"
 	"sigs.k8s.io/yaml"
 )
@@ -167,6 +168,7 @@ func LoadEditorModel(cfg *rest.Config, reg *repo.Registry, opts EditorOptions) (
 	if err != nil {
 		return "", err
 	}
+	mapper := restmapper.NewDeferredDiscoveryRESTMapper(memory.NewMemCacheClient(kc.Discovery()))
 	dc, err := dynamic.NewForConfig(cfg)
 	if err != nil {
 		return "", err
@@ -180,53 +182,71 @@ func LoadEditorModel(cfg *rest.Config, reg *repo.Registry, opts EditorOptions) (
 	if err != nil {
 		return "", err
 	}
-	selector, err := metav1.LabelSelectorAsSelector(app.Spec.Selector)
+	_, values, err := EditorChartValueManifest(app, mapper, dc, opts.ReleaseName, opts.Namespace)
 	if err != nil {
 		return "", err
 	}
+
+	data, err := yaml.Marshal(values)
+	if err != nil {
+		return "", err
+	}
+	return string(data), nil
+}
+
+func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.DeferredDiscoveryRESTMapper, dc dynamic.Interface, releaseName, namespace string) (string, map[string]interface{}, error) {
+	selector, err := metav1.LabelSelectorAsSelector(app.Spec.Selector)
+	if err != nil {
+		return "", nil, err
+	}
 	labelSelector := selector.String()
 
-	modelValues := map[string]*unstructured.Unstructured{}
+	var buf bytes.Buffer
+	values := map[string]interface{}{}
 
-	mapper := restmapper.NewDeferredDiscoveryRESTMapper(memory.NewMemCacheClient(kc.Discovery()))
 	for _, gk := range app.Spec.ComponentGroupKinds {
 		mapping, err := mapper.RESTMapping(schema.GroupKind{
 			Group: gk.Group,
 			Kind:  gk.Kind,
 		})
 		if err != nil {
-			return "", err
+			return "", nil, err
 		}
 		var rc dynamic.ResourceInterface
 		if mapping.Scope == meta.RESTScopeNamespace {
-			rc = dc.Resource(mapping.Resource).Namespace(opts.Namespace)
+			rc = dc.Resource(mapping.Resource).Namespace(namespace)
 		} else {
 			rc = dc.Resource(mapping.Resource)
 		}
 
-		result, err := rc.List(context.TODO(), metav1.ListOptions{
+		list, err := rc.List(context.TODO(), metav1.ListOptions{
 			LabelSelector: labelSelector,
 		})
 		if err != nil {
-			return "", err
+			return "", nil, err
 		}
-		for _, obj := range result.Items {
-			rsKey, err := ResourceKey(obj.GetAPIVersion(), obj.GetKind(), opts.ReleaseName, obj.GetName())
-			if err != nil {
-				return "", err
-			}
-			if _, ok := modelValues[rsKey]; ok {
-				return "", fmt.Errorf("duplicate resource key %s for application %s/%s", rsKey, app.Namespace, app.Name)
-			}
-			modelValues[rsKey] = &obj
-		}
-	}
+		for _, obj := range list.Items {
+			// remove status
+			delete(obj.Object, "status")
 
-	data, err := yaml.Marshal(modelValues)
-	if err != nil {
-		return "", err
+			buf.WriteString("\n---\n")
+			data, err := yaml.Marshal(obj)
+			if err != nil {
+				return "", nil, err
+			}
+			buf.Write(data)
+
+			rsKey, err := ResourceKey(obj.GetAPIVersion(), obj.GetKind(), releaseName, obj.GetName())
+			if err != nil {
+				return "", nil, err
+			}
+			if _, ok := values[rsKey]; ok {
+				return "", nil, fmt.Errorf("duplicate resource key %s for application %s/%s", rsKey, app.Namespace, app.Name)
+			}
+			values[rsKey] = &obj
+		}
 	}
-	return string(data), nil
+	return buf.String(), values, nil
 }
 
 func GenerateEditorModel(reg *repo.Registry, opts EditorOptions) (string, error) {
