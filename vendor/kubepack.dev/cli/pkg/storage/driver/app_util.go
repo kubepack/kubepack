@@ -299,7 +299,7 @@ func decodeReleaseFromApp(app *v1beta1.Application, di dynamic.Interface, cl dis
 	// versions := strings.Split(app.Annotations["helm.sh/component-versions"], ",")
 	mapper := restmapper.NewDeferredDiscoveryRESTMapper(cl)
 
-	manifest, values, err := lib.EditorChartValueManifest(app, mapper, di, rls.Name, rls.Namespace)
+	manifest, values, err := lib.EditorChartValueManifest(app, mapper, di, rls.Name, rls.Namespace, rls.Chart)
 	if err != nil {
 		return nil, err
 	}
