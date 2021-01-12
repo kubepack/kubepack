@@ -40,6 +40,8 @@ import (
 	"github.com/spf13/pflag"
 	"gopkg.in/macaron.v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 	"k8s.io/client-go/util/homedir"
@@ -134,9 +136,9 @@ func main() {
 			ctx.JSON(http.StatusOK, pv)
 		})
 
-		// Generate Order for a PackageView / Chart
-		m.Post("/orders", binding.Json(lib.EditResourceOrder{}), func(ctx *macaron.Context, params lib.EditResourceOrder) {
-			order, err := lib.CreateEditResourceOrder(lib.DefaultRegistry, params)
+		// Generate Order for a Editor PackageView / Chart
+		m.Post("/orders", binding.Json(lib.ChartOrder{}), func(ctx *macaron.Context, params lib.ChartOrder) {
+			order, err := lib.CreateChartOrder(lib.DefaultRegistry, params)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
@@ -210,27 +212,53 @@ func main() {
 		ctx.WriteHeader(http.StatusNotFound)
 	})
 
-	// PUBLIC
-	// INITIAL Model (Values)
-	// GET vs POST (Get makes more sense, but do we send so much data via query string?)
-	// With POST, we can send large payloads without any non-standard limits
-	// https://stackoverflow.com/a/812962
-	m.Post("/editor/:group/:version/namespaces/:namespace/:resource/:releaseName", binding.Json(lib.EditorParameters{}), func(ctx *macaron.Context, params lib.EditorParameters) {
-		opts := lib.EditorOptions{
-			Group:       ctx.Params(":group"),
-			Version:     ctx.Params(":version"),
-			Resource:    ctx.Params(":resource"),
-			ReleaseName: ctx.Params(":releaseName"),
-			Namespace:   ctx.Params(":namespace"),
-			ValuesFile:  params.ValuesFile,
-			ValuesPatch: params.ValuesPatch,
-		}
-		model, err := lib.GenerateEditorModel(lib.DefaultRegistry, opts)
-		if err != nil {
-			ctx.Error(http.StatusInternalServerError, err.Error())
-			return
-		}
-		_, _ = ctx.Write([]byte(model))
+	m.Group("/editor/:group/:version/:resource", func() {
+		// PUBLIC
+		// INITIAL Model (Values)
+		// GET vs POST (Get makes more sense, but do we send so much data via query string?)
+		// With POST, we can send large payloads without any non-standard limits
+		// https://stackoverflow.com/a/812962
+		m.Post("/model", binding.Json(lib.Unstructured{}), func(ctx *macaron.Context, opts lib.Unstructured) {
+			gvr := schema.GroupVersionResource{
+				Group:    ctx.Params(":group"),
+				Version:  ctx.Params(":version"),
+				Resource: ctx.Params(":resource"),
+			}
+
+			model, err := lib.GenerateEditorModel(lib.DefaultRegistry, gvr, opts)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+			_, _ = ctx.Write([]byte(model))
+		})
+		m.Get("/manifest", binding.Json(lib.Unstructured{}), func(ctx *macaron.Context, opts lib.Unstructured) {
+			gvr := schema.GroupVersionResource{
+				Group:    ctx.Params(":group"),
+				Version:  ctx.Params(":version"),
+				Resource: ctx.Params(":resource"),
+			}
+			manifest, _, err := lib.RenderChartTemplate(lib.DefaultRegistry, gvr, opts)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+			_, _ = ctx.Write([]byte(manifest))
+		})
+		m.Get("/resources", binding.Json(lib.Unstructured{}), func(ctx *macaron.Context, opts lib.Unstructured) {
+			gvr := schema.GroupVersionResource{
+				Group:    ctx.Params(":group"),
+				Version:  ctx.Params(":version"),
+				Resource: ctx.Params(":resource"),
+			}
+
+			_, tpls, err := lib.RenderChartTemplate(lib.DefaultRegistry, gvr, opts)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+			ctx.JSON(http.StatusOK, tpls)
+		})
 	})
 
 	// PUBLIC
@@ -514,7 +542,7 @@ func main() {
 				return
 			}
 
-			manifest, _, err := lib.RenderChartTemplate(bs, lib.DefaultRegistry, order)
+			manifest, _, err := lib.RenderOrderTemplate(bs, lib.DefaultRegistry, order)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
@@ -541,7 +569,7 @@ func main() {
 				return
 			}
 
-			_, tpls, err := lib.RenderChartTemplate(bs, lib.DefaultRegistry, order)
+			_, tpls, err := lib.RenderOrderTemplate(bs, lib.DefaultRegistry, order)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
@@ -643,21 +671,90 @@ func main() {
 					ctx.Error(http.StatusInternalServerError, err.Error())
 					return
 				}
-				opts := lib.EditorOptions{
-					Group:       ctx.Params(":group"),
-					Version:     ctx.Params(":version"),
-					Resource:    ctx.Params(":resource"),
-					ReleaseName: ctx.Params(":releaseName"),
-					Namespace:   ctx.Params(":namespace"),
-					//ValuesFile:  params.ValuesFile,
-					//ValuesPatch: params.ValuesPatch,
+
+				gvr := schema.GroupVersionResource{
+					Group:    ctx.Params(":group"),
+					Version:  ctx.Params(":version"),
+					Resource: ctx.Params(":resource"),
 				}
-				model, err := lib.LoadEditorModel(cfg, lib.DefaultRegistry, opts)
+				opts := lib.ReleaseMetadata{
+					Name:      ctx.Params(":releaseName"),
+					Namespace: ctx.Params(":namespace"),
+				}
+				tpl, err := lib.LoadEditorModel(cfg, lib.DefaultRegistry, gvr, opts)
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
 					return
 				}
-				_, _ = ctx.Write([]byte(model))
+				data, err := yaml.Marshal(tpl.Values)
+				if err != nil {
+					ctx.Error(http.StatusInternalServerError, err.Error())
+					return
+				}
+				_, _ = ctx.Write(data)
+			})
+
+			// redundant apis
+			// can be replaced by getting the model, then using the /editor apis
+			m.Get("/manifest", func(ctx *macaron.Context) {
+				cfg, err := clientcmd.BuildConfigFromContext("", filepath.Join(homedir.HomeDir(), ".kube", "config"))
+				if err != nil {
+					ctx.Error(http.StatusInternalServerError, err.Error())
+					return
+				}
+
+				gvr := schema.GroupVersionResource{
+					Group:    ctx.Params(":group"),
+					Version:  ctx.Params(":version"),
+					Resource: ctx.Params(":resource"),
+				}
+				opts := lib.ReleaseMetadata{
+					Name:      ctx.Params(":releaseName"),
+					Namespace: ctx.Params(":namespace"),
+				}
+				tpl, err := lib.LoadEditorModel(cfg, lib.DefaultRegistry, gvr, opts)
+				if err != nil {
+					ctx.Error(http.StatusInternalServerError, err.Error())
+					return
+				}
+				_, _ = ctx.Write(tpl.Manifest)
+			})
+
+			// redundant apis
+			// can be replaced by getting the model, then using the /editor apis
+			m.Get("/resources", func(ctx *macaron.Context) {
+				cfg, err := clientcmd.BuildConfigFromContext("", filepath.Join(homedir.HomeDir(), ".kube", "config"))
+				if err != nil {
+					ctx.Error(http.StatusInternalServerError, err.Error())
+					return
+				}
+
+				gvr := schema.GroupVersionResource{
+					Group:    ctx.Params(":group"),
+					Version:  ctx.Params(":version"),
+					Resource: ctx.Params(":resource"),
+				}
+				opts := lib.ReleaseMetadata{
+					Name:      ctx.Params(":releaseName"),
+					Namespace: ctx.Params(":namespace"),
+				}
+				tpl, err := lib.LoadEditorModel(cfg, lib.DefaultRegistry, gvr, opts)
+				if err != nil {
+					ctx.Error(http.StatusInternalServerError, err.Error())
+					return
+				}
+
+				out := struct {
+					Resources []*unstructured.Unstructured `json:"resources,omitempty"`
+				}{
+					tpl.Resources,
+				}
+				data, err := yaml.Marshal(out)
+				if err != nil {
+					ctx.Error(http.StatusInternalServerError, err.Error())
+					return
+				}
+				_, _ = ctx.Write(data)
 			})
 
 			// create / update / apply / install
@@ -670,7 +767,7 @@ func main() {
 				ctx.JSON(http.StatusOK, rls)
 			})
 
-			m.Put("", func(ctx *macaron.Context) {
+			m.Delete("", func(ctx *macaron.Context) {
 				rls, err := handler.DeleteResource(ctx, f)
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())

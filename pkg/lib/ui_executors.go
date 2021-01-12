@@ -35,6 +35,7 @@ import (
 	_ "gocloud.dev/blob/s3blob"
 	"gomodules.xyz/version"
 	"helm.sh/helm/v3/pkg/action"
+	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chartutil"
 	"helm.sh/helm/v3/pkg/release"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -53,11 +54,11 @@ type BucketFile struct {
 
 type BucketJsonFile struct {
 	// URL of the file in bucket
-	URL string `json:"url"`
+	URL string `json:"url,omitempty"`
 	// Bucket key for this file
-	Key      string                     `json:"key"`
-	Filename string                     `json:"filename"`
-	Data     *unstructured.Unstructured `json:"data"`
+	Key      string                     `json:"key,omitempty"`
+	Filename string                     `json:"filename,omitempty"`
+	Data     *unstructured.Unstructured `json:"data,omitempty"`
 }
 
 type BucketObject struct {
@@ -76,6 +77,7 @@ type TemplateRenderer struct {
 	KubeVersion string
 	ValuesFile  string
 	ValuesPatch *runtime.RawExtension
+	Values      map[string]interface{}
 
 	BucketURL string
 	UID       string
@@ -165,6 +167,8 @@ func (x *TemplateRenderer) Do() error {
 		if err != nil {
 			return err
 		}
+	} else if x.Values != nil {
+		vals = x.Values
 	}
 
 	// Pre-install anything in the crd/ directory. We do this before Helm
@@ -302,8 +306,10 @@ type EditorModelGenerator struct {
 	KubeVersion string
 	ValuesFile  string
 	ValuesPatch *runtime.RawExtension
+	Values      map[string]interface{}
 
-	manifest []byte
+	CRDs     []*chart.File
+	Manifest []byte
 }
 
 func (x *EditorModelGenerator) Do() error {
@@ -374,12 +380,15 @@ func (x *EditorModelGenerator) Do() error {
 		if err != nil {
 			return err
 		}
+	} else if x.Values != nil {
+		vals = x.Values
 	}
 
 	// Pre-install anything in the crd/ directory. We do this before Helm
 	// contacts the upstream server and builds the capabilities object.
-	//if crds := chrt.CRDObjects(); len(crds) > 0 {
-	//}
+	for _, crd := range chrt.CRDObjects() {
+		x.CRDs = append(x.CRDs, crd.File)
+	}
 
 	if err := chartutil.ProcessDependencies(chrt.Chart, vals); err != nil {
 		return err
@@ -444,12 +453,12 @@ func (x *EditorModelGenerator) Do() error {
 	}
 
 	{
-		x.manifest = manifestDoc.Bytes()
+		x.Manifest = manifestDoc.Bytes()
 	}
 
 	return nil
 }
 
-func (x *EditorModelGenerator) Result() []byte {
-	return x.manifest
+func (x *EditorModelGenerator) Result() ([]*chart.File, []byte) {
+	return x.CRDs, x.Manifest
 }

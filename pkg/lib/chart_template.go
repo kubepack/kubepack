@@ -48,6 +48,29 @@ import (
 	"sigs.k8s.io/yaml"
 )
 
+type Metadata struct {
+	Release ReleaseMetadata `json:"release,omitempty"`
+}
+
+type ReleaseMetadata struct {
+	Name      string `json:"name,omitempty"`
+	Namespace string `json:"namespace,omitempty"`
+}
+
+type OptionsSpec struct {
+	Metadata `json:"metadata,omitempty"`
+}
+
+type Unstructured map[string]interface{}
+
+type ChartOrder struct {
+	v1alpha1.ChartRepoRef `json:",inline"`
+
+	ReleaseName string `json:"releaseName,omitempty"`
+	Namespace   string `json:"namespace,omitempty"`
+	Values      string `json:"values,omitempty"`
+}
+
 type EditorParameters struct {
 	ValuesFile string `json:"valuesFile,omitempty"`
 	// RFC 6902 compatible json patch. ref: http://jsonpatch.com
@@ -57,41 +80,47 @@ type EditorParameters struct {
 }
 
 type EditResourceOrder struct {
-	Group    string `json:"group"`
-	Version  string `json:"version"`
-	Resource string `json:"resource"`
+	Group    string `json:"group,omitempty"`
+	Version  string `json:"version,omitempty"`
+	Resource string `json:"resource,omitempty"`
 
-	ReleaseName string `json:"releaseName"`
-	Namespace   string `json:"namespace"`
-	Values      string `json:"values"`
+	ReleaseName string `json:"releaseName,omitempty"`
+	Namespace   string `json:"namespace,omitempty"`
+	Values      string `json:"values,omitempty"`
 }
 
 type EditorOptions struct {
-	Group    string `json:"group"`
-	Version  string `json:"version"`
-	Resource string `json:"resource"`
+	Group    string `json:"group,omitempty"`
+	Version  string `json:"version,omitempty"`
+	Resource string `json:"resource,omitempty"`
 
-	ReleaseName string                `json:"releaseName"`
-	Namespace   string                `json:"namespace"`
-	ValuesFile  string                `json:"valuesFile"`
-	ValuesPatch *runtime.RawExtension `json:"valuesPatch"`
+	ReleaseName string                `json:"releaseName,omitempty"`
+	Namespace   string                `json:"namespace,omitempty"`
+	ValuesFile  string                `json:"valuesFile,omitempty"`
+	ValuesPatch *runtime.RawExtension `json:"valuesPatch,omitempty"`
 }
 
 type EditorModel struct {
-	Values map[string]interface{} `json:"values"`
+	Values map[string]interface{} `json:"values,omitempty"`
 }
 
 type ChartTemplate struct {
 	v1alpha1.ChartRef `json:",inline"`
-	Version           string                       `json:"version"`
-	ReleaseName       string                       `json:"releaseName"`
-	Namespace         string                       `json:"namespace"`
-	CRDs              []BucketJsonFile             `json:"crds"`
-	Manifest          *BucketObject                `json:"manifest"`
-	Resources         []*unstructured.Unstructured `json:"resources"`
+	Version           string                       `json:"version,omitempty"`
+	ReleaseName       string                       `json:"releaseName,omitempty"`
+	Namespace         string                       `json:"namespace,omitempty"`
+	CRDs              []BucketJsonFile             `json:"crds,omitempty"`
+	Manifest          *BucketObject                `json:"manifest,omitempty"`
+	Resources         []*unstructured.Unstructured `json:"resources,omitempty"`
 }
 
-func RenderChartTemplate(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order) (string, []ChartTemplate, error) {
+type EditorTemplate struct {
+	Manifest  []byte                       `json:"manifest,omitempty"`
+	Values    map[string]interface{}       `json:"values,omitempty"`
+	Resources []*unstructured.Unstructured `json:"resources,omitempty"`
+}
+
+func RenderOrderTemplate(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order) (string, []ChartTemplate, error) {
 	var buf bytes.Buffer
 	var tpls []ChartTemplate
 
@@ -169,55 +198,42 @@ func RenderChartTemplate(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 	return buf.String(), tpls, nil
 }
 
-func LoadEditorModel(cfg *rest.Config, reg *repo.Registry, opts EditorOptions) (string, error) {
-	rd, err := hub.NewRegistryOfKnownResources().LoadByGVR(schema.GroupVersionResource{
-		Group:    opts.Group,
-		Version:  opts.Version,
-		Resource: opts.Resource,
-	})
+func LoadEditorModel(cfg *rest.Config, reg *repo.Registry, gvr schema.GroupVersionResource, opts ReleaseMetadata) (*EditorTemplate, error) {
+	rd, err := hub.NewRegistryOfKnownResources().LoadByGVR(gvr)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	chrt, err := reg.GetChart(rd.Spec.UI.Editor.URL, rd.Spec.UI.Editor.Name, rd.Spec.UI.Editor.Version)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	kc, err := kubernetes.NewForConfig(cfg)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	mapper := restmapper.NewDeferredDiscoveryRESTMapper(memory.NewMemCacheClient(kc.Discovery()))
 	dc, err := dynamic.NewForConfig(cfg)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	ac, err := app_cs.NewForConfig(cfg)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	app, err := ac.AppV1beta1().Applications(opts.Namespace).Get(context.TODO(), opts.ReleaseName, metav1.GetOptions{})
+	app, err := ac.AppV1beta1().Applications(opts.Namespace).Get(context.TODO(), opts.Name, metav1.GetOptions{})
 	if err != nil {
-		return "", err
+		return nil, err
 	}
-	_, values, err := EditorChartValueManifest(app, mapper, dc, opts.ReleaseName, opts.Namespace, chrt.Chart)
-	if err != nil {
-		return "", err
-	}
-
-	data, err := yaml.Marshal(values)
-	if err != nil {
-		return "", err
-	}
-	return string(data), nil
+	return EditorChartValueManifest(app, mapper, dc, opts.Name, opts.Namespace, chrt.Chart)
 }
 
-func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.DeferredDiscoveryRESTMapper, dc dynamic.Interface, releaseName, namespace string, chrt *chart.Chart) (string, map[string]interface{}, error) {
+func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.DeferredDiscoveryRESTMapper, dc dynamic.Interface, releaseName, namespace string, chrt *chart.Chart) (*EditorTemplate, error) {
 	selector, err := metav1.LabelSelectorAsSelector(app.Spec.Selector)
 	if err != nil {
-		return "", nil, err
+		return nil, err
 	}
 	labelSelector := selector.String()
 
@@ -228,13 +244,23 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 	gkToVersion := map[metav1.GroupKind]string{}
 	for rsKey, x := range chrt.Values {
 		var tm metav1.TypeMeta
-		err := mapstructure.Decode(x, &tm)
+
+		config := &mapstructure.DecoderConfig{
+			Metadata: nil,
+			TagName:  "json",
+			Result:   &tm,
+		}
+		decoder, err := mapstructure.NewDecoder(config)
 		if err != nil {
-			return "", nil, fmt.Errorf("failed to parse TypeMeta for rsKey %s in chart name=%s version=%s values", rsKey, chrt.Name(), chrt.Metadata.Version)
+			return nil, err
+		}
+		err = decoder.Decode(x)
+		if err != nil {
+			return nil, fmt.Errorf("failed to parse TypeMeta for rsKey %s in chart name=%s version=%s values", rsKey, chrt.Name(), chrt.Metadata.Version)
 		}
 		gv, err := schema.ParseGroupVersion(tm.APIVersion)
 		if err != nil {
-			return "", nil, err
+			return nil, err
 		}
 		gkToVersion[metav1.GroupKind{
 			Group: gv.Group,
@@ -242,10 +268,11 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 		}] = gv.Version
 	}
 
+	var resources []*unstructured.Unstructured
 	for _, gk := range app.Spec.ComponentGroupKinds {
 		version, ok := gkToVersion[gk]
 		if !ok {
-			return "", nil, fmt.Errorf("failed to detect version for GK %#v in chart name=%s version=%s values", gk, chrt.Name(), chrt.Metadata.Version)
+			return nil, fmt.Errorf("failed to detect version for GK %#v in chart name=%s version=%s values", gk, chrt.Name(), chrt.Metadata.Version)
 
 		}
 
@@ -254,7 +281,7 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 			Kind:  gk.Kind,
 		}, version)
 		if err != nil {
-			return "", nil, err
+			return nil, err
 		}
 		var rc dynamic.ResourceInterface
 		if mapping.Scope == meta.RESTScopeNamespace {
@@ -267,38 +294,57 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 			LabelSelector: labelSelector,
 		})
 		if err != nil {
-			return "", nil, err
+			return nil, err
 		}
 		for _, obj := range list.Items {
 			// remove status
 			delete(obj.Object, "status")
 
+			resources = append(resources, &obj)
+
 			buf.WriteString("\n---\n")
 			data, err := yaml.Marshal(obj)
 			if err != nil {
-				return "", nil, err
+				return nil, err
 			}
 			buf.Write(data)
 
 			rsKey, err := ResourceKey(obj.GetAPIVersion(), obj.GetKind(), releaseName, obj.GetName())
 			if err != nil {
-				return "", nil, err
+				return nil, err
 			}
 			if _, ok := values[rsKey]; ok {
-				return "", nil, fmt.Errorf("duplicate resource key %s for application %s/%s", rsKey, app.Namespace, app.Name)
+				return nil, fmt.Errorf("duplicate resource key %s for application %s/%s", rsKey, app.Namespace, app.Name)
 			}
 			values[rsKey] = &obj
 		}
 	}
-	return buf.String(), values, nil
+
+	tpl := EditorTemplate{
+		Manifest:  buf.Bytes(),
+		Values:    values,
+		Resources: resources,
+	}
+	return &tpl, nil
 }
 
-func GenerateEditorModel(reg *repo.Registry, opts EditorOptions) (string, error) {
-	rd, err := hub.NewRegistryOfKnownResources().LoadByGVR(schema.GroupVersionResource{
-		Group:    opts.Group,
-		Version:  opts.Version,
-		Resource: opts.Resource,
-	})
+func GenerateEditorModel(reg *repo.Registry, gvr schema.GroupVersionResource, opts Unstructured) (string, error) {
+	rd, err := hub.NewRegistryOfKnownResources().LoadByGVR(gvr)
+	if err != nil {
+		return "", err
+	}
+
+	var spec OptionsSpec
+	config := &mapstructure.DecoderConfig{
+		Metadata: nil,
+		TagName:  "json",
+		Result:   &spec,
+	}
+	decoder, err := mapstructure.NewDecoder(config)
+	if err != nil {
+		return "", err
+	}
+	err = decoder.Decode(opts)
 	if err != nil {
 		return "", err
 	}
@@ -310,11 +356,10 @@ func GenerateEditorModel(reg *repo.Registry, opts EditorOptions) (string, error)
 			Name: rd.Spec.UI.Options.Name,
 		},
 		Version:     rd.Spec.UI.Options.Version,
-		ReleaseName: opts.ReleaseName,
-		Namespace:   opts.Namespace,
+		ReleaseName: spec.Metadata.Release.Name,
+		Namespace:   spec.Metadata.Release.Namespace,
 		KubeVersion: "v1.17.0",
-		ValuesFile:  opts.ValuesFile,
-		ValuesPatch: opts.ValuesPatch,
+		Values:      opts,
 	}
 	err = f1.Do()
 	if err != nil {
@@ -322,7 +367,8 @@ func GenerateEditorModel(reg *repo.Registry, opts EditorOptions) (string, error)
 	}
 
 	modelValues := map[string]*unstructured.Unstructured{}
-	err = ProcessResources(f1.Result(), func(obj *unstructured.Unstructured) error {
+	_, manifest := f1.Result()
+	err = ProcessResources(manifest, func(obj *unstructured.Unstructured) error {
 		rsKey, err := ResourceKey(obj.GetAPIVersion(), obj.GetKind(), rd.Spec.UI.Options.Name, obj.GetName())
 		if err != nil {
 			return err
@@ -343,6 +389,74 @@ func GenerateEditorModel(reg *repo.Registry, opts EditorOptions) (string, error)
 	return string(data), err
 }
 
+func RenderChartTemplate(reg *repo.Registry, gvr schema.GroupVersionResource, opts Unstructured) (string, *ChartTemplate, error) {
+	rd, err := hub.NewRegistryOfKnownResources().LoadByGVR(gvr)
+	if err != nil {
+		return "", nil, err
+	}
+
+	var spec OptionsSpec
+	config := &mapstructure.DecoderConfig{
+		Metadata: nil,
+		TagName:  "json",
+		Result:   &spec,
+	}
+	decoder, err := mapstructure.NewDecoder(config)
+	if err != nil {
+		return "", nil, err
+	}
+	err = decoder.Decode(opts)
+	if err != nil {
+		return "", nil, err
+	}
+
+	f1 := &EditorModelGenerator{
+		Registry: reg,
+		ChartRef: v1alpha1.ChartRef{
+			URL:  rd.Spec.UI.Editor.URL,
+			Name: rd.Spec.UI.Editor.Name,
+		},
+		Version:     rd.Spec.UI.Editor.Version,
+		ReleaseName: spec.Metadata.Release.Name,
+		Namespace:   spec.Metadata.Release.Namespace,
+		KubeVersion: "v1.17.0",
+		Values:      opts,
+	}
+	err = f1.Do()
+	if err != nil {
+		return "", nil, err
+	}
+
+	tpl := ChartTemplate{
+		ChartRef:    f1.ChartRef,
+		Version:     f1.Version,
+		ReleaseName: f1.ReleaseName,
+		Namespace:   f1.Namespace,
+	}
+
+	crds, manifest := f1.Result()
+	for _, crd := range crds {
+		resources, err := ExtractResources(crd.Data)
+		if err != nil {
+			return "", nil, err
+		}
+		if len(resources) != 1 {
+			return "", nil, fmt.Errorf("%d crds found in %s", len(resources), crd.Name)
+		}
+		tpl.CRDs = append(tpl.CRDs, BucketJsonFile{
+			Filename: crd.Name,
+			Data:     resources[0],
+		})
+	}
+	if manifest != nil {
+		tpl.Resources, err = ExtractResources(manifest)
+		if err != nil {
+			return "", nil, err
+		}
+	}
+	return string(manifest), &tpl, nil
+}
+
 func CreateEditResourceOrder(reg *repo.Registry, opts EditResourceOrder) (*v1alpha1.Order, error) {
 	rd, err := hub.NewRegistryOfKnownResources().LoadByGVR(schema.GroupVersionResource{
 		Group:    opts.Group,
@@ -353,8 +467,21 @@ func CreateEditResourceOrder(reg *repo.Registry, opts EditResourceOrder) (*v1alp
 		return nil, err
 	}
 
+	return CreateChartOrder(reg, ChartOrder{
+		ChartRepoRef: v1alpha1.ChartRepoRef{
+			URL:     rd.Spec.UI.Editor.URL,
+			Name:    rd.Spec.UI.Editor.Name,
+			Version: rd.Spec.UI.Editor.Version,
+		},
+		ReleaseName: opts.ReleaseName,
+		Namespace:   opts.Namespace,
+		Values:      opts.Values,
+	})
+}
+
+func CreateChartOrder(reg *repo.Registry, opts ChartOrder) (*v1alpha1.Order, error) {
 	// editor chart
-	chrt, err := reg.GetChart(rd.Spec.UI.Editor.URL, rd.Spec.UI.Editor.Name, rd.Spec.UI.Editor.Version)
+	chrt, err := reg.GetChart(opts.URL, opts.Name, opts.Version)
 	if err != nil {
 		return nil, err
 	}
@@ -391,10 +518,10 @@ func CreateEditResourceOrder(reg *repo.Registry, opts EditResourceOrder) (*v1alp
 				{
 					Chart: &v1alpha1.ChartSelection{
 						ChartRef: v1alpha1.ChartRef{
-							URL:  rd.Spec.UI.Editor.URL,
-							Name: rd.Spec.UI.Editor.Name,
+							URL:  opts.URL,
+							Name: opts.Name,
 						},
-						Version:     rd.Spec.UI.Editor.Version,
+						Version:     opts.Version,
 						ReleaseName: opts.ReleaseName,
 						Namespace:   opts.Namespace,
 						Bundle:      nil,
