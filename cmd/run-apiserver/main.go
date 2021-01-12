@@ -28,6 +28,7 @@ import (
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/artifacts/products"
+	"kubepack.dev/kubepack/pkg/handler"
 	"kubepack.dev/kubepack/pkg/lib"
 	"kubepack.dev/lib-helm/getter"
 	"kubepack.dev/lib-helm/repo"
@@ -661,7 +662,7 @@ func main() {
 
 			// create / update / apply / install
 			m.Put("", binding.Json(lib.EditorModel{}), func(ctx *macaron.Context, model lib.EditorModel) {
-				rls, err := lib.ApplyResource(ctx, model, f)
+				rls, err := handler.ApplyResource(ctx, model, f)
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
 					return
@@ -670,7 +671,7 @@ func main() {
 			})
 
 			m.Put("", func(ctx *macaron.Context) {
-				rls, err := lib.DeleteResource(ctx, f)
+				rls, err := handler.DeleteResource(ctx, f)
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
 					return

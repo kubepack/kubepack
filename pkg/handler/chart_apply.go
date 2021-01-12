@@ -14,10 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package lib
+package handler
 
 import (
 	a2 "kubepack.dev/cli/pkg/lib/action"
+	"kubepack.dev/kubepack/pkg/lib"
 	"kubepack.dev/lib-helm/action"
 
 	"gopkg.in/macaron.v1"
@@ -27,8 +28,8 @@ import (
 	"kmodules.xyz/resource-metadata/hub"
 )
 
-func ApplyResource(ctx *macaron.Context, model EditorModel, f cmdutil.Factory) (*release.Release, error) {
-	opts := EditorOptions{
+func ApplyResource(ctx *macaron.Context, model lib.EditorModel, f cmdutil.Factory) (*release.Release, error) {
+	opts := lib.EditorOptions{
 		Group:       ctx.Params(":group"),
 		Version:     ctx.Params(":version"),
 		Resource:    ctx.Params(":resource"),
@@ -51,7 +52,7 @@ func ApplyResource(ctx *macaron.Context, model EditorModel, f cmdutil.Factory) (
 		return nil, err
 	}
 
-	applier.WithRegistry(DefaultRegistry)
+	applier.WithRegistry(lib.DefaultRegistry)
 	opts2 := a2.NewApplyOptions()
 	opts2.ChartURL = rd.Spec.UI.Editor.URL
 	opts2.ChartName = rd.Spec.UI.Editor.Name
@@ -80,7 +81,7 @@ func ApplyResource(ctx *macaron.Context, model EditorModel, f cmdutil.Factory) (
 }
 
 func DeleteResource(ctx *macaron.Context, f cmdutil.Factory) (*release.UninstallReleaseResponse, error) {
-	opts := EditorOptions{
+	opts := lib.EditorOptions{
 		Group:       ctx.Params(":group"),
 		Version:     ctx.Params(":version"),
 		Resource:    ctx.Params(":resource"),

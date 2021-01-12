@@ -27,7 +27,9 @@ import (
 	"kubepack.dev/lib-helm/repo"
 
 	"github.com/google/uuid"
+	"github.com/mitchellh/mapstructure"
 	"gomodules.xyz/jsonpatch/v3"
+	"helm.sh/helm/v3/pkg/chart"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -168,6 +170,20 @@ func RenderChartTemplate(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 }
 
 func LoadEditorModel(cfg *rest.Config, reg *repo.Registry, opts EditorOptions) (string, error) {
+	rd, err := hub.NewRegistryOfKnownResources().LoadByGVR(schema.GroupVersionResource{
+		Group:    opts.Group,
+		Version:  opts.Version,
+		Resource: opts.Resource,
+	})
+	if err != nil {
+		return "", err
+	}
+
+	chrt, err := reg.GetChart(rd.Spec.UI.Editor.URL, rd.Spec.UI.Editor.Name, rd.Spec.UI.Editor.Version)
+	if err != nil {
+		return "", err
+	}
+
 	kc, err := kubernetes.NewForConfig(cfg)
 	if err != nil {
 		return "", err
@@ -186,7 +202,7 @@ func LoadEditorModel(cfg *rest.Config, reg *repo.Registry, opts EditorOptions) (
 	if err != nil {
 		return "", err
 	}
-	_, values, err := EditorChartValueManifest(app, mapper, dc, opts.ReleaseName, opts.Namespace)
+	_, values, err := EditorChartValueManifest(app, mapper, dc, opts.ReleaseName, opts.Namespace, chrt.Chart)
 	if err != nil {
 		return "", err
 	}
@@ -198,7 +214,7 @@ func LoadEditorModel(cfg *rest.Config, reg *repo.Registry, opts EditorOptions) (
 	return string(data), nil
 }
 
-func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.DeferredDiscoveryRESTMapper, dc dynamic.Interface, releaseName, namespace string) (string, map[string]interface{}, error) {
+func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.DeferredDiscoveryRESTMapper, dc dynamic.Interface, releaseName, namespace string, chrt *chart.Chart) (string, map[string]interface{}, error) {
 	selector, err := metav1.LabelSelectorAsSelector(app.Spec.Selector)
 	if err != nil {
 		return "", nil, err
@@ -208,11 +224,35 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 	var buf bytes.Buffer
 	values := map[string]interface{}{}
 
+	// detect apiVersion from defaultValues in chart
+	gkToVersion := map[metav1.GroupKind]string{}
+	for rsKey, x := range chrt.Values {
+		var tm metav1.TypeMeta
+		err := mapstructure.Decode(x, &tm)
+		if err != nil {
+			return "", nil, fmt.Errorf("failed to parse TypeMeta for rsKey %s in chart name=%s version=%s values", rsKey, chrt.Name(), chrt.Metadata.Version)
+		}
+		gv, err := schema.ParseGroupVersion(tm.APIVersion)
+		if err != nil {
+			return "", nil, err
+		}
+		gkToVersion[metav1.GroupKind{
+			Group: gv.Group,
+			Kind:  tm.Kind,
+		}] = gv.Version
+	}
+
 	for _, gk := range app.Spec.ComponentGroupKinds {
+		version, ok := gkToVersion[gk]
+		if !ok {
+			return "", nil, fmt.Errorf("failed to detect version for GK %#v in chart name=%s version=%s values", gk, chrt.Name(), chrt.Metadata.Version)
+
+		}
+
 		mapping, err := mapper.RESTMapping(schema.GroupKind{
 			Group: gk.Group,
 			Kind:  gk.Kind,
-		})
+		}, version)
 		if err != nil {
 			return "", nil, err
 		}
