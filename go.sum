@@ -1612,8 +1612,11 @@ kubepack.dev/cli v0.0.0-20210112035115-09fc3b76e2ea h1:Hqg0DLcPgooNZ04YMDteFNzOM
 kubepack.dev/cli v0.0.0-20210112035115-09fc3b76e2ea/go.mod h1:JPi/Nn88POAKIKdVTtmdQAkq1iXIW4wsezw+VQA9Dyg=
 kubepack.dev/cli v0.0.0-20210112051729-521812ce6309 h1:Y8FroEAGmh2pgRu5OIuxnhT/JIufJJZEwjHX5ojKaUE=
 kubepack.dev/cli v0.0.0-20210112051729-521812ce6309/go.mod h1:Z3Rwh3CYrZLkTHq/iniJPwu/MEIfeSf4J5cArQzXqa8=
+kubepack.dev/cli v0.0.0-20210112165039-590701181e18 h1:QpVy2e1cePyr4zxiKqW8kVlI+l7LWoZv6eY+oZsR2hE=
+kubepack.dev/cli v0.0.0-20210112165039-590701181e18/go.mod h1:zwWV4v7pu8oYb08uPXAZ9F0U6eBbgOHRR6xvUAxqjUI=
 kubepack.dev/kubepack v0.2.2-0.20210111140209-b1342c8a18a4/go.mod h1:r5fqmUZhyjLVMrsQoP0RAFVyYNTUqZ/Y8DK0+7/LNyw=
 kubepack.dev/kubepack v0.2.2-0.20210112051458-55306c24efed/go.mod h1:6ESAQ1n1zjY1DQj75G5T+INysF+09WB0NVYw+6Gherk=
+kubepack.dev/kubepack v0.2.2-0.20210112164031-ab9fc7d7b12c/go.mod h1:DbvQIzxZXQri9tWtl9KRVHBqct0+8TmPGU/HnD/dXU8=
 kubepack.dev/lib-helm v0.2.1 h1:KnRfYRuepJT7Zgfi6iJHYrF3SFfGjrvWLMxhPOsmy/I=
 kubepack.dev/lib-helm v0.2.1/go.mod h1:rrfYDaHg26/HT2E7pp2o5TKdf5a/YOtbFtUr6SLab6I=
 modernc.org/cc v1.0.0/go.mod h1:1Sk4//wdnYJiUIxnW8ddKpaOJCF37yAdqYnkxUpaYxw=
