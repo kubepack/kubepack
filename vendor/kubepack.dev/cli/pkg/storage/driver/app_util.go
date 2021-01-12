@@ -19,7 +19,6 @@ package driver
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"sort"
 	"strconv"
@@ -38,9 +37,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	yu "k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/client-go/discovery"
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/restmapper"
@@ -236,58 +233,25 @@ func mergeSecret(app *v1beta1.Application, s *corev1.Secret) {
 }
 
 func extractComponents(data string, components map[metav1.GroupKind]string, commonLabels map[string]string) (map[metav1.GroupKind]string, map[string]string, error) {
-	reader := yu.NewYAMLOrJSONDecoder(strings.NewReader(data), 2048)
-	for {
-		var obj unstructured.Unstructured
-		err := reader.Decode(&obj)
-		if err == io.EOF {
-			break
-		} else if err != nil {
-			return components, commonLabels, err
+	err := lib.ProcessResources([]byte(data), func(obj *unstructured.Unstructured) error {
+		gv, err := schema.ParseGroupVersion(obj.GetAPIVersion())
+		if err != nil {
+			return err
 		}
-		if obj.IsList() {
-			err := obj.EachListItem(func(item runtime.Object) error {
-				castItem := item.(*unstructured.Unstructured)
+		components[metav1.GroupKind{Group: gv.Group, Kind: obj.GetKind()}] = gv.Version
 
-				gv, err := schema.ParseGroupVersion(castItem.GetAPIVersion())
-				if err != nil {
-					return err
-				}
-				components[metav1.GroupKind{Group: gv.Group, Kind: castItem.GetKind()}] = gv.Version
-
-				if commonLabels == nil {
-					commonLabels = castItem.GetLabels()
-				} else {
-					for k, v := range castItem.GetLabels() {
-						if existing, found := commonLabels[k]; found && existing != v {
-							delete(commonLabels, k)
-						}
-					}
-				}
-				return nil
-			})
-			if err != nil {
-				return components, commonLabels, err
-			}
+		if commonLabels == nil {
+			commonLabels = obj.GetLabels()
 		} else {
-			gv, err := schema.ParseGroupVersion(obj.GetAPIVersion())
-			if err != nil {
-				return components, commonLabels, err
-			}
-			components[metav1.GroupKind{Group: gv.Group, Kind: obj.GetKind()}] = gv.Version
-
-			if commonLabels == nil {
-				commonLabels = obj.GetLabels()
-			} else {
-				for k, v := range obj.GetLabels() {
-					if existing, found := commonLabels[k]; found && existing != v {
-						delete(commonLabels, k)
-					}
+			for k, v := range obj.GetLabels() {
+				if existing, found := commonLabels[k]; found && existing != v {
+					delete(commonLabels, k)
 				}
 			}
 		}
-	}
-	return components, commonLabels, nil
+		return nil
+	})
+	return components, commonLabels, err
 }
 
 // decodeRelease decodes the bytes of data into a release

@@ -18,10 +18,12 @@ package driver
 
 import (
 	"context"
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
 
+	"github.com/imdario/mergo"
 	"github.com/pkg/errors"
 	rspb "helm.sh/helm/v3/pkg/release"
 	"helm.sh/helm/v3/pkg/storage/driver"
@@ -177,7 +179,10 @@ func (d *Applications) Create(_ string, rls *rspb.Release) error {
 	_, _, err = createOrPatchApplication(context.Background(), d.ai, obj.ObjectMeta, func(in *v1beta1.Application) *v1beta1.Application {
 		in.Labels = obj.Labels
 		in.Annotations = obj.Annotations
-		in.Spec = obj.Spec
+		if err := mergo.Merge(&in.Spec, &obj.Spec); err != nil {
+			panic(fmt.Errorf("failed to update appliation %s/%s spec, reason: %v", in.Namespace, in.Name, err))
+		}
+		in.Spec.AssemblyPhase = obj.Spec.AssemblyPhase
 		return in
 	}, metav1.PatchOptions{})
 	if err != nil {
@@ -210,7 +215,10 @@ func (d *Applications) Update(_ string, rls *rspb.Release) error {
 	_, _, err = createOrPatchApplication(context.Background(), d.ai, obj.ObjectMeta, func(in *v1beta1.Application) *v1beta1.Application {
 		in.Labels = obj.Labels
 		in.Annotations = obj.Annotations
-		in.Spec = obj.Spec
+		if err := mergo.Merge(&in.Spec, &obj.Spec); err != nil {
+			panic(fmt.Errorf("failed to update appliation %s/%s spec, reason: %v", in.Namespace, in.Name, err))
+		}
+		in.Spec.AssemblyPhase = obj.Spec.AssemblyPhase
 		return in
 	}, metav1.PatchOptions{})
 	if err != nil {
