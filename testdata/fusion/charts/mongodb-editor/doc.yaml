@@ -1,0 +1,19 @@
+chart:
+  name: mongodb-editor
+  values: -- generate from values file --
+  valuesExample: -- generate from values file --
+  version: v0.1.0
+prerequisites:
+- Kubernetes 1.14+
+project:
+  app: a Mongodb Editor
+  description: Mongodb Editor
+  name: Mongodb Editor by AppsCode
+  shortName: Mongodb Editor
+  url: https://byte.builders
+release:
+  name: mongodb-editor
+  namespace: default
+repository:
+  name: bytebuilders-ui
+  url: https://bundles.bytebuilders.dev/ui/

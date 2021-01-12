@@ -1,0 +1,71 @@
+---
+# Source: mongodb/templates/stash/backupconfiguration.yaml
+apiVersion: stash.appscode.com/v1beta1
+kind: BackupConfiguration
+metadata:
+  name: mongodb-editor
+  namespace: default
+  labels:
+    helm.sh/chart: mongodb-0.1.0
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/version: "0.1.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  schedule: 0 */8 * * *
+  task:
+    name: mongodb-backup-3.4.17
+  repository:
+    name: mongodb-editor
+  target:
+    ref:
+      apiVersion: appcatalog.appscode.com/v1alpha1
+      kind: AppBinding
+      name: mongodb-editor
+  runtimeSettings:
+    pod:
+      securityContext:
+        {}
+    container:
+      securityContext:
+        {}
+      resources:
+        {}
+  retentionPolicy:
+    keepLast: 5
+    name: keep-last-5
+    prune: true
+---
+# Source: mongodb/templates/stash/repository.yaml
+apiVersion: stash.appscode.com/v1alpha1
+kind: Repository
+metadata:
+  name: mongodb-editor
+  namespace: default
+  labels:
+    helm.sh/chart: mongodb-0.1.0
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/version: "0.1.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  backend:
+    s3:
+      bucket: kubedb-demo
+      prefix: /profiles
+    storageSecretName: mongodb-editor
+---
+# Source: mongodb/templates/stash/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongodb-editor
+  namespace: default
+  labels:
+    helm.sh/chart: mongodb-0.1.0
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/version: "0.1.0"
+    app.kubernetes.io/managed-by: Helm
+type: Opaque
+data:

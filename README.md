@@ -144,3 +144,12 @@ curl -X POST -H "Content-Type: application/json" -d @artifacts/kubedb-community/
 - http://localhost:4000/chartrepositories
 - http://localhost:4000/chartrepositories/charts/?url=https://charts.appscode.com/stable/
 - http://localhost:4000/chartrepositories/charts/voyager/versions/?url=https://charts.appscode.com/stable/
+
+### Fuse charts
+
+```
+go run cmd/fuse-chart/*.go \
+  --sample-dir=./testdata/fusion/samples \
+  --chart-dir=./testdata/fusion/charts \
+  --chart-name=mongodb-editor
+```

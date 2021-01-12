@@ -33,8 +33,12 @@ github.com/BurntSushi/toml
 github.com/MakeNowJust/heredoc
 # github.com/Masterminds/goutils v1.1.0
 github.com/Masterminds/goutils
+# github.com/Masterminds/semver v1.5.0
+github.com/Masterminds/semver
 # github.com/Masterminds/semver/v3 v3.1.0
 github.com/Masterminds/semver/v3
+# github.com/Masterminds/sprig v2.22.0+incompatible
+github.com/Masterminds/sprig
 # github.com/Masterminds/sprig/v3 v3.1.0
 github.com/Masterminds/sprig/v3
 # github.com/Masterminds/squirrel v1.2.0
@@ -823,6 +827,8 @@ gopkg.in/natefinch/lumberjack.v2
 gopkg.in/tomb.v1
 # gopkg.in/yaml.v2 v2.3.0
 gopkg.in/yaml.v2
+# gopkg.in/yaml.v3 v3.0.0-20200603094226-e3079894b1e8
+gopkg.in/yaml.v3
 # helm.sh/helm/v3 v3.4.1 => github.com/kubepack/helm/v3 v3.2.2-0.20200523120511-a86fc03a6a93
 helm.sh/helm/v3/internal/experimental/registry
 helm.sh/helm/v3/internal/fileutil
@@ -1420,6 +1426,8 @@ kmodules.xyz/resource-metadata/hub/resourcedescriptors
 # kmodules.xyz/webhook-runtime v0.0.0-20201105073856-2dc7382b88c6
 kmodules.xyz/webhook-runtime/admission/v1beta1
 kmodules.xyz/webhook-runtime/registry/admissionreview/v1beta1
+# kubepack.dev/chart-doc-gen v0.3.1-0.20210111011933-daa7c1d70a65
+kubepack.dev/chart-doc-gen/api
 # kubepack.dev/cli v0.0.0-20210112165039-590701181e18
 kubepack.dev/cli/pkg/action
 kubepack.dev/cli/pkg/apply

@@ -3,6 +3,7 @@ module kubepack.dev/kubepack
 go 1.12
 
 require (
+	github.com/Masterminds/sprig v2.22.0+incompatible
 	github.com/appscode/static-assets v0.4.1
 	github.com/coreos/prometheus-operator v0.39.0
 	github.com/cubewise-code/go-mime v0.0.0-20200519001935-8c5762b177d8
@@ -31,6 +32,7 @@ require (
 	gomodules.xyz/version v0.1.0
 	gomodules.xyz/x v0.0.0-20201105065653-91c568df6331
 	gopkg.in/macaron.v1 v1.3.8
+	gopkg.in/yaml.v3 v3.0.0-20200603094226-e3079894b1e8
 	helm.sh/helm/v3 v3.4.1
 	k8s.io/api v0.18.9
 	k8s.io/apiextensions-apiserver v0.18.9
@@ -47,6 +49,7 @@ require (
 	kmodules.xyz/custom-resources v0.0.0-20201124062543-bd8d35c21b0c
 	kmodules.xyz/resource-metadata v0.4.8-0.20210109211859-ee04a80b905a
 	kmodules.xyz/webhook-runtime v0.0.0-20201105073856-2dc7382b88c6
+	kubepack.dev/chart-doc-gen v0.3.1-0.20210111011933-daa7c1d70a65
 	kubepack.dev/cli v0.0.0-20210112165039-590701181e18
 	kubepack.dev/lib-helm v0.2.1
 	sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4

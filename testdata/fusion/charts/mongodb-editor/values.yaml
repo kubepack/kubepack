@@ -1,0 +1,15 @@
+grafanaSearchlightDevDashboard: # +doc-gen:break
+  apiVersion: grafana.searchlight.dev/v1alpha1
+  kind: Dashboard
+kubedbComMongoDB: # +doc-gen:break
+  apiVersion: kubedb.com/v1alpha2
+  kind: MongoDB
+secret: # +doc-gen:break
+  apiVersion: v1
+  kind: Secret
+stashAppscodeComBackupConfiguration: # +doc-gen:break
+  apiVersion: stash.appscode.com/v1beta1
+  kind: BackupConfiguration
+stashAppscodeComRepository: # +doc-gen:break
+  apiVersion: stash.appscode.com/v1alpha1
+  kind: Repository

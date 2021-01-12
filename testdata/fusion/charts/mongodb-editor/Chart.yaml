@@ -1,0 +1,10 @@
+description: Ui Wizard Chart
+home: https://byte.builders
+keywords:
+- appscode
+maintainers:
+- email: support@appscode.com
+  name: AppsCode Engineering
+  url: https://appscode.com
+name: mongodb-editor
+version: v0.1.0

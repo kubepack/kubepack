@@ -1,0 +1,65 @@
+---
+# Source: mongodb/templates/db.yaml
+apiVersion: kubedb.com/v1alpha2
+kind: MongoDB
+metadata:
+  name: mongodb-editor
+  namespace: default
+  labels:
+    helm.sh/chart: mongodb-0.1.0
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/version: "0.1.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+spec:
+  version: "3.4.17"
+  shardTopology:
+    shard:
+      shards: 3
+      replicas: 3
+      storage:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: "10Gi"
+    configServer:
+      replicas: 3
+      storage:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: "10Gi"
+    mongos:
+      replicas: 2
+      strategy:
+        type: RollingUpdate
+
+
+  podTemplate:
+    spec:
+      serviceAccountName: mongodb-editor
+      resources:
+        {}
+      securityContext:
+        {}
+
+  serviceTemplate:
+    spec:
+      type: ClusterIP
+
+  storageType: Durable
+  storage:
+    accessModes:
+      - "ReadWriteOnce"
+    resources:
+      requests:
+        storage: "10Gi"
+
+  clusterAuthMode: keyFile
+  sslMode: disabled
+  terminationPolicy: WipeOut
+  updateStrategy:
+    type: OnDelete
