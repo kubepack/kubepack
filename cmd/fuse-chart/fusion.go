@@ -34,7 +34,7 @@ var (
 		Type:       "object",
 		Properties: map[string]crdv1.JSONSchemaProps{},
 	}
-	modelValues  = map[string]ObjectContainer{}
+	modelValues  = map[string]*unstructured.Unstructured{}
 	registry     = hub.NewRegistryOfKnownResources()
 	resourceKeys = sets.NewString()
 )
@@ -44,8 +44,15 @@ type ObjectModel struct {
 	Object *unstructured.Unstructured `json:"object"`
 }
 
+type ObjectMeta struct {
+	Name      string `json:"name,omitempty"`
+	Namespace string `json:"namespace,omitempty"`
+}
+
 type ObjectContainer struct {
 	metav1.TypeMeta `json:",inline"`
+	ObjectMeta      `json:"metadata,omitempty"`
+	Spec            interface{} `json:"spec,omitempty"`
 }
 
 func NewCmdFuse() *cobra.Command {
@@ -80,12 +87,13 @@ func NewCmdFuse() *cobra.Command {
 				_, _, rsFilename := lib.ResourceFilename(obj.GetAPIVersion(), obj.GetKind(), chartName, obj.GetName())
 
 				// values
-				modelValues[rsKey] = ObjectContainer{
-					TypeMeta: metav1.TypeMeta{
-						APIVersion: obj.GetAPIVersion(),
-						Kind:       obj.GetKind(),
-					},
+				cp := obj.DeepCopy()
+				delete(cp.Object, "status")
+				cp.Object["metadata"] = ObjectMeta{
+					Name:      obj.GetName(),
+					Namespace: obj.GetNamespace(),
 				}
+				modelValues[rsKey] = cp
 
 				// schema
 				gvr, err := registry.GVR(obj.GetObjectKind().GroupVersionKind())
@@ -129,6 +137,12 @@ func NewCmdFuse() *cobra.Command {
 							},
 							PreserveUnknownFields: false,
 						},
+					}
+					if strings.HasSuffix(gvr.Group, ".k8s.io") ||
+						strings.HasSuffix(gvr.Group, "kubernetes.io") {
+						crd.Annotations = map[string]string{
+							"api-approved.kubernetes.io": "https://github.com/kubernetes-sigs/application/pull/2",
+						}
 					}
 
 					filename := filepath.Join(crdDir, fmt.Sprintf("%s_%s.yaml", gvr.Group, gvr.Resource))
@@ -294,13 +308,13 @@ func GenerateChartMetadata() error {
 		Home:        "https://byte.builders",
 		Sources:     nil,
 		Version:     "v0.1.0",
+		AppVersion:  "v0.1.0",
 		Description: "Ui Wizard Chart",
 		Keywords:    []string{"appscode"},
 		Maintainers: []*chart.Maintainer{
 			{
-				Name:  "AppsCode Engineering",
+				Name:  "appscode",
 				Email: "support@appscode.com",
-				URL:   "https://appscode.com",
 			},
 		},
 		Icon:        "https://cdn.appscode.com/images/products/bytebuilders/bytebuilders-512x512.png",

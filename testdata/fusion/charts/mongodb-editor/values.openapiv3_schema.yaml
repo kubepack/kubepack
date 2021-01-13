@@ -210,38 +210,6 @@ properties:
             type: object
         type: object
     type: object
-  grafanaSearchlightDevDashboard:
-    properties:
-      apiVersion:
-        type: string
-      kind:
-        type: string
-      metadata:
-        type: object
-      spec:
-        properties:
-          folderId:
-            format: int64
-            type: integer
-          grafana:
-            properties:
-              apiVersion:
-                type: string
-              kind:
-                type: string
-              name:
-                type: string
-            type: object
-          model:
-            type: object
-            x-kubernetes-preserve-unknown-fields: true
-          overwrite:
-            type: boolean
-        required:
-        - folderId
-        - overwrite
-        type: object
-    type: object
   kubedbComMongoDB:
     properties:
       apiVersion:

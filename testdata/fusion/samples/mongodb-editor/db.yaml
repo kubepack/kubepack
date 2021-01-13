@@ -33,22 +33,6 @@ spec:
             storage: "10Gi"
     mongos:
       replicas: 2
-      strategy:
-        type: RollingUpdate
-
-
-  podTemplate:
-    spec:
-      serviceAccountName: mongodb-editor
-      resources:
-        {}
-      securityContext:
-        {}
-
-  serviceTemplate:
-    spec:
-      type: ClusterIP
-
   storageType: Durable
   storage:
     accessModes:
@@ -56,9 +40,6 @@ spec:
     resources:
       requests:
         storage: "10Gi"
-
   clusterAuthMode: keyFile
   sslMode: disabled
   terminationPolicy: WipeOut
-  updateStrategy:
-    type: OnDelete

@@ -35,8 +35,6 @@ spec:
       kind: Service
     - group: apps
       kind: StatefulSet
-    - group: grafana.searchlight.dev
-      kind: Dashboard
     - group: kubedb.com
       kind: MongoDB
     - group: monitoring.coreos.com
