@@ -59,6 +59,13 @@ func NewCmdFuse() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			crdDir := filepath.Join(chartDir, chartName, "crds")
+			err = os.MkdirAll(crdDir, 0755)
+			if err != nil {
+				return err
+			}
+
 			err = GenerateChartMetadata()
 			if err != nil {
 				return err
@@ -89,6 +96,52 @@ func NewCmdFuse() *cobra.Command {
 				if err != nil {
 					return err
 				}
+
+				if IsCRD(gvr.Group) {
+					crd := crdv1.CustomResourceDefinition{
+						TypeMeta: metav1.TypeMeta{
+							APIVersion: crdv1.SchemeGroupVersion.String(),
+							Kind:       "CustomResourceDefinition",
+						},
+						ObjectMeta: metav1.ObjectMeta{
+							Name: fmt.Sprintf("%s.%s", gvr.Resource, gvr.Group),
+						},
+						Spec: crdv1.CustomResourceDefinitionSpec{
+							Group: gvr.Group,
+							Names: crdv1.CustomResourceDefinitionNames{
+								Plural:   descriptor.Spec.Resource.Name,
+								Singular: strings.ToLower(descriptor.Spec.Resource.Kind),
+								// ShortNames: nil,
+								Kind:     descriptor.Spec.Resource.Kind,
+								ListKind: descriptor.Spec.Resource.Kind + "List",
+								// Categories: nil,
+							},
+							Scope: crdv1.ResourceScope(string(descriptor.Spec.Resource.Scope)),
+							Versions: []crdv1.CustomResourceDefinitionVersion{
+								{
+									Name:    descriptor.Spec.Resource.Version,
+									Served:  true,
+									Storage: true,
+									Schema:  descriptor.Spec.Validation,
+									//Subresources:             nil,
+									//AdditionalPrinterColumns: nil,
+								},
+							},
+							PreserveUnknownFields: false,
+						},
+					}
+
+					filename := filepath.Join(crdDir, fmt.Sprintf("%s_%s.yaml", gvr.Group, gvr.Resource))
+					data, err := yaml.Marshal(crd)
+					if err != nil {
+						return err
+					}
+					err = ioutil.WriteFile(filename, data, 0644)
+					if err != nil {
+						return err
+					}
+				}
+
 				if descriptor.Spec.Validation != nil && descriptor.Spec.Validation.OpenAPIV3Schema != nil {
 					delete(descriptor.Spec.Validation.OpenAPIV3Schema.Properties, "status")
 					chartSchema.Properties[rsKey] = *descriptor.Spec.Validation.OpenAPIV3Schema
@@ -343,4 +396,15 @@ func removeDescription(schema *crdv1.JSONSchemaProps) {
 		removeDescription(&prop)
 		schema.Definitions[key] = prop
 	}
+}
+
+// Impefect
+func IsCRD(group string) bool {
+	if group == "app.k8s.io" {
+		return true
+	}
+	return strings.ContainsRune(group, '.') &&
+		group != "" &&
+		!strings.HasSuffix(group, ".k8s.io") &&
+		!strings.HasSuffix(group, ".kubernetes.io")
 }
