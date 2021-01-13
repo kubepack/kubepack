@@ -70,25 +70,25 @@ func newApplicationObject(rls *rspb.Release, lbs labels) (*v1beta1.Application, 
 	lbs.set("status", release.StatusDeployed.String())
 	lbs.set("version", strconv.Itoa(rls.Version))
 
-	p := v1alpha1.ApplicationPackage{
-		TypeMeta: metav1.TypeMeta{
-			APIVersion: v1alpha1.SchemeGroupVersion.String(),
-			Kind:       "ApplicationPackage",
-		},
-		// Bundle: x.Chart.Bundle,
-		Chart: v1alpha1.ChartRepoRef{
-			Name:    rls.Chart.Metadata.Name,
-			Version: rls.Chart.Metadata.Version,
-		},
-		Channel: v1alpha1.RegularChannel,
-	}
-	if len(rls.Chart.Metadata.Sources) > 0 {
-		p.Chart.URL = rls.Chart.Metadata.Sources[0]
-	}
-	data, err := json.Marshal(p)
-	if err != nil {
-		panic(err)
-	}
+	//p := v1alpha1.ApplicationPackage{
+	//	TypeMeta: metav1.TypeMeta{
+	//		APIVersion: v1alpha1.SchemeGroupVersion.String(),
+	//		Kind:       "ApplicationPackage",
+	//	},
+	//	// Bundle: x.Chart.Bundle,
+	//	Chart: v1alpha1.ChartRepoRef{
+	//		Name:    rls.Chart.Metadata.Name,
+	//		Version: rls.Chart.Metadata.Version,
+	//	},
+	//	Channel: v1alpha1.RegularChannel,
+	//}
+	//if len(rls.Chart.Metadata.Sources) > 0 {
+	//	p.Chart.URL = rls.Chart.Metadata.Sources[0]
+	//}
+	//data, err := json.Marshal(p)
+	//if err != nil {
+	//	panic(err)
+	//}
 
 	// create and return configmap object
 	obj := &v1beta1.Application{
@@ -97,7 +97,7 @@ func newApplicationObject(rls *rspb.Release, lbs labels) (*v1beta1.Application, 
 			Namespace: rls.Namespace,
 			Labels:    lbs.toMap(),
 			Annotations: map[string]string{
-				apis.LabelPackage:        string(data),
+				// apis.LabelPackage:        string(data),
 				"helm.sh/first-deployed": rls.Info.FirstDeployed.UTC().Format(time.RFC3339),
 				"helm.sh/last-deployed":  rls.Info.LastDeployed.UTC().Format(time.RFC3339),
 			},
@@ -153,7 +153,7 @@ func newApplicationObject(rls *rspb.Release, lbs labels) (*v1beta1.Application, 
 	var commonLabels map[string]string
 
 	// Hooks ?
-	components, commonLabels, err = extractComponents(rls.Manifest, components, commonLabels)
+	components, commonLabels, err := extractComponents(rls.Manifest, components, commonLabels)
 	if err != nil {
 		return nil, err
 	}
