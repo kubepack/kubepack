@@ -292,6 +292,7 @@ func GenerateChartMetadata() error {
 	chartMeta := chart.Metadata{
 		Name:        chartName,
 		Home:        "https://byte.builders",
+		Sources:     nil,
 		Version:     "v0.1.0",
 		Description: "Ui Wizard Chart",
 		Keywords:    []string{"appscode"},
@@ -302,6 +303,12 @@ func GenerateChartMetadata() error {
 				URL:   "https://appscode.com",
 			},
 		},
+		Icon:        "https://cdn.appscode.com/images/products/bytebuilders/bytebuilders-512x512.png",
+		APIVersion:  "v2",
+		Condition:   "",
+		Deprecated:  false,
+		KubeVersion: ">= 1.14.0",
+		Type:        "application",
 	}
 	data4, err := yaml.Marshal(chartMeta)
 	if err != nil {
