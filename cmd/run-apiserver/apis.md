@@ -75,10 +75,18 @@ curl -X DELETE -H "Content-Type: application/json" \
 
 GET "/clusters/:cluster/editor/:group/:version/namespaces/:namespace/:resource/:releaseName/model"
 
+http://localhost:4000/clusters/my_cluster/editor/kubedb.com/v1alpha2/namespaces/demo/mongodbs/mymongo/model
+
+
 // redundant apis
 // can be replaced by getting the model, then using the /editor apis
 GET "/clusters/:cluster/editor/:group/:version/namespaces/:namespace/:resource/:releaseName/manifest"
 
+http://localhost:4000/clusters/my_cluster/editor/kubedb.com/v1alpha2/namespaces/demo/mongodbs/mymongo/manifest
+
+
 // redundant apis
 // can be replaced by getting the model, then using the /editor apis
 GET "/clusters/:cluster/editor/:group/:version/namespaces/:namespace/:resource/:releaseName/resources"
+
+http://localhost:4000/clusters/my_cluster/editor/kubedb.com/v1alpha2/namespaces/demo/mongodbs/mymongo/resources

@@ -720,12 +720,7 @@ func main() {
 					ctx.Error(http.StatusInternalServerError, err.Error())
 					return
 				}
-				data, err := yaml.Marshal(tpl.Values)
-				if err != nil {
-					ctx.Error(http.StatusInternalServerError, err.Error())
-					return
-				}
-				_, _ = ctx.Write(data)
+				ctx.JSON(http.StatusOK, tpl.Values)
 			})
 
 			// redundant apis
@@ -783,12 +778,7 @@ func main() {
 				}{
 					tpl.Resources,
 				}
-				data, err := yaml.Marshal(out)
-				if err != nil {
-					ctx.Error(http.StatusInternalServerError, err.Error())
-					return
-				}
-				_, _ = ctx.Write(data)
+				ctx.JSON(http.StatusOK, out)
 			})
 		})
 
