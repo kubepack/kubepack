@@ -284,7 +284,7 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 			resources = append(resources, &obj)
 
 			buf.WriteString("\n---\n")
-			data, err := yaml.Marshal(obj)
+			data, err := yaml.Marshal(&obj)
 			if err != nil {
 				return nil, err
 			}

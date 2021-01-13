@@ -22,7 +22,6 @@ import (
 	"net/http"
 	"sort"
 	"strconv"
-	"strings"
 	"time"
 
 	"kubepack.dev/kubepack/apis"
@@ -174,16 +173,7 @@ func newApplicationObject(rls *rspb.Release, lbs labels) (*v1beta1.Application, 
 	})
 
 	gks := make([]metav1.GroupKind, 0, len(components))
-	versions := make([]string, 0, len(components))
-	for _, gvk := range gvks {
-		gks = append(gks, metav1.GroupKind{
-			Group: gvk.Group,
-			Kind:  gvk.Kind,
-		})
-		versions = append(versions, gvk.Version)
-	}
 	obj.Spec.ComponentGroupKinds = gks
-	obj.Annotations["helm.sh/component-versions"] = strings.Join(versions, ",")
 
 	if len(commonLabels) > 0 {
 		obj.Spec.Selector = &metav1.LabelSelector{
@@ -296,7 +286,6 @@ func decodeReleaseFromApp(app *v1beta1.Application, di dynamic.Interface, cl dis
 	rls.Info.FirstDeployed, _ = helmtime.Parse(time.RFC3339, app.Annotations["helm.sh/first-deployed"])
 	rls.Info.LastDeployed, _ = helmtime.Parse(time.RFC3339, app.Annotations["helm.sh/last-deployed"])
 
-	// versions := strings.Split(app.Annotations["helm.sh/component-versions"], ",")
 	mapper := restmapper.NewDeferredDiscoveryRESTMapper(cl)
 
 	tpl, err := lib.EditorChartValueManifest(app, mapper, di, rls.Name, rls.Namespace, rls.Chart)

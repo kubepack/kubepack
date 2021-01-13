@@ -2,7 +2,6 @@ package driver
 
 import (
 	"context"
-	meta_util "kmodules.xyz/client-go/meta"
 	"strconv"
 	"strings"
 	"time"
@@ -16,6 +15,7 @@ import (
 	kblabels "k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/util/validation"
 	corev1 "k8s.io/client-go/kubernetes/typed/core/v1"
+	meta_util "kmodules.xyz/client-go/meta"
 	"sigs.k8s.io/application/api/app/v1beta1"
 	cs "sigs.k8s.io/application/client/clientset/versioned/typed/app/v1beta1"
 )

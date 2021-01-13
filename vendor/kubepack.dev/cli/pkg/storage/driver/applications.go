@@ -19,7 +19,6 @@ package driver
 import (
 	"context"
 	"fmt"
-	meta_util "kmodules.xyz/client-go/meta"
 	"strconv"
 	"strings"
 	"time"
@@ -34,6 +33,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/validation"
 	"k8s.io/client-go/discovery"
 	"k8s.io/client-go/dynamic"
+	meta_util "kmodules.xyz/client-go/meta"
 	"sigs.k8s.io/application/api/app/v1beta1"
 	cs "sigs.k8s.io/application/client/clientset/versioned/typed/app/v1beta1"
 )

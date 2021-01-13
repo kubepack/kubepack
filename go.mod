@@ -50,7 +50,7 @@ require (
 	kmodules.xyz/resource-metadata v0.4.8-0.20210113000222-d15533e4bb66
 	kmodules.xyz/webhook-runtime v0.0.0-20201105073856-2dc7382b88c6
 	kubepack.dev/chart-doc-gen v0.3.1-0.20210111011933-daa7c1d70a65
-	kubepack.dev/cli v0.0.0-20210113141359-0dfe986431a1
+	kubepack.dev/cli v0.0.0-20210113142734-070f23811bd3
 	kubepack.dev/lib-helm v0.2.1
 	sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4
 	sigs.k8s.io/yaml v1.2.0
