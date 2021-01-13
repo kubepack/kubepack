@@ -69,7 +69,6 @@ curl -X PUT -H "Content-Type: application/json" \
 
 DELETE "/clusters/:cluster/editor/namespaces/:namespace/releases/:releaseName"
 
-
 curl -X DELETE -H "Content-Type: application/json" \
   http://localhost:4000/clusters/my_cluster/editor/namespaces/demo/releases/mymongo
 

@@ -17,14 +17,15 @@ limitations under the License.
 package handler
 
 import (
+	"kubepack.dev/cli/pkg/lib/action"
+	"kubepack.dev/kubepack/pkg/lib"
+
 	"gopkg.in/macaron.v1"
 	"helm.sh/helm/v3/pkg/release"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	cmdutil "k8s.io/kubectl/pkg/cmd/util"
 	"kmodules.xyz/resource-metadata/hub"
-	"kubepack.dev/cli/pkg/lib/action"
-	"kubepack.dev/kubepack/pkg/lib"
 )
 
 func ApplyResource(ctx *macaron.Context, model unstructured.Unstructured, f cmdutil.Factory) (*release.Release, error) {

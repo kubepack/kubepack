@@ -44,11 +44,11 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
+	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/util/homedir"
 	cliflag "k8s.io/component-base/cli/flag"
 	cmdutil "k8s.io/kubectl/pkg/cmd/util"
 	"kmodules.xyz/client-go/logs"
-	"kmodules.xyz/client-go/tools/clientcmd"
 	"sigs.k8s.io/yaml"
 )
 
@@ -700,7 +700,7 @@ func main() {
 
 			// GET Model from Existing Installations
 			m.Get("/model", func(ctx *macaron.Context) {
-				cfg, err := clientcmd.BuildConfigFromContext("", filepath.Join(homedir.HomeDir(), ".kube", "config"))
+				cfg, err := clientcmd.BuildConfigFromFlags("", filepath.Join(homedir.HomeDir(), ".kube", "config"))
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
 					return
@@ -731,7 +731,7 @@ func main() {
 			// redundant apis
 			// can be replaced by getting the model, then using the /editor apis
 			m.Get("/manifest", func(ctx *macaron.Context) {
-				cfg, err := clientcmd.BuildConfigFromContext("", filepath.Join(homedir.HomeDir(), ".kube", "config"))
+				cfg, err := clientcmd.BuildConfigFromFlags("", filepath.Join(homedir.HomeDir(), ".kube", "config"))
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
 					return
@@ -757,7 +757,7 @@ func main() {
 			// redundant apis
 			// can be replaced by getting the model, then using the /editor apis
 			m.Get("/resources", func(ctx *macaron.Context) {
-				cfg, err := clientcmd.BuildConfigFromContext("", filepath.Join(homedir.HomeDir(), ".kube", "config"))
+				cfg, err := clientcmd.BuildConfigFromFlags("", filepath.Join(homedir.HomeDir(), ".kube", "config"))
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
 					return
