@@ -24,8 +24,8 @@ func ParseKey(key string) (string, int, error) {
 		return "", 0, fmt.Errorf("failed to match regex")
 	}
 
-	rlsName := matches[0][0]
-	version, err := strconv.Atoi(matches[0][1])
+	rlsName := matches[0][1]
+	version, err := strconv.Atoi(matches[0][2])
 	if err != nil {
 		return "", 0, err
 	}

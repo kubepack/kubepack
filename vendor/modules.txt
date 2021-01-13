@@ -1424,7 +1424,7 @@ kmodules.xyz/webhook-runtime/admission/v1beta1
 kmodules.xyz/webhook-runtime/registry/admissionreview/v1beta1
 # kubepack.dev/chart-doc-gen v0.3.1-0.20210111011933-daa7c1d70a65
 kubepack.dev/chart-doc-gen/api
-# kubepack.dev/cli v0.0.0-20210113142734-070f23811bd3 => ../cli
+# kubepack.dev/cli v0.0.0-20210113144801-70abc9bfd539 => ../cli
 kubepack.dev/cli/pkg/action
 kubepack.dev/cli/pkg/apply
 kubepack.dev/cli/pkg/lib/action

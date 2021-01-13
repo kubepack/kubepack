@@ -237,7 +237,10 @@ func (d *Applications) Delete(key string) (rls *rspb.Release, err error) {
 	}
 
 	// fetch the release to check existence
-	if rls, err = d.Get(name); err != nil {
+	if rls, err = d.Get(key); err != nil {
+		if err == driver.ErrReleaseNotFound {
+			return rls, nil
+		}
 		return nil, err
 	}
 	// delete the release
