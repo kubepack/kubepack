@@ -3,7 +3,6 @@ module kubepack.dev/kubepack
 go 1.12
 
 require (
-	github.com/Masterminds/semver v1.5.0 // indirect
 	github.com/Masterminds/sprig v2.22.0+incompatible
 	github.com/appscode/static-assets v0.4.1
 	github.com/coreos/prometheus-operator v0.39.0
@@ -17,7 +16,6 @@ require (
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/google/gofuzz v1.1.0
 	github.com/google/uuid v1.1.2
-	github.com/gorilla/schema v1.2.0 // indirect
 	github.com/gregjones/httpcache v0.0.0-20180305231024-9cad4c3443a7
 	github.com/mitchellh/mapstructure v1.2.2
 	github.com/onsi/ginkgo v1.11.0
@@ -52,7 +50,7 @@ require (
 	kmodules.xyz/resource-metadata v0.4.8-0.20210113000222-d15533e4bb66
 	kmodules.xyz/webhook-runtime v0.0.0-20201105073856-2dc7382b88c6
 	kubepack.dev/chart-doc-gen v0.3.1-0.20210111011933-daa7c1d70a65
-	kubepack.dev/cli v0.0.0-20210113083119-ee6b52830b1b
+	kubepack.dev/cli v0.0.0-20210113140928-3d47b462b6f1
 	kubepack.dev/lib-helm v0.2.1
 	sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4
 	sigs.k8s.io/yaml v1.2.0
