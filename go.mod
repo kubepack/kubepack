@@ -47,7 +47,7 @@ require (
 	kmodules.xyz/client-go v0.0.0-20201230092550-8ca15cfcbefa
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20200922204806-c1426cd7fcf4
 	kmodules.xyz/custom-resources v0.0.0-20201124062543-bd8d35c21b0c
-	kmodules.xyz/resource-metadata v0.4.8-0.20210109211859-ee04a80b905a
+	kmodules.xyz/resource-metadata v0.4.8-0.20210113000222-d15533e4bb66
 	kmodules.xyz/webhook-runtime v0.0.0-20201105073856-2dc7382b88c6
 	kubepack.dev/chart-doc-gen v0.3.1-0.20210111011933-daa7c1d70a65
 	kubepack.dev/cli v0.0.0-20210112165039-590701181e18

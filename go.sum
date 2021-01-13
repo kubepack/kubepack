@@ -1606,6 +1606,8 @@ kmodules.xyz/custom-resources v0.0.0-20201124062543-bd8d35c21b0c/go.mod h1:/r3/e
 kmodules.xyz/openshift v0.0.0-20201105073146-0da509a7d39f/go.mod h1:vFwB/f5rVH5QoKXb/MN5xndDzYbmip2N8Zn68wgywlk=
 kmodules.xyz/resource-metadata v0.4.8-0.20210109211859-ee04a80b905a h1:VKdz+FNH1fSHJXLFtuJ9k9lZQEoqXby2GShs3Izk1b4=
 kmodules.xyz/resource-metadata v0.4.8-0.20210109211859-ee04a80b905a/go.mod h1:H6VUUjSuusM4SfQY9oRy8WvPJIrDdP/WIevnx9pHeh8=
+kmodules.xyz/resource-metadata v0.4.8-0.20210113000222-d15533e4bb66 h1:92V9MuFfSwHNt/mZUPAtm3c1Rj6bQZRvmXSjVGXfcyo=
+kmodules.xyz/resource-metadata v0.4.8-0.20210113000222-d15533e4bb66/go.mod h1:H6VUUjSuusM4SfQY9oRy8WvPJIrDdP/WIevnx9pHeh8=
 kmodules.xyz/webhook-runtime v0.0.0-20201105073856-2dc7382b88c6 h1:9+EIwxUrXrM8QD9rC1Fg+6CQK0vPniFO3ClaKih010M=
 kmodules.xyz/webhook-runtime v0.0.0-20201105073856-2dc7382b88c6/go.mod h1:xLgewoOzwR5ZrVOHQ2SR0P4E7tgCyBWbYlUawEXgeF4=
 kubepack.dev/chart-doc-gen v0.3.1-0.20210111011933-daa7c1d70a65 h1:eD7FHjILD3x3lca1SE3tJmdTWjrmG7bUA+jBqwguzKY=

@@ -1416,7 +1416,7 @@ kmodules.xyz/custom-resources/apis/appcatalog/v1alpha1
 kmodules.xyz/custom-resources/client/clientset/versioned/scheme
 kmodules.xyz/custom-resources/client/clientset/versioned/typed/appcatalog/v1alpha1
 kmodules.xyz/custom-resources/crds
-# kmodules.xyz/resource-metadata v0.4.8-0.20210109211859-ee04a80b905a
+# kmodules.xyz/resource-metadata v0.4.8-0.20210113000222-d15533e4bb66
 kmodules.xyz/resource-metadata/apis/meta
 kmodules.xyz/resource-metadata/apis/meta/v1alpha1
 kmodules.xyz/resource-metadata/crds

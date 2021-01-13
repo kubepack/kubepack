@@ -1,0 +1,56 @@
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  name: mongodb-editor
+  namespace: default
+  labels:
+    app.kubernetes.io/name: mongodb-editor-options
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    kubepack.com/package: '{"kind":"ApplicationPackage","apiVersion":"kubepack.com/v1alpha1","chart":{"name":"mongodb-editor-options","url":"https://bundles.byte.builders/ui/","version":"v0.1.0"},"channel":"Regular"}'
+spec:
+  descriptor:
+    description: MongoDB Editor UI Options
+    icons:
+      - src: https://cdn.appscode.com/images/products/kubedb/kubedb-community-icon.png
+        type: image/png
+    links:
+      - description: website
+        url: https://byte.builders
+    maintainers:
+      - email: support@appscode.com
+        name: appscode
+    # TODO: Fix This
+    type: mongodbs.kubedb.com
+    # version: v0.1.0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mongodbs.kubedb.com
+      app.kubernetes.io/instance: mongodb-editor
+  componentKinds:
+    - group: ""
+      kind: Secret
+    - group: ""
+      kind: Service
+    - group: apps
+      kind: StatefulSet
+    - group: grafana.searchlight.dev
+      kind: Dashboard
+    - group: kubedb.com
+      kind: MongoDB
+    - group: monitoring.coreos.com
+      kind: ServiceMonitor
+    - group: policy
+      kind: PodDisruptionBudget
+    - group: policy
+      kind: PodSecurityPolicy
+    - group: rbac.authorization.k8s.io
+      kind: Role
+    - group: rbac.authorization.k8s.io
+      kind: RoleBinding
+    - group: stash.appscode.com
+      kind: BackupConfiguration
+    - group: stash.appscode.com
+      kind: Repository
+  assemblyPhase: Ready

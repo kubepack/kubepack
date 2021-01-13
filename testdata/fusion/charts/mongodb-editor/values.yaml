@@ -1,3 +1,6 @@
+appApplication: # +doc-gen:break
+  apiVersion: app.k8s.io/v1beta1
+  kind: Application
 grafanaSearchlightDevDashboard: # +doc-gen:break
   apiVersion: grafana.searchlight.dev/v1alpha1
   kind: Dashboard

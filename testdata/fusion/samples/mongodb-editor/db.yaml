@@ -9,7 +9,6 @@ metadata:
     helm.sh/chart: mongodb-0.1.0
     app.kubernetes.io/name: mongodb
     app.kubernetes.io/instance: RELEASE-NAME
-    app.kubernetes.io/version: "0.1.0"
     app.kubernetes.io/managed-by: Helm
   annotations:
 spec:
