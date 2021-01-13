@@ -8,9 +8,8 @@ metadata:
   labels:
     helm.sh/chart: mongodb-0.1.0
     app.kubernetes.io/name: mongodb
-    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/instance: mongodb-editor
     app.kubernetes.io/managed-by: Helm
-  annotations:
 spec:
   version: "3.4.17"
   shardTopology:
@@ -43,3 +42,13 @@ spec:
   clusterAuthMode: keyFile
   sslMode: disabled
   terminationPolicy: WipeOut
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mongodb-editor
+  namespace: default
+  labels:
+    app.kubernetes.io/name: mongodb-editor-options
+    app.kubernetes.io/instance: mymongo
+    app.kubernetes.io/managed-by: Helm

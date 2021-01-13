@@ -23,12 +23,13 @@ import (
 
 	"gopkg.in/macaron.v1"
 	"helm.sh/helm/v3/pkg/release"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	cmdutil "k8s.io/kubectl/pkg/cmd/util"
 	"kmodules.xyz/resource-metadata/hub"
 )
 
-func ApplyResource(ctx *macaron.Context, model lib.EditorModel, f cmdutil.Factory) (*release.Release, error) {
+func ApplyResource(ctx *macaron.Context, model unstructured.Unstructured, f cmdutil.Factory) (*release.Release, error) {
 	opts := lib.EditorOptions{
 		Group:       ctx.Params(":group"),
 		Version:     ctx.Params(":version"),
@@ -57,7 +58,7 @@ func ApplyResource(ctx *macaron.Context, model lib.EditorModel, f cmdutil.Factor
 	opts2.ChartURL = rd.Spec.UI.Editor.URL
 	opts2.ChartName = rd.Spec.UI.Editor.Name
 	opts2.Version = rd.Spec.UI.Editor.Version
-	opts2.Values = model.Values
+	opts2.Values = model.Object
 	//opts2.ValuesFile =               "values.yaml"
 	//opts2.ValuesPatch =              nil
 	opts2.CreateNamespace = false // TODO?

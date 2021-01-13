@@ -91,6 +91,12 @@ secret: # +doc-gen:break
     name: mongodb-editor
     namespace: default
   type: Opaque
+serviceAccount: # +doc-gen:break
+  apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: mongodb-editor
+    namespace: default
 stashAppscodeComBackupConfiguration: # +doc-gen:break
   apiVersion: stash.appscode.com/v1beta1
   kind: BackupConfiguration

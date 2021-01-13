@@ -218,7 +218,7 @@ func main() {
 		// GET vs POST (Get makes more sense, but do we send so much data via query string?)
 		// With POST, we can send large payloads without any non-standard limits
 		// https://stackoverflow.com/a/812962
-		m.Post("/model", binding.Json(lib.Unstructured{}), func(ctx *macaron.Context, opts lib.Unstructured) {
+		m.Post("/model", binding.Json(unstructured.Unstructured{}), func(ctx *macaron.Context, opts unstructured.Unstructured) {
 			gvr := schema.GroupVersionResource{
 				Group:    ctx.Params(":group"),
 				Version:  ctx.Params(":version"),
@@ -230,32 +230,42 @@ func main() {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
 			}
-			_, _ = ctx.Write([]byte(model))
+			ctx.JSON(http.StatusOK, model)
 		})
-		m.Get("/manifest", binding.Json(lib.Unstructured{}), func(ctx *macaron.Context, opts lib.Unstructured) {
+		m.Post("/:releaseName/namespaces/:namespace/manifest", binding.Json(unstructured.Unstructured{}), func(ctx *macaron.Context, opts unstructured.Unstructured) {
 			gvr := schema.GroupVersionResource{
 				Group:    ctx.Params(":group"),
 				Version:  ctx.Params(":version"),
 				Resource: ctx.Params(":resource"),
 			}
-			manifest, _, err := lib.RenderChartTemplate(lib.DefaultRegistry, gvr, opts)
+			rlm := lib.ReleaseMetadata{
+				Name:      ctx.Params(":releaseName"),
+				Namespace: ctx.Params(":namespace"),
+			}
+			manifest, _, err := lib.RenderChartTemplate(lib.DefaultRegistry, gvr, rlm, opts)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
 			}
 			_, _ = ctx.Write([]byte(manifest))
 		})
-		m.Get("/resources", binding.Json(lib.Unstructured{}), func(ctx *macaron.Context, opts lib.Unstructured) {
+		m.Post("/:releaseName/namespaces/:namespace/resources", binding.Json(unstructured.Unstructured{}), func(ctx *macaron.Context, opts unstructured.Unstructured) {
 			gvr := schema.GroupVersionResource{
 				Group:    ctx.Params(":group"),
 				Version:  ctx.Params(":version"),
 				Resource: ctx.Params(":resource"),
 			}
-
-			_, tpls, err := lib.RenderChartTemplate(lib.DefaultRegistry, gvr, opts)
+			rlm := lib.ReleaseMetadata{
+				Name:      ctx.Params(":releaseName"),
+				Namespace: ctx.Params(":namespace"),
+			}
+			_, tpls, err := lib.RenderChartTemplate(lib.DefaultRegistry, gvr, rlm, opts)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
+			}
+			if ctx.QueryBool("skipCRDs") {
+				tpls.CRDs = nil
 			}
 			ctx.JSON(http.StatusOK, tpls)
 		})
@@ -758,7 +768,7 @@ func main() {
 			})
 
 			// create / update / apply / install
-			m.Put("", binding.Json(lib.EditorModel{}), func(ctx *macaron.Context, model lib.EditorModel) {
+			m.Put("", binding.Json(unstructured.Unstructured{}), func(ctx *macaron.Context, model unstructured.Unstructured) {
 				rls, err := handler.ApplyResource(ctx, model, f)
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())

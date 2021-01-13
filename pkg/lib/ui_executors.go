@@ -227,6 +227,9 @@ func (x *TemplateRenderer) Do() error {
 	if err != nil {
 		return err
 	}
+	if x.Values != nil {
+		valuesToRender["Values"] = x.Values
+	}
 
 	hooks, manifests, err := renderResources(chrt.Chart, caps, valuesToRender)
 	if err != nil {
@@ -416,6 +419,9 @@ func (x *EditorModelGenerator) Do() error {
 	valuesToRender, err := chartutil.ToRenderValues(chrt.Chart, vals, options, caps)
 	if err != nil {
 		return err
+	}
+	if x.Values != nil {
+		valuesToRender["Values"] = x.Values
 	}
 
 	hooks, manifests, err := renderResources(chrt.Chart, caps, valuesToRender)

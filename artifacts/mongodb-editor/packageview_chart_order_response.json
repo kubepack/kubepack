@@ -1,0 +1,42 @@
+{
+  "kind": "Order",
+  "apiVersion": "kubepack.com/v1alpha1",
+  "metadata": {
+    "name": "mymongo",
+    "namespace": "demo",
+    "uid": "d96b7440-2fdb-4fab-89b0-81d2b72631f2",
+    "creationTimestamp": "2021-01-13T05:36:37Z"
+  },
+  "spec": {
+    "items": [
+      {
+        "chart": {
+          "url": "https://bundles.byte.builders/ui/",
+          "name": "mongodb-editor-options",
+          "version": "v0.1.0",
+          "releaseName": "mymongo",
+          "namespace": "demo",
+          "valuesFile": "values.yaml",
+          "valuesPatch": [
+            {
+              "op": "add",
+              "path": "/metadata/release/name",
+              "value": "mymongo"
+            },
+            {
+              "op": "add",
+              "path": "/metadata/release/namespace",
+              "value": "demo"
+            },
+            {
+              "op": "replace",
+              "path": "/spec/version",
+              "value": "4.3.2"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "status": {}
+}

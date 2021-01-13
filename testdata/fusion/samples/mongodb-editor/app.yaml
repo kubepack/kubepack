@@ -5,7 +5,7 @@ metadata:
   namespace: default
   labels:
     app.kubernetes.io/name: mongodb-editor-options
-    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/instance: mongodb-editor
     app.kubernetes.io/managed-by: Helm
   annotations:
     kubepack.com/package: '{"kind":"ApplicationPackage","apiVersion":"kubepack.com/v1alpha1","chart":{"name":"mongodb-editor-options","url":"https://bundles.byte.builders/ui/","version":"v0.1.0"},"channel":"Regular"}'
