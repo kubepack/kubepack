@@ -2,9 +2,9 @@
 
 - GET "/bundleview"
 
-**API PATH CHANGED from /deploy/orders -> /bundleview/orders**
-
 - POST "/bundleview/orders", v1alpha1.BundleView{}
+
+  - API PATH CHANGED from /deploy/orders -> /bundleview/orders
 
 - GET "/packageview"
 
