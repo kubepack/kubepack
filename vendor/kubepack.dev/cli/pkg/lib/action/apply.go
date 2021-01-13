@@ -127,6 +127,7 @@ func (x *Applier) Run() (*release.Release, error) {
 
 	cmd := action.NewApply(x.cfg)
 
+	cmd.ApplyOptions = x.opts.ApplyOptions
 	cmd.CreateNamespace = x.opts.CreateNamespace
 	cmd.DryRun = x.opts.DryRun
 	cmd.DisableHooks = x.opts.DisableHooks
@@ -205,6 +206,8 @@ func (x *Applier) Run() (*release.Release, error) {
 	} else if x.opts.Values != nil {
 		vals = x.opts.Values
 	}
+	// VERY IMP: changes the default rendering behavior of helm charts
+	cmd.OverwriteValues = x.opts.Values != nil
 
 	return cmd.Run(chrt.Chart, vals)
 }

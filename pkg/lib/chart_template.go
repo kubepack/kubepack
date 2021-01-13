@@ -86,17 +86,6 @@ type EditResourceOrder struct {
 	Values      string `json:"values,omitempty"`
 }
 
-type EditorOptions struct {
-	Group    string `json:"group,omitempty"`
-	Version  string `json:"version,omitempty"`
-	Resource string `json:"resource,omitempty"`
-
-	ReleaseName string                `json:"releaseName,omitempty"`
-	Namespace   string                `json:"namespace,omitempty"`
-	ValuesFile  string                `json:"valuesFile,omitempty"`
-	ValuesPatch *runtime.RawExtension `json:"valuesPatch,omitempty"`
-}
-
 type ChartTemplate struct {
 	v1alpha1.ChartRef `json:",inline"`
 	Version           string                       `json:"version,omitempty"`
@@ -266,7 +255,6 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 		version, ok := gkToVersion[gk]
 		if !ok {
 			return nil, fmt.Errorf("failed to detect version for GK %#v in chart name=%s version=%s values", gk, chrt.Name(), chrt.Metadata.Version)
-
 		}
 
 		mapping, err := mapper.RESTMapping(schema.GroupKind{

@@ -7,28 +7,18 @@ appApplication: # +doc-gen:break
   spec:
     assemblyPhase: Ready
     componentKinds:
-      - group: ""
-        kind: Secret
-      - group: ""
-        kind: Service
-      - group: apps
-        kind: StatefulSet
+      - group: app.k8s.io
+        kind: Application
       - group: kubedb.com
         kind: MongoDB
-      - group: monitoring.coreos.com
-        kind: ServiceMonitor
-      - group: policy
-        kind: PodDisruptionBudget
-      - group: policy
-        kind: PodSecurityPolicy
-      - group: rbac.authorization.k8s.io
-        kind: Role
-      - group: rbac.authorization.k8s.io
-        kind: RoleBinding
+      - group: ""
+        kind: ServiceAccount
       - group: stash.appscode.com
         kind: BackupConfiguration
       - group: stash.appscode.com
         kind: Repository
+      - group: ""
+        kind: Secret
     descriptor:
       description: MongoDB Editor UI Options
       icons:

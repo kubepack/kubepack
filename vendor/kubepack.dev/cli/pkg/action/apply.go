@@ -81,6 +81,9 @@ type Apply struct {
 	// OutputDir/<ReleaseName>
 	UseReleaseName bool
 	PostRenderer   postrender.PostRenderer
+
+	// If true, then don't coalesce values, instead use inout values for rendering directly
+	OverwriteValues bool
 }
 
 // NewApply creates a new Apply object with the given configuration.
@@ -219,6 +222,9 @@ func (i *Apply) Run(chrt *chart.Chart, vals map[string]interface{}) (*release.Re
 	valuesToRender, err := chartutil.ToRenderValues(chrt, vals, options, caps)
 	if err != nil {
 		return nil, err
+	}
+	if i.OverwriteValues {
+		valuesToRender["Values"] = vals
 	}
 
 	rel := i.createRelease(chrt, vals)

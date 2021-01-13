@@ -2,6 +2,7 @@ package driver
 
 import (
 	"context"
+	meta_util "kmodules.xyz/client-go/meta"
 	"strconv"
 	"strings"
 	"time"
@@ -146,8 +147,8 @@ func (d *ApplicationSecrets) Create(key string, rls *rspb.Release) error {
 	}
 	// push the secret object out into the kubiverse
 	_, _, err = createOrPatchApplication(context.Background(), d.ai, app.ObjectMeta, func(in *v1beta1.Application) *v1beta1.Application {
-		in.Labels = app.Labels
-		in.Annotations = app.Annotations
+		in.Labels = meta_util.MergeKeys(in.Labels, app.Labels)
+		in.Annotations = meta_util.MergeKeys(in.Annotations, app.Annotations)
 		in.Spec = app.Spec
 		in.Spec.Info = nil
 		mergeSecret(in, s)
@@ -190,8 +191,8 @@ func (d *ApplicationSecrets) Update(key string, rls *rspb.Release) error {
 	}
 	// push the secret object out into the kubiverse
 	_, _, err = createOrPatchApplication(context.Background(), d.ai, app.ObjectMeta, func(in *v1beta1.Application) *v1beta1.Application {
-		in.Labels = app.Labels
-		in.Annotations = app.Annotations
+		in.Labels = meta_util.MergeKeys(in.Labels, app.Labels)
+		in.Annotations = meta_util.MergeKeys(in.Annotations, app.Annotations)
 		in.Spec = app.Spec
 		mergeSecret(in, s)
 		return in

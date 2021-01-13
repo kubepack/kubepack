@@ -584,6 +584,11 @@ func main() {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
 			}
+			if ctx.QueryBool("skipCRDs") {
+				for i := range tpls {
+					tpls[i].CRDs = nil
+				}
+			}
 			ctx.JSON(http.StatusOK, tpls)
 		})
 		m.Get("/:id/helm2", func(ctx *macaron.Context) {
@@ -673,7 +678,26 @@ func main() {
 
 	// PRIVATE
 	m.Group("/clusters/:cluster", func() {
+		m.Delete("/editor/namespaces/:namespace/releases/:releaseName", func(ctx *macaron.Context) {
+			rls, err := handler.DeleteResource(ctx, f)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+			ctx.JSON(http.StatusOK, rls)
+		})
+
 		m.Group("/editor/:group/:version/namespaces/:namespace/:resource/:releaseName", func() {
+			// create / update / apply / install
+			m.Put("", binding.Json(unstructured.Unstructured{}), func(ctx *macaron.Context, model unstructured.Unstructured) {
+				rls, err := handler.ApplyResource(ctx, model, f)
+				if err != nil {
+					ctx.Error(http.StatusInternalServerError, err.Error())
+					return
+				}
+				ctx.JSON(http.StatusOK, rls)
+			})
+
 			// GET Model from Existing Installations
 			m.Get("/model", func(ctx *macaron.Context) {
 				cfg, err := clientcmd.BuildConfigFromContext("", filepath.Join(homedir.HomeDir(), ".kube", "config"))
@@ -765,25 +789,6 @@ func main() {
 					return
 				}
 				_, _ = ctx.Write(data)
-			})
-
-			// create / update / apply / install
-			m.Put("", binding.Json(unstructured.Unstructured{}), func(ctx *macaron.Context, model unstructured.Unstructured) {
-				rls, err := handler.ApplyResource(ctx, model, f)
-				if err != nil {
-					ctx.Error(http.StatusInternalServerError, err.Error())
-					return
-				}
-				ctx.JSON(http.StatusOK, rls)
-			})
-
-			m.Delete("", func(ctx *macaron.Context) {
-				rls, err := handler.DeleteResource(ctx, f)
-				if err != nil {
-					ctx.Error(http.StatusInternalServerError, err.Error())
-					return
-				}
-				ctx.JSON(http.StatusOK, rls)
 			})
 		})
 

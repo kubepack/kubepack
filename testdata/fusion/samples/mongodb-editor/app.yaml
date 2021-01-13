@@ -29,26 +29,16 @@ spec:
       app.kubernetes.io/name: mongodbs.kubedb.com
       app.kubernetes.io/instance: mongodb-editor
   componentKinds:
-    - group: ""
-      kind: Secret
-    - group: ""
-      kind: Service
-    - group: apps
-      kind: StatefulSet
+    - group: app.k8s.io
+      kind: Application
     - group: kubedb.com
       kind: MongoDB
-    - group: monitoring.coreos.com
-      kind: ServiceMonitor
-    - group: policy
-      kind: PodDisruptionBudget
-    - group: policy
-      kind: PodSecurityPolicy
-    - group: rbac.authorization.k8s.io
-      kind: Role
-    - group: rbac.authorization.k8s.io
-      kind: RoleBinding
+    - group: ""
+      kind: ServiceAccount
     - group: stash.appscode.com
       kind: BackupConfiguration
     - group: stash.appscode.com
       kind: Repository
+    - group: ""
+      kind: Secret
   assemblyPhase: Ready

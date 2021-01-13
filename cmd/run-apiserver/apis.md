@@ -60,6 +60,19 @@ GET "/deploy/orders/:id/render/resources"
 
 ### "/clusters/:cluster/editor/:group/:version/namespaces/:namespace/:resource/:releaseName"
 
+PUT "/clusters/:cluster/editor/:group/:version/namespaces/:namespace/:resource/:releaseName", lib.EditorModel{}
+
+curl -X PUT -H "Content-Type: application/json" \
+  -d @./artifacts/mongodb-editor/mongodb_editor_model.json \
+  http://localhost:4000/clusters/my_cluster/editor/kubedb.com/v1alpha2/namespaces/demo/mongodbs/mymongo
+
+
+DELETE "/clusters/:cluster/editor/namespaces/:namespace/releases/:releaseName"
+
+
+curl -X DELETE -H "Content-Type: application/json" \
+  http://localhost:4000/clusters/my_cluster/editor/namespaces/demo/releases/mymongo
+
 
 GET "/clusters/:cluster/editor/:group/:version/namespaces/:namespace/:resource/:releaseName/model"
 
@@ -70,7 +83,3 @@ GET "/clusters/:cluster/editor/:group/:version/namespaces/:namespace/:resource/:
 // redundant apis
 // can be replaced by getting the model, then using the /editor apis
 GET "/clusters/:cluster/editor/:group/:version/namespaces/:namespace/:resource/:releaseName/resources"
-
-PUT "/clusters/:cluster/editor/:group/:version/namespaces/:namespace/:resource/:releaseName", lib.EditorModel{}
-
-DELETE "/clusters/:cluster/editor/:group/:version/namespaces/:namespace/:resource/:releaseName"

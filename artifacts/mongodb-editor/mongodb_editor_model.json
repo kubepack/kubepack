@@ -4,7 +4,7 @@
     "kind": "Application",
     "metadata": {
       "annotations": {
-        "kubepack.com/package": "{\"kind\":\"ApplicationPackage\",\"apiVersion\":\"kubepack.com/v1alpha1\",\"chart\":{\"name\":\"mongodb-editor-options\",\"url\":\"https://bundles.byte.builders/ui/\",\"version\":\"v0.1.0\"},\"channel\":\"Regular\"}"
+        "kubepack.com/package": "{\"kind\":\"ApplicationPackage\",\"apiVersion\":\"kubepack.com/v1alpha1\",\"chart\":{\"name\":\"mongodb-editor\",\"url\":\"https://bundles.byte.builders/ui/\",\"version\":\"v0.1.0\"},\"channel\":\"Regular\"}"
       },
       "labels": {
         "app.kubernetes.io/instance": "mymongo",
@@ -18,44 +18,16 @@
       "assemblyPhase": "Ready",
       "componentKinds": [
         {
-          "group": "",
-          "kind": "Secret"
-        },
-        {
-          "group": "",
-          "kind": "Service"
-        },
-        {
-          "group": "apps",
-          "kind": "StatefulSet"
-        },
-        {
-          "group": "grafana.searchlight.dev",
-          "kind": "Dashboard"
+          "group": "app.k8s.io",
+          "kind": "Application"
         },
         {
           "group": "kubedb.com",
           "kind": "MongoDB"
         },
         {
-          "group": "monitoring.coreos.com",
-          "kind": "ServiceMonitor"
-        },
-        {
-          "group": "policy",
-          "kind": "PodDisruptionBudget"
-        },
-        {
-          "group": "policy",
-          "kind": "PodSecurityPolicy"
-        },
-        {
-          "group": "rbac.authorization.k8s.io",
-          "kind": "Role"
-        },
-        {
-          "group": "rbac.authorization.k8s.io",
-          "kind": "RoleBinding"
+          "group": "",
+          "kind": "ServiceAccount"
         },
         {
           "group": "stash.appscode.com",
@@ -64,6 +36,10 @@
         {
           "group": "stash.appscode.com",
           "kind": "Repository"
+        },
+        {
+          "group": "",
+          "kind": "Secret"
         }
       ],
       "descriptor": {

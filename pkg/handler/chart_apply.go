@@ -17,51 +17,45 @@ limitations under the License.
 package handler
 
 import (
-	a2 "kubepack.dev/cli/pkg/lib/action"
-	"kubepack.dev/kubepack/pkg/lib"
-	"kubepack.dev/lib-helm/action"
-
 	"gopkg.in/macaron.v1"
 	"helm.sh/helm/v3/pkg/release"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	cmdutil "k8s.io/kubectl/pkg/cmd/util"
 	"kmodules.xyz/resource-metadata/hub"
+	"kubepack.dev/cli/pkg/lib/action"
+	"kubepack.dev/kubepack/pkg/lib"
 )
 
 func ApplyResource(ctx *macaron.Context, model unstructured.Unstructured, f cmdutil.Factory) (*release.Release, error) {
-	opts := lib.EditorOptions{
-		Group:       ctx.Params(":group"),
-		Version:     ctx.Params(":version"),
-		Resource:    ctx.Params(":resource"),
-		ReleaseName: ctx.Params(":releaseName"),
-		Namespace:   ctx.Params(":namespace"),
-		// ValuesFile:  params.ValuesFile,
-		// ValuesPatch: params.ValuesPatch,
+	gvr := schema.GroupVersionResource{
+		Group:    ctx.Params(":group"),
+		Version:  ctx.Params(":version"),
+		Resource: ctx.Params(":resource"),
 	}
-	rd, err := hub.NewRegistryOfKnownResources().LoadByGVR(schema.GroupVersionResource{
-		Group:    opts.Group,
-		Version:  opts.Version,
-		Resource: opts.Resource,
-	})
+	rlm := lib.ReleaseMetadata{
+		Name:      ctx.Params(":releaseName"),
+		Namespace: ctx.Params(":namespace"),
+	}
+	rd, err := hub.NewRegistryOfKnownResources().LoadByGVR(gvr)
 	if err != nil {
 		return nil, err
 	}
 
-	applier, err := a2.NewApplier(f, opts.Namespace, "applications")
+	applier, err := action.NewApplier(f, rlm.Namespace, "applications")
 	if err != nil {
 		return nil, err
 	}
 
 	applier.WithRegistry(lib.DefaultRegistry)
-	opts2 := a2.NewApplyOptions()
+	opts2 := action.NewApplyOptions()
 	opts2.ChartURL = rd.Spec.UI.Editor.URL
 	opts2.ChartName = rd.Spec.UI.Editor.Name
 	opts2.Version = rd.Spec.UI.Editor.Version
 	opts2.Values = model.Object
 	//opts2.ValuesFile =               "values.yaml"
 	//opts2.ValuesPatch =              nil
-	opts2.CreateNamespace = false // TODO?
+	opts2.CreateNamespace = true // TODO?
 	opts2.DryRun = false
 	opts2.DisableHooks = false
 	opts2.Replace = false
@@ -69,8 +63,8 @@ func ApplyResource(ctx *macaron.Context, model unstructured.Unstructured, f cmdu
 	opts2.Timeout = 0
 	opts2.Description = "Apply editor"
 	opts2.Devel = false
-	opts2.Namespace = opts.Namespace
-	opts2.ReleaseName = opts.ReleaseName
+	opts2.Namespace = rlm.Namespace
+	opts2.ReleaseName = rlm.Name
 	opts2.Atomic = false
 	opts2.SkipCRDs = false
 	opts2.SubNotes = false
@@ -82,22 +76,17 @@ func ApplyResource(ctx *macaron.Context, model unstructured.Unstructured, f cmdu
 }
 
 func DeleteResource(ctx *macaron.Context, f cmdutil.Factory) (*release.UninstallReleaseResponse, error) {
-	opts := lib.EditorOptions{
-		Group:       ctx.Params(":group"),
-		Version:     ctx.Params(":version"),
-		Resource:    ctx.Params(":resource"),
-		ReleaseName: ctx.Params(":releaseName"),
-		Namespace:   ctx.Params(":namespace"),
-		// ValuesFile:  params.ValuesFile,
-		// ValuesPatch: params.ValuesPatch,
+	rlm := lib.ReleaseMetadata{
+		Name:      ctx.Params(":releaseName"),
+		Namespace: ctx.Params(":namespace"),
 	}
 
-	cmd, err := action.NewUninstaller(f, opts.Namespace, "applications")
+	cmd, err := action.NewUninstaller(f, rlm.Namespace, "applications")
 	if err != nil {
 		return nil, err
 	}
 
-	cmd.WithReleaseName(opts.ReleaseName)
+	cmd.WithReleaseName(rlm.Name)
 	cmd.WithOptions(action.UninstallOptions{
 		DisableHooks: false,
 		DryRun:       false,

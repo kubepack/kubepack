@@ -19,6 +19,7 @@ package driver
 import (
 	"context"
 	"fmt"
+	meta_util "kmodules.xyz/client-go/meta"
 	"strconv"
 	"strings"
 	"time"
@@ -177,8 +178,8 @@ func (d *Applications) Create(_ string, rls *rspb.Release) error {
 	}
 	// push the configmap object out into the kubiverse
 	_, _, err = createOrPatchApplication(context.Background(), d.ai, obj.ObjectMeta, func(in *v1beta1.Application) *v1beta1.Application {
-		in.Labels = obj.Labels
-		in.Annotations = obj.Annotations
+		in.Labels = meta_util.MergeKeys(in.Labels, obj.Labels)
+		in.Annotations = meta_util.MergeKeys(in.Annotations, obj.Annotations)
 		if err := mergo.Merge(&in.Spec, &obj.Spec); err != nil {
 			panic(fmt.Errorf("failed to update appliation %s/%s spec, reason: %v", in.Namespace, in.Name, err))
 		}
@@ -213,8 +214,8 @@ func (d *Applications) Update(_ string, rls *rspb.Release) error {
 	}
 	// push the configmap object out into the kubiverse
 	_, _, err = createOrPatchApplication(context.Background(), d.ai, obj.ObjectMeta, func(in *v1beta1.Application) *v1beta1.Application {
-		in.Labels = obj.Labels
-		in.Annotations = obj.Annotations
+		in.Labels = meta_util.MergeKeys(in.Labels, obj.Labels)
+		in.Annotations = meta_util.MergeKeys(in.Annotations, obj.Annotations)
 		if err := mergo.Merge(&in.Spec, &obj.Spec); err != nil {
 			panic(fmt.Errorf("failed to update appliation %s/%s spec, reason: %v", in.Namespace, in.Name, err))
 		}

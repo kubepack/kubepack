@@ -121,7 +121,7 @@ func newApplicationObject(rls *rspb.Release, lbs labels) (*v1beta1.Application, 
 			Selector: &metav1.LabelSelector{
 				MatchLabels: map[string]string{},
 			},
-			AddOwnerRef:   true, // TODO
+			AddOwnerRef:   false, // TODO
 			AssemblyPhase: toAssemblyPhase(rls.Info.Status),
 		},
 	}
@@ -265,7 +265,7 @@ func decodeReleaseFromApp(app *v1beta1.Application, di dynamic.Interface, cl dis
 	rls.Version, _ = strconv.Atoi(app.Labels["version"])
 
 	var ap v1alpha1.ApplicationPackage
-	if data, ok := app.Labels[apis.LabelPackage]; ok {
+	if data, ok := app.Annotations[apis.LabelPackage]; ok {
 		err := json.Unmarshal([]byte(data), &ap)
 		if err != nil {
 			return nil, err
