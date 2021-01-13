@@ -10,7 +10,7 @@
 
 `http://localhost:4000/packageview?url=https://bundles.byte.builders/ui/&name=mongodb-editor-options&version=v0.1.0`
 
-- POST "/packageview/orders", lib.ChartOrder{}
+- POST "/packageview/orders"
 
 `curl -X POST -H "Content-Type: application/json" \ -d @./artifacts/mongodb-editor/packageview_chart_order.json \ http://localhost:4000/packageview/orders?url=https://bundles.byte.builders/ui/&name=mongodb-editor-options&version=v0.1.0`
 
@@ -24,17 +24,15 @@
 
 `http://localhost:4000/packageview/files/templates/app.yaml?url=https://bundles.byte.builders/ui/&name=mongodb-editor-options&version=v0.1.0`
 
-**Initial Model**
-
-- POST "/editor/:group/:version/:resource/model", lib.Unstructured{}
+- POST "/editor/:group/:version/:resource/model" (Initial Model)
 
 `curl -X POST -H "Content-Type: application/json" \ -d @./artifacts/mongodb-editor/mongodb_options_model.json \ http://localhost:4000/editor/kubedb.com/v1alpha2/mongodbs/model > ./artifacts/mongodb-editor/mongodb_editor_model.json`
 
-- GET "/editor/:group/:version/:resource/manifest", lib.Unstructured{}
+- GET "/editor/:group/:version/:resource/manifest"
 
 `curl -X POST -H "Content-Type: application/json" \ -d @./artifacts/mongodb-editor/mongodb_editor_model.json \ http://localhost:4000/editor/kubedb.com/v1alpha2/mongodbs/mymongo/namespaces/demo/manifest > ./artifacts/mongodb-editor/mongodb_editor_manifest.yaml`
 
-- GET "/editor/:group/:version/:resource/resources", lib.Unstructured{}
+- GET "/editor/:group/:version/:resource/resources"
 
 `curl -X POST -H "Content-Type: application/json" \ -d @./artifacts/mongodb-editor/mongodb_editor_model.json \ http://localhost:4000/editor/kubedb.com/v1alpha2/mongodbs/mymongo/namespaces/demo/resources?skipCRDs=true | jq '.' > ./artifacts/mongodb-editor/mongodb_editor_resources.json`
 
@@ -44,7 +42,7 @@
 
 - GET "/deploy/orders/:id/render/resources"
 
-- PUT "/clusters/:cluster/editor/:group/:version/namespaces/:namespace/:resource/:releaseName", lib.EditorModel{}
+- PUT "/clusters/:cluster/editor/:group/:version/namespaces/:namespace/:resource/:releaseName"
 
 `curl -X PUT -H "Content-Type: application/json" \ -d @./artifacts/mongodb-editor/mongodb_editor_model.json \ http://localhost:4000/clusters/my_cluster/editor/kubedb.com/v1alpha2/namespaces/demo/mongodbs/mymongo`
 
