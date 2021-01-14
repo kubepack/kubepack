@@ -12,7 +12,7 @@
 
 - POST "/packageview/orders"
 
-`curl -X POST -H "Content-Type: application/json" \ -d @./artifacts/mongodb-editor/packageview_chart_order.json \ http://localhost:4000/packageview/orders?url=https://bundles.byte.builders/ui/&name=mongodb-editor-options&version=v0.1.0`
+`curl -X POST -H "Content-Type: application/json" -d @./artifacts/mongodb-editor/packageview_chart_order.json http://localhost:4000/packageview/orders?url=https://bundles.byte.builders/ui/&name=mongodb-editor-options&version=v0.1.0`
 
 `$ {"kind":"Order","apiVersion":"kubepack.com/v1alpha1","metadata":{"name":"mymongo","namespace":"demo","uid":"d96b7440-2fdb-4fab-89b0-81d2b72631f2","creationTimestamp":"2021-01-13T05:36:37Z"},"spec":{"items":[{"chart":{"url":"https://bundles.byte.builders/ui/","name":"mongodb-editor-options","version":"v0.1.0","releaseName":"mymongo","namespace":"demo","valuesFile":"values.yaml","valuesPatch":[{"op":"add","path":"/metadata/release/name","value":"mymongo"},{"op":"add","path":"/metadata/release/namespace","value":"demo"},{"op":"replace","path":"/spec/version","value":"4.3.2"}]}}]},"status":{}}`
 
@@ -26,29 +26,36 @@
 
 - POST "/editor/:group/:version/:resource/model" (Initial Model)
 
-`curl -X POST -H "Content-Type: application/json" \ -d @./artifacts/mongodb-editor/mongodb_options_model.json \ http://localhost:4000/editor/kubedb.com/v1alpha2/mongodbs/model > ./artifacts/mongodb-editor/mongodb_editor_model.json`
+`curl -X POST -H "Content-Type: application/json" -d @./artifacts/mongodb-editor/mongodb_options_model.json http://localhost:4000/editor/kubedb.com/v1alpha2/mongodbs/model > ./artifacts/mongodb-editor/mongodb_editor_model.json`
 
-- GET "/editor/:group/:version/:resource/manifest"
+- POST "/editor/:group/:version/:resource/manifest" (Preview API)
 
-`curl -X POST -H "Content-Type: application/json" \ -d @./artifacts/mongodb-editor/mongodb_editor_model.json \ http://localhost:4000/editor/kubedb.com/v1alpha2/mongodbs/mymongo/namespaces/demo/manifest > ./artifacts/mongodb-editor/mongodb_editor_manifest.yaml`
+`curl -X POST -H "Content-Type: application/json" -d @./artifacts/mongodb-editor/mongodb_editor_model.json  http://localhost:4000/editor/kubedb.com/v1alpha2/mongodbs/mymongo/namespaces/demo/manifest > ./artifacts/mongodb-editor/mongodb_editor_manifest.yaml`
 
-- GET "/editor/:group/:version/:resource/resources"
+- POST "/editor/:group/:version/:resource/resources" (Preview API)
 
-`curl -X POST -H "Content-Type: application/json" \ -d @./artifacts/mongodb-editor/mongodb_editor_model.json \ http://localhost:4000/editor/kubedb.com/v1alpha2/mongodbs/mymongo/namespaces/demo/resources?skipCRDs=true | jq '.' > ./artifacts/mongodb-editor/mongodb_editor_resources.json`
+`curl -X POST -H "Content-Type: application/json" -d @./artifacts/mongodb-editor/mongodb_editor_model.json  http://localhost:4000/editor/kubedb.com/v1alpha2/mongodbs/mymongo/namespaces/demo/resources?skipCRDs=true | jq '.' > ./artifacts/mongodb-editor/mongodb_editor_resources.json`
 
-- POST "/deploy/orders", v1alpha1.Order{}
+- POST "/deploy/orders"
 
 - GET "/deploy/orders/:id/render/manifest"
 
+http://localhost:4000/deploy/orders/5902b772-319c-40c1-b260-68d81b7864fd/render/manifest
+
 - GET "/deploy/orders/:id/render/resources"
+  - Query parameter: skipCRDs=true
 
-- PUT "/clusters/:cluster/editor/:group/:version/namespaces/:namespace/:resource/:releaseName"
+http://localhost:4000/deploy/orders/5902b772-319c-40c1-b260-68d81b7864fd/render/resources?skipCRDs=true
 
-`curl -X PUT -H "Content-Type: application/json" \ -d @./artifacts/mongodb-editor/mongodb_editor_model.json \ http://localhost:4000/clusters/my_cluster/editor/kubedb.com/v1alpha2/namespaces/demo/mongodbs/mymongo`
+- PUT "/clusters/:cluster/editor/:group/:version/namespaces/:namespace/:resource/:releaseName" (apply/install/update app API)
 
-- DELETE "/clusters/:cluster/editor/namespaces/:namespace/releases/:releaseName"
+`curl -X PUT -H "Content-Type: application/json" -d @./artifacts/mongodb-editor/mongodb_editor_model.json  http://localhost:4000/clusters/my_cluster/editor/kubedb.com/v1alpha2/namespaces/demo/mongodbs/mymongo`
 
-`curl -X DELETE -H "Content-Type: application/json" \ http://localhost:4000/clusters/my_cluster/editor/namespaces/demo/releases/mymongo`
+- DELETE "/clusters/:cluster/editor/namespaces/:namespace/releases/:releaseName" (Delete app api)
+
+`curl -X DELETE -H "Content-Type: application/json" http://localhost:4000/clusters/my_cluster/editor/namespaces/demo/releases/mymongo`
+
+## UI Edit mode
 
 - GET "/clusters/:cluster/editor/:group/:version/namespaces/:namespace/:resource/:releaseName/model"
 
