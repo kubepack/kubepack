@@ -39,7 +39,6 @@ import (
 	"gopkg.in/macaron.v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 	"k8s.io/client-go/tools/clientcmd"
@@ -191,7 +190,7 @@ func main() {
 		}
 
 		filename := ctx.Params("*")
-		format := lib.DataFormat(ctx.Params("format"))
+		format := lib.DataFormat(ctx.Query("format"))
 		for _, f := range chrt.Raw {
 			if f.Name == filename {
 				out, ct, err := lib.ConvertFormat(f, lib.DataFormat(format))
@@ -208,26 +207,20 @@ func main() {
 		ctx.WriteHeader(http.StatusNotFound)
 	})
 
-	m.Group("/editor/:group/:version/:resource", func() {
+	m.Group("/editor", func() {
 		// PUBLIC
 		// INITIAL Model (Values)
 		// GET vs POST (Get makes more sense, but do we send so much data via query string?)
 		// With POST, we can send large payloads without any non-standard limits
 		// https://stackoverflow.com/a/812962
-		m.Post("/model", binding.Json(unstructured.Unstructured{}), func(ctx *macaron.Context, opts unstructured.Unstructured) {
-			gvr := schema.GroupVersionResource{
-				Group:    ctx.Params(":group"),
-				Version:  ctx.Params(":version"),
-				Resource: ctx.Params(":resource"),
-			}
-
-			model, err := lib.GenerateEditorModel(lib.DefaultRegistry, gvr, opts)
+		m.Put("/model", binding.Json(unstructured.Unstructured{}), func(ctx *macaron.Context, opts unstructured.Unstructured) {
+			model, err := lib.GenerateEditorModel(lib.DefaultRegistry, opts)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
 			}
 
-			format := lib.DataFormat(ctx.Params("format"))
+			format := lib.DataFormat(ctx.Query("format"))
 			if format == lib.YAMLFormat {
 				out, err := yaml.Marshal(model)
 				if err != nil {
@@ -239,34 +232,16 @@ func main() {
 			}
 			ctx.JSON(http.StatusOK, model)
 		})
-		m.Post("/:releaseName/namespaces/:namespace/manifest", binding.Json(unstructured.Unstructured{}), func(ctx *macaron.Context, opts unstructured.Unstructured) {
-			gvr := schema.GroupVersionResource{
-				Group:    ctx.Params(":group"),
-				Version:  ctx.Params(":version"),
-				Resource: ctx.Params(":resource"),
-			}
-			rlm := lib.ReleaseMetadata{
-				Name:      ctx.Params(":releaseName"),
-				Namespace: ctx.Params(":namespace"),
-			}
-			manifest, _, err := lib.RenderChartTemplate(lib.DefaultRegistry, gvr, rlm, opts)
+		m.Put("/manifest", binding.Json(unstructured.Unstructured{}), func(ctx *macaron.Context, opts unstructured.Unstructured) {
+			manifest, _, err := lib.RenderChartTemplate(lib.DefaultRegistry, opts)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
 			}
 			_, _ = ctx.Write([]byte(manifest))
 		})
-		m.Post("/:releaseName/namespaces/:namespace/resources", binding.Json(unstructured.Unstructured{}), func(ctx *macaron.Context, opts unstructured.Unstructured) {
-			gvr := schema.GroupVersionResource{
-				Group:    ctx.Params(":group"),
-				Version:  ctx.Params(":version"),
-				Resource: ctx.Params(":resource"),
-			}
-			rlm := lib.ReleaseMetadata{
-				Name:      ctx.Params(":releaseName"),
-				Namespace: ctx.Params(":namespace"),
-			}
-			_, tpls, err := lib.RenderChartTemplate(lib.DefaultRegistry, gvr, rlm, opts)
+		m.Put("/resources", binding.Json(unstructured.Unstructured{}), func(ctx *macaron.Context, opts unstructured.Unstructured) {
+			_, tpls, err := lib.RenderChartTemplate(lib.DefaultRegistry, opts)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
 				return
@@ -279,7 +254,7 @@ func main() {
 				CRDs      []string `json:"crds,omitempty"`
 				Resources []string `json:"resources,omitempty"`
 			}{}
-			format := lib.DataFormat(ctx.Params("format"))
+			format := lib.DataFormat(ctx.Query("format"))
 
 			for _, crd := range tpls.CRDs {
 				data, err := lib.Marshal(crd, format)
@@ -620,7 +595,7 @@ func main() {
 				}
 			}
 
-			format := lib.DataFormat(ctx.Params("format"))
+			format := lib.DataFormat(ctx.Query("format"))
 			out, err := lib.ConvertChartTemplates(tpls, format)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
@@ -736,7 +711,7 @@ func main() {
 			})
 
 			// POST Model from Existing Installations
-			m.Post("/model", binding.Json(lib.OptionsSpec{}), func(ctx *macaron.Context, model lib.OptionsSpec) {
+			m.Put("/model", binding.Json(lib.OptionsSpec{}), func(ctx *macaron.Context, model lib.OptionsSpec) {
 				cfg, err := clientcmd.BuildConfigFromFlags("", filepath.Join(homedir.HomeDir(), ".kube", "config"))
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
@@ -749,7 +724,7 @@ func main() {
 					return
 				}
 
-				format := lib.DataFormat(ctx.Params("format"))
+				format := lib.DataFormat(ctx.Query("format"))
 				out, err := lib.Marshal(tpl.Values, format)
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
@@ -760,7 +735,7 @@ func main() {
 
 			// redundant apis
 			// can be replaced by getting the model, then using the /editor apis
-			m.Post("/manifest", binding.Json(lib.OptionsSpec{}), func(ctx *macaron.Context, model lib.OptionsSpec) {
+			m.Put("/manifest", binding.Json(lib.OptionsSpec{}), func(ctx *macaron.Context, model lib.OptionsSpec) {
 				cfg, err := clientcmd.BuildConfigFromFlags("", filepath.Join(homedir.HomeDir(), ".kube", "config"))
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
@@ -777,7 +752,7 @@ func main() {
 
 			// redundant apis
 			// can be replaced by getting the model, then using the /editor apis
-			m.Post("/resources", binding.Json(lib.OptionsSpec{}), func(ctx *macaron.Context, model lib.OptionsSpec) {
+			m.Put("/resources", binding.Json(lib.OptionsSpec{}), func(ctx *macaron.Context, model lib.OptionsSpec) {
 				cfg, err := clientcmd.BuildConfigFromFlags("", filepath.Join(homedir.HomeDir(), ".kube", "config"))
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
@@ -793,7 +768,7 @@ func main() {
 				out := struct {
 					Resources []string `json:"resources,omitempty"`
 				}{}
-				format := lib.DataFormat(ctx.Params("format"))
+				format := lib.DataFormat(ctx.Query("format"))
 
 				for _, r := range tpl.Resources {
 					data, err := lib.Marshal(r, format)

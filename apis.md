@@ -24,6 +24,8 @@
 
 `http://localhost:4000/packageview/files/templates/app.yaml?url=https://bundles.byte.builders/ui/&name=mongodb-editor-options&version=v0.1.0`
 
+`http://localhost:4000/packageview/files/values.yaml?url=https://bundles.byte.builders/ui/&name=mongodb-editor-options&version=v0.1.0&format=json`
+
 - POST "/editor/:group/:version/:resource/model" (Initial Model)
 
 `curl -X POST -H "Content-Type: application/json" -d @./artifacts/mongodb-editor/mongodb_options_model.json http://localhost:4000/editor/kubedb.com/v1alpha2/mongodbs/model > ./artifacts/mongodb-editor/mongodb_editor_model.json`

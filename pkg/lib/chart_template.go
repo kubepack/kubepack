@@ -342,12 +342,7 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 	return &tpl, nil
 }
 
-func GenerateEditorModel(reg *repo.Registry, gvr schema.GroupVersionResource, opts unstructured.Unstructured) (*unstructured.Unstructured, error) {
-	rd, err := hub.NewRegistryOfKnownResources().LoadByGVR(gvr)
-	if err != nil {
-		return nil, err
-	}
-
+func GenerateEditorModel(reg *repo.Registry, opts unstructured.Unstructured) (*unstructured.Unstructured, error) {
 	var spec OptionsSpec
 	config := &mapstructure.DecoderConfig{
 		Metadata: nil,
@@ -359,6 +354,15 @@ func GenerateEditorModel(reg *repo.Registry, gvr schema.GroupVersionResource, op
 		return nil, err
 	}
 	err = decoder.Decode(opts.Object)
+	if err != nil {
+		return nil, err
+	}
+
+	rd, err := hub.NewRegistryOfKnownResources().LoadByGVR(schema.GroupVersionResource{
+		Group:    spec.Resource.Group,
+		Version:  spec.Resource.Version,
+		Resource: spec.Resource.Name,
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -398,26 +402,30 @@ func GenerateEditorModel(reg *repo.Registry, gvr schema.GroupVersionResource, op
 	return &unstructured.Unstructured{Object: modelValues}, err
 }
 
-func RenderChartTemplate(reg *repo.Registry, gvr schema.GroupVersionResource, rlm ReleaseMetadata, opts unstructured.Unstructured) (string, *ChartTemplate, error) {
-	rd, err := hub.NewRegistryOfKnownResources().LoadByGVR(gvr)
+func RenderChartTemplate(reg *repo.Registry, opts unstructured.Unstructured) (string, *ChartTemplate, error) {
+	var spec OptionsSpec
+	config := &mapstructure.DecoderConfig{
+		Metadata: nil,
+		TagName:  "json",
+		Result:   &spec,
+	}
+	decoder, err := mapstructure.NewDecoder(config)
+	if err != nil {
+		return "", nil, err
+	}
+	err = decoder.Decode(opts.Object)
 	if err != nil {
 		return "", nil, err
 	}
 
-	//var spec OptionsSpec
-	//config := &mapstructure.DecoderConfig{
-	//	Metadata: nil,
-	//	TagName:  "json",
-	//	Result:   &spec,
-	//}
-	//decoder, err := mapstructure.NewDecoder(config)
-	//if err != nil {
-	//	return "", nil, err
-	//}
-	//err = decoder.Decode(opts.Object)
-	//if err != nil {
-	//	return "", nil, err
-	//}
+	rd, err := hub.NewRegistryOfKnownResources().LoadByGVR(schema.GroupVersionResource{
+		Group:    spec.Resource.Group,
+		Version:  spec.Resource.Version,
+		Resource: spec.Resource.Name,
+	})
+	if err != nil {
+		return "", nil, err
+	}
 
 	f1 := &EditorModelGenerator{
 		Registry: reg,
@@ -426,8 +434,8 @@ func RenderChartTemplate(reg *repo.Registry, gvr schema.GroupVersionResource, rl
 			Name: rd.Spec.UI.Editor.Name,
 		},
 		Version:     rd.Spec.UI.Editor.Version,
-		ReleaseName: rlm.Name,
-		Namespace:   rlm.Namespace,
+		ReleaseName: spec.Release.Name,
+		Namespace:   spec.Release.Namespace,
 		KubeVersion: "v1.17.0",
 		Values:      opts.Object,
 	}
