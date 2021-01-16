@@ -21,22 +21,24 @@ import (
 	crdv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/util/sets"
 	"kmodules.xyz/resource-metadata/hub"
 	"sigs.k8s.io/yaml"
 )
 
 var (
-	sampleDir   = ""
-	chartDir    = ""
-	chartName   = ""
-	chartSchema = crdv1.JSONSchemaProps{
+	sampleDir      = ""
+	chartDir       = ""
+	chartName      = ""
+	resourceSchema = crdv1.JSONSchemaProps{
 		Type:       "object",
 		Properties: map[string]crdv1.JSONSchemaProps{},
 	}
-	modelValues  = map[string]*unstructured.Unstructured{}
-	registry     = hub.NewRegistryOfKnownResources()
-	resourceKeys = sets.NewString()
+	resourceValues = map[string]*unstructured.Unstructured{}
+	registry       = hub.NewRegistryOfKnownResources()
+	resourceKeys   = sets.NewString()
+	gvr            schema.GroupVersionResource
 )
 
 type ObjectModel struct {
@@ -93,7 +95,7 @@ func NewCmdFuse() *cobra.Command {
 					Name:      obj.GetName(),
 					Namespace: obj.GetNamespace(),
 				}
-				modelValues[rsKey] = cp
+				resourceValues[rsKey] = cp
 
 				// schema
 				gvr, err := registry.GVR(obj.GetObjectKind().GroupVersionKind())
@@ -158,7 +160,7 @@ func NewCmdFuse() *cobra.Command {
 
 				if descriptor.Spec.Validation != nil && descriptor.Spec.Validation.OpenAPIV3Schema != nil {
 					delete(descriptor.Spec.Validation.OpenAPIV3Schema.Properties, "status")
-					chartSchema.Properties[rsKey] = *descriptor.Spec.Validation.OpenAPIV3Schema
+					resourceSchema.Properties[rsKey] = *descriptor.Spec.Validation.OpenAPIV3Schema
 				}
 
 				// templates
@@ -184,7 +186,7 @@ func NewCmdFuse() *cobra.Command {
 					panic(err)
 				}
 
-				resourceTemplate := `{{"{{- with .Values."}}{{ .key }} {{"}}"}}
+				resourceTemplate := `{{"{{- with .Values.resources"}}{{ .key }} {{"}}"}}
 {{"{{- . | toYaml }}"}}
 {{"{{- end }}"}}
 `
@@ -204,6 +206,12 @@ func NewCmdFuse() *cobra.Command {
 			}
 
 			{
+				var chartSchema crdv1.JSONSchemaProps
+				err = yaml.Unmarshal([]byte(valuesMetadataSchema), &chartSchema)
+				if err != nil {
+					return err
+				}
+				chartSchema.Properties["resources"] = resourceSchema
 				removeDescription(&chartSchema)
 				data3, err := yaml.Marshal(chartSchema)
 				if err != nil {
@@ -217,7 +225,7 @@ func NewCmdFuse() *cobra.Command {
 			}
 
 			{
-				data, err := yaml.Marshal(modelValues)
+				data, err := yaml.Marshal(resourceValues)
 				if err != nil {
 					panic(err)
 				}
@@ -229,6 +237,22 @@ func NewCmdFuse() *cobra.Command {
 				}
 				addDocComments(&root)
 
+				rd, err := registry.LoadByGVR(gvr)
+				if err != nil {
+					return err
+				}
+
+				values := map[string]interface{}{
+					"metadata": map[string]interface{}{
+						"resource": &rd.Spec.Resource,
+						"release": map[string]interface{}{
+							"name":      "RELEASE-NAME",
+							"namespace": "default",
+						},
+					},
+					"resources": root.Content[0],
+				}
+
 				//data, err = y3.Marshal(&root)
 				//if err != nil {
 				//	return err
@@ -238,7 +262,7 @@ func NewCmdFuse() *cobra.Command {
 				enc := y3.NewEncoder(&buf)
 				enc.SetIndent(2)
 				defer enc.Close()
-				err = enc.Encode(&root)
+				err = enc.Encode(&values)
 				if err != nil {
 					return err
 				}
@@ -298,6 +322,10 @@ func NewCmdFuse() *cobra.Command {
 	cmd.Flags().StringVar(&sampleDir, "sample-dir", sampleDir, "Sample dir")
 	cmd.Flags().StringVar(&chartDir, "chart-dir", chartDir, "Charts dir")
 	cmd.Flags().StringVar(&chartName, "chart-name", chartName, "Charts name")
+
+	cmd.Flags().StringVar(&gvr.Group, "resource.group", chartName, "Resource api group")
+	cmd.Flags().StringVar(&gvr.Version, "resource.version", chartName, "Resource api version")
+	cmd.Flags().StringVar(&gvr.Resource, "resource.name", chartName, "Resource plural")
 
 	return cmd
 }

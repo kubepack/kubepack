@@ -151,5 +151,8 @@ curl -X POST -H "Content-Type: application/json" -d @artifacts/kubedb-community/
 $ go run cmd/fuse-chart/*.go \
   --sample-dir=./testdata/fusion/samples \
   --chart-dir=./testdata/fusion/charts \
-  --chart-name=mongodb-editor
+  --chart-name=mongodb-editor \
+  --resource.group=kubedb.com \
+  --resource.version=v1alpha2 \
+  --resource.name=mongodbs
 ```
