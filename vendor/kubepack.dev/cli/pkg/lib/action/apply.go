@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"kubepack.dev/cli/pkg/action"
-	"kubepack.dev/cli/pkg/apply"
+	"kmodules.xyz/apply"
 	"kubepack.dev/lib-helm/repo"
 
 	jsonpatch "github.com/evanphx/json-patch"

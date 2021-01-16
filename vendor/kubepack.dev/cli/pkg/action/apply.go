@@ -24,7 +24,7 @@ import (
 	"strings"
 	"time"
 
-	"kubepack.dev/cli/pkg/apply"
+	"kmodules.xyz/apply"
 
 	"github.com/pkg/errors"
 	"helm.sh/helm/v3/pkg/chart"

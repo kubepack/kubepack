@@ -41,6 +41,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/restmapper"
+	metaapi "kmodules.xyz/resource-metadata/apis/meta/v1alpha1"
 	"kmodules.xyz/resource-metadata/hub"
 	"sigs.k8s.io/application/api/app/v1beta1"
 	app_cs "sigs.k8s.io/application/client/clientset/versioned"
@@ -53,8 +54,8 @@ import (
 //}
 
 type Metadata struct {
-	Resource v1alpha1.ResourceID `json:"resource,omitempty"`
-	Release  ReleaseMetadata     `json:"release,omitempty"`
+	Resource metaapi.ResourceID `json:"resource,omitempty"`
+	Release  ReleaseMetadata    `json:"release,omitempty"`
 }
 
 type ReleaseMetadata struct {

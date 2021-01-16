@@ -274,11 +274,11 @@ func (x *CRDReadinessPrinter) Do() error {
 
 	for _, crd := range x.CRDs {
 		// Work around for bug: https://github.com/kubernetes/kubernetes/issues/83242
-		_, err := fmt.Fprintf(x.W, "until kubectl get crds %s.%s -o=jsonpath='{.items[0].metadata.name}' &> /dev/null; do sleep 1; done\n", crd.Name, crd.Group)
+		_, err := fmt.Fprintf(x.W, "until kubectl get crds %s.%s -o=jsonpath='{.items[0].metadata.name}' &> /dev/null; do sleep 1; done\n", crd.Resource, crd.Group)
 		if err != nil {
 			return err
 		}
-		_, err = fmt.Fprintf(x.W, "kubectl wait --for=condition=Established crds/%s.%s --timeout=5m\n", crd.Name, crd.Group)
+		_, err = fmt.Fprintf(x.W, "kubectl wait --for=condition=Established crds/%s.%s --timeout=5m\n", crd.Resource, crd.Group)
 		if err != nil {
 			return err
 		}
@@ -297,16 +297,16 @@ func (x *CRDReadinessChecker) Do() error {
 		crds = append(crds, &apiextensions.CustomResourceDefinition{
 			V1beta1: &crdv1beta1.CustomResourceDefinition{
 				ObjectMeta: v1.ObjectMeta{
-					Name: fmt.Sprintf("%s.%s", crd.Name, crd.Group),
+					Name: fmt.Sprintf("%s.%s", crd.Resource, crd.Group),
 				},
 				Spec: crdv1beta1.CustomResourceDefinitionSpec{
 					Group:   crd.Group,
 					Version: crd.Version,
 					Names: crdv1beta1.CustomResourceDefinitionNames{
-						Plural: crd.Name,
-						Kind:   crd.Kind,
+						Plural: crd.Resource,
+						//Kind:   crd.Kind,
 					},
-					Scope: crdv1beta1.ResourceScope(string(crd.Scope)),
+					//Scope: crdv1beta1.ResourceScope(string(crd.Scope)),
 					Versions: []crdv1beta1.CustomResourceDefinitionVersion{
 						{
 							Name: crd.Version,

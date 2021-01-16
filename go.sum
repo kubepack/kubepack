@@ -689,6 +689,8 @@ github.com/kr/text v0.1.0 h1:45sCR5RtlFHMR4UwH9sdQ5TC8v0qDQCHnXt+kaKSTVE=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
 github.com/kubepack/application v0.8.4-0.20201117013009-57cb1e10e2ed h1:ENLY8BOTL/RBVaovsyM+8wyLkeQgUi84DiVRXEwpzt8=
 github.com/kubepack/application v0.8.4-0.20201117013009-57cb1e10e2ed/go.mod h1:fj5C7YmS+JrEpdbbVA4/Hh3d4brlQ/fIyr/aaJysEGk=
+github.com/kubepack/cli v0.0.0-20210116154246-47d1146e6fa0 h1:V0UTFx+VKHt1OJHcXRv/QRqtyP//wEO0mLCOskzKVfc=
+github.com/kubepack/cli v0.0.0-20210116154246-47d1146e6fa0/go.mod h1:trnJZpeWZPWdo9JZfOZXS3O/q4w2brz4sXB9k1uUMSY=
 github.com/kubepack/helm/v3 v3.2.2-0.20200523120511-a86fc03a6a93 h1:pdop/rlQ+mXa5Pr6SrFb+7l4VoS9lyVRCXHdejgefIA=
 github.com/kubepack/helm/v3 v3.2.2-0.20200523120511-a86fc03a6a93/go.mod h1:ZaXz/vzktgwjyGGFbUWtIQkscfE7WYoRGP2szqAFHR0=
 github.com/kubernetes-sigs/go-open-service-broker-client v0.0.0-20190909175253-906fa5f9c249/go.mod h1:s8wBC55/DEkNa3YMY1WLgpT33Ghpmw7v+waIxh15dYI=
@@ -1570,6 +1572,8 @@ k8s.io/utils v0.0.0-20200324210504-a9aa75ae1b89 h1:d4vVOjXm687F1iLSP2q3lyPPuyvTU
 k8s.io/utils v0.0.0-20200324210504-a9aa75ae1b89/go.mod h1:sZAwmy6armz5eXlNoLmJcl4F1QuKu7sr+mFQ0byX7Ew=
 kmodules.xyz/apiversion v0.2.0 h1:vAQYqZFm4xu4pbB1cAdHbFEPES6EQkcR4wc06xdTOWk=
 kmodules.xyz/apiversion v0.2.0/go.mod h1:oPX8g8LvlPdPX3Yc5YvCzJHQnw3YF/X4/jdW0b1am80=
+kmodules.xyz/apply v0.0.0-20210116151714-fd7ceb3d27af h1:DE1aa6Qlv/TKQCA+5a+qXJ0GpOyAwQRkZFxp5j01T88=
+kmodules.xyz/apply v0.0.0-20210116151714-fd7ceb3d27af/go.mod h1:nfm6EEM4OXLbvg5RxMsEHGvqpwgRHWEgdf7hg3hzMSQ=
 kmodules.xyz/client-go v0.0.0-20201105071625-0b277310b9b8 h1:zs2+yI/Ola5HjdtfP29XD76Bx5BO4WchC2uN9lkhxQM=
 kmodules.xyz/client-go v0.0.0-20201105071625-0b277310b9b8/go.mod h1:WXDwZBmvrcLgGcuO9iZpI9jcfPuDFfWbxA4EnhAFtGw=
 kmodules.xyz/client-go v0.0.0-20201230092550-8ca15cfcbefa h1:1a6/yWhBhxAXzvPsPXW4tg7l93pP2B9LsEZOe4ldGPE=

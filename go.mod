@@ -58,7 +58,7 @@ require (
 	sigs.k8s.io/yaml v1.2.0
 )
 
-replace kubepack.dev/cli => ../cli
+replace kubepack.dev/cli => github.com/kubepack/cli v0.0.0-20210116154246-47d1146e6fa0
 
 replace bitbucket.org/ww/goautoneg => gomodules.xyz/goautoneg v0.0.0-20120707110453-a547fc61f48d
 

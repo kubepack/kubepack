@@ -33,19 +33,8 @@ type ResourceID struct {
 	Version string `json:"version" protobuf:"bytes,2,opt,name=version"`
 	// Name is the plural name of the resource to serve.  It must match the name of the CustomResourceDefinition-registration
 	// too: plural.group and it must be all lowercase.
-	Name string `json:"name" protobuf:"bytes,3,opt,name=name"`
-	// Kind is the serialized kind of the resource.  It is normally CamelCase and singular.
-	Kind  string        `json:"kind" protobuf:"bytes,4,opt,name=kind"`
-	Scope ResourceScope `json:"scope" protobuf:"bytes,5,opt,name=scope,casttype=ResourceScope"`
+	Resource string `json:"resource" protobuf:"bytes,3,opt,name=resource"`
 }
-
-// ResourceScope is an enum defining the different scopes available to a custom resource
-type ResourceScope string
-
-const (
-	ClusterScoped   ResourceScope = "Cluster"
-	NamespaceScoped ResourceScope = "Namespaced"
-)
 
 type Feature struct {
 	Trait string `json:"trait" protobuf:"bytes,1,opt,name=trait"`

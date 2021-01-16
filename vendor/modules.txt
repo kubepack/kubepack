@@ -1385,6 +1385,8 @@ k8s.io/utils/pointer
 k8s.io/utils/trace
 # kmodules.xyz/apiversion v0.2.0
 kmodules.xyz/apiversion
+# kmodules.xyz/apply v0.0.0-20210116151714-fd7ceb3d27af
+kmodules.xyz/apply
 # kmodules.xyz/client-go v0.0.0-20201230092550-8ca15cfcbefa
 kmodules.xyz/client-go
 kmodules.xyz/client-go/admissionregistration/v1beta1
@@ -1424,9 +1426,8 @@ kmodules.xyz/webhook-runtime/admission/v1beta1
 kmodules.xyz/webhook-runtime/registry/admissionreview/v1beta1
 # kubepack.dev/chart-doc-gen v0.3.1-0.20210111011933-daa7c1d70a65
 kubepack.dev/chart-doc-gen/api
-# kubepack.dev/cli v0.0.0-20210116103944-7a7b45a70149 => ../cli
+# kubepack.dev/cli v0.0.0-20210116103944-7a7b45a70149 => github.com/kubepack/cli v0.0.0-20210116154246-47d1146e6fa0
 kubepack.dev/cli/pkg/action
-kubepack.dev/cli/pkg/apply
 kubepack.dev/cli/pkg/lib/action
 kubepack.dev/cli/pkg/storage/driver
 # kubepack.dev/lib-helm v0.2.1
