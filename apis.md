@@ -59,18 +59,20 @@ http://localhost:4000/deploy/orders/5902b772-319c-40c1-b260-68d81b7864fd/render/
 
 ## UI Edit mode
 
-- GET "/clusters/:cluster/editor/:group/:version/namespaces/:namespace/:resource/:releaseName/model"
+- PUT "/clusters/my_cluster/editor/model"
 
-`http://localhost:4000/clusters/my_cluster/editor/kubedb.com/v1alpha2/namespaces/demo/mongodbs/mymongo/model`
+`curl -X PUT -H "Content-Type: application/json" -d @./artifacts/mongodb-editor/mongodb_editor_model.json  http://localhost:4000/clusters/my_cluster/editor/model`
 
-- GET "/clusters/:cluster/editor/:group/:version/namespaces/:namespace/:resource/:releaseName/manifest"
+
+- GET "/clusters/:cluster/editor/manifest"
   - redundant apis
   - can be replaced by getting the model, then using the /editor apis
 
-`http://localhost:4000/clusters/my_cluster/editor/kubedb.com/v1alpha2/namespaces/demo/mongodbs/mymongo/manifest`
+`curl -X PUT -H "Content-Type: application/json" -d @./artifacts/mongodb-editor/mongodb_editor_model.json  http://localhost:4000/clusters/my_cluster/editor/manifest`
 
-- GET "/clusters/:cluster/editor/:group/:version/namespaces/:namespace/:resource/:releaseName/resources"
+
+- GET "/clusters/:cluster/editor/resources"
   - redundant apis
   - can be replaced by getting the model, then using the /editor apis
 
-`http://localhost:4000/clusters/my_cluster/editor/kubedb.com/v1alpha2/namespaces/demo/mongodbs/mymongo/resources`
+`curl -X PUT -H "Content-Type: application/json" -d @./artifacts/mongodb-editor/mongodb_editor_model.json  http://localhost:4000/clusters/my_cluster/editor/resources`
