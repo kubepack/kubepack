@@ -154,4 +154,4 @@ replace k8s.io/kubernetes => github.com/kmodules/kubernetes v1.19.0-alpha.0.0.20
 
 replace k8s.io/utils => k8s.io/utils v0.0.0-20200324210504-a9aa75ae1b89
 
-replace sigs.k8s.io/application => github.com/kubepack/application v0.8.4-0.20201117013009-57cb1e10e2ed
+replace sigs.k8s.io/application => github.com/kmodules/application v0.8.4-0.20201117013009-57cb1e10e2ed

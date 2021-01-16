@@ -1444,7 +1444,7 @@ kubepack.dev/lib-helm/repo
 # sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.0.7
 sigs.k8s.io/apiserver-network-proxy/konnectivity-client/pkg/client
 sigs.k8s.io/apiserver-network-proxy/konnectivity-client/proto/client
-# sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4 => github.com/kubepack/application v0.8.4-0.20201117013009-57cb1e10e2ed
+# sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4 => github.com/kmodules/application v0.8.4-0.20201117013009-57cb1e10e2ed
 sigs.k8s.io/application/api/app/v1beta1
 sigs.k8s.io/application/client/clientset/versioned
 sigs.k8s.io/application/client/clientset/versioned/scheme
