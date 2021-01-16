@@ -286,9 +286,12 @@ func decodeReleaseFromApp(app *v1beta1.Application, di dynamic.Interface, cl dis
 	rls.Info.FirstDeployed, _ = helmtime.Parse(time.RFC3339, app.Annotations["helm.sh/first-deployed"])
 	rls.Info.LastDeployed, _ = helmtime.Parse(time.RFC3339, app.Annotations["helm.sh/last-deployed"])
 
+	rlm := lib.ReleaseMetadata{
+		Name:      rls.Name,
+		Namespace: rls.Namespace,
+	}
 	mapper := restmapper.NewDeferredDiscoveryRESTMapper(cl)
-
-	tpl, err := lib.EditorChartValueManifest(app, mapper, di, rls.Name, rls.Namespace, rls.Chart)
+	tpl, err := lib.EditorChartValueManifest(app, mapper, di, rlm, rls.Chart)
 	if err != nil {
 		return nil, err
 	}

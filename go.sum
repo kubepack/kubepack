@@ -1587,7 +1587,7 @@ kmodules.xyz/webhook-runtime v0.0.0-20201105073856-2dc7382b88c6 h1:9+EIwxUrXrM8Q
 kmodules.xyz/webhook-runtime v0.0.0-20201105073856-2dc7382b88c6/go.mod h1:xLgewoOzwR5ZrVOHQ2SR0P4E7tgCyBWbYlUawEXgeF4=
 kubepack.dev/chart-doc-gen v0.3.1-0.20210111011933-daa7c1d70a65 h1:eD7FHjILD3x3lca1SE3tJmdTWjrmG7bUA+jBqwguzKY=
 kubepack.dev/chart-doc-gen v0.3.1-0.20210111011933-daa7c1d70a65/go.mod h1:P8LlQGPjdohr/Og6Pvnhv7vxiTX8oRHoktRay8leFM4=
-kubepack.dev/kubepack v0.2.2-0.20210113140616-c2a5c3bf8f66/go.mod h1:UmRckBjn21/RTFz4SQO24xYMqxFhL/q1+CA9jIkMG2c=
+kubepack.dev/kubepack v0.2.2-0.20210116103714-3dc228d948f4/go.mod h1:h4c5AfIcLC+dyGvibgHaAAQnw/JenBAf50Nx0vk7dTQ=
 kubepack.dev/lib-helm v0.2.1 h1:KnRfYRuepJT7Zgfi6iJHYrF3SFfGjrvWLMxhPOsmy/I=
 kubepack.dev/lib-helm v0.2.1/go.mod h1:rrfYDaHg26/HT2E7pp2o5TKdf5a/YOtbFtUr6SLab6I=
 modernc.org/cc v1.0.0/go.mod h1:1Sk4//wdnYJiUIxnW8ddKpaOJCF37yAdqYnkxUpaYxw=
