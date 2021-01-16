@@ -186,7 +186,7 @@ func NewCmdFuse() *cobra.Command {
 					panic(err)
 				}
 
-				resourceTemplate := `{{"{{- with .Values.resources"}}{{ .key }} {{"}}"}}
+				resourceTemplate := `{{"{{- with .Values.resources."}}{{ .key }} {{"}}"}}
 {{"{{- . | toYaml }}"}}
 {{"{{- end }}"}}
 `

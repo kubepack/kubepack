@@ -17,10 +17,12 @@ limitations under the License.
 package handler
 
 import (
+	"errors"
+
 	"kubepack.dev/cli/pkg/lib/action"
 	"kubepack.dev/kubepack/pkg/lib"
 
-	"gopkg.in/macaron.v1"
+	"github.com/mitchellh/mapstructure"
 	"helm.sh/helm/v3/pkg/release"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -28,22 +30,33 @@ import (
 	"kmodules.xyz/resource-metadata/hub"
 )
 
-func ApplyResource(ctx *macaron.Context, model unstructured.Unstructured, f cmdutil.Factory) (*release.Release, error) {
-	gvr := schema.GroupVersionResource{
-		Group:    ctx.Params(":group"),
-		Version:  ctx.Params(":version"),
-		Resource: ctx.Params(":resource"),
+func ApplyResource(f cmdutil.Factory, model unstructured.Unstructured, skipCRds bool) (*release.Release, error) {
+	var tm lib.OptionsSpec
+
+	config := &mapstructure.DecoderConfig{
+		Metadata: nil,
+		TagName:  "json",
+		Result:   &tm,
 	}
-	rlm := lib.ReleaseMetadata{
-		Name:      ctx.Params(":releaseName"),
-		Namespace: ctx.Params(":namespace"),
+	decoder, err := mapstructure.NewDecoder(config)
+	if err != nil {
+		return nil, err
 	}
-	rd, err := hub.NewRegistryOfKnownResources().LoadByGVR(gvr)
+	err = decoder.Decode(model.Object)
+	if err != nil {
+		return nil, errors.New("failed to parse Metadata for values")
+	}
+
+	rd, err := hub.NewRegistryOfKnownResources().LoadByGVR(schema.GroupVersionResource{
+		Group:    tm.Resource.Group,
+		Version:  tm.Resource.Version,
+		Resource: tm.Resource.Name,
+	})
 	if err != nil {
 		return nil, err
 	}
 
-	applier, err := action.NewApplier(f, rlm.Namespace, "applications")
+	applier, err := action.NewApplier(f, tm.Release.Namespace, "applications")
 	if err != nil {
 		return nil, err
 	}
@@ -64,10 +77,10 @@ func ApplyResource(ctx *macaron.Context, model unstructured.Unstructured, f cmdu
 	opts2.Timeout = 0
 	opts2.Description = "Apply editor"
 	opts2.Devel = false
-	opts2.Namespace = rlm.Namespace
-	opts2.ReleaseName = rlm.Name
+	opts2.Namespace = tm.Release.Namespace
+	opts2.ReleaseName = tm.Resource.Name
 	opts2.Atomic = false
-	opts2.SkipCRDs = false
+	opts2.SkipCRDs = skipCRds
 	opts2.SubNotes = false
 	opts2.DisableOpenAPIValidation = false
 	opts2.IncludeCRDs = false
@@ -76,18 +89,13 @@ func ApplyResource(ctx *macaron.Context, model unstructured.Unstructured, f cmdu
 	return applier.Run()
 }
 
-func DeleteResource(ctx *macaron.Context, f cmdutil.Factory) (*release.UninstallReleaseResponse, error) {
-	rlm := lib.ReleaseMetadata{
-		Name:      ctx.Params(":releaseName"),
-		Namespace: ctx.Params(":namespace"),
-	}
-
-	cmd, err := action.NewUninstaller(f, rlm.Namespace, "applications")
+func DeleteResource(f cmdutil.Factory, opts lib.OptionsSpec) (*release.UninstallReleaseResponse, error) {
+	cmd, err := action.NewUninstaller(f, opts.Release.Namespace, "applications")
 	if err != nil {
 		return nil, err
 	}
 
-	cmd.WithReleaseName(rlm.Name)
+	cmd.WithReleaseName(opts.Release.Name)
 	cmd.WithOptions(action.UninstallOptions{
 		DisableHooks: false,
 		DryRun:       false,

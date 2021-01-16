@@ -33,8 +33,6 @@ import (
 	"kubepack.dev/lib-helm/getter"
 	"kubepack.dev/lib-helm/repo"
 
-	gomime "github.com/cubewise-code/go-mime"
-	"github.com/gabriel-vasile/mimetype"
 	"github.com/go-macaron/binding"
 	"github.com/google/uuid"
 	"github.com/spf13/pflag"
@@ -186,8 +184,6 @@ func main() {
 
 	// PUBLIC
 	m.Get("/packageview/files/*", binding.Json(v1alpha1.ChartRepoRef{}), func(ctx *macaron.Context, params v1alpha1.ChartRepoRef) {
-		// TODO: verify params
-
 		chrt, err := lib.DefaultRegistry.GetChart(params.URL, params.Name, params.Version)
 		if err != nil {
 			ctx.Error(http.StatusInternalServerError, err.Error())
@@ -195,20 +191,20 @@ func main() {
 		}
 
 		filename := ctx.Params("*")
+		format := lib.DataFormat(ctx.Params("format"))
 		for _, f := range chrt.Raw {
 			if f.Name == filename {
-				ext := filepath.Ext(f.Name)
-				if ct := gomime.TypeByExtension(ext); ct != "" {
-					ctx.Header().Set("Content-Type", ct)
-				} else {
-					ct := mimetype.Detect(f.Data)
-					ctx.Header().Set("Content-Type", ct.String())
+				out, ct, err := lib.ConvertFormat(f, lib.DataFormat(format))
+				if err != nil {
+					ctx.Error(http.StatusInternalServerError, err.Error())
+					return
 				}
-				_, _ = ctx.Write(f.Data)
+
+				ctx.Header().Set("Content-Type", ct)
+				_, _ = ctx.Write(out)
 				return
 			}
 		}
-
 		ctx.WriteHeader(http.StatusNotFound)
 	})
 
@@ -228,6 +224,17 @@ func main() {
 			model, err := lib.GenerateEditorModel(lib.DefaultRegistry, gvr, opts)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+
+			format := lib.DataFormat(ctx.Params("format"))
+			if format == lib.YAMLFormat {
+				out, err := yaml.Marshal(model)
+				if err != nil {
+					ctx.Error(http.StatusInternalServerError, err.Error())
+					return
+				}
+				_, _ = ctx.Write(out)
 				return
 			}
 			ctx.JSON(http.StatusOK, model)
@@ -267,7 +274,30 @@ func main() {
 			if ctx.QueryBool("skipCRDs") {
 				tpls.CRDs = nil
 			}
-			ctx.JSON(http.StatusOK, tpls)
+
+			out := struct {
+				CRDs      []string `json:"crds,omitempty"`
+				Resources []string `json:"resources,omitempty"`
+			}{}
+			format := lib.DataFormat(ctx.Params("format"))
+
+			for _, crd := range tpls.CRDs {
+				data, err := lib.Marshal(crd, format)
+				if err != nil {
+					ctx.Error(http.StatusInternalServerError, err.Error())
+					return
+				}
+				out.CRDs = append(out.CRDs, string(data))
+			}
+			for _, r := range tpls.Resources {
+				data, err := lib.Marshal(r, format)
+				if err != nil {
+					ctx.Error(http.StatusInternalServerError, err.Error())
+					return
+				}
+				out.Resources = append(out.Resources, string(data))
+			}
+			ctx.JSON(http.StatusOK, out)
 		})
 	})
 
@@ -589,7 +619,14 @@ func main() {
 					tpls[i].CRDs = nil
 				}
 			}
-			ctx.JSON(http.StatusOK, tpls)
+
+			format := lib.DataFormat(ctx.Params("format"))
+			out, err := lib.ConvertChartTemplates(tpls, format)
+			if err != nil {
+				ctx.Error(http.StatusInternalServerError, err.Error())
+				return
+			}
+			ctx.JSON(http.StatusOK, out)
 		})
 		m.Get("/:id/helm2", func(ctx *macaron.Context) {
 			bs, err := lib.NewTestBlobStore()
@@ -678,70 +715,59 @@ func main() {
 
 	// PRIVATE
 	m.Group("/clusters/:cluster", func() {
-		m.Delete("/editor/namespaces/:namespace/releases/:releaseName", func(ctx *macaron.Context) {
-			rls, err := handler.DeleteResource(ctx, f)
-			if err != nil {
-				ctx.Error(http.StatusInternalServerError, err.Error())
-				return
-			}
-			ctx.JSON(http.StatusOK, rls)
-		})
-
-		m.Group("/editor/:group/:version/namespaces/:namespace/:resource/:releaseName", func() {
+		m.Group("/editor", func() {
 			// create / update / apply / install
 			m.Put("", binding.Json(unstructured.Unstructured{}), func(ctx *macaron.Context, model unstructured.Unstructured) {
-				rls, err := handler.ApplyResource(ctx, model, f)
+				rls, err := handler.ApplyResource(f, model, !ctx.QueryBool("installCRDs"))
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
 					return
 				}
-				ctx.JSON(http.StatusOK, rls)
+				ctx.JSON(http.StatusOK, rls.Info)
 			})
 
-			// GET Model from Existing Installations
-			m.Get("/model", func(ctx *macaron.Context) {
+			m.Delete("", binding.Json(lib.OptionsSpec{}), func(ctx *macaron.Context, model lib.OptionsSpec) {
+				rls, err := handler.DeleteResource(f, model)
+				if err != nil {
+					ctx.Error(http.StatusInternalServerError, err.Error())
+					return
+				}
+				_, _ = ctx.Write([]byte(rls.Info))
+			})
+
+			// POST Model from Existing Installations
+			m.Post("/model", binding.Json(lib.OptionsSpec{}), func(ctx *macaron.Context, model lib.OptionsSpec) {
 				cfg, err := clientcmd.BuildConfigFromFlags("", filepath.Join(homedir.HomeDir(), ".kube", "config"))
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
 					return
 				}
 
-				gvr := schema.GroupVersionResource{
-					Group:    ctx.Params(":group"),
-					Version:  ctx.Params(":version"),
-					Resource: ctx.Params(":resource"),
-				}
-				opts := lib.ReleaseMetadata{
-					Name:      ctx.Params(":releaseName"),
-					Namespace: ctx.Params(":namespace"),
-				}
-				tpl, err := lib.LoadEditorModel(cfg, lib.DefaultRegistry, gvr, opts)
+				tpl, err := lib.LoadEditorModel(cfg, lib.DefaultRegistry, model)
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
 					return
 				}
-				ctx.JSON(http.StatusOK, tpl.Values)
+
+				format := lib.DataFormat(ctx.Params("format"))
+				out, err := lib.Marshal(tpl.Values, format)
+				if err != nil {
+					ctx.Error(http.StatusInternalServerError, err.Error())
+					return
+				}
+				_, _ = ctx.Write(out)
 			})
 
 			// redundant apis
 			// can be replaced by getting the model, then using the /editor apis
-			m.Get("/manifest", func(ctx *macaron.Context) {
+			m.Post("/manifest", binding.Json(lib.OptionsSpec{}), func(ctx *macaron.Context, model lib.OptionsSpec) {
 				cfg, err := clientcmd.BuildConfigFromFlags("", filepath.Join(homedir.HomeDir(), ".kube", "config"))
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
 					return
 				}
 
-				gvr := schema.GroupVersionResource{
-					Group:    ctx.Params(":group"),
-					Version:  ctx.Params(":version"),
-					Resource: ctx.Params(":resource"),
-				}
-				opts := lib.ReleaseMetadata{
-					Name:      ctx.Params(":releaseName"),
-					Namespace: ctx.Params(":namespace"),
-				}
-				tpl, err := lib.LoadEditorModel(cfg, lib.DefaultRegistry, gvr, opts)
+				tpl, err := lib.LoadEditorModel(cfg, lib.DefaultRegistry, model)
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
 					return
@@ -751,32 +777,31 @@ func main() {
 
 			// redundant apis
 			// can be replaced by getting the model, then using the /editor apis
-			m.Get("/resources", func(ctx *macaron.Context) {
+			m.Post("/resources", binding.Json(lib.OptionsSpec{}), func(ctx *macaron.Context, model lib.OptionsSpec) {
 				cfg, err := clientcmd.BuildConfigFromFlags("", filepath.Join(homedir.HomeDir(), ".kube", "config"))
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
 					return
 				}
 
-				gvr := schema.GroupVersionResource{
-					Group:    ctx.Params(":group"),
-					Version:  ctx.Params(":version"),
-					Resource: ctx.Params(":resource"),
-				}
-				opts := lib.ReleaseMetadata{
-					Name:      ctx.Params(":releaseName"),
-					Namespace: ctx.Params(":namespace"),
-				}
-				tpl, err := lib.LoadEditorModel(cfg, lib.DefaultRegistry, gvr, opts)
+				tpl, err := lib.LoadEditorModel(cfg, lib.DefaultRegistry, model)
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
 					return
 				}
 
 				out := struct {
-					Resources []*unstructured.Unstructured `json:"resources,omitempty"`
-				}{
-					tpl.Resources,
+					Resources []string `json:"resources,omitempty"`
+				}{}
+				format := lib.DataFormat(ctx.Params("format"))
+
+				for _, r := range tpl.Resources {
+					data, err := lib.Marshal(r, format)
+					if err != nil {
+						ctx.Error(http.StatusInternalServerError, err.Error())
+						return
+					}
+					out.Resources = append(out.Resources, string(data))
 				}
 				ctx.JSON(http.StatusOK, out)
 			})

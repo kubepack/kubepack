@@ -47,8 +47,14 @@ import (
 	"sigs.k8s.io/yaml"
 )
 
+//type EditorModel struct {
+//	Metadata  `json:"metadata,omitempty"`
+//	Resources map[string]interface{} `json:"resources,omitempty"`
+//}
+
 type Metadata struct {
-	Release ReleaseMetadata `json:"release,omitempty"`
+	Resource v1alpha1.ResourceID `json:"resource,omitempty"`
+	Release  ReleaseMetadata     `json:"release,omitempty"`
 }
 
 type ReleaseMetadata struct {
@@ -94,6 +100,25 @@ type ChartTemplate struct {
 	CRDs              []BucketJsonFile             `json:"crds,omitempty"`
 	Manifest          *BucketObject                `json:"manifest,omitempty"`
 	Resources         []*unstructured.Unstructured `json:"resources,omitempty"`
+}
+
+type BucketFileOutput struct {
+	// URL of the file in bucket
+	URL string `json:"url,omitempty"`
+	// Bucket key for this file
+	Key      string `json:"key,omitempty"`
+	Filename string `json:"filename,omitempty"`
+	Data     string `json:"data,omitempty"`
+}
+
+type ChartTemplateOutput struct {
+	v1alpha1.ChartRef `json:",inline"`
+	Version           string             `json:"version,omitempty"`
+	ReleaseName       string             `json:"releaseName,omitempty"`
+	Namespace         string             `json:"namespace,omitempty"`
+	CRDs              []BucketFileOutput `json:"crds,omitempty"`
+	Manifest          *BucketObject      `json:"manifest,omitempty"`
+	Resources         []string           `json:"resources,omitempty"`
 }
 
 type EditorTemplate struct {
@@ -180,8 +205,12 @@ func RenderOrderTemplate(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 	return buf.String(), tpls, nil
 }
 
-func LoadEditorModel(cfg *rest.Config, reg *repo.Registry, gvr schema.GroupVersionResource, opts ReleaseMetadata) (*EditorTemplate, error) {
-	rd, err := hub.NewRegistryOfKnownResources().LoadByGVR(gvr)
+func LoadEditorModel(cfg *rest.Config, reg *repo.Registry, opts OptionsSpec) (*EditorTemplate, error) {
+	rd, err := hub.NewRegistryOfKnownResources().LoadByGVR(schema.GroupVersionResource{
+		Group:    opts.Resource.Group,
+		Version:  opts.Resource.Version,
+		Resource: opts.Resource.Name,
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -205,14 +234,15 @@ func LoadEditorModel(cfg *rest.Config, reg *repo.Registry, gvr schema.GroupVersi
 		return nil, err
 	}
 
-	app, err := ac.AppV1beta1().Applications(opts.Namespace).Get(context.TODO(), opts.Name, metav1.GetOptions{})
+	app, err := ac.AppV1beta1().Applications(opts.Release.Namespace).Get(context.TODO(), opts.Release.Name, metav1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
-	return EditorChartValueManifest(app, mapper, dc, opts.Name, opts.Namespace, chrt.Chart)
+
+	return EditorChartValueManifest(app, mapper, dc, opts.Metadata, chrt.Chart)
 }
 
-func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.DeferredDiscoveryRESTMapper, dc dynamic.Interface, releaseName, namespace string, chrt *chart.Chart) (*EditorTemplate, error) {
+func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.DeferredDiscoveryRESTMapper, dc dynamic.Interface, mt Metadata, chrt *chart.Chart) (*EditorTemplate, error) {
 	selector, err := metav1.LabelSelectorAsSelector(app.Spec.Selector)
 	if err != nil {
 		return nil, err
@@ -220,7 +250,7 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 	labelSelector := selector.String()
 
 	var buf bytes.Buffer
-	values := map[string]interface{}{}
+	resourceMap := map[string]interface{}{}
 
 	// detect apiVersion from defaultValues in chart
 	gkToVersion := map[metav1.GroupKind]string{}
@@ -266,7 +296,7 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 		}
 		var rc dynamic.ResourceInterface
 		if mapping.Scope == meta.RESTScopeNamespace {
-			rc = dc.Resource(mapping.Resource).Namespace(namespace)
+			rc = dc.Resource(mapping.Resource).Namespace(mt.Release.Namespace)
 		} else {
 			rc = dc.Resource(mapping.Resource)
 		}
@@ -290,20 +320,23 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 			}
 			buf.Write(data)
 
-			rsKey, err := ResourceKey(obj.GetAPIVersion(), obj.GetKind(), releaseName, obj.GetName())
+			rsKey, err := ResourceKey(obj.GetAPIVersion(), obj.GetKind(), mt.Release.Name, obj.GetName())
 			if err != nil {
 				return nil, err
 			}
-			if _, ok := values[rsKey]; ok {
+			if _, ok := resourceMap[rsKey]; ok {
 				return nil, fmt.Errorf("duplicate resource key %s for application %s/%s", rsKey, app.Namespace, app.Name)
 			}
-			values[rsKey] = &obj
+			resourceMap[rsKey] = &obj
 		}
 	}
 
 	tpl := EditorTemplate{
-		Manifest:  buf.Bytes(),
-		Values:    values,
+		Manifest: buf.Bytes(),
+		Values: map[string]interface{}{
+			"metadata":  mt,
+			"resources": resourceMap,
+		},
 		Resources: resources,
 	}
 	return &tpl, nil
