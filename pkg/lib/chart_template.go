@@ -239,10 +239,10 @@ func LoadEditorModel(cfg *rest.Config, reg *repo.Registry, opts OptionsSpec) (*E
 		return nil, err
 	}
 
-	return EditorChartValueManifest(app, mapper, dc, opts.Metadata, chrt.Chart)
+	return EditorChartValueManifest(app, mapper, dc, opts.Metadata.Release, chrt.Chart)
 }
 
-func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.DeferredDiscoveryRESTMapper, dc dynamic.Interface, mt Metadata, chrt *chart.Chart) (*EditorTemplate, error) {
+func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.DeferredDiscoveryRESTMapper, dc dynamic.Interface, mt ReleaseMetadata, chrt *chart.Chart) (*EditorTemplate, error) {
 	selector, err := metav1.LabelSelectorAsSelector(app.Spec.Selector)
 	if err != nil {
 		return nil, err
@@ -296,7 +296,7 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 		}
 		var rc dynamic.ResourceInterface
 		if mapping.Scope == meta.RESTScopeNamespace {
-			rc = dc.Resource(mapping.Resource).Namespace(mt.Release.Namespace)
+			rc = dc.Resource(mapping.Resource).Namespace(mt.Namespace)
 		} else {
 			rc = dc.Resource(mapping.Resource)
 		}
@@ -320,7 +320,7 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 			}
 			buf.Write(data)
 
-			rsKey, err := ResourceKey(obj.GetAPIVersion(), obj.GetKind(), mt.Release.Name, obj.GetName())
+			rsKey, err := ResourceKey(obj.GetAPIVersion(), obj.GetKind(), mt.Name, obj.GetName())
 			if err != nil {
 				return nil, err
 			}
