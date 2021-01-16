@@ -1,5 +1,12 @@
 {
   "metadata": {
+    "resource": {
+      "group": "kubedb.com",
+      "kind": "MongoDB",
+      "name": "mongodbs",
+      "scope": "Namespaced",
+      "version": "v1alpha2"
+    },
     "release": {
       "name": "mymongo",
       "namespace": "demo"

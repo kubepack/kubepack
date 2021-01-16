@@ -26,17 +26,17 @@
 
 `http://localhost:4000/packageview/files/values.yaml?url=https://bundles.byte.builders/ui/&name=mongodb-editor-options&version=v0.1.0&format=json`
 
-- POST "/editor/:group/:version/:resource/model" (Initial Model)
+- PUT "/editor/model" (Initial Model)
 
-`curl -X POST -H "Content-Type: application/json" -d @./artifacts/mongodb-editor/mongodb_options_model.json http://localhost:4000/editor/kubedb.com/v1alpha2/mongodbs/model > ./artifacts/mongodb-editor/mongodb_editor_model.json`
+`curl -X PUT -H "Content-Type: application/json" -d @./artifacts/mongodb-editor/mongodb_options_model.json http://localhost:4000/editor/model > ./artifacts/mongodb-editor/mongodb_editor_model.json`
 
-- POST "/editor/:group/:version/:resource/manifest" (Preview API)
+- PUT "/editor/manifest" (Preview API)
 
-`curl -X POST -H "Content-Type: application/json" -d @./artifacts/mongodb-editor/mongodb_editor_model.json  http://localhost:4000/editor/kubedb.com/v1alpha2/mongodbs/mymongo/namespaces/demo/manifest > ./artifacts/mongodb-editor/mongodb_editor_manifest.yaml`
+`curl -X PUT -H "Content-Type: application/json" -d @./artifacts/mongodb-editor/mongodb_editor_model.json http://localhost:4000/editor/manifest > ./artifacts/mongodb-editor/mongodb_editor_manifest.yaml`
 
-- POST "/editor/:group/:version/:resource/resources" (Preview API)
+- PUT "/editor/resources" (Preview API)
 
-`curl -X POST -H "Content-Type: application/json" -d @./artifacts/mongodb-editor/mongodb_editor_model.json  http://localhost:4000/editor/kubedb.com/v1alpha2/mongodbs/mymongo/namespaces/demo/resources?skipCRDs=true | jq '.' > ./artifacts/mongodb-editor/mongodb_editor_resources.json`
+`curl -X PUT -H "Content-Type: application/json" -d @./artifacts/mongodb-editor/mongodb_editor_model.json http://localhost:4000/editor/resources?skipCRDs=true | jq '.' > ./artifacts/mongodb-editor/mongodb_editor_resources.json`
 
 - POST "/deploy/orders"
 
@@ -49,9 +49,9 @@ http://localhost:4000/deploy/orders/5902b772-319c-40c1-b260-68d81b7864fd/render/
 
 http://localhost:4000/deploy/orders/5902b772-319c-40c1-b260-68d81b7864fd/render/resources?skipCRDs=true
 
-- PUT "/clusters/:cluster/editor/:group/:version/namespaces/:namespace/:resource/:releaseName" (apply/install/update app API)
+- PUT "/clusters/:cluster/editor" (apply/install/update app API)
 
-`curl -X PUT -H "Content-Type: application/json" -d @./artifacts/mongodb-editor/mongodb_editor_model.json  http://localhost:4000/clusters/my_cluster/editor/kubedb.com/v1alpha2/namespaces/demo/mongodbs/mymongo`
+`curl -X PUT -H "Content-Type: application/json" -d @./artifacts/mongodb-editor/mongodb_editor_model.json  http://localhost:4000/clusters/my_cluster/editor?installCRDs=true`
 
 - DELETE "/clusters/:cluster/editor/namespaces/:namespace/releases/:releaseName" (Delete app api)
 

@@ -127,6 +127,11 @@ type EditorTemplate struct {
 	Resources []*unstructured.Unstructured `json:"resources,omitempty"`
 }
 
+type ResourceOutput struct {
+	CRDs      []string `json:"crds,omitempty"`
+	Resources []string `json:"resources,omitempty"`
+}
+
 func RenderOrderTemplate(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order) (string, []ChartTemplate, error) {
 	var buf bytes.Buffer
 	var tpls []ChartTemplate
@@ -239,10 +244,10 @@ func LoadEditorModel(cfg *rest.Config, reg *repo.Registry, opts OptionsSpec) (*E
 		return nil, err
 	}
 
-	return EditorChartValueManifest(app, mapper, dc, opts.Metadata.Release, chrt.Chart)
+	return EditorChartValueManifest(app, mapper, dc, opts.Metadata, chrt.Chart)
 }
 
-func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.DeferredDiscoveryRESTMapper, dc dynamic.Interface, mt ReleaseMetadata, chrt *chart.Chart) (*EditorTemplate, error) {
+func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.DeferredDiscoveryRESTMapper, dc dynamic.Interface, mt Metadata, chrt *chart.Chart) (*EditorTemplate, error) {
 	selector, err := metav1.LabelSelectorAsSelector(app.Spec.Selector)
 	if err != nil {
 		return nil, err
@@ -254,7 +259,7 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 
 	// detect apiVersion from defaultValues in chart
 	gkToVersion := map[metav1.GroupKind]string{}
-	for rsKey, x := range chrt.Values {
+	for rsKey, x := range chrt.Values["resources"].(map[string]interface{}) {
 		var tm metav1.TypeMeta
 
 		config := &mapstructure.DecoderConfig{
@@ -296,7 +301,7 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 		}
 		var rc dynamic.ResourceInterface
 		if mapping.Scope == meta.RESTScopeNamespace {
-			rc = dc.Resource(mapping.Resource).Namespace(mt.Namespace)
+			rc = dc.Resource(mapping.Resource).Namespace(mt.Release.Namespace)
 		} else {
 			rc = dc.Resource(mapping.Resource)
 		}
@@ -320,7 +325,7 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 			}
 			buf.Write(data)
 
-			rsKey, err := ResourceKey(obj.GetAPIVersion(), obj.GetKind(), mt.Name, obj.GetName())
+			rsKey, err := ResourceKey(obj.GetAPIVersion(), obj.GetKind(), mt.Release.Name, obj.GetName())
 			if err != nil {
 				return nil, err
 			}
@@ -384,7 +389,7 @@ func GenerateEditorModel(reg *repo.Registry, opts unstructured.Unstructured) (*u
 		return nil, err
 	}
 
-	modelValues := map[string]interface{}{}
+	resoourceValues := map[string]interface{}{}
 	_, manifest := f1.Result()
 	err = ProcessResources(manifest, func(obj *unstructured.Unstructured) error {
 		rsKey, err := ResourceKey(obj.GetAPIVersion(), obj.GetKind(), spec.Metadata.Release.Name, obj.GetName())
@@ -393,13 +398,18 @@ func GenerateEditorModel(reg *repo.Registry, opts unstructured.Unstructured) (*u
 		}
 
 		// values
-		modelValues[rsKey] = obj.Object
+		resoourceValues[rsKey] = obj.Object
 		return nil
 	})
 	if err != nil {
 		return nil, err
 	}
-	return &unstructured.Unstructured{Object: modelValues}, err
+	return &unstructured.Unstructured{
+		Object: map[string]interface{}{
+			"metadata":  opts.Object["metadata"],
+			"resources": resoourceValues,
+		},
+	}, err
 }
 
 func RenderChartTemplate(reg *repo.Registry, opts unstructured.Unstructured) (string, *ChartTemplate, error) {

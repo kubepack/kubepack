@@ -1,3 +1,5 @@
-{{- with .Values.resources.stashAppscodeComBackupConfiguration }}
+{{- with .Values.resources }}
+{{- with .stashAppscodeComBackupConfiguration }}
 {{- . | toYaml }}
+{{- end }}
 {{- end }}

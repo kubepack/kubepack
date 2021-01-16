@@ -190,7 +190,7 @@ func main() {
 		}
 
 		filename := ctx.Params("*")
-		format := lib.DataFormat(ctx.Query("format"))
+		format := lib.NewDataFormat(ctx.QueryTrim("format"), lib.JsonFormat)
 		for _, f := range chrt.Raw {
 			if f.Name == filename {
 				out, ct, err := lib.ConvertFormat(f, lib.DataFormat(format))
@@ -220,7 +220,7 @@ func main() {
 				return
 			}
 
-			format := lib.DataFormat(ctx.Query("format"))
+			format := lib.NewDataFormat(ctx.QueryTrim("format"), lib.JsonFormat)
 			if format == lib.YAMLFormat {
 				out, err := yaml.Marshal(model)
 				if err != nil {
@@ -250,11 +250,8 @@ func main() {
 				tpls.CRDs = nil
 			}
 
-			out := struct {
-				CRDs      []string `json:"crds,omitempty"`
-				Resources []string `json:"resources,omitempty"`
-			}{}
-			format := lib.DataFormat(ctx.Query("format"))
+			var out lib.ResourceOutput
+			format := lib.NewDataFormat(ctx.QueryTrim("format"), lib.YAMLFormat)
 
 			for _, crd := range tpls.CRDs {
 				data, err := lib.Marshal(crd, format)
@@ -272,7 +269,7 @@ func main() {
 				}
 				out.Resources = append(out.Resources, string(data))
 			}
-			ctx.JSON(http.StatusOK, out)
+			ctx.JSON(http.StatusOK, &out)
 		})
 	})
 
@@ -595,7 +592,7 @@ func main() {
 				}
 			}
 
-			format := lib.DataFormat(ctx.Query("format"))
+			format := lib.NewDataFormat(ctx.QueryTrim("format"), lib.YAMLFormat)
 			out, err := lib.ConvertChartTemplates(tpls, format)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
@@ -724,7 +721,7 @@ func main() {
 					return
 				}
 
-				format := lib.DataFormat(ctx.Query("format"))
+				format := lib.NewDataFormat(ctx.QueryTrim("format"), lib.JsonFormat)
 				out, err := lib.Marshal(tpl.Values, format)
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
@@ -765,10 +762,8 @@ func main() {
 					return
 				}
 
-				out := struct {
-					Resources []string `json:"resources,omitempty"`
-				}{}
-				format := lib.DataFormat(ctx.Query("format"))
+				var out lib.ResourceOutput
+				format := lib.NewDataFormat(ctx.QueryTrim("format"), lib.YAMLFormat)
 
 				for _, r := range tpl.Resources {
 					data, err := lib.Marshal(r, format)

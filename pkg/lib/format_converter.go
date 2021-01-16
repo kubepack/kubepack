@@ -21,6 +21,17 @@ const (
 	YAMLFormat DataFormat = "yaml"
 )
 
+func NewDataFormat(format string, def DataFormat) DataFormat {
+	switch format {
+	case string(YAMLFormat):
+		return YAMLFormat
+	case string(JsonFormat):
+		return JsonFormat
+	default:
+		return def
+	}
+}
+
 func Marshal(v interface{}, format DataFormat) ([]byte, error) {
 	if format == JsonFormat {
 		return json.Marshal(v)

@@ -186,8 +186,10 @@ func NewCmdFuse() *cobra.Command {
 					panic(err)
 				}
 
-				resourceTemplate := `{{"{{- with .Values.resources."}}{{ .key }} {{"}}"}}
+				resourceTemplate := `{{"{{- with .Values.resources }}"}}
+{{"{{- with ."}}{{ .key }}{{" }}"}}
 {{"{{- . | toYaml }}"}}
+{{"{{- end }}"}}
 {{"{{- end }}"}}
 `
 				funcMap := sprig.TxtFuncMap()
