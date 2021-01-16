@@ -68,6 +68,7 @@ import (
 	authv1client "k8s.io/client-go/kubernetes/typed/authorization/v1"
 	"k8s.io/client-go/rest"
 	"kmodules.xyz/client-go/apiextensions"
+	"kmodules.xyz/client-go/tools/parser"
 	wait2 "kmodules.xyz/client-go/tools/wait"
 	"kmodules.xyz/resource-metadata/hub"
 	"sigs.k8s.io/application/api/app/v1beta1"
@@ -1324,7 +1325,7 @@ func (x *ApplicationGenerator) Result() *v1beta1.Application {
 var empty = struct{}{}
 
 func (x *ApplicationGenerator) extractComponentAttributes(data []byte) error {
-	return ProcessResources(data, func(obj *unstructured.Unstructured) error {
+	return parser.ProcessResources(data, func(obj *unstructured.Unstructured) error {
 		gv, err := schema.ParseGroupVersion(obj.GetAPIVersion())
 		if err != nil {
 			return err
@@ -1346,7 +1347,7 @@ func (x *ApplicationGenerator) extractComponentAttributes(data []byte) error {
 }
 
 func ExtractResourceAttributes(data []byte, verb string, reg *hub.Registry, attrs map[authorization.ResourceAttributes]*ResourcePermission) error {
-	return ProcessResources(data, func(obj *unstructured.Unstructured) error {
+	return parser.ProcessResources(data, func(obj *unstructured.Unstructured) error {
 		gvr, err := reg.GVR(schema.FromAPIVersionAndKind(obj.GetAPIVersion(), obj.GetKind()))
 		if err != nil {
 			return err
@@ -1377,7 +1378,7 @@ func ExtractResourceAttributes(data []byte, verb string, reg *hub.Registry, attr
 func ExtractResources(data []byte) ([]*unstructured.Unstructured, error) {
 	var resources []*unstructured.Unstructured
 
-	err := ProcessResources(data, func(obj *unstructured.Unstructured) error {
+	err := parser.ProcessResources(data, func(obj *unstructured.Unstructured) error {
 		if obj.GetNamespace() == "" {
 			obj.SetNamespace(core.NamespaceDefault)
 		}

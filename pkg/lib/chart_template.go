@@ -41,6 +41,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/restmapper"
+	"kmodules.xyz/client-go/tools/parser"
 	metaapi "kmodules.xyz/resource-metadata/apis/meta/v1alpha1"
 	"kmodules.xyz/resource-metadata/hub"
 	"sigs.k8s.io/application/api/app/v1beta1"
@@ -396,7 +397,7 @@ func GenerateEditorModel(reg *repo.Registry, opts unstructured.Unstructured) (*u
 
 	resoourceValues := map[string]interface{}{}
 	_, manifest := f1.Result()
-	err = ProcessResources(manifest, func(obj *unstructured.Unstructured) error {
+	err = parser.ProcessResources(manifest, func(obj *unstructured.Unstructured) error {
 		rsKey, err := ResourceKey(obj.GetAPIVersion(), obj.GetKind(), spec.Metadata.Release.Name, obj.GetName())
 		if err != nil {
 			return err

@@ -23,6 +23,7 @@ import (
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/util/sets"
+	"kmodules.xyz/client-go/tools/parser"
 	"kmodules.xyz/resource-metadata/hub"
 	"sigs.k8s.io/yaml"
 )
@@ -80,7 +81,7 @@ func NewCmdFuse() *cobra.Command {
 				return err
 			}
 
-			err = lib.ProcessDir(filepath.Join(sampleDir, chartName), func(obj *unstructured.Unstructured) error {
+			err = parser.ProcessDir(filepath.Join(sampleDir, chartName), func(obj *unstructured.Unstructured) error {
 				rsKey, err := lib.ResourceKey(obj.GetAPIVersion(), obj.GetKind(), chartName, obj.GetName())
 				if err != nil {
 					return err
