@@ -1513,8 +1513,8 @@ kmodules.xyz/apply v0.0.0-20210116151714-fd7ceb3d27af h1:DE1aa6Qlv/TKQCA+5a+qXJ0
 kmodules.xyz/apply v0.0.0-20210116151714-fd7ceb3d27af/go.mod h1:nfm6EEM4OXLbvg5RxMsEHGvqpwgRHWEgdf7hg3hzMSQ=
 kmodules.xyz/client-go v0.0.0-20201105071625-0b277310b9b8/go.mod h1:WXDwZBmvrcLgGcuO9iZpI9jcfPuDFfWbxA4EnhAFtGw=
 kmodules.xyz/client-go v0.0.0-20201230092550-8ca15cfcbefa/go.mod h1:WXDwZBmvrcLgGcuO9iZpI9jcfPuDFfWbxA4EnhAFtGw=
-kmodules.xyz/client-go v0.0.0-20210116153227-569dec1f25e4 h1:cqpTqsYmLk2AspvdImhBSElz1okIV5D9/pjHVx/Xe0Q=
-kmodules.xyz/client-go v0.0.0-20210116153227-569dec1f25e4/go.mod h1:WXDwZBmvrcLgGcuO9iZpI9jcfPuDFfWbxA4EnhAFtGw=
+kmodules.xyz/client-go v0.0.0-20210116171603-216059f39cd8 h1:WGc4xfIh4GFUuLXfc3QZoHbXTc+owb2io1F1wsEkEcM=
+kmodules.xyz/client-go v0.0.0-20210116171603-216059f39cd8/go.mod h1:WXDwZBmvrcLgGcuO9iZpI9jcfPuDFfWbxA4EnhAFtGw=
 kmodules.xyz/crd-schema-fuzz v0.0.0-20200521005638-2433a187de95/go.mod h1:jpu8xFsDKd6kAWUAKk8oTu/GQGBWqhrcaDeOJdaCJnk=
 kmodules.xyz/crd-schema-fuzz v0.0.0-20200922204806-c1426cd7fcf4 h1:NWWv+Qju8xzHZT9hIk1+BbgQtIytNOoCU4g4vqUmh3M=
 kmodules.xyz/crd-schema-fuzz v0.0.0-20200922204806-c1426cd7fcf4/go.mod h1:WrO3fryNyFCgqqyWnwI89lnzWA7kN072Ehya7ELGfzE=

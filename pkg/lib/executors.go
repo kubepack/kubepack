@@ -909,7 +909,7 @@ func (x *PermissionChecker) Do() error {
 		}
 
 		for _, crd := range crds {
-			items, err := ExtractResources(crd.File.Data)
+			items, err := parser.ListResources(crd.File.Data)
 			if err != nil {
 				return err
 			}
@@ -1373,30 +1373,6 @@ func ExtractResourceAttributes(data []byte, verb string, reg *hub.Registry, attr
 
 		return nil
 	})
-}
-
-func ExtractResources(data []byte) ([]*unstructured.Unstructured, error) {
-	var resources []*unstructured.Unstructured
-
-	err := parser.ProcessResources(data, func(obj *unstructured.Unstructured) error {
-		if obj.GetNamespace() == "" {
-			obj.SetNamespace(core.NamespaceDefault)
-		}
-		resources = append(resources, obj)
-		return nil
-	})
-	if err != nil {
-		return nil, err
-	}
-
-	sort.Slice(resources, func(i, j int) bool {
-		if resources[i].GetAPIVersion() == resources[j].GetAPIVersion() {
-			return resources[i].GetKind() < resources[j].GetKind()
-		}
-		return resources[i].GetAPIVersion() < resources[j].GetAPIVersion()
-	})
-
-	return resources, nil
 }
 
 // helm.sh/helm/v3/pkg/action/install.go

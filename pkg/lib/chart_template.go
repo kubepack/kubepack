@@ -169,7 +169,7 @@ func RenderOrderTemplate(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 		}
 		crds, manifestFile := f1.Result()
 		for _, crd := range crds {
-			resources, err := ExtractResources(crd.Data)
+			resources, err := parser.ListResources(crd.Data)
 			if err != nil {
 				return "", nil, err
 			}
@@ -188,7 +188,7 @@ func RenderOrderTemplate(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 				URL: manifestFile.URL,
 				Key: manifestFile.Key,
 			}
-			tpl.Resources, err = ExtractResources(manifestFile.Data)
+			tpl.Resources, err = parser.ListResources(manifestFile.Data)
 			if err != nil {
 				return "", nil, err
 			}
@@ -469,7 +469,7 @@ func RenderChartTemplate(reg *repo.Registry, opts unstructured.Unstructured) (st
 
 	crds, manifest := f1.Result()
 	for _, crd := range crds {
-		resources, err := ExtractResources(crd.Data)
+		resources, err := parser.ListResources(crd.Data)
 		if err != nil {
 			return "", nil, err
 		}
@@ -482,7 +482,7 @@ func RenderChartTemplate(reg *repo.Registry, opts unstructured.Unstructured) (st
 		})
 	}
 	if manifest != nil {
-		tpl.Resources, err = ExtractResources(manifest)
+		tpl.Resources, err = parser.ListResources(manifest)
 		if err != nil {
 			return "", nil, err
 		}
