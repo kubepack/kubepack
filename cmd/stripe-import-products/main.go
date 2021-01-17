@@ -40,6 +40,10 @@ func main() {
 			log.Fatal(err)
 		}
 
+		if !old.Published {
+			continue
+		}
+
 		var nu v1alpha1.Product
 
 		nu.Name = old.Key
@@ -52,7 +56,7 @@ func main() {
 		nu.Spec.Summary = old.Summary
 		nu.Spec.Owner = 1
 		nu.Spec.Phase = v1alpha1.PhaseActive
-		nu.Spec.Description = old.Description["markdown"]
+		nu.Spec.Description = old.Description["html"]
 
 		media := map[v1alpha1.MediaType]v1alpha1.MediaSpec{}
 		if old.HeroImage.Src != "" {
@@ -96,6 +100,11 @@ func main() {
 				}
 			}
 		}
+
+		for k := range media {
+			nu.Spec.Media = append(nu.Spec.Media, media[k])
+		}
+
 		nu.Spec.Maintainers = []v1alpha1.ContactData{
 			{
 				Name:  old.Author,
