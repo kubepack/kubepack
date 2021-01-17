@@ -17,12 +17,12 @@ limitations under the License.
 package lib
 
 import (
+	"kubepack.dev/kubepack/apis"
+
 	"gomodules.xyz/blobfs"
 	"gomodules.xyz/blobfs/testing"
 )
 
-const YAMLHost = "https://pkg.bytebuilders.xyz"
-const YAMLBucket = "gs://pkg.bytebuilders.xyz"
 const GoogleApplicationCredentials = "/personal/AppsCode/credentials/bytebuilders@byte-builders.json"
 
 type BlobStore struct {
@@ -32,13 +32,13 @@ type BlobStore struct {
 }
 
 func NewTestBlobStore() (*BlobStore, error) {
-	fs, err := testing.NewTestGCS(YAMLBucket, GoogleApplicationCredentials)
+	fs, err := testing.NewTestGCS(apis.YAMLBucket, GoogleApplicationCredentials)
 	if err != nil {
 		return nil, err
 	}
 	return &BlobStore{
 		BlobFS: fs,
-		Host:   YAMLHost,
-		Bucket: YAMLBucket,
+		Host:   apis.YAMLHost,
+		Bucket: apis.YAMLBucket,
 	}, nil
 }

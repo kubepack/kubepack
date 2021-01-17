@@ -40,3 +40,8 @@ const (
 	LabelChartFirstDeployed = "helm.sh/first-deployed"
 	LabelChartLastDeployed  = "helm.sh/last-deployed"
 )
+
+const (
+	YAMLHost   = "https://pkg.bytebuilders.xyz"
+	YAMLBucket = "gs://pkg.bytebuilders.xyz"
+)
