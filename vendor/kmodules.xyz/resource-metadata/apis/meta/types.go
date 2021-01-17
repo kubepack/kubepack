@@ -46,19 +46,34 @@ type ResourceDescriptorSpec struct {
 	Maintainers []ContactData
 	Links       []Link
 
+	ResourceRequirements []ResourceRequirements
+
+	UI *UIParameters
+
 	Installer *DeploymentParameters
+}
+
+type ResourceRequirements struct {
+	Units     string
+	Shards    string
+	Resources string
+}
+
+type UIParameters struct {
+	Options *ChartRepoRef
+	Editor  *ChartRepoRef
 }
 
 type DeploymentParameters struct {
 	ProductID string
 	PlanID    string
-	Version   string
-	Chart     *ChartRef
+	Chart     *ChartRepoRef
 }
 
-type ChartRef struct {
-	URL  string
-	Name string
+type ChartRepoRef struct {
+	Name    string
+	URL     string
+	Version string
 }
 
 type ResourceID struct {
