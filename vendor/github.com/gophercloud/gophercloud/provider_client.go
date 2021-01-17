@@ -305,9 +305,6 @@ type RequestOpts struct {
 	// ErrorContext specifies the resource error type to return if an error is encountered.
 	// This lets resources override default error messages based on the response status code.
 	ErrorContext error
-	// KeepResponseBody specifies whether to keep the HTTP response body. Usually used, when the HTTP
-	// response body is considered for further use. Valid when JSONResponse is nil.
-	KeepResponseBody bool
 }
 
 // requestState contains temporary state for a single ProviderClient.Request() call.
@@ -349,11 +346,6 @@ func (client *ProviderClient) doRequest(method, url string, options *RequestOpts
 		contentType = &applicationJSON
 	}
 
-	// Return an error, when "KeepResponseBody" is true and "JSONResponse" is not nil
-	if options.KeepResponseBody && options.JSONResponse != nil {
-		return nil, errors.New("cannot use KeepResponseBody when JSONResponse is not nil")
-	}
-
 	if options.RawBody != nil {
 		body = options.RawBody
 	}
@@ -392,6 +384,9 @@ func (client *ProviderClient) doRequest(method, url string, options *RequestOpts
 		req.Header.Set(k, v)
 	}
 
+	// Set connection parameter to close the connection immediately when we've got the response
+	req.Close = true
+
 	prereqtok := req.Header.Get("X-Auth-Token")
 
 	// Issue the request.
@@ -419,12 +414,11 @@ func (client *ProviderClient) doRequest(method, url string, options *RequestOpts
 		body, _ := ioutil.ReadAll(resp.Body)
 		resp.Body.Close()
 		respErr := ErrUnexpectedResponseCode{
-			URL:            url,
-			Method:         method,
-			Expected:       options.OkCodes,
-			Actual:         resp.StatusCode,
-			Body:           body,
-			ResponseHeader: resp.Header,
+			URL:      url,
+			Method:   method,
+			Expected: options.OkCodes,
+			Actual:   resp.StatusCode,
+			Body:     body,
 		}
 
 		errType := options.ErrorContext
@@ -519,22 +513,7 @@ func (client *ProviderClient) doRequest(method, url string, options *RequestOpts
 	// Parse the response body as JSON, if requested to do so.
 	if options.JSONResponse != nil {
 		defer resp.Body.Close()
-		// Don't decode JSON when there is no content
-		if resp.StatusCode == http.StatusNoContent {
-			// read till EOF, otherwise the connection will be closed and cannot be reused
-			_, err = io.Copy(ioutil.Discard, resp.Body)
-			return resp, err
-		}
 		if err := json.NewDecoder(resp.Body).Decode(options.JSONResponse); err != nil {
-			return nil, err
-		}
-	}
-
-	// Close unused body to allow the HTTP connection to be reused
-	if !options.KeepResponseBody && options.JSONResponse == nil {
-		defer resp.Body.Close()
-		// read till EOF, otherwise the connection will be closed and cannot be reused
-		if _, err := io.Copy(ioutil.Discard, resp.Body); err != nil {
 			return nil, err
 		}
 	}
@@ -543,16 +522,16 @@ func (client *ProviderClient) doRequest(method, url string, options *RequestOpts
 }
 
 func defaultOkCodes(method string) []int {
-	switch method {
-	case "GET", "HEAD":
+	switch {
+	case method == "GET":
 		return []int{200}
-	case "POST":
+	case method == "POST":
 		return []int{201, 202}
-	case "PUT":
+	case method == "PUT":
 		return []int{201, 202}
-	case "PATCH":
+	case method == "PATCH":
 		return []int{200, 202, 204}
-	case "DELETE":
+	case method == "DELETE":
 		return []int{202, 204}
 	}
 

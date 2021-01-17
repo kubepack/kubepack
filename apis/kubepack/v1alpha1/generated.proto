@@ -558,12 +558,7 @@ message ResourceID {
 
   // Name is the plural name of the resource to serve.  It must match the name of the CustomResourceDefinition-registration
   // too: plural.group and it must be all lowercase.
-  optional string name = 3;
-
-  // Kind is the serialized kind of the resource.  It is normally CamelCase and singular.
-  optional string kind = 4;
-
-  optional string scope = 5;
+  optional string resource = 3;
 }
 
 message Row {

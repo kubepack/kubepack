@@ -482,6 +482,7 @@ func (r *Registry) createResourcePanel(keepOfficialTypes bool) (*v1alpha1.Resour
 			Icons:      rd.Spec.Icons,
 			Namespaced: rd.Spec.Resource.Scope == v1alpha1.NamespaceScoped,
 			Missing:    r.Missing(gvr),
+			UI:         rd.Spec.UI,
 			Installer:  rd.Spec.Installer,
 		})
 		existingGRs[gvr.GroupResource()] = true

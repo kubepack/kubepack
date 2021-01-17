@@ -34,10 +34,10 @@ import (
 	"kubepack.dev/kubepack/apis"
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	chart2 "kubepack.dev/lib-helm/chart"
+	libchart "kubepack.dev/lib-helm/chart"
 	"kubepack.dev/lib-helm/repo"
 
 	jsonpatch "github.com/evanphx/json-patch"
-	"github.com/pkg/errors"
 	"gocloud.dev/blob"
 	_ "gocloud.dev/blob/azureblob"
 	_ "gocloud.dev/blob/fileblob"
@@ -47,9 +47,7 @@ import (
 	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chartutil"
-	"helm.sh/helm/v3/pkg/engine"
 	"helm.sh/helm/v3/pkg/release"
-	"helm.sh/helm/v3/pkg/releaseutil"
 	authorization "k8s.io/api/authorization/v1"
 	core "k8s.io/api/core/v1"
 	crdv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
@@ -60,7 +58,6 @@ import (
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 	"k8s.io/cli-runtime/pkg/printers"
 	"k8s.io/cli-runtime/pkg/resource"
@@ -69,6 +66,7 @@ import (
 	authv1client "k8s.io/client-go/kubernetes/typed/authorization/v1"
 	"k8s.io/client-go/rest"
 	"kmodules.xyz/client-go/apiextensions"
+	"kmodules.xyz/client-go/tools/parser"
 	wait2 "kmodules.xyz/client-go/tools/wait"
 	"kmodules.xyz/resource-metadata/hub"
 	"sigs.k8s.io/application/api/app/v1beta1"
@@ -275,11 +273,11 @@ func (x *CRDReadinessPrinter) Do() error {
 
 	for _, crd := range x.CRDs {
 		// Work around for bug: https://github.com/kubernetes/kubernetes/issues/83242
-		_, err := fmt.Fprintf(x.W, "until kubectl get crds %s.%s -o=jsonpath='{.items[0].metadata.name}' &> /dev/null; do sleep 1; done\n", crd.Name, crd.Group)
+		_, err := fmt.Fprintf(x.W, "until kubectl get crds %s.%s -o=jsonpath='{.items[0].metadata.name}' &> /dev/null; do sleep 1; done\n", crd.Resource, crd.Group)
 		if err != nil {
 			return err
 		}
-		_, err = fmt.Fprintf(x.W, "kubectl wait --for=condition=Established crds/%s.%s --timeout=5m\n", crd.Name, crd.Group)
+		_, err = fmt.Fprintf(x.W, "kubectl wait --for=condition=Established crds/%s.%s --timeout=5m\n", crd.Resource, crd.Group)
 		if err != nil {
 			return err
 		}
@@ -298,16 +296,16 @@ func (x *CRDReadinessChecker) Do() error {
 		crds = append(crds, &apiextensions.CustomResourceDefinition{
 			V1beta1: &crdv1beta1.CustomResourceDefinition{
 				ObjectMeta: v1.ObjectMeta{
-					Name: fmt.Sprintf("%s.%s", crd.Name, crd.Group),
+					Name: fmt.Sprintf("%s.%s", crd.Resource, crd.Group),
 				},
 				Spec: crdv1beta1.CustomResourceDefinitionSpec{
 					Group:   crd.Group,
 					Version: crd.Version,
 					Names: crdv1beta1.CustomResourceDefinitionNames{
-						Plural: crd.Name,
-						Kind:   crd.Kind,
+						Plural: crd.Resource,
+						//Kind:   crd.Kind,
 					},
-					Scope: crdv1beta1.ResourceScope(string(crd.Scope)),
+					//Scope: crdv1beta1.ResourceScope(string(crd.Scope)),
 					Versions: []crdv1beta1.CustomResourceDefinitionVersion{
 						{
 							Name: crd.Version,
@@ -617,7 +615,7 @@ func (x *YAMLPrinter) Do() error {
 	client.APIVersions = chartutil.VersionSet(extraAPIs)
 	client.Version = x.Version
 
-	validInstallableChart, err := isChartInstallable(chrt.Chart)
+	validInstallableChart, err := libchart.IsChartInstallable(chrt.Chart)
 	if !validInstallableChart {
 		return err
 	}
@@ -676,7 +674,7 @@ func (x *YAMLPrinter) Do() error {
 
 	// Pre-install anything in the crd/ directory. We do this before Helm
 	// contacts the upstream server and builds the capabilities object.
-	if crds := chrt.CRDs(); len(crds) > 0 {
+	if crds := chrt.CRDObjects(); len(crds) > 0 {
 		_, err = fmt.Fprintln(&buf, "# install CRDs")
 		if err != nil {
 			return err
@@ -688,7 +686,7 @@ func (x *YAMLPrinter) Do() error {
 			if err != nil {
 				return err
 			}
-			_, writeErr := w.Write(crd.Data)
+			_, writeErr := w.Write(crd.File.Data)
 			// Always check the return value of Close when writing.
 			closeErr := w.Close()
 			if writeErr != nil {
@@ -733,7 +731,7 @@ func (x *YAMLPrinter) Do() error {
 		return err
 	}
 
-	hooks, manifests, err := renderResources(chrt.Chart, caps, valuesToRender)
+	hooks, manifests, err := libchart.RenderResources(chrt.Chart, caps, valuesToRender)
 	if err != nil {
 		return err
 	}
@@ -741,7 +739,7 @@ func (x *YAMLPrinter) Do() error {
 	var manifestDoc bytes.Buffer
 
 	for _, hook := range hooks {
-		if IsEvent(hook.Events, release.HookPreInstall) {
+		if libchart.IsEvent(hook.Events, release.HookPreInstall) {
 			// TODO: Mark as pre-install hook
 			_, err = fmt.Fprintf(&manifestDoc, "---\n# Source: %s\n%s\n", hook.Path, hook.Manifest)
 			if err != nil {
@@ -758,7 +756,7 @@ func (x *YAMLPrinter) Do() error {
 	}
 
 	for _, hook := range hooks {
-		if IsEvent(hook.Events, release.HookPostInstall) {
+		if libchart.IsEvent(hook.Events, release.HookPostInstall) {
 			// TODO: Mark as post-install hook
 			_, err = fmt.Fprintf(&manifestDoc, "---\n# Source: %s\n%s\n", hook.Path, hook.Manifest)
 			if err != nil {
@@ -846,7 +844,7 @@ func (x *PermissionChecker) Do() error {
 	client.APIVersions = chartutil.VersionSet(extraAPIs)
 	client.Version = x.Version
 
-	validInstallableChart, err := isChartInstallable(chrt.Chart)
+	validInstallableChart, err := libchart.IsChartInstallable(chrt.Chart)
 	if !validInstallableChart {
 		return err
 	}
@@ -895,7 +893,7 @@ func (x *PermissionChecker) Do() error {
 
 	// Pre-install anything in the crd/ directory. We do this before Helm
 	// contacts the upstream server and builds the capabilities object.
-	if crds := chrt.CRDs(); len(crds) > 0 {
+	if crds := chrt.CRDObjects(); len(crds) > 0 {
 		attr := authorization.ResourceAttributes{
 			Verb:     x.Verb,
 			Group:    "apiextensions.k8s.io",
@@ -909,7 +907,7 @@ func (x *PermissionChecker) Do() error {
 		}
 
 		for _, crd := range crds {
-			items, err := ExtractResources(crd.Data)
+			items, err := parser.ListResources(crd.File.Data)
 			if err != nil {
 				return err
 			}
@@ -936,13 +934,13 @@ func (x *PermissionChecker) Do() error {
 		return err
 	}
 
-	hooks, manifests, err := renderResources(chrt.Chart, caps, valuesToRender)
+	hooks, manifests, err := libchart.RenderResources(chrt.Chart, caps, valuesToRender)
 	if err != nil {
 		return err
 	}
 
 	for _, hook := range hooks {
-		if IsEvent(hook.Events, release.HookPreInstall) {
+		if libchart.IsEvent(hook.Events, release.HookPreInstall) {
 			err = ExtractResourceAttributes([]byte(hook.Manifest), x.Verb, x.ResourceRegistry, x.attrs)
 			if err != nil {
 				return err
@@ -958,7 +956,7 @@ func (x *PermissionChecker) Do() error {
 	}
 
 	for _, hook := range hooks {
-		if IsEvent(hook.Events, release.HookPostInstall) {
+		if libchart.IsEvent(hook.Events, release.HookPostInstall) {
 			err = ExtractResourceAttributes([]byte(hook.Manifest), x.Verb, x.ResourceRegistry, x.attrs)
 			if err != nil {
 				return err
@@ -1098,7 +1096,6 @@ type ApplicationGenerator struct {
 
 	components   map[metav1.GroupKind]struct{}
 	commonLabels map[string]string
-	init         bool
 }
 
 func (x *ApplicationGenerator) Do() error {
@@ -1132,7 +1129,7 @@ func (x *ApplicationGenerator) Do() error {
 	client.APIVersions = chartutil.VersionSet(extraAPIs)
 	client.Version = x.Chart.Version
 
-	validInstallableChart, err := isChartInstallable(x.chrt)
+	validInstallableChart, err := libchart.IsChartInstallable(x.chrt)
 	if !validInstallableChart {
 		return err
 	}
@@ -1181,7 +1178,7 @@ func (x *ApplicationGenerator) Do() error {
 
 	// Pre-install anything in the crd/ directory. We do this before Helm
 	// contacts the upstream server and builds the capabilities object.
-	//if crds := chrt.CRDs(); len(crds) > 0 {
+	//if crds := chrt.CRDObjects(); len(crds) > 0 {
 	//	attr := metav1.GroupKind{
 	//		Group:    "apiextensions.k8s.io",
 	//		Kind: "CustomResourceDefinition",
@@ -1217,59 +1214,42 @@ func (x *ApplicationGenerator) Do() error {
 		return err
 	}
 
-	hooks, manifests, err := renderResources(x.chrt, caps, valuesToRender)
+	hooks, manifests, err := libchart.RenderResources(x.chrt, caps, valuesToRender)
 	if err != nil {
 		return err
 	}
 
+	var manifestDoc bytes.Buffer
 	for _, hook := range hooks {
-		if IsEvent(hook.Events, release.HookPreInstall) {
-			err = x.extractComponentAttributes([]byte(hook.Manifest))
+		if libchart.IsEvent(hook.Events, release.HookPreInstall) {
+			// TODO: Mark as pre-install hook
+			_, err = fmt.Fprintf(&manifestDoc, "---\n# Source: %s\n%s\n", hook.Path, hook.Manifest)
 			if err != nil {
 				return err
 			}
 		}
 	}
-
 	for _, m := range manifests {
-		err = x.extractComponentAttributes([]byte(m.Content))
+		_, err = fmt.Fprintf(&manifestDoc, "---\n# Source: %s\n%s\n", m.Name, m.Content)
 		if err != nil {
 			return err
 		}
 	}
-
 	for _, hook := range hooks {
-		if IsEvent(hook.Events, release.HookPostInstall) {
-			err = x.extractComponentAttributes([]byte(hook.Manifest))
+		if libchart.IsEvent(hook.Events, release.HookPostInstall) {
+			// TODO: Mark as post-install hook
+			_, err = fmt.Fprintf(&manifestDoc, "---\n# Source: %s\n%s\n", hook.Path, hook.Manifest)
 			if err != nil {
 				return err
 			}
 		}
 	}
-
-	return nil
+	x.components, x.commonLabels, err = parser.ExtractComponents(manifestDoc.Bytes())
+	return err
 }
 
 func (x *ApplicationGenerator) Result() *v1beta1.Application {
 	desc := GetPackageDescriptor(x.chrt)
-
-	p := v1alpha1.ApplicationPackage{
-		TypeMeta: metav1.TypeMeta{
-			APIVersion: v1alpha1.SchemeGroupVersion.String(),
-			Kind:       "ApplicationPackage",
-		},
-		Bundle: x.Chart.Bundle,
-		Chart: v1alpha1.ChartRepoRef{
-			Name:    x.Chart.Name,
-			URL:     x.Chart.URL,
-			Version: x.Chart.Version,
-		},
-		Channel: v1alpha1.RegularChannel,
-	}
-	data, err := json.Marshal(p)
-	if err != nil {
-		panic(err)
-	}
 
 	b := &v1beta1.Application{
 		TypeMeta: metav1.TypeMeta{
@@ -1281,7 +1261,9 @@ func (x *ApplicationGenerator) Result() *v1beta1.Application {
 			Namespace: x.Chart.Namespace,
 			Labels:    nil, // TODO: ?
 			Annotations: map[string]string{
-				apis.LabelPackage: string(data),
+				apis.LabelChartURL:     x.Chart.URL,
+				apis.LabelChartName:    x.Chart.Name,
+				apis.LabelChartVersion: x.Chart.Version,
 			},
 		},
 		Spec: v1beta1.ApplicationSpec{
@@ -1322,233 +1304,31 @@ func (x *ApplicationGenerator) Result() *v1beta1.Application {
 	return b
 }
 
-var empty = struct{}{}
-
-func (x *ApplicationGenerator) extractComponentAttributes(data []byte) error {
-	reader := yaml.NewYAMLOrJSONDecoder(bytes.NewReader(data), 2048)
-	for {
-		var obj unstructured.Unstructured
-		err := reader.Decode(&obj)
-		if err == io.EOF {
-			break
-		} else if err != nil {
-			return err
-		}
-		if obj.IsList() {
-			err := obj.EachListItem(func(item runtime.Object) error {
-				castItem := item.(*unstructured.Unstructured)
-
-				gv, err := schema.ParseGroupVersion(castItem.GetAPIVersion())
-				if err != nil {
-					return err
-				}
-				x.components[metav1.GroupKind{Group: gv.Group, Kind: castItem.GetKind()}] = empty
-
-				if !x.init {
-					x.commonLabels = castItem.GetLabels()
-					x.init = true
-				} else {
-					for k, v := range castItem.GetLabels() {
-						if existing, found := x.commonLabels[k]; found && existing != v {
-							delete(x.commonLabels, k)
-						}
-					}
-				}
-				return nil
-			})
-			if err != nil {
-				return err
-			}
-		} else {
-			gv, err := schema.ParseGroupVersion(obj.GetAPIVersion())
-			if err != nil {
-				return err
-			}
-			x.components[metav1.GroupKind{Group: gv.Group, Kind: obj.GetKind()}] = empty
-
-			if !x.init {
-				x.commonLabels = obj.GetLabels()
-				x.init = true
-			} else {
-				for k, v := range obj.GetLabels() {
-					if existing, found := x.commonLabels[k]; found && existing != v {
-						delete(x.commonLabels, k)
-					}
-				}
-			}
-		}
-	}
-	return nil
-}
-
 func ExtractResourceAttributes(data []byte, verb string, reg *hub.Registry, attrs map[authorization.ResourceAttributes]*ResourcePermission) error {
-	reader := yaml.NewYAMLOrJSONDecoder(bytes.NewReader(data), 2048)
-	for {
-		var obj unstructured.Unstructured
-		err := reader.Decode(&obj)
-		if err == io.EOF {
-			break
-		} else if err != nil {
+	return parser.ProcessResources(data, func(obj *unstructured.Unstructured) error {
+		gvr, err := reg.GVR(schema.FromAPIVersionAndKind(obj.GetAPIVersion(), obj.GetKind()))
+		if err != nil {
 			return err
 		}
-		if obj.IsList() {
-			err := obj.EachListItem(func(item runtime.Object) error {
-				castItem := item.(*unstructured.Unstructured)
 
-				gvr, err := reg.GVR(schema.FromAPIVersionAndKind(castItem.GetAPIVersion(), castItem.GetKind()))
-				if err != nil {
-					return err
-				}
+		ns := XorY(obj.GetNamespace(), core.NamespaceDefault)
+		obj.SetNamespace(ns)
 
-				ns := XorY(castItem.GetNamespace(), core.NamespaceDefault)
-				castItem.SetNamespace(ns)
-
-				attr := authorization.ResourceAttributes{
-					Namespace: ns,
-					Verb:      verb,
-					Group:     gvr.Group,
-					Version:   gvr.Version,
-					Resource:  gvr.Resource,
-					// Name:      castItem.GetName(), // TODO: needed for delete
-				}
-				info, found := attrs[attr]
-				if !found {
-					info = new(ResourcePermission)
-					attrs[attr] = info
-				}
-				info.Items = append(info.Items, castItem)
-
-				return nil
-			})
-			if err != nil {
-				return err
-			}
-		} else {
-			gvr, err := reg.GVR(schema.FromAPIVersionAndKind(obj.GetAPIVersion(), obj.GetKind()))
-			if err != nil {
-				return err
-			}
-
-			ns := XorY(obj.GetNamespace(), core.NamespaceDefault)
-			obj.SetNamespace(ns)
-
-			attr := authorization.ResourceAttributes{
-				Namespace: ns,
-				Verb:      verb,
-				Group:     gvr.Group,
-				Version:   gvr.Version,
-				Resource:  gvr.Resource,
-				// Name:      obj.GetName(), // TODO: needed for delete
-			}
-			info, found := attrs[attr]
-			if !found {
-				info = new(ResourcePermission)
-				attrs[attr] = info
-			}
-			info.Items = append(info.Items, &obj)
+		attr := authorization.ResourceAttributes{
+			Namespace: ns,
+			Verb:      verb,
+			Group:     gvr.Group,
+			Version:   gvr.Version,
+			Resource:  gvr.Resource,
+			// Name:      obj.GetName(), // TODO: needed for delete
 		}
-	}
-	return nil
-}
-
-func ExtractResources(data []byte) ([]*unstructured.Unstructured, error) {
-	var resources []*unstructured.Unstructured
-
-	reader := yaml.NewYAMLOrJSONDecoder(bytes.NewReader(data), 2048)
-	for {
-		var obj unstructured.Unstructured
-		err := reader.Decode(&obj)
-		if err == io.EOF {
-			break
-		} else if err != nil {
-			return nil, err
+		info, found := attrs[attr]
+		if !found {
+			info = new(ResourcePermission)
+			attrs[attr] = info
 		}
-		if obj.IsList() {
-			err := obj.EachListItem(func(item runtime.Object) error {
-				castItem := item.(*unstructured.Unstructured)
-				if castItem.GetNamespace() == "" {
-					castItem.SetNamespace(core.NamespaceDefault)
-				}
-				resources = append(resources, castItem)
-				return nil
-			})
-			if err != nil {
-				return nil, err
-			}
-		} else {
-			if obj.GetNamespace() == "" {
-				obj.SetNamespace(core.NamespaceDefault)
-			}
-			resources = append(resources, &obj)
-		}
-	}
+		info.Items = append(info.Items, obj)
 
-	return resources, nil
-}
-
-// helm.sh/helm/v3/pkg/action/install.go
-const notesFileSuffix = "NOTES.txt"
-
-// renderResources renders the templates in a chart
-func renderResources(ch *chart.Chart, caps *chartutil.Capabilities, values chartutil.Values) ([]*release.Hook, []releaseutil.Manifest, error) {
-	hs := []*release.Hook{}
-	b := bytes.NewBuffer(nil)
-
-	if ch.Metadata.KubeVersion != "" {
-		if !chartutil.IsCompatibleRange(ch.Metadata.KubeVersion, caps.KubeVersion.String()) {
-			return hs, nil, errors.Errorf("chart requires kubeVersion: %s which is incompatible with Kubernetes %s", ch.Metadata.KubeVersion, caps.KubeVersion.String())
-		}
-	}
-
-	files, err := engine.Render(ch, values)
-	if err != nil {
-		return hs, nil, err
-	}
-
-	for k := range files {
-		if strings.HasSuffix(k, notesFileSuffix) {
-			delete(files, k)
-		}
-	}
-
-	// Sort hooks, manifests, and partials. Only hooks and manifests are returned,
-	// as partials are not used after renderer.Render. Empty manifests are also
-	// removed here.
-	hs, manifests, err := releaseutil.SortManifests(files, caps.APIVersions, releaseutil.InstallOrder)
-	if err != nil {
-		// By catching parse errors here, we can prevent bogus releases from going
-		// to Kubernetes.
-		//
-		// We return the files as a big blob of data to help the user debug parser
-		// errors.
-		for name, content := range files {
-			if strings.TrimSpace(content) == "" {
-				continue
-			}
-			fmt.Fprintf(b, "---\n# Source: %s\n%s\n", name, content)
-		}
-		return hs, manifests, err
-	}
-
-	return hs, manifests, nil
-}
-
-func IsEvent(events []release.HookEvent, x release.HookEvent) bool {
-	for _, event := range events {
-		if event == x {
-			return true
-		}
-	}
-	return false
-}
-
-// isChartInstallable validates if a chart can be installed
-//
-// Application chart type is only installable
-func isChartInstallable(ch *chart.Chart) (bool, error) {
-	switch ch.Metadata.Type {
-	case "", "application":
-		return true, nil
-	}
-	return false, errors.Errorf("%s charts are not installable", ch.Metadata.Type)
+		return nil
+	})
 }

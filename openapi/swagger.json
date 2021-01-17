@@ -1198,23 +1198,14 @@
       "required": [
         "group",
         "version",
-        "name",
-        "kind",
-        "scope"
+        "resource"
       ],
       "properties": {
         "group": {
           "type": "string"
         },
-        "kind": {
-          "description": "Kind is the serialized kind of the resource.  It is normally CamelCase and singular.",
-          "type": "string"
-        },
-        "name": {
+        "resource": {
           "description": "Name is the plural name of the resource to serve.  It must match the name of the CustomResourceDefinition-registration too: plural.group and it must be all lowercase.",
-          "type": "string"
-        },
-        "scope": {
           "type": "string"
         },
         "version": {

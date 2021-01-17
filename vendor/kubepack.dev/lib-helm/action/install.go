@@ -12,6 +12,7 @@ import (
 	"helm.sh/helm/v3/pkg/release"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
+	libchart "kubepack.dev/lib-helm/chart"
 	"kubepack.dev/lib-helm/repo"
 	"sigs.k8s.io/yaml"
 )
@@ -100,7 +101,7 @@ func (x *Installer) Run() (*release.Release, error) {
 	cmd.Wait = x.opts.Wait
 	cmd.Timeout = x.opts.Timeout
 
-	validInstallableChart, err := isChartInstallable(chrt.Chart)
+	validInstallableChart, err := libchart.IsChartInstallable(chrt.Chart)
 	if !validInstallableChart {
 		return nil, err
 	}
