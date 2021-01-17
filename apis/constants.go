@@ -34,11 +34,11 @@ const (
 )
 
 const (
-	LabelChartURL           = "helm.sh/chart-url"
-	LabelChartName          = "helm.sh/chart-name"
-	LabelChartVersion       = "helm.sh/chart-version"
-	LabelChartFirstDeployed = "helm.sh/first-deployed"
-	LabelChartLastDeployed  = "helm.sh/last-deployed"
+	LabelChartURL           = "meta.helm.sh/chart-url"
+	LabelChartName          = "meta.helm.sh/chart-name"
+	LabelChartVersion       = "meta.helm.sh/chart-version"
+	LabelChartFirstDeployed = "meta.helm.sh/first-deployed"
+	LabelChartLastDeployed  = "meta.helm.sh/last-deployed"
 )
 
 const (
