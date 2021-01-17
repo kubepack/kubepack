@@ -246,7 +246,7 @@ github.com/exponent-io/jsonpath
 github.com/fatih/color
 # github.com/fatih/structs v1.1.0
 github.com/fatih/structs
-# github.com/gabriel-vasile/mimetype v1.1.1
+# github.com/gabriel-vasile/mimetype v1.1.2
 github.com/gabriel-vasile/mimetype
 github.com/gabriel-vasile/mimetype/internal/json
 github.com/gabriel-vasile/mimetype/internal/matchers
@@ -1387,7 +1387,7 @@ k8s.io/utils/trace
 kmodules.xyz/apiversion
 # kmodules.xyz/apply v0.0.0-20210116151714-fd7ceb3d27af
 kmodules.xyz/apply
-# kmodules.xyz/client-go v0.0.0-20210116171603-216059f39cd8
+# kmodules.xyz/client-go v0.0.0-20210117022818-f5dc9b7323f3
 kmodules.xyz/client-go
 kmodules.xyz/client-go/admissionregistration/v1beta1
 kmodules.xyz/client-go/apiextensions
@@ -1404,6 +1404,7 @@ kmodules.xyz/client-go/tools/analytics
 kmodules.xyz/client-go/tools/cli
 kmodules.xyz/client-go/tools/clientcmd
 kmodules.xyz/client-go/tools/clusterid
+kmodules.xyz/client-go/tools/converter
 kmodules.xyz/client-go/tools/parser
 kmodules.xyz/client-go/tools/queue
 kmodules.xyz/client-go/tools/wait

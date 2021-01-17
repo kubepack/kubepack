@@ -7,9 +7,8 @@ require (
 	github.com/Masterminds/sprig v2.22.0+incompatible
 	github.com/appscode/static-assets v0.4.1
 	github.com/coreos/prometheus-operator v0.39.0
-	github.com/cubewise-code/go-mime v0.0.0-20200519001935-8c5762b177d8
 	github.com/evanphx/json-patch v4.9.0+incompatible
-	github.com/gabriel-vasile/mimetype v1.1.1
+	github.com/gabriel-vasile/mimetype v1.1.2
 	github.com/go-macaron/binding v1.1.0
 	github.com/go-openapi/spec v0.19.8
 	github.com/gobuffalo/flect v0.2.2
@@ -46,7 +45,7 @@ require (
 	k8s.io/kube-openapi v0.0.0-20200410145947-61e04a5be9a6
 	k8s.io/kubectl v0.18.9
 	k8s.io/kubernetes v1.18.9
-	kmodules.xyz/client-go v0.0.0-20210116171603-216059f39cd8
+	kmodules.xyz/client-go v0.0.0-20210117022818-f5dc9b7323f3
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20200922204806-c1426cd7fcf4
 	kmodules.xyz/custom-resources v0.0.0-20201124062543-bd8d35c21b0c
 	kmodules.xyz/resource-metadata v0.4.8-0.20210113000222-d15533e4bb66

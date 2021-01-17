@@ -46,6 +46,8 @@ import (
 	cliflag "k8s.io/component-base/cli/flag"
 	cmdutil "k8s.io/kubectl/pkg/cmd/util"
 	"kmodules.xyz/client-go/logs"
+	meta_util "kmodules.xyz/client-go/meta"
+	"kmodules.xyz/client-go/tools/converter"
 	"sigs.k8s.io/yaml"
 )
 
@@ -190,10 +192,10 @@ func main() {
 		}
 
 		filename := ctx.Params("*")
-		format := lib.NewDataFormat(ctx.QueryTrim("format"), lib.JsonFormat)
+		format := meta_util.NewDataFormat(ctx.QueryTrim("format"), meta_util.JsonFormat)
 		for _, f := range chrt.Raw {
 			if f.Name == filename {
-				out, ct, err := lib.ConvertFormat(f, lib.DataFormat(format))
+				out, ct, err := converter.Convert(f.Name, f.Data, format)
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
 					return
@@ -220,8 +222,8 @@ func main() {
 				return
 			}
 
-			format := lib.NewDataFormat(ctx.QueryTrim("format"), lib.JsonFormat)
-			if format == lib.YAMLFormat {
+			format := meta_util.NewDataFormat(ctx.QueryTrim("format"), meta_util.JsonFormat)
+			if format == meta_util.YAMLFormat {
 				out, err := yaml.Marshal(model)
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
@@ -251,10 +253,10 @@ func main() {
 			}
 
 			var out lib.ResourceOutput
-			format := lib.NewDataFormat(ctx.QueryTrim("format"), lib.YAMLFormat)
+			format := meta_util.NewDataFormat(ctx.QueryTrim("format"), meta_util.YAMLFormat)
 
 			for _, crd := range tpls.CRDs {
-				data, err := lib.Marshal(crd, format)
+				data, err := meta_util.Marshal(crd, format)
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
 					return
@@ -262,7 +264,7 @@ func main() {
 				out.CRDs = append(out.CRDs, string(data))
 			}
 			for _, r := range tpls.Resources {
-				data, err := lib.Marshal(r, format)
+				data, err := meta_util.Marshal(r, format)
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
 					return
@@ -592,7 +594,7 @@ func main() {
 				}
 			}
 
-			format := lib.NewDataFormat(ctx.QueryTrim("format"), lib.YAMLFormat)
+			format := meta_util.NewDataFormat(ctx.QueryTrim("format"), meta_util.YAMLFormat)
 			out, err := lib.ConvertChartTemplates(tpls, format)
 			if err != nil {
 				ctx.Error(http.StatusInternalServerError, err.Error())
@@ -721,8 +723,8 @@ func main() {
 					return
 				}
 
-				format := lib.NewDataFormat(ctx.QueryTrim("format"), lib.JsonFormat)
-				out, err := lib.Marshal(tpl.Values, format)
+				format := meta_util.NewDataFormat(ctx.QueryTrim("format"), meta_util.JsonFormat)
+				out, err := meta_util.Marshal(tpl.Values, format)
 				if err != nil {
 					ctx.Error(http.StatusInternalServerError, err.Error())
 					return
@@ -763,10 +765,10 @@ func main() {
 				}
 
 				var out lib.ResourceOutput
-				format := lib.NewDataFormat(ctx.QueryTrim("format"), lib.YAMLFormat)
+				format := meta_util.NewDataFormat(ctx.QueryTrim("format"), meta_util.YAMLFormat)
 
 				for _, r := range tpl.Resources {
-					data, err := lib.Marshal(r, format)
+					data, err := meta_util.Marshal(r, format)
 					if err != nil {
 						ctx.Error(http.StatusInternalServerError, err.Error())
 						return
