@@ -27,7 +27,6 @@ import (
 	"kubepack.dev/lib-helm/repo"
 
 	"github.com/google/uuid"
-	"github.com/mitchellh/mapstructure"
 	"gomodules.xyz/jsonpatch/v3"
 	"helm.sh/helm/v3/pkg/chart"
 	"k8s.io/apimachinery/pkg/api/meta"
@@ -41,6 +40,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/restmapper"
+	meta_util "kmodules.xyz/client-go/meta"
 	"kmodules.xyz/client-go/tools/parser"
 	metaapi "kmodules.xyz/resource-metadata/apis/meta/v1alpha1"
 	"kmodules.xyz/resource-metadata/hub"
@@ -264,16 +264,7 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 	for rsKey, x := range chrt.Values["resources"].(map[string]interface{}) {
 		var tm metav1.TypeMeta
 
-		config := &mapstructure.DecoderConfig{
-			Metadata: nil,
-			TagName:  "json",
-			Result:   &tm,
-		}
-		decoder, err := mapstructure.NewDecoder(config)
-		if err != nil {
-			return nil, err
-		}
-		err = decoder.Decode(x)
+		err = meta_util.DecodeObject(x.(map[string]interface{}), &tm)
 		if err != nil {
 			return nil, fmt.Errorf("failed to parse TypeMeta for rsKey %s in chart name=%s version=%s values", rsKey, chrt.Name(), chrt.Metadata.Version)
 		}
@@ -355,16 +346,7 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 
 func GenerateEditorModel(reg *repo.Registry, opts unstructured.Unstructured) (*unstructured.Unstructured, error) {
 	var spec OptionsSpec
-	config := &mapstructure.DecoderConfig{
-		Metadata: nil,
-		TagName:  "json",
-		Result:   &spec,
-	}
-	decoder, err := mapstructure.NewDecoder(config)
-	if err != nil {
-		return nil, err
-	}
-	err = decoder.Decode(opts.Object)
+	err := meta_util.DecodeObject(opts.Object, &spec)
 	if err != nil {
 		return nil, err
 	}
@@ -420,16 +402,7 @@ func GenerateEditorModel(reg *repo.Registry, opts unstructured.Unstructured) (*u
 
 func RenderChartTemplate(reg *repo.Registry, opts unstructured.Unstructured) (string, *ChartTemplate, error) {
 	var spec OptionsSpec
-	config := &mapstructure.DecoderConfig{
-		Metadata: nil,
-		TagName:  "json",
-		Result:   &spec,
-	}
-	decoder, err := mapstructure.NewDecoder(config)
-	if err != nil {
-		return "", nil, err
-	}
-	err = decoder.Decode(opts.Object)
+	err := meta_util.DecodeObject(opts.Object, &spec)
 	if err != nil {
 		return "", nil, err
 	}

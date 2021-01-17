@@ -22,27 +22,17 @@ import (
 	"kubepack.dev/cli/pkg/lib/action"
 	"kubepack.dev/kubepack/pkg/lib"
 
-	"github.com/mitchellh/mapstructure"
 	"helm.sh/helm/v3/pkg/release"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	cmdutil "k8s.io/kubectl/pkg/cmd/util"
+	meta_util "kmodules.xyz/client-go/meta"
 	"kmodules.xyz/resource-metadata/hub"
 )
 
 func ApplyResource(f cmdutil.Factory, model unstructured.Unstructured, skipCRds bool) (*release.Release, error) {
 	var tm lib.OptionsSpec
-
-	config := &mapstructure.DecoderConfig{
-		Metadata: nil,
-		TagName:  "json",
-		Result:   &tm,
-	}
-	decoder, err := mapstructure.NewDecoder(config)
-	if err != nil {
-		return nil, err
-	}
-	err = decoder.Decode(model.Object)
+	err := meta_util.DecodeObject(model.Object, &tm)
 	if err != nil {
 		return nil, errors.New("failed to parse Metadata for values")
 	}
