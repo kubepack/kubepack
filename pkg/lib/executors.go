@@ -617,7 +617,7 @@ func (x *YAMLPrinter) Do() error {
 	client.APIVersions = chartutil.VersionSet(extraAPIs)
 	client.Version = x.Version
 
-	validInstallableChart, err := isChartInstallable(chrt.Chart)
+	validInstallableChart, err := IsChartInstallable(chrt.Chart)
 	if !validInstallableChart {
 		return err
 	}
@@ -733,7 +733,7 @@ func (x *YAMLPrinter) Do() error {
 		return err
 	}
 
-	hooks, manifests, err := renderResources(chrt.Chart, caps, valuesToRender)
+	hooks, manifests, err := RenderResources(chrt.Chart, caps, valuesToRender)
 	if err != nil {
 		return err
 	}
@@ -846,7 +846,7 @@ func (x *PermissionChecker) Do() error {
 	client.APIVersions = chartutil.VersionSet(extraAPIs)
 	client.Version = x.Version
 
-	validInstallableChart, err := isChartInstallable(chrt.Chart)
+	validInstallableChart, err := IsChartInstallable(chrt.Chart)
 	if !validInstallableChart {
 		return err
 	}
@@ -936,7 +936,7 @@ func (x *PermissionChecker) Do() error {
 		return err
 	}
 
-	hooks, manifests, err := renderResources(chrt.Chart, caps, valuesToRender)
+	hooks, manifests, err := RenderResources(chrt.Chart, caps, valuesToRender)
 	if err != nil {
 		return err
 	}
@@ -1132,7 +1132,7 @@ func (x *ApplicationGenerator) Do() error {
 	client.APIVersions = chartutil.VersionSet(extraAPIs)
 	client.Version = x.Chart.Version
 
-	validInstallableChart, err := isChartInstallable(x.chrt)
+	validInstallableChart, err := IsChartInstallable(x.chrt)
 	if !validInstallableChart {
 		return err
 	}
@@ -1217,59 +1217,42 @@ func (x *ApplicationGenerator) Do() error {
 		return err
 	}
 
-	hooks, manifests, err := renderResources(x.chrt, caps, valuesToRender)
+	hooks, manifests, err := RenderResources(x.chrt, caps, valuesToRender)
 	if err != nil {
 		return err
 	}
 
+	var manifestDoc bytes.Buffer
 	for _, hook := range hooks {
 		if IsEvent(hook.Events, release.HookPreInstall) {
-			err = x.extractComponentAttributes([]byte(hook.Manifest))
+			// TODO: Mark as pre-install hook
+			_, err = fmt.Fprintf(&manifestDoc, "---\n# Source: %s\n%s\n", hook.Path, hook.Manifest)
 			if err != nil {
 				return err
 			}
 		}
 	}
-
 	for _, m := range manifests {
-		err = x.extractComponentAttributes([]byte(m.Content))
+		_, err = fmt.Fprintf(&manifestDoc, "---\n# Source: %s\n%s\n", m.Name, m.Content)
 		if err != nil {
 			return err
 		}
 	}
-
 	for _, hook := range hooks {
 		if IsEvent(hook.Events, release.HookPostInstall) {
-			err = x.extractComponentAttributes([]byte(hook.Manifest))
+			// TODO: Mark as post-install hook
+			_, err = fmt.Fprintf(&manifestDoc, "---\n# Source: %s\n%s\n", hook.Path, hook.Manifest)
 			if err != nil {
 				return err
 			}
 		}
 	}
-
-	return nil
+	x.components, x.commonLabels, err = parser.ExtractComponents(manifestDoc.Bytes())
+	return err
 }
 
 func (x *ApplicationGenerator) Result() *v1beta1.Application {
 	desc := GetPackageDescriptor(x.chrt)
-
-	p := v1alpha1.ApplicationPackage{
-		TypeMeta: metav1.TypeMeta{
-			APIVersion: v1alpha1.SchemeGroupVersion.String(),
-			Kind:       "ApplicationPackage",
-		},
-		Bundle: x.Chart.Bundle,
-		Chart: v1alpha1.ChartRepoRef{
-			Name:    x.Chart.Name,
-			URL:     x.Chart.URL,
-			Version: x.Chart.Version,
-		},
-		Channel: v1alpha1.RegularChannel,
-	}
-	data, err := json.Marshal(p)
-	if err != nil {
-		panic(err)
-	}
 
 	b := &v1beta1.Application{
 		TypeMeta: metav1.TypeMeta{
@@ -1281,7 +1264,9 @@ func (x *ApplicationGenerator) Result() *v1beta1.Application {
 			Namespace: x.Chart.Namespace,
 			Labels:    nil, // TODO: ?
 			Annotations: map[string]string{
-				apis.LabelPackage: string(data),
+				apis.LabelChartURL:     x.Chart.URL,
+				apis.LabelChartName:    x.Chart.Name,
+				apis.LabelChartVersion: x.Chart.Version,
 			},
 		},
 		Spec: v1beta1.ApplicationSpec{
@@ -1322,30 +1307,6 @@ func (x *ApplicationGenerator) Result() *v1beta1.Application {
 	return b
 }
 
-var empty = struct{}{}
-
-func (x *ApplicationGenerator) extractComponentAttributes(data []byte) error {
-	return parser.ProcessResources(data, func(obj *unstructured.Unstructured) error {
-		gv, err := schema.ParseGroupVersion(obj.GetAPIVersion())
-		if err != nil {
-			return err
-		}
-		x.components[metav1.GroupKind{Group: gv.Group, Kind: obj.GetKind()}] = empty
-
-		if !x.init {
-			x.commonLabels = obj.GetLabels()
-			x.init = true
-		} else {
-			for k, v := range obj.GetLabels() {
-				if existing, found := x.commonLabels[k]; found && existing != v {
-					delete(x.commonLabels, k)
-				}
-			}
-		}
-		return nil
-	})
-}
-
 func ExtractResourceAttributes(data []byte, verb string, reg *hub.Registry, attrs map[authorization.ResourceAttributes]*ResourcePermission) error {
 	return parser.ProcessResources(data, func(obj *unstructured.Unstructured) error {
 		gvr, err := reg.GVR(schema.FromAPIVersionAndKind(obj.GetAPIVersion(), obj.GetKind()))
@@ -1378,8 +1339,8 @@ func ExtractResourceAttributes(data []byte, verb string, reg *hub.Registry, attr
 // helm.sh/helm/v3/pkg/action/install.go
 const notesFileSuffix = "NOTES.txt"
 
-// renderResources renders the templates in a chart
-func renderResources(ch *chart.Chart, caps *chartutil.Capabilities, values chartutil.Values) ([]*release.Hook, []releaseutil.Manifest, error) {
+// RenderResources renders the templates in a chart
+func RenderResources(ch *chart.Chart, caps *chartutil.Capabilities, values chartutil.Values) ([]*release.Hook, []releaseutil.Manifest, error) {
 	hs := []*release.Hook{}
 	b := bytes.NewBuffer(nil)
 
@@ -1431,10 +1392,10 @@ func IsEvent(events []release.HookEvent, x release.HookEvent) bool {
 	return false
 }
 
-// isChartInstallable validates if a chart can be installed
+// IsChartInstallable validates if a chart can be installed
 //
 // Application chart type is only installable
-func isChartInstallable(ch *chart.Chart) (bool, error) {
+func IsChartInstallable(ch *chart.Chart) (bool, error) {
 	switch ch.Metadata.Type {
 	case "", "application":
 		return true, nil
