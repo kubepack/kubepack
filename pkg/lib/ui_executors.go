@@ -25,6 +25,7 @@ import (
 	"strconv"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+	"kubepack.dev/lib-app/api"
 	"kubepack.dev/lib-helm/repo"
 
 	jsonpatch "github.com/evanphx/json-patch"
@@ -38,35 +39,9 @@ import (
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chartutil"
 	"helm.sh/helm/v3/pkg/release"
-	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	yamllib "sigs.k8s.io/yaml"
 )
-
-type BucketFile struct {
-	// URL of the file in bucket
-	URL string `json:"url"`
-	// Bucket key for this file
-	Key      string `json:"key"`
-	Filename string `json:"filename"`
-	Data     []byte `json:"data"`
-}
-
-type BucketJsonFile struct {
-	// URL of the file in bucket
-	URL string `json:"url,omitempty"`
-	// Bucket key for this file
-	Key      string                     `json:"key,omitempty"`
-	Filename string                     `json:"filename,omitempty"`
-	Data     *unstructured.Unstructured `json:"data,omitempty"`
-}
-
-type BucketObject struct {
-	// URL of the file in bucket
-	URL string `json:"url"`
-	// Bucket key for this file
-	Key string `json:"key"`
-}
 
 type TemplateRenderer struct {
 	Registry    *repo.Registry
@@ -84,8 +59,8 @@ type TemplateRenderer struct {
 	PublicURL string
 	//W         io.Writer
 
-	CRDs     []BucketFile
-	Manifest *BucketFile
+	CRDs     []api.BucketFile
+	Manifest *api.BucketFile
 }
 
 func (x *TemplateRenderer) Do() error {
@@ -191,7 +166,7 @@ func (x *TemplateRenderer) Do() error {
 			}
 
 			objectKey := "/" + path.Join(x.UID, "crds", crd.Name+".yaml")
-			x.CRDs = append(x.CRDs, BucketFile{
+			x.CRDs = append(x.CRDs, api.BucketFile{
 				URL:      x.PublicURL + objectKey,
 				Key:      objectKey,
 				Filename: crd.Filename,
@@ -267,7 +242,7 @@ func (x *TemplateRenderer) Do() error {
 
 	{
 		objectKey := "/" + path.Join(x.UID, "manifests", x.ReleaseName+".yaml")
-		x.Manifest = &BucketFile{
+		x.Manifest = &api.BucketFile{
 			URL:      x.PublicURL + objectKey,
 			Key:      objectKey,
 			Filename: "manifest.yaml",
@@ -293,7 +268,7 @@ func (x *TemplateRenderer) Do() error {
 	return nil
 }
 
-func (x *TemplateRenderer) Result() (crds []BucketFile, manifest *BucketFile) {
+func (x *TemplateRenderer) Result() (crds []api.BucketFile, manifest *api.BucketFile) {
 	crds = x.CRDs
 	manifest = x.Manifest
 

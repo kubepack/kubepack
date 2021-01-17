@@ -24,6 +24,7 @@ import (
 	"time"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+	"kubepack.dev/lib-app/api"
 	"kubepack.dev/lib-helm/repo"
 
 	"github.com/google/uuid"
@@ -42,101 +43,15 @@ import (
 	"k8s.io/client-go/restmapper"
 	meta_util "kmodules.xyz/client-go/meta"
 	"kmodules.xyz/client-go/tools/parser"
-	metaapi "kmodules.xyz/resource-metadata/apis/meta/v1alpha1"
 	"kmodules.xyz/resource-metadata/hub"
 	"sigs.k8s.io/application/api/app/v1beta1"
 	app_cs "sigs.k8s.io/application/client/clientset/versioned"
 	"sigs.k8s.io/yaml"
 )
 
-//type EditorModel struct {
-//	Metadata  `json:"metadata,omitempty"`
-//	Resources map[string]interface{} `json:"resources,omitempty"`
-//}
-
-type Metadata struct {
-	Resource metaapi.ResourceID `json:"resource,omitempty"`
-	Release  ReleaseMetadata    `json:"release,omitempty"`
-}
-
-type ReleaseMetadata struct {
-	Name      string `json:"name,omitempty"`
-	Namespace string `json:"namespace,omitempty"`
-}
-
-type OptionsSpec struct {
-	Metadata `json:"metadata,omitempty"`
-}
-
-type ChartOrder struct {
-	v1alpha1.ChartRepoRef `json:",inline"`
-
-	ReleaseName string                 `json:"releaseName,omitempty"`
-	Namespace   string                 `json:"namespace,omitempty"`
-	Values      map[string]interface{} `json:"values,omitempty"`
-}
-
-type EditorParameters struct {
-	ValuesFile string `json:"valuesFile,omitempty"`
-	// RFC 6902 compatible json patch. ref: http://jsonpatch.com
-	// +optional
-	// +kubebuilder:pruning:PreserveUnknownFields
-	ValuesPatch *runtime.RawExtension `json:"valuesPatch,omitempty"`
-}
-
-type EditResourceOrder struct {
-	Group    string `json:"group,omitempty"`
-	Version  string `json:"version,omitempty"`
-	Resource string `json:"resource,omitempty"`
-
-	ReleaseName string `json:"releaseName,omitempty"`
-	Namespace   string `json:"namespace,omitempty"`
-	Values      string `json:"values,omitempty"`
-}
-
-type ChartTemplate struct {
-	v1alpha1.ChartRef `json:",inline"`
-	Version           string                       `json:"version,omitempty"`
-	ReleaseName       string                       `json:"releaseName,omitempty"`
-	Namespace         string                       `json:"namespace,omitempty"`
-	CRDs              []BucketJsonFile             `json:"crds,omitempty"`
-	Manifest          *BucketObject                `json:"manifest,omitempty"`
-	Resources         []*unstructured.Unstructured `json:"resources,omitempty"`
-}
-
-type BucketFileOutput struct {
-	// URL of the file in bucket
-	URL string `json:"url,omitempty"`
-	// Bucket key for this file
-	Key      string `json:"key,omitempty"`
-	Filename string `json:"filename,omitempty"`
-	Data     string `json:"data,omitempty"`
-}
-
-type ChartTemplateOutput struct {
-	v1alpha1.ChartRef `json:",inline"`
-	Version           string             `json:"version,omitempty"`
-	ReleaseName       string             `json:"releaseName,omitempty"`
-	Namespace         string             `json:"namespace,omitempty"`
-	CRDs              []BucketFileOutput `json:"crds,omitempty"`
-	Manifest          *BucketObject      `json:"manifest,omitempty"`
-	Resources         []string           `json:"resources,omitempty"`
-}
-
-type EditorTemplate struct {
-	Manifest  []byte                       `json:"manifest,omitempty"`
-	Values    map[string]interface{}       `json:"values,omitempty"`
-	Resources []*unstructured.Unstructured `json:"resources,omitempty"`
-}
-
-type ResourceOutput struct {
-	CRDs      []string `json:"crds,omitempty"`
-	Resources []string `json:"resources,omitempty"`
-}
-
-func RenderOrderTemplate(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order) (string, []ChartTemplate, error) {
+func RenderOrderTemplate(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order) (string, []api.ChartTemplate, error) {
 	var buf bytes.Buffer
-	var tpls []ChartTemplate
+	var tpls []api.ChartTemplate
 
 	for _, pkg := range order.Spec.Packages {
 		if pkg.Chart == nil {
@@ -161,7 +76,7 @@ func RenderOrderTemplate(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 			return "", nil, err
 		}
 
-		tpl := ChartTemplate{
+		tpl := api.ChartTemplate{
 			ChartRef:    pkg.Chart.ChartRef,
 			Version:     pkg.Chart.Version,
 			ReleaseName: pkg.Chart.ReleaseName,
@@ -176,7 +91,7 @@ func RenderOrderTemplate(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 			if len(resources) != 1 {
 				return "", nil, fmt.Errorf("%d crds found in %s", len(resources), crd.Filename)
 			}
-			tpl.CRDs = append(tpl.CRDs, BucketJsonFile{
+			tpl.CRDs = append(tpl.CRDs, api.BucketJsonFile{
 				URL:      crd.URL,
 				Key:      crd.Key,
 				Filename: crd.Filename,
@@ -184,7 +99,7 @@ func RenderOrderTemplate(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 			})
 		}
 		if manifestFile != nil {
-			tpl.Manifest = &BucketObject{
+			tpl.Manifest = &api.BucketObject{
 				URL: manifestFile.URL,
 				Key: manifestFile.Key,
 			}
@@ -212,7 +127,7 @@ func RenderOrderTemplate(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 	return buf.String(), tpls, nil
 }
 
-func LoadEditorModel(cfg *rest.Config, reg *repo.Registry, opts OptionsSpec) (*EditorTemplate, error) {
+func LoadEditorModel(cfg *rest.Config, reg *repo.Registry, opts api.OptionsSpec) (*api.EditorTemplate, error) {
 	rd, err := hub.NewRegistryOfKnownResources().LoadByGVR(schema.GroupVersionResource{
 		Group:    opts.Resource.Group,
 		Version:  opts.Resource.Version,
@@ -249,7 +164,7 @@ func LoadEditorModel(cfg *rest.Config, reg *repo.Registry, opts OptionsSpec) (*E
 	return EditorChartValueManifest(app, mapper, dc, opts.Metadata.Release, chrt.Chart)
 }
 
-func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.DeferredDiscoveryRESTMapper, dc dynamic.Interface, mt ReleaseMetadata, chrt *chart.Chart) (*EditorTemplate, error) {
+func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.DeferredDiscoveryRESTMapper, dc dynamic.Interface, mt api.ReleaseMetadata, chrt *chart.Chart) (*api.EditorTemplate, error) {
 	selector, err := metav1.LabelSelectorAsSelector(app.Spec.Selector)
 	if err != nil {
 		return nil, err
@@ -329,7 +244,7 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 		}
 	}
 
-	tpl := EditorTemplate{
+	tpl := api.EditorTemplate{
 		Manifest: buf.Bytes(),
 		Values: map[string]interface{}{
 			"metadata": map[string]interface{}{
@@ -345,7 +260,7 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper *restmapper.Defer
 }
 
 func GenerateEditorModel(reg *repo.Registry, opts unstructured.Unstructured) (*unstructured.Unstructured, error) {
-	var spec OptionsSpec
+	var spec api.OptionsSpec
 	err := meta_util.DecodeObject(opts.Object, &spec)
 	if err != nil {
 		return nil, err
@@ -400,8 +315,8 @@ func GenerateEditorModel(reg *repo.Registry, opts unstructured.Unstructured) (*u
 	}, err
 }
 
-func RenderChartTemplate(reg *repo.Registry, opts unstructured.Unstructured) (string, *ChartTemplate, error) {
-	var spec OptionsSpec
+func RenderChartTemplate(reg *repo.Registry, opts unstructured.Unstructured) (string, *api.ChartTemplate, error) {
+	var spec api.OptionsSpec
 	err := meta_util.DecodeObject(opts.Object, &spec)
 	if err != nil {
 		return "", nil, err
@@ -433,7 +348,7 @@ func RenderChartTemplate(reg *repo.Registry, opts unstructured.Unstructured) (st
 		return "", nil, err
 	}
 
-	tpl := ChartTemplate{
+	tpl := api.ChartTemplate{
 		ChartRef:    f1.ChartRef,
 		Version:     f1.Version,
 		ReleaseName: f1.ReleaseName,
@@ -449,7 +364,7 @@ func RenderChartTemplate(reg *repo.Registry, opts unstructured.Unstructured) (st
 		if len(resources) != 1 {
 			return "", nil, fmt.Errorf("%d crds found in %s", len(resources), crd.Name)
 		}
-		tpl.CRDs = append(tpl.CRDs, BucketJsonFile{
+		tpl.CRDs = append(tpl.CRDs, api.BucketJsonFile{
 			Filename: crd.Name,
 			Data:     resources[0],
 		})
@@ -463,7 +378,7 @@ func RenderChartTemplate(reg *repo.Registry, opts unstructured.Unstructured) (st
 	return string(manifest), &tpl, nil
 }
 
-func CreateChartOrder(reg *repo.Registry, opts ChartOrder) (*v1alpha1.Order, error) {
+func CreateChartOrder(reg *repo.Registry, opts api.ChartOrder) (*v1alpha1.Order, error) {
 	// editor chart
 	chrt, err := reg.GetChart(opts.URL, opts.Name, opts.Version)
 	if err != nil {

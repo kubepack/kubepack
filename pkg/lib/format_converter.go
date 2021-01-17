@@ -1,14 +1,16 @@
 package lib
 
 import (
+	"kubepack.dev/lib-app/api"
+
 	meta_util "kmodules.xyz/client-go/meta"
 )
 
-func ConvertChartTemplates(tpls []ChartTemplate, format meta_util.DataFormat) ([]ChartTemplateOutput, error) {
-	var out []ChartTemplateOutput
+func ConvertChartTemplates(tpls []api.ChartTemplate, format meta_util.DataFormat) ([]api.ChartTemplateOutput, error) {
+	var out []api.ChartTemplateOutput
 
 	for _, tpl := range tpls {
-		entry := ChartTemplateOutput{
+		entry := api.ChartTemplateOutput{
 			ChartRef:    tpl.ChartRef,
 			Version:     tpl.Version,
 			ReleaseName: tpl.ReleaseName,
@@ -21,7 +23,7 @@ func ConvertChartTemplates(tpls []ChartTemplate, format meta_util.DataFormat) ([
 			if err != nil {
 				return nil, err
 			}
-			entry.CRDs = append(entry.CRDs, BucketFileOutput{
+			entry.CRDs = append(entry.CRDs, api.BucketFileOutput{
 				URL:      crd.URL,
 				Key:      crd.Key,
 				Filename: crd.Filename,

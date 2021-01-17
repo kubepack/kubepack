@@ -1432,6 +1432,8 @@ kubepack.dev/chart-doc-gen/api
 kubepack.dev/cli/pkg/action
 kubepack.dev/cli/pkg/lib/action
 kubepack.dev/cli/pkg/storage/driver
+# kubepack.dev/lib-app v0.0.0-20210117033044-8805ad15ca24
+kubepack.dev/lib-app/api
 # kubepack.dev/lib-helm v0.2.1
 kubepack.dev/lib-helm/action
 kubepack.dev/lib-helm/chart

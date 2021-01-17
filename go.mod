@@ -18,7 +18,6 @@ require (
 	github.com/google/uuid v1.1.2
 	github.com/gorilla/schema v1.2.0 // indirect
 	github.com/gregjones/httpcache v0.0.0-20180305231024-9cad4c3443a7
-	github.com/mitchellh/mapstructure v1.2.2
 	github.com/onsi/ginkgo v1.11.0
 	github.com/onsi/gomega v1.8.1
 	github.com/pkg/errors v0.9.1
@@ -52,6 +51,7 @@ require (
 	kmodules.xyz/webhook-runtime v0.0.0-20201105073856-2dc7382b88c6
 	kubepack.dev/chart-doc-gen v0.3.1-0.20210111011933-daa7c1d70a65
 	kubepack.dev/cli v0.0.0-20210116103944-7a7b45a70149
+	kubepack.dev/lib-app v0.0.0-20210117033044-8805ad15ca24
 	kubepack.dev/lib-helm v0.2.1
 	sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4
 	sigs.k8s.io/yaml v1.2.0

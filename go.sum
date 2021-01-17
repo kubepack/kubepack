@@ -1515,6 +1515,7 @@ kmodules.xyz/apply v0.0.0-20210116151714-fd7ceb3d27af h1:DE1aa6Qlv/TKQCA+5a+qXJ0
 kmodules.xyz/apply v0.0.0-20210116151714-fd7ceb3d27af/go.mod h1:nfm6EEM4OXLbvg5RxMsEHGvqpwgRHWEgdf7hg3hzMSQ=
 kmodules.xyz/client-go v0.0.0-20201105071625-0b277310b9b8/go.mod h1:WXDwZBmvrcLgGcuO9iZpI9jcfPuDFfWbxA4EnhAFtGw=
 kmodules.xyz/client-go v0.0.0-20201230092550-8ca15cfcbefa/go.mod h1:WXDwZBmvrcLgGcuO9iZpI9jcfPuDFfWbxA4EnhAFtGw=
+kmodules.xyz/client-go v0.0.0-20210116153227-569dec1f25e4/go.mod h1:WXDwZBmvrcLgGcuO9iZpI9jcfPuDFfWbxA4EnhAFtGw=
 kmodules.xyz/client-go v0.0.0-20210117022818-f5dc9b7323f3 h1:yvkpxLkZkAkqGrhDtnFEOaqcorRfMHfDZrYlU5gBtA8=
 kmodules.xyz/client-go v0.0.0-20210117022818-f5dc9b7323f3/go.mod h1:GdX1CHOpjL4F8P9O/7dE9m0fIOs05BNHKVT+kM51rk8=
 kmodules.xyz/crd-schema-fuzz v0.0.0-20200521005638-2433a187de95/go.mod h1:jpu8xFsDKd6kAWUAKk8oTu/GQGBWqhrcaDeOJdaCJnk=
@@ -1530,6 +1531,8 @@ kmodules.xyz/webhook-runtime v0.0.0-20201105073856-2dc7382b88c6/go.mod h1:xLgewo
 kubepack.dev/chart-doc-gen v0.3.1-0.20210111011933-daa7c1d70a65 h1:eD7FHjILD3x3lca1SE3tJmdTWjrmG7bUA+jBqwguzKY=
 kubepack.dev/chart-doc-gen v0.3.1-0.20210111011933-daa7c1d70a65/go.mod h1:P8LlQGPjdohr/Og6Pvnhv7vxiTX8oRHoktRay8leFM4=
 kubepack.dev/kubepack v0.2.2-0.20210116103714-3dc228d948f4/go.mod h1:h4c5AfIcLC+dyGvibgHaAAQnw/JenBAf50Nx0vk7dTQ=
+kubepack.dev/lib-app v0.0.0-20210117033044-8805ad15ca24 h1:1LQLZK9HQqjS53WN/F87MKd9mEmcrGcGUFlk0AMH41I=
+kubepack.dev/lib-app v0.0.0-20210117033044-8805ad15ca24/go.mod h1:us5buYKdKsnH0QVlpbfTePi6i7Bl46mT2rZXcjwaqSo=
 kubepack.dev/lib-helm v0.2.1 h1:KnRfYRuepJT7Zgfi6iJHYrF3SFfGjrvWLMxhPOsmy/I=
 kubepack.dev/lib-helm v0.2.1/go.mod h1:rrfYDaHg26/HT2E7pp2o5TKdf5a/YOtbFtUr6SLab6I=
 modernc.org/cc v1.0.0/go.mod h1:1Sk4//wdnYJiUIxnW8ddKpaOJCF37yAdqYnkxUpaYxw=
