@@ -1,5 +1,0 @@
-{{- with .Values.resources }}
-{{- with .stashAppscodeComRepository }}
-{{- . | toYaml }}
-{{- end }}
-{{- end }}

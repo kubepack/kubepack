@@ -1,5 +1,0 @@
-{{- with .Values.resources }}
-{{- with .kubedbComMongoDB }}
-{{- . | toYaml }}
-{{- end }}
-{{- end }}
