@@ -12,6 +12,7 @@ import (
 	"helm.sh/helm/v3/pkg/release"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
+	libchart "kubepack.dev/lib-helm/chart"
 	"kubepack.dev/lib-helm/repo"
 	"sigs.k8s.io/yaml"
 )
@@ -111,7 +112,7 @@ func (x *Upgrader) Run() (*release.Release, error) {
 	cmd.Atomic = x.opts.Atomic
 	cmd.CleanupOnFail = x.opts.CleanupOnFail
 
-	validInstallableChart, err := isChartInstallable(chrt.Chart)
+	validInstallableChart, err := libchart.IsChartInstallable(chrt.Chart)
 	if !validInstallableChart {
 		return nil, err
 	}

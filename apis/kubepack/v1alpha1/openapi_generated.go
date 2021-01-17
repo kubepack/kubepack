@@ -17411,28 +17411,15 @@ func schema_kubepack_apis_kubepack_v1alpha1_ResourceID(ref common.ReferenceCallb
 							Format: "",
 						},
 					},
-					"name": {
+					"resource": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Name is the plural name of the resource to serve.  It must match the name of the CustomResourceDefinition-registration too: plural.group and it must be all lowercase.",
 							Type:        []string{"string"},
 							Format:      "",
 						},
 					},
-					"kind": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Kind is the serialized kind of the resource.  It is normally CamelCase and singular.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"scope": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
 				},
-				Required: []string{"group", "version", "name", "kind", "scope"},
+				Required: []string{"group", "version", "resource"},
 			},
 		},
 	}

@@ -22,13 +22,21 @@ const (
 	StripeAPIKey = "STRIPE_API_KEY"
 
 	StripeMetadataKeyUserID = "client_id"
+)
 
-	LabelPackage = "kubepack.com/package"
-
+const (
 	LabelPlanID         = "byte.builders/plan-id"
 	LabelPlanPhase      = "byte.builders/plan-phase"
 	LabelProductID      = "byte.builders/product-id"
 	LabelProductKey     = "byte.builders/product-key"
 	LabelProductPhase   = "byte.builders/product-phase"
 	LabelProductOwnerID = "byte.builders/product-owner-id"
+)
+
+const (
+	LabelChartURL      = "helm.sh/chart-url"
+	LabelChartName     = "helm.sh/chart-name"
+	LabelChartVersion  = "helm.sh/chart-version"
+	LabelFirstDeployed = "helm.sh/first-deployed"
+	LabelLastDeployed  = "helm.sh/last-deployed"
 )
