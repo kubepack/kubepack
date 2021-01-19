@@ -35,16 +35,6 @@ spec:
             type: object
           spec:
             properties:
-              aggregateUsage:
-                type: string
-              amount:
-                format: int64
-                type: integer
-              amountDecimal:
-                format: double
-                type: number
-              billingScheme:
-                type: string
               bundle:
                 properties:
                   name:
@@ -76,45 +66,37 @@ spec:
                 type: string
               phase:
                 type: string
+              pricingPattern:
+                additionalProperties:
+                  properties:
+                    expression:
+                      type: string
+                    sizedPrices:
+                      items:
+                        properties:
+                          cpu:
+                            type: string
+                          memory:
+                            type: string
+                          price:
+                            format: double
+                            type: number
+                        required:
+                        - cpu
+                        - memory
+                        - price
+                        type: object
+                      type: array
+                  required:
+                  - expression
+                  - sizedPrices
+                  type: object
+                type: object
               productID:
                 type: string
-              tiers:
-                items:
-                  description: PlanTier configures tiered pricing
-                  properties:
-                    flatAmount:
-                      format: int64
-                      type: integer
-                    flatAmountDecimal:
-                      format: double
-                      type: number
-                    unitAmount:
-                      format: int64
-                      type: integer
-                    unitAmountDecimal:
-                      format: double
-                      type: number
-                    upTo:
-                      format: int64
-                      type: integer
-                  type: object
-                type: array
-              tiersMode:
-                type: string
-              transformUsage:
-                description: PlanTransformUsage represents the bucket billing configuration.
-                properties:
-                  divideBy:
-                    format: int64
-                    type: integer
-                  round:
-                    type: string
-                type: object
               trialPeriodDays:
                 format: int64
                 type: integer
-              usageType:
-                type: string
               weight:
                 description: Plans for sorted by weight before displaying to users
                 format: int32
@@ -125,6 +107,7 @@ spec:
             - id
             - name
             - phase
+            - pricingPattern
             - productID
             - weight
             type: object
