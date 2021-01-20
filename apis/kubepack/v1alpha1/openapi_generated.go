@@ -17873,6 +17873,30 @@ func schema_kubepack_apis_kubepack_v1alpha1_PlanSpec(ref common.ReferenceCallbac
 							},
 						},
 					},
+					"aggregateUsage": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"amount": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"integer"},
+							Format: "int64",
+						},
+					},
+					"amountDecimal": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"billingScheme": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
 					"currency": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
@@ -17891,10 +17915,39 @@ func schema_kubepack_apis_kubepack_v1alpha1_PlanSpec(ref common.ReferenceCallbac
 							Format: "int64",
 						},
 					},
+					"tiers": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTier"),
+									},
+								},
+							},
+						},
+					},
+					"tiersMode": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"transformUsage": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTransformUsage"),
+						},
+					},
 					"trialPeriodDays": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"integer"},
 							Format: "int64",
+						},
+					},
+					"usageType": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
 						},
 					},
 				},
@@ -17902,7 +17955,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_PlanSpec(ref common.ReferenceCallbac
 			},
 		},
 		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRef", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PricingPattern"},
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRef", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTier", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTransformUsage", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PricingPattern"},
 	}
 }
 

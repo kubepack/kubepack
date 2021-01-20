@@ -974,6 +974,26 @@ func (in *PlanSpec) DeepCopyInto(out *PlanSpec) {
 			(*out)[key] = *val.DeepCopy()
 		}
 	}
+	if in.AggregateUsage != nil {
+		in, out := &in.AggregateUsage, &out.AggregateUsage
+		*out = new(string)
+		**out = **in
+	}
+	if in.Amount != nil {
+		in, out := &in.Amount, &out.Amount
+		*out = new(int64)
+		**out = **in
+	}
+	if in.AmountDecimal != nil {
+		in, out := &in.AmountDecimal, &out.AmountDecimal
+		*out = new(float64)
+		**out = **in
+	}
+	if in.BillingScheme != nil {
+		in, out := &in.BillingScheme, &out.BillingScheme
+		*out = new(string)
+		**out = **in
+	}
 	if in.Currency != nil {
 		in, out := &in.Currency, &out.Currency
 		*out = new(string)
@@ -989,9 +1009,35 @@ func (in *PlanSpec) DeepCopyInto(out *PlanSpec) {
 		*out = new(int64)
 		**out = **in
 	}
+	if in.Tiers != nil {
+		in, out := &in.Tiers, &out.Tiers
+		*out = make([]*PlanTier, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(PlanTier)
+				(*in).DeepCopyInto(*out)
+			}
+		}
+	}
+	if in.TiersMode != nil {
+		in, out := &in.TiersMode, &out.TiersMode
+		*out = new(string)
+		**out = **in
+	}
+	if in.TransformUsage != nil {
+		in, out := &in.TransformUsage, &out.TransformUsage
+		*out = new(PlanTransformUsage)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.TrialPeriodDays != nil {
 		in, out := &in.TrialPeriodDays, &out.TrialPeriodDays
 		*out = new(int64)
+		**out = **in
+	}
+	if in.UsageType != nil {
+		in, out := &in.UsageType, &out.UsageType
+		*out = new(string)
 		**out = **in
 	}
 	return

@@ -147,9 +147,9 @@ func main() {
 						},
 						Phase:         v1alpha1.PhaseActive,
 						IncludedPlans: nil,
-						Amount:        stripe.Int64(p.Amount),
-						Interval:      stripe.String(string(p.Interval)),
-						Currency:      stripe.String(string(p.Currency)),
+						//Amount:        stripe.Int64(p.Amount),
+						Interval: stripe.String(string(p.Interval)),
+						Currency: stripe.String(string(p.Currency)),
 					},
 				}
 

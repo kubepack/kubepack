@@ -58,10 +58,18 @@ type PlanSpec struct {
 
 	PricingPattern map[ResourceGroup]PricingPattern `json:"pricingPattern" protobuf:"bytes,10,rep,name=pricingPattern,castkey=ResourceGroup"`
 
-	Currency        *string `json:"currency,omitempty" protobuf:"bytes,11,opt,name=currency"`
-	Interval        *string `json:"interval,omitempty" protobuf:"bytes,12,opt,name=interval"`
-	IntervalCount   *int64  `json:"intervalCount,omitempty" protobuf:"varint,13,opt,name=intervalCount"`
-	TrialPeriodDays *int64  `json:"trialPeriodDays,omitempty" protobuf:"varint,14,opt,name=trialPeriodDays"`
+	AggregateUsage  *string             `json:"aggregateUsage,omitempty" protobuf:"bytes,11,opt,name=aggregateUsage"`
+	Amount          *int64              `json:"amount,omitempty" protobuf:"varint,12,opt,name=amount"`
+	AmountDecimal   *float64            `json:"amountDecimal,string,omitempty" protobuf:"fixed64,13,opt,name=amountDecimal"`
+	BillingScheme   *string             `json:"billingScheme,omitempty" protobuf:"bytes,14,opt,name=billingScheme"`
+	Currency        *string             `json:"currency,omitempty" protobuf:"bytes,15,opt,name=currency"`
+	Interval        *string             `json:"interval,omitempty" protobuf:"bytes,16,opt,name=interval"`
+	IntervalCount   *int64              `json:"intervalCount,omitempty" protobuf:"varint,17,opt,name=intervalCount"`
+	Tiers           []*PlanTier         `json:"tiers,omitempty" protobuf:"bytes,18,rep,name=tiers"`
+	TiersMode       *string             `json:"tiersMode,omitempty" protobuf:"bytes,19,opt,name=tiersMode"`
+	TransformUsage  *PlanTransformUsage `json:"transformUsage,omitempty" protobuf:"bytes,20,opt,name=transformUsage"`
+	TrialPeriodDays *int64              `json:"trialPeriodDays,omitempty" protobuf:"varint,21,opt,name=trialPeriodDays"`
+	UsageType       *string             `json:"usageType,omitempty" protobuf:"bytes,22,opt,name=usageType"`
 }
 
 type ResourceGroup string

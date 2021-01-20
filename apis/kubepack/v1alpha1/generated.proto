@@ -406,13 +406,29 @@ message PlanSpec {
 
   map<string, PricingPattern> pricingPattern = 10;
 
-  optional string currency = 11;
+  optional string aggregateUsage = 11;
 
-  optional string interval = 12;
+  optional int64 amount = 12;
 
-  optional int64 intervalCount = 13;
+  optional double amountDecimal = 13;
 
-  optional int64 trialPeriodDays = 14;
+  optional string billingScheme = 14;
+
+  optional string currency = 15;
+
+  optional string interval = 16;
+
+  optional int64 intervalCount = 17;
+
+  repeated PlanTier tiers = 18;
+
+  optional string tiersMode = 19;
+
+  optional PlanTransformUsage transformUsage = 20;
+
+  optional int64 trialPeriodDays = 21;
+
+  optional string usageType = 22;
 }
 
 message PlanStatus {

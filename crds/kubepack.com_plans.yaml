@@ -36,6 +36,16 @@ spec:
           type: object
         spec:
           properties:
+            aggregateUsage:
+              type: string
+            amount:
+              format: int64
+              type: integer
+            amountDecimal:
+              format: float
+              type: number
+            billingScheme:
+              type: string
             bundle:
               properties:
                 name:
@@ -95,9 +105,43 @@ spec:
               type: object
             productID:
               type: string
+            tiers:
+              items:
+                description: PlanTier configures tiered pricing
+                properties:
+                  flatAmount:
+                    format: int64
+                    type: integer
+                  flatAmountDecimal:
+                    format: float
+                    type: number
+                  unitAmount:
+                    format: int64
+                    type: integer
+                  unitAmountDecimal:
+                    format: float
+                    type: number
+                  upTo:
+                    format: int64
+                    type: integer
+                type: object
+              type: array
+            tiersMode:
+              type: string
+            transformUsage:
+              description: PlanTransformUsage represents the bucket billing configuration.
+              properties:
+                divideBy:
+                  format: int64
+                  type: integer
+                round:
+                  type: string
+              type: object
             trialPeriodDays:
               format: int64
               type: integer
+            usageType:
+              type: string
             weight:
               description: Plans for sorted by weight before displaying to users
               format: int32
