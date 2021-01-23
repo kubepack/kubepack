@@ -16,7 +16,7 @@ github.com/Azure/azure-storage-blob-go/azblob
 # github.com/Azure/go-ansiterm v0.0.0-20170929234023-d6e3b3328b78 => github.com/Azure/go-ansiterm v0.0.0-20170929234023-d6e3b3328b78
 github.com/Azure/go-ansiterm
 github.com/Azure/go-ansiterm/winterm
-# github.com/Azure/go-autorest/autorest v0.9.3 => github.com/Azure/go-autorest/autorest v0.9.0
+# github.com/Azure/go-autorest/autorest v0.10.2 => github.com/Azure/go-autorest/autorest v0.9.0
 github.com/Azure/go-autorest/autorest
 github.com/Azure/go-autorest/autorest/azure
 # github.com/Azure/go-autorest/autorest/adal v0.8.3 => github.com/Azure/go-autorest/autorest/adal v0.5.0
@@ -305,11 +305,13 @@ github.com/googleapis/gax-go/v2
 github.com/googleapis/gnostic/OpenAPIv2
 github.com/googleapis/gnostic/compiler
 github.com/googleapis/gnostic/extensions
-# github.com/gophercloud/gophercloud v0.6.0
+# github.com/gophercloud/gophercloud v0.11.0
 github.com/gophercloud/gophercloud
 github.com/gophercloud/gophercloud/openstack
 github.com/gophercloud/gophercloud/openstack/identity/v2/tenants
 github.com/gophercloud/gophercloud/openstack/identity/v2/tokens
+github.com/gophercloud/gophercloud/openstack/identity/v3/extensions/ec2tokens
+github.com/gophercloud/gophercloud/openstack/identity/v3/extensions/oauth1
 github.com/gophercloud/gophercloud/openstack/identity/v3/tokens
 github.com/gophercloud/gophercloud/openstack/utils
 github.com/gophercloud/gophercloud/pagination
@@ -384,7 +386,7 @@ github.com/matttproud/golang_protobuf_extensions/pbutil
 github.com/mitchellh/copystructure
 # github.com/mitchellh/go-wordwrap v1.0.0
 github.com/mitchellh/go-wordwrap
-# github.com/mitchellh/mapstructure v1.1.2
+# github.com/mitchellh/mapstructure v1.2.2
 github.com/mitchellh/mapstructure
 # github.com/mitchellh/reflectwalk v1.0.0
 github.com/mitchellh/reflectwalk
@@ -428,7 +430,7 @@ github.com/onsi/gomega/matchers/support/goraph/edge
 github.com/onsi/gomega/matchers/support/goraph/node
 github.com/onsi/gomega/matchers/support/goraph/util
 github.com/onsi/gomega/types
-# github.com/opencontainers/go-digest v1.0.0-rc1
+# github.com/opencontainers/go-digest v1.0.0
 github.com/opencontainers/go-digest
 # github.com/opencontainers/image-spec v1.0.1
 github.com/opencontainers/image-spec/specs-go
@@ -531,11 +533,13 @@ go.opencensus.io/trace
 go.opencensus.io/trace/internal
 go.opencensus.io/trace/propagation
 go.opencensus.io/trace/tracestate
-# go.uber.org/atomic v1.5.0
+# go.uber.org/atomic v1.6.0
 go.uber.org/atomic
-# go.uber.org/multierr v1.1.0
+# go.uber.org/multierr v1.3.0
 go.uber.org/multierr
-# go.uber.org/zap v1.10.0
+# go.uber.org/tools v0.0.0-20190618225709-2cfd321de3ee
+go.uber.org/tools/update-license
+# go.uber.org/zap v1.13.0
 go.uber.org/zap
 go.uber.org/zap/buffer
 go.uber.org/zap/internal/bufferpool
@@ -680,7 +684,7 @@ gomodules.xyz/homedir
 gomodules.xyz/jsonpatch/v2
 # gomodules.xyz/password-generator v0.2.6
 gomodules.xyz/password-generator
-# gomodules.xyz/pointer v0.0.0-20201105040656-991dd254b680
+# gomodules.xyz/pointer v0.0.0-20201105071923-daf60fa55209
 gomodules.xyz/pointer
 # gomodules.xyz/runtime v0.0.0-20201104200926-d838b09dda8b
 gomodules.xyz/runtime
@@ -1348,7 +1352,7 @@ k8s.io/utils/pointer
 k8s.io/utils/trace
 # kmodules.xyz/apiversion v0.2.0
 kmodules.xyz/apiversion
-# kmodules.xyz/client-go v0.0.0-20210117055448-ac3622fe26e7
+# kmodules.xyz/client-go v0.0.0-20210118094617-273ba20ad7ca
 kmodules.xyz/client-go
 kmodules.xyz/client-go/admissionregistration/v1beta1
 kmodules.xyz/client-go/apiextensions
