@@ -20,13 +20,11 @@ require (
 	github.com/mitchellh/mapstructure v1.2.2 // indirect
 	github.com/onsi/ginkgo v1.11.0
 	github.com/onsi/gomega v1.8.1
-	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.1.1
 	github.com/spf13/pflag v1.0.5
 	github.com/stripe/stripe-go v70.15.0+incompatible
 	go.uber.org/atomic v1.6.0 // indirect
-	go.uber.org/zap v1.13.0 // indirect
 	gocloud.dev v0.20.0
 	gomodules.xyz/blobfs v0.1.2
 	gomodules.xyz/jsonpatch/v2 v2.1.0
@@ -57,7 +55,7 @@ replace kubepack.dev/cli => github.com/kubepack/cli v0.0.0-20210116154246-47d114
 
 replace github.com/go-macaron/binding => github.com/gomodules/binding v0.0.0-20200811095614-c752727d2156
 
-replace helm.sh/helm/v3 => github.com/kubepack/helm/v3 v3.2.2-0.20200523120511-a86fc03a6a93
+replace helm.sh/helm/v3 => github.com/kubepack/helm/v3 v3.3.5-0.20201117014452-f6732bc03450
 
 replace sigs.k8s.io/application => github.com/kmodules/application v0.8.4-0.20201117013009-57cb1e10e2ed
 
