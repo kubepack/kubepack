@@ -2,7 +2,6 @@ package parser
 
 import (
 	"bytes"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
@@ -26,6 +25,8 @@ func ProcessResources(data []byte, fn ResourceFn) error {
 		err := reader.Decode(&obj)
 		if err == io.EOF {
 			break
+		} else if IsYAMLSyntaxError(err) {
+			continue
 		} else if err != nil {
 			return err
 		}
@@ -52,8 +53,11 @@ func ProcessDir(dir string, fn ResourceFn) error {
 		if info.IsDir() {
 			return nil
 		}
+		ext := filepath.Ext(info.Name())
+		if ext != ".yaml" && ext != ".yml" && ext != ".json" {
+			return nil
+		}
 
-		fmt.Println(">>> ", path)
 		data, err := ioutil.ReadFile(path)
 		if err != nil {
 			return err
@@ -117,4 +121,12 @@ func ExtractComponents(data []byte) (map[metav1.GroupKind]struct{}, map[string]s
 		return nil, nil, err
 	}
 	return components, commonLabels, err
+}
+
+func IsYAMLSyntaxError(err error) bool {
+	if err == nil {
+		return false
+	}
+	_, ok := err.(ylib.YAMLSyntaxError)
+	return ok
 }
