@@ -92,7 +92,7 @@ func main() {
 		}
 	}
 	if selection == nil {
-		log.Fatalln("chart selection not found in order")
+		panic("chart selection not found in order")
 	}
 
 	fn := &lib.ApplicationGenerator{
