@@ -51,8 +51,6 @@ require (
 	sigs.k8s.io/yaml v1.2.0
 )
 
-replace kubepack.dev/cli => github.com/kubepack/cli v0.0.0-20210116154246-47d1146e6fa0
-
 replace github.com/go-macaron/binding => github.com/gomodules/binding v0.0.0-20200811095614-c752727d2156
 
 replace helm.sh/helm/v3 => github.com/kubepack/helm/v3 v3.3.5-0.20201117014452-f6732bc03450
