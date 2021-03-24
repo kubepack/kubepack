@@ -56,7 +56,8 @@ type PlanSpec struct {
 	//+optional
 	IncludedPlans []string `json:"includedPlans,omitempty" protobuf:"bytes,9,rep,name=includedPlans"`
 
-	PricingPattern map[ResourceGroup]PricingPattern `json:"pricingPattern" protobuf:"bytes,10,rep,name=pricingPattern,castkey=ResourceGroup"`
+	//+optional
+	PricingPattern map[ResourceGroup]PricingPattern `json:"pricingPattern,omitempty" protobuf:"bytes,10,rep,name=pricingPattern,castkey=ResourceGroup"`
 
 	AggregateUsage  *string             `json:"aggregateUsage,omitempty" protobuf:"bytes,11,opt,name=aggregateUsage"`
 	Amount          *int64              `json:"amount,omitempty" protobuf:"varint,12,opt,name=amount"`

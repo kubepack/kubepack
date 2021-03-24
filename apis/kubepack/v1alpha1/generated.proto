@@ -404,6 +404,7 @@ message PlanSpec {
   // +optional
   repeated string includedPlans = 9;
 
+  // +optional
   map<string, PricingPattern> pricingPattern = 10;
 
   optional string aggregateUsage = 11;

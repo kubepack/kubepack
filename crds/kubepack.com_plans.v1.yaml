@@ -151,7 +151,6 @@ spec:
             - id
             - name
             - phase
-            - pricingPattern
             - productID
             - weight
             type: object

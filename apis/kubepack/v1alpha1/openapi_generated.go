@@ -17951,7 +17951,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_PlanSpec(ref common.ReferenceCallbac
 						},
 					},
 				},
-				Required: []string{"id", "name", "displayName", "description", "productID", "phase", "weight", "pricingPattern"},
+				Required: []string{"id", "name", "displayName", "description", "productID", "phase", "weight"},
 			},
 		},
 		Dependencies: []string{
