@@ -76,8 +76,10 @@ type PlanSpec struct {
 type ResourceGroup string
 
 type PricingPattern struct {
-	Expression  Expression   `json:"expression" protobuf:"bytes,1,opt,name=expression,casttype=Expression"`
-	SizedPrices []SizedPrice `json:"sizedPrices" protobuf:"bytes,2,rep,name=sizedPrices"`
+	//+optional
+	Expression Expression `json:"expression,omitempty" protobuf:"bytes,1,opt,name=expression,casttype=Expression"`
+	//+optional
+	SizedPrices []SizedPrice `json:"sizedPrices,omitempty" protobuf:"bytes,2,rep,name=sizedPrices"`
 }
 
 type Expression string

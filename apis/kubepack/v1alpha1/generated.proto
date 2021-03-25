@@ -460,8 +460,10 @@ message PlanTransformUsage {
 }
 
 message PricingPattern {
+  // +optional
   optional string expression = 1;
 
+  // +optional
   repeated SizedPrice sizedPrices = 2;
 }
 

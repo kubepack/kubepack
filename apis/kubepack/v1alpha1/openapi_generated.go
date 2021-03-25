@@ -18073,7 +18073,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_PricingPattern(ref common.ReferenceC
 						},
 					},
 				},
-				Required: []string{"expression", "sizedPrices"},
 			},
 		},
 		Dependencies: []string{

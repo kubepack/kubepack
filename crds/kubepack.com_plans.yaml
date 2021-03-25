@@ -98,9 +98,6 @@ spec:
                       - price
                       type: object
                     type: array
-                required:
-                - expression
-                - sizedPrices
                 type: object
               type: object
             productID:
