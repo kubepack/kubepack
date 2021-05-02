@@ -12,6 +12,24 @@ spec:
       groups:
       - monitoring.coreos.com
       resource: prometheuses
+  - name: Alertmanager
+    required: true
+    type:
+      groups:
+      - monitoring.coreos.com
+      resource: alertmanagers
+  - name: ServiceMonitor
+    required: true
+    type:
+      groups:
+      - monitoring.coreos.com
+      resource: servicemonitors
+  - name: PodMonitor
+    required: true
+    type:
+      groups:
+      - monitoring.coreos.com
+      resource: podmonitors
   icons:
   - src: https://cdn.appscode.com/k8s/icons/resourceclasses/monitoring.svg
     type: image/svg+xml

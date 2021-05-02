@@ -417,13 +417,14 @@ func (r *Registry) createResourcePanel(keepOfficialTypes bool) (*v1alpha1.Resour
 				if !ok {
 					continue
 				}
-				pe.Type = &v1alpha1.GroupVersionResource{
-					Group:    gvr.Group,
-					Version:  gvr.Version,
-					Resource: gvr.Resource,
+				pe.Resource = &v1alpha1.ResourceID{
+					Group:   gvr.Group,
+					Version: gvr.Version,
+					Name:    gvr.Resource,
 				}
 				existingGRs[gvr.GroupResource()] = true
 				if rd, err := r.LoadByGVR(gvr); err == nil {
+					pe.Resource = &rd.Spec.Resource
 					pe.Namespaced = rd.Spec.Resource.Scope == v1alpha1.NamespaceScoped
 					pe.Icons = rd.Spec.Icons
 					pe.Missing = r.Missing(gvr)
@@ -473,16 +474,11 @@ func (r *Registry) createResourcePanel(keepOfficialTypes bool) (*v1alpha1.Resour
 		}
 
 		section.Entries = append(section.Entries, v1alpha1.PanelEntry{
-			Name: rd.Spec.Resource.Kind,
-			Type: &v1alpha1.GroupVersionResource{
-				Group:    rd.Spec.Resource.Group,
-				Version:  rd.Spec.Resource.Version,
-				Resource: rd.Spec.Resource.Name,
-			},
+			Name:       rd.Spec.Resource.Kind,
+			Resource:   &rd.Spec.Resource,
 			Icons:      rd.Spec.Icons,
 			Namespaced: rd.Spec.Resource.Scope == v1alpha1.NamespaceScoped,
 			Missing:    r.Missing(gvr),
-			UI:         rd.Spec.UI,
 			Installer:  rd.Spec.Installer,
 		})
 		existingGRs[gvr.GroupResource()] = true

@@ -58,11 +58,16 @@ spec:
                       name. See https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types
                       for more.
                     type: string
-                  jsonPath:
-                    description: JSONPath is a simple JSON path, i.e. with array notation.
-                    type: string
                   name:
                     description: name is a human readable name for the column.
+                    type: string
+                  pathTemplate:
+                    description: 'PathTemplate is a Go text template that will be
+                      evaluated to determine cell value. Users can use JSONPath expression
+                      to extract nested fields and apply template functions from Masterminds/sprig
+                      library. The template function for JSON path is called `jp`.
+                      Example: {{ jp "{.a.b}" . }} or {{ jp "{.a.b}" true }}, if json
+                      output is desired from JSONPath parser'
                     type: string
                   priority:
                     description: priority is an integer defining the relative importance
@@ -77,7 +82,6 @@ spec:
                       for more.
                     type: string
                 required:
-                - jsonPath
                 - name
                 - priority
                 - type
@@ -227,27 +231,6 @@ spec:
                 productID:
                   type: string
               type: object
-            keyTargets:
-              items:
-                description: TypeMeta describes an individual object in an API response
-                  or request with strings representing the type of the object and
-                  its API schema version. Structures that are versioned or persisted
-                  should inline TypeMeta.
-                properties:
-                  apiVersion:
-                    description: 'APIVersion defines the versioned schema of this
-                      representation of an object. Servers should convert recognized
-                      schemas to the latest internal value, and may reject unrecognized
-                      values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-                    type: string
-                  kind:
-                    description: 'Kind is a string value representing the REST resource
-                      this object represents. Servers may infer this from the endpoint
-                      the client submits requests to. Cannot be updated. In CamelCase.
-                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-                    type: string
-                type: object
-              type: array
             links:
               description: Links are a list of descriptive URLs intended to be used
                 to surface additional documentation, dashboards, etc.
@@ -281,6 +264,49 @@ spec:
                   url:
                     description: Url could typically be a website address.
                     type: string
+                type: object
+              type: array
+            pages:
+              items:
+                properties:
+                  name:
+                    type: string
+                  resources:
+                    items:
+                      properties:
+                        actions:
+                          properties:
+                            create:
+                              type: string
+                          required:
+                          - create
+                          type: object
+                        displayMode:
+                          type: string
+                        ref:
+                          description: GroupVersionResource unambiguously identifies
+                            a resource.
+                          properties:
+                            group:
+                              type: string
+                            resource:
+                              type: string
+                            version:
+                              type: string
+                          required:
+                          - group
+                          - resource
+                          - version
+                          type: object
+                      required:
+                      - actions
+                      - displayMode
+                      - ref
+                      type: object
+                    type: array
+                required:
+                - name
+                - resources
                 type: object
               type: array
             resource:
@@ -326,7 +352,23 @@ spec:
                     type: string
                 type: object
               type: array
+            status:
+              properties:
+                danger:
+                  items:
+                    type: string
+                  type: array
+                success:
+                  items:
+                    type: string
+                  type: array
+                warning:
+                  items:
+                    type: string
+                  type: array
+              type: object
             subTables:
+              description: For array type fields of the resource
               items:
                 properties:
                   columns:
@@ -345,12 +387,17 @@ spec:
                             is the resource name. See https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types
                             for more.
                           type: string
-                        jsonPath:
-                          description: JSONPath is a simple JSON path, i.e. with array
-                            notation.
-                          type: string
                         name:
                           description: name is a human readable name for the column.
+                          type: string
+                        pathTemplate:
+                          description: 'PathTemplate is a Go text template that will
+                            be evaluated to determine cell value. Users can use JSONPath
+                            expression to extract nested fields and apply template
+                            functions from Masterminds/sprig library. The template
+                            function for JSON path is called `jp`. Example: {{ jp
+                            "{.a.b}" . }} or {{ jp "{.a.b}" true }}, if json output
+                            is desired from JSONPath parser'
                           type: string
                         priority:
                           description: priority is an integer defining the relative
@@ -365,7 +412,6 @@ spec:
                             for more.
                           type: string
                       required:
-                      - jsonPath
                       - name
                       - priority
                       - type
@@ -395,6 +441,12 @@ spec:
                   - url
                   - version
                   type: object
+                instanceLabelPaths:
+                  description: app.kubernetes.io/instance label must be updated at
+                    these paths when refilling metadata
+                  items:
+                    type: string
+                  type: array
                 options:
                   description: ChartRepoRef references to a single version of a Chart
                   properties:
@@ -523,7 +575,6 @@ spec:
                       format: int64
                       type: integer
                     maximum:
-                      format: float
                       type: number
                     minItems:
                       format: int64
@@ -535,10 +586,8 @@ spec:
                       format: int64
                       type: integer
                     minimum:
-                      format: float
                       type: number
                     multipleOf:
-                      format: float
                       type: number
                     not: {}
                     nullable:

@@ -18,10 +18,10 @@ package v1alpha1
 
 func (section *PanelSection) Contains(rd *ResourceDescriptor) bool {
 	for _, entry := range section.Entries {
-		if entry.Type != nil &&
-			entry.Type.Group == rd.Spec.Resource.Group &&
-			entry.Type.Version == rd.Spec.Resource.Version &&
-			entry.Type.Resource == rd.Spec.Resource.Name {
+		if entry.Resource != nil &&
+			entry.Resource.Group == rd.Spec.Resource.Group &&
+			entry.Resource.Version == rd.Spec.Resource.Version &&
+			entry.Resource.Name == rd.Spec.Resource.Name {
 			return true
 		}
 	}
@@ -29,9 +29,9 @@ func (section *PanelSection) Contains(rd *ResourceDescriptor) bool {
 }
 
 func (e PanelEntry) Equals(other PanelEntry) bool {
-	if e.Type != nil && other.Type != nil {
-		return *e.Type == *other.Type
-	} else if e.Type == nil && other.Type == nil {
+	if e.Resource != nil && other.Resource != nil {
+		return *e.Resource == *other.Resource
+	} else if e.Resource == nil && other.Resource == nil {
 		return e.Path == other.Path
 	}
 	return false

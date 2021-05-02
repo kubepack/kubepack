@@ -21,9 +21,9 @@ import (
 
 	"kubepack.dev/kubepack/client/clientset/versioned/typed/kubepack/v1alpha1/util"
 
-	"github.com/golang/glog"
 	"github.com/pkg/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/klog/v2"
 	core_util "kmodules.xyz/client-go/core/v1"
 	"kmodules.xyz/client-go/tools/queue"
 	api "sigs.k8s.io/application/api/app/v1beta1"
@@ -45,15 +45,15 @@ func (c *KubepackController) initAppWatcher() {
 func (c *KubepackController) runAppInjector(key string) error {
 	obj, exists, err := c.appInformer.GetIndexer().GetByKey(key)
 	if err != nil {
-		glog.Errorf("Fetching object with key %s from store failed with %v", key, err)
+		klog.Errorf("Fetching object with key %s from store failed with %v", key, err)
 		return err
 	}
 
 	if !exists {
-		glog.Warningf("Application %s does not exist anymore\n", key)
+		klog.Warningf("Application %s does not exist anymore\n", key)
 	} else {
 		vPolicy := obj.(*api.Application).DeepCopy()
-		glog.Infof("Sync/Add/Update for Application %s/%s\n", vPolicy.Namespace, vPolicy.Name)
+		klog.Infof("Sync/Add/Update for Application %s/%s\n", vPolicy.Namespace, vPolicy.Name)
 
 		if vPolicy.DeletionTimestamp != nil {
 		} else {

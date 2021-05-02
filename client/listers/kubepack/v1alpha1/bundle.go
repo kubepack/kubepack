@@ -27,10 +27,13 @@ import (
 )
 
 // BundleLister helps list Bundles.
+// All objects returned here must be treated as read-only.
 type BundleLister interface {
 	// List lists all Bundles in the indexer.
+	// Objects returned here must be treated as read-only.
 	List(selector labels.Selector) (ret []*v1alpha1.Bundle, err error)
 	// Get retrieves the Bundle from the index for a given name.
+	// Objects returned here must be treated as read-only.
 	Get(name string) (*v1alpha1.Bundle, error)
 	BundleListerExpansion
 }
