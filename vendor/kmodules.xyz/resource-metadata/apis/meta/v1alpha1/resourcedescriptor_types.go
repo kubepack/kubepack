@@ -46,11 +46,13 @@ type ResourceDescriptor struct {
 }
 
 type ResourceDescriptorSpec struct {
-	Resource    ResourceID                   `json:"resource"`
-	Columns     []ResourceColumnDefinition   `json:"columns,omitempty"`
+	Resource ResourceID                 `json:"resource"`
+	Columns  []ResourceColumnDefinition `json:"columns,omitempty"`
+	// For array type fields of the resource
 	SubTables   []ResourceSubTableDefinition `json:"subTables,omitempty"`
 	Connections []ResourceConnection         `json:"connections,omitempty"`
-	KeyTargets  []metav1.TypeMeta            `json:"keyTargets,omitempty"`
+	Pages       []RelatedResourcePage        `json:"pages,omitempty"`
+	Status      *StatusCodes                 `json:"status,omitempty"`
 
 	// validation describes the schema used for validation and pruning of the custom resource.
 	// If present, this validation schema is used to validate all versions.
@@ -110,9 +112,48 @@ type ResourceRequirements struct {
 	Resources string `json:"resources,omitempty"`
 }
 
+type RelatedResourcePage struct {
+	Name      string            `json:"name"`
+	Resources []ResourceSection `json:"resources"`
+}
+
+type ResourceSection struct {
+	Ref         GroupVersionResource `json:"ref"`
+	DisplayMode ResourceDisplayMode  `json:"displayMode"`
+	Actions     ResourceActions      `json:"actions"`
+}
+
+type ResourceDisplayMode string
+
+const (
+	DisplayModeList  = "List"
+	DisplayModeField = "Field"
+)
+
+type ResourceActions struct {
+	Create ResourceAction `json:"create"`
+}
+
+type ResourceAction string
+
+const (
+	ActionNever   = "Never"
+	ActionAlways  = "Always"
+	ActionIfEmpty = "IfEmpty"
+)
+
+type StatusCodes struct {
+	Success []string `json:"success,omitempty"`
+	Danger  []string `json:"danger,omitempty"`
+	Warning []string `json:"warning,omitempty"`
+}
+
 type UIParameters struct {
 	Options *ChartRepoRef `json:"options,omitempty"`
 	Editor  *ChartRepoRef `json:"editor,omitempty"`
+	// app.kubernetes.io/instance label must be updated at these paths when refilling metadata
+	// +optional
+	InstanceLabelPaths []string `json:"instanceLabelPaths,omitempty"`
 }
 
 type DeploymentParameters struct {
@@ -231,8 +272,12 @@ type ResourceColumnDefinition struct {
 	// numbers are considered higher priority. Columns that may be omitted in limited space scenarios
 	// should be given a higher priority.
 	Priority int32 `json:"priority"`
-	// JSONPath is a simple JSON path, i.e. with array notation.
-	JSONPath string `json:"jsonPath"`
+	// PathTemplate is a Go text template that will be evaluated to determine cell value.
+	// Users can use JSONPath expression to extract nested fields and apply template functions from Masterminds/sprig library.
+	// The template function for JSON path is called `jp`.
+	// Example: {{ jp "{.a.b}" . }} or {{ jp "{.a.b}" true }}, if json output is desired from JSONPath parser
+	// +optional
+	PathTemplate string `json:"pathTemplate,omitempty"`
 }
 
 type ResourceSubTableDefinition struct {

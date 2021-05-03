@@ -17,7 +17,10 @@ limitations under the License.
 package rules
 
 import (
+	"bufio"
+	"bytes"
 	"fmt"
+	"io"
 	"os"
 	"path"
 	"path/filepath"
@@ -25,7 +28,10 @@ import (
 	"strings"
 
 	"github.com/pkg/errors"
-	"sigs.k8s.io/yaml"
+	"k8s.io/apimachinery/pkg/api/validation"
+	apipath "k8s.io/apimachinery/pkg/api/validation/path"
+	"k8s.io/apimachinery/pkg/util/validation/field"
+	"k8s.io/apimachinery/pkg/util/yaml"
 
 	"helm.sh/helm/v3/pkg/chart/loader"
 	"helm.sh/helm/v3/pkg/chartutil"
@@ -114,19 +120,62 @@ func Templates(linter *support.Linter, values map[string]interface{}, namespace 
 
 		renderedContent := renderedContentMap[path.Join(chart.Name(), fileName)]
 		if strings.TrimSpace(renderedContent) != "" {
-			var yamlStruct K8sYamlStruct
-			// Even though K8sYamlStruct only defines a few fields, an error in any other
-			// key will be raised as well
-			err := yaml.Unmarshal([]byte(renderedContent), &yamlStruct)
+			linter.RunLinterRule(support.WarningSev, fpath, validateTopIndentLevel(renderedContent))
 
-			// If YAML linting fails, we sill progress. So we don't capture the returned state
-			// on this linter run.
-			linter.RunLinterRule(support.ErrorSev, fpath, validateYamlContent(err))
-			linter.RunLinterRule(support.ErrorSev, fpath, validateMetadataName(&yamlStruct))
-			linter.RunLinterRule(support.ErrorSev, fpath, validateNoDeprecations(&yamlStruct))
-			linter.RunLinterRule(support.ErrorSev, fpath, validateMatchSelector(&yamlStruct, renderedContent))
+			decoder := yaml.NewYAMLOrJSONDecoder(strings.NewReader(renderedContent), 4096)
+
+			// Lint all resources if the file contains multiple documents separated by ---
+			for {
+				// Even though K8sYamlStruct only defines a few fields, an error in any other
+				// key will be raised as well
+				var yamlStruct *K8sYamlStruct
+
+				err := decoder.Decode(&yamlStruct)
+				if err == io.EOF {
+					break
+				}
+
+				// If YAML linting fails, we sill progress. So we don't capture the returned state
+				// on this linter run.
+				linter.RunLinterRule(support.ErrorSev, fpath, validateYamlContent(err))
+
+				if yamlStruct != nil {
+					// NOTE: set to warnings to allow users to support out-of-date kubernetes
+					// Refs https://github.com/helm/helm/issues/8596
+					linter.RunLinterRule(support.WarningSev, fpath, validateMetadataName(yamlStruct))
+					linter.RunLinterRule(support.WarningSev, fpath, validateNoDeprecations(yamlStruct))
+
+					linter.RunLinterRule(support.ErrorSev, fpath, validateMatchSelector(yamlStruct, renderedContent))
+				}
+			}
 		}
 	}
+}
+
+// validateTopIndentLevel checks that the content does not start with an indent level > 0.
+//
+// This error can occur when a template accidentally inserts space. It can cause
+// unpredictable errors depending on whether the text is normalized before being passed
+// into the YAML parser. So we trap it here.
+//
+// See https://github.com/helm/helm/issues/8467
+func validateTopIndentLevel(content string) error {
+	// Read lines until we get to a non-empty one
+	scanner := bufio.NewScanner(bytes.NewBufferString(content))
+	for scanner.Scan() {
+		line := scanner.Text()
+		// If line is empty, skip
+		if strings.TrimSpace(line) == "" {
+			continue
+		}
+		// If it starts with one or more spaces, this is an error
+		if strings.HasPrefix(line, " ") || strings.HasPrefix(line, "\t") {
+			return fmt.Errorf("document starts with an illegal indent: %q, which may cause parsing problems", line)
+		}
+		// Any other condition passes.
+		return nil
+	}
+	return scanner.Err()
 }
 
 // Validation functions
@@ -156,13 +205,66 @@ func validateYamlContent(err error) error {
 	return errors.Wrap(err, "unable to parse YAML")
 }
 
+// validateMetadataName uses the correct validation function for the object
+// Kind, or if not set, defaults to the standard definition of a subdomain in
+// DNS (RFC 1123), used by most resources.
 func validateMetadataName(obj *K8sYamlStruct) error {
-	// This will return an error if the characters do not abide by the standard OR if the
-	// name is left empty.
-	if err := chartutil.ValidateMetadataName(obj.Metadata.Name); err != nil {
-		return errors.Wrapf(err, "object name does not conform to Kubernetes naming requirements: %q", obj.Metadata.Name)
+	fn := validateMetadataNameFunc(obj)
+	allErrs := field.ErrorList{}
+	for _, msg := range fn(obj.Metadata.Name, false) {
+		allErrs = append(allErrs, field.Invalid(field.NewPath("metadata").Child("name"), obj.Metadata.Name, msg))
+	}
+	if len(allErrs) > 0 {
+		return errors.Wrapf(allErrs.ToAggregate(), "object name does not conform to Kubernetes naming requirements: %q", obj.Metadata.Name)
 	}
 	return nil
+}
+
+// validateMetadataNameFunc will return a name validation function for the
+// object kind, if defined below.
+//
+// Rules should match those set in the various api validations:
+// https://github.com/kubernetes/kubernetes/blob/v1.20.0/pkg/apis/core/validation/validation.go#L205-L274
+// https://github.com/kubernetes/kubernetes/blob/v1.20.0/pkg/apis/apps/validation/validation.go#L39
+// ...
+//
+// Implementing here to avoid importing k/k.
+//
+// If no mapping is defined, returns NameIsDNSSubdomain.  This is used by object
+// kinds that don't have special requirements, so is the most likely to work if
+// new kinds are added.
+func validateMetadataNameFunc(obj *K8sYamlStruct) validation.ValidateNameFunc {
+	switch strings.ToLower(obj.Kind) {
+	case "pod", "node", "secret", "endpoints", "resourcequota", // core
+		"controllerrevision", "daemonset", "deployment", "replicaset", "statefulset", // apps
+		"autoscaler",     // autoscaler
+		"cronjob", "job", // batch
+		"lease",                    // coordination
+		"endpointslice",            // discovery
+		"networkpolicy", "ingress", // networking
+		"podsecuritypolicy",                           // policy
+		"priorityclass",                               // scheduling
+		"podpreset",                                   // settings
+		"storageclass", "volumeattachment", "csinode": // storage
+		return validation.NameIsDNSSubdomain
+	case "service":
+		return validation.NameIsDNS1035Label
+	case "namespace":
+		return validation.ValidateNamespaceName
+	case "serviceaccount":
+		return validation.ValidateServiceAccountName
+	case "certificatesigningrequest":
+		// No validation.
+		// https://github.com/kubernetes/kubernetes/blob/v1.20.0/pkg/apis/certificates/validation/validation.go#L137-L140
+		return func(name string, prefix bool) []string { return nil }
+	case "role", "clusterrole", "rolebinding", "clusterrolebinding":
+		// https://github.com/kubernetes/kubernetes/blob/v1.20.0/pkg/apis/rbac/validation/validation.go#L32-L34
+		return func(name string, prefix bool) []string {
+			return apipath.IsValidPathSegmentName(name)
+		}
+	default:
+		return validation.NameIsDNSSubdomain
+	}
 }
 
 func validateNoCRDHooks(manifest []byte) error {

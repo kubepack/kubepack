@@ -122,6 +122,39 @@ func ExistsGroupKind(client discovery.DiscoveryInterface, group, kind string) bo
 	return false
 }
 
+func ExistsGroupKinds(client discovery.DiscoveryInterface, gk schema.GroupKind, otherGks ...schema.GroupKind) bool {
+	desired := make(map[schema.GroupKind]bool, 1+len(otherGks))
+	desired[gk] = false
+	for _, other := range otherGks {
+		desired[other] = false
+	}
+
+	if resourceList, err := client.ServerPreferredResources(); discovery.IsGroupDiscoveryFailedError(err) || err == nil {
+		for _, resources := range resourceList {
+			gv, err := schema.ParseGroupVersion(resources.GroupVersion)
+			if err != nil {
+				return false
+			}
+			for _, resource := range resources.APIResources {
+				x := schema.GroupKind{
+					Group: gv.Group,
+					Kind:  resource.Kind,
+				}
+				if _, found := desired[x]; found {
+					desired[x] = true
+				}
+			}
+		}
+	}
+
+	for _, found := range desired {
+		if !found {
+			return false
+		}
+	}
+	return true
+}
+
 type KnownBug struct {
 	URL string
 	Fix string

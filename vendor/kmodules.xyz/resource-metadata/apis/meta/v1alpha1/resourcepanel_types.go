@@ -37,14 +37,13 @@ type PanelSection struct {
 type PanelEntry struct {
 	Name string `json:"name"`
 	// +optional
-	Path string                `json:"path,omitempty"`
-	Type *GroupVersionResource `json:"type,omitempty"`
+	Path     string      `json:"path,omitempty"`
+	Resource *ResourceID `json:"resource,omitempty"`
 	// +optional
 	Required bool `json:"required,omitempty"`
 	// +optional
 	Icons      []ImageSpec           `json:"icons,omitempty"`
 	Namespaced bool                  `json:"namespaced"`
 	Missing    bool                  `json:"missing,omitempty"`
-	UI         *UIParameters         `json:"ui,omitempty"`
 	Installer  *DeploymentParameters `json:"installer,omitempty"`
 }
