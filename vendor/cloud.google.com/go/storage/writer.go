@@ -123,8 +123,7 @@ func (w *Writer) open() error {
 		call := w.o.c.raw.Objects.Insert(w.o.bucket, rawObj).
 			Media(pr, mediaOpts...).
 			Projection("full").
-			Context(w.ctx).
-			Name(w.o.object)
+			Context(w.ctx)
 
 		if w.ProgressFunc != nil {
 			call.ProgressUpdater(func(n, _ int64) { w.ProgressFunc(n) })

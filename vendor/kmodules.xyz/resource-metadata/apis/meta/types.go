@@ -38,7 +38,8 @@ type ResourceDescriptorSpec struct {
 	Columns     []ResourceColumnDefinition
 	SubTables   []ResourceSubTableDefinition
 	Connections []ResourceConnection
-	KeyTargets  []metav1.TypeMeta
+	Pages       []RelatedResourcePage
+	Status      *StatusCodes
 
 	Validation *apiextensions.CustomResourceValidation
 
@@ -59,9 +60,46 @@ type ResourceRequirements struct {
 	Resources string
 }
 
+type RelatedResourcePage struct {
+	Name      string
+	Resources []ResourceSection
+}
+
+type ResourceSection struct {
+	Ref         GroupVersionResource
+	DisplayMode ResourceDisplayMode
+	Actions     ResourceActions
+}
+
+type ResourceDisplayMode string
+
+const (
+	DisplayModeList  = "List"
+	DisplayModeField = "Field"
+)
+
+type ResourceActions struct {
+	Create ResourceAction
+}
+
+type ResourceAction string
+
+const (
+	ActionNever   = "Never"
+	ActionAlways  = "Always"
+	ActionIfEmpty = "IfEmpty"
+)
+
+type StatusCodes struct {
+	Success []string
+	Danger  []string
+	Warning []string
+}
+
 type UIParameters struct {
-	Options *ChartRepoRef
-	Editor  *ChartRepoRef
+	Options            *ChartRepoRef
+	Editor             *ChartRepoRef
+	InstanceLabelPaths []string
 }
 
 type DeploymentParameters struct {
@@ -141,8 +179,8 @@ type ResourceColumnDefinition struct {
 	// numbers are considered higher priority. Columns that may be omitted in limited space scenarios
 	// should be given a higher priority.
 	Priority int32
-	// JSONPath is a simple JSON path, i.e. without array notation.
-	JSONPath string
+	// PathTemplate is a Go text template that will be evaluated to determine cell value.
+	PathTemplate string
 }
 
 type ResourceSubTableDefinition struct {

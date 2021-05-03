@@ -27,10 +27,13 @@ import (
 )
 
 // OrderLister helps list Orders.
+// All objects returned here must be treated as read-only.
 type OrderLister interface {
 	// List lists all Orders in the indexer.
+	// Objects returned here must be treated as read-only.
 	List(selector labels.Selector) (ret []*v1alpha1.Order, err error)
 	// Get retrieves the Order from the index for a given name.
+	// Objects returned here must be treated as read-only.
 	Get(name string) (*v1alpha1.Order, error)
 	OrderListerExpansion
 }

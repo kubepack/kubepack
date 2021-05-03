@@ -19,8 +19,8 @@ BIN      := kubepack-operator
 COMPRESS ?= no
 
 # Produce CRDs that work back to Kubernetes 1.11 (no version conversion)
-CRD_OPTIONS          ?= "crd:trivialVersions=true,preserveUnknownFields=false,crdVersions={v1beta1,v1}"
-CODE_GENERATOR_IMAGE ?= appscode/gengo:release-1.18
+CRD_OPTIONS          ?= "crd:trivialVersions=true,preserveUnknownFields=false,allowDangerousTypes=true,crdVersions={v1beta1,v1}"
+CODE_GENERATOR_IMAGE ?= appscode/gengo:release-1.21
 API_GROUPS           ?= kubepack:v1alpha1
 
 # Where to push the docker image.

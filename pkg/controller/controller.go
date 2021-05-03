@@ -23,7 +23,6 @@ import (
 	cs "kubepack.dev/kubepack/client/clientset/versioned"
 
 	pcm "github.com/coreos/prometheus-operator/pkg/client/versioned/typed/monitoring/v1"
-	"github.com/golang/glog"
 	crd_cs "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	"k8s.io/apimachinery/pkg/util/runtime"
 	"k8s.io/client-go/informers"
@@ -31,6 +30,7 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/cache"
 	"k8s.io/client-go/tools/record"
+	"k8s.io/klog/v2"
 	reg_util "kmodules.xyz/client-go/admissionregistration/v1beta1"
 	"kmodules.xyz/client-go/apiextensions"
 	"kmodules.xyz/client-go/tools/queue"
@@ -91,7 +91,7 @@ func (c *KubepackController) Run(stopCh <-chan struct{}) {
 func (c *KubepackController) RunInformers(stopCh <-chan struct{}) {
 	defer runtime.HandleCrash()
 
-	glog.Info("Starting Vault controller")
+	klog.Info("Starting Vault controller")
 
 	c.extInformerFactory.Start(stopCh)
 	for _, v := range c.extInformerFactory.WaitForCacheSync(stopCh) {
@@ -105,5 +105,5 @@ func (c *KubepackController) RunInformers(stopCh <-chan struct{}) {
 	go c.appQueue.Run(stopCh)
 
 	<-stopCh
-	glog.Info("Stopping Vault operator")
+	klog.Info("Stopping Vault operator")
 }

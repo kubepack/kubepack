@@ -6,6 +6,10 @@
         {
           "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/kubernetes.svg",
           "type": "image/svg+xml"
+        },
+        {
+          "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/kubernetes.png",
+          "type": "image/png"
         }
       ],
       "entries": [
@@ -17,6 +21,10 @@
             {
               "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/basic.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/basic.png",
+              "type": "image/png"
             }
           ],
           "namespaced": false
@@ -31,8 +39,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/cluster.x-k8s.io/machine.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/cluster.x-k8s.io/machines.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/cluster.x-k8s.io/machines.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true,
@@ -48,8 +60,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/cluster.x-k8s.io/machinesset.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/cluster.x-k8s.io/machinesets.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/cluster.x-k8s.io/machinesets.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true,
@@ -63,6 +79,10 @@
         {
           "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/workloads.svg",
           "type": "image/svg+xml"
+        },
+        {
+          "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/workloads.png",
+          "type": "image/png"
         }
       ],
       "entries": [
@@ -76,8 +96,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apps/deploy.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/apps/deployments.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apps/deployments.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -92,8 +116,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apps/rs.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/apps/replicasets.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apps/replicasets.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -108,8 +136,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/core/replicationcontrollers.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/core/replicationcontrollers.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -124,8 +156,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apps/sts.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/apps/statefulsets.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apps/statefulsets.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -140,8 +176,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apps/ds.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/apps/daemonsets.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apps/daemonsets.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -156,8 +196,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/batch/job.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/batch/jobs.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/batch/jobs.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -171,8 +215,12 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/batch/cronjob.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/batch/cronjobs.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/batch/cronjobs.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -187,8 +235,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/core/pod.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/core/pods.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/core/pods.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -201,6 +253,10 @@
         {
           "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/helm.svg",
           "type": "image/svg+xml"
+        },
+        {
+          "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/helm.png",
+          "type": "image/png"
         }
       ],
       "entries": [
@@ -211,6 +267,10 @@
             {
               "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/release.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/release.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -224,6 +284,10 @@
         {
           "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/datastore.svg",
           "type": "image/svg+xml"
+        },
+        {
+          "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/datastore.png",
+          "type": "image/png"
         }
       ],
       "entries": [
@@ -231,20 +295,286 @@
           "name": "Elasticsearch",
           "type": {
             "group": "kubedb.com",
-            "version": "v1alpha1",
+            "version": "v1alpha2",
             "resource": "elasticsearches"
           },
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/kubedb.com/elasticsearch.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
               "type": "image/svg+xml"
             }
           ],
           "namespaced": true,
-          "missing": true,
-          "installer": {
-            "productID": "prod_Gnc33bJka9iRl9"
+          "ui": {
+            "options": {
+              "name": "elasticsearch-editor-options",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            },
+            "editor": {
+              "name": "elasticsearch-editor",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            }
+          }
+        },
+        {
+          "name": "Etcd",
+          "type": {
+            "group": "kubedb.com",
+            "version": "v1alpha2",
+            "resource": "etcds"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "MariaDB",
+          "type": {
+            "group": "kubedb.com",
+            "version": "v1alpha2",
+            "resource": "mariadbs"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true,
+          "ui": {
+            "options": {
+              "name": "mariadb-editor-options",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            },
+            "editor": {
+              "name": "mariadb-editor",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            }
+          }
+        },
+        {
+          "name": "Memcached",
+          "type": {
+            "group": "kubedb.com",
+            "version": "v1alpha2",
+            "resource": "memcacheds"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true,
+          "ui": {
+            "options": {
+              "name": "memcached-editor-options",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            },
+            "editor": {
+              "name": "memcached-editor",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            }
+          }
+        },
+        {
+          "name": "MongoDB",
+          "type": {
+            "group": "kubedb.com",
+            "version": "v1alpha2",
+            "resource": "mongodbs"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true,
+          "ui": {
+            "options": {
+              "name": "mongodb-editor-options",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            },
+            "editor": {
+              "name": "mongodb-editor",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            }
+          }
+        },
+        {
+          "name": "MySQL",
+          "type": {
+            "group": "kubedb.com",
+            "version": "v1alpha2",
+            "resource": "mysqls"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true,
+          "ui": {
+            "options": {
+              "name": "mysql-editor-options",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            },
+            "editor": {
+              "name": "mysql-editor",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            }
+          }
+        },
+        {
+          "name": "PerconaXtraDB",
+          "type": {
+            "group": "kubedb.com",
+            "version": "v1alpha2",
+            "resource": "perconaxtradbs"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true,
+          "ui": {
+            "options": {
+              "name": "perconaxtradb-editor-options",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            },
+            "editor": {
+              "name": "perconaxtradb-editor",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            }
+          }
+        },
+        {
+          "name": "PgBouncer",
+          "type": {
+            "group": "kubedb.com",
+            "version": "v1alpha2",
+            "resource": "pgbouncers"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true,
+          "ui": {
+            "options": {
+              "name": "pgbouncer-editor-options",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            },
+            "editor": {
+              "name": "pgbouncer-editor",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            }
+          }
+        },
+        {
+          "name": "Postgres",
+          "type": {
+            "group": "kubedb.com",
+            "version": "v1alpha2",
+            "resource": "postgreses"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true,
+          "ui": {
+            "options": {
+              "name": "postgres-editor-options",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            },
+            "editor": {
+              "name": "postgres-editor",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            }
+          }
+        },
+        {
+          "name": "ProxySQL",
+          "type": {
+            "group": "kubedb.com",
+            "version": "v1alpha2",
+            "resource": "proxysqls"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true,
+          "ui": {
+            "options": {
+              "name": "proxysql-editor-options",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            },
+            "editor": {
+              "name": "proxysql-editor",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            }
+          }
+        },
+        {
+          "name": "Redis",
+          "type": {
+            "group": "kubedb.com",
+            "version": "v1alpha2",
+            "resource": "redises"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true,
+          "ui": {
+            "options": {
+              "name": "redis-editor-options",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            },
+            "editor": {
+              "name": "redis-editor",
+              "url": "https://raw.githubusercontent.com/bytebuilders/ui-wizards/master/stable",
+              "version": "v0.1.0"
+            }
           }
         }
       ]
@@ -255,6 +585,10 @@
         {
           "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/networking.svg",
           "type": "image/svg+xml"
+        },
+        {
+          "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/networking.png",
+          "type": "image/png"
         }
       ],
       "entries": [
@@ -268,8 +602,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/core/svc.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/core/services.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/core/services.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -278,13 +616,13 @@
           "name": "Ingresses",
           "type": {
             "group": "networking.k8s.io",
-            "version": "v1beta1",
+            "version": "v1",
             "resource": "ingresses"
           },
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/networking.k8s.io/ing.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
               "type": "image/svg+xml"
             }
           ],
@@ -300,8 +638,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/voyager.appscode.com/ingress.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/voyager.appscode.com/ingresses.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/voyager.appscode.com/ingresses.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true,
@@ -317,8 +659,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/networking.k8s.io/netpol.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/networking.k8s.io/networkpolicies.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/networking.k8s.io/networkpolicies.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -331,6 +677,10 @@
         {
           "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/config.svg",
           "type": "image/svg+xml"
+        },
+        {
+          "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/config.png",
+          "type": "image/png"
         }
       ],
       "entries": [
@@ -344,8 +694,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/core/cm.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/core/configmaps.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/core/configmaps.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -360,8 +714,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/core/secret.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/core/secrets.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/core/secrets.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -374,6 +732,10 @@
         {
           "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/storage.svg",
           "type": "image/svg+xml"
+        },
+        {
+          "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/storage.png",
+          "type": "image/png"
         }
       ],
       "entries": [
@@ -387,8 +749,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/core/pvc.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/core/persistentvolumeclaims.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/core/persistentvolumeclaims.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -403,8 +769,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/core/pv.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/core/persistentvolumes.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/core/persistentvolumes.png",
+              "type": "image/png"
             }
           ],
           "namespaced": false
@@ -419,8 +789,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/storage.k8s.io/sc.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/storage.k8s.io/storageclasses.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/storage.k8s.io/storageclasses.png",
+              "type": "image/png"
             }
           ],
           "namespaced": false
@@ -434,6 +808,10 @@
         {
           "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/monitoring.svg",
           "type": "image/svg+xml"
+        },
+        {
+          "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/monitoring.png",
+          "type": "image/png"
         }
       ],
       "entries": [
@@ -447,8 +825,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/monitoring.coreos.com/prometheus.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/monitoring.coreos.com/prometheuses.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/monitoring.coreos.com/prometheuses.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true,
@@ -462,6 +844,10 @@
         {
           "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/security.svg",
           "type": "image/svg+xml"
+        },
+        {
+          "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/security.png",
+          "type": "image/png"
         }
       ],
       "entries": [
@@ -475,8 +861,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/policy/psp.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/policy/podsecuritypolicies.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/policy/podsecuritypolicies.png",
+              "type": "image/png"
             }
           ],
           "namespaced": false
@@ -491,8 +881,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/voyager.appscode.com/certificate.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/voyager.appscode.com/certificates.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/voyager.appscode.com/certificates.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true,
@@ -508,8 +902,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/core/sa.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/core/serviceaccounts.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/core/serviceaccounts.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -522,6 +920,10 @@
         {
           "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/admin.svg",
           "type": "image/svg+xml"
+        },
+        {
+          "src": "https://cdn.appscode.com/k8s/icons/resourceclasses/admin.png",
+          "type": "image/png"
         }
       ],
       "entries": [
@@ -535,8 +937,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/core/ns.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/core/namespaces.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/core/namespaces.png",
+              "type": "image/png"
             }
           ],
           "namespaced": false
@@ -550,8 +956,12 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/core/limits.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/core/limitranges.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/core/limitranges.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -565,8 +975,12 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/core/quota.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/core/resourcequotas.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/core/resourcequotas.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -581,8 +995,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/rbac.authorization.k8s.io/c-role.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/rbac.authorization.k8s.io/clusterroles.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/rbac.authorization.k8s.io/clusterroles.png",
+              "type": "image/png"
             }
           ],
           "namespaced": false
@@ -597,8 +1015,12 @@
           "required": true,
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/rbac.authorization.k8s.io/role.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/rbac.authorization.k8s.io/roles.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/rbac.authorization.k8s.io/roles.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -612,11 +1034,11 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
               "type": "image/svg+xml"
             }
           ],
-          "namespaced": false
+          "namespaced": true
         }
       ]
     },
@@ -625,7 +1047,7 @@
       "apiGroup": "admissionregistration.k8s.io",
       "icons": [
         {
-          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
           "type": "image/svg+xml"
         }
       ],
@@ -639,8 +1061,12 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/admissionregistration.k8s.io/mutatingwebhookconfigurations.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/admissionregistration.k8s.io/mutatingwebhookconfigurations.png",
+              "type": "image/png"
             }
           ],
           "namespaced": false
@@ -654,8 +1080,12 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/admissionregistration.k8s.io/validatingwebhookconfigurations.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/admissionregistration.k8s.io/validatingwebhookconfigurations.png",
+              "type": "image/png"
             }
           ],
           "namespaced": false
@@ -667,7 +1097,7 @@
       "apiGroup": "apiextensions.k8s.io",
       "icons": [
         {
-          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
           "type": "image/svg+xml"
         }
       ],
@@ -681,8 +1111,12 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.png",
+              "type": "image/png"
             }
           ],
           "namespaced": false
@@ -694,7 +1128,7 @@
       "apiGroup": "apiregistration.k8s.io",
       "icons": [
         {
-          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
           "type": "image/svg+xml"
         }
       ],
@@ -708,8 +1142,12 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/apiregistration.k8s.io/apiservices.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiregistration.k8s.io/apiservices.png",
+              "type": "image/png"
             }
           ],
           "namespaced": false
@@ -721,7 +1159,7 @@
       "apiGroup": "apps",
       "icons": [
         {
-          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
           "type": "image/svg+xml"
         }
       ],
@@ -735,7 +1173,7 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
               "type": "image/svg+xml"
             }
           ],
@@ -748,7 +1186,7 @@
       "apiGroup": "rbac.authorization.k8s.io",
       "icons": [
         {
-          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
           "type": "image/svg+xml"
         }
       ],
@@ -762,8 +1200,12 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/rbac.authorization.k8s.io/crb.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/rbac.authorization.k8s.io/clusterrolebindings.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/rbac.authorization.k8s.io/clusterrolebindings.png",
+              "type": "image/png"
             }
           ],
           "namespaced": false
@@ -777,8 +1219,12 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/rbac.authorization.k8s.io/rb.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/rbac.authorization.k8s.io/rolebindings.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/rbac.authorization.k8s.io/rolebindings.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -790,7 +1236,7 @@
       "apiGroup": "autoscaling",
       "icons": [
         {
-          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
           "type": "image/svg+xml"
         }
       ],
@@ -804,11 +1250,99 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/autoscaling/horizontalpodautoscalers.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/autoscaling/horizontalpodautoscalers.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
+        }
+      ]
+    },
+    {
+      "name": "Bytebuilders Cloud",
+      "apiGroup": "cloud.bytebuilders.dev",
+      "icons": [
+        {
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+          "type": "image/svg+xml"
+        }
+      ],
+      "entries": [
+        {
+          "name": "Credential",
+          "type": {
+            "group": "cloud.bytebuilders.dev",
+            "version": "v1alpha1",
+            "resource": "credentials"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": false
+        }
+      ]
+    },
+    {
+      "name": "Bytebuilders Cluster",
+      "apiGroup": "cluster.bytebuilders.dev",
+      "icons": [
+        {
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+          "type": "image/svg+xml"
+        }
+      ],
+      "entries": [
+        {
+          "name": "ClusterAuthInfoTemplate",
+          "type": {
+            "group": "cluster.bytebuilders.dev",
+            "version": "v1alpha1",
+            "resource": "clusterauthinfotemplates"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": false
+        },
+        {
+          "name": "ClusterInfo",
+          "type": {
+            "group": "cluster.bytebuilders.dev",
+            "version": "v1alpha1",
+            "resource": "clusterinfos"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": false
+        },
+        {
+          "name": "ClusterUserAuth",
+          "type": {
+            "group": "cluster.bytebuilders.dev",
+            "version": "v1alpha1",
+            "resource": "clusteruserauths"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": false
         }
       ]
     },
@@ -817,7 +1351,7 @@
       "apiGroup": "certificates.k8s.io",
       "icons": [
         {
-          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
           "type": "image/svg+xml"
         }
       ],
@@ -826,12 +1360,12 @@
           "name": "CertificateSigningRequest",
           "type": {
             "group": "certificates.k8s.io",
-            "version": "v1beta1",
+            "version": "v1",
             "resource": "certificatesigningrequests"
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
               "type": "image/svg+xml"
             }
           ],
@@ -844,7 +1378,7 @@
       "apiGroup": "coordination.k8s.io",
       "icons": [
         {
-          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
           "type": "image/svg+xml"
         }
       ],
@@ -858,8 +1392,12 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/coordination.k8s.io/leases.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/coordination.k8s.io/leases.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -870,7 +1408,7 @@
       "name": "Core",
       "icons": [
         {
-          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
           "type": "image/svg+xml"
         }
       ],
@@ -884,7 +1422,7 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
               "type": "image/svg+xml"
             }
           ],
@@ -899,8 +1437,12 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/core/ep.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/core/endpoints.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/core/endpoints.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -914,8 +1456,12 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/core/events.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/core/events.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -929,8 +1475,12 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/core/node.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/core/nodes.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/core/nodes.png",
+              "type": "image/png"
             }
           ],
           "namespaced": false
@@ -942,7 +1492,7 @@
       "apiGroup": "discovery.k8s.io",
       "icons": [
         {
-          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
           "type": "image/svg+xml"
         }
       ],
@@ -956,8 +1506,12 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/discovery.k8s.io/endpointslices.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/discovery.k8s.io/endpointslices.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -969,7 +1523,7 @@
       "apiGroup": "events.k8s.io",
       "icons": [
         {
-          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
           "type": "image/svg+xml"
         }
       ],
@@ -978,12 +1532,12 @@
           "name": "Event",
           "type": {
             "group": "events.k8s.io",
-            "version": "v1beta1",
+            "version": "v1",
             "resource": "events"
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
               "type": "image/svg+xml"
             }
           ],
@@ -996,7 +1550,7 @@
       "apiGroup": "extensions",
       "icons": [
         {
-          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
           "type": "image/svg+xml"
         }
       ],
@@ -1010,7 +1564,218 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/networking.k8s.io/ing.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/extensions/ingresses.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/extensions/ingresses.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": true
+        }
+      ]
+    },
+    {
+      "name": "Kubedb Autoscaling",
+      "apiGroup": "autoscaling.kubedb.com",
+      "icons": [
+        {
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+          "type": "image/svg+xml"
+        }
+      ],
+      "entries": [
+        {
+          "name": "ElasticsearchAutoscaler",
+          "type": {
+            "group": "autoscaling.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "elasticsearchautoscalers"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "EtcdAutoscaler",
+          "type": {
+            "group": "autoscaling.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "etcdautoscalers"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "MariaDBAutoscaler",
+          "type": {
+            "group": "autoscaling.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "mariadbautoscalers"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "MemcachedAutoscaler",
+          "type": {
+            "group": "autoscaling.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "memcachedautoscalers"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "MongoDBAutoscaler",
+          "type": {
+            "group": "autoscaling.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "mongodbautoscalers"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "MySQLAutoscaler",
+          "type": {
+            "group": "autoscaling.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "mysqlautoscalers"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "PerconaXtraDBAutoscaler",
+          "type": {
+            "group": "autoscaling.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "perconaxtradbautoscalers"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "PgBouncerAutoscaler",
+          "type": {
+            "group": "autoscaling.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "pgbouncerautoscalers"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "PostgresAutoscaler",
+          "type": {
+            "group": "autoscaling.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "postgresautoscalers"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "ProxySQLAutoscaler",
+          "type": {
+            "group": "autoscaling.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "proxysqlautoscalers"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "RedisAutoscaler",
+          "type": {
+            "group": "autoscaling.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "redisautoscalers"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "VerticalAutoscaler",
+          "type": {
+            "group": "autoscaling.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "verticalautoscalers"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "VerticalAutoscalerCheckpoint",
+          "type": {
+            "group": "autoscaling.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "verticalautoscalercheckpoints"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
               "type": "image/svg+xml"
             }
           ],
@@ -1019,11 +1784,544 @@
       ]
     },
     {
+      "name": "Kubedb Catalog",
+      "apiGroup": "catalog.kubedb.com",
+      "icons": [
+        {
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+          "type": "image/svg+xml"
+        }
+      ],
+      "entries": [
+        {
+          "name": "ElasticsearchVersion",
+          "type": {
+            "group": "catalog.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "elasticsearchversions"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/elasticsearchversions.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/elasticsearchversions.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": false
+        },
+        {
+          "name": "EtcdVersion",
+          "type": {
+            "group": "catalog.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "etcdversions"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/etcdversions.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/etcdversions.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": false
+        },
+        {
+          "name": "MariaDBVersion",
+          "type": {
+            "group": "catalog.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "mariadbversions"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": false
+        },
+        {
+          "name": "MemcachedVersion",
+          "type": {
+            "group": "catalog.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "memcachedversions"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/memcachedversions.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/memcachedversions.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": false
+        },
+        {
+          "name": "MongoDBVersion",
+          "type": {
+            "group": "catalog.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "mongodbversions"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/mongodbversions.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/mongodbversions.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": false
+        },
+        {
+          "name": "MySQLVersion",
+          "type": {
+            "group": "catalog.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "mysqlversions"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/mysqlversions.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/mysqlversions.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": false
+        },
+        {
+          "name": "PerconaXtraDBVersion",
+          "type": {
+            "group": "catalog.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "perconaxtradbversions"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/perconaxtradbversions.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/perconaxtradbversions.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": false
+        },
+        {
+          "name": "PgBouncerVersion",
+          "type": {
+            "group": "catalog.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "pgbouncerversions"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/pgbouncerversions.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/pgbouncerversions.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": false
+        },
+        {
+          "name": "PostgresVersion",
+          "type": {
+            "group": "catalog.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "postgresversions"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/postgresversions.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/postgresversions.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": false
+        },
+        {
+          "name": "ProxySQLVersion",
+          "type": {
+            "group": "catalog.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "proxysqlversions"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/proxysqlversions.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/proxysqlversions.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": false
+        },
+        {
+          "name": "RedisVersion",
+          "type": {
+            "group": "catalog.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "redisversions"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/redisversions.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/redisversions.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": false
+        }
+      ]
+    },
+    {
+      "name": "Kubedb Installer",
+      "apiGroup": "installer.kubedb.com",
+      "icons": [
+        {
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+          "type": "image/svg+xml"
+        }
+      ],
+      "entries": [
+        {
+          "name": "KubeDBCatalog",
+          "type": {
+            "group": "installer.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "kubedbcatalogs"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "KubeDBEnterprise",
+          "type": {
+            "group": "installer.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "kubedbenterprises"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "KubeDBOperator",
+          "type": {
+            "group": "installer.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "kubedboperators"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true
+        }
+      ]
+    },
+    {
+      "name": "Kubedb Op",
+      "apiGroup": "ops.kubedb.com",
+      "icons": [
+        {
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+          "type": "image/svg+xml"
+        }
+      ],
+      "entries": [
+        {
+          "name": "ElasticsearchOpsRequest",
+          "type": {
+            "group": "ops.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "elasticsearchopsrequests"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/elasticsearchopsrequests.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/elasticsearchopsrequests.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "EtcdOpsRequest",
+          "type": {
+            "group": "ops.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "etcdopsrequests"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/etcdopsrequests.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/etcdopsrequests.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "MariaDBOpsRequest",
+          "type": {
+            "group": "ops.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "mariadbopsrequests"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "MemcachedOpsRequest",
+          "type": {
+            "group": "ops.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "memcachedopsrequests"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/memcachedopsrequests.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/memcachedopsrequests.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "MongoDBOpsRequest",
+          "type": {
+            "group": "ops.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "mongodbopsrequests"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/mongodbopsrequests.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/mongodbopsrequests.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "MySQLOpsRequest",
+          "type": {
+            "group": "ops.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "mysqlopsrequests"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/mysqlopsrequests.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/mysqlopsrequests.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "PerconaXtraDBOpsRequest",
+          "type": {
+            "group": "ops.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "perconaxtradbopsrequests"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/perconaxtradbopsrequests.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/perconaxtradbopsrequests.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "PgBouncerOpsRequest",
+          "type": {
+            "group": "ops.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "pgbounceropsrequests"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/pgbounceropsrequests.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/pgbounceropsrequests.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "PostgresOpsRequest",
+          "type": {
+            "group": "ops.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "postgresopsrequests"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/postgresopsrequests.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/postgresopsrequests.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "ProxySQLOpsRequest",
+          "type": {
+            "group": "ops.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "proxysqlopsrequests"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/proxysqlopsrequests.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/proxysqlopsrequests.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": true
+        },
+        {
+          "name": "RedisOpsRequest",
+          "type": {
+            "group": "ops.kubedb.com",
+            "version": "v1alpha1",
+            "resource": "redisopsrequests"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/redisopsrequests.svg",
+              "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/ops.kubedb.com/redisopsrequests.png",
+              "type": "image/png"
+            }
+          ],
+          "namespaced": true
+        }
+      ]
+    },
+    {
+      "name": "Kubepack",
+      "apiGroup": "kubepack.com",
+      "icons": [
+        {
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+          "type": "image/svg+xml"
+        }
+      ],
+      "entries": [
+        {
+          "name": "Plan",
+          "type": {
+            "group": "kubepack.com",
+            "version": "v1alpha1",
+            "resource": "plans"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": false
+        },
+        {
+          "name": "Product",
+          "type": {
+            "group": "kubepack.com",
+            "version": "v1alpha1",
+            "resource": "products"
+          },
+          "icons": [
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
+              "type": "image/svg+xml"
+            }
+          ],
+          "namespaced": false
+        }
+      ]
+    },
+    {
       "name": "Networking",
       "apiGroup": "networking.k8s.io",
       "icons": [
         {
-          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
           "type": "image/svg+xml"
         }
       ],
@@ -1032,12 +2330,12 @@
           "name": "IngressClass",
           "type": {
             "group": "networking.k8s.io",
-            "version": "v1beta1",
+            "version": "v1",
             "resource": "ingressclasses"
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
               "type": "image/svg+xml"
             }
           ],
@@ -1050,7 +2348,7 @@
       "apiGroup": "node.k8s.io",
       "icons": [
         {
-          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
           "type": "image/svg+xml"
         }
       ],
@@ -1064,8 +2362,12 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/node.k8s.io/runtimeclasses.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/node.k8s.io/runtimeclasses.png",
+              "type": "image/png"
             }
           ],
           "namespaced": false
@@ -1077,7 +2379,7 @@
       "apiGroup": "policy",
       "icons": [
         {
-          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
           "type": "image/svg+xml"
         }
       ],
@@ -1091,8 +2393,12 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/policy/poddisruptionbudgets.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/policy/poddisruptionbudgets.png",
+              "type": "image/png"
             }
           ],
           "namespaced": true
@@ -1104,7 +2410,7 @@
       "apiGroup": "scheduling.k8s.io",
       "icons": [
         {
-          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
           "type": "image/svg+xml"
         }
       ],
@@ -1118,8 +2424,12 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/scheduling.k8s.io/priorityclasses.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/scheduling.k8s.io/priorityclasses.png",
+              "type": "image/png"
             }
           ],
           "namespaced": false
@@ -1131,7 +2441,7 @@
       "apiGroup": "storage.k8s.io",
       "icons": [
         {
-          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+          "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
           "type": "image/svg+xml"
         }
       ],
@@ -1145,8 +2455,12 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/storage.k8s.io/csinodes.svg",
               "type": "image/svg+xml"
+            },
+            {
+              "src": "https://cdn.appscode.com/k8s/icons/storage.k8s.io/csinodes.png",
+              "type": "image/png"
             }
           ],
           "namespaced": false
@@ -1160,7 +2474,7 @@
           },
           "icons": [
             {
-              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/crd.svg",
+              "src": "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg",
               "type": "image/svg+xml"
             }
           ],
