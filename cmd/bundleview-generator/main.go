@@ -19,9 +19,9 @@ package main
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"os"
 
+	"k8s.io/klog/v2"
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/pkg/lib"
 
@@ -47,33 +47,33 @@ func main() {
 		Version: version,
 	})
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 
 	err = os.MkdirAll("artifacts/"+name, 0755)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 
 	{
 		data, err := yaml.Marshal(bv)
 		if err != nil {
-			log.Fatal(err)
+			klog.Fatal(err)
 		}
 		err = ioutil.WriteFile("artifacts/"+name+"/bundleview.yaml", data, 0644)
 		if err != nil {
-			log.Fatal(err)
+			klog.Fatal(err)
 		}
 	}
 
 	{
 		data, err := json.MarshalIndent(bv, "", "  ")
 		if err != nil {
-			log.Fatal(err)
+			klog.Fatal(err)
 		}
 		err = ioutil.WriteFile("artifacts/"+name+"/bundleview.json", data, 0644)
 		if err != nil {
-			log.Fatal(err)
+			klog.Fatal(err)
 		}
 	}
 }

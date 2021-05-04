@@ -18,9 +18,9 @@ package main
 
 import (
 	"io/ioutil"
-	"log"
 	"os"
 
+	"k8s.io/klog/v2"
 	"kubepack.dev/kubepack/pkg/lib"
 
 	flag "github.com/spf13/pflag"
@@ -41,19 +41,19 @@ func main() {
 
 	table, err := lib.ComparePlans(lib.DefaultRegistry, url, names, version)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 
 	data, err := yaml.Marshal(table)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	err = os.MkdirAll("artifacts", 0755)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	err = ioutil.WriteFile("artifacts/table.yaml", data, 0644)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 }

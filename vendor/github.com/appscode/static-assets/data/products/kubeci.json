@@ -2,8 +2,8 @@
   "key": "kubeci",
   "name": "KubeCI",
   "fullname": "KubeCI by AppsCode",
-  "tagline": "Run production-grade databases easily on <strong>Kubernetes</strong>",
-  "summary": "",
+  "tagline": "Run production-grade databases on <strong>Kubernetes</strong>",
+  "summary": "Run production-grade databases on <strong>Kubernetes</strong>",
   "published": false,
   "author": "AppsCode Inc.",
   "website": {
@@ -36,12 +36,12 @@
   "docRepo": "kube-ci/docs",
   "badges": [
     {
-      "url" : "github/stars/kube-ci/engine",
+      "url": "github/stars/kube-ci/engine",
       "alt": "GitHub Stars",
       "logo": "github"
     },
     {
-      "url" : "docker/pulls/kubeci/kubeci-engine",
+      "url": "docker/pulls/kubeci/kubeci-engine",
       "alt": "Docker Pulls",
       "logo": "docker"
     }
@@ -153,8 +153,16 @@
     }
   ],
   "versions": [
-    { "version": "master", "hostDocs": false, "show": true },
-    { "version": "v0.1.0", "hostDocs": true, "show": true }
+    {
+      "version": "master",
+      "hostDocs": false,
+      "show": true
+    },
+    {
+      "version": "v0.1.0",
+      "hostDocs": true,
+      "show": true
+    }
   ],
   "latestVersion": "v0.1.0",
   "socialLinks": {
@@ -171,6 +179,5 @@
   "supportLinks": {
     "Support URL": "https://appscode.freshdesk.com",
     "Website URL": "https://www.appscode.com/products/kube-ci"
-  },
-  "stripeProductID": ""
+  }
 }

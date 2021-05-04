@@ -18,9 +18,9 @@ package main
 
 import (
 	"io/ioutil"
-	"log"
 	"os"
 
+	"k8s.io/klog/v2"
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/pkg/lib"
 
@@ -38,29 +38,29 @@ func main() {
 
 	data, err := ioutil.ReadFile(file)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	var bv v1alpha1.BundleView
 	err = yaml.Unmarshal(data, &bv)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 
 	out, err := lib.CreateOrder(lib.DefaultRegistry, bv)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 
 	data, err = yaml.Marshal(out)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	err = os.MkdirAll("artifacts/"+bv.Name, 0755)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	err = ioutil.WriteFile("artifacts/"+bv.Name+"/order.yaml", data, 0644)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 }

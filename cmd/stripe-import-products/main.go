@@ -19,12 +19,12 @@ package main
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"os"
 	"path/filepath"
 	"sort"
 	"strings"
 
+	"k8s.io/klog/v2"
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 
 	"github.com/appscode/static-assets/api"
@@ -37,7 +37,7 @@ func main() {
 		var old api.Product
 		err := json.Unmarshal(data, &old)
 		if err != nil {
-			log.Fatal(err)
+			klog.Fatal(err)
 		}
 
 		if !old.Published {
@@ -189,19 +189,19 @@ func main() {
 		f := filepath.Join("artifacts", "products", filename)
 		err = os.MkdirAll(filepath.Dir(f), 0755)
 		if err != nil {
-			log.Fatal(err)
+			klog.Fatal(err)
 		}
 
 		if _, err := os.Stat(f); err == nil {
 			data, err := ioutil.ReadFile(f)
 			if err != nil {
-				log.Fatal(err)
+				klog.Fatal(err)
 			}
 
 			var existing v1alpha1.Product
 			err = json.Unmarshal(data, &existing)
 			if err != nil {
-				log.Fatal(err)
+				klog.Fatal(err)
 			}
 			// preserve product id and plans
 			nu.Spec.StripeID = existing.Spec.StripeID
@@ -209,11 +209,11 @@ func main() {
 
 		data, err = json.MarshalIndent(&nu, "", "  ")
 		if err != nil {
-			log.Fatal(err)
+			klog.Fatal(err)
 		}
 		err = ioutil.WriteFile(f, data, 0644)
 		if err != nil {
-			log.Fatal(err)
+			klog.Fatal(err)
 		}
 	}
 }

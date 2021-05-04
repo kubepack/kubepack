@@ -18,9 +18,9 @@ package main
 
 import (
 	"io/ioutil"
-	"log"
 	"os"
 
+	"k8s.io/klog/v2"
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/pkg/lib"
 
@@ -71,12 +71,12 @@ func main() {
 
 	data, err := ioutil.ReadFile(file)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	var order v1alpha1.Order
 	err = yaml.Unmarshal(data, &order)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 
 	var selection *v1alpha1.ChartSelection
@@ -101,20 +101,20 @@ func main() {
 	}
 	err = fn.Do()
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	app := fn.Result()
 
 	data, err = yaml.Marshal(app)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	err = os.MkdirAll("artifacts/"+name, 0755)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	err = ioutil.WriteFile("artifacts/"+name+"/application.yaml", data, 0644)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 }

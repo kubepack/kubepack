@@ -20,7 +20,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -33,6 +32,7 @@ import (
 	"github.com/stripe/stripe-go/plan"
 	"github.com/stripe/stripe-go/product"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/klog/v2"
 )
 
 func main() {
@@ -41,7 +41,7 @@ func main() {
 	dir := "artifacts/products"
 	files, err := ioutil.ReadDir(dir)
 	if err != nil {
-		log.Fatalln(err)
+		klog.Fatalln(err)
 	}
 	for _, file := range files {
 		if file.IsDir() || !strings.HasSuffix(file.Name(), ".json") {
@@ -53,13 +53,13 @@ func main() {
 
 		data, err := ioutil.ReadFile(filename)
 		if err != nil {
-			log.Fatalln(err)
+			klog.Fatalln(err)
 		}
 
 		var existing v1alpha1.Product
 		err = json.Unmarshal(data, &existing)
 		if err != nil {
-			log.Fatalln(err)
+			klog.Fatalln(err)
 		}
 		if existing.Spec.UnitLabel == "" {
 			existing.Spec.UnitLabel = "Cluster"
@@ -73,7 +73,7 @@ func main() {
 					if se, ok := err.(*stripe.Error); ok && se.Code == stripe.ErrorCodeResourceMissing {
 						exists = false
 					} else {
-						log.Fatalln(err)
+						klog.Fatalln(err)
 					}
 				}
 			}
@@ -96,7 +96,7 @@ func main() {
 
 				p, err := product.New(params)
 				if err != nil {
-					log.Fatalln(err)
+					klog.Fatalln(err)
 				}
 				existing.Spec.StripeID = p.ID
 			}
@@ -104,22 +104,22 @@ func main() {
 
 		data, err = json.MarshalIndent(existing, "", "  ")
 		if err != nil {
-			log.Fatalln(err)
+			klog.Fatalln(err)
 		}
 		err = ioutil.WriteFile(filename, data, 0644)
 		if err != nil {
-			log.Fatalln(err)
+			klog.Fatalln(err)
 		}
 
 		{
 			planDir := filepath.Join(dir, existing.Name+"-plans")
 			err = os.MkdirAll(planDir, 0755)
 			if err != nil {
-				log.Fatalln(err)
+				klog.Fatalln(err)
 			}
 			plaanfiles, err := ioutil.ReadDir(planDir)
 			if err != nil {
-				log.Fatalln(err)
+				klog.Fatalln(err)
 			}
 			if len(plaanfiles) == 0 {
 				params := &stripe.PlanParams{
@@ -131,7 +131,7 @@ func main() {
 				}
 				p, err := plan.New(params)
 				if err != nil {
-					log.Fatalln(err)
+					klog.Fatalln(err)
 				}
 				plaan := v1alpha1.Plan{
 					ObjectMeta: metav1.ObjectMeta{
@@ -155,11 +155,11 @@ func main() {
 
 				data, err = json.MarshalIndent(plaan, "", "  ")
 				if err != nil {
-					log.Fatalln(err)
+					klog.Fatalln(err)
 				}
 				err = ioutil.WriteFile(filepath.Join(planDir, plaan.Name+".json"), data, 0644)
 				if err != nil {
-					log.Fatalln(err)
+					klog.Fatalln(err)
 				}
 			} else {
 				for _, plaanfile := range plaanfiles {
@@ -168,12 +168,12 @@ func main() {
 					}
 					data, err := ioutil.ReadFile(filepath.Join(planDir, plaanfile.Name()))
 					if err != nil {
-						log.Fatalln(err)
+						klog.Fatalln(err)
 					}
 					var plaan v1alpha1.Plan
 					err = json.Unmarshal(data, &plaan)
 					if err != nil {
-						log.Fatalln(err)
+						klog.Fatalln(err)
 					}
 
 					plaan.Spec.ProductID = existing.Spec.StripeID
@@ -185,7 +185,7 @@ func main() {
 							if se, ok := err.(*stripe.Error); ok && se.Code == stripe.ErrorCodeResourceMissing {
 								exists = false
 							} else {
-								log.Fatalln(err)
+								klog.Fatalln(err)
 							}
 						}
 					}
@@ -214,7 +214,7 @@ func main() {
 						}
 						p, err := plan.New(params)
 						if err != nil {
-							log.Fatalln(err)
+							klog.Fatalln(err)
 						}
 
 						plaan.Spec.StripeID = p.ID
@@ -222,11 +222,11 @@ func main() {
 
 						data, err = json.MarshalIndent(plaan, "", "  ")
 						if err != nil {
-							log.Fatalln(err)
+							klog.Fatalln(err)
 						}
 						err = ioutil.WriteFile(filepath.Join(planDir, plaan.Name+".json"), data, 0644)
 						if err != nil {
-							log.Fatalln(err)
+							klog.Fatalln(err)
 						}
 					}
 				}

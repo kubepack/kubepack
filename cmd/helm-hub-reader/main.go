@@ -19,11 +19,11 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"strings"
 
+	"k8s.io/klog/v2"
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 
 	"github.com/gregjones/httpcache"
@@ -49,20 +49,20 @@ func main() {
 						url := strings.TrimSuffix(repo.URL, "/") + "/index.yaml"
 						resp, err := http.Get(url)
 						if err != nil {
-							log.Fatalln(err)
+							klog.Fatalln(err)
 						}
 						data, err := ioutil.ReadAll(resp.Body)
 						if err != nil {
-							log.Fatalln(err)
+							klog.Fatalln(err)
 						}
 						resp.Body.Close()
 						err = os.MkdirAll("artifacts/hub", 0755)
 						if err != nil {
-							log.Fatalln(err)
+							klog.Fatalln(err)
 						}
 						err = ioutil.WriteFile("artifacts/hub/"+repo.Name+"-index.yaml", data, 0644)
 						if err != nil {
-							log.Fatalln(err)
+							klog.Fatalln(err)
 						}
 					}
 				}

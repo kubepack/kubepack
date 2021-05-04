@@ -2,7 +2,7 @@
   "key": "kubedb",
   "name": "KubeDB",
   "fullname": "KubeDB by AppsCode",
-  "tagline": "Run production-grade databases easily on <strong>Kubernetes</strong>",
+  "tagline": "Run production-grade Databases on <br><strong>Kubernetes</strong>",
   "summary": "KubeDB by AppsCode simplifies and automates routine database tasks such as provisioning, patching, backup, recovery, failure detection, and repair for various popular databases on private and public clouds",
   "published": true,
   "author": "AppsCode Inc.",
@@ -37,8 +37,8 @@
   "datasheetFormID": "9d6f5a4d3fe306ecf3b9ca3c8e121265bcf355b2c3f198a8439cf9035bbda0e7",
   "badges": [
     {
-      "url": "github/stars/kubedb/cli",
-      "alt": "GitHub Stars",
+      "url": "kubedb",
+      "alt": "GitHub",
       "logo": "github"
     },
     {
@@ -153,27 +153,188 @@
         "alt": "http"
       },
       "summary": "",
-      "description": "KubeDB is 100% open source and distributed under a commercial friendly Apache v2 license. You get the benefits of bug fixes and enhancements made by the KubeDB community as a whole and not just by its primary sponsor AppsCode Inc. Since it is open source, your engineering team has the ability to debug issues unique to your deployment and make any changes if necessary. You get the piece of mind that your critical infrastructure component is not tied to the fate of a startup."
+      "description": "KubeDB is an open core project. KubeDB Community edition is open source and free to use for both commercial and non-commercial purposes. It comes with the cluster provisioning functionalities. KubeDB Enterprise edition includes the features of the Community Edition and extends it by automating Day 2 operations like database backup/recovery, upgrading version, horizontal and vertical scaling, TLS/SSL support via cert-manager, connection pooling, etc."
     }
   ],
   "versions": [
-      { "version": "master", "hostDocs": false, "show": true },
-      { "version": "v0.13.0-rc.0", "hostDocs": true, "show": true },
-      { "version": "0.12.0", "hostDocs": true, "show": true },
-      { "version": "0.11.0", "hostDocs": true, "show": true },
-      { "version": "0.10.0", "hostDocs": true, "show": true },
-      { "version": "0.9.0", "hostDocs": true, "show": true },
-      { "version": "0.9.0-rc.2", "hostDocs": true },
-      { "version": "0.9.0-rc.1", "hostDocs": true },
-      { "version": "0.9.0-rc.0", "hostDocs": true },
-      { "version": "0.8.0", "hostDocs": true, "show": true },
-      { "version": "0.8.0-rc.0", "hostDocs": true },
-      { "version": "0.8.0-beta.2", "hostDocs": true },
-      { "version": "0.8.0-beta.0", "hostDocs": true },
-      { "version": "0.7.1", "hostDocs": false },
-      { "version": "0.6.0", "hostDocs": false, "show": true }
+    {
+      "version": "master",
+      "hostDocs": false,
+      "show": true
+    },
+    {
+      "version": "v2020.12.10",
+      "hostDocs": true,
+      "show": true,
+      "info": {
+        "cli": "v0.15.2",
+        "community": "v0.15.2",
+        "enterprise": "v0.2.2",
+        "installer": "v0.15.2"
+      }
+    },
+    {
+      "version": "v2020.11.12",
+      "hostDocs": true,
+      "show": true,
+      "info": {
+        "cli": "v0.15.1",
+        "community": "v0.15.1",
+        "enterprise": "v0.2.1",
+        "installer": "v0.15.1"
+      }
+    },
+    {
+      "version": "v2020.11.11",
+      "hostDocs": true,
+      "show": true,
+      "info": {
+        "cli": "v0.15.0",
+        "community": "v0.15.0",
+        "enterprise": "v0.2.0",
+        "installer": "v0.15.0"
+      }
+    },
+    {
+      "version": "v2020.11.08",
+      "hostDocs": true,
+      "show": true,
+      "info": {
+        "cli": "v0.14.1",
+        "community": "v0.14.1",
+        "enterprise": "v0.1.1",
+        "installer": "v0.14.1"
+      }
+    },
+    {
+      "version": "v2020.10.28",
+      "hostDocs": true,
+      "show": true,
+      "info": {
+        "cli": "v0.14.0",
+        "community": "v0.14.0",
+        "enterprise": "v0.1.0",
+        "installer": "v0.14.0"
+      }
+    },
+    {
+      "version": "v2020.10.27-rc.2",
+      "hostDocs": true,
+      "info": {
+        "cli": "v0.14.0-rc.2",
+        "community": "v0.14.0-rc.2",
+        "enterprise": "v0.1.0-rc.2",
+        "installer": "v0.14.0-rc.2"
+      }
+    },
+    {
+      "version": "v2020.10.27-rc.1",
+      "hostDocs": true,
+      "info": {
+        "cli": "v0.14.0-rc.1",
+        "community": "v0.14.0-rc.1",
+        "enterprise": "v0.1.0-rc.1",
+        "installer": "v0.14.0-rc.1"
+      }
+    },
+    {
+      "version": "v2020.10.27-rc.0",
+      "hostDocs": true,
+      "info": {
+        "cli": "v0.14.0-beta.6",
+        "community": "v0.14.0-beta.6",
+        "enterprise": "v0.1.0-beta.6",
+        "installer": "v0.14.0-beta.6"
+      }
+    },
+    {
+      "version": "v2020.10.26-beta.0",
+      "hostDocs": true,
+      "info": {
+        "cli": "v0.14.0-beta.5",
+        "community": "v0.14.0-beta.5",
+        "enterprise": "v0.1.0-beta.5",
+        "installer": "v0.14.0-beta.5"
+      }
+    },
+    {
+      "version": "v2020.10.24-beta.0",
+      "hostDocs": true,
+      "info": {
+        "cli": "v0.14.0-beta.4",
+        "community": "v0.14.0-beta.4",
+        "enterprise": "v0.1.0-beta.4",
+        "installer": "v0.14.0-beta.4"
+      }
+    },
+    {
+      "version": "v2020.09.04-beta.0",
+      "hostDocs": true
+    },
+    {
+      "version": "v2020.07.10-beta.0",
+      "hostDocs": true
+    },
+    {
+      "version": "v0.13.0-rc.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.12.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.11.0",
+      "hostDocs": true
+    },
+    {
+      "version": "0.10.0",
+      "hostDocs": true
+    },
+    {
+      "version": "0.9.0",
+      "hostDocs": true
+    },
+    {
+      "version": "0.9.0-rc.2",
+      "hostDocs": true
+    },
+    {
+      "version": "0.9.0-rc.1",
+      "hostDocs": true
+    },
+    {
+      "version": "0.9.0-rc.0",
+      "hostDocs": true
+    },
+    {
+      "version": "0.8.0",
+      "hostDocs": true
+    },
+    {
+      "version": "0.8.0-rc.0",
+      "hostDocs": true
+    },
+    {
+      "version": "0.8.0-beta.2",
+      "hostDocs": true
+    },
+    {
+      "version": "0.8.0-beta.0",
+      "hostDocs": true
+    },
+    {
+      "version": "0.7.1",
+      "hostDocs": false
+    },
+    {
+      "version": "0.6.0",
+      "hostDocs": false
+    }
   ],
-  "latestVersion": "v0.13.0-rc.0",
+  "latestVersion": "v2020.12.10",
   "socialLinks": {
     "facebook": "https://facebook.com/appscode",
     "github": "https://github.com/kubedb/cli",
@@ -192,19 +353,19 @@
   "stripeProductID": "prod_FARWKSytMzmLb9",
   "plans": {
     "Community": {
-      "price": "0"
-    },
-    "Standard_M2M": {
-      "price": "599"
-    },
-    "Standard_Y2Y": {
-      "price": "399"
+      "price": 0
     },
     "Golden_M2M": {
-      "price": "999"
+      "price": 999
     },
     "Golden_Y2Y": {
-      "price": "799"
+      "price": 799
+    },
+    "Standard_M2M": {
+      "price": 599
+    },
+    "Standard_Y2Y": {
+      "price": 399
     }
   }
 }

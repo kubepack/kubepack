@@ -3,7 +3,9 @@
   "name": "Percona XtraDB",
   "fullname": "Stash Percona XtraDB Addon",
   "tagline": "Percona XtraDB backup and restore plugin for Stash by AppsCode",
+  "summary": "Percona XtraDB backup and restore plugin for Stash by AppsCode",
   "published": true,
+  "author": "",
   "repoURL": "https://github.com/stashed/percona-xtradb",
   "starRepo": "stashed/stash",
   "docRepo": "stashed/percona-xtradb",
@@ -20,8 +22,68 @@
     }
   ],
   "versions": [
-    { "version": "master", "hostDocs": false, "show": true },
-    { "version": "5.7", "hostDocs": true, "show": true }
+    {
+      "version": "master",
+      "hostDocs": false,
+      "show": true
+    },
+    {
+      "version": "5.7-v4",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "5.7-v3",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "5.7-v2",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "5.7.0-v1",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "5.7-v1",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "5.7.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "5.7",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "5.7-rc.20200827",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "5.7-rc.20200826",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "5.7-beta.20200826",
+      "hostDocs": true
+    },
+    {
+      "version": "5.7-beta.20200709",
+      "hostDocs": true
+    },
+    {
+      "version": "5.7-beta.20200708",
+      "hostDocs": true
+    }
   ],
-  "latestVersion": "5.7"
+  "latestVersion": "5.7-v4"
 }

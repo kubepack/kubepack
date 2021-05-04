@@ -3,7 +3,7 @@
   "name": "Kubeform",
   "fullname": "Kubeform by AppsCode",
   "tagline": "Provision cloud resources <br /> using <strong>Kubernetes</strong> CRDs <br />& <strong>Terraform</strong>",
-  "summary": "",
+  "summary": "Provision cloud resources <br /> using <strong>Kubernetes</strong> CRDs <br />& <strong>Terraform</strong>",
   "published": true,
   "author": "AppsCode Inc.",
   "website": {
@@ -36,8 +36,8 @@
   "docRepo": "kubeform/docs",
   "badges": [
     {
-      "url": "github/stars/kubeform/kubeform",
-      "alt": "GitHub Stars",
+      "url": "kubeform",
+      "alt": "GitHub",
       "logo": "github"
     },
     {
@@ -127,11 +127,40 @@
     }
   ],
   "versions": [
-    { "version": "master", "hostDocs": false, "show": true },
-    { "version": "v0.0.1", "hostDocs": true, "show": false },
-    { "version": "v0.1.0", "hostDocs": true, "show": true }
+    {
+      "version": "master",
+      "hostDocs": false,
+      "show": true
+    },
+    {
+      "version": "v2020.10.30",
+      "hostDocs": true,
+      "show": true,
+      "info": {
+        "community": "v0.3.0",
+        "installer": "v0.3.0"
+      }
+    },
+    {
+      "version": "v2020.10.13",
+      "hostDocs": true,
+      "show": true,
+      "info": {
+        "community": "v0.2.0",
+        "installer": "v0.2.0"
+      }
+    },
+    {
+      "version": "v0.1.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "v0.0.1",
+      "hostDocs": true
+    }
   ],
-  "latestVersion": "v0.1.0",
+  "latestVersion": "v2020.10.30",
   "socialLinks": {
     "facebook": "https://facebook.com/appscode",
     "github": "https://github.com/kubeform/kubeform",
@@ -150,7 +179,7 @@
   "stripeProductID": "prod_FARWKSytMzmLb9",
   "plans": {
     "Community": {
-      "price": "0"
+      "price": 0
     }
   }
 }

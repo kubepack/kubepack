@@ -19,7 +19,6 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"path/filepath"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
@@ -31,6 +30,7 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 	"k8s.io/client-go/util/homedir"
+	"k8s.io/klog/v2"
 	clientcmdutil "kmodules.xyz/client-go/tools/clientcmd"
 	"kmodules.xyz/resource-metadata/hub"
 	"sigs.k8s.io/yaml"
@@ -49,7 +49,7 @@ func main() {
 	flag.Parse()
 
 	if masterURL == "" && kubeconfigPath == "" {
-		log.Fatalln("Possibly in cluster. Can't create RESTClientGetter")
+		klog.Fatalln("Possibly in cluster. Can't create RESTClientGetter")
 	}
 
 	cc := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
@@ -57,24 +57,24 @@ func main() {
 		&clientcmd.ConfigOverrides{ClusterInfo: clientcmdapi.Cluster{Server: masterURL}})
 	kubeconfig, err := cc.RawConfig()
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	getter := clientcmdutil.NewClientGetter(&kubeconfig)
 
 	data, err := ioutil.ReadFile(file)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	var order v1alpha1.Order
 	err = yaml.Unmarshal(data, &order)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	order.UID = types.UID(uuid.New().String())
 
 	allowed, err := lib.CheckPermissions(getter, lib.DefaultRegistry, order, hub.Helm3)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	fmt.Println("ALLOWED", "=", allowed)
 }

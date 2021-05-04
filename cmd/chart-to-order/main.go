@@ -19,7 +19,6 @@ package main
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"os"
 	"time"
 
@@ -29,6 +28,7 @@ import (
 	flag "github.com/spf13/pflag"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
+	"k8s.io/klog/v2"
 	"sigs.k8s.io/yaml"
 )
 
@@ -78,28 +78,28 @@ func main() {
 
 	err := os.MkdirAll("artifacts/"+name, 0755)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 
 	{
 		data, err := yaml.Marshal(order)
 		if err != nil {
-			log.Fatal(err)
+			klog.Fatal(err)
 		}
 		err = ioutil.WriteFile("artifacts/"+name+"/order.yaml", data, 0644)
 		if err != nil {
-			log.Fatal(err)
+			klog.Fatal(err)
 		}
 	}
 
 	{
 		data, err := json.MarshalIndent(order, "", "  ")
 		if err != nil {
-			log.Fatal(err)
+			klog.Fatal(err)
 		}
 		err = ioutil.WriteFile("artifacts/"+name+"/order.json", data, 0644)
 		if err != nil {
-			log.Fatal(err)
+			klog.Fatal(err)
 		}
 	}
 }

@@ -19,7 +19,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/pkg/lib"
@@ -27,6 +26,7 @@ import (
 
 	flag "github.com/spf13/pflag"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/klog/v2"
 )
 
 var (
@@ -47,12 +47,12 @@ func main() {
 
 	chrt, err := lib.DefaultRegistry.GetChart(url, name, version)
 	if err != nil {
-		log.Fatalln(err)
+		klog.Fatalln(err)
 	}
 
 	repoName, err := repo.DefaultNamer.Name(url)
 	if err != nil {
-		log.Fatalln(err)
+		klog.Fatalln(err)
 	}
 
 	var nu v1alpha1.Product
@@ -133,7 +133,7 @@ func main() {
 
 	data, err := json.MarshalIndent(nu, "", "  ")
 	if err != nil {
-		log.Fatalln(err)
+		klog.Fatalln(err)
 	}
 	fmt.Println(string(data))
 }

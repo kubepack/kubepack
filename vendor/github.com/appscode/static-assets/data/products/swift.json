@@ -3,12 +3,13 @@
   "name": "Swift",
   "fullname": "Swift by AppsCode",
   "tagline": "Ajax friendly Helm Tiller Proxy",
-  "summary": "",
+  "summary": "Ajax friendly Helm Tiller Proxy",
   "published": true,
   "author": "AppsCode Inc.",
   "website": {
     "domainKey": "domain_appscode",
-    "path": "/products/swift/"
+    "path": "/products/swift/",
+    "themeColor": ""
   },
   "heroImage": {
     "src": "https://cdn.appscode.com/images/products/swift/swift-hero.png",
@@ -32,7 +33,6 @@
   "repoURL": "https://github.com/kubepack/swift",
   "starRepo": "kubepack/swift",
   "docRepo": "kubepack/swift",
-  "datasheetFormID": "",
   "badges": [
     {
       "url": "github/stars/appscode/swift",
@@ -87,26 +87,98 @@
     }
   ],
   "versions": [
-    { "version": "master", "hostDocs": false, "show": true },
-    { "version": "v0.12.1", "hostDocs": true, "show": true },
-    { "version": "0.11.1", "hostDocs": true, "show": true },
-    { "version": "0.11.0", "hostDocs": true, "show": true },
-    { "version": "0.10.0", "hostDocs": true, "show": true },
-    { "version": "0.9.0", "hostDocs": true, "show": true },
-    { "version": "0.8.1", "hostDocs": true, "show": true },
-    { "version": "0.8.0", "hostDocs": true },
-    { "version": "0.7.3", "hostDocs": true, "show": true },
-    { "version": "0.7.2", "hostDocs": true },
-    { "version": "0.7.1", "hostDocs": true },
-    { "version": "0.7.0", "hostDocs": true },
-    { "version": "0.6.0", "hostDocs": true },
-    { "version": "0.5.2", "hostDocs": true, "show": true },
-    { "version": "0.5.1", "hostDocs": false },
-    { "version": "0.5.0", "hostDocs": false },
-    { "version": "0.3.2", "hostDocs": false, "show": true },
-    { "version": "0.3.1", "hostDocs": false },
-    { "version": "0.2.0", "hostDocs": false, "show": true },
-    { "version": "0.1.0", "hostDocs": false, "show": true }
+    {
+      "version": "master",
+      "hostDocs": false,
+      "show": true
+    },
+    {
+      "version": "v0.12.1",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.11.1",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.11.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.10.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.9.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.8.1",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.8.0",
+      "hostDocs": true
+    },
+    {
+      "version": "0.7.3",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.7.2",
+      "hostDocs": true
+    },
+    {
+      "version": "0.7.1",
+      "hostDocs": true
+    },
+    {
+      "version": "0.7.0",
+      "hostDocs": true
+    },
+    {
+      "version": "0.6.0",
+      "hostDocs": true
+    },
+    {
+      "version": "0.5.2",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.5.1",
+      "hostDocs": false
+    },
+    {
+      "version": "0.5.0",
+      "hostDocs": false
+    },
+    {
+      "version": "0.3.2",
+      "hostDocs": false,
+      "show": true
+    },
+    {
+      "version": "0.3.1",
+      "hostDocs": false
+    },
+    {
+      "version": "0.2.0",
+      "hostDocs": false,
+      "show": true
+    },
+    {
+      "version": "0.1.0",
+      "hostDocs": false,
+      "show": true
+    }
   ],
   "latestVersion": "v0.12.1",
   "socialLinks": {
@@ -127,7 +199,7 @@
   "stripeProductID": "prod_FARXloMWkxsKvP",
   "plans": {
     "Community": {
-      "price": "0"
+      "price": 0
     }
   }
 }

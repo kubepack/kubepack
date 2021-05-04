@@ -3,12 +3,13 @@
   "name": "ServiceBroker",
   "fullname": "Service Broker by AppsCode",
   "tagline": "Open Service Broker for AppsCode Kubernetes Operators",
-  "summary": "",
+  "summary": "Open Service Broker for AppsCode Kubernetes Operators",
   "published": true,
   "author": "AppsCode Inc.",
   "website": {
     "domainKey": "domain_appscode",
-    "path": "/products/service-broker/"
+    "path": "/products/service-broker/",
+    "themeColor": ""
   },
   "heroImage": {
     "src": "https://cdn.appscode.com/images/products/service-broker/service-broker-hero.png",
@@ -32,15 +33,14 @@
   "repoURL": "https://github.com/appscode/service-broker",
   "starRepo": "appscode/service-broker",
   "docRepo": "appscode/service-broker",
-  "datasheetFormID": "",
   "badges": [
     {
-      "url" : "github/stars/appscode/service-broker",
+      "url": "github/stars/appscode/service-broker",
       "alt": "GitHub Stars",
       "logo": "github"
     },
     {
-      "url" : "docker/pulls/appscode/service-broker",
+      "url": "docker/pulls/appscode/service-broker",
       "alt": "Docker Pulls",
       "logo": "docker"
     }
@@ -87,11 +87,31 @@
     }
   ],
   "versions": [
-    { "version": "master", "hostDocs": false, "show": true },
-    { "version": "0.3.1", "hostDocs": true, "show": true },
-    { "version": "0.3.0", "hostDocs": true, "show": true },
-    { "version": "0.2.0", "hostDocs": true, "show": true },
-    { "version": "0.1.0", "hostDocs": true, "show": true }
+    {
+      "version": "master",
+      "hostDocs": false,
+      "show": true
+    },
+    {
+      "version": "0.3.1",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.3.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.2.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.1.0",
+      "hostDocs": true,
+      "show": true
+    }
   ],
   "latestVersion": "0.3.1",
   "socialLinks": {
@@ -112,7 +132,7 @@
   "stripeProductID": "prod_FARXK4vNsfeLk3",
   "plans": {
     "Community": {
-      "price": "0"
+      "price": 0
     }
   }
 }

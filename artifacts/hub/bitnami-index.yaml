@@ -86405,7 +86405,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: f991349bb0cb25f740810e187cd5820b598d84484047bdf3d80a2f9db93d8205
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86418,7 +86418,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.12.6.tgz
     version: 0.12.6
@@ -86428,7 +86428,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: 547f723f81d10617cd8d1541c5b4eadedde3a3bbaa1d137bed523b769bce27bb
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86441,7 +86441,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.12.5.tgz
     version: 0.12.5
@@ -86451,7 +86451,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: 013c2bcad2522287d78d3a1d45840a8e2d896336d902533ec5916600ad525db3
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86464,7 +86464,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.12.2.tgz
     version: 0.12.2
@@ -86474,7 +86474,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: a5011717fdab7e202f3968f99725568653359f185faefaaeae2c42d9fc296b71
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86487,7 +86487,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.12.1.tgz
     version: 0.12.1
@@ -86497,7 +86497,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: 96fe79911a952ad089cb5df3342d7bfdf661779429e94853c04aa0a6ec891d00
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86510,7 +86510,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.12.0.tgz
     version: 0.12.0
@@ -86520,7 +86520,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: c5bde723bb94cd3c57eda9cda98b99b545e91ad0caa6bcd094c621d218cba7ee
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86533,7 +86533,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.11.2.tgz
     version: 0.11.2
@@ -86543,7 +86543,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: d1f277903f5f893b70bac2ed5dbff8feb0b743832286873a22bd46e0f705f224
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86556,7 +86556,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.11.1.tgz
     version: 0.11.1
@@ -86566,7 +86566,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: 3130a004ff9882946667481fd210030b3e6bfe9cf75013741adf958b7349edcf
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86579,7 +86579,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.11.0.tgz
     version: 0.11.0
@@ -86589,7 +86589,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: 74c2c9a54508306565498f7a8139549cbf8f42c0575fee7af884902a6cfe4d1f
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86602,7 +86602,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.10.1.tgz
     version: 0.10.1
@@ -86612,7 +86612,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: ff388f4487c08694443611417624078fa954e9963a99bcfc5de0eedd5600bde6
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86625,7 +86625,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.10.0.tgz
     version: 0.10.0
@@ -86635,7 +86635,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: 654d3fc439bdc64ddf666b3887a5c9849ac9d0325f51df3805f817589687fc76
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86648,7 +86648,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.9.1.tgz
     version: 0.9.1
@@ -86658,7 +86658,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: 351aedd84da1871854c2f123c2381f1cdc1b1d42c5b4a343e550cc456b8bfe84
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86671,7 +86671,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.9.0.tgz
     version: 0.9.0
@@ -86681,7 +86681,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: e6f6bf7767cfe48cfc83753a02befb9ef7acc239e45c50f544814fba718b0147
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86694,7 +86694,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.8.3.tgz
     version: 0.8.3
@@ -86704,7 +86704,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: 4b0a2b8cd1738380d36fa519131d1d126f06886392eae796316414badbb84d33
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86717,7 +86717,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.8.2.tgz
     version: 0.8.2
@@ -86727,7 +86727,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: 13d575ae3c9ff4f07224a4df2f8f31340fcc61b68808e1a8134c137df1914aaa
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86740,7 +86740,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.8.1.tgz
     version: 0.8.1
@@ -86750,7 +86750,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: 36614843d7cc76e175cccb118c5524c12983727afd957a532c663629fa9fcb53
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86763,7 +86763,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.8.0.tgz
     version: 0.8.0
@@ -86773,7 +86773,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: 6f6ec62647a42d6a6e859a91c0ed92fb4b90efb542431a459decfc7a86c00f1c
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86786,7 +86786,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.7.5.tgz
     version: 0.7.5
@@ -86796,7 +86796,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: 0565a298171340b4bf4300e04791abaecfa0bcef3af88686d7970994f1433438
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86809,7 +86809,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.7.4.tgz
     version: 0.7.4
@@ -86819,7 +86819,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: 5d2ffb8eef1f40f4c7101f48d7af1a6d37fe4d4e380462d14316a72181d251f8
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86832,7 +86832,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.7.3.tgz
     version: 0.7.3
@@ -86842,7 +86842,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: a158301c7a33687089ba8895106ba5bce76ea23a0ab76c2fb5c99622252aa457
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86855,7 +86855,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.7.1.tgz
     version: 0.7.1
@@ -86865,7 +86865,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: be86d0e942ada190b8901c7cff49aaa81d2a9d784a5027ace583136e094a39d1
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86878,7 +86878,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.7.0.tgz
     version: 0.7.0
@@ -86888,7 +86888,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: 39339f2fe7524e631198c81bde4f3d4946e1fc25edeaa8522a85eada4bdbf029
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86901,7 +86901,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.6.0.tgz
     version: 0.6.0
@@ -86911,7 +86911,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: 4dd999491784fd50851ecb13e9936dfe581dea6546541cf4662b1ef385169a32
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86924,7 +86924,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.5.0.tgz
     version: 0.5.0
@@ -86934,7 +86934,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: d5284ea89a4596ec33c42173059f8fedb41ad8299f969712ff538d155c7bd472
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86947,7 +86947,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.4.0.tgz
     version: 0.4.0
@@ -86957,7 +86957,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: a22141c3801c421872e70eb78b9e7a32ca17c4877843ac28ff6061293dea295b
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86970,7 +86970,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.3.1.tgz
     version: 0.3.1
@@ -86980,7 +86980,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: f18a57456fb441ecc438666ac25cbee75b1a0ca2a4e4cee1628dcd33c06d7783
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -86993,7 +86993,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.3.0.tgz
     version: 0.3.0
@@ -87003,7 +87003,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: b744033d28ba5782b06b7e26de13fbf6f1bfdb477502652af34d6f6fe239e343
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -87016,7 +87016,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.2.1.tgz
     version: 0.2.1
@@ -87026,7 +87026,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: 6f52f469817f8316006e3030b8f5d89e469fafcbf6a25e5274c1759e95adad20
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -87039,7 +87039,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.2.0.tgz
     version: 0.2.0
@@ -87049,7 +87049,7 @@ entries:
     description: The Prometheus Operator for Kubernetes provides easy monitoring definitions
       for Kubernetes services and deployment and management of Prometheus instances.
     digest: 5b26815a8dbfd87150e47a6560f40260ae44d3258b376e613b599662b96df06c
-    home: https://github.com/coreos/prometheus-operator/
+    home: https://github.com/prometheus-operator/prometheus-operator/
     icon: https://bitnami.com/assets/stacks/prometheus-operator/img/prometheus-operator-stack-220x234.png
     keywords:
     - prometheus
@@ -87062,7 +87062,7 @@ entries:
     name: prometheus-operator
     sources:
     - https://github.com/bitnami/bitnami-docker-prometheus-operator
-    - https://github.com/coreos/prometheus-operator/
+    - https://github.com/prometheus-operator/prometheus-operator/
     urls:
     - https://charts.bitnami.com/bitnami/prometheus-operator-0.1.0.tgz
     version: 0.1.0

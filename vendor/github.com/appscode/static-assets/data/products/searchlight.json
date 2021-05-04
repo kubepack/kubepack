@@ -3,12 +3,13 @@
   "name": "Searchlight",
   "fullname": "Searchlight by AppsCode",
   "tagline": "Alerts for Kubernetes",
-  "summary": "",
+  "summary": "Alerts for Kubernetes",
   "published": true,
   "author": "AppsCode Inc.",
   "website": {
     "domainKey": "domain_appscode",
-    "path": "/products/searchlight/"
+    "path": "/products/searchlight/",
+    "themeColor": ""
   },
   "heroImage": {
     "src": "https://cdn.appscode.com/images/products/searchlight/searchlight-hero.png",
@@ -32,7 +33,6 @@
   "repoURL": "https://github.com/searchlight/searchlight",
   "starRepo": "searchlight/searchlight",
   "docRepo": "searchlight/searchlight",
-  "datasheetFormID": "",
   "badges": [
     {
       "url": "github/stars/appscode/searchlight",
@@ -87,16 +87,52 @@
     }
   ],
   "versions": [
-    { "version": "master", "hostDocs": false, "show": true },
-    { "version": "8.0.0", "hostDocs": true, "show": true },
-    { "version": "8.0.0-rc.0", "hostDocs": true, "show": true },
-    { "version": "7.0.0", "hostDocs": true, "show": true },
-    { "version": "7.0.0-rc.0", "hostDocs": true },
-    { "version": "5.1.1", "hostDocs": true, "show": true },
-    { "version": "5.1.0", "hostDocs": true },
-    { "version": "5.0.0", "hostDocs": true },
-    { "version": "4.0.0", "hostDocs": false },
-    { "version": "3.0.1", "hostDocs": false, "show": true }
+    {
+      "version": "master",
+      "hostDocs": false,
+      "show": true
+    },
+    {
+      "version": "8.0.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "8.0.0-rc.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "7.0.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "7.0.0-rc.0",
+      "hostDocs": true
+    },
+    {
+      "version": "5.1.1",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "5.1.0",
+      "hostDocs": true
+    },
+    {
+      "version": "5.0.0",
+      "hostDocs": true
+    },
+    {
+      "version": "4.0.0",
+      "hostDocs": false
+    },
+    {
+      "version": "3.0.1",
+      "hostDocs": false,
+      "show": true
+    }
   ],
   "latestVersion": "8.0.0",
   "socialLinks": {
@@ -117,7 +153,7 @@
   "stripeProductID": "prod_FARWHv38XFKlXL",
   "plans": {
     "Community": {
-      "price": "0"
+      "price": 0
     }
   }
 }

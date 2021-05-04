@@ -19,9 +19,9 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 
+	"k8s.io/klog/v2"
 	"kubepack.dev/kubepack/pkg/lib"
 
 	flag "github.com/spf13/pflag"
@@ -54,26 +54,26 @@ func main() {
 
 	pkgChart, err := lib.DefaultRegistry.GetChart(url, name, version)
 	if err != nil {
-		log.Fatalln(err)
+		klog.Fatalln(err)
 	}
 
 	fmt.Println(pkgChart.Metadata.Description)
 
 	b, err := lib.CreatePackageView(url, pkgChart.Chart)
 	if err != nil {
-		log.Fatalln(err)
+		klog.Fatalln(err)
 	}
 
 	data, err := yamllib.Marshal(b)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	err = os.MkdirAll("artifacts/"+name, 0755)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	err = ioutil.WriteFile("artifacts/"+name+"/packageview.yaml", data, 0644)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 }

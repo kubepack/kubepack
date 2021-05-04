@@ -3,12 +3,13 @@
   "name": "Kubed",
   "fullname": "Kubed by AppsCode",
   "tagline": "Kubernetes cluster manager daemon",
-  "summary": "",
+  "summary": "Kubernetes cluster manager daemon",
   "published": true,
   "author": "AppsCode Inc.",
   "website": {
     "domainKey": "domain_appscode",
-    "path": "/products/kubed/"
+    "path": "/products/kubed/",
+    "themeColor": ""
   },
   "heroImage": {
     "src": "https://cdn.appscode.com/images/products/kubed/kubed-hero.png",
@@ -32,7 +33,6 @@
   "repoURL": "https://github.com/appscode/kubed",
   "starRepo": "appscode/kubed",
   "docRepo": "appscode/kubed",
-  "datasheetFormID": "",
   "badges": [
     {
       "url": "github/stars/appscode/kubed",
@@ -126,26 +126,102 @@
     }
   ],
   "versions": [
-    { "version": "master", "hostDocs": false, "show": true },
-    { "version": "v0.12.0-rc.2", "hostDocs": true, "show": true },
-    { "version": "v0.12.0-rc.1", "hostDocs": true, "show": false },
-    { "version": "v0.12.0-rc.0", "hostDocs": true, "show": false },
-    { "version": "v0.11.0", "hostDocs": true, "show": true },
-    { "version": "0.10.0", "hostDocs": true, "show": true },
-    { "version": "0.9.0", "hostDocs": true, "show": true },
-    { "version": "0.8.0", "hostDocs": true, "show": true },
-    { "version": "0.7.0", "hostDocs": true, "show": true },
-    { "version": "0.7.0-rc.2", "hostDocs": true },
-    { "version": "0.7.0-rc.1", "hostDocs": true },
-    { "version": "0.7.0-rc.0", "hostDocs": true },
-    { "version": "0.6.0-rc.0", "hostDocs": true },
-    { "version": "0.5.0", "hostDocs": true, "show": true },
-    { "version": "0.4.0", "hostDocs": true },
-    { "version": "0.3.1", "hostDocs": false },
-    { "version": "0.3.0", "hostDocs": false },
-    { "version": "0.2.0", "hostDocs": false, "show": true }
+    {
+      "version": "master",
+      "hostDocs": false,
+      "show": true
+    },
+    {
+      "version": "v0.13.0-beta.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "v0.12.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "v0.12.0-rc.3",
+      "hostDocs": true
+    },
+    {
+      "version": "v0.12.0-rc.2",
+      "hostDocs": true
+    },
+    {
+      "version": "v0.12.0-rc.1",
+      "hostDocs": true
+    },
+    {
+      "version": "v0.12.0-rc.0",
+      "hostDocs": true
+    },
+    {
+      "version": "v0.11.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.10.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.9.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.8.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.7.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.7.0-rc.2",
+      "hostDocs": true
+    },
+    {
+      "version": "0.7.0-rc.1",
+      "hostDocs": true
+    },
+    {
+      "version": "0.7.0-rc.0",
+      "hostDocs": true
+    },
+    {
+      "version": "0.6.0-rc.0",
+      "hostDocs": true
+    },
+    {
+      "version": "0.5.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.4.0",
+      "hostDocs": true
+    },
+    {
+      "version": "0.3.1",
+      "hostDocs": false
+    },
+    {
+      "version": "0.3.0",
+      "hostDocs": false
+    },
+    {
+      "version": "0.2.0",
+      "hostDocs": false,
+      "show": true
+    }
   ],
-  "latestVersion": "v0.12.0-rc.2",
+  "latestVersion": "v0.12.0",
   "socialLinks": {
     "facebook": "https://facebook.com/appscode",
     "github": "https://github.com/appscode/kubed",
@@ -164,7 +240,7 @@
   "stripeProductID": "prod_FARVnpFkkXyggO",
   "plans": {
     "Community": {
-      "price": "0"
+      "price": 0
     }
   }
 }

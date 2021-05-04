@@ -18,7 +18,6 @@ package main
 
 import (
 	"io/ioutil"
-	"log"
 	"path/filepath"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
@@ -28,6 +27,7 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 	"k8s.io/client-go/util/homedir"
+	"k8s.io/klog/v2"
 	clientcmdutil "kmodules.xyz/client-go/tools/clientcmd"
 	"sigs.k8s.io/yaml"
 )
@@ -46,12 +46,12 @@ func main() {
 
 	data, err := ioutil.ReadFile(file)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	var order v1alpha1.Order
 	err = yaml.Unmarshal(data, &order)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 
 	cc := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
@@ -59,12 +59,12 @@ func main() {
 		&clientcmd.ConfigOverrides{ClusterInfo: clientcmdapi.Cluster{Server: masterURL}})
 	kubeconfig, err := cc.RawConfig()
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	getter := clientcmdutil.NewClientGetter(&kubeconfig)
 
 	err = lib.UninstallOrder(getter, order)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 }
