@@ -1,6 +1,8 @@
 package api
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 type Feature struct {
 	Title       string `json:"title"`
@@ -23,12 +25,12 @@ type URLRef struct {
 }
 
 type ProductVersion struct {
-	Version  string            `json:"version"`
-	HostDocs bool              `json:"hostDocs"`
-	Show     bool              `json:"show,omitempty"`
-	DocsDir  string            `json:"docsDir,omitempty"` // default: "docs"
-	Branch   string            `json:"branch,omitempty"`
-	Info     map[string]string `json:"info,omitempty"`
+	Version  string                 `json:"version"`
+	HostDocs bool                   `json:"hostDocs"`
+	Show     bool                   `json:"show,omitempty"`
+	DocsDir  string                 `json:"docsDir,omitempty"` // default: "docs"
+	Branch   string                 `json:"branch,omitempty"`
+	Info     map[string]interface{} `json:"info,omitempty"`
 }
 
 type Solution struct {
@@ -54,12 +56,13 @@ type Product struct {
 	Summary         string                `json:"summary"`
 	Published       bool                  `json:"published"`
 	Author          string                `json:"author"`
-	Website         URLRef                `json:"website"`
-	Keywords        string                `json:"keywords"`
-	HeroImage       Image                 `json:"heroImage"`
-	Logo            Image                 `json:"logo"`
-	LogoWhite       Image                 `json:"logoWhite"`
-	Icon            Image                 `json:"icon"`
+	Website         *URLRef               `json:"website,omitempty"`
+	Keywords        string                `json:"keywords,omitempty"`
+	HeroImage       *Image                `json:"heroImage,omitempty"`
+	HeroSlider      []Image               `json:"heroSlider,omitempty"`
+	Logo            *Image                `json:"logo,omitempty"`
+	LogoWhite       *Image                `json:"logoWhite,omitempty"`
+	Icon            *Image                `json:"icon,omitempty"`
 	RepoURL         string                `json:"repoURL,omitempty"`
 	StarRepo        string                `json:"starRepo,omitempty"`
 	DocRepo         string                `json:"docRepo,omitempty"`
@@ -75,7 +78,7 @@ type Product struct {
 	SupportLinks    map[string]string     `json:"supportLinks,omitempty"`
 	StripeProductID string                `json:"stripeProductID,omitempty"`
 	Plans           map[string]Plan       `json:"plans,omitempty"`
-	SubProjects     map[string]ProjectRef `json:"subProjects"`
+	SubProjects     map[string]ProjectRef `json:"subProjects,omitempty"`
 }
 
 type Plan struct {

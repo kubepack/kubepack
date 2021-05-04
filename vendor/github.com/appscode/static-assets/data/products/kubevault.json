@@ -3,7 +3,7 @@
   "name": "KubeVault",
   "fullname": "KubeVault by AppsCode",
   "tagline": "Tools for running HashiCorp <strong>Vault</strong> on <strong>Kubernetes</strong>",
-  "summary": "",
+  "summary": "Tools for running HashiCorp <strong>Vault</strong> on <strong>Kubernetes</strong>",
   "published": true,
   "author": "AppsCode Inc.",
   "website": {
@@ -34,11 +34,10 @@
   "repoURL": "https://github.com/kubevault/docs",
   "starRepo": "kubevault/operator",
   "docRepo": "kubevault/docs",
-  "datasheetFormID": "",
   "badges": [
     {
-      "url": "github/stars/kubevault/operator",
-      "alt": "GitHub Stars",
+      "url": "kubevault",
+      "alt": "GitHub",
       "logo": "github"
     },
     {
@@ -128,10 +127,30 @@
     }
   ],
   "versions": [
-      { "version": "master", "hostDocs": false, "show": true },
-      { "version": "v0.3.0", "hostDocs": true, "show": true },
-      { "version": "0.2.0", "hostDocs": true, "show": true },
-      { "version": "0.1.0", "hostDocs": true, "show": true }
+    {
+      "version": "master",
+      "hostDocs": false,
+      "show": true
+    },
+    {
+      "version": "v2020.07.09-beta.0",
+      "hostDocs": true
+    },
+    {
+      "version": "v0.3.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.2.0",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "0.1.0",
+      "hostDocs": true,
+      "show": true
+    }
   ],
   "latestVersion": "v0.3.0",
   "socialLinks": {
@@ -152,19 +171,19 @@
   "stripeProductID": "prod_FiawKtgLGy6R9v",
   "plans": {
     "Community": {
-      "price": "0"
-    },
-    "Standard_M2M": {
-      "price": "499"
-    },
-    "Standard_Y2Y": {
-      "price": "349"
+      "price": 0
     },
     "Golden_M2M": {
-      "price": "899"
+      "price": 899
     },
     "Golden_Y2Y": {
-      "price": "699"
+      "price": 699
+    },
+    "Standard_M2M": {
+      "price": 499
+    },
+    "Standard_Y2Y": {
+      "price": 349
     }
   }
 }

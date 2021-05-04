@@ -18,7 +18,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"path/filepath"
 
 	"kubepack.dev/kubepack/pkg/lib"
@@ -29,6 +28,7 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 	"k8s.io/client-go/util/homedir"
+	"k8s.io/klog/v2"
 	clientcmdutil "kmodules.xyz/client-go/tools/clientcmd"
 )
 
@@ -58,14 +58,14 @@ func main() {
 		&clientcmd.ConfigOverrides{ClusterInfo: clientcmdapi.Cluster{Server: masterURL}})
 	kubeconfig, err := cc.RawConfig()
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	getter := clientcmdutil.NewClientGetter(&kubeconfig)
 
 	namespace := "default"
 	i, err := action.NewInstaller(getter, namespace, "secret")
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	i.WithRegistry(lib.DefaultRegistry).
 		WithOptions(action.InstallOptions{
@@ -87,7 +87,7 @@ func main() {
 		})
 	rel, err := i.Run()
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	fmt.Println(rel)
 }

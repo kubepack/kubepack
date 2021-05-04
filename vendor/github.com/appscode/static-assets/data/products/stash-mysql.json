@@ -3,6 +3,7 @@
   "name": "MySQL",
   "fullname": "Stash MySQL Addon",
   "tagline": "MySQL backup and restore plugin for Stash by AppsCode",
+  "summary": "MySQL backup and restore plugin for Stash by AppsCode",
   "published": true,
   "author": "AppsCode Inc.",
   "repoURL": "https://github.com/stashed/mysql",
@@ -10,21 +11,178 @@
   "docRepo": "stashed/mysql",
   "badges": [
     {
-      "url" : "github/stars/stashed/mysql",
+      "url": "github/stars/stashed/mysql",
       "alt": "GitHub Stars",
       "logo": "github"
     },
     {
-      "url" : "docker/pulls/stashed/mysql",
+      "url": "docker/pulls/stashed/mysql",
       "alt": "Docker Pulls",
       "logo": "docker"
     }
   ],
   "versions": [
-    { "version": "master", "hostDocs": false, "show": true },
-    { "version": "5.7.25", "hostDocs": true, "show": true },
-    { "version": "8.0.3", "hostDocs": true, "show": true },
-    { "version": "8.0.14", "hostDocs": true, "show": true }
+    {
+      "version": "master",
+      "hostDocs": false,
+      "show": true
+    },
+    {
+      "version": "8.0.14-v5",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "8.0.14-v4",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "8.0.14-v3",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "8.0.14-v2",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "8.0.14-v1",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "8.0.14",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "8.0.14-rc.20200827",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "8.0.14-rc.20200826",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "8.0.14-beta.20200826",
+      "hostDocs": true
+    },
+    {
+      "version": "8.0.14-beta.20200709",
+      "hostDocs": true
+    },
+    {
+      "version": "8.0.14-beta.20200708",
+      "hostDocs": true
+    },
+    {
+      "version": "8.0.3-v5",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "8.0.3-v4",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "8.0.3-v3",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "8.0.3-v2",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "8.0.3-v1",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "8.0.3",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "8.0.3-rc.20200827",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "8.0.3-rc.20200826",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "8.0.3-beta.20200826",
+      "hostDocs": true
+    },
+    {
+      "version": "8.0.3-beta.20200709",
+      "hostDocs": true
+    },
+    {
+      "version": "8.0.3-beta.20200708",
+      "hostDocs": true
+    },
+    {
+      "version": "5.7.25-v5",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "5.7.25-v4",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "5.7.25-v3",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "5.7.25-v2",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "5.7.25-v1",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "5.7.25",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "5.7.25-rc.20200827",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "5.7.25-rc.20200826",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "5.7.25-beta.20200826",
+      "hostDocs": true
+    },
+    {
+      "version": "5.7.25-beta.20200709",
+      "hostDocs": true
+    },
+    {
+      "version": "5.7.25-beta.20200708",
+      "hostDocs": true
+    }
   ],
-  "latestVersion": "8.0.14"
+  "latestVersion": "8.0.14-v5"
 }

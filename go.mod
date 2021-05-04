@@ -3,11 +3,11 @@ module kubepack.dev/kubepack
 go 1.15
 
 require (
-	github.com/appscode/static-assets v0.4.1
-	github.com/coreos/prometheus-operator v0.39.0
+	github.com/appscode/static-assets v0.6.7
+	github.com/aws/aws-sdk-go v1.38.31 // indirect
 	github.com/evanphx/json-patch v4.9.0+incompatible
 	github.com/gabriel-vasile/mimetype v1.2.0
-	github.com/go-openapi/spec v0.19.8
+	github.com/go-openapi/spec v0.19.5
 	github.com/gobuffalo/flect v0.2.2
 	github.com/gogo/protobuf v1.3.2
 	github.com/google/gofuzz v1.1.0
@@ -16,41 +16,37 @@ require (
 	github.com/onsi/ginkgo v1.15.0
 	github.com/onsi/gomega v1.10.5
 	github.com/pkg/errors v0.9.1
+	github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring v0.47.0 // indirect
+	github.com/prometheus-operator/prometheus-operator/pkg/client v0.47.0
 	github.com/spf13/cobra v1.1.3
 	github.com/spf13/pflag v1.0.5
 	github.com/stripe/stripe-go v70.15.0+incompatible
-	gocloud.dev v0.20.0
-	gomodules.xyz/blobfs v0.1.2
+	gocloud.dev v0.22.0
+	gomodules.xyz/blobfs v0.1.7
 	gomodules.xyz/jsonpatch/v2 v2.1.0
-	gomodules.xyz/runtime v0.0.0-20201104200926-d838b09dda8b
+	gomodules.xyz/runtime v0.2.0
 	gomodules.xyz/sets v0.0.0-20210218105342-2efe2fb519a2 // indirect
 	gomodules.xyz/version v0.1.0
-	gomodules.xyz/x v0.0.0-20201105065653-91c568df6331
-	helm.sh/helm/v3 v3.4.1
+	gomodules.xyz/x v0.0.3
+	helm.sh/helm/v3 v3.5.2
 	k8s.io/api v0.21.0
 	k8s.io/apiextensions-apiserver v0.21.0
 	k8s.io/apimachinery v0.21.0
 	k8s.io/apiserver v0.21.0
 	k8s.io/cli-runtime v0.21.0
-	k8s.io/client-go v12.0.0+incompatible
+	k8s.io/client-go v0.21.0
 	k8s.io/klog/v2 v2.8.0
 	k8s.io/kube-openapi v0.0.0-20210305001622-591a79e4bda7
 	k8s.io/kubernetes v1.21.0
-	kmodules.xyz/client-go v0.0.0-20210503064222-c8c59295a3a5
+	kmodules.xyz/client-go v0.0.0-20210504024435-1eb80721e9b8
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20210503192455-da44af375c4c
-	kmodules.xyz/custom-resources v0.0.0-20210503065135-5267be335cb4
-	kmodules.xyz/resource-metadata v0.4.8-0.20210113000222-d15533e4bb66
-	kmodules.xyz/webhook-runtime v0.0.0-20210503065550-dc37e69fdba2
-	kubepack.dev/lib-helm v0.2.4-0.20210503023620-2c4eef951cf7
-	sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4
+	kmodules.xyz/custom-resources v0.0.0-20210504034124-54c54fcdb690
+	kmodules.xyz/resource-metadata v0.0.0-00010101000000-000000000000
+	kmodules.xyz/webhook-runtime v0.0.0-20210504042742-3a9911e3dcdc
+	kubepack.dev/lib-helm v0.2.4-0.20210504075710-8653e4557a39
+	sigs.k8s.io/application v0.0.0-00010101000000-000000000000
 	sigs.k8s.io/yaml v1.2.0
 )
-
-replace git.apache.org/thrift.git => github.com/apache/thrift v0.13.0
-
-replace github.com/Azure/go-autorest/autorest/azure/auth => github.com/Azure/go-autorest/autorest/azure/auth v0.2.0
-
-replace github.com/go-macaron/binding => github.com/gomodules/binding v0.0.0-20200811095614-c752727d2156
 
 replace bitbucket.org/ww/goautoneg => gomodules.xyz/goautoneg v0.0.0-20120707110453-a547fc61f48d
 

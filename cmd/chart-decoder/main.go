@@ -34,6 +34,7 @@ import (
 	"helm.sh/helm/v3/pkg/cli/values"
 	"helm.sh/helm/v3/pkg/getter"
 	"helm.sh/helm/v3/pkg/release"
+	"k8s.io/klog/v2"
 )
 
 var (
@@ -76,7 +77,7 @@ func main() {
 	client.Version = "8.1.1"
 	rel, err := runInstall([]string{"wordpress", "stable/wordpress"}, client, valueOpts, os.Stdout)
 	if err != nil {
-		log.Fatalln(err)
+		klog.Fatalln(err)
 	}
 
 	var manifests bytes.Buffer

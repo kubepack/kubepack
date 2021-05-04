@@ -18,8 +18,8 @@ package main
 
 import (
 	"fmt"
-	"log"
 
+	"k8s.io/klog/v2"
 	"kubepack.dev/kubepack/pkg/lib"
 
 	flag "github.com/spf13/pflag"
@@ -43,7 +43,7 @@ func main() {
 
 	chrt, err := lib.DefaultRegistry.GetChart(url, name, version)
 	if err != nil {
-		log.Fatalln(err)
+		klog.Fatalln(err)
 	}
 
 	fmt.Println("Version", chrt.Metadata.Version)

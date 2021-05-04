@@ -19,7 +19,6 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -30,6 +29,7 @@ import (
 	"github.com/gobuffalo/flect"
 	flag "github.com/spf13/pflag"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/klog/v2"
 	"sigs.k8s.io/yaml"
 )
 
@@ -96,7 +96,7 @@ func main() {
 
 		pkgChart, err := lib.DefaultRegistry.GetChart(url, chartName, primaryVersion)
 		if err != nil {
-			log.Fatalln(err)
+			klog.Fatalln(err)
 		}
 		ref := v1alpha1.PackageRef{
 			Chart: &v1alpha1.ChartOption{
@@ -140,7 +140,7 @@ func main() {
 
 		chart, err := lib.DefaultRegistry.GetChart(url, bundleName, version)
 		if err != nil {
-			log.Fatalln(err)
+			klog.Fatalln(err)
 		}
 		ref := v1alpha1.PackageRef{
 			Bundle: &v1alpha1.BundleOption{
@@ -156,14 +156,14 @@ func main() {
 
 	data, err := yaml.Marshal(b)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	err = os.MkdirAll("testdata/charts/"+name+"/templates", 0755)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	err = ioutil.WriteFile("testdata/charts/"+name+"/templates/bundle.yaml", data, 0644)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 }

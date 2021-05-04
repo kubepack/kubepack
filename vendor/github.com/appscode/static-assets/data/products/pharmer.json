@@ -3,13 +3,13 @@
   "name": "Pharmer",
   "fullname": "Pharmer by AppsCode",
   "tagline": "Kubernetes Cluster Manager using Kubeadm & Cluster API",
-  "summary": "",
+  "summary": "Kubernetes Cluster Manager using Kubeadm & Cluster API",
   "published": true,
   "author": "AppsCode Inc.",
   "website": {
     "domainKey": "domain_pharmer",
     "path": "",
-     "themeColor": "#8E44AD"
+    "themeColor": "#8E44AD"
   },
   "keywords": "kubernetes appscode cluster management upgrades",
   "heroImage": {
@@ -34,11 +34,10 @@
   "repoURL": "https://github.com/pharmer/docs",
   "starRepo": "pharmer/pharmer",
   "docRepo": "pharmer/docs",
-  "datasheetFormID": "",
   "badges": [
     {
-      "url": "github/stars/pharmer/pharmer",
-      "alt": "GitHub Stars",
+      "url": "pharmer",
+      "alt": "GitHub",
       "logo": "github"
     },
     {
@@ -89,9 +88,21 @@
     }
   ],
   "versions": [
-    { "version": "master", "hostDocs": false, "show": true },
-    { "version": "0.3.1", "hostDocs": true, "show": true },
-    { "version": "v0.5.2", "hostDocs": true, "show": true }
+    {
+      "version": "master",
+      "hostDocs": false,
+      "show": true
+    },
+    {
+      "version": "0.3.1",
+      "hostDocs": true,
+      "show": true
+    },
+    {
+      "version": "v0.5.2",
+      "hostDocs": true,
+      "show": true
+    }
   ],
   "latestVersion": "v0.5.2",
   "socialLinks": {
@@ -112,19 +123,19 @@
   "stripeProductID": "prod_FARVvB8RAs9eaU",
   "plans": {
     "Community": {
-      "price": "0"
-    },
-    "Standard_M2M": {
-      "price": "599"
-    },
-    "Standard_Y2Y": {
-      "price": "399"
+      "price": 0
     },
     "Golden_M2M": {
-      "price": "999"
+      "price": 999
     },
     "Golden_Y2Y": {
-      "price": "799"
+      "price": 799
+    },
+    "Standard_M2M": {
+      "price": 599
+    },
+    "Standard_Y2Y": {
+      "price": 399
     }
   }
 }

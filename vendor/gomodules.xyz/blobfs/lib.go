@@ -8,6 +8,8 @@ import (
 	"strings"
 
 	"gocloud.dev/blob"
+	_ "gocloud.dev/blob/fileblob"
+	_ "gocloud.dev/blob/memblob"
 )
 
 type BlobFS struct {
@@ -18,8 +20,12 @@ func New(storageURL string) *BlobFS {
 	return &BlobFS{storageURL: storageURL}
 }
 
-func NewInMemory() *BlobFS {
+func NewInMemoryFS() *BlobFS {
 	return New("mem://")
+}
+
+func NewOsFs() *BlobFS {
+	return New("file:///")
 }
 
 func (fs *BlobFS) WriteFile(ctx context.Context, filepath string, data []byte) error {
@@ -79,7 +85,7 @@ func (fs *BlobFS) Exists(ctx context.Context, filepath string) (bool, error) {
 	return bucket.Exists(context.TODO(), filename)
 }
 
-func (fs *BlobFS) SignedURL(ctx context.Context, filepath string) (string, error) {
+func (fs *BlobFS) SignedURL(ctx context.Context, filepath string, opts *blob.SignedURLOptions) (string, error) {
 	dir, filename := path.Split(filepath)
 	bucket, err := fs.openBucket(ctx, dir)
 	if err != nil {
@@ -87,7 +93,7 @@ func (fs *BlobFS) SignedURL(ctx context.Context, filepath string) (string, error
 	}
 	defer bucket.Close()
 
-	return bucket.SignedURL(ctx, filename, nil)
+	return bucket.SignedURL(ctx, filename, opts)
 }
 
 func (fs *BlobFS) openBucket(ctx context.Context, dir string) (*blob.Bucket, error) {
