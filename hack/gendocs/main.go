@@ -25,11 +25,11 @@ import (
 	"strings"
 	"text/template"
 
-	"k8s.io/klog/v2"
 	"kubepack.dev/kubepack/pkg/cmds"
 
 	"github.com/spf13/cobra/doc"
 	"gomodules.xyz/runtime"
+	"k8s.io/klog/v2"
 )
 
 const (
