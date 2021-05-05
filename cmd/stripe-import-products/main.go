@@ -24,11 +24,11 @@ import (
 	"sort"
 	"strings"
 
-	"k8s.io/klog/v2"
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 
 	"github.com/appscode/static-assets/api"
 	"github.com/appscode/static-assets/data/products"
+	"k8s.io/klog/v2"
 )
 
 func main() {

@@ -19,10 +19,10 @@ package main
 import (
 	"fmt"
 
-	"k8s.io/klog/v2"
 	"kubepack.dev/kubepack/pkg/lib"
 
 	flag "github.com/spf13/pflag"
+	"k8s.io/klog/v2"
 )
 
 var (
