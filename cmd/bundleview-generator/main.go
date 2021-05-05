@@ -21,11 +21,11 @@ import (
 	"io/ioutil"
 	"os"
 
-	"k8s.io/klog/v2"
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/pkg/lib"
 
 	flag "github.com/spf13/pflag"
+	"k8s.io/klog/v2"
 	"sigs.k8s.io/yaml"
 )
 
