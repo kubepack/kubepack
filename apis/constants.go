@@ -25,6 +25,7 @@ const (
 )
 
 const (
+	LabelPlanName       = "byte.builders/plan-name"
 	LabelPlanID         = "byte.builders/plan-id"
 	LabelPlanPhase      = "byte.builders/plan-phase"
 	LabelProductID      = "byte.builders/product-id"

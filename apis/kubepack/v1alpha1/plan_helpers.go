@@ -28,8 +28,9 @@ func (_ Plan) CustomResourceDefinition() *apiextensions.CustomResourceDefinition
 	return crds.MustCustomResourceDefinition(SchemeGroupVersion.WithResource(ResourcePlans))
 }
 
-func (plan *Plan) SetLabels(planID, prodID, phase string) {
+func (plan *Plan) SetLabels(planName, planID, prodID, phase string) {
 	labelMap := map[string]string{
+		apis.LabelPlanName:  planName,
 		apis.LabelPlanID:    planID,
 		apis.LabelProductID: prodID,
 		apis.LabelPlanPhase: phase,
@@ -37,8 +38,11 @@ func (plan *Plan) SetLabels(planID, prodID, phase string) {
 	plan.ObjectMeta.SetLabels(labelMap)
 }
 
-func (_ Plan) FormatLabels(planID, prodID, phase string) string {
+func (_ Plan) FormatLabels(planName, planID, prodID, phase string) string {
 	labelMap := make(map[string]string)
+	if planName != "" {
+		labelMap[apis.LabelPlanName] = planName
+	}
 	if planID != "" {
 		labelMap[apis.LabelPlanID] = planID
 	}

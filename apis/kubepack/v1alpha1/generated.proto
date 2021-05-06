@@ -404,29 +404,32 @@ message PlanSpec {
   // +optional
   repeated string includedPlans = 9;
 
-  optional string aggregateUsage = 10;
+  // +optional
+  map<string, PricingPattern> pricingPattern = 10;
 
-  optional int64 amount = 11;
+  optional string aggregateUsage = 11;
 
-  optional double amountDecimal = 12;
+  optional int64 amount = 12;
 
-  optional string billingScheme = 13;
+  optional double amountDecimal = 13;
 
-  optional string currency = 14;
+  optional string billingScheme = 14;
 
-  optional string interval = 15;
+  optional string currency = 15;
 
-  optional int64 intervalCount = 16;
+  optional string interval = 16;
 
-  repeated PlanTier tiers = 17;
+  optional int64 intervalCount = 17;
 
-  optional string tiersMode = 18;
+  repeated PlanTier tiers = 18;
 
-  optional PlanTransformUsage transformUsage = 19;
+  optional string tiersMode = 19;
 
-  optional int64 trialPeriodDays = 20;
+  optional PlanTransformUsage transformUsage = 20;
 
-  optional string usageType = 21;
+  optional int64 trialPeriodDays = 21;
+
+  optional string usageType = 22;
 }
 
 message PlanStatus {
@@ -454,6 +457,14 @@ message PlanTransformUsage {
   optional int64 divideBy = 1;
 
   optional string round = 2;
+}
+
+message PricingPattern {
+  // +optional
+  optional string expression = 1;
+
+  // +optional
+  repeated SizedPrice sizedPrices = 2;
 }
 
 // +kubebuilder:object:root=true
@@ -565,6 +576,14 @@ message Row {
   optional string trait = 1;
 
   repeated string values = 2;
+}
+
+message SizedPrice {
+  optional string cpu = 1;
+
+  optional string memory = 2;
+
+  optional double price = 3;
 }
 
 message ValuesFile {

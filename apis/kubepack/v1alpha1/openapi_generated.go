@@ -362,6 +362,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanStatus":                                         schema_kubepack_apis_kubepack_v1alpha1_PlanStatus(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTier":                                           schema_kubepack_apis_kubepack_v1alpha1_PlanTier(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTransformUsage":                                 schema_kubepack_apis_kubepack_v1alpha1_PlanTransformUsage(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.PricingPattern":                                     schema_kubepack_apis_kubepack_v1alpha1_PricingPattern(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Product":                                            schema_kubepack_apis_kubepack_v1alpha1_Product(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductList":                                        schema_kubepack_apis_kubepack_v1alpha1_ProductList(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductSpec":                                        schema_kubepack_apis_kubepack_v1alpha1_ProductSpec(ref),
@@ -371,6 +372,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions":                                schema_kubepack_apis_kubepack_v1alpha1_ResourceDefinitions(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceID":                                         schema_kubepack_apis_kubepack_v1alpha1_ResourceID(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Row":                                                schema_kubepack_apis_kubepack_v1alpha1_Row(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.SizedPrice":                                         schema_kubepack_apis_kubepack_v1alpha1_SizedPrice(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ValuesFile":                                         schema_kubepack_apis_kubepack_v1alpha1_ValuesFile(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.VersionDetail":                                      schema_kubepack_apis_kubepack_v1alpha1_VersionDetail(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.VersionOption":                                      schema_kubepack_apis_kubepack_v1alpha1_VersionOption(ref),
@@ -17857,6 +17859,20 @@ func schema_kubepack_apis_kubepack_v1alpha1_PlanSpec(ref common.ReferenceCallbac
 							},
 						},
 					},
+					"pricingPattern": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"object"},
+							AdditionalProperties: &spec.SchemaOrBool{
+								Allows: true,
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.PricingPattern"),
+									},
+								},
+							},
+						},
+					},
 					"aggregateUsage": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
@@ -17939,7 +17955,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_PlanSpec(ref common.ReferenceCallbac
 			},
 		},
 		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRef", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTier", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTransformUsage"},
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ChartRef", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTier", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PlanTransformUsage", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.PricingPattern"},
 	}
 }
 
@@ -18027,6 +18043,39 @@ func schema_kubepack_apis_kubepack_v1alpha1_PlanTransformUsage(ref common.Refere
 				},
 			},
 		},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_PricingPattern(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"expression": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"sizedPrices": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.SizedPrice"),
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.SizedPrice"},
 	}
 }
 
@@ -18490,6 +18539,40 @@ func schema_kubepack_apis_kubepack_v1alpha1_Row(ref common.ReferenceCallback) co
 					},
 				},
 				Required: []string{"trait", "values"},
+			},
+		},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_SizedPrice(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"cpu": {
+						SchemaProps: spec.SchemaProps{
+							Default: "",
+							Type:    []string{"string"},
+							Format:  "",
+						},
+					},
+					"memory": {
+						SchemaProps: spec.SchemaProps{
+							Default: "",
+							Type:    []string{"string"},
+							Format:  "",
+						},
+					},
+					"price": {
+						SchemaProps: spec.SchemaProps{
+							Default: 0,
+							Type:    []string{"number"},
+							Format:  "double",
+						},
+					},
+				},
+				Required: []string{"cpu", "memory", "price"},
 			},
 		},
 	}
