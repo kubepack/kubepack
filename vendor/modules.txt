@@ -73,7 +73,7 @@ github.com/NYTimes/gziphandler
 github.com/PuerkitoBio/purell
 # github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578
 github.com/PuerkitoBio/urlesc
-# github.com/alessio/shellescape v1.4.1
+# github.com/alessio/shellescape v1.2.2
 github.com/alessio/shellescape
 # github.com/appscode/static-assets v0.6.7
 ## explicit
@@ -265,10 +265,10 @@ github.com/go-logr/logr
 github.com/go-openapi/jsonpointer
 # github.com/go-openapi/jsonreference v0.19.3 => github.com/go-openapi/jsonreference v0.19.3
 github.com/go-openapi/jsonreference
-# github.com/go-openapi/spec v0.19.5 => github.com/go-openapi/spec v0.19.5
+# github.com/go-openapi/spec v0.19.8 => github.com/go-openapi/spec v0.19.5
 ## explicit
 github.com/go-openapi/spec
-# github.com/go-openapi/swag v0.19.5 => github.com/go-openapi/swag v0.19.5
+# github.com/go-openapi/swag v0.19.9 => github.com/go-openapi/swag v0.19.5
 github.com/go-openapi/swag
 # github.com/gobuffalo/flect v0.2.2
 ## explicit
@@ -288,7 +288,7 @@ github.com/gogo/protobuf/gogoproto
 github.com/gogo/protobuf/proto
 github.com/gogo/protobuf/protoc-gen-gogo/descriptor
 github.com/gogo/protobuf/sortkeys
-# github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
+# github.com/golang/glog v0.0.0-20210429001901-424d2337a529
 github.com/golang/glog
 # github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e
 github.com/golang/groupcache/lru
@@ -734,11 +734,16 @@ golang.org/x/xerrors/internal
 ## explicit
 gomodules.xyz/blobfs
 gomodules.xyz/blobfs/testing
+# gomodules.xyz/clock v0.0.0-20200817085942-06523dba733f
+gomodules.xyz/clock
 # gomodules.xyz/homedir v0.0.0-20201104190528-bcd4d5d94b84
 gomodules.xyz/homedir
 # gomodules.xyz/jsonpatch/v2 v2.1.0
 ## explicit
 gomodules.xyz/jsonpatch/v2
+# gomodules.xyz/kglog v0.0.1
+## explicit
+gomodules.xyz/kglog
 # gomodules.xyz/password-generator v0.2.6
 gomodules.xyz/password-generator
 # gomodules.xyz/pointer v0.0.0-20201105071923-daf60fa55209
@@ -752,13 +757,14 @@ gomodules.xyz/sets
 # gomodules.xyz/version v0.1.0
 ## explicit
 gomodules.xyz/version
-# gomodules.xyz/x v0.0.3
+# gomodules.xyz/wait v0.0.0-20210218105358-639bd9211545
+gomodules.xyz/wait
+# gomodules.xyz/x v0.0.4
 ## explicit
 gomodules.xyz/x/analytics
 gomodules.xyz/x/crypto/rand
 gomodules.xyz/x/env
 gomodules.xyz/x/flags
-gomodules.xyz/x/log/golog
 gomodules.xyz/x/strings
 gomodules.xyz/x/term
 gomodules.xyz/x/version
@@ -893,7 +899,7 @@ gopkg.in/natefinch/lumberjack.v2
 gopkg.in/tomb.v1
 # gopkg.in/yaml.v2 v2.4.0
 gopkg.in/yaml.v2
-# gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
+# gopkg.in/yaml.v3 v3.0.0-20200603094226-e3079894b1e8
 gopkg.in/yaml.v3
 # helm.sh/helm/v3 v3.5.2 => github.com/kubepack/helm/v3 v3.1.0-rc.1.0.20210503022716-7e2d4913a125
 ## explicit
@@ -1510,7 +1516,7 @@ k8s.io/utils/pointer
 k8s.io/utils/trace
 # kmodules.xyz/apiversion v0.2.0
 kmodules.xyz/apiversion
-# kmodules.xyz/client-go v0.0.0-20210504024435-1eb80721e9b8
+# kmodules.xyz/client-go v0.0.0-20210505231546-fa4fb8e1d04e
 ## explicit
 kmodules.xyz/client-go
 kmodules.xyz/client-go/admissionregistration/v1beta1
@@ -1521,7 +1527,6 @@ kmodules.xyz/client-go/apiregistration/v1beta1
 kmodules.xyz/client-go/core/v1
 kmodules.xyz/client-go/discovery
 kmodules.xyz/client-go/dynamic
-kmodules.xyz/client-go/logs
 kmodules.xyz/client-go/meta
 kmodules.xyz/client-go/openapi
 kmodules.xyz/client-go/tools/analytics
@@ -1555,7 +1560,7 @@ kmodules.xyz/resource-metadata/hub/resourcedescriptors
 ## explicit
 kmodules.xyz/webhook-runtime/admission/v1beta1
 kmodules.xyz/webhook-runtime/registry/admissionreview/v1beta1
-# kubepack.dev/lib-helm v0.2.4-0.20210504075710-8653e4557a39
+# kubepack.dev/lib-helm v0.2.3
 ## explicit
 kubepack.dev/lib-helm/action
 kubepack.dev/lib-helm/chart

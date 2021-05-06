@@ -1,5 +1,5 @@
 /*
-Copyright AppsCode Inc. and Contributors
+Copyright 2014 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,21 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package main
-
-import (
-	"os"
-
-	"kubepack.dev/kubepack/pkg/cmds"
-
-	"gomodules.xyz/kglog"
-)
-
-func main() {
-	kglog.InitLogs()
-	defer kglog.FlushLogs()
-
-	if err := cmds.NewRootCmd().Execute(); err != nil {
-		os.Exit(1)
-	}
-}
+// Package wait provides tools for polling or listening for changes
+// to a condition.
+package wait // import "gomodules.xyz/wait"
