@@ -18054,9 +18054,8 @@ func schema_kubepack_apis_kubepack_v1alpha1_PricingPattern(ref common.ReferenceC
 				Properties: map[string]spec.Schema{
 					"expression": {
 						SchemaProps: spec.SchemaProps{
-							Default: "",
-							Type:    []string{"string"},
-							Format:  "",
+							Type:   []string{"string"},
+							Format: "",
 						},
 					},
 					"sizedPrices": {

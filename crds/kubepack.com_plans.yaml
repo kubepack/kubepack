@@ -42,7 +42,7 @@ spec:
               format: int64
               type: integer
             amountDecimal:
-              format: float
+              format: double
               type: number
             billingScheme:
               type: string
@@ -110,13 +110,13 @@ spec:
                     format: int64
                     type: integer
                   flatAmountDecimal:
-                    format: float
+                    format: double
                     type: number
                   unitAmount:
                     format: int64
                     type: integer
                   unitAmountDecimal:
-                    format: float
+                    format: double
                     type: number
                   upTo:
                     format: int64
