@@ -14,6 +14,29 @@
       "url": "https://bundles.kubepack.com",
       "name": "kubedb-enterprise"
     },
+    "pricingPattern": {
+      "elasticsearches.kubedb.com": {
+        "expression": "0.0118885873*cpu + 0.0012664360*memory"
+      },
+      "mariadbs.kubedb.com": {
+        "expression": "0.0006138533*cpu + 0.0049108263*memory"
+      },
+      "mongodbs.kubedb.com": {
+        "expression": "0.0005833333*cpu + 0.0065333333*memory"
+      },
+      "mysqls.kubedb.com": {
+        "expression": "0.0006138533*cpu + 0.0049108263*memory"
+      },
+      "postgreses.kubedb.com": {
+        "expression": "0.0006676994*cpu + 0.0053415956*memory"
+      },
+      "redises.kubedb.com": {
+        "expression": "0.0107273061*cpu + 0.0031369121*memory"
+      },
+      "memcacheds.kubedb.com": {
+        "expression": "0.0107273061*cpu + 0.0031369121*memory"
+      }
+    },
     "amount": 299,
     "currency": "usd",
     "interval": "month"
