@@ -16,7 +16,6 @@ require (
 	github.com/onsi/ginkgo v1.15.0
 	github.com/onsi/gomega v1.10.5
 	github.com/pkg/errors v0.9.1
-	github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring v0.47.0 // indirect
 	github.com/prometheus-operator/prometheus-operator/pkg/client v0.47.0
 	github.com/spf13/cobra v1.1.3
 	github.com/spf13/pflag v1.0.5
@@ -42,9 +41,9 @@ require (
 	kmodules.xyz/client-go v0.0.0-20210505231546-fa4fb8e1d04e
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20210503192455-da44af375c4c
 	kmodules.xyz/custom-resources v0.0.0-20210504034124-54c54fcdb690
-	kmodules.xyz/resource-metadata v0.0.0-00010101000000-000000000000
+	kmodules.xyz/resource-metadata v0.5.2
 	kmodules.xyz/webhook-runtime v0.0.0-20210504042742-3a9911e3dcdc
-	kubepack.dev/lib-helm v0.2.3
+	kubepack.dev/lib-helm v0.2.4-0.20210504075710-8653e4557a39
 	sigs.k8s.io/application v0.0.0-00010101000000-000000000000
 	sigs.k8s.io/yaml v1.2.0
 )
@@ -152,7 +151,5 @@ replace k8s.io/kube-openapi => k8s.io/kube-openapi v0.0.0-20210305001622-591a79e
 replace k8s.io/kubernetes => github.com/kmodules/kubernetes v1.22.0-alpha.0.0.20210427080452-22d2e66bae50
 
 replace k8s.io/utils => k8s.io/utils v0.0.0-20201110183641-67b214c5f920
-
-replace kmodules.xyz/resource-metadata => kmodules.xyz/resource-metadata v0.5.0
 
 replace sigs.k8s.io/application => github.com/kmodules/application v0.8.4-0.20210427030912-90eeee3bc4ad

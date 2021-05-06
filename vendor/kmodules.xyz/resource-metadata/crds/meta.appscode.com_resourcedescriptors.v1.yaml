@@ -580,6 +580,7 @@ spec:
                         format: int64
                         type: integer
                       maximum:
+                        format: double
                         type: number
                       minItems:
                         format: int64
@@ -591,8 +592,10 @@ spec:
                         format: int64
                         type: integer
                       minimum:
+                        format: double
                         type: number
                       multipleOf:
+                        format: double
                         type: number
                       not: {}
                       nullable:
