@@ -1,16 +1,15 @@
 module kubepack.dev/kubepack
 
-go 1.15
+go 1.16
 
 require (
 	github.com/appscode/static-assets v0.6.7
-	github.com/aws/aws-sdk-go v1.38.31 // indirect
 	github.com/evanphx/json-patch v4.9.0+incompatible
 	github.com/gabriel-vasile/mimetype v1.2.0
 	github.com/go-openapi/spec v0.19.8
 	github.com/gobuffalo/flect v0.2.2
 	github.com/gogo/protobuf v1.3.2
-	github.com/google/gofuzz v1.1.0
+	github.com/google/gofuzz v1.2.0
 	github.com/google/uuid v1.1.2
 	github.com/gregjones/httpcache v0.0.0-20180305231024-9cad4c3443a7
 	github.com/onsi/ginkgo v1.15.0
@@ -25,7 +24,6 @@ require (
 	gomodules.xyz/jsonpatch/v2 v2.1.0
 	gomodules.xyz/kglog v0.0.1
 	gomodules.xyz/runtime v0.2.0
-	gomodules.xyz/sets v0.0.0-20210218105342-2efe2fb519a2 // indirect
 	gomodules.xyz/version v0.1.0
 	gomodules.xyz/x v0.0.4
 	helm.sh/helm/v3 v3.5.2
@@ -38,10 +36,10 @@ require (
 	k8s.io/klog/v2 v2.8.0
 	k8s.io/kube-openapi v0.0.0-20210305001622-591a79e4bda7
 	k8s.io/kubernetes v1.21.0
-	kmodules.xyz/client-go v0.0.0-20210505231546-fa4fb8e1d04e
+	kmodules.xyz/client-go v0.0.0-20210512200950-b646b11ba7bf
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20210503192455-da44af375c4c
 	kmodules.xyz/custom-resources v0.0.0-20210504034124-54c54fcdb690
-	kmodules.xyz/resource-metadata v0.5.2
+	kmodules.xyz/resource-metadata v0.5.5-0.20210513195540-42f3f7e2e71c
 	kmodules.xyz/webhook-runtime v0.0.0-20210504042742-3a9911e3dcdc
 	kubepack.dev/lib-helm v0.2.4-0.20210504075710-8653e4557a39
 	sigs.k8s.io/application v0.0.0-00010101000000-000000000000

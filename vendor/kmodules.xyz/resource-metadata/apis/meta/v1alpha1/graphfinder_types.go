@@ -47,5 +47,5 @@ type GraphRequest struct {
 
 type GraphResponse struct {
 	Source      GroupVersionResource `json:"source"`
-	Connections []Edge               `json:"connections,omitempty"`
+	Connections []*Edge              `json:"connections,omitempty"`
 }

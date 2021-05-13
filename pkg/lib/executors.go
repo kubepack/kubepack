@@ -66,9 +66,9 @@ import (
 	authv1client "k8s.io/client-go/kubernetes/typed/authorization/v1"
 	"k8s.io/client-go/rest"
 	"kmodules.xyz/client-go/apiextensions"
+	disco_util "kmodules.xyz/client-go/discovery"
 	"kmodules.xyz/client-go/tools/parser"
 	wait2 "kmodules.xyz/client-go/tools/wait"
-	"kmodules.xyz/resource-metadata/hub"
 	"sigs.k8s.io/application/api/app/v1beta1"
 	"sigs.k8s.io/application/client/clientset/versioned"
 	yamllib "sigs.k8s.io/yaml"
@@ -809,9 +809,9 @@ type PermissionChecker struct {
 	Namespace   string
 	Verb        string
 
-	Config           *rest.Config
-	ClientGetter     genericclioptions.RESTClientGetter
-	ResourceRegistry *hub.Registry
+	Config       *rest.Config
+	ClientGetter genericclioptions.RESTClientGetter
+	Mapper       disco_util.ResourceMapper
 
 	attrs map[authorization.ResourceAttributes]*ResourcePermission
 	m     sync.Mutex
@@ -941,7 +941,7 @@ func (x *PermissionChecker) Do() error {
 
 	for _, hook := range hooks {
 		if libchart.IsEvent(hook.Events, release.HookPreInstall) {
-			err = ExtractResourceAttributes([]byte(hook.Manifest), x.Verb, x.ResourceRegistry, x.attrs)
+			err = ExtractResourceAttributes([]byte(hook.Manifest), x.Verb, x.Mapper, x.attrs)
 			if err != nil {
 				return err
 			}
@@ -949,7 +949,7 @@ func (x *PermissionChecker) Do() error {
 	}
 
 	for _, m := range manifests {
-		err = ExtractResourceAttributes([]byte(m.Content), x.Verb, x.ResourceRegistry, x.attrs)
+		err = ExtractResourceAttributes([]byte(m.Content), x.Verb, x.Mapper, x.attrs)
 		if err != nil {
 			return err
 		}
@@ -957,7 +957,7 @@ func (x *PermissionChecker) Do() error {
 
 	for _, hook := range hooks {
 		if libchart.IsEvent(hook.Events, release.HookPostInstall) {
-			err = ExtractResourceAttributes([]byte(hook.Manifest), x.Verb, x.ResourceRegistry, x.attrs)
+			err = ExtractResourceAttributes([]byte(hook.Manifest), x.Verb, x.Mapper, x.attrs)
 			if err != nil {
 				return err
 			}
@@ -1304,9 +1304,9 @@ func (x *ApplicationGenerator) Result() *v1beta1.Application {
 	return b
 }
 
-func ExtractResourceAttributes(data []byte, verb string, reg *hub.Registry, attrs map[authorization.ResourceAttributes]*ResourcePermission) error {
+func ExtractResourceAttributes(data []byte, verb string, mapper disco_util.ResourceMapper, attrs map[authorization.ResourceAttributes]*ResourcePermission) error {
 	return parser.ProcessResources(data, func(obj *unstructured.Unstructured) error {
-		gvr, err := reg.GVR(schema.FromAPIVersionAndKind(obj.GetAPIVersion(), obj.GetKind()))
+		gvr, err := mapper.GVR(schema.FromAPIVersionAndKind(obj.GetAPIVersion(), obj.GetKind()))
 		if err != nil {
 			return err
 		}

@@ -55,7 +55,7 @@ type Path struct {
 	Source   GroupVersionResource `json:"source"`
 	Target   GroupVersionResource `json:"target"`
 	Distance uint64               `json:"distance"`
-	Edges    []Edge               `json:"edges"`
+	Edges    []*Edge              `json:"edges"`
 }
 
 type Edge struct {

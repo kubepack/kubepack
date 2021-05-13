@@ -25,20 +25,20 @@ import (
 	"kubepack.dev/lib-helm/repo"
 
 	"k8s.io/cli-runtime/pkg/genericclioptions"
+	"k8s.io/client-go/restmapper"
+	disco_util "kmodules.xyz/client-go/discovery"
 	"kmodules.xyz/resource-metadata/hub"
 )
 
 func CheckPermissions(getter genericclioptions.RESTClientGetter, reg *repo.Registry, order v1alpha1.Order, helm hub.HelmVersion) (bool, error) {
-	resRegistry := hub.NewRegistry(string(order.UID), helm, hub.KnownResources)
 	config, err := getter.ToRESTConfig()
 	if err != nil {
 		return false, err
 	}
-	err = resRegistry.DiscoverResources(config)
+	discoclient, err := getter.ToDiscoveryClient()
 	if err != nil {
 		return false, err
 	}
-
 	for _, pkg := range order.Spec.Packages {
 		if pkg.Chart == nil {
 			continue
@@ -53,9 +53,9 @@ func CheckPermissions(getter genericclioptions.RESTClientGetter, reg *repo.Regis
 			Namespace:   pkg.Chart.Namespace,
 			Verb:        "create",
 
-			Config:           config,
-			ClientGetter:     getter,
-			ResourceRegistry: resRegistry,
+			Config:       config,
+			ClientGetter: getter,
+			Mapper:       disco_util.NewResourceMapper(restmapper.NewDeferredDiscoveryRESTMapper(discoclient)),
 		}
 		err = checker.Do()
 		if err != nil {
