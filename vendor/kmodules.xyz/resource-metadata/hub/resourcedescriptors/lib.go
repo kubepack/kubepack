@@ -17,6 +17,7 @@ limitations under the License.
 package resourcedescriptors
 
 import (
+	"embed"
 	"fmt"
 	"strings"
 
@@ -25,6 +26,13 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"sigs.k8s.io/yaml"
 )
+
+//go:embed **/**/*.yaml
+var fs embed.FS
+
+func FS() embed.FS {
+	return fs
+}
 
 func LoadByGVR(gvr schema.GroupVersionResource) (*v1alpha1.ResourceDescriptor, error) {
 	var filename string
@@ -42,7 +50,7 @@ func LoadByName(name string) (*v1alpha1.ResourceDescriptor, error) {
 }
 
 func LoadByFile(filename string) (*v1alpha1.ResourceDescriptor, error) {
-	data, err := Asset(filename)
+	data, err := fs.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}

@@ -17,6 +17,7 @@ limitations under the License.
 package resourceclasses
 
 import (
+	"embed"
 	"strings"
 
 	"kmodules.xyz/resource-metadata/apis/meta/v1alpha1"
@@ -26,6 +27,13 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"sigs.k8s.io/yaml"
 )
+
+//go:embed *.yaml
+var fs embed.FS
+
+func FS() embed.FS {
+	return fs
+}
 
 func ResourceClassName(apiGroup string) string {
 	name := apiGroup
@@ -64,7 +72,7 @@ func LoadByName(name string) (*v1alpha1.ResourceClass, error) {
 }
 
 func LoadByFile(filename string) (*v1alpha1.ResourceClass, error) {
-	data, err := Asset(filename)
+	data, err := fs.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
