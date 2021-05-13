@@ -612,7 +612,7 @@ func autoConvert_v1alpha1_GraphResponse_To_meta_GraphResponse(in *GraphResponse,
 	if err := Convert_v1alpha1_GroupVersionResource_To_meta_GroupVersionResource(&in.Source, &out.Source, s); err != nil {
 		return err
 	}
-	out.Connections = *(*[]meta.Edge)(unsafe.Pointer(&in.Connections))
+	out.Connections = *(*[]*meta.Edge)(unsafe.Pointer(&in.Connections))
 	return nil
 }
 
@@ -625,7 +625,7 @@ func autoConvert_meta_GraphResponse_To_v1alpha1_GraphResponse(in *meta.GraphResp
 	if err := Convert_meta_GroupVersionResource_To_v1alpha1_GroupVersionResource(&in.Source, &out.Source, s); err != nil {
 		return err
 	}
-	out.Connections = *(*[]Edge)(unsafe.Pointer(&in.Connections))
+	out.Connections = *(*[]*Edge)(unsafe.Pointer(&in.Connections))
 	return nil
 }
 
@@ -734,7 +734,7 @@ func autoConvert_v1alpha1_Path_To_meta_Path(in *Path, out *meta.Path, s conversi
 		return err
 	}
 	out.Distance = in.Distance
-	out.Edges = *(*[]meta.Edge)(unsafe.Pointer(&in.Edges))
+	out.Edges = *(*[]*meta.Edge)(unsafe.Pointer(&in.Edges))
 	return nil
 }
 
@@ -751,7 +751,7 @@ func autoConvert_meta_Path_To_v1alpha1_Path(in *meta.Path, out *Path, s conversi
 		return err
 	}
 	out.Distance = in.Distance
-	out.Edges = *(*[]Edge)(unsafe.Pointer(&in.Edges))
+	out.Edges = *(*[]*Edge)(unsafe.Pointer(&in.Edges))
 	return nil
 }
 

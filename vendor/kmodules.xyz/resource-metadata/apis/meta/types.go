@@ -247,7 +247,7 @@ type Path struct {
 	Source   GroupVersionResource
 	Target   GroupVersionResource
 	Distance uint64
-	Edges    []Edge
+	Edges    []*Edge
 }
 
 type Edge struct {
@@ -271,7 +271,7 @@ type GraphRequest struct {
 
 type GraphResponse struct {
 	Source      GroupVersionResource
-	Connections []Edge
+	Connections []*Edge
 }
 
 type Table struct {
