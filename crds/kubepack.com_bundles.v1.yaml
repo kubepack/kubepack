@@ -167,15 +167,15 @@ spec:
                                 properties:
                                   owned:
                                     items:
-                                      description: ResourceID identifies a resource
+                                      description: GroupVersionResource unambiguously
+                                        identifies a resource.  It doesn't anonymously
+                                        include GroupVersion to avoid automatic coersion.  It
+                                        doesn't use a GroupVersion to avoid custom
+                                        marshalling
                                       properties:
                                         group:
                                           type: string
                                         resource:
-                                          description: 'Name is the plural name of
-                                            the resource to serve.  It must match
-                                            the name of the CustomResourceDefinition-registration
-                                            too: plural.group and it must be all lowercase.'
                                           type: string
                                         version:
                                           type: string
@@ -187,15 +187,15 @@ spec:
                                     type: array
                                   required:
                                     items:
-                                      description: ResourceID identifies a resource
+                                      description: GroupVersionResource unambiguously
+                                        identifies a resource.  It doesn't anonymously
+                                        include GroupVersion to avoid automatic coersion.  It
+                                        doesn't use a GroupVersion to avoid custom
+                                        marshalling
                                       properties:
                                         group:
                                           type: string
                                         resource:
-                                          description: 'Name is the plural name of
-                                            the resource to serve.  It must match
-                                            the name of the CustomResourceDefinition-registration
-                                            too: plural.group and it must be all lowercase.'
                                           type: string
                                         version:
                                           type: string
@@ -283,14 +283,19 @@ spec:
                                           type: object
                                       type: object
                                     resource:
+                                      description: GroupResource specifies a Group
+                                        and a Resource, but does not force a version.  This
+                                        is useful for identifying concepts during
+                                        lookup stages without having partially valid
+                                        types
                                       properties:
                                         group:
                                           type: string
-                                        name:
+                                        resource:
                                           type: string
                                       required:
                                       - group
-                                      - name
+                                      - resource
                                       type: object
                                     timeout:
                                       type: string

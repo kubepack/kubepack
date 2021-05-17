@@ -73,6 +73,9 @@ spec:
     name: podsecuritypolicies
     scope: Cluster
     version: v1beta1
+  resourceRequirements:
+  - resources: spec.podTemplate.spec.resources
+    units: spec.replicas
   ui:
     editor:
       name: policy-podsecuritypolicy-editor
@@ -80,7 +83,7 @@ spec:
       version: v0.1.0
   validation:
     openAPIV3Schema:
-      description: PodSecurityPolicy governs the ability to make requests that affect the Security Context that will be applied to a pod and container.
+      description: PodSecurityPolicy governs the ability to make requests that affect the Security Context that will be applied to a pod and container. Deprecated in 1.21.
       properties:
         apiVersion:
           description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
@@ -111,7 +114,7 @@ spec:
               description: allowPrivilegeEscalation determines if a pod can request to allow privilege escalation. If unspecified, defaults to true.
               type: boolean
             allowedCSIDrivers:
-              description: AllowedCSIDrivers is a whitelist of inline CSI drivers that must be explicitly set to be embedded within a pod spec. An empty value indicates that any CSI driver can be used for inline ephemeral volumes. This is an alpha field, and is only honored if the API server enables the CSIInlineVolume feature gate.
+              description: AllowedCSIDrivers is an allowlist of inline CSI drivers that must be explicitly set to be embedded within a pod spec. An empty value indicates that any CSI driver can be used for inline ephemeral volumes. This is a beta field, and is only honored if the API server enables the CSIInlineVolume feature gate.
               items:
                 description: AllowedCSIDriver represents a single inline CSI Driver that is allowed to be used.
                 properties:
@@ -129,7 +132,7 @@ spec:
                 type: string
               type: array
             allowedFlexVolumes:
-              description: allowedFlexVolumes is a whitelist of allowed Flexvolumes.  Empty or nil indicates that all Flexvolumes may be used.  This parameter is effective only when the usage of the Flexvolumes is allowed in the "volumes" field.
+              description: allowedFlexVolumes is an allowlist of Flexvolumes.  Empty or nil indicates that all Flexvolumes may be used.  This parameter is effective only when the usage of the Flexvolumes is allowed in the "volumes" field.
               items:
                 description: AllowedFlexVolume represents a single Flexvolume that is allowed to be used.
                 properties:
@@ -141,7 +144,7 @@ spec:
                 type: object
               type: array
             allowedHostPaths:
-              description: allowedHostPaths is a white list of allowed host paths. Empty indicates that all host paths may be used.
+              description: allowedHostPaths is an allowlist of host paths. Empty indicates that all host paths may be used.
               items:
                 description: AllowedHostPath defines the host volume conditions that will be enabled by a policy for pods to use. It requires the path prefix to be defined.
                 properties:
@@ -154,12 +157,12 @@ spec:
                 type: object
               type: array
             allowedProcMountTypes:
-              description: AllowedProcMountTypes is a whitelist of allowed ProcMountTypes. Empty or nil indicates that only the DefaultProcMountType may be used. This requires the ProcMountType feature flag to be enabled.
+              description: AllowedProcMountTypes is an allowlist of allowed ProcMountTypes. Empty or nil indicates that only the DefaultProcMountType may be used. This requires the ProcMountType feature flag to be enabled.
               items:
                 type: string
               type: array
             allowedUnsafeSysctls:
-              description: "allowedUnsafeSysctls is a list of explicitly allowed unsafe sysctls, defaults to none. Each entry is either a plain sysctl name or ends in \"*\" in which case it is considered as a prefix of allowed sysctls. Single * means all unsafe sysctls are allowed. Kubelet has to whitelist all allowed unsafe sysctls explicitly to avoid rejection. \n Examples: e.g. \"foo/*\" allows \"foo/bar\", \"foo/baz\", etc. e.g. \"foo.*\" allows \"foo.bar\", \"foo.baz\", etc."
+              description: "allowedUnsafeSysctls is a list of explicitly allowed unsafe sysctls, defaults to none. Each entry is either a plain sysctl name or ends in \"*\" in which case it is considered as a prefix of allowed sysctls. Single * means all unsafe sysctls are allowed. Kubelet has to allowlist all allowed unsafe sysctls explicitly to avoid rejection. \n Examples: e.g. \"foo/*\" allows \"foo/bar\", \"foo/baz\", etc. e.g. \"foo.*\" allows \"foo.bar\", \"foo.baz\", etc."
               items:
                 type: string
               type: array
@@ -299,7 +302,7 @@ spec:
               description: runtimeClass is the strategy that will dictate the allowable RuntimeClasses for a pod. If this field is omitted, the pod's runtimeClassName field is unrestricted. Enforcement of this field depends on the RuntimeClass feature gate being enabled.
               properties:
                 allowedRuntimeClassNames:
-                  description: allowedRuntimeClassNames is a whitelist of RuntimeClass names that may be specified on a pod. A value of "*" means that any RuntimeClass name is allowed, and must be the only item in the list. An empty list requires the RuntimeClassName field to be unset.
+                  description: allowedRuntimeClassNames is an allowlist of RuntimeClass names that may be specified on a pod. A value of "*" means that any RuntimeClass name is allowed, and must be the only item in the list. An empty list requires the RuntimeClassName field to be unset.
                   items:
                     type: string
                   type: array
@@ -360,7 +363,7 @@ spec:
                   type: string
               type: object
             volumes:
-              description: volumes is a white list of allowed volume plugins. Empty indicates that no volumes may be used. To allow all volumes you may use '*'.
+              description: volumes is an allowlist of volume plugins. Empty indicates that no volumes may be used. To allow all volumes you may use '*'.
               items:
                 description: FSType gives strong typing to different file systems that are used by volumes.
                 type: string

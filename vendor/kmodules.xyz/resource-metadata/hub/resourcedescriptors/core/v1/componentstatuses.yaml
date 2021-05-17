@@ -15,6 +15,9 @@ spec:
     name: componentstatuses
     scope: Cluster
     version: v1
+  resourceRequirements:
+  - resources: spec.podTemplate.spec.resources
+    units: spec.replicas
   ui:
     editor:
       name: core-componentstatus-editor
@@ -22,7 +25,7 @@ spec:
       version: v0.1.0
   validation:
     openAPIV3Schema:
-      description: ComponentStatus (and ComponentStatusList) holds the cluster validation info.
+      description: 'ComponentStatus (and ComponentStatusList) holds the cluster validation info. Deprecated: This API is deprecated in v1.19+'
       properties:
         apiVersion:
           description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'

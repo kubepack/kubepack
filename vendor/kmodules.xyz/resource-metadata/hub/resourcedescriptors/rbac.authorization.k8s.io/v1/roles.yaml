@@ -59,6 +59,9 @@ spec:
     name: roles
     scope: Namespaced
     version: v1
+  resourceRequirements:
+  - resources: spec.podTemplate.spec.resources
+    units: spec.replicas
   ui:
     editor:
       name: rbacauthorizationk8sio-role-editor

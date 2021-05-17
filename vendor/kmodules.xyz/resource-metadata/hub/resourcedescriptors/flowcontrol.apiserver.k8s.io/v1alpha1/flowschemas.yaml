@@ -15,6 +15,9 @@ spec:
     name: flowschemas
     scope: Namespaced
     version: v1alpha1
+  resourceRequirements:
+  - resources: spec.podTemplate.spec.resources
+    units: spec.replicas
   ui:
     editor:
       name: flowcontrolapiserverk8sio-flowschema-editor
@@ -50,7 +53,7 @@ spec:
               type: object
           type: object
         spec:
-          description: '`spec` is the specification of the desired behavior of a FlowSchema. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status'
+          description: '`spec` is the specification of the desired behavior of a FlowSchema. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status'
           properties:
             distinguisherMethod:
               description: '`distinguisherMethod` defines how to compute the flow distinguisher for requests that match this schema. `nil` specifies that the distinguisher is disabled and thus will always be the empty string.'

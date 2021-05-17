@@ -20,6 +20,9 @@ spec:
     name: networkpolicies
     scope: Namespaced
     version: v1
+  resourceRequirements:
+  - resources: spec.podTemplate.spec.resources
+    units: spec.replicas
   ui:
     editor:
       name: networkingk8sio-networkpolicy-editor
@@ -67,13 +70,18 @@ spec:
                     items:
                       description: NetworkPolicyPort describes a port to allow traffic on
                       properties:
+                        endPort:
+                          description: If set, indicates that the range of ports from port to endPort, inclusive, should be allowed by the policy. This field cannot be defined if the port field is not defined or if the port field is defined as a named (string) port. The endPort must be equal or greater than port. This feature is in Alpha state and should be enabled using the Feature Gate "NetworkPolicyEndPort".
+                          format: int32
+                          type: integer
                         port:
                           anyOf:
                           - type: integer
                           - type: string
-                          description: The port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers.
+                          description: The port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers. If present, only traffic on the specified protocol AND port will be matched.
                           x-kubernetes-int-or-string: true
                         protocol:
+                          default: TCP
                           description: The protocol (TCP, UDP, or SCTP) which traffic must match. If not specified, this field defaults to TCP.
                           type: string
                       type: object
@@ -81,7 +89,7 @@ spec:
                   to:
                     description: List of destinations for outgoing traffic of pods selected for this rule. Items in this list are combined using a logical OR operation. If this field is empty or missing, this rule matches all destinations (traffic not restricted by destination). If this field is present and contains at least one item, this rule allows traffic only if the traffic matches at least one item in the to list.
                     items:
-                      description: NetworkPolicyPeer describes a peer to allow traffic from. Only certain combinations of fields are allowed
+                      description: NetworkPolicyPeer describes a peer to allow traffic to/from. Only certain combinations of fields are allowed
                       properties:
                         ipBlock:
                           description: IPBlock defines policy on a particular IPBlock. If this field is set then neither of the other fields can be.
@@ -169,7 +177,7 @@ spec:
                   from:
                     description: List of sources which should be able to access the pods selected for this rule. Items in this list are combined using a logical OR operation. If this field is empty or missing, this rule matches all sources (traffic not restricted by source). If this field is present and contains at least one item, this rule allows traffic only if the traffic matches at least one item in the from list.
                     items:
-                      description: NetworkPolicyPeer describes a peer to allow traffic from. Only certain combinations of fields are allowed
+                      description: NetworkPolicyPeer describes a peer to allow traffic to/from. Only certain combinations of fields are allowed
                       properties:
                         ipBlock:
                           description: IPBlock defines policy on a particular IPBlock. If this field is set then neither of the other fields can be.
@@ -252,13 +260,18 @@ spec:
                     items:
                       description: NetworkPolicyPort describes a port to allow traffic on
                       properties:
+                        endPort:
+                          description: If set, indicates that the range of ports from port to endPort, inclusive, should be allowed by the policy. This field cannot be defined if the port field is not defined or if the port field is defined as a named (string) port. The endPort must be equal or greater than port. This feature is in Alpha state and should be enabled using the Feature Gate "NetworkPolicyEndPort".
+                          format: int32
+                          type: integer
                         port:
                           anyOf:
                           - type: integer
                           - type: string
-                          description: The port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers.
+                          description: The port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers. If present, only traffic on the specified protocol AND port will be matched.
                           x-kubernetes-int-or-string: true
                         protocol:
+                          default: TCP
                           description: The protocol (TCP, UDP, or SCTP) which traffic must match. If not specified, this field defaults to TCP.
                           type: string
                       type: object
@@ -296,9 +309,9 @@ spec:
                   type: object
               type: object
             policyTypes:
-              description: List of rule types that the NetworkPolicy relates to. Valid options are "Ingress", "Egress", or "Ingress,Egress". If this field is not specified, it will default based on the existence of Ingress or Egress rules; policies that contain an Egress section are assumed to affect Egress, and all policies (whether or not they contain an Ingress section) are assumed to affect Ingress. If you want to write an egress-only policy, you must explicitly specify policyTypes [ "Egress" ]. Likewise, if you want to write a policy that specifies that no egress is allowed, you must specify a policyTypes value that include "Egress" (since such a policy would not include an Egress section and would otherwise default to just [ "Ingress" ]). This field is beta-level in 1.8
+              description: List of rule types that the NetworkPolicy relates to. Valid options are ["Ingress"], ["Egress"], or ["Ingress", "Egress"]. If this field is not specified, it will default based on the existence of Ingress or Egress rules; policies that contain an Egress section are assumed to affect Egress, and all policies (whether or not they contain an Ingress section) are assumed to affect Ingress. If you want to write an egress-only policy, you must explicitly specify policyTypes [ "Egress" ]. Likewise, if you want to write a policy that specifies that no egress is allowed, you must specify a policyTypes value that include "Egress" (since such a policy would not include an Egress section and would otherwise default to just [ "Ingress" ]). This field is beta-level in 1.8
               items:
-                description: Policy Type string describes the NetworkPolicy type This type is beta-level in 1.8
+                description: PolicyType string describes the NetworkPolicy type This type is beta-level in 1.8
                 type: string
               type: array
           required:

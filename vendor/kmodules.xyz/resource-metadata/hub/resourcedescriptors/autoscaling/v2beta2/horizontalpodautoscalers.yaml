@@ -84,6 +84,9 @@ spec:
     name: horizontalpodautoscalers
     scope: Namespaced
     version: v2beta2
+  resourceRequirements:
+  - resources: spec.podTemplate.spec.resources
+    units: spec.replicas
   ui:
     editor:
       name: autoscaling-horizontalpodautoscaler-editor
@@ -200,6 +203,47 @@ spec:
               items:
                 description: MetricSpec specifies how to scale based on a single metric (only `type` and one other matching field should be set at once).
                 properties:
+                  containerResource:
+                    description: container resource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing a single container in each pod of the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source. This is an alpha feature and can be enabled by the HPAContainerMetrics feature flag.
+                    properties:
+                      container:
+                        description: container is the name of the container in the pods of the scaling target
+                        type: string
+                      name:
+                        description: name is the name of the resource in question.
+                        type: string
+                      target:
+                        description: target specifies the target value for the given metric
+                        properties:
+                          averageUtilization:
+                            description: averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type
+                            format: int32
+                            type: integer
+                          averageValue:
+                            anyOf:
+                            - type: integer
+                            - type: string
+                            description: averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
+                            pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                            x-kubernetes-int-or-string: true
+                          type:
+                            description: type represents whether the metric type is Utilization, Value, or AverageValue
+                            type: string
+                          value:
+                            anyOf:
+                            - type: integer
+                            - type: string
+                            description: value is the target value of the metric (as a quantity).
+                            pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                            x-kubernetes-int-or-string: true
+                        required:
+                        - type
+                        type: object
+                    required:
+                    - container
+                    - name
+                    - target
+                    type: object
                   external:
                     description: external refers to a global metric that is not associated with any Kubernetes object. It allows autoscaling based on information coming from components running outside of cluster (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster).
                     properties:
@@ -474,7 +518,7 @@ spec:
                     - target
                     type: object
                   type:
-                    description: type is the type of metric source.  It should be one of "Object", "Pods" or "Resource", each mapping to a matching field in the object.
+                    description: 'type is the type of metric source.  It should be one of "ContainerResource", "External", "Object", "Pods" or "Resource", each mapping to a matching field in the object. Note: "ContainerResource" type is available on when the feature-gate HPAContainerMetrics is enabled'
                     type: string
                 required:
                 - type

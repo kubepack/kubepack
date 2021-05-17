@@ -371,6 +371,26 @@ func (r *Registry) Preferred(gvr schema.GroupVersionResource) (schema.GroupVersi
 	return gvr, nil
 }
 
+func (r *Registry) ExistsGVR(gvr schema.GroupVersionResource) (bool, error) {
+	if gvr.Version == "" {
+		return false, fmt.Errorf("unspecificed version for %v", gvr.GroupResource())
+	}
+	r.m.RLock()
+	defer r.m.RUnlock()
+	_, exists := r.regGVR[gvr]
+	return exists, nil
+}
+
+func (r *Registry) ExistsGVK(gvk schema.GroupVersionKind) (bool, error) {
+	if gvk.Version == "" {
+		return false, fmt.Errorf("unspecificed version for %v", gvk.GroupKind())
+	}
+	r.m.RLock()
+	defer r.m.RUnlock()
+	_, exists := r.regGVK[gvk]
+	return exists, nil
+}
+
 func (r *Registry) Resources() []schema.GroupVersionResource {
 	r.m.RLock()
 	defer r.m.RUnlock()

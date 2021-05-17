@@ -131,8 +131,8 @@ func (x *WaitForPrinter) Do() error {
 		parts = append(parts, "wait")
 
 		if w.Resource.Group != "" {
-			if w.Resource.Name != "" {
-				parts = append(parts, w.Resource.Group+"/"+w.Resource.Name)
+			if w.Resource.Resource != "" {
+				parts = append(parts, w.Resource.Group+"/"+w.Resource.Resource)
 			} else {
 				parts = append(parts, w.Resource.Group)
 			}
@@ -200,7 +200,7 @@ func (x *WaitForChecker) Do() error {
 		if flags.All {
 			builder.ResourceTypeOrNameArgs(true, flags.Resource.Group)
 		} else {
-			builder.ResourceTypeOrNameArgs(false, flags.Resource.Group+"/"+flags.Resource.Name)
+			builder.ResourceTypeOrNameArgs(false, flags.Resource.Group+"/"+flags.Resource.Resource)
 		}
 		if flags.Labels != nil {
 			selector, err := v1.LabelSelectorAsSelector(flags.Labels)
@@ -261,7 +261,7 @@ func (b *ResourceFindBuilderWrapper) Do() resource.Visitor {
 }
 
 type CRDReadinessPrinter struct {
-	CRDs []v1alpha1.ResourceID
+	CRDs []metav1.GroupVersionResource
 	W    io.Writer
 }
 
@@ -286,7 +286,7 @@ func (x *CRDReadinessPrinter) Do() error {
 }
 
 type CRDReadinessChecker struct {
-	CRDs   []v1alpha1.ResourceID
+	CRDs   []metav1.GroupVersionResource
 	Client rest.Interface
 }
 

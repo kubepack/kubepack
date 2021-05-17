@@ -206,20 +206,6 @@ message FeatureTable {
   repeated Row rows = 2;
 }
 
-message GroupResource {
-  optional string group = 1;
-
-  optional string name = 2;
-}
-
-message GroupVersionResource {
-  optional string group = 1;
-
-  optional string version = 2;
-
-  optional string resource = 3;
-}
-
 message Hub {
   repeated Repository repositories = 1;
 }
@@ -556,20 +542,9 @@ message Repository {
 }
 
 message ResourceDefinitions {
-  repeated ResourceID owned = 1;
+  repeated k8s.io.apimachinery.pkg.apis.meta.v1.GroupVersionResource owned = 1;
 
-  repeated ResourceID required = 2;
-}
-
-// ResourceID identifies a resource
-message ResourceID {
-  optional string group = 1;
-
-  optional string version = 2;
-
-  // Name is the plural name of the resource to serve.  It must match the name of the CustomResourceDefinition-registration
-  // too: plural.group and it must be all lowercase.
-  optional string resource = 3;
+  repeated k8s.io.apimachinery.pkg.apis.meta.v1.GroupVersionResource required = 2;
 }
 
 message Row {
@@ -618,7 +593,7 @@ message VersionOption {
 }
 
 message WaitFlags {
-  optional GroupResource resource = 1;
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.GroupResource resource = 1;
 
   optional k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelector labels = 2;
 
