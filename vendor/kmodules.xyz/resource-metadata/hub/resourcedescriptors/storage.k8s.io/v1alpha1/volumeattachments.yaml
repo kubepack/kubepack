@@ -15,6 +15,9 @@ spec:
     name: volumeattachments
     scope: Namespaced
     version: v1alpha1
+  resourceRequirements:
+  - resources: spec.podTemplate.spec.resources
+    units: spec.replicas
   validation:
     openAPIV3Schema:
       description: "VolumeAttachment captures the intent to attach or detach the specified volume to/from the specified node. \n VolumeAttachment objects are non-namespaced."

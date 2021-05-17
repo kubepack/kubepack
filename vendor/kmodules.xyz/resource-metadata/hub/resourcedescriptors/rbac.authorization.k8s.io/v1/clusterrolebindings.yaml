@@ -62,6 +62,9 @@ spec:
     name: clusterrolebindings
     scope: Cluster
     version: v1
+  resourceRequirements:
+  - resources: spec.podTemplate.spec.resources
+    units: spec.replicas
   ui:
     editor:
       name: rbacauthorizationk8sio-clusterrolebinding-editor

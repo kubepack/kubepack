@@ -15,6 +15,9 @@ spec:
     name: prioritylevelconfigurations
     scope: Namespaced
     version: v1alpha1
+  resourceRequirements:
+  - resources: spec.podTemplate.spec.resources
+    units: spec.replicas
   ui:
     editor:
       name: flowcontrolapiserverk8sio-prioritylevelconfiguration-editor
@@ -50,7 +53,7 @@ spec:
               type: object
           type: object
         spec:
-          description: '`spec` is the specification of the desired behavior of a "request-priority". More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status'
+          description: '`spec` is the specification of the desired behavior of a "request-priority". More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status'
           properties:
             limited:
               description: '`limited` specifies how requests are handled for a Limited priority level. This field must be non-empty if and only if `type` is `"Limited"`.'
