@@ -20,6 +20,9 @@ spec:
     name: ingresses
     scope: Namespaced
     version: v1beta1
+  resourceRequirements:
+  - resources: spec.podTemplate.spec.resources
+    units: spec.replicas
   ui:
     editor:
       name: networkingk8sio-ingress-editor

@@ -20,6 +20,9 @@ spec:
     name: storageclasses
     scope: Cluster
     version: v1beta1
+  resourceRequirements:
+  - resources: spec.podTemplate.spec.resources
+    units: spec.replicas
   validation:
     openAPIV3Schema:
       description: "StorageClass describes the parameters for a class of storage for which PersistentVolumes can be dynamically provisioned. \n StorageClasses are non-namespaced; the name of the storage class according to etcd is in ObjectMeta.Name."

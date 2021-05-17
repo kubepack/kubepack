@@ -20,6 +20,9 @@ spec:
     name: certificatesigningrequests
     scope: Cluster
     version: v1beta1
+  resourceRequirements:
+  - resources: spec.podTemplate.spec.resources
+    units: spec.replicas
   ui:
     editor:
       name: certificatesk8sio-certificatesigningrequest-editor
@@ -67,6 +70,7 @@ spec:
               items:
                 type: string
               type: array
+              x-kubernetes-list-type: atomic
             request:
               description: Base64-encoded PKCS#10 CSR data
               format: byte
@@ -78,11 +82,12 @@ spec:
               description: UID information about the requesting user. See user.Info interface for details.
               type: string
             usages:
-              description: 'allowedUsages specifies a set of usage contexts the key will be valid for. See: https://tools.ietf.org/html/rfc5280#section-4.2.1.3      https://tools.ietf.org/html/rfc5280#section-4.2.1.12'
+              description: 'allowedUsages specifies a set of usage contexts the key will be valid for. See: https://tools.ietf.org/html/rfc5280#section-4.2.1.3      https://tools.ietf.org/html/rfc5280#section-4.2.1.12 Valid values are:  "signing",  "digital signature",  "content commitment",  "key encipherment",  "key agreement",  "data encipherment",  "cert sign",  "crl sign",  "encipher only",  "decipher only",  "any",  "server auth",  "client auth",  "code signing",  "email protection",  "s/mime",  "ipsec end system",  "ipsec tunnel",  "ipsec user",  "timestamping",  "ocsp signing",  "microsoft sgc",  "netscape sgc"'
               items:
                 description: 'KeyUsages specifies valid usage contexts for keys. See: https://tools.ietf.org/html/rfc5280#section-4.2.1.3      https://tools.ietf.org/html/rfc5280#section-4.2.1.12'
                 type: string
               type: array
+              x-kubernetes-list-type: atomic
             username:
               description: Information about the requesting user. See user.Info interface for details.
               type: string

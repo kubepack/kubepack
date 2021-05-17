@@ -36,10 +36,10 @@ require (
 	k8s.io/klog/v2 v2.8.0
 	k8s.io/kube-openapi v0.0.0-20210305001622-591a79e4bda7
 	k8s.io/kubernetes v1.21.0
-	kmodules.xyz/client-go v0.0.0-20210512200950-b646b11ba7bf
+	kmodules.xyz/client-go v0.0.0-20210514054158-27e164b43474
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20210503192455-da44af375c4c
 	kmodules.xyz/custom-resources v0.0.0-20210504034124-54c54fcdb690
-	kmodules.xyz/resource-metadata v0.5.5-0.20210513195540-42f3f7e2e71c
+	kmodules.xyz/resource-metadata v0.5.5-0.20210514060730-df2b810e12e6
 	kmodules.xyz/webhook-runtime v0.0.0-20210504042742-3a9911e3dcdc
 	kubepack.dev/lib-helm v0.2.4-0.20210504075710-8653e4557a39
 	sigs.k8s.io/application v0.0.0-00010101000000-000000000000

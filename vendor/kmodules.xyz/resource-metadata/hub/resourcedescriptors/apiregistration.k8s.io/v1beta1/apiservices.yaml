@@ -20,6 +20,9 @@ spec:
     name: apiservices
     scope: Cluster
     version: v1beta1
+  resourceRequirements:
+  - resources: spec.podTemplate.spec.resources
+    units: spec.replicas
   validation:
     openAPIV3Schema:
       description: APIService represents a server for a particular GroupVersion. Name must be "version.group".
@@ -64,7 +67,7 @@ spec:
               description: InsecureSkipTLSVerify disables TLS certificate verification when communicating with this server. This is strongly discouraged.  You should use the CABundle instead.
               type: boolean
             service:
-              description: Service is a reference to the service for this API server.  It must communicate on port 443 If the Service is nil, that means the handling for the API groupversion is handled locally on this server. The call will simply delegate to the normal handler chain to be fulfilled.
+              description: Service is a reference to the service for this API server.  It must communicate on port 443. If the Service is nil, that means the handling for the API groupversion is handled locally on this server. The call will simply delegate to the normal handler chain to be fulfilled.
               properties:
                 name:
                   description: Name is the name of the service

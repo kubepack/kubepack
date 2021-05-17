@@ -338,8 +338,6 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ContactData":                                        schema_kubepack_apis_kubepack_v1alpha1_ContactData(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Feature":                                            schema_kubepack_apis_kubepack_v1alpha1_Feature(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.FeatureTable":                                       schema_kubepack_apis_kubepack_v1alpha1_FeatureTable(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.GroupResource":                                      schema_kubepack_apis_kubepack_v1alpha1_GroupResource(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.GroupVersionResource":                               schema_kubepack_apis_kubepack_v1alpha1_GroupVersionResource(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Hub":                                                schema_kubepack_apis_kubepack_v1alpha1_Hub(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec":                                          schema_kubepack_apis_kubepack_v1alpha1_ImageSpec(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link":                                               schema_kubepack_apis_kubepack_v1alpha1_Link(ref),
@@ -370,7 +368,6 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ProductVersion":                                     schema_kubepack_apis_kubepack_v1alpha1_ProductVersion(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Repository":                                         schema_kubepack_apis_kubepack_v1alpha1_Repository(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceDefinitions":                                schema_kubepack_apis_kubepack_v1alpha1_ResourceDefinitions(ref),
-		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceID":                                         schema_kubepack_apis_kubepack_v1alpha1_ResourceID(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Row":                                                schema_kubepack_apis_kubepack_v1alpha1_Row(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.SizedPrice":                                         schema_kubepack_apis_kubepack_v1alpha1_SizedPrice(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ValuesFile":                                         schema_kubepack_apis_kubepack_v1alpha1_ValuesFile(ref),
@@ -16850,67 +16847,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_FeatureTable(ref common.ReferenceCal
 	}
 }
 
-func schema_kubepack_apis_kubepack_v1alpha1_GroupResource(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Type: []string{"object"},
-				Properties: map[string]spec.Schema{
-					"group": {
-						SchemaProps: spec.SchemaProps{
-							Default: "",
-							Type:    []string{"string"},
-							Format:  "",
-						},
-					},
-					"name": {
-						SchemaProps: spec.SchemaProps{
-							Default: "",
-							Type:    []string{"string"},
-							Format:  "",
-						},
-					},
-				},
-				Required: []string{"group", "name"},
-			},
-		},
-	}
-}
-
-func schema_kubepack_apis_kubepack_v1alpha1_GroupVersionResource(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Type: []string{"object"},
-				Properties: map[string]spec.Schema{
-					"group": {
-						SchemaProps: spec.SchemaProps{
-							Default: "",
-							Type:    []string{"string"},
-							Format:  "",
-						},
-					},
-					"version": {
-						SchemaProps: spec.SchemaProps{
-							Default: "",
-							Type:    []string{"string"},
-							Format:  "",
-						},
-					},
-					"resource": {
-						SchemaProps: spec.SchemaProps{
-							Default: "",
-							Type:    []string{"string"},
-							Format:  "",
-						},
-					},
-				},
-				Required: []string{"group", "version", "resource"},
-			},
-		},
-	}
-}
-
 func schema_kubepack_apis_kubepack_v1alpha1_Hub(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -18446,7 +18382,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_ResourceDefinitions(ref common.Refer
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
 										Default: map[string]interface{}{},
-										Ref:     ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceID"),
+										Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.GroupVersionResource"),
 									},
 								},
 							},
@@ -18459,7 +18395,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_ResourceDefinitions(ref common.Refer
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
 										Default: map[string]interface{}{},
-										Ref:     ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceID"),
+										Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.GroupVersionResource"),
 									},
 								},
 							},
@@ -18470,43 +18406,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_ResourceDefinitions(ref common.Refer
 			},
 		},
 		Dependencies: []string{
-			"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ResourceID"},
-	}
-}
-
-func schema_kubepack_apis_kubepack_v1alpha1_ResourceID(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "ResourceID identifies a resource",
-				Type:        []string{"object"},
-				Properties: map[string]spec.Schema{
-					"group": {
-						SchemaProps: spec.SchemaProps{
-							Default: "",
-							Type:    []string{"string"},
-							Format:  "",
-						},
-					},
-					"version": {
-						SchemaProps: spec.SchemaProps{
-							Default: "",
-							Type:    []string{"string"},
-							Format:  "",
-						},
-					},
-					"resource": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Name is the plural name of the resource to serve.  It must match the name of the CustomResourceDefinition-registration too: plural.group and it must be all lowercase.",
-							Default:     "",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-				},
-				Required: []string{"group", "version", "resource"},
-			},
-		},
+			"k8s.io/apimachinery/pkg/apis/meta/v1.GroupVersionResource"},
 	}
 }
 
@@ -18719,7 +18619,7 @@ func schema_kubepack_apis_kubepack_v1alpha1_WaitFlags(ref common.ReferenceCallba
 					"resource": {
 						SchemaProps: spec.SchemaProps{
 							Default: map[string]interface{}{},
-							Ref:     ref("kubepack.dev/kubepack/apis/kubepack/v1alpha1.GroupResource"),
+							Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.GroupResource"),
 						},
 					},
 					"labels": {
@@ -18752,6 +18652,6 @@ func schema_kubepack_apis_kubepack_v1alpha1_WaitFlags(ref common.ReferenceCallba
 			},
 		},
 		Dependencies: []string{
-			"k8s.io/apimachinery/pkg/apis/meta/v1.Duration", "k8s.io/apimachinery/pkg/apis/meta/v1.LabelSelector", "kubepack.dev/kubepack/apis/kubepack/v1alpha1.GroupResource"},
+			"k8s.io/apimachinery/pkg/apis/meta/v1.Duration", "k8s.io/apimachinery/pkg/apis/meta/v1.GroupResource", "k8s.io/apimachinery/pkg/apis/meta/v1.LabelSelector"},
 	}
 }
