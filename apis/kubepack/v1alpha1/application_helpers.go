@@ -62,13 +62,8 @@ func ConvertLink(in []Link) []v1beta1.Link {
 func ApplicationCustomResourceDefinition() *apiextensions.CustomResourceDefinition {
 	var out apiextensions.CustomResourceDefinition
 
-	v1file := fmt.Sprintf("%s_%s.v1.yaml", v1beta1.GroupVersion.Group, "applications")
+	v1file := fmt.Sprintf("%s_%s.yaml", v1beta1.GroupVersion.Group, "applications")
 	if err := yaml.Unmarshal(v1beta1.MustAsset(v1file), &out.V1); err != nil {
-		panic(err)
-	}
-
-	v1beta1file := fmt.Sprintf("%s_%s.yaml", v1beta1.GroupVersion.Group, "applications")
-	if err := yaml.Unmarshal(v1beta1.MustAsset(v1beta1file), &out.V1beta1); err != nil {
 		panic(err)
 	}
 
