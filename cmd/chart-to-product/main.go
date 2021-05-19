@@ -22,7 +22,7 @@ import (
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/pkg/lib"
-	"kubepack.dev/lib-helm/repo"
+	"kubepack.dev/lib-helm/pkg/repo"
 
 	flag "github.com/spf13/pflag"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"

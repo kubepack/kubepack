@@ -68,6 +68,15 @@ func (e Engine) Render(chrt *chart.Chart, values chartutil.Values) (map[string]s
 	return e.render(tmap)
 }
 
+func (e Engine) NewInstance(chrt *chart.Chart, values chartutil.Values) *EngineInstance {
+	return &EngineInstance{
+		chrt:          chrt,
+		values:        values,
+		referenceTpls: allPartialTemplates(chrt, values),
+		e:             e,
+	}
+}
+
 // Render takes a chart, optional values, and value overrides, and attempts to
 // render the Go templates using the default options.
 func Render(chrt *chart.Chart, values chartutil.Values) (map[string]string, error) {
@@ -330,6 +339,78 @@ func allTemplates(c *chart.Chart, vals chartutil.Values) map[string]renderable {
 	return templates
 }
 
+func allPartialTemplates(c *chart.Chart, vals chartutil.Values) map[string]renderable {
+	templates := make(map[string]renderable)
+	recAllPartialTpls(c, templates, vals)
+	return templates
+}
+
+func recAllPartialTpls(c *chart.Chart, templates map[string]renderable, vals chartutil.Values) {
+	next := map[string]interface{}{
+		"Chart":        c.Metadata,
+		"Files":        newFiles(c.Files),
+		"Release":      vals["Release"],
+		"Capabilities": vals["Capabilities"],
+		"Values":       make(chartutil.Values),
+	}
+
+	// If there is a {{.Values.ThisChart}} in the parent metadata,
+	// copy that into the {{.Values}} for this template.
+	if c.IsRoot() {
+		next["Values"] = vals["Values"]
+	} else if vs, err := vals.Table("Values." + c.Name()); err == nil {
+		next["Values"] = vs
+	}
+
+	for _, child := range c.Dependencies() {
+		recAllPartialTpls(child, templates, next)
+	}
+
+	newParentID := c.ChartFullPath()
+	for _, t := range c.Templates {
+		// Only read partials. They are only included from other templates.
+		if !strings.HasPrefix(path.Base(t.Name), "_") {
+			continue
+		}
+		//if !isTemplateValid(c, t.Name) {
+		//	continue
+		//}
+		templates[path.Join(newParentID, t.Name)] = renderable{
+			tpl:      string(t.Data),
+			vals:     next,
+			basePath: path.Join(newParentID, "templates"),
+		}
+	}
+}
+
+func prepareTpls(c *chart.Chart, tpls map[string]string, vals chartutil.Values) map[string]renderable {
+	next := map[string]interface{}{
+		"Chart":        c.Metadata,
+		"Files":        newFiles(c.Files),
+		"Release":      vals["Release"],
+		"Capabilities": vals["Capabilities"],
+		"Values":       make(chartutil.Values),
+	}
+
+	// If there is a {{.Values.ThisChart}} in the parent metadata,
+	// copy that into the {{.Values}} for this template.
+	if c.IsRoot() {
+		next["Values"] = vals["Values"]
+	} else if vs, err := vals.Table("Values." + c.Name()); err == nil {
+		next["Values"] = vs
+	}
+
+	templates := map[string]renderable{}
+	for key, t := range tpls {
+		templates[key] = renderable{
+			tpl:      t,
+			vals:     next,
+			basePath: "",
+		}
+	}
+	return templates
+}
+
 // recAllTpls recurses through the templates in a chart.
 //
 // As it recurses, it also sets the values to be appropriate for the template
@@ -379,4 +460,16 @@ func isTemplateValid(ch *chart.Chart, templateName string) bool {
 // isLibraryChart returns true if the chart is a library chart
 func isLibraryChart(c *chart.Chart) bool {
 	return strings.EqualFold(c.Metadata.Type, "library")
+}
+
+type EngineInstance struct {
+	chrt          *chart.Chart
+	values        chartutil.Values
+	referenceTpls map[string]renderable
+	e             Engine
+}
+
+func (ei EngineInstance) Render(tpls map[string]string) (map[string]string, error) {
+	templates := prepareTpls(ei.chrt, tpls, ei.values)
+	return ei.e.renderWithReferences(templates, ei.referenceTpls)
 }

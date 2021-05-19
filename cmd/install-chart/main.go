@@ -21,7 +21,8 @@ import (
 	"path/filepath"
 
 	"kubepack.dev/kubepack/pkg/lib"
-	"kubepack.dev/lib-helm/action"
+	"kubepack.dev/lib-helm/pkg/action"
+	"kubepack.dev/lib-helm/pkg/values"
 
 	flag "github.com/spf13/pflag"
 	"gomodules.xyz/x/crypto/rand"
@@ -69,11 +70,13 @@ func main() {
 	}
 	i.WithRegistry(lib.DefaultRegistry).
 		WithOptions(action.InstallOptions{
-			ChartURL:     url,
-			ChartName:    name,
-			Version:      version,
-			ValuesFile:   "",
-			ValuesPatch:  nil,
+			ChartURL:  url,
+			ChartName: name,
+			Version:   version,
+			Values: values.Options{
+				ValuesFile:  "",
+				ValuesPatch: nil,
+			},
 			DryRun:       false,
 			DisableHooks: false,
 			Replace:      false,
@@ -85,7 +88,7 @@ func main() {
 			Atomic:       false,
 			SkipCRDs:     false,
 		})
-	rel, err := i.Run()
+	rel, _, err := i.Run()
 	if err != nil {
 		klog.Fatal(err)
 	}

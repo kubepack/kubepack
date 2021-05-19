@@ -20,7 +20,7 @@ import (
 	"strings"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/lib-helm/repo"
+	"kubepack.dev/lib-helm/pkg/repo"
 
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chartutil"

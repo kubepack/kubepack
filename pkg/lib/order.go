@@ -21,8 +21,9 @@ import (
 	"time"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/lib-helm/action"
-	"kubepack.dev/lib-helm/repo"
+	"kubepack.dev/lib-helm/pkg/action"
+	"kubepack.dev/lib-helm/pkg/repo"
+	"kubepack.dev/lib-helm/pkg/values"
 
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
@@ -222,11 +223,13 @@ func InstallOrder(getter genericclioptions.RESTClientGetter, reg *repo.Registry,
 		f3.
 			WithRegistry(reg).
 			WithOptions(action.InstallOptions{
-				ChartURL:    pkg.Chart.ChartRef.URL,
-				ChartName:   pkg.Chart.ChartRef.Name,
-				Version:     pkg.Chart.Version,
-				ValuesFile:  pkg.Chart.ValuesFile,
-				ValuesPatch: pkg.Chart.ValuesPatch,
+				ChartURL:  pkg.Chart.ChartRef.URL,
+				ChartName: pkg.Chart.ChartRef.Name,
+				Version:   pkg.Chart.Version,
+				Values: values.Options{
+					ValuesFile:  pkg.Chart.ValuesFile,
+					ValuesPatch: pkg.Chart.ValuesPatch,
+				},
 				Namespace:   pkg.Chart.Namespace,
 				ReleaseName: pkg.Chart.ReleaseName,
 			})

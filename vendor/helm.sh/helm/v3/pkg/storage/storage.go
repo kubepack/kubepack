@@ -134,11 +134,22 @@ func (s *Storage) Deployed(name string) (*rspb.Release, error) {
 func (s *Storage) DeployedAll(name string) ([]*rspb.Release, error) {
 	s.Log("getting deployed releases from %q history", name)
 
-	ls, err := s.Driver.Query(map[string]string{
-		"name":   name,
-		"owner":  "helm",
-		"status": "deployed",
-	})
+	var lbls map[string]string
+	if s.Name() == "storage.x-helm.dev/apps" {
+		// WARNING(tamal): These lbls are required for Kubepack/Application driver.
+		lbls = map[string]string{
+			"name.release.x-helm.dev/" + name:   name,
+			"owner":                             "helm",
+			"status.release.x-helm.dev/" + name: "deployed",
+		}
+	} else {
+		lbls = map[string]string{
+			"name":   name,
+			"owner":  "helm",
+			"status": "deployed",
+		}
+	}
+	ls, err := s.Driver.Query(lbls)
 	if err == nil {
 		return ls, nil
 	}
@@ -153,7 +164,20 @@ func (s *Storage) DeployedAll(name string) ([]*rspb.Release, error) {
 func (s *Storage) History(name string) ([]*rspb.Release, error) {
 	s.Log("getting release history for %q", name)
 
-	return s.Driver.Query(map[string]string{"name": name, "owner": "helm"})
+	var lbls map[string]string
+	if s.Name() == "storage.x-helm.dev/apps" {
+		// WARNING(tamal): These lbls are required for Kubepack/Application driver.
+		lbls = map[string]string{
+			"name.release.x-helm.dev/" + name: name,
+			"owner":                           "helm",
+		}
+	} else {
+		lbls = map[string]string{
+			"name":  name,
+			"owner": "helm",
+		}
+	}
+	return s.Driver.Query(lbls)
 }
 
 // removeLeastRecent removes items from history until the length number of releases
