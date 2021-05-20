@@ -18,7 +18,7 @@ package lib
 
 import (
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/lib-helm/repo"
+	"kubepack.dev/lib-helm/pkg/repo"
 )
 
 func ComparePlans(reg *repo.Registry, url string, names []string, version string) (v1alpha1.FeatureTable, error) {

@@ -21,6 +21,7 @@ import (
 
 	api "kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	cs "kubepack.dev/kubepack/client/clientset/versioned"
+	application "kubepack.dev/lib-helm/pkg/application"
 
 	pcm "github.com/prometheus-operator/prometheus-operator/pkg/client/versioned/typed/monitoring/v1"
 	crd_cs "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
@@ -67,7 +68,7 @@ func (c *KubepackController) ensureCustomResourceDefinitions() error {
 	crds := []*apiextensions.CustomResourceDefinition{
 		api.Bundle{}.CustomResourceDefinition(),
 		api.Order{}.CustomResourceDefinition(),
-		api.ApplicationCustomResourceDefinition(),
+		application.CustomResourceDefinition(),
 		appcat.AppBinding{}.CustomResourceDefinition(),
 	}
 	return apiextensions.RegisterCRDs(c.crdClient, crds)

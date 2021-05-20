@@ -18,7 +18,7 @@ package lib
 
 import (
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/lib-helm/repo"
+	"kubepack.dev/lib-helm/pkg/repo"
 
 	"github.com/gobuffalo/flect"
 	kerr "k8s.io/apimachinery/pkg/api/errors"
