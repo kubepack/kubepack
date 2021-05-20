@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	github.com/appscode/static-assets v0.6.7
+	github.com/aws/aws-sdk-go v1.38.31 // indirect
 	github.com/evanphx/json-patch v4.9.0+incompatible
 	github.com/gabriel-vasile/mimetype v1.2.0
 	github.com/go-openapi/spec v0.19.8
@@ -24,6 +25,7 @@ require (
 	gomodules.xyz/jsonpatch/v2 v2.1.0
 	gomodules.xyz/kglog v0.0.1
 	gomodules.xyz/runtime v0.2.0
+	gomodules.xyz/sets v0.0.0-20210218105342-2efe2fb519a2 // indirect
 	gomodules.xyz/version v0.1.0
 	gomodules.xyz/x v0.0.4
 	helm.sh/helm/v3 v3.5.2
@@ -39,10 +41,10 @@ require (
 	kmodules.xyz/client-go v0.0.0-20210514054158-27e164b43474
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20210503192455-da44af375c4c
 	kmodules.xyz/custom-resources v0.0.0-20210504034124-54c54fcdb690
-	kmodules.xyz/resource-metadata v0.5.5-0.20210514060730-df2b810e12e6
+	kmodules.xyz/resource-metadata v0.5.5-0.20210518185031-147bfd9e841c
 	kmodules.xyz/webhook-runtime v0.0.0-20210504042742-3a9911e3dcdc
-	kubepack.dev/lib-helm v0.2.4-0.20210504075710-8653e4557a39
-	sigs.k8s.io/application v0.0.0-00010101000000-000000000000
+	kubepack.dev/lib-helm v0.2.4-0.20210519231607-c3994656e95b
+	sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4
 	sigs.k8s.io/yaml v1.2.0
 )
 
@@ -130,7 +132,9 @@ replace google.golang.org/genproto => google.golang.org/genproto v0.0.0-20201110
 
 replace google.golang.org/grpc => google.golang.org/grpc v1.27.1
 
-replace helm.sh/helm/v3 => github.com/kubepack/helm/v3 v3.1.0-rc.1.0.20210503022716-7e2d4913a125
+replace gopkg.in/yaml.v2 => gopkg.in/yaml.v2 v2.3.0
+
+replace helm.sh/helm/v3 => github.com/kubepack/helm/v3 v3.6.0-rc.1.0.20210518225915-c3e0ce48dd1b
 
 replace k8s.io/api => k8s.io/api v0.21.0
 

@@ -33,9 +33,10 @@ import (
 
 	"kubepack.dev/kubepack/apis"
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	chart2 "kubepack.dev/lib-helm/chart"
-	libchart "kubepack.dev/lib-helm/chart"
-	"kubepack.dev/lib-helm/repo"
+	"kubepack.dev/lib-helm/pkg/application"
+	chart2 "kubepack.dev/lib-helm/pkg/chart"
+	libchart "kubepack.dev/lib-helm/pkg/chart"
+	"kubepack.dev/lib-helm/pkg/repo"
 
 	jsonpatch "github.com/evanphx/json-patch"
 	"gocloud.dev/blob"
@@ -1029,7 +1030,7 @@ func (x *ApplicationCRDRegistrar) Do() error {
 		return err
 	}
 	return apiextensions.RegisterCRDs(apiextClient, []*apiextensions.CustomResourceDefinition{
-		v1alpha1.ApplicationCustomResourceDefinition(),
+		application.CustomResourceDefinition(),
 	})
 }
 
