@@ -14,7 +14,7 @@ import (
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 	"kmodules.xyz/resource-metadata/hub"
 	libchart "kubepack.dev/lib-helm/pkg/chart"
-	"kubepack.dev/lib-helm/pkg/flowapi"
+	"kubepack.dev/lib-helm/pkg/engine"
 	"kubepack.dev/lib-helm/pkg/repo"
 	"kubepack.dev/lib-helm/pkg/values"
 )
@@ -83,7 +83,7 @@ func (x *Upgrader) WithReleaseName(name string) *Upgrader {
 	return x
 }
 
-func (x *Upgrader) Run() (*release.Release, *flowapi.FlowState, error) {
+func (x *Upgrader) Run() (*release.Release, *engine.State, error) {
 	if x.opts.Version == "" && x.opts.Devel {
 		debug("setting version to >0.0.0-0")
 		x.opts.Version = ">0.0.0-0"
@@ -162,14 +162,13 @@ func (x *Upgrader) Run() (*release.Release, *flowapi.FlowState, error) {
 		return nil, nil, err
 	}
 	caps, _ := x.cfg.GetCapabilities()
-	return rls, &flowapi.FlowState{
+	return rls, &engine.State{
 		ReleaseName:  rls.Name,
+		Namespace:    x.opts.Namespace,
 		Chrt:         rls.Chart,
 		Values:       rls.Config,
 		IsUpgrade:    true,
 		Capabilities: caps,
-		// Engine:       engine.EngineInstance{},
-		// InitEngine:   sync.Once{},
 	}, nil
 }
 

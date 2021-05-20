@@ -140,8 +140,15 @@ func newApplicationObject(rls *rspb.Release) *v1beta1.Application {
 	if partOf, ok := rls.Chart.Metadata.Annotations["app.kubernetes.io/part-of"]; ok && partOf != "" {
 		lbl["app.kubernetes.io/part-of"] = partOf
 	} else {
-		lbl["app.kubernetes.io/name"] = rls.Chart.Name()
 		lbl["app.kubernetes.io/instance"] = rls.Name
+
+		// ref : https://github.com/kubepack/helm/blob/ac-1.21.0/pkg/action/validate.go#L208-L214
+		if data, ok := rls.Chart.Metadata.Annotations["meta.x-helm.dev/editor"]; ok && data != "" {
+			var gvr metav1.GroupVersionResource
+			if err := json.Unmarshal([]byte(data), &gvr); err == nil {
+				lbl["app.kubernetes.io/name"] = fmt.Sprintf("%s.%s", gvr.Resource, gvr.Group)
+			}
+		}
 	}
 	obj.Spec.Selector = &metav1.LabelSelector{
 		MatchLabels: lbl,
@@ -278,8 +285,6 @@ func decodeReleaseFromApp(app *v1beta1.Application, rlsNames []string, di dynami
 func EditorChartValueManifest(app *v1beta1.Application, mapper discovery.ResourceMapper, dc dynamic.Interface, rls types.NamespacedName, editorGVR *metav1.GroupVersionResource) (*EditorTemplate, error) {
 	labels := app.Spec.Selector
 	labels.MatchLabels["app.kubernetes.io/instance"] = rls.Name
-	// TODO: keep track of chart name via labels?
-	// appNameLabel                   = "app.kubernetes.io/name" not used
 
 	selector, err := metav1.LabelSelectorAsSelector(labels)
 	if err != nil {
