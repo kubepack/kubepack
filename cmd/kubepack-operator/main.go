@@ -25,10 +25,12 @@ import (
 )
 
 func main() {
-	kglog.InitLogs()
+	rootCmd := cmds.NewRootCmd()
+
+	kglog.Init(rootCmd, true)
 	defer kglog.FlushLogs()
 
-	if err := cmds.NewRootCmd().Execute(); err != nil {
+	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}
 }
