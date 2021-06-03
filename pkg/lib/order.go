@@ -25,10 +25,10 @@ import (
 	"kubepack.dev/lib-helm/pkg/repo"
 	"kubepack.dev/lib-helm/pkg/values"
 
+	"github.com/Masterminds/semver/v3"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
 	"gomodules.xyz/jsonpatch/v2"
-	"gomodules.xyz/version"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
@@ -183,11 +183,13 @@ func InstallOrder(getter genericclioptions.RESTClientGetter, reg *repo.Registry,
 	if err != nil {
 		return err
 	}
-	kv, err := version.NewVersion(info.GitVersion)
+	kubeVersionPtr, err := semver.NewVersion(info.GitVersion)
 	if err != nil {
 		return err
 	}
-	kubeVersion := kv.ToMutator().ResetPrerelease().ResetMetadata().Done().String()
+	kubeVersion := *kubeVersionPtr
+	kubeVersion, _ = kubeVersion.SetPrerelease("")
+	kubeVersion, _ = kubeVersion.SetMetadata("")
 
 	namespaces := sets.NewString("default", "kube-system")
 
@@ -262,7 +264,7 @@ func InstallOrder(getter genericclioptions.RESTClientGetter, reg *repo.Registry,
 		f6 := &ApplicationGenerator{
 			Registry:    reg,
 			Chart:       *pkg.Chart,
-			KubeVersion: kubeVersion,
+			KubeVersion: kubeVersion.Original(),
 		}
 		err = f6.Do()
 		if err != nil {

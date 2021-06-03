@@ -36,6 +36,7 @@ github.com/MakeNowJust/heredoc
 # github.com/Masterminds/goutils v1.1.1
 github.com/Masterminds/goutils
 # github.com/Masterminds/semver/v3 v3.1.1
+## explicit
 github.com/Masterminds/semver/v3
 # github.com/Masterminds/sprig/v3 v3.2.2
 github.com/Masterminds/sprig/v3
@@ -748,7 +749,7 @@ gomodules.xyz/homedir
 # gomodules.xyz/jsonpatch/v2 v2.1.0
 ## explicit
 gomodules.xyz/jsonpatch/v2
-# gomodules.xyz/kglog v0.0.1
+# gomodules.xyz/kglog v0.0.3
 ## explicit
 gomodules.xyz/kglog
 # gomodules.xyz/password-generator v0.2.6
@@ -759,19 +760,14 @@ gomodules.xyz/pointer
 ## explicit
 gomodules.xyz/runtime
 # gomodules.xyz/sets v0.0.0-20210218105342-2efe2fb519a2
-## explicit
 gomodules.xyz/sets
-# gomodules.xyz/version v0.1.0
-## explicit
-gomodules.xyz/version
 # gomodules.xyz/wait v0.0.0-20210218105358-639bd9211545
 gomodules.xyz/wait
-# gomodules.xyz/x v0.0.4
+# gomodules.xyz/x v0.0.5
 ## explicit
 gomodules.xyz/x/analytics
 gomodules.xyz/x/crypto/rand
 gomodules.xyz/x/env
-gomodules.xyz/x/flags
 gomodules.xyz/x/strings
 gomodules.xyz/x/term
 gomodules.xyz/x/version
@@ -908,7 +904,7 @@ gopkg.in/tomb.v1
 gopkg.in/yaml.v2
 # gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776
 gopkg.in/yaml.v3
-# helm.sh/helm/v3 v3.5.2 => github.com/kubepack/helm/v3 v3.6.0-rc.1.0.20210518225915-c3e0ce48dd1b
+# helm.sh/helm/v3 v3.6.0 => github.com/kubepack/helm/v3 v3.6.0-rc.1.0.20210518225915-c3e0ce48dd1b
 ## explicit
 helm.sh/helm/v3/internal/experimental/registry
 helm.sh/helm/v3/internal/fileutil
@@ -1531,7 +1527,7 @@ k8s.io/utils/trace
 kmodules.xyz/apiversion
 # kmodules.xyz/apply v0.0.0-20210503080849-eb226c295465
 kmodules.xyz/apply
-# kmodules.xyz/client-go v0.0.0-20210514054158-27e164b43474
+# kmodules.xyz/client-go v0.0.0-20210603204237-f389e448f0be
 ## explicit
 kmodules.xyz/client-go
 kmodules.xyz/client-go/admissionregistration/v1beta1
