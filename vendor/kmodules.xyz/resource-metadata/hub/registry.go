@@ -27,6 +27,7 @@ import (
 	"time"
 
 	"kmodules.xyz/apiversion"
+	kmapi "kmodules.xyz/client-go/api/v1"
 	disco_util "kmodules.xyz/client-go/discovery"
 	"kmodules.xyz/resource-metadata/apis/meta/v1alpha1"
 	"kmodules.xyz/resource-metadata/hub/resourceclasses"
@@ -65,8 +66,8 @@ type Registry struct {
 	// TODO: store in KV so cached for multiple instances of BB api server
 	preferred     map[schema.GroupResource]schema.GroupVersionResource
 	lastRefreshed time.Time
-	regGVK        map[schema.GroupVersionKind]*v1alpha1.ResourceID
-	regGVR        map[schema.GroupVersionResource]*v1alpha1.ResourceID
+	regGVK        map[schema.GroupVersionKind]*kmapi.ResourceID
+	regGVR        map[schema.GroupVersionResource]*kmapi.ResourceID
 }
 
 var _ disco_util.ResourceMapper = &Registry{}
@@ -76,8 +77,8 @@ func NewRegistry(uid string, helm HelmVersion, cache KV) *Registry {
 		uid:    uid,
 		helm:   helm,
 		cache:  cache,
-		regGVK: map[schema.GroupVersionKind]*v1alpha1.ResourceID{},
-		regGVR: map[schema.GroupVersionResource]*v1alpha1.ResourceID{},
+		regGVK: map[schema.GroupVersionKind]*kmapi.ResourceID{},
+		regGVR: map[schema.GroupVersionResource]*kmapi.ResourceID{},
 	}
 
 	guess := make(map[schema.GroupResource]string)
@@ -204,9 +205,9 @@ func (r *Registry) createRegistry(cfg *rest.Config) (map[schema.GroupResource]sc
 			rs.Group = gv.Group
 			rs.Version = gv.Version
 
-			scope := v1alpha1.ClusterScoped
+			scope := kmapi.ClusterScoped
 			if rs.Namespaced {
-				scope = v1alpha1.NamespaceScoped
+				scope = kmapi.NamespaceScoped
 			}
 
 			filename := fmt.Sprintf("%s/%s/%s.yaml", rs.Group, rs.Version, rs.Name)
@@ -225,7 +226,7 @@ func (r *Registry) createRegistry(cfg *rest.Config) (map[schema.GroupResource]sc
 					},
 				},
 				Spec: v1alpha1.ResourceDescriptorSpec{
-					Resource: v1alpha1.ResourceID{
+					Resource: kmapi.ResourceID{
 						Group:   rs.Group,
 						Version: rs.Version,
 						Name:    rs.Name,
@@ -313,6 +314,18 @@ func (r *Registry) findGVR(in *v1alpha1.GroupResources, keepOfficialTypes bool) 
 	return schema.GroupVersionResource{}, false
 }
 
+func (r *Registry) ResourceIDForGVK(gvk schema.GroupVersionKind) (*kmapi.ResourceID, error) {
+	r.m.RLocker()
+	defer r.m.RUnlock()
+	return r.regGVK[gvk], nil
+}
+
+func (r *Registry) ResourceIDForGVR(gvr schema.GroupVersionResource) (*kmapi.ResourceID, error) {
+	r.m.RLocker()
+	defer r.m.RUnlock()
+	return r.regGVR[gvr], nil
+}
+
 func (r *Registry) GVR(gvk schema.GroupVersionKind) (schema.GroupVersionResource, error) {
 	r.m.RLock()
 	defer r.m.RUnlock()
@@ -350,7 +363,7 @@ func (r *Registry) IsNamespaced(gvr schema.GroupVersionResource) (bool, error) {
 	if !exist {
 		return false, UnregisteredErr{gvr.String()}
 	}
-	return rid.Scope == v1alpha1.NamespaceScoped, nil
+	return rid.Scope == kmapi.NamespaceScoped, nil
 }
 
 func (r *Registry) IsPreferred(gvr schema.GroupVersionResource) (bool, error) {
@@ -462,7 +475,7 @@ func (r *Registry) createResourcePanel(keepOfficialTypes bool) (*v1alpha1.Resour
 				if !ok {
 					continue
 				}
-				pe.Resource = &v1alpha1.ResourceID{
+				pe.Resource = &kmapi.ResourceID{
 					Group:   gvr.Group,
 					Version: gvr.Version,
 					Name:    gvr.Resource,
@@ -470,7 +483,7 @@ func (r *Registry) createResourcePanel(keepOfficialTypes bool) (*v1alpha1.Resour
 				existingGRs[gvr.GroupResource()] = true
 				if rd, err := r.LoadByGVR(gvr); err == nil {
 					pe.Resource = &rd.Spec.Resource
-					pe.Namespaced = rd.Spec.Resource.Scope == v1alpha1.NamespaceScoped
+					pe.Namespaced = rd.Spec.Resource.Scope == kmapi.NamespaceScoped
 					pe.Icons = rd.Spec.Icons
 					pe.Missing = r.Missing(gvr)
 					pe.Installer = rd.Spec.Installer
@@ -522,7 +535,7 @@ func (r *Registry) createResourcePanel(keepOfficialTypes bool) (*v1alpha1.Resour
 			Name:       rd.Spec.Resource.Kind,
 			Resource:   &rd.Spec.Resource,
 			Icons:      rd.Spec.Icons,
-			Namespaced: rd.Spec.Resource.Scope == v1alpha1.NamespaceScoped,
+			Namespaced: rd.Spec.Resource.Scope == kmapi.NamespaceScoped,
 			Missing:    r.Missing(gvr),
 			Installer:  rd.Spec.Installer,
 		})

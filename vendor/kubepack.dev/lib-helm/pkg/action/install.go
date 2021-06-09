@@ -39,6 +39,7 @@ type InstallOptions struct {
 	DisableOpenAPIValidation bool           `json:"disableOpenAPIValidation"`
 	IncludeCRDs              bool           `json:"includeCRDs"`
 	PartOf                   string         `json:"partOf"`
+	CreateNamespace          bool           `json:"createNamespace"`
 }
 
 type Installer struct {
@@ -113,6 +114,7 @@ func (x *Installer) Run() (*release.Release, *engine.State, error) {
 	cmd.SubNotes = x.opts.SubNotes
 	cmd.DisableOpenAPIValidation = x.opts.DisableOpenAPIValidation
 	cmd.IncludeCRDs = x.opts.IncludeCRDs
+	cmd.CreateNamespace = x.opts.CreateNamespace
 
 	validInstallableChart, err := libchart.IsChartInstallable(chrt.Chart)
 	if !validInstallableChart {

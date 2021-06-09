@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"sort"
 	"strings"
+	"time"
 
 	"github.com/imdario/mergo"
 	"github.com/pkg/errors"
@@ -241,8 +242,15 @@ func (d *Applications) Create(_ string, rls *rspb.Release) error {
 // Update updates the Application holding the release. If not found
 // the Application is created to hold the release.
 func (d *Applications) Update(_ string, rls *rspb.Release) error {
+	// Bypass update call if called on originalRelease.
+	// Update() just updates the modifiedAt timestamp. This is not that important for our app driver.
+	if rls.Chart == nil || rls.Chart.Metadata == nil {
+		return nil
+	}
+
 	// create a new configmap object to hold the release
 	obj := newApplicationObject(rls)
+	obj.Annotations["modified-at.release.x-helm.dev/"+rls.Name] = time.Now().UTC().Format(time.RFC3339)
 
 	// push the configmap object out into the kubiverse
 	_, _, err := createOrPatchApplication(context.Background(), d.ai, obj.ObjectMeta, func(in *v1beta1.Application) *v1beta1.Application {

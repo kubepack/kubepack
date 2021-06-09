@@ -21,14 +21,14 @@ import (
 
 	"kubepack.dev/kubepack/pkg/cmds"
 
-	"gomodules.xyz/kglog"
+	"gomodules.xyz/logs"
 )
 
 func main() {
 	rootCmd := cmds.NewRootCmd()
 
-	kglog.Init(rootCmd, true)
-	defer kglog.FlushLogs()
+	logs.Init(rootCmd, true)
+	defer logs.FlushLogs()
 
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)

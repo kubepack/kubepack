@@ -33,6 +33,7 @@ type DeployOptions struct {
 	DisableOpenAPIValidation bool           `json:"disableOpenAPIValidation"`
 	IncludeCRDs              bool           `json:"includeCRDs"`
 	PartOf                   string         `json:"partOf"`
+	CreateNamespace          bool           `json:"createNamespace"`
 	Force                    bool           `json:"force"`
 	Recreate                 bool           `json:"recreate"`
 	CleanupOnFail            bool           `json:"cleanupOnFail"`
@@ -101,6 +102,7 @@ func (x *Deployer) Run() (*release.Release, *engine.State, error) {
 				DisableOpenAPIValidation: x.opts.DisableOpenAPIValidation,
 				IncludeCRDs:              x.opts.IncludeCRDs,
 				PartOf:                   x.opts.PartOf,
+				CreateNamespace:          x.opts.CreateNamespace,
 			})
 		return i.Run()
 	} else if err != nil {

@@ -21,30 +21,7 @@ import (
 
 	"kmodules.xyz/client-go/apiextensions"
 	"kmodules.xyz/resource-metadata/crds"
-
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/runtime/schema"
 )
-
-func (r ResourceID) GroupVersion() schema.GroupVersion {
-	return schema.GroupVersion{Group: r.Group, Version: r.Version}
-}
-
-func (r ResourceID) GroupResource() schema.GroupResource {
-	return schema.GroupResource{Group: r.Group, Resource: r.Name}
-}
-
-func (r ResourceID) TypeMeta() metav1.TypeMeta {
-	return metav1.TypeMeta{APIVersion: r.GroupVersion().String(), Kind: r.Kind}
-}
-
-func (r ResourceID) GroupVersionResource() schema.GroupVersionResource {
-	return schema.GroupVersionResource{Group: r.Group, Version: r.Version, Resource: r.Name}
-}
-
-func (r ResourceID) GroupVersionKind() schema.GroupVersionKind {
-	return schema.GroupVersionKind{Group: r.Group, Version: r.Version, Kind: r.Kind}
-}
 
 func (v ResourceDescriptor) CustomResourceDefinition() *apiextensions.CustomResourceDefinition {
 	return crds.MustCustomResourceDefinition(SchemeGroupVersion.WithResource(ResourceResourceDescriptors))
