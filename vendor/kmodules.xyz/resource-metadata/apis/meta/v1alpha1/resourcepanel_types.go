@@ -17,6 +17,8 @@ limitations under the License.
 package v1alpha1
 
 import (
+	kmapi "kmodules.xyz/client-go/api/v1"
+
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -37,8 +39,8 @@ type PanelSection struct {
 type PanelEntry struct {
 	Name string `json:"name"`
 	// +optional
-	Path     string      `json:"path,omitempty"`
-	Resource *ResourceID `json:"resource,omitempty"`
+	Path     string            `json:"path,omitempty"`
+	Resource *kmapi.ResourceID `json:"resource,omitempty"`
 	// +optional
 	Required bool `json:"required,omitempty"`
 	// +optional

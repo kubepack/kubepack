@@ -24,7 +24,7 @@ require (
 	gocloud.dev v0.22.0
 	gomodules.xyz/blobfs v0.1.7
 	gomodules.xyz/jsonpatch/v2 v2.1.0
-	gomodules.xyz/kglog v0.0.3
+	gomodules.xyz/logs v0.0.2
 	gomodules.xyz/runtime v0.2.0
 	gomodules.xyz/x v0.0.5
 	helm.sh/helm/v3 v3.6.0
@@ -37,12 +37,12 @@ require (
 	k8s.io/klog/v2 v2.8.0
 	k8s.io/kube-openapi v0.0.0-20210305001622-591a79e4bda7
 	k8s.io/kubernetes v1.21.0
-	kmodules.xyz/client-go v0.0.0-20210603204237-f389e448f0be
+	kmodules.xyz/client-go v0.0.0-20210606080445-4a400cecb350
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20210503192455-da44af375c4c
-	kmodules.xyz/custom-resources v0.0.0-20210504034124-54c54fcdb690
-	kmodules.xyz/resource-metadata v0.5.5-0.20210518185031-147bfd9e841c
+	kmodules.xyz/custom-resources v0.0.0-20210605111625-741fcb992541
+	kmodules.xyz/resource-metadata v0.5.6-0.20210609095405-6352a05e3b49
 	kmodules.xyz/webhook-runtime v0.0.0-20210504042742-3a9911e3dcdc
-	kubepack.dev/lib-helm v0.2.4-0.20210520194150-305faa644d29
+	kubepack.dev/lib-helm v0.2.4-0.20210609103625-e05e8e764d03
 	sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4
 	sigs.k8s.io/yaml v1.2.0
 )

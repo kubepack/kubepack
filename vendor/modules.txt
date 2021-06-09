@@ -294,8 +294,6 @@ github.com/gogo/protobuf/gogoproto
 github.com/gogo/protobuf/proto
 github.com/gogo/protobuf/protoc-gen-gogo/descriptor
 github.com/gogo/protobuf/sortkeys
-# github.com/golang/glog v0.0.0-20210429001901-424d2337a529
-github.com/golang/glog
 # github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e
 github.com/golang/groupcache/lru
 # github.com/golang/protobuf v1.4.3 => github.com/golang/protobuf v1.4.3
@@ -744,14 +742,16 @@ gomodules.xyz/blobfs
 gomodules.xyz/blobfs/testing
 # gomodules.xyz/clock v0.0.0-20200817085942-06523dba733f
 gomodules.xyz/clock
+# gomodules.xyz/flags v0.1.0
+gomodules.xyz/flags
 # gomodules.xyz/homedir v0.0.0-20201104190528-bcd4d5d94b84
 gomodules.xyz/homedir
 # gomodules.xyz/jsonpatch/v2 v2.1.0
 ## explicit
 gomodules.xyz/jsonpatch/v2
-# gomodules.xyz/kglog v0.0.3
+# gomodules.xyz/logs v0.0.2
 ## explicit
-gomodules.xyz/kglog
+gomodules.xyz/logs
 # gomodules.xyz/password-generator v0.2.6
 gomodules.xyz/password-generator
 # gomodules.xyz/pointer v0.0.0-20201105071923-daf60fa55209
@@ -902,7 +902,7 @@ gopkg.in/natefinch/lumberjack.v2
 gopkg.in/tomb.v1
 # gopkg.in/yaml.v2 v2.4.0 => gopkg.in/yaml.v2 v2.3.0
 gopkg.in/yaml.v2
-# gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776
+# gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
 gopkg.in/yaml.v3
 # helm.sh/helm/v3 v3.6.0 => github.com/kubepack/helm/v3 v3.6.0-rc.1.0.20210518225915-c3e0ce48dd1b
 ## explicit
@@ -1527,10 +1527,11 @@ k8s.io/utils/trace
 kmodules.xyz/apiversion
 # kmodules.xyz/apply v0.0.0-20210503080849-eb226c295465
 kmodules.xyz/apply
-# kmodules.xyz/client-go v0.0.0-20210603204237-f389e448f0be
+# kmodules.xyz/client-go v0.0.0-20210606080445-4a400cecb350
 ## explicit
 kmodules.xyz/client-go
 kmodules.xyz/client-go/admissionregistration/v1beta1
+kmodules.xyz/client-go/api/v1
 kmodules.xyz/client-go/apiextensions
 kmodules.xyz/client-go/apiextensions/v1
 kmodules.xyz/client-go/apiextensions/v1beta1
@@ -1550,16 +1551,18 @@ kmodules.xyz/client-go/tools/wait
 # kmodules.xyz/crd-schema-fuzz v0.0.0-20210503192455-da44af375c4c
 ## explicit
 kmodules.xyz/crd-schema-fuzz
-# kmodules.xyz/custom-resources v0.0.0-20210504034124-54c54fcdb690
+# kmodules.xyz/custom-resources v0.0.0-20210605111625-741fcb992541
 ## explicit
 kmodules.xyz/custom-resources/apis/appcatalog
 kmodules.xyz/custom-resources/apis/appcatalog/v1alpha1
+kmodules.xyz/custom-resources/apis/auditor
+kmodules.xyz/custom-resources/apis/auditor/v1alpha1
 kmodules.xyz/custom-resources/apis/metrics
 kmodules.xyz/custom-resources/apis/metrics/v1alpha1
 kmodules.xyz/custom-resources/client/clientset/versioned/scheme
 kmodules.xyz/custom-resources/client/clientset/versioned/typed/appcatalog/v1alpha1
 kmodules.xyz/custom-resources/crds
-# kmodules.xyz/resource-metadata v0.5.5-0.20210518185031-147bfd9e841c
+# kmodules.xyz/resource-metadata v0.5.6-0.20210609095405-6352a05e3b49
 ## explicit
 kmodules.xyz/resource-metadata/apis/meta
 kmodules.xyz/resource-metadata/apis/meta/v1alpha1
@@ -1571,7 +1574,7 @@ kmodules.xyz/resource-metadata/hub/resourcedescriptors
 ## explicit
 kmodules.xyz/webhook-runtime/admission/v1beta1
 kmodules.xyz/webhook-runtime/registry/admissionreview/v1beta1
-# kubepack.dev/lib-helm v0.2.4-0.20210520194150-305faa644d29
+# kubepack.dev/lib-helm v0.2.4-0.20210609103625-e05e8e764d03
 ## explicit
 kubepack.dev/lib-helm/pkg/action
 kubepack.dev/lib-helm/pkg/application

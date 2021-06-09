@@ -17,6 +17,8 @@ limitations under the License.
 package v1alpha1
 
 import (
+	kmapi "kmodules.xyz/client-go/api/v1"
+
 	crdv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -46,7 +48,7 @@ type ResourceDescriptor struct {
 }
 
 type ResourceDescriptorSpec struct {
-	Resource ResourceID                 `json:"resource"`
+	Resource kmapi.ResourceID           `json:"resource"`
 	Columns  []ResourceColumnDefinition `json:"columns,omitempty"`
 	// For array type fields of the resource
 	SubTables   []ResourceSubTableDefinition `json:"subTables,omitempty"`
@@ -168,26 +170,6 @@ type ChartRepoRef struct {
 	URL     string `json:"url"`
 	Version string `json:"version"`
 }
-
-// ResourceID identifies a resource
-type ResourceID struct {
-	Group   string `json:"group"`
-	Version string `json:"version"`
-	// Name is the plural name of the resource to serve.  It must match the name of the CustomResourceDefinition-registration
-	// too: plural.group and it must be all lowercase.
-	Name string `json:"name"`
-	// Kind is the serialized kind of the resource.  It is normally CamelCase and singular.
-	Kind  string        `json:"kind"`
-	Scope ResourceScope `json:"scope"`
-}
-
-// ResourceScope is an enum defining the different scopes available to a custom resource
-type ResourceScope string
-
-const (
-	ClusterScoped   ResourceScope = "Cluster"
-	NamespaceScoped ResourceScope = "Namespaced"
-)
 
 type ConnectionType string
 

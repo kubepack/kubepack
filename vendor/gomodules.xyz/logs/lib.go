@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package kglog
+package logs
 
 import (
 	"flag"
@@ -23,17 +23,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/golang/glog"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
-	"gomodules.xyz/sets"
+	"gomodules.xyz/flags"
 	"gomodules.xyz/wait"
 	"k8s.io/klog/v2"
 )
 
 // ref:
 // - https://github.com/kubernetes/component-base/blob/master/logs/logs.go
-// - https://github.com/kubernetes/klog/blob/master/examples/coexist_glog/coexist_glog.go
 
 const logFlushFreqFlagName = "log-flush-frequency"
 
@@ -60,6 +58,7 @@ func (writer KlogWriter) Write(data []byte) (n int, err error) {
 
 // Init initializes logs the way we want for AppsCode codebase.
 func Init(rootCmd *cobra.Command, printFlags bool) {
+	klog.InitFlags(nil)
 	pflag.CommandLine.SetNormalizeFunc(WordSepNormalizeFunc)
 	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
 	InitLogs()
@@ -69,36 +68,36 @@ func Init(rootCmd *cobra.Command, printFlags bool) {
 		// If Cobra is used, set the rootCmd
 		pflag.Parse()
 		fs := pflag.CommandLine
-		InitKlog(fs)
 		if printFlags {
-			PrintFlags(fs)
+			flags.PrintFlags(fs)
 		}
+		flags.LoggerOptions = flags.GetOptions(fs)
 		return
 	}
 
 	fs := rootCmd.Flags()
 	if fn := rootCmd.PersistentPreRunE; fn != nil {
 		rootCmd.PersistentPreRunE = func(cmd *cobra.Command, args []string) error {
-			InitKlog(fs)
 			if printFlags {
-				PrintFlags(fs)
+				flags.PrintFlags(fs)
 			}
+			flags.LoggerOptions = flags.GetOptions(fs)
 			return fn(cmd, args)
 		}
 	} else if fn := rootCmd.PersistentPreRun; fn != nil {
 		rootCmd.PersistentPreRun = func(cmd *cobra.Command, args []string) {
-			InitKlog(fs)
 			if printFlags {
-				PrintFlags(fs)
+				flags.PrintFlags(fs)
 			}
+			flags.LoggerOptions = flags.GetOptions(fs)
 			fn(cmd, args)
 		}
 	} else {
 		rootCmd.PersistentPreRun = func(cmd *cobra.Command, args []string) {
-			InitKlog(fs)
 			if printFlags {
-				PrintFlags(fs)
+				flags.PrintFlags(fs)
 			}
+			flags.LoggerOptions = flags.GetOptions(fs)
 		}
 	}
 }
@@ -119,25 +118,8 @@ func InitLogs() {
 	go wait.Forever(klog.Flush, *logFlushFreq)
 }
 
-func InitKlog(fs *pflag.FlagSet) {
-	klogFlags := flag.NewFlagSet("klog", flag.ExitOnError)
-	klog.InitFlags(klogFlags)
-
-	// Sync the glog and klog flags.
-	fs.VisitAll(func(f1 *pflag.Flag) {
-		f2 := klogFlags.Lookup(f1.Name)
-		if f2 != nil {
-			value := f1.Value.String()
-			// Ignore error. klog's -log_backtrace_at flag throws error when set to empty string.
-			// Unfortunately, there is no way to tell if a flag was set to empty string or left unset on command line.
-			_ = f2.Value.Set(value)
-		}
-	})
-}
-
 // FlushLogs flushes logs immediately.
 func FlushLogs() {
-	glog.Flush()
 	klog.Flush()
 }
 
@@ -153,22 +135,4 @@ func GlogSetter(val string) (string, error) {
 		return "", fmt.Errorf("failed set klog.logging.verbosity %s: %v", val, err)
 	}
 	return fmt.Sprintf("successfully set klog.logging.verbosity to %s", val), nil
-}
-
-func PrintFlags(fs *pflag.FlagSet, list ...string) {
-	bl := sets.NewString("secret", "token", "password", "credential")
-	if len(list) > 0 {
-		bl.Insert(list...)
-	}
-	fs.VisitAll(func(flag *pflag.Flag) {
-		name := strings.ToLower(flag.Name)
-		val := flag.Value.String()
-		for _, keyword := range bl.UnsortedList() {
-			if strings.Contains(name, keyword) {
-				val = "***REDACTED***"
-				break
-			}
-		}
-		log.Printf("FLAG: --%s=%q", flag.Name, val)
-	})
 }

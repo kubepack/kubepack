@@ -39,6 +39,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/dynamic"
+	"k8s.io/klog/v2"
 	"kmodules.xyz/client-go/discovery"
 	"kmodules.xyz/client-go/tools/parser"
 	"sigs.k8s.io/application/api/app/v1beta1"
@@ -302,7 +303,8 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper discovery.Resourc
 			Version: "", // use the preferred version
 		})
 		if err != nil {
-			return nil, fmt.Errorf("failed to detect GVR for gk %v, reason %v", gk, err)
+			klog.Warningf("failed to detect GVR for gk %v, reason %v", gk, err)
+			continue
 		}
 		namespaced, err := mapper.IsNamespaced(gvr)
 		if err != nil {
@@ -325,7 +327,7 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper discovery.Resourc
 			// check ownership
 			// https://github.com/kubepack/helm/blob/ac-1.21.0/pkg/action/validate.go#L87-L92
 
-			annotationMap := app.GetAnnotations()
+			annotationMap := obj.GetAnnotations()
 			if v := annotationMap["meta.helm.sh/release-name"]; v != rls.Name {
 				continue
 			}

@@ -18,7 +18,7 @@ type State struct {
 	Engine *engine.EngineInstance
 }
 
-func (state State) Init() error {
+func (state *State) Init() error {
 	if state.Engine != nil {
 		return nil
 	}
