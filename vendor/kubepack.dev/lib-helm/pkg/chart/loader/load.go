@@ -19,12 +19,13 @@ package loader
 import (
 	"bytes"
 	"log"
+	"os"
 	"path/filepath"
-	"reflect"
 	"strings"
 
 	"github.com/pkg/errors"
 	"helm.sh/helm/v3/pkg/chart"
+	"helm.sh/helm/v3/pkg/chartutil"
 	"sigs.k8s.io/yaml"
 )
 
@@ -34,14 +35,16 @@ type ChartLoader interface {
 }
 
 // Loader returns a new ChartLoader appropriate for the given chart name
-func Loader(name interface{}) (ChartLoader, error) {
-	if reader, ok := name.(*bytes.Reader); ok {
-		l := ReaderLoader(*reader)
-		return &l, nil
-	} else if filename, ok := name.(string); ok {
-		return FileLoader(filename), nil
+func Loader(name string) (ChartLoader, error) {
+	fi, err := os.Stat(name)
+	if err != nil {
+		return nil, err
 	}
-	return nil, errors.Errorf("unknown input type %v to load chart", reflect.TypeOf(name))
+	if fi.IsDir() {
+		return DirLoader(name), nil
+	}
+	return FileLoader(name), nil
+
 }
 
 // Load takes a string name, tries to resolve it to a file or directory, and then loads it.
@@ -51,7 +54,7 @@ func Loader(name interface{}) (ChartLoader, error) {
 //
 // If a .helmignore file is present, the directory loader will skip loading any files
 // matching it. But .helmignore is not evaluated when reading out of an archive.
-func Load(name interface{}) (*chart.Chart, error) {
+func Load(name string) (*chart.Chart, error) {
 	l, err := Loader(name)
 	if err != nil {
 		return nil, err
@@ -70,10 +73,11 @@ func LoadFiles(files []*BufferedFile) (*chart.Chart, error) {
 	c := new(chart.Chart)
 	subcharts := make(map[string][]*BufferedFile)
 
+	// do not rely on assumed ordering of files in the chart and crash
+	// if Chart.yaml was not coming early enough to initialize metadata
 	for _, f := range files {
 		c.Raw = append(c.Raw, &chart.File{Name: f.Name, Data: f.Data})
-		switch {
-		case f.Name == "Chart.yaml":
+		if f.Name == chartutil.ChartfileName {
 			if c.Metadata == nil {
 				c.Metadata = new(chart.Metadata)
 			}
@@ -86,6 +90,13 @@ func LoadFiles(files []*BufferedFile) (*chart.Chart, error) {
 			if c.Metadata.APIVersion == "" {
 				c.Metadata.APIVersion = chart.APIVersionV1
 			}
+		}
+	}
+	for _, f := range files {
+		switch {
+		case f.Name == chartutil.ChartfileName:
+			// already processed
+			continue
 		case f.Name == "Chart.lock":
 			c.Lock = new(chart.Lock)
 			if err := yaml.Unmarshal(f.Data, &c.Lock); err != nil {
@@ -120,6 +131,9 @@ func LoadFiles(files []*BufferedFile) (*chart.Chart, error) {
 			if err := yaml.Unmarshal(f.Data, &c.Lock); err != nil {
 				return c, errors.Wrap(err, "cannot load requirements.lock")
 			}
+			if c.Metadata == nil {
+				c.Metadata = new(chart.Metadata)
+			}
 			if c.Metadata.APIVersion == chart.APIVersionV1 {
 				c.Files = append(c.Files, &chart.File{Name: f.Name, Data: f.Data})
 			}
@@ -138,6 +152,10 @@ func LoadFiles(files []*BufferedFile) (*chart.Chart, error) {
 		default:
 			c.Files = append(c.Files, &chart.File{Name: f.Name, Data: f.Data})
 		}
+	}
+
+	if c.Metadata == nil {
+		return c, errors.New("Chart.yaml file is missing")
 	}
 
 	if err := c.Validate(); err != nil {
