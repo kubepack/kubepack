@@ -17,10 +17,9 @@ limitations under the License.
 package repo
 
 import (
-	"bytes"
 	"fmt"
-	"io"
 	"os"
+	"path/filepath"
 	"strings"
 	"sync"
 	"time"
@@ -28,6 +27,7 @@ import (
 	"github.com/PuerkitoBio/purell"
 	"github.com/gregjones/httpcache"
 	"github.com/gregjones/httpcache/diskcache"
+	"github.com/pkg/errors"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/helmpath"
 	"kubepack.dev/lib-helm/pkg/chart/loader"
@@ -111,18 +111,42 @@ func (r *Registry) Delete(url string) (*Entry, error) {
 }
 
 // LocateChart looks for a chart and returns either the reader or an error.
-func (r *Registry) LocateChart(repoURL, name, version string) (*bytes.Reader, *ChartVersion, error) {
-	if repoURL == "" {
-		return nil, nil, fmt.Errorf("can't find repoURL for chart %s", name)
+func (r *Registry) LocateChart(repository, name, version string) (loader.ChartLoader, *ChartVersion, error) {
+	repository = strings.TrimSpace(repository)
+	name = strings.TrimSpace(name)
+	version = strings.TrimSpace(version)
+
+	if dir, ok := os.LookupEnv("UI_WIZARD_CHARTS_DIR"); ok {
+		repository = filepath.Join(dir, name)
 	}
 
-	rc, _, err := r.Get(repoURL)
+	if repository == "" {
+		return nil, nil, fmt.Errorf("can't find repository for chart %s", name)
+	}
+
+	if fi, err := os.Stat(repository); err == nil {
+		abs, err := filepath.Abs(repository)
+		if err != nil {
+			return nil, nil, err
+		}
+		//if c.Verify {
+		//	if _, err := downloader.VerifyChart(abs, c.Keyring); err != nil {
+		//		return "", err
+		//	}
+		//}
+		if fi.IsDir() {
+			return loader.DirLoader(abs), nil, nil
+		}
+		return loader.FileLoader(abs), nil, nil
+	}
+	if filepath.IsAbs(repository) || strings.HasPrefix(repository, ".") {
+		return nil, nil, errors.Errorf("path %q not found", repository)
+	}
+
+	rc, _, err := r.Get(repository)
 	if err != nil {
 		return nil, nil, err
 	}
-
-	name = strings.TrimSpace(name)
-	version = strings.TrimSpace(version)
 
 	dl := downloader.ChartDownloader{
 		Out:     os.Stdout,
@@ -154,32 +178,31 @@ func (r *Registry) LocateChart(repoURL, name, version string) (*bytes.Reader, *C
 	// 	// Need to download
 	// }
 
-	_, err = reader.Seek(0, io.SeekStart)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	return reader, cv, nil
+	l2 := loader.ByteLoader(*reader)
+	return &l2, cv, nil
 }
 
-func (r *Registry) GetChart(repoURL, chartName, chartVersion string) (*ChartExtended, error) {
-	reader, cv, err := r.LocateChart(repoURL, chartName, chartVersion)
+func (r *Registry) GetChart(repository, chartName, chartVersion string) (*ChartExtended, error) {
+	chartLoader, cv, err := r.LocateChart(repository, chartName, chartVersion)
 	if err != nil {
 		return nil, err
 	}
 
-	chrt, err := loader.Load(reader)
+	chrt, err := chartLoader.Load()
 	if err != nil {
 		return nil, err
 	}
 
-	return &ChartExtended{
-		Chart:   chrt,
-		URLs:    cv.URLs,
-		Created: cv.Created,
-		Removed: cv.Removed,
-		Digest:  cv.Digest,
-	}, nil
+	cx := &ChartExtended{
+		Chart: chrt,
+	}
+	if cv != nil {
+		cx.URLs = cv.URLs
+		cx.Created = cv.Created
+		cx.Removed = cv.Removed
+		cx.Digest = cv.Digest
+	}
+	return cx, nil
 }
 
 // ChartExtended represents a chart with metadata from its entry in the IndexFile

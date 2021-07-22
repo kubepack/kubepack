@@ -34,16 +34,14 @@ import (
 	"kmodules.xyz/resource-metadata/hub/resourcedescriptors"
 
 	stringz "gomodules.xyz/x/strings"
-	"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions"
-	crdv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
-	crdv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
-	crd_cs "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/typed/apiextensions/v1beta1"
+	crd_cs "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/typed/apiextensions/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/discovery"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
+	"k8s.io/klog/v2"
 )
 
 type HelmVersion string
@@ -64,6 +62,7 @@ type Registry struct {
 	cache KV
 	m     sync.RWMutex
 	// TODO: store in KV so cached for multiple instances of BB api server
+	cfg           *rest.Config
 	preferred     map[schema.GroupResource]schema.GroupVersionResource
 	lastRefreshed time.Time
 	regGVK        map[schema.GroupVersionKind]*kmapi.ResourceID
@@ -107,12 +106,19 @@ func NewRegistryOfKnownResources() *Registry {
 }
 
 func (r *Registry) DiscoverResources(cfg *rest.Config) error {
-	preferred, reg, err := r.createRegistry(cfg)
+	r.m.Lock()
+	defer r.m.Unlock()
+
+	r.cfg = cfg
+	return r.discoverResources()
+}
+
+func (r *Registry) discoverResources() error {
+	preferred, reg, err := r.createRegistry(r.cfg)
 	if err != nil {
 		return err
 	}
 
-	r.m.Lock()
 	r.preferred = preferred
 	r.lastRefreshed = time.Now()
 	for filename, rd := range reg {
@@ -122,7 +128,6 @@ func (r *Registry) DiscoverResources(cfg *rest.Config) error {
 			r.cache.Set(filename, rd)
 		}
 	}
-	r.m.Unlock()
 
 	return nil
 }
@@ -132,6 +137,17 @@ func (r *Registry) Refresh(cfg *rest.Config) error {
 		return r.DiscoverResources(cfg)
 	}
 	return nil
+}
+
+func (r *Registry) Reset() {
+	r.m.Lock()
+	defer r.m.Unlock()
+	if r.cfg == nil {
+		return
+	}
+	if err := r.discoverResources(); err != nil {
+		klog.ErrorS(err, "failed to reset Registry")
+	}
 }
 
 func DiscoverHelm(cfg *rest.Config) (HelmVersion, string, error) {
@@ -238,19 +254,7 @@ func (r *Registry) createRegistry(cfg *rest.Config) (map[schema.GroupResource]sc
 			if !v1alpha1.IsOfficialType(rd.Spec.Resource.Group) {
 				crd, err := apiext.CustomResourceDefinitions().Get(context.TODO(), fmt.Sprintf("%s.%s", rd.Spec.Resource.Name, rd.Spec.Resource.Group), metav1.GetOptions{})
 				if err == nil {
-					var inner apiextensions.CustomResourceDefinition
-					err = crdv1beta1.Convert_v1beta1_CustomResourceDefinition_To_apiextensions_CustomResourceDefinition(crd, &inner, nil)
-					if err != nil {
-						return nil, nil, err
-					}
-
-					var out crdv1.CustomResourceDefinition
-					err = crdv1.Convert_apiextensions_CustomResourceDefinition_To_v1_CustomResourceDefinition(&inner, &out, nil)
-					if err != nil {
-						return nil, nil, err
-					}
-
-					for _, v := range out.Spec.Versions {
+					for _, v := range crd.Spec.Versions {
 						if v.Name == rs.Version {
 							rd.Spec.Validation = v.Schema
 							break
