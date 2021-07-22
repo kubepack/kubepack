@@ -6,16 +6,16 @@ require (
 	github.com/Masterminds/semver/v3 v3.1.1
 	github.com/appscode/static-assets v0.6.7
 	github.com/aws/aws-sdk-go v1.38.31 // indirect
-	github.com/evanphx/json-patch v4.9.0+incompatible
-	github.com/gabriel-vasile/mimetype v1.2.0
+	github.com/evanphx/json-patch v4.11.0+incompatible
+	github.com/gabriel-vasile/mimetype v1.3.0
 	github.com/go-openapi/spec v0.19.8
-	github.com/gobuffalo/flect v0.2.2
+	github.com/gobuffalo/flect v0.2.3
 	github.com/gogo/protobuf v1.3.2
 	github.com/google/gofuzz v1.2.0
 	github.com/google/uuid v1.1.2
 	github.com/gregjones/httpcache v0.0.0-20180305231024-9cad4c3443a7
-	github.com/onsi/ginkgo v1.15.0
-	github.com/onsi/gomega v1.10.5
+	github.com/onsi/ginkgo v1.16.4
+	github.com/onsi/gomega v1.13.0
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus-operator/prometheus-operator/pkg/client v0.47.0
 	github.com/spf13/cobra v1.1.3
@@ -23,26 +23,26 @@ require (
 	github.com/stripe/stripe-go v70.15.0+incompatible
 	gocloud.dev v0.22.0
 	gomodules.xyz/blobfs v0.1.7
-	gomodules.xyz/jsonpatch/v2 v2.1.0
-	gomodules.xyz/logs v0.0.2
+	gomodules.xyz/jsonpatch/v2 v2.2.0
+	gomodules.xyz/logs v0.0.3
 	gomodules.xyz/runtime v0.2.0
 	gomodules.xyz/x v0.0.5
-	helm.sh/helm/v3 v3.6.0
-	k8s.io/api v0.21.0
-	k8s.io/apiextensions-apiserver v0.21.0
-	k8s.io/apimachinery v0.21.0
-	k8s.io/apiserver v0.21.0
-	k8s.io/cli-runtime v0.21.0
-	k8s.io/client-go v0.21.0
+	helm.sh/helm/v3 v3.6.1
+	k8s.io/api v0.21.1
+	k8s.io/apiextensions-apiserver v0.21.1
+	k8s.io/apimachinery v0.21.1
+	k8s.io/apiserver v0.21.1
+	k8s.io/cli-runtime v0.21.1
+	k8s.io/client-go v0.21.1
 	k8s.io/klog/v2 v2.8.0
 	k8s.io/kube-openapi v0.0.0-20210305001622-591a79e4bda7
-	k8s.io/kubernetes v1.21.0
-	kmodules.xyz/client-go v0.0.0-20210606080445-4a400cecb350
-	kmodules.xyz/crd-schema-fuzz v0.0.0-20210503192455-da44af375c4c
+	k8s.io/kubernetes v1.21.1
+	kmodules.xyz/client-go v0.0.0-20210719120358-dd0503cf99cf
+	kmodules.xyz/crd-schema-fuzz v0.0.0-20210618002152-fae23aef5fb4
 	kmodules.xyz/custom-resources v0.0.0-20210605111625-741fcb992541
-	kmodules.xyz/resource-metadata v0.5.6-0.20210609095405-6352a05e3b49
-	kmodules.xyz/webhook-runtime v0.0.0-20210504042742-3a9911e3dcdc
-	kubepack.dev/lib-helm v0.2.4-0.20210609103625-e05e8e764d03
+	kmodules.xyz/resource-metadata v0.5.8-0.20210722055301-dcc1abc08aa0
+	kmodules.xyz/webhook-runtime v0.0.0-20210716205500-e489faf01981
+	kubepack.dev/lib-helm v0.2.4-0.20210702135227-03dd8e7b6b0f
 	sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4
 	sigs.k8s.io/yaml v1.2.0
 )

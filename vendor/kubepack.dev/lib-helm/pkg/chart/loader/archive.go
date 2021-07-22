@@ -22,14 +22,15 @@ import (
 	"compress/gzip"
 	"fmt"
 	"io"
+	"net/http"
 	"os"
 	"path"
 	"regexp"
 	"strings"
 
-	"github.com/gabriel-vasile/mimetype"
 	"github.com/pkg/errors"
 	"helm.sh/helm/v3/pkg/chart"
+	"helm.sh/helm/v3/pkg/chartutil"
 	utilerrors "k8s.io/apimachinery/pkg/util/errors"
 )
 
@@ -71,49 +72,32 @@ func LoadFile(name string) (*chart.Chart, error) {
 	return c, err
 }
 
-// ReaderLoader loads a chart from a bytes.Reader
-type ReaderLoader bytes.Reader
-
-// Load loads a chart
-func (l *ReaderLoader) Load() (*chart.Chart, error) {
-	return LoadReader((*bytes.Reader)(l))
-}
-
-// LoadReader loads from an archive file.
-func LoadReader(reader *bytes.Reader) (*chart.Chart, error) {
-	err := ensureArchive("", reader)
-	if err != nil {
-		return nil, err
-	}
-
-	c, err := LoadArchive(reader)
-	if err != nil {
-		if err == gzip.ErrHeader {
-			return nil, fmt.Errorf("response does not appear to be a valid chart file (details: %s)", err)
-		}
-	}
-	return c, err
-}
-
 // ensureArchive's job is to return an informative error if the file does not appear to be a gzipped archive.
 //
 // Sometimes users will provide a values.yaml for an argument where a chart is expected. One common occurrence
 // of this is invoking `helm template values.yaml mychart` which would otherwise produce a confusing error
 // if we didn't check for this.
-func ensureArchive(name string, raw io.ReadSeeker) (err error) {
+func ensureArchive(name string, raw *os.File) (err error) {
 	defer func() {
-		_, e2 := raw.Seek(0, io.SeekStart) // reset read offset to allow archive loading to proceed.
+		_, e2 := raw.Seek(0, 0) // reset read offset to allow archive loading to proceed.
 		err = utilerrors.NewAggregate([]error{err, e2})
 	}()
 
-	mime, err := mimetype.DetectReader(raw)
+	// Check the file format to give us a chance to provide the user with more actionable feedback.
+	buffer := make([]byte, 512)
+	_, err = raw.Read(buffer)
 	if err != nil && err != io.EOF {
-		err = fmt.Errorf("file '%s' cannot be read: %s", name, err)
-		return
+		return fmt.Errorf("file '%s' cannot be read: %s", name, err)
 	}
-	if !mime.Is("application/x-gzip") {
-		err = fmt.Errorf("archive does not appear to be a gzipped archive; got '%s'", mime.String())
-		return
+	if contentType := http.DetectContentType(buffer); contentType != "application/x-gzip" {
+		// TODO: Is there a way to reliably test if a file content is YAML? ghodss/yaml accepts a wide
+		//       variety of content (Makefile, .zshrc) as valid YAML without errors.
+
+		// Wrong content type. Let's check if it's yaml and give an extra hint?
+		if strings.HasSuffix(name, ".yml") || strings.HasSuffix(name, ".yaml") {
+			return fmt.Errorf("file '%s' seems to be a YAML file, but expected a gzipped archive", name)
+		}
+		return fmt.Errorf("file '%s' does not appear to be a gzipped archive; got '%s'", name, contentType)
 	}
 	return nil
 }
@@ -128,7 +112,7 @@ func LoadArchiveFiles(in io.Reader) ([]*BufferedFile, error) {
 	}
 	defer unzipped.Close()
 
-	var files []*BufferedFile
+	files := []*BufferedFile{}
 	tr := tar.NewReader(unzipped)
 	for {
 		b := bytes.NewBuffer(nil)
@@ -185,7 +169,7 @@ func LoadArchiveFiles(in io.Reader) ([]*BufferedFile, error) {
 			return nil, errors.New("chart contains illegally named files")
 		}
 
-		if parts[0] == "Chart.yaml" {
+		if parts[0] == chartutil.ChartfileName {
 			return nil, errors.New("chart yaml not in base directory")
 		}
 
@@ -193,7 +177,9 @@ func LoadArchiveFiles(in io.Reader) ([]*BufferedFile, error) {
 			return nil, err
 		}
 
-		files = append(files, &BufferedFile{Name: n, Data: b.Bytes()})
+		data := bytes.TrimPrefix(b.Bytes(), utf8bom)
+
+		files = append(files, &BufferedFile{Name: n, Data: data})
 		b.Reset()
 	}
 
