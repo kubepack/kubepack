@@ -1,17 +1,16 @@
 {
   "metadata": {
-    "name": "stash-community",
+    "name": "kubeform-enterprise",
     "creationTimestamp": null
   },
   "spec": {
-    "id": "plan_Gnc3hPZxAhwsOY",
-    "name": "Stash Community",
-    "displayName": "Stash Community",
-    "productID": "prod_Gnc3w4QZUlCMWp",
+    "name": "Kubeform Enterprise",
+    "displayNname": "Kubeform Enterprise",
+    "productID": "prod_Gnc3R1tawPW1Mk",
     "phase": "Active",
     "bundle": {
       "url": "https://bundles.kubepack.com",
-      "name": "stash-community"
+      "name": "kubeform-enterprise"
     },
     "amount": 0,
     "currency": "usd",

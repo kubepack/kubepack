@@ -1,17 +1,16 @@
 {
   "metadata": {
-    "name": "stash-community",
+    "name": "voyager-enterprise",
     "creationTimestamp": null
   },
   "spec": {
-    "id": "plan_Gnc3hPZxAhwsOY",
-    "name": "Stash Community",
-    "displayName": "Stash Community",
-    "productID": "prod_Gnc3w4QZUlCMWp",
+    "name": "Voyager Enterprise",
+    "displayName": "Voyager Enterprise",
+    "productID": "prod_Gnc3UGstx2C1i4",
     "phase": "Active",
     "bundle": {
       "url": "https://bundles.kubepack.com",
-      "name": "stash-community"
+      "name": "voyager-enterprise"
     },
     "amount": 0,
     "currency": "usd",
