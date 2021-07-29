@@ -6,6 +6,7 @@
   "spec": {
     "id": "plan_Gnc3zNcMO5ZpMb",
     "name": "KubeVault Community",
+    "displayName": "KubeVault Community",
     "productID": "prod_Gnc3QfNmCtMQAa",
     "phase": "Active",
     "bundle": {
