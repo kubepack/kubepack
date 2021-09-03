@@ -16,25 +16,25 @@
     },
     "pricingPattern": {
       "elasticsearches.kubedb.com": {
-        "expression": "0.0118885873*cpu + 0.0012664360*memory"
+        "expression": "0*cpu + 0.00684931506*memory"
       },
       "mariadbs.kubedb.com": {
-        "expression": "0.0006138533*cpu + 0.0049108263*memory"
+        "expression": "0*cpu + 0.00684931506*memory"
       },
       "mongodbs.kubedb.com": {
-        "expression": "0.0005833333*cpu + 0.0065333333*memory"
+        "expression": "0*cpu + 0.00684931506*memory"
       },
       "mysqls.kubedb.com": {
-        "expression": "0.0006138533*cpu + 0.0049108263*memory"
+        "expression": "0*cpu + 0.00684931506*memory"
       },
       "postgreses.kubedb.com": {
-        "expression": "0.0006676994*cpu + 0.0053415956*memory"
+        "expression": "0*cpu + 0.00684931506*memory"
       },
       "redises.kubedb.com": {
-        "expression": "0.0107273061*cpu + 0.0031369121*memory"
+        "expression": "0*cpu + 0.00684931506*memory"
       },
       "memcacheds.kubedb.com": {
-        "expression": "0.0107273061*cpu + 0.0031369121*memory"
+        "expression": "0*cpu + 0.00684931506*memory"
       }
     },
     "amount": 299,
