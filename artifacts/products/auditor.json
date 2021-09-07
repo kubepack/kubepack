@@ -1,0 +1,77 @@
+{
+  "metadata": {
+    "name": "auditor",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "prod_KBJYIdtleKbcEP",
+    "key": "auditor",
+    "name": "Auditor by AppsCode",
+    "shortName": "Auditor",
+    "tagline": "Kubernetes Auditor",
+    "owner": 1,
+    "description": "Kubernetes Auditor",
+    "unitLabel": "Cluster",
+    "phase": "Active",
+    "icons": [
+      {
+        "description": "hero_image",
+        "src": "https://cdn.appscode.com/images/products/auditor/auditor-hero.png"
+      },
+      {
+        "description": "logo",
+        "src": "https://cdn.appscode.com/images/products/auditor/auditor.png"
+      },
+      {
+        "description": "logo_white",
+        "src": "https://cdn.appscode.com/images/products/auditor/auditor-white.png"
+      },
+      {
+        "description": "icon",
+        "src": "https://cdn.appscode.com/images/products/auditor/auditor-icon.png"
+      },
+      {
+        "description": "icon_192x192",
+        "src": "https://cdn.appscode.com/images/products/auditor/icons/android-icon-192x192.png"
+      }
+    ],
+    "maintainers": [
+      {
+        "name": "AppsCode Inc.",
+        "email": "support@appscode.com"
+      }
+    ],
+    "keywords": [
+      "kubernetes",
+      "appscode",
+      "audit"
+    ],
+    "links": [
+      {
+        "description": "facebook",
+        "url": "https://facebook.com/appscode"
+      },
+      {
+        "description": "github",
+        "url": "https://github.com/kubeops/auditor"
+      },
+      {
+        "description": "linkedin",
+        "url": "https://www.linkedin.com/company/appscode"
+      },
+      {
+        "description": "src_repo",
+        "url": "https://github.com/kubeops/auditor"
+      },
+      {
+        "description": "support_desk",
+        "url": "https://appscode.freshdesk.com"
+      },
+      {
+        "description": "youtube",
+        "url": "https://www.youtube.com/c/appscodeinc"
+      }
+    ]
+  },
+  "status": {}
+}

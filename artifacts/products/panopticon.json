@@ -1,0 +1,77 @@
+{
+  "metadata": {
+    "name": "panopticon",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "prod_KBJekAwg8pluHW",
+    "key": "panopticon",
+    "name": "Panopticon by AppsCode",
+    "shortName": "Panopticon",
+    "tagline": "ByteBuilders Panopticon",
+    "owner": 1,
+    "description": "ByteBuilders Panopticon",
+    "unitLabel": "Cluster",
+    "phase": "Active",
+    "icons": [
+      {
+        "description": "hero_image",
+        "src": "https://cdn.appscode.com/images/products/panopticon/panopticon-hero.png"
+      },
+      {
+        "description": "logo",
+        "src": "https://cdn.appscode.com/images/products/panopticon/panopticon.png"
+      },
+      {
+        "description": "logo_white",
+        "src": "https://cdn.appscode.com/images/products/panopticon/panopticon-white.png"
+      },
+      {
+        "description": "icon",
+        "src": "https://cdn.appscode.com/images/products/panopticon/panopticon-icon.png"
+      },
+      {
+        "description": "icon_192x192",
+        "src": "https://cdn.appscode.com/images/products/panopticon/icons/android-icon-192x192.png"
+      }
+    ],
+    "maintainers": [
+      {
+        "name": "AppsCode Inc.",
+        "email": "support@appscode.com"
+      }
+    ],
+    "keywords": [
+      "kubernetes",
+      "appscode",
+      "audit"
+    ],
+    "links": [
+      {
+        "description": "facebook",
+        "url": "https://facebook.com/appscode"
+      },
+      {
+        "description": "github",
+        "url": "https://github.com/kubeops/panopticon"
+      },
+      {
+        "description": "linkedin",
+        "url": "https://www.linkedin.com/company/appscode"
+      },
+      {
+        "description": "src_repo",
+        "url": "https://github.com/kubeops/panopticon"
+      },
+      {
+        "description": "support_desk",
+        "url": "https://appscode.freshdesk.com"
+      },
+      {
+        "description": "youtube",
+        "url": "https://www.youtube.com/c/appscodeinc"
+      }
+    ]
+  },
+  "status": {}
+}

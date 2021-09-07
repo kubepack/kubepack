@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "name": "panopticon-community",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "plan_KBJecbNeayiInc",
+    "name": "Panopticon Community",
+    "displayName": "",
+    "description": "",
+    "productID": "prod_KBJekAwg8pluHW",
+    "phase": "Active",
+    "weight": 0,
+    "bundle": {
+      "url": "https://kubernetes-charts.storage.googleapis.com",
+      "name": "panopticon-community"
+    },
+    "currency": "usd",
+    "interval": "month"
+  },
+  "status": {}
+}

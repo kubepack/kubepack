@@ -1,21 +1,23 @@
 {
-    "metadata": {
-      "name": "stash-enterprise",
-      "creationTimestamp": null
+  "metadata": {
+    "name": "stash-enterprise",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "plan_KBJeD8di2GPuCc",
+    "name": "Stash Enterprise",
+    "displayName": "Stash Enterprise",
+    "description": "Backup your Kubernetes Stateful Applications",
+    "productID": "prod_Gnc3w4QZUlCMWp",
+    "phase": "Active",
+    "weight": 0,
+    "bundle": {
+      "url": "https://bundles.kubepack.com",
+      "name": "stash-enterprise"
     },
-    "spec": {
-      "name": "Stash Enterprise",
-      "displayName": "Stash Enterprise",
-      "description": "Backup your Kubernetes Stateful Applications",
-      "productID": "prod_Gnc3w4QZUlCMWp",
-      "phase": "Active",
-      "bundle": {
-        "url": "https://bundles.kubepack.com",
-        "name": "stash-enterprise"
-      },
-      "amount": 0,
-      "currency": "usd",
-      "interval": "month"
-    },
-    "status": {}
-  }
+    "amount": 0,
+    "currency": "usd",
+    "interval": "month"
+  },
+  "status": {}
+}

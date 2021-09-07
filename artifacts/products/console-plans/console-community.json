@@ -1,21 +1,20 @@
 {
   "metadata": {
-    "name": "kubeform-enterprise",
+    "name": "console-community",
     "creationTimestamp": null
   },
   "spec": {
-    "id": "plan_KBJe2JEtNKpaV2",
-    "name": "Kubeform Enterprise",
+    "id": "plan_KBJevsaTpn4rwJ",
+    "name": "Console Community",
     "displayName": "",
     "description": "",
-    "productID": "prod_Gnc3R1tawPW1Mk",
+    "productID": "prod_KBJeCU0ybPpPrr",
     "phase": "Active",
     "weight": 0,
     "bundle": {
-      "url": "https://bundles.kubepack.com",
-      "name": "kubeform-enterprise"
+      "url": "https://kubernetes-charts.storage.googleapis.com",
+      "name": "console-community"
     },
-    "amount": 0,
     "currency": "usd",
     "interval": "month"
   },

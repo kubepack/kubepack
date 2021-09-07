@@ -1,0 +1,69 @@
+{
+  "metadata": {
+    "name": "console",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "id": "prod_KBJeCU0ybPpPrr",
+    "key": "console",
+    "name": "Console by AppsCode",
+    "shortName": "Console",
+    "tagline": "ByteBuilders Console",
+    "owner": 1,
+    "description": "ByteBuilders Console",
+    "unitLabel": "Cluster",
+    "phase": "Active",
+    "icons": [
+      {
+        "description": "hero_image",
+        "src": "https://cdn.appscode.com/images/products/console/console-hero.png"
+      },
+      {
+        "description": "logo",
+        "src": "https://cdn.appscode.com/images/products/console/console.png"
+      },
+      {
+        "description": "logo_white",
+        "src": "https://cdn.appscode.com/images/products/console/console-white.png"
+      },
+      {
+        "description": "icon",
+        "src": "https://cdn.appscode.com/images/products/console/console-icon.png"
+      },
+      {
+        "description": "icon_192x192",
+        "src": "https://cdn.appscode.com/images/products/console/icons/android-icon-192x192.png"
+      }
+    ],
+    "maintainers": [
+      {
+        "name": "AppsCode Inc.",
+        "email": "support@appscode.com"
+      }
+    ],
+    "keywords": [
+      "kubernetes",
+      "appscode",
+      "audit"
+    ],
+    "links": [
+      {
+        "description": "facebook",
+        "url": "https://facebook.com/appscode"
+      },
+      {
+        "description": "linkedin",
+        "url": "https://www.linkedin.com/company/appscode"
+      },
+      {
+        "description": "support_desk",
+        "url": "https://appscode.freshdesk.com"
+      },
+      {
+        "description": "youtube",
+        "url": "https://www.youtube.com/c/appscodeinc"
+      }
+    ]
+  },
+  "status": {}
+}

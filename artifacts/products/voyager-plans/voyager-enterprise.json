@@ -4,10 +4,13 @@
     "creationTimestamp": null
   },
   "spec": {
+    "id": "plan_KBJecHawC1FHVh",
     "name": "Voyager Enterprise",
     "displayName": "Voyager Enterprise",
+    "description": "",
     "productID": "prod_Gnc3UGstx2C1i4",
     "phase": "Active",
+    "weight": 0,
     "bundle": {
       "url": "https://bundles.kubepack.com",
       "name": "voyager-enterprise"
