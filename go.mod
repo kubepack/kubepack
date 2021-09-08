@@ -4,7 +4,6 @@ go 1.16
 
 require (
 	github.com/Masterminds/semver/v3 v3.1.1
-	github.com/appscode/static-assets v0.6.7
 	github.com/aws/aws-sdk-go v1.38.31 // indirect
 	github.com/evanphx/json-patch v4.11.0+incompatible
 	github.com/gabriel-vasile/mimetype v1.3.0
@@ -18,9 +17,9 @@ require (
 	github.com/onsi/gomega v1.13.0
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus-operator/prometheus-operator/pkg/client v0.47.0
+	github.com/russross/blackfriday v1.5.3-0.20190124082335-a477dd164691 // indirect
 	github.com/spf13/cobra v1.1.3
 	github.com/spf13/pflag v1.0.5
-	github.com/stripe/stripe-go v70.15.0+incompatible
 	gocloud.dev v0.22.0
 	gomodules.xyz/blobfs v0.1.7
 	gomodules.xyz/jsonpatch/v2 v2.2.0
