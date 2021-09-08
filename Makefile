@@ -239,29 +239,8 @@ gen-crd-protos-%:
 			--apimachinery-packages=-k8s.io/apimachinery/pkg/api/resource,-k8s.io/apimachinery/pkg/apis/meta/v1,-k8s.io/apimachinery/pkg/apis/meta/v1beta1,-k8s.io/apimachinery/pkg/runtime,-k8s.io/apimachinery/pkg/runtime/schema,-k8s.io/apimachinery/pkg/util/intstr \
 			--packages=-k8s.io/api/core/v1,-k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1,kubepack.dev/kubepack/apis/$(subst _,/,$*)
 
-.PHONY: gen-bindata
-gen-bindata:
-	@docker run                                                 \
-		-i                                                      \
-		--rm                                                    \
-		-u $$(id -u):$$(id -g)                                  \
-		-v $$(pwd):/src                                         \
-		-w /src                                                 \
-		-v /tmp:/.cache                                         \
-		--env HTTP_PROXY=$(HTTP_PROXY)                          \
-		--env HTTPS_PROXY=$(HTTPS_PROXY)                        \
-		$(BUILD_IMAGE)                                          \
-		/bin/bash -c "                                          \
-			cd /src/crds;                                                                                                           \
-			go-bindata -ignore='\\.go$$' -ignore=\\.DS_Store -mode=0644 -modtime=1573722179 -o bindata.go -pkg crds ./...;              \
-			cd /src/artifacts/products;                                                                                                 \
-			go-bindata -ignore='\\.go$$' -ignore=\\.DS_Store -mode=0644 -modtime=1573722179 -o bindata.go -pkg products .;              \
-			cd /src/artifacts/products;                                                                                                 \
-			go-bindata -ignore='\\.go$$' -ignore=\\.DS_Store -mode=0644 -modtime=1573722179 -o plans/bindata.go -pkg plans *-plans/*;   \
-		"
-
 .PHONY: manifests
-manifests: gen-crds label-crds gen-bindata
+manifests: gen-crds label-crds
 
 .PHONY: gen
 gen: clientset gen-crd-protos manifests openapi
