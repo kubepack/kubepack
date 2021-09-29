@@ -15,14 +15,11 @@ spec:
     name: endpointslice
     scope: Namespaced
     version: v1beta1
-  resourceRequirements:
-  - resources: spec.podTemplate.spec.resources
-    units: spec.replicas
   ui:
     editor:
       name: discoveryk8sio-endpointslice-editor
       url: https://bundles.byte.builders/ui/
-      version: v0.2.0-alpha.0
+      version: v0.2.0-rc.0
   validation:
     openAPIV3Schema:
       description: EndpointSlice represents a subset of the endpoints that implement

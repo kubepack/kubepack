@@ -173,9 +173,6 @@ spec:
     name: replicasets
     scope: Namespaced
     version: v1
-  resourceRequirements:
-  - resources: spec.podTemplate.spec.resources
-    units: spec.replicas
   subTables:
   - columns:
     - name: Name
@@ -285,7 +282,7 @@ spec:
     editor:
       name: apps-replicaset-editor
       url: https://bundles.byte.builders/ui/
-      version: v0.2.0-alpha.0
+      version: v0.2.0-rc.0
   validation:
     openAPIV3Schema:
       description: ReplicaSet ensures that a specified number of pod replicas are

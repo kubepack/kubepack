@@ -187,9 +187,6 @@ spec:
     name: deployments
     scope: Namespaced
     version: v1
-  resourceRequirements:
-  - resources: spec.podTemplate.spec.resources
-    units: spec.replicas
   subTables:
   - columns:
     - name: Name
@@ -276,7 +273,7 @@ spec:
     editor:
       name: apps-deployment-editor
       url: https://bundles.byte.builders/ui/
-      version: v0.2.0-alpha.0
+      version: v0.2.0-rc.0
   validation:
     openAPIV3Schema:
       description: Deployment enables declarative updates for Pods and ReplicaSets.

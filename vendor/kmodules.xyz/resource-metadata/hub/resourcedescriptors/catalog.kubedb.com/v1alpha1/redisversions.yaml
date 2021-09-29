@@ -20,14 +20,11 @@ spec:
     name: redisversions
     scope: Cluster
     version: v1alpha1
-  resourceRequirements:
-  - resources: spec.podTemplate.spec.resources
-    units: spec.replicas
   ui:
     editor:
       name: catalogkubedbcom-redisversion-editor
       url: https://bundles.byte.builders/ui/
-      version: v0.2.0-alpha.0
+      version: v0.2.0-rc.0
   validation:
     openAPIV3Schema:
       properties:
@@ -62,6 +59,13 @@ spec:
           type: object
         spec:
           properties:
+            coordinator:
+              properties:
+                image:
+                  type: string
+              required:
+              - image
+              type: object
             db:
               properties:
                 image:
@@ -72,6 +76,13 @@ spec:
             deprecated:
               type: boolean
             exporter:
+              properties:
+                image:
+                  type: string
+              required:
+              - image
+              type: object
+            initContainer:
               properties:
                 image:
                   type: string
