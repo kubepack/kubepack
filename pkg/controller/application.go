@@ -22,6 +22,7 @@ import (
 	"kubepack.dev/kubepack/client/clientset/versioned/typed/kubepack/v1alpha1/util"
 
 	"github.com/pkg/errors"
+	core "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/klog/v2"
 	core_util "kmodules.xyz/client-go/core/v1"
@@ -36,7 +37,7 @@ const (
 func (c *KubepackController) initAppWatcher() {
 	c.appInformer = c.extInformerFactory.App().V1beta1().Applications().Informer()
 	c.appQueue = queue.New("Application", c.MaxNumRequeues, c.NumThreads, c.runAppInjector)
-	c.appInformer.AddEventHandler(queue.NewReconcilableHandler(c.appQueue.GetQueue()))
+	c.appInformer.AddEventHandler(queue.NewReconcilableHandler(c.appQueue.GetQueue(), core.NamespaceAll))
 	c.appLister = c.extInformerFactory.App().V1beta1().Applications().Lister()
 }
 

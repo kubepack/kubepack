@@ -19,6 +19,7 @@ package parser
 import (
 	"bytes"
 	"io"
+	"io/fs"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -32,9 +33,18 @@ import (
 	ylib "k8s.io/apimachinery/pkg/util/yaml"
 )
 
-type ResourceFn func(obj *unstructured.Unstructured) error
+type ResourceInfo struct {
+	Filename string
+	Object   *unstructured.Unstructured
+}
+
+type ResourceFn func(ri ResourceInfo) error
 
 func ProcessResources(data []byte, fn ResourceFn) error {
+	return processResources("", data, fn)
+}
+
+func processResources(filename string, data []byte, fn ResourceFn) error {
 	reader := ylib.NewYAMLOrJSONDecoder(bytes.NewReader(data), 2048)
 	for {
 		var obj unstructured.Unstructured
@@ -43,17 +53,25 @@ func ProcessResources(data []byte, fn ResourceFn) error {
 			break
 		} else if IsYAMLSyntaxError(err) {
 			continue
+		} else if runtime.IsMissingKind(err) {
+			continue
 		} else if err != nil {
 			return err
 		}
 		if obj.IsList() {
 			if err := obj.EachListItem(func(item runtime.Object) error {
-				return fn(item.(*unstructured.Unstructured))
+				return fn(ResourceInfo{
+					Filename: filename,
+					Object:   item.(*unstructured.Unstructured),
+				})
 			}); err != nil {
 				return err
 			}
 		} else {
-			if err := fn(&obj); err != nil {
+			if err := fn(ResourceInfo{
+				Filename: filename,
+				Object:   &obj,
+			}); err != nil {
 				return err
 			}
 		}
@@ -61,8 +79,8 @@ func ProcessResources(data []byte, fn ResourceFn) error {
 	return nil
 }
 
-func ProcessDir(dir string, fn ResourceFn) error {
-	return filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+func ProcessPath(root string, fn ResourceFn) error {
+	return filepath.WalkDir(root, func(path string, info os.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -79,18 +97,40 @@ func ProcessDir(dir string, fn ResourceFn) error {
 			return err
 		}
 
-		return ProcessResources(data, fn)
+		return processResources(path, data, fn)
 	})
 }
 
-func ListResources(data []byte) ([]*unstructured.Unstructured, error) {
-	var resources []*unstructured.Unstructured
-
-	err := ProcessResources(data, func(obj *unstructured.Unstructured) error {
-		if obj.GetNamespace() == "" {
-			obj.SetNamespace(core.NamespaceDefault)
+func ProcessFS(fsys fs.FS, fn ResourceFn) error {
+	return fs.WalkDir(fsys, ".", func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
 		}
-		resources = append(resources, obj)
+		if d.IsDir() {
+			return nil
+		}
+		ext := filepath.Ext(d.Name())
+		if ext != ".yaml" && ext != ".yml" && ext != ".json" {
+			return nil
+		}
+
+		data, err := fs.ReadFile(fsys, path)
+		if err != nil {
+			return err
+		}
+
+		return processResources(path, data, fn)
+	})
+}
+
+func ListResources(data []byte) ([]ResourceInfo, error) {
+	var resources []ResourceInfo
+
+	err := processResources("", data, func(ri ResourceInfo) error {
+		if ri.Object.GetNamespace() == "" {
+			ri.Object.SetNamespace(core.NamespaceDefault)
+		}
+		resources = append(resources, ri)
 		return nil
 	})
 	if err != nil {
@@ -98,10 +138,58 @@ func ListResources(data []byte) ([]*unstructured.Unstructured, error) {
 	}
 
 	sort.Slice(resources, func(i, j int) bool {
-		if resources[i].GetAPIVersion() == resources[j].GetAPIVersion() {
-			return resources[i].GetKind() < resources[j].GetKind()
+		if resources[i].Object.GetAPIVersion() == resources[j].Object.GetAPIVersion() {
+			return resources[i].Object.GetKind() < resources[j].Object.GetKind()
 		}
-		return resources[i].GetAPIVersion() < resources[j].GetAPIVersion()
+		return resources[i].Object.GetAPIVersion() < resources[j].Object.GetAPIVersion()
+	})
+
+	return resources, nil
+}
+
+func ListPathResources(root string) ([]ResourceInfo, error) {
+	var resources []ResourceInfo
+
+	err := ProcessPath(root, func(ri ResourceInfo) error {
+		if ri.Object.GetNamespace() == "" {
+			ri.Object.SetNamespace(core.NamespaceDefault)
+		}
+		resources = append(resources, ri)
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	sort.Slice(resources, func(i, j int) bool {
+		if resources[i].Object.GetAPIVersion() == resources[j].Object.GetAPIVersion() {
+			return resources[i].Object.GetKind() < resources[j].Object.GetKind()
+		}
+		return resources[i].Object.GetAPIVersion() < resources[j].Object.GetAPIVersion()
+	})
+
+	return resources, nil
+}
+
+func ListFSResources(fsys fs.FS) ([]ResourceInfo, error) {
+	var resources []ResourceInfo
+
+	err := ProcessFS(fsys, func(ri ResourceInfo) error {
+		if ri.Object.GetNamespace() == "" {
+			ri.Object.SetNamespace(core.NamespaceDefault)
+		}
+		resources = append(resources, ri)
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	sort.Slice(resources, func(i, j int) bool {
+		if resources[i].Object.GetAPIVersion() == resources[j].Object.GetAPIVersion() {
+			return resources[i].Object.GetKind() < resources[j].Object.GetKind()
+		}
+		return resources[i].Object.GetAPIVersion() < resources[j].Object.GetAPIVersion()
 	})
 
 	return resources, nil
@@ -114,18 +202,18 @@ func ExtractComponents(data []byte) (map[metav1.GroupKind]struct{}, map[string]s
 	commonLabels := map[string]string{}
 	init := false
 
-	err := ProcessResources(data, func(obj *unstructured.Unstructured) error {
-		gv, err := schema.ParseGroupVersion(obj.GetAPIVersion())
+	err := processResources("", data, func(ri ResourceInfo) error {
+		gv, err := schema.ParseGroupVersion(ri.Object.GetAPIVersion())
 		if err != nil {
 			return err
 		}
-		components[metav1.GroupKind{Group: gv.Group, Kind: obj.GetKind()}] = empty
+		components[metav1.GroupKind{Group: gv.Group, Kind: ri.Object.GetKind()}] = empty
 
 		if !init {
-			commonLabels = obj.GetLabels()
+			commonLabels = ri.Object.GetLabels()
 			init = true
 		} else {
-			for k, v := range obj.GetLabels() {
+			for k, v := range ri.Object.GetLabels() {
 				if existing, found := commonLabels[k]; found && existing != v {
 					delete(commonLabels, k)
 				}

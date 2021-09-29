@@ -914,7 +914,9 @@ func (x *PermissionChecker) Do() error {
 			if err != nil {
 				return err
 			}
-			info.Items = append(info.Items, items...)
+			for i := range items {
+				info.Items = append(info.Items, items[i].Object)
+			}
 		}
 	}
 
@@ -1310,14 +1312,14 @@ func (x *ApplicationGenerator) Result() *v1beta1.Application {
 }
 
 func ExtractResourceAttributes(data []byte, verb string, mapper disco_util.ResourceMapper, attrs map[authorization.ResourceAttributes]*ResourcePermission) error {
-	return parser.ProcessResources(data, func(obj *unstructured.Unstructured) error {
-		gvr, err := mapper.GVR(schema.FromAPIVersionAndKind(obj.GetAPIVersion(), obj.GetKind()))
+	return parser.ProcessResources(data, func(ri parser.ResourceInfo) error {
+		gvr, err := mapper.GVR(schema.FromAPIVersionAndKind(ri.Object.GetAPIVersion(), ri.Object.GetKind()))
 		if err != nil {
 			return err
 		}
 
-		ns := XorY(obj.GetNamespace(), core.NamespaceDefault)
-		obj.SetNamespace(ns)
+		ns := XorY(ri.Object.GetNamespace(), core.NamespaceDefault)
+		ri.Object.SetNamespace(ns)
 
 		attr := authorization.ResourceAttributes{
 			Namespace: ns,
@@ -1325,14 +1327,14 @@ func ExtractResourceAttributes(data []byte, verb string, mapper disco_util.Resou
 			Group:     gvr.Group,
 			Version:   gvr.Version,
 			Resource:  gvr.Resource,
-			// Name:      obj.GetName(), // TODO: needed for delete
+			// Name:      ri.GetName(), // TODO: needed for delete
 		}
 		info, found := attrs[attr]
 		if !found {
 			info = new(ResourcePermission)
 			attrs[attr] = info
 		}
-		info.Items = append(info.Items, obj)
+		info.Items = append(info.Items, ri.Object)
 
 		return nil
 	})
