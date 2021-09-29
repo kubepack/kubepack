@@ -61,7 +61,7 @@ spec:
     editor:
       name: stashappscodecom-repository-editor
       url: https://bundles.byte.builders/ui/
-      version: v0.2.0-rc.0
+      version: v0.2.0
   validation:
     openAPIV3Schema:
       properties:
