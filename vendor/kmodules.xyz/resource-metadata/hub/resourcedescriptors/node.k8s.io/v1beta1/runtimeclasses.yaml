@@ -20,14 +20,11 @@ spec:
     name: runtimeclasses
     scope: Cluster
     version: v1beta1
-  resourceRequirements:
-  - resources: spec.podTemplate.spec.resources
-    units: spec.replicas
   ui:
     editor:
       name: nodek8sio-runtimeclass-editor
       url: https://bundles.byte.builders/ui/
-      version: v0.2.0-alpha.0
+      version: v0.2.0-rc.0
   validation:
     openAPIV3Schema:
       description: RuntimeClass defines a class of container runtime supported in

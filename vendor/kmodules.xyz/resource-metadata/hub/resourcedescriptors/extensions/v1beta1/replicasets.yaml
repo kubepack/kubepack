@@ -15,14 +15,11 @@ spec:
     name: replicasets
     scope: Namespaced
     version: v1beta1
-  resourceRequirements:
-  - resources: spec.podTemplate.spec.resources
-    units: spec.replicas
   ui:
     editor:
       name: extensions-replicaset-editor
       url: https://bundles.byte.builders/ui/
-      version: v0.2.0-alpha.0
+      version: v0.2.0-rc.0
   validation:
     openAPIV3Schema:
       description: DEPRECATED - This group version of ReplicaSet is deprecated by

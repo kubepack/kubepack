@@ -102,9 +102,6 @@ spec:
     name: cronjobs
     scope: Namespaced
     version: v1beta1
-  resourceRequirements:
-  - resources: spec.podTemplate.spec.resources
-    units: spec.replicas
   subTables:
   - columns:
     - name: Name
@@ -214,7 +211,7 @@ spec:
     editor:
       name: batch-cronjob-editor
       url: https://bundles.byte.builders/ui/
-      version: v0.2.0-alpha.0
+      version: v0.2.0-rc.0
   validation:
     openAPIV3Schema:
       description: CronJob represents the configuration of a single cron job.

@@ -15,14 +15,11 @@ spec:
     name: evictions
     scope: Namespaced
     version: v1beta1
-  resourceRequirements:
-  - resources: spec.podTemplate.spec.resources
-    units: spec.replicas
   ui:
     editor:
       name: policy-eviction-editor
       url: https://bundles.byte.builders/ui/
-      version: v0.2.0-alpha.0
+      version: v0.2.0-rc.0
   validation:
     openAPIV3Schema:
       description: Eviction evicts a pod from its node subject to certain policies
