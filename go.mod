@@ -23,9 +23,9 @@ require (
 	gocloud.dev v0.22.0
 	gomodules.xyz/blobfs v0.1.7
 	gomodules.xyz/jsonpatch/v2 v2.2.0
-	gomodules.xyz/logs v0.0.4
+	gomodules.xyz/logs v0.0.6
 	gomodules.xyz/runtime v0.2.0
-	gomodules.xyz/x v0.0.7
+	gomodules.xyz/x v0.0.8
 	helm.sh/helm/v3 v3.6.1
 	k8s.io/api v0.21.1
 	k8s.io/apiextensions-apiserver v0.21.1
@@ -36,11 +36,11 @@ require (
 	k8s.io/klog/v2 v2.8.0
 	k8s.io/kube-openapi v0.0.0-20210305001622-591a79e4bda7
 	k8s.io/kubernetes v1.21.1
-	kmodules.xyz/client-go v0.0.0-20210928133955-8df5bb467db6
+	kmodules.xyz/client-go v0.0.0-20211028132207-0cf6ea46b030
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20210618002152-fae23aef5fb4
-	kmodules.xyz/custom-resources v0.0.0-20210727045435-83db827677cf
-	kmodules.xyz/resource-metadata v0.6.0
-	kmodules.xyz/webhook-runtime v0.0.0-20210716205500-e489faf01981
+	kmodules.xyz/custom-resources v0.0.0-20211007080833-72bd9e8cae6e
+	kmodules.xyz/resource-metadata v0.6.7
+	kmodules.xyz/webhook-runtime v0.0.0-20210928141616-7f73c2ab318a
 	kubepack.dev/lib-helm v0.2.4-0.20210702135227-03dd8e7b6b0f
 	sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4
 	sigs.k8s.io/yaml v1.2.0
@@ -154,4 +154,10 @@ replace k8s.io/utils => k8s.io/utils v0.0.0-20201110183641-67b214c5f920
 
 replace sigs.k8s.io/application => github.com/kmodules/application v0.8.4-0.20210427030912-90eeee3bc4ad
 
-replace github.com/satori/go.uuid => github.com/gofrs/uuid v4.0.0+incompatible
+replace github.com/satori/go.uuid => github.com/gomodules/uuid v4.0.0+incompatible
+
+replace github.com/dgrijalva/jwt-go => github.com/gomodules/jwt v3.2.2+incompatible
+
+replace github.com/golang-jwt/jwt => github.com/golang-jwt/jwt v3.2.2+incompatible
+
+replace github.com/form3tech-oss/jwt-go => github.com/form3tech-oss/jwt-go v3.2.5+incompatible
