@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 SHELL=/bin/bash -o pipefail
 
 GO_PKG   := kubepack.dev
@@ -30,7 +31,13 @@ REGISTRY ?= kubepack
 git_branch       := $(shell git rev-parse --abbrev-ref HEAD)
 git_tag          := $(shell git describe --exact-match --abbrev=0 2>/dev/null || echo "")
 commit_hash      := $(shell git rev-parse --verify HEAD)
-commit_timestamp := $(shell date --date="@$$(git show -s --format=%ct)" --utc +%FT%T)
+OS               ?= $(shell uname -s)
+ifeq ($(OS),Linux)
+  commit_timestamp := $(shell date --date="@$$(git show -s --format=%ct)" --utc +%FT%T)
+endif
+ifeq ($(OS),Darwin)
+  commit_timestamp := $(shell date -r "$$(git show -s --format=%ct)" -u +%FT%T)
+endif
 
 VERSION          := $(shell git describe --tags --always --dirty)
 version_strategy := commit_hash
