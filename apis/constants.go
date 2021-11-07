@@ -46,3 +46,7 @@ const (
 	YAMLHost   = "https://pkg.bytebuilders.xyz"
 	YAMLBucket = "gs://pkg.bytebuilders.xyz"
 )
+
+const (
+	DefaultKubernetesVersion = "1.22.0"
+)

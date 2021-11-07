@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"path"
 
+	"kubepack.dev/kubepack/apis"
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/lib-helm/pkg/repo"
 
@@ -110,7 +111,7 @@ func GenerateHelm3Script(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 		f6 := &ApplicationGenerator{
 			Registry:    reg,
 			Chart:       *pkg.Chart,
-			KubeVersion: "v1.17.0",
+			KubeVersion: apis.DefaultKubernetesVersion,
 		}
 		err = f6.Do()
 		if err != nil {

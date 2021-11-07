@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"path"
 
+	"kubepack.dev/kubepack/apis"
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/lib-helm/pkg/repo"
 
@@ -76,7 +77,7 @@ func GenerateYAMLScript(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order)
 			Version:     pkg.Chart.Version,
 			ReleaseName: pkg.Chart.ReleaseName,
 			Namespace:   pkg.Chart.Namespace,
-			KubeVersion: "v1.17.0",
+			KubeVersion: apis.DefaultKubernetesVersion,
 			ValuesFile:  pkg.Chart.ValuesFile,
 			ValuesPatch: pkg.Chart.ValuesPatch,
 			BucketURL:   bs.Bucket,
@@ -114,7 +115,7 @@ func GenerateYAMLScript(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order)
 		f6 := &ApplicationGenerator{
 			Registry:    reg,
 			Chart:       *pkg.Chart,
-			KubeVersion: "v1.17.0",
+			KubeVersion: apis.DefaultKubernetesVersion,
 		}
 		err = f6.Do()
 		if err != nil {
