@@ -38,7 +38,7 @@ func NewTestBlobStore() (*BlobStore, error) {
 	}
 	return &BlobStore{
 		Interface: fs,
-		Host:   apis.YAMLHost,
-		Bucket: apis.YAMLBucket,
+		Host:      apis.YAMLHost,
+		Bucket:    apis.YAMLBucket,
 	}, nil
 }
