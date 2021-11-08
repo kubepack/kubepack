@@ -87,7 +87,7 @@ func (x *WaitForPrinter) Do() error {
 		return nil
 	}
 
-	_, err := fmt.Fprintf(x.W, "\n## wait %s to be ready\n", x.Name)
+	_, err := fmt.Fprintf(x.W, "# wait %s to be ready\n", x.Name)
 	if err != nil {
 		return err
 	}
@@ -234,7 +234,7 @@ type CRDReadinessPrinter struct {
 }
 
 func (x *CRDReadinessPrinter) Do() error {
-	_, err := fmt.Fprintln(x.W, "\n## wait for crds to be ready")
+	_, err := fmt.Fprintln(x.W, "# wait for crds to be ready")
 	if err != nil {
 		return err
 	}
@@ -318,7 +318,7 @@ func (x *Helm3CommandPrinter) Do() error {
 		$ helm repo update
 		$ helm search repo appscode/voyager --version v12.0.0-rc.1
 	*/
-	_, err = fmt.Fprintf(&buf, "\n## add helm repository %s\n", reponame)
+	_, err = fmt.Fprintf(&buf, "# add helm repository %s\n", reponame)
 	if err != nil {
 		return err
 	}
@@ -340,7 +340,7 @@ func (x *Helm3CommandPrinter) Do() error {
 		  --namespace kube-system \
 		  --set cloudProvider=$provider
 	*/
-	_, err = fmt.Fprintf(&buf, "\n## install chart %s/%s\n", reponame, x.ChartRef.Name)
+	_, err = fmt.Fprintf(&buf, "# install chart %s/%s\n", reponame, x.ChartRef.Name)
 	if err != nil {
 		return err
 	}
