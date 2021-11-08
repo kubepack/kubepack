@@ -872,7 +872,7 @@ golang.org/x/tools/internal/typesinternal
 ## explicit; go 1.11
 golang.org/x/xerrors
 golang.org/x/xerrors/internal
-# gomodules.xyz/blobfs v0.1.7
+# gomodules.xyz/blobfs v0.1.10
 ## explicit; go 1.14
 gomodules.xyz/blobfs
 gomodules.xyz/blobfs/testing

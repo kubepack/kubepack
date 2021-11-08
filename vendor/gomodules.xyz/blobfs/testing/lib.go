@@ -9,7 +9,7 @@ import (
 /*
 NewTestGCS returns a BlobFS for a gcs bucket url gs://<bucket> and credential file
 */
-func NewTestGCS(bucketURL, credential string) (*blobfs.BlobFS, error) {
+func NewTestGCS(bucketURL, credential string) (blobfs.Interface, error) {
 	if v, ok := os.LookupEnv("GOOGLE_APPLICATION_CREDENTIALS"); ok {
 		credential = v
 	} else {

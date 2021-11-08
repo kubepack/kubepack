@@ -19,7 +19,7 @@ require (
 	github.com/spf13/cobra v1.1.3
 	github.com/spf13/pflag v1.0.5
 	gocloud.dev v0.22.0
-	gomodules.xyz/blobfs v0.1.7
+	gomodules.xyz/blobfs v0.1.10
 	gomodules.xyz/jsonpatch/v2 v2.2.0
 	gomodules.xyz/logs v0.0.6
 	gomodules.xyz/runtime v0.2.0
