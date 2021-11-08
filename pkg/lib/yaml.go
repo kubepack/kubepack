@@ -29,14 +29,18 @@ import (
 
 func GenerateYAMLScript(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order, opts ...ScriptOption) ([]ScriptRef, error) {
 	var buf bytes.Buffer
-	_, err := buf.WriteString("#!/usr/bin/env sh\n")
-	if err != nil {
-		return nil, err
-	}
+	var err error
 
 	var scriptOptions ScriptOptions
 	for _, opt := range opts {
 		opt.Apply(&scriptOptions)
+	}
+
+	if !scriptOptions.OsIndependentScript {
+		_, err = buf.WriteString("#!/usr/bin/env sh\n")
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	if !scriptOptions.DisableApplicationCRD {
