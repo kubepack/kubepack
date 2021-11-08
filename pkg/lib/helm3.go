@@ -21,6 +21,7 @@ import (
 	"context"
 	"fmt"
 	"path"
+	"strings"
 
 	"kubepack.dev/kubepack/apis"
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
@@ -135,7 +136,7 @@ func GenerateHelm3Script(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 				OS:      Neutral,
 				URL:     "",
 				Command: "",
-				Script:  buf.String(),
+				Script:  strings.TrimSpace(buf.String()),
 			},
 		}, nil
 	}
