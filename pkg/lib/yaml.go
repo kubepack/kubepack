@@ -129,6 +129,17 @@ func GenerateYAMLScript(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order,
 		}
 	}
 
+	if scriptOptions.OsIndependentScript {
+		return []ScriptRef{
+			{
+				OS:      Neutral,
+				URL:     "",
+				Command: "",
+				Script:  buf.String(),
+			},
+		}, nil
+	}
+
 	err = bs.WriteFile(context.TODO(), path.Join(string(order.UID), "script.sh"), buf.Bytes())
 	if err != nil {
 		return nil, err
@@ -140,13 +151,13 @@ func GenerateYAMLScript(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order,
 			OS:      Linux,
 			URL:     scriptURL,
 			Command: fmt.Sprintf("curl -fsSL %s | bash", scriptURL),
-			Script:  string(buf.Bytes()),
+			Script:  buf.String(),
 		},
 		{
 			OS:      MacOS,
 			URL:     scriptURL,
 			Command: fmt.Sprintf("curl -fsSL %s | bash", scriptURL),
-			Script:  string(buf.Bytes()),
+			Script:  buf.String(),
 		},
 	}, nil
 }

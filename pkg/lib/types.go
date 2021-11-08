@@ -19,6 +19,7 @@ package lib
 type OS string
 
 const (
+	Neutral OS = ""
 	Linux   OS = "linux"
 	Windows OS = "windows"
 	MacOS   OS = "darwin"

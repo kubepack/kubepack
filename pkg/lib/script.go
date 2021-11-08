@@ -18,6 +18,7 @@ package lib
 
 type ScriptOptions struct {
 	DisableApplicationCRD bool
+	OsIndependentScript   bool
 }
 
 type ScriptOption interface {
@@ -32,4 +33,8 @@ func (fn ScriptOptionFunc) Apply(opt *ScriptOptions) {
 
 var DisableApplicationCRD = ScriptOptionFunc(func(opt *ScriptOptions) {
 	opt.DisableApplicationCRD = true
+})
+
+var OsIndependentScript = ScriptOptionFunc(func(opt *ScriptOptions) {
+	opt.OsIndependentScript = true
 })
