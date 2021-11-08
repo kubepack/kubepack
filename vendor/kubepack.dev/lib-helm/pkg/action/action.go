@@ -42,9 +42,14 @@ type Configuration struct {
 }
 
 // Init initializes the action configuration
-func (c *Configuration) Init(getter genericclioptions.RESTClientGetter, namespace, helmDriver string, log ha.DebugLog) error {
+func (c *Configuration) Init(getter genericclioptions.RESTClientGetter, namespace, helmDriver string, logger ...ha.DebugLog) error {
 	var kc kube.Interface
 	var factory kube.Factory
+
+	var log ha.DebugLog = debug
+	if len(logger) > 0 {
+		log = logger[0]
+	}
 
 	switch helmDriver {
 	case "secret", "secrets", "", "configmap", "configmaps", "memory", "sql":

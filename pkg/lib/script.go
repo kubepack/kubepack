@@ -16,17 +16,20 @@ limitations under the License.
 
 package lib
 
-type OS string
-
-const (
-	Linux   OS = "linux"
-	Windows OS = "windows"
-	MacOS   OS = "darwin"
-)
-
-type ScriptRef struct {
-	OS      OS     `json:"os"`
-	URL     string `json:"url"`
-	Command string `json:"command"`
-	Script  string `json:"script"`
+type ScriptOptions struct {
+	DisableApplicationCRD bool
 }
+
+type ScriptOption interface {
+	Apply(opt *ScriptOptions)
+}
+
+type ScriptOptionFunc func(opt *ScriptOptions)
+
+func (fn ScriptOptionFunc) Apply(opt *ScriptOptions) {
+	fn(opt)
+}
+
+var DisableApplicationCRD = ScriptOptionFunc(func(opt *ScriptOptions) {
+	opt.DisableApplicationCRD = true
+})

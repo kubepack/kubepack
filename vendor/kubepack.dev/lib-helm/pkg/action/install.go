@@ -50,10 +50,10 @@ type Installer struct {
 	result *release.Release
 }
 
-func NewInstaller(getter genericclioptions.RESTClientGetter, namespace string, helmDriver string) (*Installer, error) {
+func NewInstaller(getter genericclioptions.RESTClientGetter, namespace string, helmDriver string, log ...ha.DebugLog) (*Installer, error) {
 	cfg := new(Configuration)
 	// TODO: Use secret driver for which namespace?
-	err := cfg.Init(getter, namespace, helmDriver, debug)
+	err := cfg.Init(getter, namespace, helmDriver, log...)
 	if err != nil {
 		return nil, err
 	}

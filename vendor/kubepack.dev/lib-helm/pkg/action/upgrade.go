@@ -50,10 +50,10 @@ type Upgrader struct {
 	result      *release.Release
 }
 
-func NewUpgrader(getter genericclioptions.RESTClientGetter, namespace string, helmDriver string) (*Upgrader, error) {
+func NewUpgrader(getter genericclioptions.RESTClientGetter, namespace string, helmDriver string, log ...ha.DebugLog) (*Upgrader, error) {
 	cfg := new(Configuration)
 	// TODO: Use secret driver for which namespace?
-	err := cfg.Init(getter, namespace, helmDriver, debug)
+	err := cfg.Init(getter, namespace, helmDriver, log...)
 	if err != nil {
 		return nil, err
 	}

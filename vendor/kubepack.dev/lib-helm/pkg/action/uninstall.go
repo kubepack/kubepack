@@ -24,10 +24,10 @@ type Uninstaller struct {
 	result      *release.UninstallReleaseResponse
 }
 
-func NewUninstaller(getter genericclioptions.RESTClientGetter, namespace string, helmDriver string) (*Uninstaller, error) {
+func NewUninstaller(getter genericclioptions.RESTClientGetter, namespace string, helmDriver string, log ...ha.DebugLog) (*Uninstaller, error) {
 	cfg := new(Configuration)
 	// TODO: Use secret driver for which namespace?
-	err := cfg.Init(getter, namespace, helmDriver, debug)
+	err := cfg.Init(getter, namespace, helmDriver, log...)
 	if err != nil {
 		return nil, err
 	}

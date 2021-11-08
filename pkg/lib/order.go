@@ -20,6 +20,7 @@ import (
 	"encoding/json"
 	"time"
 
+	"kubepack.dev/kubepack/apis"
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/lib-helm/pkg/action"
 	"kubepack.dev/lib-helm/pkg/repo"
@@ -32,7 +33,6 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
-	"k8s.io/apimachinery/pkg/util/sets"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 	"k8s.io/client-go/kubernetes"
 	"sigs.k8s.io/application/client/clientset/versioned"
@@ -168,7 +168,7 @@ func FindChartData(bundle *v1alpha1.Bundle, chrtRef v1alpha1.ChartRef, chrtVersi
 	return nil, nil, ""
 }
 
-func InstallOrder(getter genericclioptions.RESTClientGetter, reg *repo.Registry, order v1alpha1.Order) error {
+func InstallOrder(getter genericclioptions.RESTClientGetter, reg *repo.Registry, order v1alpha1.Order, opts ...ScriptOption) error {
 	config, err := getter.ToRESTConfig()
 	if err != nil {
 		return err
@@ -191,31 +191,24 @@ func InstallOrder(getter genericclioptions.RESTClientGetter, reg *repo.Registry,
 	kubeVersion, _ = kubeVersion.SetPrerelease("")
 	kubeVersion, _ = kubeVersion.SetMetadata("")
 
-	namespaces := sets.NewString("default", "kube-system")
-
-	f1 := &ApplicationCRDRegistrar{
-		Config: config,
+	var scriptOptions ScriptOptions
+	for _, opt := range opts {
+		opt.Apply(&scriptOptions)
 	}
-	err = f1.Do()
-	if err != nil {
-		return err
+
+	if !scriptOptions.DisableApplicationCRD {
+		f1 := &ApplicationCRDRegistrar{
+			Config: config,
+		}
+		err = f1.Do()
+		if err != nil {
+			return err
+		}
 	}
 
 	for _, pkg := range order.Spec.Packages {
 		if pkg.Chart == nil {
 			continue
-		}
-
-		if !namespaces.Has(pkg.Chart.Namespace) {
-			f2 := &NamespaceCreator{
-				Namespace: pkg.Chart.Namespace,
-				Client:    kc,
-			}
-			err = f2.Do()
-			if err != nil {
-				return err
-			}
-			namespaces.Insert(pkg.Chart.Namespace)
 		}
 
 		f3, err := action.NewInstaller(getter, pkg.Chart.Namespace, "secret")
@@ -232,8 +225,9 @@ func InstallOrder(getter genericclioptions.RESTClientGetter, reg *repo.Registry,
 					ValuesFile:  pkg.Chart.ValuesFile,
 					ValuesPatch: pkg.Chart.ValuesPatch,
 				},
-				Namespace:   pkg.Chart.Namespace,
-				ReleaseName: pkg.Chart.ReleaseName,
+				Namespace:       pkg.Chart.Namespace,
+				CreateNamespace: !apis.BuiltinNamespaces.Has(pkg.Chart.Namespace),
+				ReleaseName:     pkg.Chart.ReleaseName,
 			})
 		err = f3.Do()
 		if err != nil {
@@ -261,23 +255,25 @@ func InstallOrder(getter genericclioptions.RESTClientGetter, reg *repo.Registry,
 			}
 		}
 
-		f6 := &ApplicationGenerator{
-			Registry:    reg,
-			Chart:       *pkg.Chart,
-			KubeVersion: kubeVersion.Original(),
-		}
-		err = f6.Do()
-		if err != nil {
-			return err
-		}
+		if !scriptOptions.DisableApplicationCRD {
+			f6 := &ApplicationGenerator{
+				Registry:    reg,
+				Chart:       *pkg.Chart,
+				KubeVersion: kubeVersion.Original(),
+			}
+			err = f6.Do()
+			if err != nil {
+				return err
+			}
 
-		f7 := &ApplicationCreator{
-			App:    f6.Result(),
-			Client: versioned.NewForConfigOrDie(config),
-		}
-		err = f7.Do()
-		if err != nil {
-			return err
+			f7 := &ApplicationCreator{
+				App:    f6.Result(),
+				Client: versioned.NewForConfigOrDie(config),
+			}
+			err = f7.Do()
+			if err != nil {
+				return err
+			}
 		}
 	}
 	return nil
