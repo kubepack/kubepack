@@ -26,6 +26,7 @@ import (
 
 	"github.com/gabriel-vasile/mimetype"
 	"helm.sh/helm/v3/pkg/chart"
+	"helm.sh/helm/v3/pkg/chartutil"
 	crdv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -92,7 +93,7 @@ func CreatePackageView(url string, chrt *chart.Chart) (*v1alpha1.PackageView, er
 	}
 
 	for _, f := range chrt.Raw {
-		if f.Name == "values.yaml" || (strings.HasPrefix(f.Name, "values-") && strings.HasSuffix(f.Name, ".yaml")) {
+		if f.Name == chartutil.ValuesfileName || (strings.HasPrefix(f.Name, "values-") && strings.HasSuffix(f.Name, ".yaml")) {
 			var values map[string]interface{}
 			err := yamllib.Unmarshal(f.Data, &values)
 			if err != nil {

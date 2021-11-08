@@ -41,7 +41,7 @@ func getChangedValues(original, modified map[string]interface{}, prefix string, 
 			if !ok {
 				oVal = map[string]interface{}{}
 			}
-			next, err := getChangedValues(oVal, val, curKey, cmds)
+			next, err := getChangedValues(oVal, val, curKey, nil)
 			if err != nil {
 				return nil, err
 			}
@@ -67,7 +67,7 @@ func getChangedValues(original, modified map[string]interface{}, prefix string, 
 					if !ok {
 						return nil, fmt.Errorf("%s[%d] element is not a map", curKey, i)
 					}
-					next, err := getChangedValues(map[string]interface{}{}, em, fmt.Sprintf("%s[%d]", curKey, i), cmds)
+					next, err := getChangedValues(map[string]interface{}{}, em, fmt.Sprintf("%s[%d]", curKey, i), nil)
 					if err != nil {
 						return nil, err
 					}
@@ -88,6 +88,19 @@ func getChangedValues(original, modified map[string]interface{}, prefix string, 
 			}
 		default:
 			return nil, fmt.Errorf("unknown type %v with value %v", reflect.TypeOf(v), v)
+		}
+	}
+
+	for k := range original {
+		if _, found := modified[k]; !found {
+			curKey := ""
+			if prefix == "" {
+				curKey = escapeKey(k)
+			} else {
+				curKey = prefix + "." + escapeKey(k)
+			}
+
+			cmds = append(cmds, fmt.Sprintf("%s=null", curKey))
 		}
 	}
 	return cmds, nil

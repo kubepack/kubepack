@@ -25,50 +25,37 @@ import (
 	"kubepack.dev/kubepack/apis"
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/lib-helm/pkg/repo"
-
-	"k8s.io/apimachinery/pkg/util/sets"
 )
 
-func GenerateYAMLScript(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order) ([]ScriptRef, error) {
+func GenerateYAMLScript(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order, opts ...ScriptOption) ([]ScriptRef, error) {
 	var buf bytes.Buffer
-	_, err := buf.WriteString("#!/usr/bin/env bash\n")
-	if err != nil {
-		return nil, err
-	}
-	_, err = buf.WriteString("set -xeou pipefail\n\n")
+	_, err := buf.WriteString("#!/usr/bin/env sh\n")
 	if err != nil {
 		return nil, err
 	}
 
-	namespaces := sets.NewString("default", "kube-system")
+	var scriptOptions ScriptOptions
+	for _, opt := range opts {
+		opt.Apply(&scriptOptions)
+	}
 
-	f1 := &ApplicationCRDRegPrinter{
-		W: &buf,
-	}
-	err = f1.Do()
-	if err != nil {
-		return nil, err
-	}
-	_, err = buf.WriteRune('\n')
-	if err != nil {
-		return nil, err
+	if !scriptOptions.DisableApplicationCRD {
+		f1 := &ApplicationCRDRegPrinter{
+			W: &buf,
+		}
+		err = f1.Do()
+		if err != nil {
+			return nil, err
+		}
+		_, err = buf.WriteRune('\n')
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	for _, pkg := range order.Spec.Packages {
 		if pkg.Chart == nil {
 			continue
-		}
-
-		if !namespaces.Has(pkg.Chart.Namespace) {
-			f2 := &NamespacePrinter{
-				Namespace: pkg.Chart.Namespace,
-				W:         &buf,
-			}
-			err = f2.Do()
-			if err != nil {
-				return nil, err
-			}
-			namespaces.Insert(pkg.Chart.Namespace)
 		}
 
 		f3 := &YAMLPrinter{
@@ -112,26 +99,28 @@ func GenerateYAMLScript(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order)
 			}
 		}
 
-		f6 := &ApplicationGenerator{
-			Registry:    reg,
-			Chart:       *pkg.Chart,
-			KubeVersion: apis.DefaultKubernetesVersion,
-		}
-		err = f6.Do()
-		if err != nil {
-			return nil, err
-		}
+		if !scriptOptions.DisableApplicationCRD {
+			f6 := &ApplicationGenerator{
+				Registry:    reg,
+				Chart:       *pkg.Chart,
+				KubeVersion: apis.DefaultKubernetesVersion,
+			}
+			err = f6.Do()
+			if err != nil {
+				return nil, err
+			}
 
-		f7 := &ApplicationUploader{
-			App:       f6.Result(),
-			UID:       string(order.UID),
-			BucketURL: bs.Bucket,
-			PublicURL: bs.Host,
-			W:         &buf,
-		}
-		err = f7.Do()
-		if err != nil {
-			return nil, err
+			f7 := &ApplicationUploader{
+				App:       f6.Result(),
+				UID:       string(order.UID),
+				BucketURL: bs.Bucket,
+				PublicURL: bs.Host,
+				W:         &buf,
+			}
+			err = f7.Do()
+			if err != nil {
+				return nil, err
+			}
 		}
 
 		_, err = buf.WriteRune('\n')
@@ -151,11 +140,13 @@ func GenerateYAMLScript(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order)
 			OS:      Linux,
 			URL:     scriptURL,
 			Command: fmt.Sprintf("curl -fsSL %s | bash", scriptURL),
+			Script:  string(buf.Bytes()),
 		},
 		{
 			OS:      MacOS,
 			URL:     scriptURL,
 			Command: fmt.Sprintf("curl -fsSL %s | bash", scriptURL),
+			Script:  string(buf.Bytes()),
 		},
 	}, nil
 }

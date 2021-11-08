@@ -53,7 +53,6 @@ import (
 	core "k8s.io/api/core/v1"
 	crdv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	crd_cs "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
-	kerr "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -63,7 +62,6 @@ import (
 	"k8s.io/cli-runtime/pkg/printers"
 	"k8s.io/cli-runtime/pkg/resource"
 	"k8s.io/client-go/dynamic"
-	"k8s.io/client-go/kubernetes"
 	authv1client "k8s.io/client-go/kubernetes/typed/authorization/v1"
 	"k8s.io/client-go/rest"
 	"kmodules.xyz/client-go/apiextensions"
@@ -77,37 +75,6 @@ import (
 
 type DoFn func() error
 
-type NamespacePrinter struct {
-	Namespace string
-	W         io.Writer
-}
-
-func (x *NamespacePrinter) Do() error {
-	_, err := x.W.Write([]byte("## create namespace if missing\n"))
-	if err != nil {
-		return err
-	}
-	_, err = x.W.Write([]byte(fmt.Sprintf("kubectl create namespace %s || true\n", x.Namespace)))
-	return err
-}
-
-type NamespaceCreator struct {
-	Namespace string
-	Client    kubernetes.Interface
-}
-
-func (x *NamespaceCreator) Do() error {
-	_, err := x.Client.CoreV1().Namespaces().Create(context.TODO(), &core.Namespace{
-		ObjectMeta: v1.ObjectMeta{
-			Name: x.Namespace,
-		},
-	}, metav1.CreateOptions{})
-	if err != nil && !kerr.IsAlreadyExists(err) {
-		return err
-	}
-	return nil
-}
-
 type WaitForPrinter struct {
 	Name      string
 	Namespace string
@@ -120,7 +87,7 @@ func (x *WaitForPrinter) Do() error {
 		return nil
 	}
 
-	_, err := fmt.Fprintf(x.W, "## wait %s to be ready\n", x.Name)
+	_, err := fmt.Fprintf(x.W, "\n## wait %s to be ready\n", x.Name)
 	if err != nil {
 		return err
 	}
@@ -267,7 +234,7 @@ type CRDReadinessPrinter struct {
 }
 
 func (x *CRDReadinessPrinter) Do() error {
-	_, err := fmt.Fprintln(x.W, "## wait for crds to be ready")
+	_, err := fmt.Fprintln(x.W, "\n## wait for crds to be ready")
 	if err != nil {
 		return err
 	}
@@ -351,7 +318,7 @@ func (x *Helm3CommandPrinter) Do() error {
 		$ helm repo update
 		$ helm search repo appscode/voyager --version v12.0.0-rc.1
 	*/
-	_, err = fmt.Fprintf(&buf, "## add helm repository %s\n", reponame)
+	_, err = fmt.Fprintf(&buf, "\n## add helm repository %s\n", reponame)
 	if err != nil {
 		return err
 	}
@@ -373,7 +340,7 @@ func (x *Helm3CommandPrinter) Do() error {
 		  --namespace kube-system \
 		  --set cloudProvider=$provider
 	*/
-	_, err = fmt.Fprintf(&buf, "## install chart %s/%s\n", reponame, x.ChartRef.Name)
+	_, err = fmt.Fprintf(&buf, "\n## install chart %s/%s\n", reponame, x.ChartRef.Name)
 	if err != nil {
 		return err
 	}
@@ -382,7 +349,7 @@ func (x *Helm3CommandPrinter) Do() error {
 		return err
 	}
 	if x.Namespace != "" {
-		_, err = fmt.Fprintf(&buf, "%s--namespace %s \\\n", indent, x.Namespace)
+		_, err = fmt.Fprintf(&buf, "%s--namespace %s --create-namespace \\\n", indent, x.Namespace)
 		if err != nil {
 			return err
 		}
@@ -428,131 +395,7 @@ func (x *Helm3CommandPrinter) Do() error {
 			return err
 		}
 		for _, v := range setValues {
-			_, err = fmt.Fprintf(&buf, `%s--set %s \\n`, indent, v)
-			if err != nil {
-				return err
-			}
-		}
-	}
-	buf.Truncate(buf.Len() - 3)
-
-	_, err = buf.WriteRune('\n')
-	if err != nil {
-		return err
-	}
-
-	_, err = buf.WriteTo(x.W)
-	return err
-}
-
-type Helm2CommandPrinter struct {
-	Registry    *repo.Registry
-	ChartRef    v1alpha1.ChartRef
-	Version     string
-	ReleaseName string
-	Namespace   string
-	ValuesFile  string
-	ValuesPatch *runtime.RawExtension
-
-	W io.Writer
-}
-
-func (x *Helm2CommandPrinter) Do() error {
-	chrt, err := x.Registry.GetChart(x.ChartRef.URL, x.ChartRef.Name, x.Version)
-	if err != nil {
-		return err
-	}
-
-	reponame, err := repo.DefaultNamer.Name(x.ChartRef.URL)
-	if err != nil {
-		return err
-	}
-
-	var buf bytes.Buffer
-
-	/*
-		$ helm repo add appscode https://charts.appscode.com/stable/
-		$ helm repo update
-		$ helm search repo appscode/voyager --version v12.0.0-rc.1
-	*/
-	_, err = fmt.Fprintf(&buf, "## add helm repository %s\n", reponame)
-	if err != nil {
-		return err
-	}
-	_, err = fmt.Fprintf(&buf, "helm repo add %s %s\n", reponame, x.ChartRef.URL)
-	if err != nil {
-		return err
-	}
-	_, err = fmt.Fprintf(&buf, "helm repo update\n")
-	if err != nil {
-		return err
-	}
-	_, err = fmt.Fprintf(&buf, "helm search %s/%s --version %s\n", reponame, x.ChartRef.Name, x.Version)
-	if err != nil {
-		return err
-	}
-
-	/*
-		$ helm install voyager-operator appscode/voyager --version v12.0.0-rc.1 \
-		  --namespace kube-system \
-		  --set cloudProvider=$provider
-	*/
-	_, err = fmt.Fprintf(&buf, "## install chart %s/%s\n", reponame, x.ChartRef.Name)
-	if err != nil {
-		return err
-	}
-	_, err = fmt.Fprintf(&buf, "helm install %s/%s --name %s --version %s \\\n", reponame, x.ChartRef.Name, x.ReleaseName, x.Version)
-	if err != nil {
-		return err
-	}
-	if x.Namespace != "" {
-		_, err = fmt.Fprintf(&buf, "%s--namespace %s \\\n", indent, x.Namespace)
-		if err != nil {
-			return err
-		}
-	}
-
-	if x.ValuesPatch != nil {
-		vals := chrt.Values
-
-		if x.ValuesFile != "" {
-			for _, f := range chrt.Raw {
-				if f.Name == x.ValuesFile {
-					if err := yamllib.Unmarshal(f.Data, &vals); err != nil {
-						return fmt.Errorf("cannot load %s. Reason: %v", f.Name, err.Error())
-					}
-					break
-				}
-			}
-		}
-		values, err := json.Marshal(vals)
-		if err != nil {
-			return err
-		}
-
-		patchData, err := json.Marshal(x.ValuesPatch)
-		if err != nil {
-			return err
-		}
-		patch, err := jsonpatch.DecodePatch(patchData)
-		if err != nil {
-			return err
-		}
-		modifiedValues, err := patch.Apply(values)
-		if err != nil {
-			return err
-		}
-		var modified map[string]interface{}
-		err = json.Unmarshal(modifiedValues, &modified)
-		if err != nil {
-			return err
-		}
-		setValues, err := chart2.GetChangedValues(chrt.Values, modified)
-		if err != nil {
-			return err
-		}
-		for _, v := range setValues {
-			_, err = fmt.Fprintf(&buf, `%s--set %s \\n`, indent, v)
+			_, err = fmt.Fprintf(&buf, "%s--set %s \\\n", indent, v)
 			if err != nil {
 				return err
 			}
@@ -640,7 +483,7 @@ func (x *YAMLPrinter) Do() error {
 
 	vals := chrt.Values
 	if x.ValuesPatch != nil {
-		if x.ValuesFile != "" {
+		if x.ValuesFile != "" && x.ValuesFile != chartutil.ValuesfileName {
 			for _, f := range chrt.Raw {
 				if f.Name == x.ValuesFile {
 					if err := yamllib.Unmarshal(f.Data, &vals); err != nil {
@@ -740,6 +583,16 @@ func (x *YAMLPrinter) Do() error {
 	}
 
 	var manifestDoc bytes.Buffer
+
+	if !apis.BuiltinNamespaces.Has(x.Namespace) {
+		manifestDoc.WriteString(fmt.Sprintf(`apiVersion: v1
+kind: Namespace
+metadata:
+  name: %s
+
+---
+`, x.Namespace))
+	}
 
 	for _, hook := range hooks {
 		if libchart.IsEvent(hook.Events, release.HookPreInstall) {

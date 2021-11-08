@@ -32,10 +32,10 @@ type Lister struct {
 	result []*release.Release
 }
 
-func NewLister(getter genericclioptions.RESTClientGetter, namespace string, helmDriver string) (*Lister, error) {
+func NewLister(getter genericclioptions.RESTClientGetter, namespace string, helmDriver string, log ...ha.DebugLog) (*Lister, error) {
 	cfg := new(Configuration)
 	// TODO: Use secret driver for which namespace?
-	err := cfg.Init(getter, namespace, helmDriver, debug)
+	err := cfg.Init(getter, namespace, helmDriver, log...)
 	if err != nil {
 		return nil, err
 	}

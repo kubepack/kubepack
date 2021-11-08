@@ -1738,8 +1738,8 @@ kmodules.xyz/resource-metadata/hub/resourcedescriptors
 ## explicit; go 1.12
 kmodules.xyz/webhook-runtime/admission/v1beta1
 kmodules.xyz/webhook-runtime/registry/admissionreview/v1beta1
-# kubepack.dev/lib-helm v0.2.4-0.20210702135227-03dd8e7b6b0f
-## explicit; go 1.16
+# kubepack.dev/lib-helm v0.3.1
+## explicit; go 1.17
 kubepack.dev/lib-helm/pkg/action
 kubepack.dev/lib-helm/pkg/application
 kubepack.dev/lib-helm/pkg/chart

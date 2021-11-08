@@ -3,7 +3,7 @@ package action
 import (
 	"time"
 
-	haction "helm.sh/helm/v3/pkg/action"
+	ha "helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/chartutil"
 	"helm.sh/helm/v3/pkg/release"
 	"helm.sh/helm/v3/pkg/storage/driver"
@@ -47,10 +47,10 @@ type Deployer struct {
 	result *release.Release
 }
 
-func NewDeployer(getter genericclioptions.RESTClientGetter, namespace string, helmDriver string) (*Deployer, error) {
+func NewDeployer(getter genericclioptions.RESTClientGetter, namespace string, helmDriver string, log ...ha.DebugLog) (*Deployer, error) {
 	cfg := new(Configuration)
 	// TODO: Use secret driver for which namespace?
-	err := cfg.Init(getter, namespace, helmDriver, debug)
+	err := cfg.Init(getter, namespace, helmDriver, log...)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func (x *Deployer) WithRegistry(reg *repo.Registry) *Deployer {
 
 func (x *Deployer) Run() (*release.Release, *engine.State, error) {
 	// If a release does not exist, install it.
-	histClient := haction.NewHistory(&x.cfg.Configuration)
+	histClient := ha.NewHistory(&x.cfg.Configuration)
 	histClient.Max = 1
 	if _, err := histClient.Run(x.opts.ReleaseName); err == driver.ErrReleaseNotFound {
 		i := NewInstallerForConfig(x.cfg)

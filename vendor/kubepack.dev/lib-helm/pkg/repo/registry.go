@@ -41,6 +41,8 @@ type Registry struct {
 	m     sync.RWMutex
 }
 
+var _ IRegistry = &Registry{}
+
 func NewCachedRegistry(cache httpcache.Cache) *Registry {
 	return &Registry{repos: make(map[string]*Entry), cache: cache}
 }

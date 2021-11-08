@@ -44,7 +44,6 @@ func Loader(name string) (ChartLoader, error) {
 		return DirLoader(name), nil
 	}
 	return FileLoader(name), nil
-
 }
 
 // Load takes a string name, tries to resolve it to a file or directory, and then loads it.
