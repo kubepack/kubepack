@@ -590,7 +590,6 @@ kind: Namespace
 metadata:
   name: %s
 
----
 `, x.Namespace))
 	}
 
