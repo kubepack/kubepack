@@ -1382,8 +1382,9 @@ kmodules.xyz/custom-resources v0.0.0-20211007080833-72bd9e8cae6e h1:0IEUFAJPgwPx
 kmodules.xyz/custom-resources v0.0.0-20211007080833-72bd9e8cae6e/go.mod h1:pGabego8q4oi/2sNjhdtFkgVaVw4AyGv14GO6VtAjTw=
 kmodules.xyz/offshoot-api v0.0.0-20210829122105-6f4d481b0c61/go.mod h1:3LECbAL3FgbyK80NP3V3Pmiuo/a3hFWg/PR6SPFhTns=
 kmodules.xyz/openshift v0.0.0-20210618001443-f2507caa512f/go.mod h1:8E5ckbd1KMNmR4hc7ScvmQnGfx1ULUUp+UTmoDdxRkc=
-kmodules.xyz/resource-metadata v0.6.7 h1:a8yosjST8+GsdgCB4i8WrT9ayEqf3jwzbcoPqRDpDCs=
 kmodules.xyz/resource-metadata v0.6.7/go.mod h1:BGy9IyQG13z6ArdexZ7gguVrNspLxa1fSPd/I7fdpI0=
+kmodules.xyz/resource-metadata v0.7.0 h1:iGa7Rw98SnFUg6OaYL3dAiACWthLnT1ly0u7UTAnrY0=
+kmodules.xyz/resource-metadata v0.7.0/go.mod h1:t5d2yZk20ksJDqVr7qkOr9uVMgfMElrpur1wq8RsjqI=
 kmodules.xyz/resource-metrics v0.0.5/go.mod h1:6Dv63HDgp83DhA+lZNB7GIQR6PLjNrYW6ghQKioQzII=
 kmodules.xyz/webhook-runtime v0.0.0-20210928141616-7f73c2ab318a h1:kSTJu+yNGkQ4tdBeR0yMXZopI4CAMJh5uFafaE1Cr9k=
 kmodules.xyz/webhook-runtime v0.0.0-20210928141616-7f73c2ab318a/go.mod h1:MFZFmJk9IXNHwq8JlF/mukwBDbopFQj4swaB2MWHc/U=
