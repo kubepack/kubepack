@@ -330,9 +330,16 @@ func (x *Helm3CommandPrinter) Do() error {
 	if err != nil {
 		return err
 	}
-	_, err = fmt.Fprintf(&buf, "helm search repo %s/%s --version %s\n", reponame, x.ChartRef.Name, x.Version)
-	if err != nil {
-		return err
+	if x.Version != "" {
+		_, err = fmt.Fprintf(&buf, "helm search repo %s/%s --version %s\n", reponame, x.ChartRef.Name, x.Version)
+		if err != nil {
+			return err
+		}
+	} else {
+		_, err = fmt.Fprintf(&buf, "helm search repo %s/%s\n", reponame, x.ChartRef.Name)
+		if err != nil {
+			return err
+		}
 	}
 
 	/*
@@ -344,9 +351,16 @@ func (x *Helm3CommandPrinter) Do() error {
 	if err != nil {
 		return err
 	}
-	_, err = fmt.Fprintf(&buf, "helm install %s %s/%s --version %s \\\n", x.ReleaseName, reponame, x.ChartRef.Name, x.Version)
-	if err != nil {
-		return err
+	if x.Version != "" {
+		_, err = fmt.Fprintf(&buf, "helm install %s %s/%s --version %s \\\n", x.ReleaseName, reponame, x.ChartRef.Name, x.Version)
+		if err != nil {
+			return err
+		}
+	} else {
+		_, err = fmt.Fprintf(&buf, "helm install %s %s/%s \\\n", x.ReleaseName, reponame, x.ChartRef.Name)
+		if err != nil {
+			return err
+		}
 	}
 	if x.Namespace != "" {
 		_, err = fmt.Fprintf(&buf, "%s--namespace %s --create-namespace \\\n", indent, x.Namespace)
