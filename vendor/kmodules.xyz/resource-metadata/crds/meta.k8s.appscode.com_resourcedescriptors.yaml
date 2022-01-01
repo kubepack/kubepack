@@ -4,9 +4,9 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   creationTimestamp: null
-  name: resourcedescriptors.meta.appscode.com
+  name: resourcedescriptors.meta.k8s.appscode.com
 spec:
-  group: meta.appscode.com
+  group: meta.k8s.appscode.com
   names:
     kind: ResourceDescriptor
     listKind: ResourceDescriptorList
@@ -90,6 +90,21 @@ spec:
               connections:
                 items:
                   properties:
+                    labels:
+                      items:
+                        enum:
+                        - auth_via
+                        - backup_via
+                        - catalog
+                        - connect_via
+                        - exposed_by
+                        - monitored_by
+                        - offshoot
+                        - restore_into
+                        - scaled_by
+                        - view
+                        type: string
+                      type: array
                     level:
                       type: string
                     nameTemplate:
@@ -181,8 +196,14 @@ spec:
                       description: 'default: metadata.labels'
                       type: string
                     type:
+                      enum:
+                      - MatchSelector
+                      - MatchName
+                      - MatchRef
+                      - OwnedBy
                       type: string
                   required:
+                  - labels
                   - target
                   - type
                   type: object
@@ -283,25 +304,53 @@ spec:
                             - create
                             type: object
                           displayMode:
+                            enum:
+                            - List
+                            - Field
                             type: string
+                          query:
+                            properties:
+                              byLabel:
+                                enum:
+                                - auth_via
+                                - backup_via
+                                - catalog
+                                - connect_via
+                                - exposed_by
+                                - monitored_by
+                                - offshoot
+                                - restore_into
+                                - scaled_by
+                                - view
+                                type: string
+                              raw:
+                                type: string
+                              type:
+                                enum:
+                                - REST
+                                - GraphQL
+                                type: string
+                            required:
+                            - type
+                            type: object
                           ref:
-                            description: GroupVersionResource unambiguously identifies
-                              a resource.
+                            description: GroupKind specifies a Group and a Kind, but
+                              does not force a version.  This is useful for identifying
+                              concepts during lookup stages without having partially
+                              valid types
                             properties:
                               group:
                                 type: string
-                              resource:
-                                type: string
-                              version:
+                              kind:
                                 type: string
                             required:
                             - group
-                            - resource
-                            - version
+                            - kind
                             type: object
                         required:
                         - actions
                         - displayMode
+                        - query
                         - ref
                         type: object
                       type: array

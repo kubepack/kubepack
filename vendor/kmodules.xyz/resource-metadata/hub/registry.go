@@ -360,10 +360,20 @@ func (r *Registry) GVK(gvr schema.GroupVersionResource) (schema.GroupVersionKind
 	return rid.GroupVersionKind(), nil
 }
 
-func (r *Registry) IsNamespaced(gvr schema.GroupVersionResource) (bool, error) {
+func (r *Registry) IsGVRNamespaced(gvr schema.GroupVersionResource) (bool, error) {
 	r.m.RLock()
 	defer r.m.RUnlock()
 	rid, exist := r.regGVR[gvr]
+	if !exist {
+		return false, UnregisteredErr{gvr.String()}
+	}
+	return rid.Scope == kmapi.NamespaceScoped, nil
+}
+
+func (r *Registry) IsGVKNamespaced(gvr schema.GroupVersionKind) (bool, error) {
+	r.m.RLock()
+	defer r.m.RUnlock()
+	rid, exist := r.regGVK[gvr]
 	if !exist {
 		return false, UnregisteredErr{gvr.String()}
 	}
@@ -419,7 +429,26 @@ func (r *Registry) Resources() []schema.GroupVersionResource {
 	return out
 }
 
+func (r *Registry) Kinds() []schema.GroupVersionKind {
+	r.m.RLock()
+	defer r.m.RUnlock()
+
+	out := make([]schema.GroupVersionKind, len(r.preferred))
+	for _, gvr := range r.preferred {
+		out = append(out, r.regGVR[gvr].GroupVersionKind())
+	}
+	return out
+}
+
 func (r *Registry) LoadByGVR(gvr schema.GroupVersionResource) (*v1alpha1.ResourceDescriptor, error) {
+	return r.LoadByFile(r.filename(gvr))
+}
+
+func (r *Registry) LoadByGVK(gvk schema.GroupVersionKind) (*v1alpha1.ResourceDescriptor, error) {
+	gvr, err := r.GVR(gvk)
+	if err != nil {
+		return nil, err
+	}
 	return r.LoadByFile(r.filename(gvr))
 }
 

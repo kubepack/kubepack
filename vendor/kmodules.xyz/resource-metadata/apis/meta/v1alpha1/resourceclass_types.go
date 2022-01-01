@@ -76,6 +76,11 @@ type Entry struct {
 	Icons []ImageSpec `json:"icons,omitempty"`
 }
 
+type GroupResources struct {
+	Groups   []string `json:"groups"`
+	Resource string   `json:"resource"`
+}
+
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 // +kubebuilder:object:root=true
 

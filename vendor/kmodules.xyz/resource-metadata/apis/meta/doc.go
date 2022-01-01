@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// +k8s:deepcopy-gen=package
-// +groupName=meta.appscode.com
-// +kubebuilder:skip
+package meta
 
-// Package api is the internal version of the API.
-package meta // import "kmodules.xyz/resource-metadata/apis/meta"
+const (
+	GroupName = "meta.k8s.appscode.com"
+)

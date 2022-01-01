@@ -208,9 +208,8 @@ func (r *RepoNamer) nameForDomain(domain string) string {
 	if icann {
 		domain = strings.TrimSuffix(domain, "."+publicSuffix)
 	}
-	if strings.HasPrefix(domain, "charts.") {
-		domain = strings.TrimPrefix(domain, "charts.")
-	}
+
+	domain = strings.TrimPrefix(domain, "charts.")
 
 	parts := strings.Split(domain, ".")
 	for i := 0; i < len(parts)/2; i++ {

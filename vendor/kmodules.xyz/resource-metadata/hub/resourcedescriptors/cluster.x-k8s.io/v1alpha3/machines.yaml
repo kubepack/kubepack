@@ -1,4 +1,4 @@
-apiVersion: meta.appscode.com/v1alpha3
+apiVersion: meta.k8s.appscode.com/v1alpha3
 kind: ResourceDescriptor
 metadata:
   creationTimestamp: null

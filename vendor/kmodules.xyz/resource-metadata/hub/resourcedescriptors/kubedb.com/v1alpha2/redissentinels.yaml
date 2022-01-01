@@ -1,4 +1,4 @@
-apiVersion: meta.appscode.com/v1alpha1
+apiVersion: meta.k8s.appscode.com/v1alpha1
 kind: ResourceDescriptor
 metadata:
   creationTimestamp: null
@@ -9,6 +9,197 @@ metadata:
     k8s.io/version: v1alpha2
   name: kubedb.com-v1alpha2-redissentinels
 spec:
+  pages:
+  - name: Basic
+    resources:
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
+      ref:
+        group: appcatalog.appscode.com
+        kind: AppBinding
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
+      ref:
+        group: catalog.kubedb.com
+        kind: RedisVersion
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
+      ref:
+        group: apps
+        kind: StatefulSet
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
+      ref:
+        group: ""
+        kind: Pod
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: exposed_by
+        type: GraphQL
+      ref:
+        group: ""
+        kind: Service
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
+      ref:
+        group: ""
+        kind: Secret
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
+      ref:
+        group: ""
+        kind: PersistentVolumeClaim
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
+      ref:
+        group: policy
+        kind: PodDisruptionBudget
+  - name: Security
+    resources:
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
+      ref:
+        group: ""
+        kind: ServiceAccount
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
+      ref:
+        group: rbac.authorization.k8s.io
+        kind: Role
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
+      ref:
+        group: rbac.authorization.k8s.io
+        kind: RoleBinding
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
+      ref:
+        group: cert-manager.io
+        kind: Certificate
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
+      ref:
+        group: cert-manager.io
+        kind: Issuer
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
+      ref:
+        group: cert-manager.io
+        kind: ClusterIssuer
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
+      ref:
+        group: policy
+        kind: PodSecurityPolicy
+  - name: Operations
+    resources:
+    - actions:
+        create: Always
+      displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
+      ref:
+        group: ops.kubedb.com
+        kind: RedisOpsRequest
+  - name: Monitoring
+    resources:
+    - actions:
+        create: IfEmpty
+      displayMode: List
+      query:
+        raw: |-
+          query Find($src: String!, $targetGroup: String!, $targetKind: String!) {
+            find(oid: $src) {
+              exposed_by(group: "", kind: "Service") {
+                refs: monitored_by(group: $targetGroup, kind: $targetKind) {
+                  namespace
+                  name
+                }
+              }
+            }
+          }
+        type: GraphQL
+      ref:
+        group: monitoring.coreos.com
+        kind: ServiceMonitor
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        raw: |-
+          query Find($src: String!, $targetGroup: String!, $targetKind: String!) {
+            find(oid: $src) {
+              exposed_by(group: "", kind: "Service") {
+                refs: monitored_by(group: $targetGroup, kind: $targetKind) {
+                  namespace
+                  name
+                }
+              }
+            }
+          }
+        type: GraphQL
+      ref:
+        group: monitoring.coreos.com
+        kind: Prometheus
   resource:
     group: kubedb.com
     kind: RedisSentinel
@@ -30,34 +221,20 @@ spec:
         metadata:
           properties:
             name:
-              description: 'Name must be unique within a namespace. Is required when
-                creating resources, although some resources may allow a client to
-                request the generation of an appropriate name automatically. Name
-                is primarily intended for creation idempotence and configuration definition.
-                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              description: 'Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
               type: string
             namespace:
-              description: "Namespace defines the space within which each name must
-                be unique. An empty namespace is equivalent to the \"default\" namespace,
-                but \"default\" is the canonical representation. Not all objects are
-                required to be scoped to a namespace - the value of this field for
-                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
-                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              description: "Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the \"default\" namespace, but \"default\" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/namespaces"
               type: string
             labels:
               additionalProperties:
                 type: string
-              description: 'Map of string keys and values that can be used to organize
-                and categorize (scope and select) objects. May match selectors of
-                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              description: 'Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
               type: object
             annotations:
               additionalProperties:
                 type: string
-              description: 'Annotations is an unstructured key value map stored with
-                a resource that may be set by external tools to store and retrieve
-                arbitrary metadata. They are not queryable and should be preserved
-                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              description: 'Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
               type: object
           type: object
         spec:

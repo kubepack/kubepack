@@ -1,4 +1,4 @@
-apiVersion: meta.appscode.com/v1alpha1
+apiVersion: meta.k8s.appscode.com/v1alpha1
 kind: ResourceDescriptor
 metadata:
   creationTimestamp: null
@@ -11,23 +11,23 @@ metadata:
 spec:
   columns:
   - name: Name
-    pathTemplate: '{{ jp "{.metadata.name}" . }}'
+    pathTemplate: '{{ .metadata.name }}'
     priority: 3
     type: string
   - name: Namespace
-    pathTemplate: '{{ jp "{.metadata.namespace}" . }}'
+    pathTemplate: '{{ .metadata.namespace }}'
     priority: 3
     type: string
   - name: Labels
-    pathTemplate: '{{ jp "{.metadata.labels}" . }}'
+    pathTemplate: '{{ .metadata.labels | toRawJson }}'
     priority: 3
     type: object
   - name: Annotations
-    pathTemplate: '{{ jp "{.metadata.annotations}" . }}'
+    pathTemplate: '{{ .metadata.annotations | toRawJson }}'
     priority: 1
     type: object
   - name: Version
-    pathTemplate: '{{ jp "{.spec.version}" . }}'
+    pathTemplate: '{{ .spec.version }}'
     priority: 3
     type: string
   - name: Replicas
@@ -35,7 +35,7 @@ spec:
     priority: 3
     type: object
   - name: Phase
-    pathTemplate: '{{ jp "{.status.phase}" . }}'
+    pathTemplate: '{{ .status.phase }}'
     priority: 3
     type: string
   - name: Total Resources
@@ -43,27 +43,29 @@ spec:
     priority: 3
     type: object
   - name: HTTPS
-    pathTemplate: '{{ jp "{.spec.enableSSL}" . }}'
+    pathTemplate: '{{ .spec.enableSSL }}'
     priority: 3
     type: string
   - name: Auth Secret
-    pathTemplate: '{{ jp "{.spec.authSecret.name}" . }}'
+    pathTemplate: '{{ .spec.authSecret.name }}'
     priority: 1
     type: string
   - name: Termination Policy
-    pathTemplate: '{{ jp "{.spec.terminationPolicy}" . }}'
+    pathTemplate: '{{ .spec.terminationPolicy }}'
     priority: 3
     type: string
   - name: Halted
-    pathTemplate: '{{ jp "{.spec.halted}" . }}'
+    pathTemplate: '{{ .spec.halted }}'
     priority: 1
     type: string
   - name: Age
-    pathTemplate: '{{ jp "{.metadata.creationTimestamp}" . }}'
+    pathTemplate: '{{ .metadata.creationTimestamp }}'
     priority: 3
     type: date
   connections:
-  - level: Controller
+  - labels:
+    - offshoot
+    level: Controller
     namespacePath: metadata.namespace
     selector:
       matchLabels:
@@ -74,7 +76,9 @@ spec:
       apiVersion: apps/v1
       kind: StatefulSet
     type: MatchSelector
-  - level: Owner
+  - labels:
+    - exposed_by
+    level: Owner
     namespacePath: metadata.namespace
     selector:
       matchLabels:
@@ -85,27 +89,37 @@ spec:
       apiVersion: v1
       kind: Service
     type: MatchSelector
-  - level: Controller
+  - labels:
+    - offshoot
+    - connect_via
+    level: Controller
     nameTemplate: '{.metadata.name}'
     namespacePath: metadata.namespace
     target:
       apiVersion: appcatalog.appscode.com/v1alpha1
       kind: AppBinding
     type: MatchName
-  - references:
+  - labels:
+    - offshoot
+    - catalog
+    references:
     - '{.spec.version}'
     target:
       apiVersion: catalog.kubedb.com/v1alpha1
       kind: ElasticsearchVersion
     type: MatchRef
-  - namespacePath: metadata.namespace
+  - labels:
+    - offshoot
+    namespacePath: metadata.namespace
     references:
     - '{.spec.tls.issuerRef.name},{.metadata.namespace}'
     target:
       apiVersion: cert-manager.io/v1
       kind: Issuer
     type: MatchRef
-  - references:
+  - labels:
+    - offshoot
+    references:
     - '{.spec.tls.issuerRef.name}'
     target:
       apiVersion: cert-manager.io/v1
@@ -122,172 +136,278 @@ spec:
     - actions:
         create: Never
       displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
       ref:
         group: appcatalog.appscode.com
-        resource: appbindings
-        version: v1alpha1
+        kind: AppBinding
     - actions:
         create: Never
       displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
       ref:
         group: catalog.kubedb.com
-        resource: elasticsearchversions
-        version: v1alpha1
+        kind: ElasticsearchVersion
     - actions:
         create: Never
       displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
       ref:
         group: apps
-        resource: statefulsets
-        version: v1
+        kind: StatefulSet
     - actions:
         create: Never
       displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
       ref:
         group: ""
-        resource: pods
-        version: v1
+        kind: Pod
     - actions:
         create: Never
       displayMode: List
+      query:
+        byLabel: exposed_by
+        type: GraphQL
       ref:
         group: ""
-        resource: services
-        version: v1
+        kind: Service
     - actions:
         create: Never
       displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
       ref:
         group: ""
-        resource: secrets
-        version: v1
+        kind: Secret
     - actions:
         create: Never
       displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
       ref:
         group: ""
-        resource: persistentvolumeclaims
-        version: v1
+        kind: PersistentVolumeClaim
     - actions:
         create: Never
       displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
       ref:
         group: policy
-        resource: poddisruptionbudgets
-        version: v1beta1
+        kind: PodDisruptionBudget
   - name: Backups
     resources:
     - actions:
         create: IfEmpty
       displayMode: List
+      query:
+        raw: |-
+          query Find($src: String!, $targetGroup: String!, $targetKind: String!) {
+            find(oid: $src) {
+              backup_via(group: "stash.appscode.com", kind: "BackupConfiguration") {
+                refs: offshoot(group: $targetGroup, kind: $targetKind) {
+                  namespace
+                  name
+                }
+              }
+            }
+          }
+        type: GraphQL
       ref:
         group: stash.appscode.com
-        resource: repositories
-        version: v1alpha1
+        kind: Repository
     - actions:
         create: IfEmpty
       displayMode: List
+      query:
+        byLabel: backup_via
+        type: GraphQL
       ref:
         group: stash.appscode.com
-        resource: backupconfigurations
-        version: v1beta1
+        kind: BackupConfiguration
     - actions:
         create: Always
       displayMode: List
+      query:
+        raw: |-
+          query Find($src: String!, $targetGroup: String!, $targetKind: String!) {
+            find(oid: $src) {
+              backup_via(group: "stash.appscode.com", kind: "BackupConfiguration") {
+                refs: offshoot(group: $targetGroup, kind: $targetKind) {
+                  namespace
+                  name
+                }
+              }
+            }
+          }
+        type: GraphQL
       ref:
         group: stash.appscode.com
-        resource: backupsessions
-        version: v1beta1
+        kind: BackupSession
     - actions:
         create: Always
       displayMode: List
+      query:
+        raw: |-
+          query Find($src: String!, $targetGroup: String!, $targetKind: String!) {
+            find(oid: $src) {
+              backup_via(group: "stash.appscode.com", kind: "BackupConfiguration") {
+                refs: offshoot(group: $targetGroup, kind: $targetKind) {
+                  namespace
+                  name
+                }
+              }
+            }
+          }
+        type: GraphQL
       ref:
         group: stash.appscode.com
-        resource: restoresessions
-        version: v1beta1
+        kind: RestoreSession
     - actions:
         create: Never
       displayMode: List
+      query:
+        raw: |-
+          query Find($src: String!, $targetGroup: String!, $targetKind: String!) {
+            find(oid: $src) {
+              backup_via(group: "stash.appscode.com", kind: "BackupConfiguration") {
+                refs: offshoot(group: $targetGroup, kind: $targetKind) {
+                  namespace
+                  name
+                }
+              }
+            }
+          }
+        type: GraphQL
       ref:
         group: batch
-        resource: cronjobs
-        version: v1beta1
+        kind: CronJob
   - name: Security
     resources:
     - actions:
         create: Never
       displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
       ref:
         group: ""
-        resource: serviceaccounts
-        version: v1
+        kind: ServiceAccount
     - actions:
         create: Never
       displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
       ref:
         group: rbac.authorization.k8s.io
-        resource: roles
-        version: v1
+        kind: Role
     - actions:
         create: Never
       displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
       ref:
         group: rbac.authorization.k8s.io
-        resource: rolebindings
-        version: v1
+        kind: RoleBinding
     - actions:
         create: Never
       displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
       ref:
         group: cert-manager.io
-        resource: certificates
-        version: v1
+        kind: Certificate
     - actions:
         create: Never
       displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
       ref:
         group: cert-manager.io
-        resource: issuers
-        version: v1
+        kind: Issuer
     - actions:
         create: Never
       displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
       ref:
         group: cert-manager.io
-        resource: clusterissuers
-        version: v1
+        kind: ClusterIssuer
     - actions:
         create: Never
       displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
       ref:
         group: policy
-        resource: podsecuritypolicies
-        version: v1beta1
+        kind: PodSecurityPolicy
   - name: Operations
     resources:
     - actions:
         create: Always
       displayMode: List
+      query:
+        byLabel: offshoot
+        type: GraphQL
       ref:
         group: ops.kubedb.com
-        resource: elasticsearchopsrequests
-        version: v1alpha1
+        kind: ElasticsearchOpsRequest
   - name: Monitoring
     resources:
     - actions:
         create: IfEmpty
       displayMode: List
+      query:
+        raw: |-
+          query Find($src: String!, $targetGroup: String!, $targetKind: String!) {
+            find(oid: $src) {
+              exposed_by(group: "", kind: "Service") {
+                refs: monitored_by(group: $targetGroup, kind: $targetKind) {
+                  namespace
+                  name
+                }
+              }
+            }
+          }
+        type: GraphQL
       ref:
         group: monitoring.coreos.com
-        resource: servicemonitors
-        version: v1
+        kind: ServiceMonitor
     - actions:
         create: Never
       displayMode: List
+      query:
+        raw: |-
+          query Find($src: String!, $targetGroup: String!, $targetKind: String!) {
+            find(oid: $src) {
+              exposed_by(group: "", kind: "Service") {
+                refs: monitored_by(group: $targetGroup, kind: $targetKind) {
+                  namespace
+                  name
+                }
+              }
+            }
+          }
+        type: GraphQL
       ref:
         group: monitoring.coreos.com
-        resource: prometheuses
-        version: v1
+        kind: Prometheus
   resource:
     group: kubedb.com
     kind: Elasticsearch
@@ -305,27 +425,27 @@ spec:
   subTables:
   - columns:
     - name: Type
-      pathTemplate: '{{ jp "{.type}" . }}'
+      pathTemplate: '{{ .type }}'
       priority: 0
       type: string
     - name: Status
-      pathTemplate: '{{ jp "{.status}" . }}'
+      pathTemplate: '{{ .status }}'
       priority: 0
       type: string
     - name: Reason
-      pathTemplate: '{{ jp "{.reason}" . }}'
+      pathTemplate: '{{ .reason }}'
       priority: 0
       type: string
     - name: Last Transition Time
-      pathTemplate: '{{ jp "{.lastTransitionTime}" . }}'
+      pathTemplate: '{{ .lastTransitionTime }}'
       priority: 0
       type: date
     - name: Observed Generation
-      pathTemplate: '{{ jp "{.observedGeneration}" . }}'
+      pathTemplate: '{{ .observedGeneration }}'
       priority: 0
       type: string
     - name: Message
-      pathTemplate: '{{ jp "{.message}" . }}'
+      pathTemplate: '{{ .message }}'
       priority: 0
       type: string
     fieldPath: .status.conditions
@@ -349,34 +469,20 @@ spec:
         metadata:
           properties:
             name:
-              description: 'Name must be unique within a namespace. Is required when
-                creating resources, although some resources may allow a client to
-                request the generation of an appropriate name automatically. Name
-                is primarily intended for creation idempotence and configuration definition.
-                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              description: 'Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
               type: string
             namespace:
-              description: "Namespace defines the space within which each name must
-                be unique. An empty namespace is equivalent to the \"default\" namespace,
-                but \"default\" is the canonical representation. Not all objects are
-                required to be scoped to a namespace - the value of this field for
-                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
-                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              description: "Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the \"default\" namespace, but \"default\" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/namespaces"
               type: string
             labels:
               additionalProperties:
                 type: string
-              description: 'Map of string keys and values that can be used to organize
-                and categorize (scope and select) objects. May match selectors of
-                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              description: 'Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
               type: object
             annotations:
               additionalProperties:
                 type: string
-              description: 'Annotations is an unstructured key value map stored with
-                a resource that may be set by external tools to store and retrieve
-                arbitrary metadata. They are not queryable and should be preserved
-                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              description: 'Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
               type: object
           type: object
         spec:

@@ -14,12 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package v1alpha1
+package openapi
 
 import (
-	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/kube-openapi/pkg/common"
 )
 
-func addConversionFuncs(scheme *runtime.Scheme) error {
-	return nil
+func GetDefinitions(first common.GetOpenAPIDefinitions, rest ...common.GetOpenAPIDefinitions) common.GetOpenAPIDefinitions {
+	return func(ref common.ReferenceCallback) map[string]common.OpenAPIDefinition {
+		n := len(first(ref))
+		for _, fn := range rest {
+			n += len(fn(ref))
+		}
+
+		defs := make(map[string]common.OpenAPIDefinition, n)
+		for k, v := range first(ref) {
+			defs[k] = v
+		}
+		for _, fn := range rest {
+			for k, v := range fn(ref) {
+				defs[k] = v
+			}
+		}
+		return defs
+	}
 }

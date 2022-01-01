@@ -1,4 +1,4 @@
-apiVersion: meta.appscode.com/v1alpha1
+apiVersion: meta.k8s.appscode.com/v1alpha1
 kind: ResourceDescriptor
 metadata:
   creationTimestamp: null
@@ -11,53 +11,64 @@ metadata:
 spec:
   columns:
   - name: Name
-    pathTemplate: '{{ jp "{.metadata.name}" . }}'
+    pathTemplate: '{{ .metadata.name }}'
     priority: 3
     type: string
   - name: Namespace
-    pathTemplate: '{{ jp "{.metadata.namespace}" . }}'
+    pathTemplate: '{{ .metadata.namespace }}'
     priority: 3
     type: string
   - name: Reference
-    pathTemplate: '{{ jp "{.spec.scaleTargetRef.kind}/{.spec.scaleTargetRef.name}"
-      . }}'
+    pathTemplate: '{{ .spec.scaleTargetRef.kind }}/{{ .spec.scaleTargetRef.name }}'
     priority: 3
     type: string
   - name: Min-Replica(s)
-    pathTemplate: '{{ jp "{.spec.minReplicas}" . }}'
+    pathTemplate: '{{ .spec.minReplicas }}'
     priority: 3
     type: string
   - name: Max-Replica(s)
-    pathTemplate: '{{ jp "{.spec.maxReplicas}" . }}'
+    pathTemplate: '{{ .spec.maxReplicas }}'
     priority: 3
     type: string
   - name: Age
-    pathTemplate: '{{ jp "{.metadata.creationTimestamp}" . }}'
+    pathTemplate: '{{ .metadata.creationTimestamp }}'
     priority: 3
     type: date
   connections:
-  - namespacePath: metadata.namespace
+  - labels:
+    - offshoot
+    - scaled_by
+    namespacePath: metadata.namespace
     references:
     - '{.spec.scaleTargetRef.name},{.metadata.namespace},{.spec.scaleTargetRef.kind},{.spec.scaleTargetRef.apiVersion}'
     target:
       apiVersion: apps/v1
       kind: Deployment
     type: MatchRef
-  - namespacePath: metadata.namespace
+  - labels:
+    - offshoot
+    - scaled_by
+    namespacePath: metadata.namespace
     references:
     - '{.spec.scaleTargetRef.name},{.metadata.namespace},{.spec.scaleTargetRef.kind},{.spec.scaleTargetRef.apiVersion}'
     target:
       apiVersion: apps/v1
       kind: ReplicaSet
     type: MatchRef
-  - namespacePath: metadata.namespace
+  - labels:
+    - offshoot
+    - scaled_by
+    namespacePath: metadata.namespace
     references:
     - '{.spec.scaleTargetRef.name},{.metadata.namespace},{.spec.scaleTargetRef.kind}'
     target:
       apiVersion: v1
       kind: ReplicationController
     type: MatchRef
-  - namespacePath: metadata.namespace
+  - labels:
+    - offshoot
+    - scaled_by
+    namespacePath: metadata.namespace
     references:
     - '{.spec.scaleTargetRef.name},{.metadata.namespace},{.spec.scaleTargetRef.kind},{.spec.scaleTargetRef.apiVersion}'
     target:

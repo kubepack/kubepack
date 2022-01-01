@@ -17,14 +17,14 @@ limitations under the License.
 package v1alpha1
 
 import (
-	policy "kmodules.xyz/resource-metadata/apis/meta"
+	meta "kmodules.xyz/resource-metadata/apis/meta"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 )
 
-var SchemeGroupVersion = schema.GroupVersion{Group: policy.GroupName, Version: "v1alpha1"}
+var SchemeGroupVersion = schema.GroupVersion{Group: meta.GroupName, Version: "v1alpha1"}
 
 var (
 	// TODO: move SchemeBuilder with zz_generated.deepcopy.go to k8s.io/api.
@@ -38,7 +38,7 @@ func init() {
 	// We only register manually written functions here. The registration of the
 	// generated functions takes place in the generated files. The separation
 	// makes the code compile even when the generated files are missing.
-	localSchemeBuilder.Register(addKnownTypes, addConversionFuncs, addDefaultingFuncs)
+	localSchemeBuilder.Register(addKnownTypes)
 }
 
 // Resource takes an unqualified resource and returns a Group qualified GroupResource
@@ -51,8 +51,9 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 	scheme.AddKnownTypes(SchemeGroupVersion,
 		&ResourceDescriptor{},
 		&ResourceDescriptorList{},
-		&PathFinder{},
-		&GraphFinder{},
+		&RenderPage{},
+		&RenderSection{},
+		&ResourceGraph{},
 	)
 
 	scheme.AddKnownTypes(SchemeGroupVersion,

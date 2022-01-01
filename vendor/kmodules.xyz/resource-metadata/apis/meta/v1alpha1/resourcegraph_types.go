@@ -17,35 +17,46 @@ limitations under the License.
 package v1alpha1
 
 import (
+	apiv1 "kmodules.xyz/client-go/api/v1"
+
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 const (
-	ResourceKindGraphFinder = "GraphFinder"
-	ResourceGraphFinder     = "graphfinder"
-	ResourceGraphFinders    = "graphfinders"
+	ResourceKindResourceGraph = "ResourceGraph"
+	ResourceResourceGraph     = "resourcegraph"
+	ResourceResourceGraphs    = "resourcegraphs"
 )
 
-// +genclient
-// +genclient:nonNamespaced
-// +genclient:skipVerbs=get,list,update,patch,delete,deleteCollection,watch,updateStatus
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-type GraphFinder struct {
+type ResourceGraph struct {
 	metav1.TypeMeta `json:",inline"`
 	// Request describes the attributes for the graph request.
 	// +optional
-	Request *GraphRequest `json:"request,omitempty"`
+	Request *ResourceGraphRequest `json:"request,omitempty"`
 	// Response describes the attributes for the graph response.
 	// +optional
-	Response *GraphResponse `json:"response,omitempty"`
+	Response *ResourceGraphResponse `json:"response,omitempty"`
 }
 
-type GraphRequest struct {
-	Source GroupVersionResource `json:"source"`
+type ResourceGraphRequest struct {
+	Source apiv1.ObjectID `json:"source"`
 }
 
-type GraphResponse struct {
-	Source      GroupVersionResource `json:"source"`
-	Connections []*Edge              `json:"connections,omitempty"`
+type ResourceGraphResponse struct {
+	Resources   []apiv1.ResourceID `json:"resources"`
+	Connections []ObjectConnection `json:"connections"`
+}
+
+type ObjectConnection struct {
+	Source ObjectPointer `json:"source"`
+	Target ObjectPointer `json:"target"`
+	Labels []string      `json:"labels"`
+}
+
+type ObjectPointer struct {
+	ResourceID int    `json:"resourceID"`
+	Namespace  string `json:"namespace"`
+	Name       string `json:"name"`
 }

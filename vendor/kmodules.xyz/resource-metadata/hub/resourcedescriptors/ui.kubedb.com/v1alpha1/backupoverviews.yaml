@@ -1,0 +1,101 @@
+apiVersion: meta.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ui.kubedb.com
+    k8s.io/kind: BackupOverview
+    k8s.io/resource: backupoverviews
+    k8s.io/version: v1alpha1
+  name: ui.kubedb.com-v1alpha1-backupoverviews
+spec:
+  columns:
+  - name: Schedule
+    pathTemplate: '{{ .spec.schedule }}'
+    priority: 3
+    type: string
+  - name: Last backup time
+    pathTemplate: '{{ .spec.lastBackupTime }}'
+    priority: 3
+    type: string
+  - name: Upcoming backup
+    pathTemplate: '{{ .spec.upcomingBackupTime }}'
+    priority: 3
+    type: string
+  - name: Backup Storage
+    pathTemplate: '{{ .spec.backupStorage }}'
+    priority: 3
+    type: string
+  - name: DataSize
+    pathTemplate: '{{ .spec.dataSize }}'
+    priority: 3
+    type: string
+  - name: Number of Snapshots
+    pathTemplate: '{{ .spec.numberOfSnapshots }}'
+    priority: 3
+    type: string
+  - name: Data Integrity
+    pathTemplate: '{{ .spec.dataIntegrity }}'
+    priority: 3
+    type: string
+  - name: Data Directory
+    pathTemplate: '{{ .spec.dataDirectory }}'
+    priority: 3
+    type: string
+  resource:
+    group: ui.kubedb.com
+    kind: BackupOverview
+    name: backupoverviews
+    scope: Namespaced
+    version: v1alpha1
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the \"default\" namespace, but \"default\" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          properties:
+            backupStorage:
+              type: string
+            dataDirectory:
+              type: string
+            dataIntegrity:
+              type: boolean
+            dataSize:
+              type: string
+            lastBackupTime:
+              format: date-time
+              type: string
+            numberOfSnapshots:
+              format: int64
+              type: integer
+            schedule:
+              type: string
+            upcomingBackupTime:
+              format: date-time
+              type: string
+          required:
+          - dataSize
+          type: object
+      type: object
