@@ -255,7 +255,7 @@ func (x *CRDReadinessPrinter) Do() error {
 
 type CRDReadinessChecker struct {
 	CRDs   []metav1.GroupVersionResource
-	Client rest.Interface
+	Client crd_cs.Interface
 }
 
 func (x *CRDReadinessChecker) Do() error {
