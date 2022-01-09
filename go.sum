@@ -1167,8 +1167,9 @@ golang.org/x/text v0.3.1-0.20180807135948-17ff2d5776d2/go.mod h1:NqM8EUOU14njkJ3
 golang.org/x/text v0.3.2/go.mod h1:bEr9sfX3Q8Zfm5fL9x+3itogRgK3+ptLWKqgva+5dAk=
 golang.org/x/text v0.3.3/go.mod h1:5Zoc/QRtKVWzQhOtBMvqHzDpF6irO9z98xDceosuGiQ=
 golang.org/x/text v0.3.4/go.mod h1:5Zoc/QRtKVWzQhOtBMvqHzDpF6irO9z98xDceosuGiQ=
-golang.org/x/text v0.3.6 h1:aRYxNxv6iGQlyVaZmk6ZgYEDa+Jg18DxebPSrd6bg1M=
 golang.org/x/text v0.3.6/go.mod h1:5Zoc/QRtKVWzQhOtBMvqHzDpF6irO9z98xDceosuGiQ=
+golang.org/x/text v0.3.7 h1:olpwvP2KacW1ZWvsR7uQhoyTYvKAupfQrRGBFM352Gk=
+golang.org/x/text v0.3.7/go.mod h1:u+2+/6zg+i71rQMx5EYifcz6MCKuco9NR6JIITiCfzQ=
 golang.org/x/time v0.0.0-20180412165947-fbb02b2291d2/go.mod h1:tRJNPiyCQ0inRvYxbN9jk5I+vvW/OXSQhTDSoE431IQ=
 golang.org/x/time v0.0.0-20190308202827-9d24e82272b4/go.mod h1:tRJNPiyCQ0inRvYxbN9jk5I+vvW/OXSQhTDSoE431IQ=
 golang.org/x/time v0.0.0-20191024005414-555d28b269f0/go.mod h1:tRJNPiyCQ0inRvYxbN9jk5I+vvW/OXSQhTDSoE431IQ=
@@ -1405,8 +1406,8 @@ kmodules.xyz/client-go v0.0.0-20210617233340-13d22e91512b/go.mod h1:A6GAK6xP5zBu
 kmodules.xyz/client-go v0.0.0-20211013093146-1fbfd52e78c9/go.mod h1:0gkPeALtYjB27OHt4rd6+ZmMgoVTHVLtEJQeU23/gtA=
 kmodules.xyz/client-go v0.0.0-20211220232704-811fa4f26329/go.mod h1:ENUu8pPK19xzBkVpAJHoGCI2QRvb1SqffWRt0K2sV5I=
 kmodules.xyz/client-go v0.0.0-20211223001502-9d4767bf97ce/go.mod h1:ENUu8pPK19xzBkVpAJHoGCI2QRvb1SqffWRt0K2sV5I=
-kmodules.xyz/client-go v0.0.0-20211231190151-a89b45cbdb3b h1:DuGe1+VMtzU+VjUwl/VHykaGMPHkYs0rkbBZWKVqhl8=
-kmodules.xyz/client-go v0.0.0-20211231190151-a89b45cbdb3b/go.mod h1:ENUu8pPK19xzBkVpAJHoGCI2QRvb1SqffWRt0K2sV5I=
+kmodules.xyz/client-go v0.0.0-20220108081101-27afc2ac4ebe h1:EZE/eC9UF5/wcdHiinzQDVshOceIP9uRxT7qM4BnUQg=
+kmodules.xyz/client-go v0.0.0-20220108081101-27afc2ac4ebe/go.mod h1:xxl1ve1Obe4xaW+XjXsNHyLTni4QPIvHn9TfnYEoQRo=
 kmodules.xyz/crd-schema-fuzz v0.0.0-20210618002152-fae23aef5fb4 h1:vg6VZCnkHu3kJKdUe/oswi7MhjUVcZpyP/aXYhKFZ7M=
 kmodules.xyz/crd-schema-fuzz v0.0.0-20210618002152-fae23aef5fb4/go.mod h1:IIkUctlfoptoci0BOrsUf8ya+MOG5uaeh1PE4uzaIbA=
 kmodules.xyz/custom-resources v0.0.0-20211221073415-ab9b13cfc659 h1:iirmMqpkunyrqpNvMhRnxyESPiQgUaqjhpoGiWTqSUU=
