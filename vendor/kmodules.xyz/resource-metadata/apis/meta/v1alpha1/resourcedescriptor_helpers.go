@@ -22,7 +22,7 @@ import (
 	"strings"
 	"text/template"
 
-	apiv1 "kmodules.xyz/client-go/api/v1"
+	kmapi "kmodules.xyz/client-go/api/v1"
 	"kmodules.xyz/client-go/apiextensions"
 	"kmodules.xyz/resource-metadata/crds"
 
@@ -61,7 +61,7 @@ const (
 	GraphQueryVarTargetKind  = "targetKind"
 )
 
-func (r ResourceLocator) GraphQuery(oid apiv1.OID) (string, map[string]interface{}, error) {
+func (r ResourceLocator) GraphQuery(oid kmapi.OID) (string, map[string]interface{}, error) {
 	if r.Query.Type == GraphQLQuery {
 		vars := map[string]interface{}{
 			GraphQueryVarSource:      string(oid),
@@ -94,7 +94,7 @@ func (r ResourceLocator) GraphQuery(oid apiv1.OID) (string, map[string]interface
 		// We mitigate that later.
 		tpl.Option("missingkey=default")
 
-		objID, err := apiv1.ParseObjectID(oid)
+		objID, err := kmapi.ParseObjectID(oid)
 		if err != nil {
 			return "", nil, errors.Wrapf(err, "failed to parse oid=%s", oid)
 		}

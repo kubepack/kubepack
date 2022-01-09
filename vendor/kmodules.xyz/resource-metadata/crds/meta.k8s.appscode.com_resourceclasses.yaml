@@ -66,6 +66,8 @@ spec:
                         - src
                         type: object
                       type: array
+                    layoutName:
+                      type: string
                     name:
                       type: string
                     path:
@@ -73,16 +75,17 @@ spec:
                     required:
                       type: boolean
                     type:
+                      description: GroupKind specifies a Group and a Kind, but does
+                        not force a version.  This is useful for identifying concepts
+                        during lookup stages without having partially valid types
                       properties:
-                        groups:
-                          items:
-                            type: string
-                          type: array
-                        resource:
+                        group:
+                          type: string
+                        kind:
                           type: string
                       required:
-                      - groups
-                      - resource
+                      - group
+                      - kind
                       type: object
                   required:
                   - name

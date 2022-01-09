@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1beta1
   name: policy-v1beta1-podsecuritypolicies
 spec:
-  columns:
+  columnDefinitions:
   - name: Name
     pathTemplate: '{{ .metadata.name }}'
     priority: 3

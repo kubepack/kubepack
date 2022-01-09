@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1alpha1
   name: ui.kubedb.com-v1alpha1-backupoverviews
 spec:
-  columns:
+  columnDefinitions:
   - name: Schedule
     pathTemplate: '{{ .spec.schedule }}'
     priority: 3

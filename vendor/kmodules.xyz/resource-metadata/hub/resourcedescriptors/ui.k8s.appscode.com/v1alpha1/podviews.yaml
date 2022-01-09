@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1alpha1
   name: ui.k8s.appscode.com-v1alpha1-podviews
 spec:
-  columns:
+  columnDefinitions:
   - name: Name
     pathTemplate: '{{ .metadata.name }}'
     priority: 3
@@ -826,7 +826,7 @@ spec:
                 type: object
               type: array
             resources:
-              description: ResourceView describes the compute resource requirements.
+              description: ResourceTableDefinition describes the compute resource requirements.
               properties:
                 limits:
                   additionalProperties:

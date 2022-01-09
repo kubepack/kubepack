@@ -32,7 +32,6 @@ import (
 	"k8s.io/client-go/util/homedir"
 	"k8s.io/klog/v2"
 	clientcmdutil "kmodules.xyz/client-go/tools/clientcmd"
-	"kmodules.xyz/resource-metadata/hub"
 	"sigs.k8s.io/yaml"
 )
 
@@ -72,7 +71,7 @@ func main() {
 	}
 	order.UID = types.UID(uuid.New().String())
 
-	allowed, err := lib.CheckPermissions(getter, lib.DefaultRegistry, order, hub.Helm3)
+	allowed, err := lib.CheckPermissions(getter, lib.DefaultRegistry, order)
 	if err != nil {
 		klog.Fatal(err)
 	}

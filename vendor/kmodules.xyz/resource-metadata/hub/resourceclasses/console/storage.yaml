@@ -3,26 +3,24 @@ kind: ResourceClass
 metadata:
   creationTimestamp: null
   name: Storage
+  namespace: console
 spec:
   entries:
   - name: Persistent Volume Claims
     required: true
     type:
-      groups:
-      - ""
-      resource: persistentvolumeclaims
+      group: ""
+      kind: PersistentVolumeClaim
   - name: Persistent Volulmes
     required: true
     type:
-      groups:
-      - ""
-      resource: persistentvolumes
+      group: ""
+      kind: PersistentVolume
   - name: Storage Classes
     required: true
     type:
-      groups:
-      - storage.k8s.io
-      resource: storageclasses
+      group: storage.k8s.io
+      kind: StorageClass
   icons:
   - src: https://cdn.appscode.com/k8s/icons/resourceclasses/storage.svg
     type: image/svg+xml

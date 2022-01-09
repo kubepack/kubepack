@@ -27,7 +27,6 @@ const (
 )
 
 // +genclient
-// +genclient:nonNamespaced
 // +genclient:skipVerbs=updateStatus
 // +k8s:openapi-gen=true
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
@@ -68,17 +67,14 @@ type ResourceClassInfo struct {
 type Entry struct {
 	Name string `json:"name"`
 	// +optional
-	Path string          `json:"path,omitempty"`
-	Type *GroupResources `json:"type,omitempty"`
+	Path string            `json:"path,omitempty"`
+	Type *metav1.GroupKind `json:"type,omitempty"`
+	// +optional
+	LayoutName string `json:"layoutName"`
 	// +optional
 	Required bool `json:"required,omitempty"`
 	// +optional
 	Icons []ImageSpec `json:"icons,omitempty"`
-}
-
-type GroupResources struct {
-	Groups   []string `json:"groups"`
-	Resource string   `json:"resource"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

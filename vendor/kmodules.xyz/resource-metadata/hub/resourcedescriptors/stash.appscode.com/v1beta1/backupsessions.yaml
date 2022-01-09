@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1beta1
   name: stash.appscode.com-v1beta1-backupsessions
 spec:
-  columns:
+  columnDefinitions:
   - name: Name
     pathTemplate: '{{ .metadata.name }}'
     priority: 3

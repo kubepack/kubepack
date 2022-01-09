@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1
   name: cert-manager.io-v1-certificates
 spec:
-  columns:
+  columnDefinitions:
   - name: Name
     pathTemplate: '{{ .metadata.name }}'
     priority: 3
@@ -89,7 +89,7 @@ spec:
     scope: Namespaced
     version: v1
   subTables:
-  - columns:
+  - columnDefinitions:
     - name: Type
       pathTemplate: '{{ .type }}'
       priority: 0

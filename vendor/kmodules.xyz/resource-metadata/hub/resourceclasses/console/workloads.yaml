@@ -3,55 +3,48 @@ kind: ResourceClass
 metadata:
   creationTimestamp: null
   name: Workloads
+  namespace: console
 spec:
   entries:
   - name: Deployments
     required: true
     type:
-      groups:
-      - apps
-      resource: deployments
+      group: apps
+      kind: Deployment
   - name: Replica Sets
     required: true
     type:
-      groups:
-      - apps
-      resource: replicasets
+      group: apps
+      kind: ReplicaSet
   - name: Replication Controllers
     required: true
     type:
-      groups:
-      - ""
-      resource: replicationcontrollers
+      group: ""
+      kind: ReplicationController
   - name: Stateful Sets
     required: true
     type:
-      groups:
-      - apps
-      resource: statefulsets
+      group: apps
+      kind: StatefulSet
   - name: Daemon Sets
     required: true
     type:
-      groups:
-      - apps
-      resource: daemonsets
+      group: apps
+      kind: Daemonset
   - name: Jobs
     required: true
     type:
-      groups:
-      - batch
-      resource: jobs
+      group: batch
+      kind: Job
   - name: Cron Jobs
     type:
-      groups:
-      - batch
-      resource: cronjobs
+      group: batch
+      kind: CronJob
   - name: Pods
     required: true
     type:
-      groups:
-      - ""
-      resource: pods
+      group: ""
+      kind: Pod
   icons:
   - src: https://cdn.appscode.com/k8s/icons/resourceclasses/workloads.svg
     type: image/svg+xml

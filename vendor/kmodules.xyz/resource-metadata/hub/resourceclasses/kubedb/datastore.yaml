@@ -1,0 +1,57 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceClass
+metadata:
+  creationTimestamp: null
+  name: Datastore
+  namespace: kubedb
+spec:
+  apiGroup: kubedb.com
+  entries:
+  - name: Elasticsearch
+    required: true
+    layoutName: kubedb-kubedb.com-v1alpha2-elasticsearches
+    type:
+      group: kubedb.com
+      kind: Elasticsearch
+  - name: MariaDB
+    required: true
+    layoutName: kubedb-kubedb.com-v1alpha2-mariadbs
+    type:
+      group: kubedb.com
+      kind: MariaDB
+  - name: Memcached
+    required: true
+    layoutName: kubedb-kubedb.com-v1alpha2-memcacheds
+    type:
+      group: kubedb.com
+      kind: Memcached
+  - name: MongoDB
+    required: true
+    layoutName: kubedb-kubedb.com-v1alpha2-mongodbs
+    type:
+      group: kubedb.com
+      kind: MongoDB
+  - name: MySQL
+    required: true
+    layoutName: kubedb-kubedb.com-v1alpha2-mysqls
+    type:
+      group: kubedb.com
+      kind: MySQL
+  - name: PostgreSQL
+    required: true
+    layoutName: kubedb-kubedb.com-v1alpha2-postgreses
+    type:
+      group: kubedb.com
+      kind: Postgres
+  - name: Redis
+    required: true
+    layoutName: kubedb-kubedb.com-v1alpha2-redises
+    type:
+      group: kubedb.com
+      kind: Redis
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/resourceclasses/datastore.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/resourceclasses/datastore.png
+    type: image/png
+  weight: 4

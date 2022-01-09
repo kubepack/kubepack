@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1
   name: core-v1-pods
 spec:
-  columns:
+  columnDefinitions:
   - format: name
     name: Name
     pathTemplate: '{{ .metadata.name }}'
@@ -227,7 +227,7 @@ spec:
     scope: Namespaced
     version: v1
   subTables:
-  - columns:
+  - columnDefinitions:
     - name: Name
       pathTemplate: '{{ .name }}'
       priority: 0
@@ -254,7 +254,7 @@ spec:
       type: string
     fieldPath: .spec.containers
     name: Containers
-  - columns:
+  - columnDefinitions:
     - name: Name
       pathTemplate: '{{ .name }}'
       priority: 0
@@ -281,7 +281,7 @@ spec:
       type: string
     fieldPath: .spec.initContainers
     name: Init-Containers
-  - columns:
+  - columnDefinitions:
     - name: Effect
       pathTemplate: '{{ .effect }}'
       priority: 0
@@ -300,7 +300,7 @@ spec:
       type: string
     fieldPath: .spec.tolerations
     name: Tolerations
-  - columns:
+  - columnDefinitions:
     - name: Type
       pathTemplate: '{{ .type }}'
       priority: 0
@@ -319,7 +319,7 @@ spec:
       type: string
     fieldPath: .status.conditions
     name: Conditions
-  - columns:
+  - columnDefinitions:
     - name: API Version
       pathTemplate: '{{ .apiVersion }}'
       priority: 0

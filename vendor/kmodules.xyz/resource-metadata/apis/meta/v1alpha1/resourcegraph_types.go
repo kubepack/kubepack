@@ -17,7 +17,7 @@ limitations under the License.
 package v1alpha1
 
 import (
-	apiv1 "kmodules.xyz/client-go/api/v1"
+	kmapi "kmodules.xyz/client-go/api/v1"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -41,11 +41,11 @@ type ResourceGraph struct {
 }
 
 type ResourceGraphRequest struct {
-	Source apiv1.ObjectID `json:"source"`
+	Source kmapi.ObjectID `json:"source"`
 }
 
 type ResourceGraphResponse struct {
-	Resources   []apiv1.ResourceID `json:"resources"`
+	Resources   []kmapi.ResourceID `json:"resources"`
 	Connections []ObjectConnection `json:"connections"`
 }
 

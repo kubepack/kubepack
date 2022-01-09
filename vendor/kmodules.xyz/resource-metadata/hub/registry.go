@@ -36,7 +36,6 @@ import (
 	stringz "gomodules.xyz/x/strings"
 	crd_cs "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/typed/apiextensions/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/discovery"
 	"k8s.io/client-go/kubernetes"
@@ -44,13 +43,8 @@ import (
 	"k8s.io/klog/v2"
 )
 
-type HelmVersion string
-
 const (
-	HelmUnused HelmVersion = ""
-	Helm2      HelmVersion = "Helm 2"
-	Helm3      HelmVersion = "Helm 3"
-	crdIconSVG             = "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg"
+	crdIconSVG = "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg"
 )
 
 // ttl for cached preferred list
@@ -58,7 +52,6 @@ const ttl = 5 * time.Minute
 
 type Registry struct {
 	uid   string
-	helm  HelmVersion
 	cache KV
 	m     sync.RWMutex
 	// TODO: store in KV so cached for multiple instances of BB api server
@@ -71,10 +64,9 @@ type Registry struct {
 
 var _ disco_util.ResourceMapper = &Registry{}
 
-func NewRegistry(uid string, helm HelmVersion, cache KV) *Registry {
+func NewRegistry(uid string, cache KV) *Registry {
 	r := &Registry{
 		uid:    uid,
-		helm:   helm,
 		cache:  cache,
 		regGVK: map[schema.GroupVersionKind]*kmapi.ResourceID{},
 		regGVR: map[schema.GroupVersionResource]*kmapi.ResourceID{},
@@ -102,7 +94,9 @@ func NewRegistry(uid string, helm HelmVersion, cache KV) *Registry {
 }
 
 func NewRegistryOfKnownResources() *Registry {
-	return NewRegistry(KnownUID, Helm3, KnownResources)
+	return NewRegistry(KnownUID, &KVMap{
+		cache: resourcedescriptors.KnownDescriptors,
+	})
 }
 
 func (r *Registry) DiscoverResources(cfg *rest.Config) error {
@@ -150,29 +144,6 @@ func (r *Registry) Reset() {
 	}
 }
 
-func DiscoverHelm(cfg *rest.Config) (HelmVersion, string, error) {
-	kc, err := kubernetes.NewForConfig(cfg)
-	if err != nil {
-		return HelmUnused, "", err
-	}
-
-	services, err := kc.CoreV1().Services(metav1.NamespaceAll).List(context.TODO(), metav1.ListOptions{
-		FieldSelector: fields.OneTermEqualSelector("metadata.name", "tiller-deploy").String(),
-	})
-	if err != nil {
-		return HelmUnused, "", err
-	}
-
-	if len(services.Items) == 1 {
-		return Helm2, services.Items[0].Namespace, nil
-	}
-	return Helm3, "", nil
-}
-
-func (r *Registry) SetHelmVersion(helm HelmVersion) {
-	r.helm = helm
-}
-
 func (r *Registry) Register(gvr schema.GroupVersionResource, cfg *rest.Config) error {
 	r.m.RLock()
 	if _, found := r.regGVR[gvr]; found {
@@ -218,51 +189,49 @@ func (r *Registry) createRegistry(cfg *rest.Config) (map[schema.GroupResource]sc
 			if err != nil {
 				return nil, nil, err
 			}
-			rs.Group = gv.Group
-			rs.Version = gv.Version
-
 			scope := kmapi.ClusterScoped
 			if rs.Namespaced {
 				scope = kmapi.NamespaceScoped
 			}
+			rid := kmapi.ResourceID{
+				Group:   gv.Group,
+				Version: gv.Version,
+				Name:    rs.Name,
+				Kind:    rs.Kind,
+				Scope:   scope,
+			}
 
-			filename := fmt.Sprintf("%s/%s/%s.yaml", rs.Group, rs.Version, rs.Name)
+			name := resourcedescriptors.GetName(rid.GroupVersionResource())
 			rd := v1alpha1.ResourceDescriptor{
 				TypeMeta: metav1.TypeMeta{
 					APIVersion: v1alpha1.SchemeGroupVersion.String(),
 					Kind:       v1alpha1.ResourceKindResourceDescriptor,
 				},
 				ObjectMeta: metav1.ObjectMeta{
-					Name: fmt.Sprintf("%s-%s-%s", rs.Group, rs.Version, rs.Name),
+					Name: name,
 					Labels: map[string]string{
-						"k8s.io/group":    rs.Group,
-						"k8s.io/version":  rs.Version,
-						"k8s.io/resource": rs.Name,
-						"k8s.io/kind":     rs.Kind,
+						"k8s.io/group":    rid.Group,
+						"k8s.io/version":  rid.Version,
+						"k8s.io/resource": rid.Name,
+						"k8s.io/kind":     rid.Kind,
 					},
 				},
 				Spec: v1alpha1.ResourceDescriptorSpec{
-					Resource: kmapi.ResourceID{
-						Group:   rs.Group,
-						Version: rs.Version,
-						Name:    rs.Name,
-						Kind:    rs.Kind,
-						Scope:   scope,
-					},
+					Resource: rid,
 				},
 			}
 			if !v1alpha1.IsOfficialType(rd.Spec.Resource.Group) {
 				crd, err := apiext.CustomResourceDefinitions().Get(context.TODO(), fmt.Sprintf("%s.%s", rd.Spec.Resource.Name, rd.Spec.Resource.Group), metav1.GetOptions{})
 				if err == nil {
 					for _, v := range crd.Spec.Versions {
-						if v.Name == rs.Version {
+						if v.Name == rid.Version {
 							rd.Spec.Validation = v.Schema
 							break
 						}
 					}
 				}
 			}
-			reg[filename] = &rd
+			reg[name] = &rd
 		}
 	}
 
@@ -283,7 +252,7 @@ func (r *Registry) createRegistry(cfg *rest.Config) (map[schema.GroupResource]sc
 
 func (r *Registry) Visit(f func(key string, val *v1alpha1.ResourceDescriptor)) {
 	for _, gvr := range r.Resources() {
-		key := r.filename(gvr)
+		key := resourcedescriptors.GetName(gvr)
 		if rd, ok := r.cache.Get(key); ok {
 			f(key, rd)
 		}
@@ -301,19 +270,22 @@ func (r *Registry) Missing(in schema.GroupVersionResource) bool {
 	return true
 }
 
-func (r *Registry) findGVR(in *v1alpha1.GroupResources, keepOfficialTypes bool) (schema.GroupVersionResource, bool) {
+func (r *Registry) findGVR(in *metav1.GroupKind, keepOfficialTypes bool) (schema.GroupVersionResource, bool) {
 	r.m.RLock()
 	defer r.m.RUnlock()
-	for _, group := range in.Groups {
-		if gvr, ok := r.preferred[schema.GroupResource{Group: group, Resource: in.Resource}]; ok {
-			return gvr, true
+
+	for gvk, rid := range r.regGVK {
+		if gvk.Group == in.Group && gvk.Kind == in.Kind {
+			if gvr, ok := r.preferred[rid.GroupResource()]; ok {
+				return gvr, true
+			}
 		}
 	}
-	for _, group := range in.Groups {
-		if keepOfficialTypes || !v1alpha1.IsOfficialType(group) {
-			gvr, ok := LatestGVRs[schema.GroupResource{Group: group, Resource: in.Resource}]
-			return gvr, ok
-		}
+
+	gk := schema.GroupKind{Group: in.Group, Kind: in.Kind}
+	if keepOfficialTypes || !v1alpha1.IsOfficialType(in.Group) {
+		gvr, ok := resourcedescriptors.LatestGVRs[gk]
+		return gvr, ok
 	}
 	return schema.GroupVersionResource{}, false
 }
@@ -441,7 +413,7 @@ func (r *Registry) Kinds() []schema.GroupVersionKind {
 }
 
 func (r *Registry) LoadByGVR(gvr schema.GroupVersionResource) (*v1alpha1.ResourceDescriptor, error) {
-	return r.LoadByFile(r.filename(gvr))
+	return r.LoadByFile(resourcedescriptors.GetName(gvr))
 }
 
 func (r *Registry) LoadByGVK(gvk schema.GroupVersionKind) (*v1alpha1.ResourceDescriptor, error) {
@@ -449,14 +421,7 @@ func (r *Registry) LoadByGVK(gvk schema.GroupVersionKind) (*v1alpha1.ResourceDes
 	if err != nil {
 		return nil, err
 	}
-	return r.LoadByFile(r.filename(gvr))
-}
-
-func (r *Registry) filename(gvr schema.GroupVersionResource) string {
-	if gvr.Group == "" && gvr.Version == "v1" {
-		return fmt.Sprintf("core/v1/%s.yaml", gvr.Resource)
-	}
-	return fmt.Sprintf("%s/%s/%s.yaml", gvr.Group, gvr.Version, gvr.Resource)
+	return r.LoadByFile(resourcedescriptors.GetName(gvr))
 }
 
 func (r *Registry) LoadByName(name string) (*v1alpha1.ResourceDescriptor, error) {
@@ -472,21 +437,21 @@ func (r *Registry) LoadByFile(filename string) (*v1alpha1.ResourceDescriptor, er
 	return obj, nil
 }
 
-func (r *Registry) CompleteResourcePanel() (*v1alpha1.ResourcePanel, error) {
-	return r.createResourcePanel(true)
+func (r *Registry) CompleteResourcePanel(namespace resourceclasses.UINamespace) (*v1alpha1.ResourcePanel, error) {
+	return r.createResourcePanel(namespace, true)
 }
 
-func (r *Registry) DefaultResourcePanel() (*v1alpha1.ResourcePanel, error) {
-	return r.createResourcePanel(false)
+func (r *Registry) DefaultResourcePanel(namespace resourceclasses.UINamespace) (*v1alpha1.ResourcePanel, error) {
+	return r.createResourcePanel(namespace, false)
 }
 
-func (r *Registry) createResourcePanel(keepOfficialTypes bool) (*v1alpha1.ResourcePanel, error) {
+func (r *Registry) createResourcePanel(namespace resourceclasses.UINamespace, keepOfficialTypes bool) (*v1alpha1.ResourcePanel, error) {
 	sections := make(map[string]*v1alpha1.PanelSection)
 	existingGRs := map[schema.GroupResource]bool{}
 
 	// first add the known required sections
-	for group, rc := range KnownClasses {
-		if !rc.IsRequired() && string(r.helm) != rc.Name {
+	for group, rc := range resourceclasses.KnownClasses[namespace] {
+		if !rc.IsRequired() && "Helm 3" != rc.Name {
 			continue
 		}
 
@@ -501,7 +466,7 @@ func (r *Registry) createResourcePanel(keepOfficialTypes bool) (*v1alpha1.Resour
 				Path:       entry.Path,
 				Required:   entry.Required,
 				Icons:      entry.Icons,
-				Namespaced: rc.Name == string(Helm3),
+				Namespaced: rc.Name == "Helm 3",
 			}
 			if entry.Type != nil {
 				gvr, ok := r.findGVR(entry.Type, keepOfficialTypes)
@@ -540,7 +505,7 @@ func (r *Registry) createResourcePanel(keepOfficialTypes bool) (*v1alpha1.Resour
 
 		section, found := sections[rd.Spec.Resource.Group]
 		if !found {
-			if rc, found := KnownClasses[rd.Spec.Resource.Group]; found {
+			if rc, found := resourceclasses.KnownClasses[namespace][rd.Spec.Resource.Group]; found {
 				w := math.MaxInt16
 				if rc.Spec.Weight > 0 {
 					w = rc.Spec.Weight

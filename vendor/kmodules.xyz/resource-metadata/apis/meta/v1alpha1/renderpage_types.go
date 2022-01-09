@@ -17,7 +17,7 @@ limitations under the License.
 package v1alpha1
 
 import (
-	apiv1 "kmodules.xyz/client-go/api/v1"
+	kmapi "kmodules.xyz/client-go/api/v1"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -42,7 +42,7 @@ type RenderPage struct {
 }
 
 type RenderPageRequest struct {
-	Source         apiv1.ObjectID `json:"source"`
+	Source         kmapi.ObjectID `json:"source"`
 	PageName       string         `json:"pageName"`
 	ConvertToTable bool           `json:"convertToTable"`
 }
@@ -52,7 +52,7 @@ type RenderPageResponse struct {
 }
 
 type PageSection struct {
-	Resource apiv1.ResourceID `json:"resource"`
+	Resource kmapi.ResourceID `json:"resource"`
 	// +optional
 	Items []unstructured.Unstructured `json:"items,omitempty"`
 	// +optional

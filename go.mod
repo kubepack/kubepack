@@ -36,8 +36,7 @@ require (
 	k8s.io/kubernetes v1.21.1
 	kmodules.xyz/client-go v0.0.0-20220108081101-27afc2ac4ebe
 	kmodules.xyz/crd-schema-fuzz v0.0.0-20210618002152-fae23aef5fb4
-	kmodules.xyz/custom-resources v0.0.0-20211221073415-ab9b13cfc659
-	kmodules.xyz/resource-metadata v0.7.1-0.20211229020403-f8778a87b568
+	kmodules.xyz/custom-resources v0.0.0-20220104014416-7dcc448afcaf
 	kmodules.xyz/webhook-runtime v0.0.0-20210928141616-7f73c2ab318a
 	kubepack.dev/lib-helm v0.3.2-0.20211223113921-d8cbb538a0e3
 	sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4
@@ -159,7 +158,7 @@ require (
 	github.com/rubenv/sql-migrate v0.0.0-20200616145509-8d140a17f351 // indirect
 	github.com/russross/blackfriday v1.5.3-0.20190124082335-a477dd164691 // indirect
 	github.com/russross/blackfriday/v2 v2.0.1 // indirect
-	github.com/sergi/go-diff v1.1.0 // indirect
+	github.com/sergi/go-diff v1.2.0 // indirect
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
@@ -215,6 +214,7 @@ require (
 	k8s.io/utils v0.0.0-20210802155522-efc7438f0176 // indirect
 	kmodules.xyz/apiversion v0.2.0 // indirect
 	kmodules.xyz/apply v0.0.0-20210503080849-eb226c295465 // indirect
+	kmodules.xyz/resource-metadata v0.8.2-0.20220109033406-e971a818b14f // indirect
 	sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.0.15 // indirect
 	sigs.k8s.io/cli-utils v0.25.0 // indirect
 	sigs.k8s.io/controller-runtime v0.9.0 // indirect

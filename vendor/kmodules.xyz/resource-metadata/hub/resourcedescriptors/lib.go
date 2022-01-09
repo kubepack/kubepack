@@ -19,10 +19,15 @@ package resourcedescriptors
 import (
 	"embed"
 	"fmt"
-	"strings"
+	iofs "io/fs"
+	"reflect"
+	"sort"
 
+	"kmodules.xyz/apiversion"
 	"kmodules.xyz/resource-metadata/apis/meta/v1alpha1"
 
+	"github.com/pkg/errors"
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"sigs.k8s.io/yaml"
 )
@@ -34,30 +39,66 @@ func FS() embed.FS {
 	return fs
 }
 
-func LoadByGVR(gvr schema.GroupVersionResource) (*v1alpha1.ResourceDescriptor, error) {
-	var filename string
-	if gvr.Group == "" && gvr.Version == "v1" {
-		filename = fmt.Sprintf("core/v1/%s.yaml", gvr.Resource)
-	} else {
-		filename = fmt.Sprintf("%s/%s/%s.yaml", gvr.Group, gvr.Version, gvr.Resource)
+var (
+	KnownDescriptors = make(map[string]*v1alpha1.ResourceDescriptor)
+	LatestGVRs       = make(map[schema.GroupKind]schema.GroupVersionResource)
+)
+
+func init() {
+	e2 := iofs.WalkDir(FS(), ".", func(path string, e iofs.DirEntry, err error) error {
+		if e.IsDir() || err != nil {
+			return err
+		}
+		data, err := fs.ReadFile(path)
+		if err != nil {
+			return errors.Wrap(err, path)
+		}
+		var rd v1alpha1.ResourceDescriptor
+		err = yaml.Unmarshal(data, &rd)
+		if err != nil {
+			return errors.Wrap(err, path)
+		}
+		KnownDescriptors[rd.Name] = &rd
+
+		gvr := rd.Spec.Resource.GroupVersionResource()
+		gk := rd.Spec.Resource.GroupKind()
+		if existing, ok := LatestGVRs[gk]; !ok {
+			LatestGVRs[gk] = gvr
+		} else if diff, _ := apiversion.Compare(existing.Version, gvr.Version); diff < 0 {
+			LatestGVRs[gk] = gvr
+		}
+		return err
+	})
+	if e2 != nil {
+		panic(errors.Wrapf(e2, "failed to load %s", reflect.TypeOf(v1alpha1.ResourceDescriptor{})))
 	}
-	return LoadByFile(filename)
+}
+
+func LoadByGVR(gvr schema.GroupVersionResource) (*v1alpha1.ResourceDescriptor, error) {
+	return LoadByName(GetName(gvr))
+}
+
+func GetName(gvr schema.GroupVersionResource) string {
+	if gvr.Group == "" && gvr.Version == "v1" {
+		return fmt.Sprintf("core-v1-%s", gvr.Resource)
+	}
+	return fmt.Sprintf("%s-%s-%s", gvr.Group, gvr.Version, gvr.Resource)
 }
 
 func LoadByName(name string) (*v1alpha1.ResourceDescriptor, error) {
-	filename := strings.Replace(name, "-", "/", 2) + ".yaml"
-	return LoadByFile(filename)
+	if obj, ok := KnownDescriptors[name]; ok {
+		return obj, nil
+	}
+	return nil, apierrors.NewNotFound(v1alpha1.Resource(v1alpha1.ResourceKindResourceDescriptor), name)
 }
 
-func LoadByFile(filename string) (*v1alpha1.ResourceDescriptor, error) {
-	data, err := fs.ReadFile(filename)
-	if err != nil {
-		return nil, err
+func List() []v1alpha1.ResourceDescriptor {
+	out := make([]v1alpha1.ResourceDescriptor, 0, len(KnownDescriptors))
+	for _, rl := range KnownDescriptors {
+		out = append(out, *rl)
 	}
-	var obj v1alpha1.ResourceDescriptor
-	err = yaml.Unmarshal(data, &obj)
-	if err != nil {
-		return nil, err
-	}
-	return &obj, nil
+	sort.Slice(out, func(i, j int) bool {
+		return out[i].Name < out[j].Name
+	})
+	return out
 }

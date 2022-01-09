@@ -3,6 +3,7 @@ kind: ResourceClass
 metadata:
   creationTimestamp: null
   name: Kubernetes
+  namespace: console
 spec:
   entries:
   - icons:
@@ -16,17 +17,13 @@ spec:
   - name: Machines
     required: true
     type:
-      groups:
-      - cluster.x-k8s.io
-      - cluster.k8s.io
-      resource: machines
+      group: cluster.x-k8s.io
+      kind: Machine
   - name: Machine Sets
     required: true
     type:
-      groups:
-      - cluster.x-k8s.io
-      - cluster.k8s.io
-      resource: machinesets
+      group: cluster.x-k8s.io
+      kind: MachineSet
   icons:
   - src: https://cdn.appscode.com/k8s/icons/resourceclasses/kubernetes.svg
     type: image/svg+xml

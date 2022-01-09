@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1
   name: core-v1-services
 spec:
-  columns:
+  columnDefinitions:
   - name: Name
     pathTemplate: '{{ .metadata.name }}'
     priority: 3

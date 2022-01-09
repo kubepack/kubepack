@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1alpha1
   name: ops.kubedb.com-v1alpha1-mongodbopsrequests
 spec:
-  columns:
+  columnDefinitions:
   - name: Name
     pathTemplate: '{{ .metadata.name }}'
     priority: 3

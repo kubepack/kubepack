@@ -3,41 +3,36 @@ kind: ResourceClass
 metadata:
   creationTimestamp: null
   name: Admin
+  namespace: console
 spec:
   entries:
   - name: Namespaces
     required: true
     type:
-      groups:
-      - ""
-      resource: namespaces
+      group: ""
+      kind: Namespace
   - name: Limit Ranges
     type:
-      groups:
-      - ""
-      resource: limitranges
+      group: ""
+      kind: LimitRange
   - name: Resource Quotas
     type:
-      groups:
-      - ""
-      resource: resourcequotas
+      group: ""
+      kind: ResourceQuota
   - name: Cluster Roles
     required: true
     type:
-      groups:
-      - rbac.authorization.k8s.io
-      resource: clusterroles
+      group: rbac.authorization.k8s.io
+      kind: ClusterRole
   - name: Roles
     required: true
     type:
-      groups:
-      - rbac.authorization.k8s.io
-      resource: roles
+      group: rbac.authorization.k8s.io
+      kind: Role
   - name: CSI Drivers
     type:
-      groups:
-      - storage.k8s.io
-      resource: csidrivers
+      group: storage.k8s.io
+      kind: CSIDriver
   icons:
   - src: https://cdn.appscode.com/k8s/icons/resourceclasses/admin.svg
     type: image/svg+xml

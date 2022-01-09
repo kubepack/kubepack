@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1alpha1
   name: ui.k8s.appscode.com-v1alpha1-resourcesummaries
 spec:
-  columns:
+  columnDefinitions:
   - name: Database
     pathTemplate: '{{ .spec.apiType.kind }}'
     priority: 3

@@ -17,12 +17,13 @@ limitations under the License.
 package hub
 
 import (
+	kmapi "kmodules.xyz/client-go/api/v1"
 	"kmodules.xyz/resource-metadata/apis/meta/v1alpha1"
 
 	"k8s.io/apimachinery/pkg/util/sets"
 )
 
-func ListEdgeLabels(skipLabels ...v1alpha1.EdgeLabel) []v1alpha1.EdgeLabel {
+func ListEdgeLabels(skipLabels ...kmapi.EdgeLabel) []kmapi.EdgeLabel {
 	labels := sets.NewString()
 	reg := NewRegistryOfKnownResources()
 	reg.Visit(func(key string, rd *v1alpha1.ResourceDescriptor) {
@@ -36,9 +37,9 @@ func ListEdgeLabels(skipLabels ...v1alpha1.EdgeLabel) []v1alpha1.EdgeLabel {
 		labels.Delete(string(skipLabel))
 	}
 
-	result := make([]v1alpha1.EdgeLabel, 0, len(labels))
+	result := make([]kmapi.EdgeLabel, 0, len(labels))
 	for lbl := range labels {
-		result = append(result, v1alpha1.EdgeLabel(lbl))
+		result = append(result, kmapi.EdgeLabel(lbl))
 	}
 	return result
 }

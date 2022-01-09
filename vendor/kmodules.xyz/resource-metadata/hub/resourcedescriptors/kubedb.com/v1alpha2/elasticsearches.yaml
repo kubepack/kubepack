@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1alpha2
   name: kubedb.com-v1alpha2-elasticsearches
 spec:
-  columns:
+  columnDefinitions:
   - name: Name
     pathTemplate: '{{ .metadata.name }}'
     priority: 3
@@ -423,7 +423,7 @@ spec:
     - Critical
     - Halted
   subTables:
-  - columns:
+  - columnDefinitions:
     - name: Type
       pathTemplate: '{{ .type }}'
       priority: 0

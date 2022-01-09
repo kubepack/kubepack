@@ -18,19 +18,48 @@ package v1alpha1
 
 import "k8s.io/apimachinery/pkg/runtime"
 
-func (in *TableRow) DeepCopy() *TableRow {
+func (in *TableCell) DeepCopy() *TableCell {
 	if in == nil {
 		return nil
 	}
 
-	out := new(TableRow)
+	out := new(TableCell)
+	if in.Data != nil {
+		out.Data = runtime.DeepCopyJSONValue(in.Data)
+	}
+	if in.Sort != nil {
+		out.Sort = runtime.DeepCopyJSONValue(in.Sort)
+	}
+	out.Link = in.Link
+	out.Icon = in.Icon
+	out.Color = in.Color
+	return out
+}
 
-	if in.Cells != nil {
-		out.Cells = make([]interface{}, len(in.Cells))
-		for i := range in.Cells {
-			out.Cells[i] = runtime.DeepCopyJSONValue(in.Cells[i])
+func Convert_ResourceColumnDefinition_To_ResourceColumn(def ResourceColumnDefinition) ResourceColumn {
+	col := ResourceColumn{
+		Name:   def.Name,
+		Type:   def.Type,
+		Format: def.Format,
+	}
+	if def.Sort != nil && def.Sort.Enable {
+		col.Sort = &SortHeader{
+			Enable: true,
+			Type:   def.Sort.Type,
+			Format: def.Sort.Format,
 		}
 	}
-
-	return out
+	if def.Link != nil && def.Link.Enable {
+		col.Link = true
+	}
+	if def.Icon != nil && def.Icon.Enable {
+		col.Icon = true
+	}
+	if def.Shape != "" {
+		col.Shape = def.Shape
+	}
+	if def.Color != nil && def.Color.Color != "" {
+		col.Color = def.Color.Color
+	}
+	return col
 }
