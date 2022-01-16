@@ -3,7 +3,7 @@ kind: ResourceClass
 metadata:
   creationTimestamp: null
   name: 'Service & Discovery'
-  namespace: console
+  namespace: cluster
 spec:
   entries:
   - name: Services

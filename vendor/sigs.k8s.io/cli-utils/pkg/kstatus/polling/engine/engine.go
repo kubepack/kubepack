@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-errors/errors"
 	"k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"sigs.k8s.io/cli-utils/pkg/kstatus/polling/event"
@@ -19,7 +18,7 @@ import (
 // ClusterReaderFactoryFunc defines the signature for the function the PollerEngine will use to create
 // a new ClusterReader for each statusPollerRunner.
 type ClusterReaderFactoryFunc func(reader client.Reader, mapper meta.RESTMapper,
-	identifiers []object.ObjMetadata) (ClusterReader, error)
+	identifiers object.ObjMetadataSet) (ClusterReader, error)
 
 // StatusReadersFactoryFunc defines the signature for the function the PollerEngine will use to
 // create the resource statusReaders and the default engine for each statusPollerRunner.
@@ -37,7 +36,7 @@ type PollerEngine struct {
 // context passed in.
 // The context can be used to stop the polling process by using timeout, deadline or
 // cancellation.
-func (s *PollerEngine) Poll(ctx context.Context, identifiers []object.ObjMetadata, options Options) <-chan event.Event {
+func (s *PollerEngine) Poll(ctx context.Context, identifiers object.ObjMetadataSet, options Options) <-chan event.Event {
 	eventChannel := make(chan event.Event)
 
 	go func() {
@@ -57,8 +56,7 @@ func (s *PollerEngine) Poll(ctx context.Context, identifiers []object.ObjMetadat
 
 		clusterReader, err := options.ClusterReaderFactoryFunc(s.Reader, s.Mapper, identifiers)
 		if err != nil {
-			handleError(eventChannel,
-				errors.WrapPrefix(err, "error creating new ClusterReader", 1))
+			handleError(eventChannel, fmt.Errorf("error creating new ClusterReader: %w", err))
 			return
 		}
 		statusReaders, defaultStatusReader := options.StatusReadersFactoryFunc(clusterReader, s.Mapper)
@@ -99,7 +97,7 @@ func (s *PollerEngine) validate(options Options) error {
 
 // validateIdentifiers makes sure that all namespaced resources
 // passed in
-func (s *PollerEngine) validateIdentifiers(identifiers []object.ObjMetadata) error {
+func (s *PollerEngine) validateIdentifiers(identifiers object.ObjMetadataSet) error {
 	for _, id := range identifiers {
 		mapping, err := s.Mapper.RESTMapping(id.GroupKind)
 		if err != nil {
@@ -164,9 +162,9 @@ type statusPollerRunner struct {
 	// doesn't have a specific engine in the statusReaders map.
 	defaultStatusReader StatusReader
 
-	// identifiers contains the list of identifiers for the resources that should be polled.
+	// identifiers contains the set of identifiers for the resources that should be polled.
 	// Each resource is identified by GroupKind, namespace and name.
-	identifiers []object.ObjMetadata
+	identifiers object.ObjMetadataSet
 
 	// previousResourceStatuses keeps track of the last event for each
 	// of the polled resources. This is used to make sure we only

@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1
   name: apps-v1-deployments
 spec:
-  columnDefinitions:
+  columns:
   - name: Name
     pathTemplate: '{{ .metadata.name }}'
     priority: 3
@@ -291,7 +291,7 @@ spec:
     scope: Namespaced
     version: v1
   subTables:
-  - columnDefinitions:
+  - columns:
     - name: Name
       pathTemplate: '{{ .name }}'
       priority: 0
@@ -318,7 +318,7 @@ spec:
       type: string
     fieldPath: .spec.template.spec.containers
     name: Containers
-  - columnDefinitions:
+  - columns:
     - name: Name
       pathTemplate: '{{ .name }}'
       priority: 0
@@ -345,7 +345,7 @@ spec:
       type: string
     fieldPath: .spec.template.spec.initContainers
     name: Init-Containers
-  - columnDefinitions:
+  - columns:
     - name: Type
       pathTemplate: '{{ .type }}'
       priority: 0

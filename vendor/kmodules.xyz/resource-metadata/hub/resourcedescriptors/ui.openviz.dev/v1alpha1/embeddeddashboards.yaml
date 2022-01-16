@@ -43,11 +43,29 @@ spec:
               description: 'Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
               type: object
           type: object
-        spec:
-          description: EmbeddedDashboardSpec defines the desired state of EmbeddedDashboard
+        request:
           properties:
-            dashboard:
-              type: string
+            panelTitles:
+              items:
+                type: string
+              type: array
+            ref:
+              properties:
+                name:
+                  type: string
+                selector:
+                  properties:
+                    dashboardTitle:
+                      type: string
+                    grafanaName:
+                      type: string
+                  type: object
+              type: object
+          required:
+          - ref
+          type: object
+        response:
+          properties:
             urls:
               items:
                 properties:

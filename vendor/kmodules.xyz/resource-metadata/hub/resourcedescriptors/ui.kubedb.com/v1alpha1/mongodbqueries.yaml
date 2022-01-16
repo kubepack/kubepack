@@ -15,42 +15,6 @@ spec:
     name: mongodbqueries
     scope: Namespaced
     version: v1alpha1
-  subTables:
-  - columnDefinitions:
-    - name: Operation
-      pathTemplate: '{{ .operation }}'
-      priority: 3
-      type: string
-    - name: Database
-      pathTemplate: '{{ .databaseName }}'
-      priority: 3
-      type: string
-    - name: Collection
-      pathTemplate: '{{ .collectionName }}'
-      priority: 3
-      type: string
-    - name: Command
-      pathTemplate: '{{ .command }}'
-      priority: 3
-      type: string
-    - name: Count
-      pathTemplate: '{{ .count }}'
-      priority: 3
-      type: string
-    - name: Avg Execution Time(ms)
-      pathTemplate: '{{ .avgExecutionTimeInMS }}'
-      priority: 3
-      type: string
-    - name: Min Execution Time(ms)
-      pathTemplate: '{{ .minExecutionTimeInMS }}'
-      priority: 3
-      type: string
-    - name: Max Execution Time(ms)
-      pathTemplate: '{{ .maxExecutionTimeInMS }}'
-      priority: 3
-      type: string
-    fieldPath: .spec.queries
-    name: Slow Queries
   validation:
     openAPIV3Schema:
       properties:
@@ -82,7 +46,7 @@ spec:
             queries:
               items:
                 properties:
-                  avgExecutionTimeInMS:
+                  avgExecutionTimeMilliSeconds:
                     format: int64
                     type: integer
                   collectionName:
@@ -94,10 +58,10 @@ spec:
                     type: integer
                   databaseName:
                     type: string
-                  maxExecutionTimeInMS:
+                  maxExecutionTimeMilliSeconds:
                     format: int64
                     type: integer
-                  minExecutionTimeInMS:
+                  minExecutionTimeMilliSeconds:
                     format: int64
                     type: integer
                   operation:
@@ -108,15 +72,6 @@ spec:
                     - DELETE
                     - GETMORE
                     type: string
-                required:
-                - avgExecutionTimeInMS
-                - collectionName
-                - command
-                - count
-                - databaseName
-                - maxExecutionTimeInMS
-                - minExecutionTimeInMS
-                - operation
                 type: object
               type: array
           required:

@@ -1,0 +1,23 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceOutline
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: autoscaling
+    k8s.io/kind: HorizontalPodAutoscaler
+    k8s.io/resource: horizontalpodautoscalers
+    k8s.io/version: v1
+  name: autoscaling-v1-horizontalpodautoscalers
+spec:
+  defaultLayout: true
+  pages:
+  - name: Basic
+    blocks:
+    - kind: Block
+      name: autoscaling-v1-horizontalpodautoscalers
+  resource:
+    group: autoscaling
+    kind: HorizontalPodAutoscaler
+    name: horizontalpodautoscalers
+    scope: Namespaced
+    version: v1

@@ -42,7 +42,8 @@ type PanelEntry struct {
 	Path     string            `json:"path,omitempty"`
 	Resource *kmapi.ResourceID `json:"resource,omitempty"`
 	// +optional
-	Required bool `json:"required,omitempty"`
+	Required   bool   `json:"required,omitempty"`
+	LayoutName string `json:"layoutName"`
 	// +optional
 	Icons      []ImageSpec           `json:"icons,omitempty"`
 	Namespaced bool                  `json:"namespaced"`

@@ -48,9 +48,8 @@ type RenderRequest struct {
 	PageName   string           `json:"pageName,omitempty"`
 	Block      *PageBlockLayout `json:"block,omitempty"`
 
-	ConvertToTable bool `json:"convertToTable,omitempty"`
-	// Self or SubTable
-	RenderSelfOnly bool `json:"renderSelfOnly,omitempty"`
+	ConvertToTable bool        `json:"convertToTable,omitempty"`
+	RenderBlocks   []TableKind `json:"renderBlocks,omitempty"`
 }
 
 type RenderResponse struct {

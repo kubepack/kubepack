@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1alpha2
   name: kubedb.com-v1alpha2-perconaxtradbs
 spec:
-  columnDefinitions:
+  columns:
   - name: Name
     pathTemplate: '{{ .metadata.name }}'
     priority: 3
@@ -336,7 +336,7 @@ spec:
     - Critical
     - Halted
   subTables:
-  - columnDefinitions:
+  - columns:
     - name: Type
       pathTemplate: '{{ .type }}'
       priority: 0

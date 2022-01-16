@@ -9,39 +9,6 @@ metadata:
     k8s.io/version: v1alpha1
   name: ui.k8s.appscode.com-v1alpha1-podviews
 spec:
-  columnDefinitions:
-  - name: Name
-    pathTemplate: '{{ .metadata.name }}'
-    priority: 3
-    type: string
-  - name: CPU (Usage)
-    pathTemplate: '{{ .spec.resources.usage.cpu | k8s_fmt_resource_cpu}}'
-    priority: 3
-    type: string
-  - name: CPU (Limit)
-    pathTemplate: '{{ .spec.resources.limits.cpu | k8s_fmt_resource_cpu}}'
-    priority: 3
-    type: string
-  - name: Memory (Usage)
-    pathTemplate: '{{ .spec.resources.usage.memory | k8s_fmt_resource_memory}}'
-    priority: 3
-    type: string
-  - name: Memory (Limit)
-    pathTemplate: '{{ .spec.resources.limits.memory | k8s_fmt_resource_memory}}'
-    priority: 3
-    type: string
-  - name: Storage (Usage)
-    pathTemplate: '{{ .spec.resources.usage.storage | k8s_fmt_resource_memory}}'
-    priority: 3
-    type: string
-  - name: Storage (Limit)
-    pathTemplate: '{{ .spec.resources.limits.storage | k8s_fmt_resource_memory}}'
-    priority: 3
-    type: string
-  - name: Status
-    pathTemplate: '{{ .status.phase }}'
-    priority: 3
-    type: string
   resource:
     group: ui.k8s.appscode.com
     kind: PodView
@@ -826,7 +793,7 @@ spec:
                 type: object
               type: array
             resources:
-              description: ResourceTableDefinition describes the compute resource requirements.
+              description: ResourceView describes the compute resource requirements.
               properties:
                 limits:
                   additionalProperties:

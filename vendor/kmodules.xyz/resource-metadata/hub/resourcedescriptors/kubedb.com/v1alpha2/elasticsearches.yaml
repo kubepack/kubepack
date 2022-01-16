@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1alpha2
   name: kubedb.com-v1alpha2-elasticsearches
 spec:
-  columnDefinitions:
+  columns:
   - name: Name
     pathTemplate: '{{ .metadata.name }}'
     priority: 3
@@ -125,6 +125,46 @@ spec:
       apiVersion: cert-manager.io/v1
       kind: ClusterIssuer
     type: MatchRef
+  - labels:
+    - view
+    nameTemplate: '{.metadata.name}~Elasticsearch.kubedb.com'
+    namespacePath: metadata.namespace
+    target:
+      apiVersion: ui.k8s.appscode.com/v1alpha1
+      kind: GenericResource
+    type: MatchName
+  - labels:
+    - view
+    nameTemplate: '{.metadata.name}~Elasticsearch.kubedb.com'
+    namespacePath: metadata.namespace
+    target:
+      apiVersion: ui.k8s.appscode.com/v1alpha1
+      kind: GenericResourceService
+    type: MatchName
+  - labels:
+    - view
+    nameTemplate: '{.metadata.name}'
+    namespacePath: metadata.namespace
+    target:
+      apiVersion: ui.kubedb.com/v1alpha1
+      kind: ElasticsearchInsight
+    type: MatchName
+  - labels:
+    - view
+    nameTemplate: '{.metadata.name}'
+    namespacePath: metadata.namespace
+    target:
+      apiVersion: ui.kubedb.com/v1alpha1
+      kind: ElasticsearchNodesStats
+    type: MatchName
+  - labels:
+    - view
+    nameTemplate: '{.metadata.name}'
+    namespacePath: metadata.namespace
+    target:
+      apiVersion: ui.kubedb.com/v1alpha1
+      kind: ElasticsearchSchemaOverview
+    type: MatchName
   icons:
   - src: https://cdn.appscode.com/k8s/icons/kubedb.com/elasticsearches.svg
     type: image/svg+xml
@@ -423,7 +463,7 @@ spec:
     - Critical
     - Halted
   subTables:
-  - columnDefinitions:
+  - columns:
     - name: Type
       pathTemplate: '{{ .type }}'
       priority: 0

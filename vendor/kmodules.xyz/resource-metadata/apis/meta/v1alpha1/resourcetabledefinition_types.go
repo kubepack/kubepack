@@ -44,9 +44,9 @@ type ResourceTableDefinition struct {
 }
 
 type ResourceTableDefinitionSpec struct {
-	Resource          *kmapi.ResourceID          `json:"resource,omitempty"`
-	DefaultView       bool                       `json:"defaultView"`
-	ColumnDefinitions []ResourceColumnDefinition `json:"columnDefinitions,omitempty"`
+	Resource    *kmapi.ResourceID          `json:"resource,omitempty"`
+	DefaultView bool                       `json:"defaultView"`
+	Columns     []ResourceColumnDefinition `json:"columns,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

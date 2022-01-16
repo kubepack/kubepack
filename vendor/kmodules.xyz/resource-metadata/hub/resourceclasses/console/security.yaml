@@ -3,7 +3,7 @@ kind: ResourceClass
 metadata:
   creationTimestamp: null
   name: Security
-  namespace: console
+  namespace: cluster
 spec:
   entries:
   - name: Policy

@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1beta1
   name: stash.appscode.com-v1beta1-restoresessions
 spec:
-  columnDefinitions:
+  columns:
   - name: Name
     pathTemplate: '{{ .metadata.name }}'
     priority: 3
@@ -627,8 +627,13 @@ spec:
               description: Repository refer to the Repository crd that hold backend information
               properties:
                 name:
-                  description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+                  description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
                   type: string
+                namespace:
+                  description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                  type: string
+              required:
+              - name
               type: object
             rules:
               description: Rules specifies different restore options for different hosts Deprecated. Use rules section inside `target`.
@@ -1846,6 +1851,11 @@ spec:
                 alias:
                   description: Alias represents the identifier of the backed up data in the repository. This will be used as `sourceHost` and `targetHosts` or will be used to generate them.
                   type: string
+                args:
+                  description: Args specifies a list of arguments to pass to the restore driver.
+                  items:
+                    type: string
+                  type: array
                 ref:
                   description: Ref refers to the restore,target
                   properties:

@@ -3,7 +3,7 @@ kind: ResourceClass
 metadata:
   creationTimestamp: null
   name: Helm 3
-  namespace: console
+  namespace: cluster
 spec:
   entries:
   - icons:

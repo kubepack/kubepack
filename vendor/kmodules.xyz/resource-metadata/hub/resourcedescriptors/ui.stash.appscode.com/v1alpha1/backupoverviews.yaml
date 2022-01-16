@@ -3,24 +3,26 @@ kind: ResourceDescriptor
 metadata:
   creationTimestamp: null
   labels:
-    k8s.io/group: ui.kubedb.com
-    k8s.io/kind: MariaDBOverview
-    k8s.io/resource: mariadboverviews
+    k8s.io/group: ui.stash.appscode.com
+    k8s.io/kind: BackupOverview
+    k8s.io/resource: backupoverviews
     k8s.io/version: v1alpha1
-  name: ui.kubedb.com-v1alpha1-mariadboverviews
+  name: ui.stash.appscode.com-v1alpha1-backupoverviews
 spec:
   resource:
-    group: ui.kubedb.com
-    kind: MariaDBOverview
-    name: mariadboverviews
+    group: ui.stash.appscode.com
+    kind: BackupOverview
+    name: backupoverviews
     scope: Namespaced
     version: v1alpha1
   validation:
     openAPIV3Schema:
       properties:
         apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
           type: string
         kind:
+          description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
           type: string
         metadata:
           properties:
@@ -42,67 +44,29 @@ spec:
               type: object
           type: object
         spec:
+          description: BackupOverviewSpec defines the desired state of BackupOverview
           properties:
-            abortedClients:
-              format: int32
-              type: integer
-            abortedConnections:
-              format: int32
-              type: integer
-            connectionsInfo:
-              properties:
-                port:
-                  format: int32
-                  type: integer
-                url:
-                  type: string
-              type: object
-            credentials:
-              properties:
-                certificate:
-                  type: string
-                password:
-                  type: string
-                username:
-                  type: string
-              type: object
-            longQueryTimeThreshold:
-              format: double
-              type: number
-            maxConnections:
-              format: int32
-              type: integer
-            maxUsedConnections:
-              format: int32
-              type: integer
-            mode:
+            dataIntegrity:
+              type: boolean
+            dataSize:
               type: string
-            numberOfSlowQueries:
-              format: int32
+            lastBackupTime:
+              format: date-time
+              type: string
+            numberOfSnapshots:
+              format: int64
               type: integer
-            questions:
-              format: int32
-              type: integer
+            repository:
+              type: string
+            schedule:
+              type: string
             status:
+              enum:
+              - Active
+              - Paused
               type: string
-            threadsCached:
-              format: int32
-              type: integer
-            threadsConnected:
-              format: int32
-              type: integer
-            threadsCreated:
-              format: int32
-              type: integer
-            threadsRunning:
-              format: int32
-              type: integer
-            version:
+            upcomingBackupTime:
+              format: date-time
               type: string
-          required:
-          - mode
-          - questions
-          - status
-          - version
           type: object
       type: object

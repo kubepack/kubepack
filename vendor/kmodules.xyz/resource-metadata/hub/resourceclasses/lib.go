@@ -42,7 +42,7 @@ func FS() embed.FS {
 type UINamespace string
 
 const (
-	ConsoleUI UINamespace = "console"
+	ClusterUI UINamespace = "cluster"
 	KubeDBUI  UINamespace = "kubedb"
 )
 

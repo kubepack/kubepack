@@ -1,0 +1,36 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceOutline
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: apps
+    k8s.io/kind: ReplicaSet
+    k8s.io/resource: replicasets
+    k8s.io/version: v1
+  name: apps-v1-replicasets
+spec:
+  defaultLayout: true
+  pages:
+  - name: Basic
+    blocks:
+    - kind: Block
+      name: apps-v1-replicasets
+  - name: Backups
+    blocks:
+    - kind: Block
+      name: stash.appscode.com-v1-backup
+  - name: Monitoring
+    blocks:
+    - kind: Block
+      name: monitoring.coreos.com-v1-monitoring
+  resource:
+    group: apps
+    kind: ReplicaSet
+    name: replicasets
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: apps-replicaset-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0

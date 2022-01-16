@@ -1,0 +1,68 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceOutline
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: monitoring.coreos.com
+    k8s.io/kind: PodMonitor
+    k8s.io/resource: podmonitors
+    k8s.io/version: v1
+  name: monitoring.coreos.com-v1-podmonitors
+spec:
+  defaultLayout: true
+  pages:
+  - name: Basic
+    blocks:
+    - actions:
+        create: Never
+      displayMode: List
+      kind: Connection
+      query:
+        byLabel: monitored_by
+        type: GraphQL
+      ref:
+        group: ""
+        kind: Pod
+    - actions:
+        create: Never
+      displayMode: List
+      kind: Connection
+      query:
+        raw: |-
+          query Find($src: String!, $targetGroup: String!, $targetKind: String!) {
+            find(oid: $src) {
+              monitored_by(group: "", kind: "Pod") {
+                refs: exposed_by(group: $targetGroup, kind: $targetKind) {
+                  namespace
+                  name
+                }
+              }
+            }
+          }
+        type: GraphQL
+      ref:
+        group: ""
+        kind: Service
+  - name: Monitoring
+    blocks:
+    - actions:
+        create: Always
+      displayMode: List
+      kind: Connection
+      query:
+        byLabel: monitored_by
+        type: GraphQL
+      ref:
+        group: monitoring.coreos.com
+        kind: Prometheus
+  resource:
+    group: monitoring.coreos.com
+    kind: PodMonitor
+    name: podmonitors
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: monitoringcoreoscom-podmonitor-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0

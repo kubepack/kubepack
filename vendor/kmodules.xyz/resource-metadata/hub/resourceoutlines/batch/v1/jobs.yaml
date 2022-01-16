@@ -1,0 +1,28 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceOutline
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: batch
+    k8s.io/kind: Job
+    k8s.io/resource: jobs
+    k8s.io/version: v1
+  name: batch-v1-jobs
+spec:
+  defaultLayout: true
+  pages:
+  - name: Basic
+    blocks:
+    - kind: Block
+      name: batch-v1-jobs
+  resource:
+    group: batch
+    kind: Job
+    name: jobs
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: batch-job-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0

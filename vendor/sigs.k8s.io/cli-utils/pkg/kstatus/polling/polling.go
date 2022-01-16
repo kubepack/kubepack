@@ -14,6 +14,7 @@ import (
 	"sigs.k8s.io/cli-utils/pkg/kstatus/polling/engine"
 	"sigs.k8s.io/cli-utils/pkg/kstatus/polling/event"
 	"sigs.k8s.io/cli-utils/pkg/kstatus/polling/statusreaders"
+	"sigs.k8s.io/cli-utils/pkg/kstatus/status"
 	"sigs.k8s.io/cli-utils/pkg/object"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -37,11 +38,21 @@ type StatusPoller struct {
 // Poll will create a new statusPollerRunner that will poll all the resources provided and report their status
 // back on the event channel returned. The statusPollerRunner can be cancelled at any time by cancelling the
 // context passed in.
-func (s *StatusPoller) Poll(ctx context.Context, identifiers []object.ObjMetadata, options Options) <-chan event.Event {
+func (s *StatusPoller) Poll(ctx context.Context, identifiers object.ObjMetadataSet, options Options) <-chan event.Event {
+	statusReaderFactory := createStatusReaders
+	if options.CustomStatusReadersFactoryFunc != nil {
+		statusReaderFactory = func(reader engine.ClusterReader, mapper meta.RESTMapper) (map[schema.GroupKind]engine.StatusReader, engine.StatusReader) {
+			readers, defaultReader := createStatusReaders(reader, mapper)
+			for gk, r := range options.CustomStatusReadersFactoryFunc(reader, mapper) {
+				readers[gk] = r
+			}
+			return readers, defaultReader
+		}
+	}
 	return s.engine.Poll(ctx, identifiers, engine.Options{
 		PollInterval:             options.PollInterval,
 		ClusterReaderFactoryFunc: clusterReaderFactoryFunc(options.UseCache),
-		StatusReadersFactoryFunc: createStatusReaders,
+		StatusReadersFactoryFunc: statusReaderFactory,
 	})
 }
 
@@ -56,6 +67,12 @@ type Options struct {
 	// all needed resources before each polling cycle. If this is set to false,
 	// then each resource will be fetched when needed with GET calls.
 	UseCache bool
+
+	// CustomStatusReadersFactoryFunc, when called, provides the StatusPoller with a map of custom
+	// StatusReaders for the given GroupKinds. These will be used along with the StatusReaders shipped with this
+	// library. However, it can also be used to override these with custom StatusReaders if the returned map
+	// has a key for the given GroupKinds, e.g. apps/deployments.
+	CustomStatusReadersFactoryFunc func(engine.ClusterReader, meta.RESTMapper) map[schema.GroupKind]engine.StatusReader
 }
 
 // createStatusReaders creates an instance of all the statusreaders. This includes a set of statusreaders for
@@ -64,7 +81,7 @@ type Options struct {
 // TODO: We should consider making the registration more automatic instead of having to create each of them
 // here. Also, it might be worth creating them on demand.
 func createStatusReaders(reader engine.ClusterReader, mapper meta.RESTMapper) (map[schema.GroupKind]engine.StatusReader, engine.StatusReader) {
-	defaultStatusReader := statusreaders.NewGenericStatusReader(reader, mapper)
+	defaultStatusReader := statusreaders.NewGenericStatusReader(reader, mapper, status.Compute)
 
 	replicaSetStatusReader := statusreaders.NewReplicaSetStatusReader(reader, mapper, defaultStatusReader)
 	deploymentStatusReader := statusreaders.NewDeploymentResourceReader(reader, mapper, replicaSetStatusReader)
@@ -85,7 +102,7 @@ func createStatusReaders(reader engine.ClusterReader, mapper meta.RESTMapper) (m
 // decided here rather than based on information passed in to the factory function. Thus, the decision
 // for which implementation is decided when the StatusPoller is created.
 func clusterReaderFactoryFunc(useCache bool) engine.ClusterReaderFactoryFunc {
-	return func(r client.Reader, mapper meta.RESTMapper, identifiers []object.ObjMetadata) (engine.ClusterReader, error) {
+	return func(r client.Reader, mapper meta.RESTMapper, identifiers object.ObjMetadataSet) (engine.ClusterReader, error) {
 		if useCache {
 			return clusterreader.NewCachingClusterReader(r, mapper, identifiers)
 		}

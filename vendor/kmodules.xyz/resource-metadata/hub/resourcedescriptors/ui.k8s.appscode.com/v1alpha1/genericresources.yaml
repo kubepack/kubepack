@@ -9,35 +9,6 @@ metadata:
     k8s.io/version: v1alpha1
   name: ui.k8s.appscode.com-v1alpha1-genericresources
 spec:
-  columnDefinitions:
-  - name: Name
-    pathTemplate: '{{ .metadata.name }}'
-    priority: 3
-    type: string
-  - name: Type
-    pathTemplate: '{{ .spec.apiType.kind }}'
-    priority: 3
-    type: string
-  - name: Namespace
-    pathTemplate: '{{ .metadata.namespace }}'
-    priority: 3
-    type: string
-  - name: vCPU(Request/Limit)
-    pathTemplate: '{{ .spec.totalResource.requests.cpu | k8s_fmt_resource_cpu}} / {{ .spec.totalResource.limits.cpu | k8s_fmt_resource_cpu}}'
-    priority: 3
-    type: string
-  - name: Memory(Request/Limit)
-    pathTemplate: '{{ .spec.totalResource.requests.memory | k8s_fmt_resource_memory}} / {{ .spec.totalResource.limits.memory | k8s_fmt_resource_memory}}'
-    priority: 3
-    type: string
-  - name: Storage(Request/Limit)
-    pathTemplate: '{{ .spec.totalResource.requests.storage | k8s_fmt_resource_memory}} / {{ .spec.totalResource.limits.storage | k8s_fmt_resource_memory}}'
-    priority: 3
-    type: string
-  - name: Status
-    pathTemplate: '{{ .status.phase }}'
-    priority: 3
-    type: string
   resource:
     group: ui.k8s.appscode.com
     kind: GenericResource
@@ -119,11 +90,35 @@ spec:
                   description: 'Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/'
                   type: object
               type: object
-            clusterID:
-              type: string
-            clusterName:
-              type: string
+            cluster:
+              properties:
+                displayName:
+                  type: string
+                name:
+                  type: string
+                provider:
+                  enum:
+                  - Aws
+                  - Azure
+                  - DigitalOcean
+                  - GoogleCloud
+                  - Linode
+                  - Packet
+                  - Scaleway
+                  - Vultr
+                  - BareMetal
+                  - KIND
+                  - Generic
+                  - Private
+                  type: string
+                uid:
+                  type: string
+              required:
+              - uid
+              type: object
             mode:
+              type: string
+            name:
               type: string
             replicas:
               format: int64
@@ -186,6 +181,8 @@ spec:
                   description: 'Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/'
                   type: object
               type: object
+            version:
+              type: string
           required:
           - apiType
           - appResource

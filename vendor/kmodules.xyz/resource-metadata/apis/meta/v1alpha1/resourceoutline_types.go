@@ -59,14 +59,14 @@ type ResourcePageOutline struct {
 	Blocks  []PageBlockOutline `json:"blocks,omitempty"`
 }
 
-// +kubebuilder:validation:Enum=ResourceBlockDefinition;Self;SubTable;Connection
+// +kubebuilder:validation:Enum=Block;Self;SubTable;Connection
 type TableKind string
 
 const (
-	TableKindResourceBlock TableKind = "ResourceBlock"
-	TableKindConnection    TableKind = "Connection"
-	TableKindSubTable      TableKind = "SubTable"
-	TableKindSelf          TableKind = "Self"
+	TableKindBlock      TableKind = "Block"
+	TableKindConnection TableKind = "Connection"
+	TableKindSubTable   TableKind = "SubTable"
+	TableKindSelf       TableKind = "Self"
 )
 
 type PageBlockOutline struct {
@@ -81,8 +81,8 @@ type PageBlockOutline struct {
 }
 
 type ResourceTableDefinitionRef struct {
-	Name              string                     `json:"name,omitempty"`
-	ColumnDefinitions []ResourceColumnDefinition `json:"columnDefinitions,omitempty"`
+	Name    string                     `json:"name,omitempty"`
+	Columns []ResourceColumnDefinition `json:"columns,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

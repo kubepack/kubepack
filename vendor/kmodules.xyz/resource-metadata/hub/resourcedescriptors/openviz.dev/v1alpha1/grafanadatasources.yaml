@@ -1,59 +1,28 @@
-apiVersion: meta.appscode.com/v1alpha1
+apiVersion: meta.k8s.appscode.com/v1alpha1
 kind: ResourceDescriptor
 metadata:
   creationTimestamp: null
   labels:
-    k8s.io/group: ui.kubedb.com
-    k8s.io/kind: BackupOverview
-    k8s.io/resource: backupoverviews
+    k8s.io/group: openviz.dev
+    k8s.io/kind: GrafanaDatasource
+    k8s.io/resource: grafanadatasources
     k8s.io/version: v1alpha1
-  name: ui.kubedb.com-v1alpha1-backupoverviews
+  name: openviz.dev-v1alpha1-grafanadatasources
 spec:
-  columnDefinitions:
-  - name: Schedule
-    pathTemplate: '{{ .spec.schedule }}'
-    priority: 3
-    type: string
-  - name: Last backup time
-    pathTemplate: '{{ .spec.lastBackupTime }}'
-    priority: 3
-    type: string
-  - name: Upcoming backup
-    pathTemplate: '{{ .spec.upcomingBackupTime }}'
-    priority: 3
-    type: string
-  - name: Backup Storage
-    pathTemplate: '{{ .spec.backupStorage }}'
-    priority: 3
-    type: string
-  - name: DataSize
-    pathTemplate: '{{ .spec.dataSize }}'
-    priority: 3
-    type: string
-  - name: Number of Snapshots
-    pathTemplate: '{{ .spec.numberOfSnapshots }}'
-    priority: 3
-    type: string
-  - name: Data Integrity
-    pathTemplate: '{{ .spec.dataIntegrity }}'
-    priority: 3
-    type: string
-  - name: Data Directory
-    pathTemplate: '{{ .spec.dataDirectory }}'
-    priority: 3
-    type: string
   resource:
-    group: ui.kubedb.com
-    kind: BackupOverview
-    name: backupoverviews
+    group: openviz.dev
+    kind: GrafanaDatasource
+    name: grafanadatasources
     scope: Namespaced
     version: v1alpha1
   validation:
     openAPIV3Schema:
       properties:
         apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
           type: string
         kind:
+          description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
           type: string
         metadata:
           properties:
@@ -76,26 +45,54 @@ spec:
           type: object
         spec:
           properties:
-            backupStorage:
+            access:
               type: string
-            dataDirectory:
-              type: string
-            dataIntegrity:
+            basicAuth:
               type: boolean
-            dataSize:
+            basicAuthPassword:
               type: string
-            lastBackupTime:
-              format: date-time
+            basicAuthUser:
               type: string
-            numberOfSnapshots:
+            database:
+              type: string
+            editable:
+              type: boolean
+            grafanaRef:
+              description: ObjectReference contains enough information to let you inspect or modify the referred object.
+              properties:
+                name:
+                  description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                  type: string
+                namespace:
+                  description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                  type: string
+              required:
+              - name
+              type: object
+            id:
               format: int64
               type: integer
-            schedule:
+            isDefault:
+              type: boolean
+            name:
               type: string
-            upcomingBackupTime:
-              format: date-time
+            orgId:
+              format: int64
+              type: integer
+            password:
+              type: string
+            type:
+              type: string
+            url:
+              type: string
+            user:
               type: string
           required:
-          - dataSize
+          - access
+          - grafanaRef
+          - name
+          - orgId
+          - type
+          - url
           type: object
       type: object

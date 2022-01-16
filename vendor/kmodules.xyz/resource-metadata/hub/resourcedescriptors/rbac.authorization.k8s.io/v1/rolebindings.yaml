@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1
   name: rbac.authorization.k8s.io-v1-rolebindings
 spec:
-  columnDefinitions:
+  columns:
   - name: Name
     pathTemplate: '{{ .metadata.name }}'
     priority: 3

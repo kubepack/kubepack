@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1beta1
   name: batch-v1beta1-cronjobs
 spec:
-  columnDefinitions:
+  columns:
   - name: Name
     pathTemplate: '{{ .metadata.name }}'
     priority: 3
@@ -103,7 +103,7 @@ spec:
     scope: Namespaced
     version: v1beta1
   subTables:
-  - columnDefinitions:
+  - columns:
     - name: Name
       pathTemplate: '{{ .name }}'
       priority: 0
@@ -130,7 +130,7 @@ spec:
       type: string
     fieldPath: .spec.jobTemplate.spec.template.spec.containers
     name: Containers
-  - columnDefinitions:
+  - columns:
     - name: Name
       pathTemplate: '{{ .name }}'
       priority: 0
@@ -157,7 +157,7 @@ spec:
       type: string
     fieldPath: .spec.jobTemplate.spec.template.spec.initContainers
     name: Init-Containers
-  - columnDefinitions:
+  - columns:
     - name: Type
       pathTemplate: '{{ .type }}'
       priority: 0
@@ -184,7 +184,7 @@ spec:
       type: string
     fieldPath: .status.conditions
     name: Conditions
-  - columnDefinitions:
+  - columns:
     - name: API Version
       pathTemplate: '{{ .apiVersion }}'
       priority: 0

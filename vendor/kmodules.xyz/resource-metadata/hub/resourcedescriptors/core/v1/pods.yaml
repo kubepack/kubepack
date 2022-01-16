@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1
   name: core-v1-pods
 spec:
-  columnDefinitions:
+  columns:
   - format: name
     name: Name
     pathTemplate: '{{ .metadata.name }}'
@@ -117,6 +117,14 @@ spec:
       apiVersion: v1
       kind: Secret
     type: MatchRef
+  - labels:
+    - view
+    nameTemplate: '{.metadata.name}'
+    namespacePath: metadata.namespace
+    target:
+      apiVersion: ui.k8s.appscode.com/v1alpha1
+      kind: PodView
+    type: MatchName
   icons:
   - src: https://cdn.appscode.com/k8s/icons/core/pods.svg
     type: image/svg+xml
@@ -227,7 +235,7 @@ spec:
     scope: Namespaced
     version: v1
   subTables:
-  - columnDefinitions:
+  - columns:
     - name: Name
       pathTemplate: '{{ .name }}'
       priority: 0
@@ -254,7 +262,7 @@ spec:
       type: string
     fieldPath: .spec.containers
     name: Containers
-  - columnDefinitions:
+  - columns:
     - name: Name
       pathTemplate: '{{ .name }}'
       priority: 0
@@ -281,7 +289,7 @@ spec:
       type: string
     fieldPath: .spec.initContainers
     name: Init-Containers
-  - columnDefinitions:
+  - columns:
     - name: Effect
       pathTemplate: '{{ .effect }}'
       priority: 0
@@ -300,7 +308,7 @@ spec:
       type: string
     fieldPath: .spec.tolerations
     name: Tolerations
-  - columnDefinitions:
+  - columns:
     - name: Type
       pathTemplate: '{{ .type }}'
       priority: 0
@@ -319,7 +327,7 @@ spec:
       type: string
     fieldPath: .status.conditions
     name: Conditions
-  - columnDefinitions:
+  - columns:
     - name: API Version
       pathTemplate: '{{ .apiVersion }}'
       priority: 0

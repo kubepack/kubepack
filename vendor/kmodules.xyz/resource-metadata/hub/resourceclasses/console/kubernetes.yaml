@@ -3,7 +3,7 @@ kind: ResourceClass
 metadata:
   creationTimestamp: null
   name: Kubernetes
-  namespace: console
+  namespace: cluster
 spec:
   entries:
   - icons:

@@ -15,18 +15,6 @@ spec:
     name: mongodbschemaoverviews
     scope: Namespaced
     version: v1alpha1
-  subTables:
-  - columnDefinitions:
-    - name: Name
-      pathTemplate: '{{ .name }}'
-      priority: 3
-      type: string
-    - name: Size
-      pathTemplate: '{{ .size }}'
-      priority: 3
-      type: object
-    fieldPath: .spec.collections
-    name: Top Collections
   validation:
     openAPIV3Schema:
       properties:
@@ -65,9 +53,6 @@ spec:
                       format: int32
                       type: integer
                     type: array
-                required:
-                - name
-                - size
                 type: object
               type: array
           required:

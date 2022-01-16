@@ -1,0 +1,243 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceOutline
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: kubedb.com
+    k8s.io/kind: Postgres
+    k8s.io/resource: postgreses
+    k8s.io/version: v1alpha2
+  name: kubedb-kubedb.com-v1alpha2-postgreses
+spec:
+  header:
+    actions:
+      create: Never
+    displayMode: Field
+    kind: Connection
+    query:
+      byLabel: view
+      type: GraphQL
+    ref:
+      group: ui.k8s.appscode.com
+      kind: GenericResource
+  tabBar:
+    actions:
+      create: Never
+    displayMode: Field
+    kind: Connection
+    query:
+      byLabel: view
+      type: GraphQL
+    ref:
+      group: ui.k8s.appscode.com
+      kind: GenericResourceService
+  pages:
+  - name: Overview
+    info:
+      actions:
+        create: Never
+      displayMode: List
+      kind: Connection
+      query:
+        byLabel: offshoot
+        type: GraphQL
+      ref:
+        group: appcatalog.appscode.com
+        kind: AppBinding
+    insight:
+      actions:
+        create: Never
+      displayMode: Field
+      kind: Connection
+      query:
+        byLabel: view
+        type: GraphQL
+      ref:
+        group: ui.kubedb.com
+        kind: PostgresInsight
+    blocks:
+    # - actions:
+    #     create: Never
+    #   displayMode: List
+    #   kind: Connection
+    #   query:
+    #     raw: |
+    #       request:
+    #         target:
+    #           group: kubedb.com
+    #           kind: Postgres
+    #           name: {{ .metadata.name }}
+    #           namespace: {{ .metadata.namespace }}
+    #         dashboard:
+    #           title: "<xyz>"
+    #         panels: []
+    #     type: REST
+    #   ref:
+    #     group: ui.openviz.dev
+    #     kind: EmbeddedDashboard
+    - actions:
+        create: Never
+      displayMode: List
+      kind: Connection
+      query:
+        raw: |-
+          query Find($src: String!, $targetGroup: String!, $targetKind: String!) {
+            find(oid: $src) {
+              offshoot(group: "", kind: "Pod") {
+                refs: view(group: $targetGroup, kind: $targetKind) {
+                  namespace
+                  name
+                }
+              }
+            }
+          }
+        type: GraphQL
+      ref:
+        group: ui.k8s.appscode.com
+        kind: PodView
+  - name: Database Insights
+    info:
+      actions:
+        create: Never
+      displayMode: Field
+      kind: Connection
+      fieldPath: .spec.settings
+      view:
+        name: ui.kubedb.com-v1alpha1-postgressettings-settings
+      query:
+        byLabel: view
+        type: GraphQL
+      ref:
+        group: ui.kubedb.com
+        kind: PostgresSettings
+    insight:
+      actions:
+        create: Never
+      displayMode: Field
+      kind: Connection
+      query:
+        byLabel: view
+        type: GraphQL
+      ref:
+        group: ui.kubedb.com
+        kind: PostgresInsight
+    blocks:
+    - actions:
+        create: Never
+      displayMode: Field
+      kind: Connection
+      fieldPath: .spec.queries
+      view:
+        name: ui.kubedb.com-v1alpha1-postgresqueries-queries
+      query:
+        byLabel: view
+        type: GraphQL
+      ref:
+        group: ui.kubedb.com
+        kind: PostgresQueries
+    - actions:
+        create: Never
+      displayMode: Field
+      kind: Connection
+      fieldPath: .spec.databases
+      view:
+        name: ui.kubedb.com-v1alpha1-postgresschemaoverviews-databases
+      query:
+        byLabel: view
+        type: GraphQL
+      ref:
+        group: ui.kubedb.com
+        kind: PostgresSchemaOverview
+    # - actions:
+    #     create: Never
+    #   displayMode: List
+    #   kind: Connection
+    #   query:
+    #     raw: |
+    #       request:
+    #         target:
+    #           group: kubedb.com
+    #           kind: Postgres
+    #           name: {{ .metadata.name }}
+    #           namespace: {{ .metadata.namespace }}
+    #         dashboard:
+    #           title: "<xyz>"
+    #         panels: []
+    #     type: REST
+    #   ref:
+    #     group: ui.openviz.dev
+    #     kind: EmbeddedDashboard
+  - name: Backups
+    info:
+      actions:
+        create: IfEmpty
+      displayMode: Field
+      kind: Connection
+      query:
+        raw: |-
+          query Find($src: String!, $targetGroup: String!, $targetKind: String!) {
+            find(oid: $src) {
+              backup_via(group: "stash.appscode.com", kind: "BackupConfiguration") {
+                refs: view(group: $targetGroup, kind: $targetKind) {
+                  namespace
+                  name
+                }
+              }
+            }
+          }
+        type: GraphQL
+      ref:
+        group: ui.stash.appscode.com
+        kind: BackupOverview
+    blocks:
+    - actions:
+        create: Always
+      displayMode: List
+      kind: Connection
+      query:
+        raw: |-
+          query Find($src: String!, $targetGroup: String!, $targetKind: String!) {
+            find(oid: $src) {
+              backup_via(group: "stash.appscode.com", kind: "BackupConfiguration") {
+                refs: offshoot(group: $targetGroup, kind: $targetKind) {
+                  namespace
+                  name
+                }
+              }
+            }
+          }
+        type: GraphQL
+      ref:
+        group: stash.appscode.com
+        kind: BackupSession
+  - name: Operations
+    blocks:
+    - actions:
+        create: Always
+      displayMode: List
+      kind: Connection
+      query:
+        byLabel: offshoot
+        type: GraphQL
+      ref:
+        group: ops.kubedb.com
+        kind: PostgresOpsRequest
+  # - name: Alerts
+  #   blocks:
+  #   - kind: Block
+  #     name: kubedb.com-v1alpha2-monitoring
+  resource:
+    group: kubedb.com
+    kind: Postgres
+    name: postgreses
+    scope: Namespaced
+    version: v1alpha2
+  ui:
+    editor:
+      name: kubedbcom-postgres-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
+    options:
+      name: kubedbcom-postgres-editor-options
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0

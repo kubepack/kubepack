@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1
   name: monitoring.coreos.com-v1-servicemonitors
 spec:
-  columnDefinitions:
+  columns:
   - name: Name
     pathTemplate: '{{ .metadata.name }}'
     priority: 3

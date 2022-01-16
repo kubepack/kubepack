@@ -4,15 +4,15 @@ metadata:
   creationTimestamp: null
   labels:
     k8s.io/group: ui.kubedb.com
-    k8s.io/kind: MySQLOverview
-    k8s.io/resource: mysqloverviews
+    k8s.io/kind: MongoDBInsight
+    k8s.io/resource: mongodbinsights
     k8s.io/version: v1alpha1
-  name: ui.kubedb.com-v1alpha1-mysqloverviews
+  name: ui.kubedb.com-v1alpha1-mongodbinsights
 spec:
   resource:
     group: ui.kubedb.com
-    kind: MySQLOverview
-    name: mysqloverviews
+    kind: MongoDBInsight
+    name: mongodbinsights
     scope: Namespaced
     version: v1alpha1
   validation:
@@ -43,66 +43,74 @@ spec:
           type: object
         spec:
           properties:
-            abortedClients:
-              format: int32
-              type: integer
-            abortedConnections:
-              format: int32
-              type: integer
-            connectionsInfo:
+            connections:
               properties:
-                port:
+                activeConnections:
                   format: int32
                   type: integer
-                url:
-                  type: string
+                availableConnections:
+                  format: int32
+                  type: integer
+                currentConnections:
+                  format: int32
+                  type: integer
+                totalConnections:
+                  format: int32
+                  type: integer
               type: object
-            credentials:
+            dbStats:
               properties:
-                certificate:
-                  type: string
-                password:
-                  type: string
-                username:
-                  type: string
+                dataSize:
+                  format: int64
+                  type: integer
+                indexSize:
+                  format: int64
+                  type: integer
+                totalCollections:
+                  format: int32
+                  type: integer
+                totalIndexes:
+                  format: int32
+                  type: integer
               type: object
-            longQueryTimeThreshold:
-              format: double
-              type: number
-            maxConnections:
-              format: int32
-              type: integer
-            maxUsedConnections:
-              format: int32
-              type: integer
-            mode:
-              type: string
-            numberOfSlowQueries:
-              format: int32
-              type: integer
-            questions:
-              format: int32
-              type: integer
+            replicaSetInfo:
+              properties:
+                numberOfReplicas:
+                  format: int32
+                  type: integer
+              type: object
+            shardsInfo:
+              properties:
+                balancerEnabled:
+                  type: boolean
+                chunksBalanced:
+                  type: boolean
+                numberOfChunks:
+                  format: int32
+                  type: integer
+                numberOfShards:
+                  format: int32
+                  type: integer
+                replicasPerShards:
+                  format: int32
+                  type: integer
+              type: object
             status:
+              enum:
+              - Provisioning
+              - DataRestoring
+              - Ready
+              - Critical
+              - NotReady
+              - Halted
               type: string
-            threadsCached:
-              format: int32
-              type: integer
-            threadsConnected:
-              format: int32
-              type: integer
-            threadsCreated:
-              format: int32
-              type: integer
-            threadsRunning:
-              format: int32
-              type: integer
+            type:
+              enum:
+              - Standalone
+              - ReplicaSet
+              - Sharded
+              type: string
             version:
               type: string
-          required:
-          - mode
-          - questions
-          - status
-          - version
           type: object
       type: object

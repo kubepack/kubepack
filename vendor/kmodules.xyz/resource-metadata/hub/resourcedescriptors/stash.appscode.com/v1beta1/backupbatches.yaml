@@ -1943,6 +1943,11 @@ spec:
                       alias:
                         description: Alias represents the identifier of the backed up data in the repository. This will be used as `hostname` or will be used to generate the `hostname` for the restic repository.
                         type: string
+                      args:
+                        description: Args specifies a list of arguments to pass to the backup driver.
+                        items:
+                          type: string
+                        type: array
                       exclude:
                         description: Exclude specifies a list of patterns for the files to ignore during backup. Stash will ignore those files that match the specified patterns. Supported only for "Restic" driver
                         items:
@@ -2045,8 +2050,13 @@ spec:
               description: Repository refer to the Repository crd that holds backend information
               properties:
                 name:
-                  description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+                  description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
                   type: string
+                namespace:
+                  description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                  type: string
+              required:
+              - name
               type: object
             retentionPolicy:
               description: RetentionPolicy indicates the policy to follow to clean old backup snapshots

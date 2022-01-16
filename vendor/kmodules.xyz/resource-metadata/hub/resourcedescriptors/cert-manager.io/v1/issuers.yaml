@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1
   name: cert-manager.io-v1-issuers
 spec:
-  columnDefinitions:
+  columns:
   - name: Name
     pathTemplate: '{{ .metadata.name }}'
     priority: 3

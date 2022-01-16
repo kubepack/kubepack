@@ -1,0 +1,36 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceOutline
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ""
+    k8s.io/kind: ReplicationController
+    k8s.io/resource: replicationcontrollers
+    k8s.io/version: v1
+  name: core-v1-replicationcontrollers
+spec:
+  defaultLayout: true
+  pages:
+  - name: Basic
+    blocks:
+    - kind: Block
+      name: core-v1-replicationcontrollers
+  - name: Backups
+    blocks:
+    - kind: Block
+      name: stash.appscode.com-v1-backup
+  - name: Monitoring
+    blocks:
+    - kind: Block
+      name: monitoring.coreos.com-v1-monitoring
+  resource:
+    group: ""
+    kind: ReplicationController
+    name: replicationcontrollers
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: core-replicationcontroller-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0

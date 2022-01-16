@@ -4,15 +4,15 @@ metadata:
   creationTimestamp: null
   labels:
     k8s.io/group: ui.kubedb.com
-    k8s.io/kind: RedisOverview
-    k8s.io/resource: redisoverviews
+    k8s.io/kind: ElasticsearchInsight
+    k8s.io/resource: elasticsearchinsights
     k8s.io/version: v1alpha1
-  name: ui.kubedb.com-v1alpha1-redisoverviews
+  name: ui.kubedb.com-v1alpha1-elasticsearchinsights
 spec:
   resource:
     group: ui.kubedb.com
-    kind: RedisOverview
-    name: redisoverviews
+    kind: ElasticsearchInsight
+    name: elasticsearchinsights
     scope: Namespaced
     version: v1alpha1
   validation:
@@ -43,58 +43,51 @@ spec:
           type: object
         spec:
           properties:
-            blockedClients:
-              format: int64
+            activePrimaryShards:
+              format: int32
               type: integer
-            connectedClients:
-              format: int64
+            activeShards:
+              format: int32
               type: integer
-            evictedKeys:
-              format: int64
+            activeShardsPercentAsNumber:
+              format: int32
               type: integer
-            evictionPolicy:
+            clusterName:
               type: string
-            expiredKeys:
-              format: int64
+            clusterStatus:
+              type: string
+            delayedUnassignedShards:
+              format: int32
               type: integer
-            maxClients:
-              format: int64
+            initializingShards:
+              format: int32
               type: integer
             mode:
               type: string
-            receivedConnections:
-              format: int64
+            numberOfDataNodes:
+              format: int32
               type: integer
-            rejectedConnections:
-              format: int64
+            numberOfInFlightFetch:
+              format: int32
               type: integer
-            slowLogMaxLen:
-              format: int64
+            numberOfNodes:
+              format: int32
               type: integer
-            slowLogThresholdMicroSec:
-              format: int64
+            numberOfPendingTasks:
+              format: int32
+              type: integer
+            relocatingShards:
+              format: int32
               type: integer
             status:
               type: string
-            totalKeys:
-              format: int64
+            taskMaxWaitingInQueueMilliSeconds:
+              format: int32
+              type: integer
+            unassignedShards:
+              format: int32
               type: integer
             version:
               type: string
-          required:
-          - blockedClients
-          - connectedClients
-          - evictedKeys
-          - evictionPolicy
-          - expiredKeys
-          - maxClients
-          - mode
-          - receivedConnections
-          - rejectedConnections
-          - slowLogMaxLen
-          - slowLogThresholdMicroSec
-          - status
-          - totalKeys
-          - version
           type: object
       type: object

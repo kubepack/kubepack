@@ -3,7 +3,7 @@ kind: ResourceClass
 metadata:
   creationTimestamp: null
   name: Storage
-  namespace: console
+  namespace: cluster
 spec:
   entries:
   - name: Persistent Volume Claims

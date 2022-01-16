@@ -9,7 +9,7 @@ metadata:
     k8s.io/version: v1alpha1
   name: ops.kubedb.com-v1alpha1-elasticsearchopsrequests
 spec:
-  columnDefinitions:
+  columns:
   - name: Name
     pathTemplate: '{{ .metadata.name }}'
     priority: 3
@@ -541,6 +541,12 @@ spec:
               type: object
             volumeExpansion:
               properties:
+                mode:
+                  default: Online
+                  enum:
+                  - Offline
+                  - Online
+                  type: string
                 node:
                   anyOf:
                   - type: integer

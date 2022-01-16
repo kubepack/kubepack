@@ -3,7 +3,7 @@ kind: ResourceClass
 metadata:
   creationTimestamp: null
   name: Monitoring
-  namespace: console
+  namespace: cluster
 spec:
   apiGroup: monitoring.coreos.com
   entries:

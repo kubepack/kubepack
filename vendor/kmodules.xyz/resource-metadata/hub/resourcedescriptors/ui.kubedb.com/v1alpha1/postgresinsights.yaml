@@ -4,15 +4,15 @@ metadata:
   creationTimestamp: null
   labels:
     k8s.io/group: ui.kubedb.com
-    k8s.io/kind: ElasticsearchOverview
-    k8s.io/resource: elasticsearchoverviews
+    k8s.io/kind: PostgresInsight
+    k8s.io/resource: postgresinsights
     k8s.io/version: v1alpha1
-  name: ui.kubedb.com-v1alpha1-elasticsearchoverviews
+  name: ui.kubedb.com-v1alpha1-postgresinsights
 spec:
   resource:
     group: ui.kubedb.com
-    kind: ElasticsearchOverview
-    name: elasticsearchoverviews
+    kind: PostgresInsight
+    name: postgresinsights
     scope: Namespaced
     version: v1alpha1
   validation:
@@ -43,88 +43,53 @@ spec:
           type: object
         spec:
           properties:
-            clusterHealth:
-              properties:
-                activePrimaryShards:
-                  format: int32
-                  type: integer
-                activeShards:
-                  format: int32
-                  type: integer
-                activeShardsPercentAsNumber:
-                  format: int32
-                  type: integer
-                clusterName:
-                  type: string
-                delayedUnassignedShards:
-                  format: int32
-                  type: integer
-                initializingShards:
-                  format: int32
-                  type: integer
-                numberOfDataNodes:
-                  format: int32
-                  type: integer
-                numberOfInFlightFetch:
-                  format: int32
-                  type: integer
-                numberOfNodes:
-                  format: int32
-                  type: integer
-                numberOfPendingTasks:
-                  format: int32
-                  type: integer
-                relocatingShards:
-                  format: int32
-                  type: integer
-                status:
-                  type: string
-                taskMaxWaitingInQueueMillis:
-                  format: int32
-                  type: integer
-                unassignedShards:
-                  format: int32
-                  type: integer
-              required:
-              - activePrimaryShards
-              - activeShards
-              - activeShardsPercentAsNumber
-              - clusterName
-              - delayedUnassignedShards
-              - initializingShards
-              - numberOfDataNodes
-              - numberOfInFlightFetch
-              - numberOfNodes
-              - numberOfPendingTasks
-              - relocatingShards
-              - status
-              - taskMaxWaitingInQueueMillis
-              - unassignedShards
+            backupInfo:
               type: object
             connectionInfo:
               properties:
-                port:
-                  format: int32
+                activeConnections:
+                  format: int64
                   type: integer
-                url:
-                  type: string
+                maxConnections:
+                  format: int64
+                  type: integer
               type: object
-            credentials:
-              properties:
-                certificate:
-                  type: string
-                password:
-                  type: string
-                username:
-                  type: string
-              type: object
+            connectionURL:
+              type: string
             mode:
               type: string
+            replicationStatus:
+              items:
+                properties:
+                  applicationName:
+                    type: string
+                  flushLag:
+                    format: int64
+                    type: integer
+                  replayLag:
+                    format: int64
+                    type: integer
+                  state:
+                    type: string
+                  writeLag:
+                    format: int64
+                    type: integer
+                type: object
+              type: array
             status:
               type: string
+            vacuumInfo:
+              properties:
+                activeVacuumProcess:
+                  format: int64
+                  type: integer
+                autoVacuum:
+                  type: string
+              type: object
             version:
               type: string
           required:
+          - connectionURL
           - mode
           - status
           - version
