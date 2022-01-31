@@ -343,7 +343,7 @@ func (x *Helm3CommandPrinter) Do() error {
 	}
 
 	/*
-		$ helm install voyager-operator appscode/voyager --version v12.0.0-rc.1 \
+		$ helm upgrade --install voyager-operator appscode/voyager --version v12.0.0-rc.1 \
 		  --namespace kube-system \
 		  --set cloudProvider=$provider
 	*/
@@ -352,12 +352,12 @@ func (x *Helm3CommandPrinter) Do() error {
 		return err
 	}
 	if x.Version != "" {
-		_, err = fmt.Fprintf(&buf, "helm install %s %s/%s --version %s \\\n", x.ReleaseName, reponame, x.ChartRef.Name, x.Version)
+		_, err = fmt.Fprintf(&buf, "helm upgrade --install %s %s/%s --version %s \\\n", x.ReleaseName, reponame, x.ChartRef.Name, x.Version)
 		if err != nil {
 			return err
 		}
 	} else {
-		_, err = fmt.Fprintf(&buf, "helm install %s %s/%s \\\n", x.ReleaseName, reponame, x.ChartRef.Name)
+		_, err = fmt.Fprintf(&buf, "helm upgrade --install %s %s/%s \\\n", x.ReleaseName, reponame, x.ChartRef.Name)
 		if err != nil {
 			return err
 		}
