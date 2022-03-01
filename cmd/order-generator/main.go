@@ -28,9 +28,7 @@ import (
 	"sigs.k8s.io/yaml"
 )
 
-var (
-	file = "artifacts/kubedb-community/bundleview.yaml"
-)
+var file = "artifacts/kubedb-community/bundleview.yaml"
 
 func main() {
 	flag.StringVar(&file, "file", file, "Path to BundleView file")
@@ -55,11 +53,11 @@ func main() {
 	if err != nil {
 		klog.Fatal(err)
 	}
-	err = os.MkdirAll("artifacts/"+bv.Name, 0755)
+	err = os.MkdirAll("artifacts/"+bv.Name, 0o755)
 	if err != nil {
 		klog.Fatal(err)
 	}
-	err = ioutil.WriteFile("artifacts/"+bv.Name+"/order.yaml", data, 0644)
+	err = ioutil.WriteFile("artifacts/"+bv.Name+"/order.yaml", data, 0o644)
 	if err != nil {
 		klog.Fatal(err)
 	}

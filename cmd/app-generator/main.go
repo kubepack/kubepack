@@ -109,11 +109,11 @@ func main() {
 	if err != nil {
 		klog.Fatal(err)
 	}
-	err = os.MkdirAll("artifacts/"+name, 0755)
+	err = os.MkdirAll("artifacts/"+name, 0o755)
 	if err != nil {
 		klog.Fatal(err)
 	}
-	err = ioutil.WriteFile("artifacts/"+name+"/application.yaml", data, 0644)
+	err = ioutil.WriteFile("artifacts/"+name+"/application.yaml", data, 0o644)
 	if err != nil {
 		klog.Fatal(err)
 	}

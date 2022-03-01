@@ -161,7 +161,7 @@ func CreateBundleViewForChart(reg *repo.Registry, ref *v1alpha1.ChartRepoRef) (*
 				Version:           ref.Version,
 			},
 			DisplayName: flect.Titleize(flect.Humanize(ref.Name)),
-			//Features:    nil,
+			// Features:    nil,
 			Packages: []v1alpha1.PackageCard{
 				{
 					Chart: &v1alpha1.ChartCard{

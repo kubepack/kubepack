@@ -31,9 +31,7 @@ import (
 	"sigs.k8s.io/yaml"
 )
 
-var (
-	file = "artifacts/kubedb-community/order.yaml"
-)
+var file = "artifacts/kubedb-community/order.yaml"
 
 func main() {
 	flag.StringVar(&file, "file", file, "Path to Order file")

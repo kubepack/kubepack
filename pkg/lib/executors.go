@@ -271,9 +271,9 @@ func (x *CRDReadinessChecker) Do() error {
 					Version: crd.Version,
 					Names: crdv1beta1.CustomResourceDefinitionNames{
 						Plural: crd.Resource,
-						//Kind:   crd.Kind,
+						// Kind:   crd.Kind,
 					},
-					//Scope: crdv1beta1.ResourceScope(string(crd.Scope)),
+					// Scope: crdv1beta1.ResourceScope(string(crd.Scope)),
 					Versions: []crdv1beta1.CustomResourceDefinitionVersion{
 						{
 							Name: crd.Version,

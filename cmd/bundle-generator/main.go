@@ -33,17 +33,19 @@ import (
 	"sigs.k8s.io/yaml"
 )
 
-var name = ""
-var displayName = ""
-var namespace = "kube-system"
-var charts []string
-var bundles []string
+var (
+	name        = ""
+	displayName = ""
+	namespace   = "kube-system"
+	charts      []string
+	bundles     []string
+)
 
-//var name = "csi-vault-bundle"
-//var displayName = ""
-//var namespace = "kube-system"
-//var charts = []string{"https://charts.appscode.com/stable/@csi-vault@v0.3.0"}
-//var bundles []string
+// var name = "csi-vault-bundle"
+// var displayName = ""
+// var namespace = "kube-system"
+// var charts = []string{"https://charts.appscode.com/stable/@csi-vault@v0.3.0"}
+// var bundles []string
 
 func main() {
 	flag.StringVar(&name, "name", name, "Name of bundle, example: stash-bundle")
@@ -158,11 +160,11 @@ func main() {
 	if err != nil {
 		klog.Fatal(err)
 	}
-	err = os.MkdirAll("testdata/charts/"+name+"/templates", 0755)
+	err = os.MkdirAll("testdata/charts/"+name+"/templates", 0o755)
 	if err != nil {
 		klog.Fatal(err)
 	}
-	err = ioutil.WriteFile("testdata/charts/"+name+"/templates/bundle.yaml", data, 0644)
+	err = ioutil.WriteFile("testdata/charts/"+name+"/templates/bundle.yaml", data, 0o644)
 	if err != nil {
 		klog.Fatal(err)
 	}

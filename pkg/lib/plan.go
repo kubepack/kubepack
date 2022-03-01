@@ -24,7 +24,7 @@ import (
 func ComparePlans(reg *repo.Registry, url string, names []string, version string) (v1alpha1.FeatureTable, error) {
 	var table v1alpha1.FeatureTable
 
-	var ids = map[string]int{} // trait -> idx
+	ids := map[string]int{} // trait -> idx
 	idx := 0
 
 	for bundleIdx, bundleName := range names {

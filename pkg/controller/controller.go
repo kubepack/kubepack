@@ -102,7 +102,7 @@ func (c *KubepackController) RunInformers(stopCh <-chan struct{}) {
 		}
 	}
 
-	//For Application
+	// For Application
 	go c.appQueue.Run(stopCh)
 
 	<-stopCh

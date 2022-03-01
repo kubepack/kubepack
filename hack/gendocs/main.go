@@ -80,7 +80,7 @@ func main() {
 	if err != nil {
 		klog.Fatalln(err)
 	}
-	err = os.MkdirAll(dir, 0755)
+	err = os.MkdirAll(dir, 0o755)
 	if err != nil {
 		klog.Fatalln(err)
 	}
@@ -115,7 +115,7 @@ func main() {
 	}
 
 	index := filepath.Join(dir, "_index.md")
-	f, err := os.OpenFile(index, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	f, err := os.OpenFile(index, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0o644)
 	if err != nil {
 		klog.Fatalln(err)
 	}

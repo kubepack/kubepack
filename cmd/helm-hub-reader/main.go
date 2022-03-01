@@ -31,7 +31,7 @@ import (
 )
 
 func main() {
-	var repos = map[string]string{}
+	repos := map[string]string{}
 
 	http.DefaultClient.Transport = httpcache.NewMemoryCacheTransport()
 
@@ -56,11 +56,11 @@ func main() {
 							klog.Fatalln(err)
 						}
 						resp.Body.Close()
-						err = os.MkdirAll("artifacts/hub", 0755)
+						err = os.MkdirAll("artifacts/hub", 0o755)
 						if err != nil {
 							klog.Fatalln(err)
 						}
-						err = ioutil.WriteFile("artifacts/hub/"+repo.Name+"-index.yaml", data, 0644)
+						err = ioutil.WriteFile("artifacts/hub/"+repo.Name+"-index.yaml", data, 0o644)
 						if err != nil {
 							klog.Fatalln(err)
 						}
