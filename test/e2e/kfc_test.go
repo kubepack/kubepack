@@ -24,9 +24,7 @@ import (
 )
 
 var _ = Describe("E2E Tests", func() {
-	var (
-		f *framework.Invocation
-	)
+	var f *framework.Invocation
 	BeforeEach(func() {
 		f = root.Invoke()
 	})

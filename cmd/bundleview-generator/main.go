@@ -50,7 +50,7 @@ func main() {
 		klog.Fatal(err)
 	}
 
-	err = os.MkdirAll("artifacts/"+name, 0755)
+	err = os.MkdirAll("artifacts/"+name, 0o755)
 	if err != nil {
 		klog.Fatal(err)
 	}
@@ -60,7 +60,7 @@ func main() {
 		if err != nil {
 			klog.Fatal(err)
 		}
-		err = ioutil.WriteFile("artifacts/"+name+"/bundleview.yaml", data, 0644)
+		err = ioutil.WriteFile("artifacts/"+name+"/bundleview.yaml", data, 0o644)
 		if err != nil {
 			klog.Fatal(err)
 		}
@@ -71,7 +71,7 @@ func main() {
 		if err != nil {
 			klog.Fatal(err)
 		}
-		err = ioutil.WriteFile("artifacts/"+name+"/bundleview.json", data, 0644)
+		err = ioutil.WriteFile("artifacts/"+name+"/bundleview.json", data, 0o644)
 		if err != nil {
 			klog.Fatal(err)
 		}

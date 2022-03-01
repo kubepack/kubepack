@@ -30,9 +30,9 @@ import (
 )
 
 var (
-	//url     = "https://charts.appscode.com/stable/"
-	//name    = "kubedb"
-	//version = "v0.13.0-rc.0"
+	// url     = "https://charts.appscode.com/stable/"
+	// name    = "kubedb"
+	// version = "v0.13.0-rc.0"
 
 	url     = "https://kubernetes-charts.storage.googleapis.com"
 	name    = "wordpress"
