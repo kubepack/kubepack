@@ -9,11 +9,6 @@ metadata:
     k8s.io/version: v1alpha2
   name: cert-manager.io-v1alpha2-certificates
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/cert-manager.io/certificates.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/cert-manager.io/certificates.png
-    type: image/png
   resource:
     group: cert-manager.io
     kind: Certificate

@@ -9,22 +9,12 @@ metadata:
     k8s.io/version: v1alpha1
   name: catalog.kubedb.com-v1alpha1-mysqlversions
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/mysqlversions.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/mysqlversions.png
-    type: image/png
   resource:
     group: catalog.kubedb.com
     kind: MySQLVersion
     name: mysqlversions
     scope: Cluster
     version: v1alpha1
-  ui:
-    editor:
-      name: catalogkubedbcom-mysqlversion-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       properties:

@@ -9,22 +9,12 @@ metadata:
     k8s.io/version: v1
   name: networking.k8s.io-v1-ingresses
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/networking.k8s.io/ingresses.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/networking.k8s.io/ingresses.png
-    type: image/png
   resource:
     group: networking.k8s.io
     kind: Ingress
     name: ingresses
     scope: Namespaced
     version: v1
-  ui:
-    editor:
-      name: networkingk8sio-ingress-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: Ingress is a collection of rules that allow inbound connections to reach the endpoints defined by a backend. An Ingress can be configured to give services externally-reachable urls, load balance traffic, terminate SSL, offer name based virtual hosting etc.

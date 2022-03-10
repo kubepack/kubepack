@@ -9,11 +9,6 @@ metadata:
     k8s.io/version: v1beta1
   name: apiregistration.k8s.io-v1beta1-apiservices
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/apiregistration.k8s.io/apiservices.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/apiregistration.k8s.io/apiservices.png
-    type: image/png
   resource:
     group: apiregistration.k8s.io
     kind: APIService

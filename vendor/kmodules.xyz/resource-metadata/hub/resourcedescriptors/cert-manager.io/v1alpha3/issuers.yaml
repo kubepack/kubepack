@@ -9,11 +9,6 @@ metadata:
     k8s.io/version: v1alpha3
   name: cert-manager.io-v1alpha3-issuers
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/cert-manager.io/issuers.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/cert-manager.io/issuers.png
-    type: image/png
   resource:
     group: cert-manager.io
     kind: Issuer

@@ -9,11 +9,6 @@ metadata:
     k8s.io/version: v1beta1
   name: admissionregistration.k8s.io-v1beta1-validatingwebhookconfigurations
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/admissionregistration.k8s.io/validatingwebhookconfigurations.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/admissionregistration.k8s.io/validatingwebhookconfigurations.png
-    type: image/png
   resource:
     group: admissionregistration.k8s.io
     kind: ValidatingWebhookConfiguration

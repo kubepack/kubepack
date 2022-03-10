@@ -15,11 +15,6 @@ spec:
     name: evictions
     scope: Namespaced
     version: v1beta1
-  ui:
-    editor:
-      name: policy-eviction-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: Eviction evicts a pod from its node subject to certain policies and safety constraints. This is a subresource of Pod.  A request to cause such an eviction is created by POSTing to .../pods/<pod name>/evictions.

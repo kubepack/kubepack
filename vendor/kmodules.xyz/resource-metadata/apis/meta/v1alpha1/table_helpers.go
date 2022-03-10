@@ -38,9 +38,10 @@ func (in *TableCell) DeepCopy() *TableCell {
 
 func Convert_ResourceColumnDefinition_To_ResourceColumn(def ResourceColumnDefinition) ResourceColumn {
 	col := ResourceColumn{
-		Name:   def.Name,
-		Type:   def.Type,
-		Format: def.Format,
+		Name:     def.Name,
+		Type:     def.Type,
+		Format:   def.Format,
+		Priority: def.Priority,
 	}
 	if def.Sort != nil && def.Sort.Enable {
 		col.Sort = &SortHeader{
@@ -49,17 +50,20 @@ func Convert_ResourceColumnDefinition_To_ResourceColumn(def ResourceColumnDefini
 			Format: def.Sort.Format,
 		}
 	}
-	if def.Link != nil && def.Link.Enable {
+	if def.Link != nil && def.Link.Template != "" {
 		col.Link = true
 	}
-	if def.Icon != nil && def.Icon.Enable {
+	if def.Tooltip != nil && def.Tooltip.Template != "" {
+		col.Tooltip = true
+	}
+	if def.Icon != nil && def.Icon.Template != "" {
 		col.Icon = true
 	}
 	if def.Shape != "" {
 		col.Shape = def.Shape
 	}
-	if def.Color != nil && def.Color.Color != "" {
-		col.Color = def.Color.Color
+	if def.TextAlign != "" {
+		col.TextAlign = def.TextAlign
 	}
 	return col
 }

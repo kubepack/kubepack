@@ -9,11 +9,6 @@ metadata:
     k8s.io/version: v1alpha3
   name: acme.cert-manager.io-v1alpha3-orders
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/acme.cert-manager.io/orders.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/acme.cert-manager.io/orders.png
-    type: image/png
   resource:
     group: acme.cert-manager.io
     kind: Order

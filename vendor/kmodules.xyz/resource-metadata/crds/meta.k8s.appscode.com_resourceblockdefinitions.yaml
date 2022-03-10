@@ -72,6 +72,8 @@ spec:
                           - restore_into
                           - scaled_by
                           - view
+                          - cert_issuer
+                          - policy
                           type: string
                         raw:
                           type: string
@@ -105,12 +107,9 @@ spec:
                             properties:
                               color:
                                 properties:
-                                  color:
-                                    enum:
-                                    - Foreground
-                                    - Background
-                                    type: string
                                   template:
+                                    description: 'Available color codes: success,danger,warning,info,
+                                      link, white, light, dark, black see https://bulma.io/documentation/elements/tag/#colors'
                                     type: string
                                 type: object
                               description:
@@ -126,15 +125,11 @@ spec:
                                 type: string
                               icon:
                                 properties:
-                                  enable:
-                                    type: boolean
                                   template:
                                     type: string
                                 type: object
                               link:
                                 properties:
-                                  enable:
-                                    type: boolean
                                   template:
                                     type: string
                                 type: object
@@ -187,6 +182,13 @@ spec:
                                 required:
                                 - type
                                 type: object
+                              textAlign:
+                                type: string
+                              tooltip:
+                                properties:
+                                  template:
+                                    type: string
+                                type: object
                               type:
                                 description: type is an OpenAPI type definition for
                                   this column. See https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types
@@ -202,12 +204,9 @@ spec:
                           type: string
                       type: object
                   required:
-                  - actions
-                  - displayMode
                   - kind
                   - query
                   - ref
-                  - view
                   type: object
                 type: array
               resource:
@@ -239,7 +238,6 @@ spec:
                 type: object
             required:
             - blocks
-            - resource
             type: object
         type: object
     served: true

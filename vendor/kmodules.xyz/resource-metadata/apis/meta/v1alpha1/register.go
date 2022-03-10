@@ -59,10 +59,15 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 		&ResourceOutlineList{},
 		&ResourceLayout{},
 		&ResourceLayoutList{},
+		&ResourceEditor{},
+		&ResourceEditorList{},
+		&Menu{},
+		&MenuList{},
+		&MenuOutline{},
+		&MenuOutlineList{},
 		&Render{},
 		&RenderAPI{},
-		&RenderPage{},
-		&RenderSection{},
+		&RenderMenu{},
 		&ResourceGraph{},
 	)
 

@@ -9,51 +9,6 @@ metadata:
     k8s.io/version: v1beta1
   name: stash.appscode.com-v1beta1-restoresessions
 spec:
-  columns:
-  - name: Name
-    pathTemplate: '{{ .metadata.name }}'
-    priority: 3
-    type: string
-  - name: Namespace
-    pathTemplate: '{{ .metadata.namespace }}'
-    priority: 3
-    type: string
-  - name: Labels
-    pathTemplate: '{{ .metadata.labels | toRawJson }}'
-    priority: 3
-    type: object
-  - name: Annotations
-    pathTemplate: '{{ .metadata.annotations | toRawJson }}'
-    priority: 1
-    type: object
-  - name: Driver
-    pathTemplate: '{{ .spec.driver }}'
-    priority: 3
-    type: string
-  - name: Repository
-    pathTemplate: '{{ .spec.repository.name }}'
-    priority: 3
-    type: string
-  - name: Target
-    pathTemplate: '{{ .spec.target.ref.kind }}/{{ .spec.target.ref.name }}'
-    priority: 3
-    type: string
-  - name: Task
-    pathTemplate: '{{ .spec.task.name }}'
-    priority: 3
-    type: string
-  - name: Phase
-    pathTemplate: '{{ .status.phase }}'
-    priority: 3
-    type: string
-  - name: Duration
-    pathTemplate: '{{ .status.sessionDuration }}'
-    priority: 3
-    type: string
-  - name: Age
-    pathTemplate: '{{ .metadata.creationTimestamp }}'
-    priority: 3
-    type: date
   connections:
   - labels:
     - offshoot
@@ -127,22 +82,12 @@ spec:
       apiVersion: v1
       kind: PersistentVolumeClaim
     type: MatchRef
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/stash.appscode.com/restoresessions.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/stash.appscode.com/restoresessions.png
-    type: image/png
   resource:
     group: stash.appscode.com
     kind: RestoreSession
     name: restoresessions
     scope: Namespaced
     version: v1beta1
-  ui:
-    editor:
-      name: stashappscodecom-restoresession-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       properties:

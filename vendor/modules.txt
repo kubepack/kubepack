@@ -911,11 +911,12 @@ gomodules.xyz/sets
 # gomodules.xyz/wait v0.2.0
 ## explicit; go 1.14
 gomodules.xyz/wait
-# gomodules.xyz/x v0.0.10
+# gomodules.xyz/x v0.0.13
 ## explicit; go 1.17
 gomodules.xyz/x/analytics
 gomodules.xyz/x/crypto/rand
 gomodules.xyz/x/env
+gomodules.xyz/x/ioutil
 gomodules.xyz/x/strings
 gomodules.xyz/x/term
 gomodules.xyz/x/version
@@ -1692,7 +1693,7 @@ kmodules.xyz/apiversion
 # kmodules.xyz/apply v0.0.0-20210503080849-eb226c295465
 ## explicit; go 1.15
 kmodules.xyz/apply
-# kmodules.xyz/client-go v0.0.0-20220113110622-dbc40d36b6f8
+# kmodules.xyz/client-go v0.0.0-20220308080632-2543b61b64fd
 ## explicit; go 1.17
 kmodules.xyz/client-go
 kmodules.xyz/client-go/admissionregistration
@@ -1727,15 +1728,13 @@ kmodules.xyz/custom-resources/apis/metrics/v1alpha1
 kmodules.xyz/custom-resources/client/clientset/versioned/scheme
 kmodules.xyz/custom-resources/client/clientset/versioned/typed/appcatalog/v1alpha1
 kmodules.xyz/custom-resources/crds
-# kmodules.xyz/resource-metadata v0.8.2-0.20220116072424-4ed4f0c4b8b5
+# kmodules.xyz/resource-metadata v0.10.0
 ## explicit; go 1.17
 kmodules.xyz/resource-metadata/apis/meta
 kmodules.xyz/resource-metadata/apis/meta/v1alpha1
 kmodules.xyz/resource-metadata/crds
 kmodules.xyz/resource-metadata/hub
-kmodules.xyz/resource-metadata/hub/resourceclasses
 kmodules.xyz/resource-metadata/hub/resourcedescriptors
-kmodules.xyz/resource-metadata/hub/resourceoutlines
 # kmodules.xyz/webhook-runtime v0.0.0-20210928141616-7f73c2ab318a
 ## explicit; go 1.12
 kmodules.xyz/webhook-runtime/admission/v1beta1

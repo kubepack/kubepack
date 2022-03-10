@@ -9,11 +9,6 @@ metadata:
     k8s.io/version: v1beta1
   name: scheduling.k8s.io-v1beta1-priorityclasses
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/scheduling.k8s.io/priorityclasses.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/scheduling.k8s.io/priorityclasses.png
-    type: image/png
   resource:
     group: scheduling.k8s.io
     kind: PriorityClass

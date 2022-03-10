@@ -15,11 +15,6 @@ spec:
     name: tokenreviews
     scope: Cluster
     version: v1
-  ui:
-    editor:
-      name: authenticationk8sio-tokenreview-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: 'TokenReview attempts to authenticate a token to a known user. Note: TokenReview requests may be cached by the webhook token authenticator plugin in the kube-apiserver.'

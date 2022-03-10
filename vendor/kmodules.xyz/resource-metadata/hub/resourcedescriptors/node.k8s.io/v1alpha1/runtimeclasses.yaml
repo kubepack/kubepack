@@ -9,11 +9,6 @@ metadata:
     k8s.io/version: v1alpha1
   name: node.k8s.io-v1alpha1-runtimeclasses
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/node.k8s.io/runtimeclasses.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/node.k8s.io/runtimeclasses.png
-    type: image/png
   resource:
     group: node.k8s.io
     kind: RuntimeClass

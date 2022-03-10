@@ -15,13 +15,6 @@ spec:
     name: applications
     scope: Namespaced
     version: v1beta1
-  ui:
-    editor:
-      name: appk8sio-application-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
-    instanceLabelPaths:
-    - spec.selector.matchLabels
   validation:
     openAPIV3Schema:
       description: Application is the Schema for the applications API

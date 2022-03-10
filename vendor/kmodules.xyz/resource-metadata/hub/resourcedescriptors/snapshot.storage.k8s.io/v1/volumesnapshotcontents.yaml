@@ -15,11 +15,6 @@ spec:
     name: volumesnapshotcontents
     scope: Cluster
     version: v1
-  ui:
-    editor:
-      name: snapshotstoragek8sio-volumesnapshotcontent-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: VolumeSnapshotContent represents the actual "on-disk" snapshot object in the underlying storage system
