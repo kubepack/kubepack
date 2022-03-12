@@ -53,6 +53,9 @@ spec:
                       format: int32
                       type: integer
                     type: array
+                required:
+                - name
+                - size
                 type: object
               type: array
           required:

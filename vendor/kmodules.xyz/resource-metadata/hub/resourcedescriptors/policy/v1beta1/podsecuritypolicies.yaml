@@ -9,75 +9,12 @@ metadata:
     k8s.io/version: v1beta1
   name: policy-v1beta1-podsecuritypolicies
 spec:
-  columns:
-  - name: Name
-    pathTemplate: '{{ .metadata.name }}'
-    priority: 3
-    type: string
-  - name: Namespace
-    pathTemplate: '{{ .metadata.namespace }}'
-    priority: 3
-    type: string
-  - name: Labels
-    pathTemplate: '{{ .metadata.labels | toRawJson }}'
-    priority: 3
-    type: object
-  - name: Annotations
-    pathTemplate: '{{ .metadata.annotations | toRawJson }}'
-    priority: 1
-    type: object
-  - name: PRIV
-    pathTemplate: '{{ .spec.allowPrivilegeEscalation }}'
-    priority: 3
-    type: string
-  - name: CAPS
-    pathTemplate: '{{ .spec.allowedCapabilities }}'
-    priority: 3
-    type: string
-  - name: SELINUX
-    pathTemplate: '{{ .spec.seLinux.rule }}'
-    priority: 3
-    type: string
-  - name: RUNASUSER
-    pathTemplate: '{{ .spec.runAsUser.rule }}'
-    priority: 3
-    type: string
-  - name: FSGROUP
-    pathTemplate: '{{ .spec.fsGroup.rule }}'
-    priority: 3
-    type: string
-  - name: SUPGROUP
-    pathTemplate: '{{ .spec.supplementalGroups.rule }}'
-    priority: 3
-    type: string
-  - name: READONLYROOTFS
-    pathTemplate: '{{ .spec.readOnlyRootFilesystem }}'
-    priority: 3
-    type: string
-  - name: VOLUMES
-    pathTemplate: '{{ .spec.volumes }}'
-    priority: 3
-    type: string
-  - name: Age
-    pathTemplate: '{{ .metadata.creationTimestamp }}'
-    priority: 3
-    type: date
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/policy/podsecuritypolicies.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/policy/podsecuritypolicies.png
-    type: image/png
   resource:
     group: policy
     kind: PodSecurityPolicy
     name: podsecuritypolicies
     scope: Cluster
     version: v1beta1
-  ui:
-    editor:
-      name: policy-podsecuritypolicy-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: PodSecurityPolicy governs the ability to make requests that affect the Security Context that will be applied to a pod and container. Deprecated in 1.21.

@@ -9,22 +9,12 @@ metadata:
     k8s.io/version: v1
   name: admissionregistration.k8s.io-v1-mutatingwebhookconfigurations
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/admissionregistration.k8s.io/mutatingwebhookconfigurations.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/admissionregistration.k8s.io/mutatingwebhookconfigurations.png
-    type: image/png
   resource:
     group: admissionregistration.k8s.io
     kind: MutatingWebhookConfiguration
     name: mutatingwebhookconfigurations
     scope: Cluster
     version: v1
-  ui:
-    editor:
-      name: admissionregistrationk8sio-mutatingwebhookconfiguration-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: MutatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and may change the object.

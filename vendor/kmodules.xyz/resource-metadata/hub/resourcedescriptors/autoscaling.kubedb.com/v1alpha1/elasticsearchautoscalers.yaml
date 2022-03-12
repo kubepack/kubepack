@@ -15,11 +15,6 @@ spec:
     name: elasticsearchautoscalers
     scope: Namespaced
     version: v1alpha1
-  ui:
-    editor:
-      name: autoscalingkubedbcom-elasticsearchautoscaler-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       properties:
@@ -205,6 +200,11 @@ spec:
               properties:
                 node:
                   properties:
+                    expansionMode:
+                      enum:
+                      - Offline
+                      - Online
+                      type: string
                     scalingThreshold:
                       format: int32
                       type: integer
@@ -218,6 +218,11 @@ spec:
                   properties:
                     data:
                       properties:
+                        expansionMode:
+                          enum:
+                          - Offline
+                          - Online
+                          type: string
                         scalingThreshold:
                           format: int32
                           type: integer
@@ -229,6 +234,11 @@ spec:
                       type: object
                     ingest:
                       properties:
+                        expansionMode:
+                          enum:
+                          - Offline
+                          - Online
+                          type: string
                         scalingThreshold:
                           format: int32
                           type: integer
@@ -240,6 +250,11 @@ spec:
                       type: object
                     master:
                       properties:
+                        expansionMode:
+                          enum:
+                          - Offline
+                          - Online
+                          type: string
                         scalingThreshold:
                           format: int32
                           type: integer

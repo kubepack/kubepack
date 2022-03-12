@@ -15,8 +15,3 @@ spec:
     name: resourcedescriptors
     scope: Namespaced
     version: v1alpha1
-  ui:
-    editor:
-      name: metaappscodecom-resourcedescriptor-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0

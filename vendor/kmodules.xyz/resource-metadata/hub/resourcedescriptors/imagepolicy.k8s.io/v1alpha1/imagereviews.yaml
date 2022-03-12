@@ -15,11 +15,6 @@ spec:
     name: imagereviews
     scope: Namespaced
     version: v1alpha1
-  ui:
-    editor:
-      name: imagepolicyk8sio-imagereview-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: ImageReview checks if the set of images in a pod are allowed.

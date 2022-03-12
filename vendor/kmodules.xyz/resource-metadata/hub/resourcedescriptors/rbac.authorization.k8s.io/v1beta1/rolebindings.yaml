@@ -9,11 +9,6 @@ metadata:
     k8s.io/version: v1beta1
   name: rbac.authorization.k8s.io-v1beta1-rolebindings
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/rbac.authorization.k8s.io/rolebindings.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/rbac.authorization.k8s.io/rolebindings.png
-    type: image/png
   resource:
     group: rbac.authorization.k8s.io
     kind: RoleBinding

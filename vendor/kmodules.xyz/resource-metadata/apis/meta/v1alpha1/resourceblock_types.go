@@ -44,7 +44,7 @@ type ResourceBlockDefinition struct {
 }
 
 type ResourceBlockDefinitionSpec struct {
-	Resource kmapi.ResourceID   `json:"resource"`
+	Resource *kmapi.ResourceID  `json:"resource,omitempty"`
 	Blocks   []PageBlockOutline `json:"blocks"`
 }
 

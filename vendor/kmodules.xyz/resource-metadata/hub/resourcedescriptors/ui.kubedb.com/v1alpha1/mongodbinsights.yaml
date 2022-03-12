@@ -57,6 +57,11 @@ spec:
                 totalConnections:
                   format: int32
                   type: integer
+              required:
+              - activeConnections
+              - availableConnections
+              - currentConnections
+              - totalConnections
               type: object
             dbStats:
               properties:
@@ -72,12 +77,19 @@ spec:
                 totalIndexes:
                   format: int32
                   type: integer
+              required:
+              - dataSize
+              - indexSize
+              - totalCollections
+              - totalIndexes
               type: object
             replicaSetInfo:
               properties:
                 numberOfReplicas:
                   format: int32
                   type: integer
+              required:
+              - numberOfReplicas
               type: object
             shardsInfo:
               properties:
@@ -94,6 +106,10 @@ spec:
                 replicasPerShards:
                   format: int32
                   type: integer
+              required:
+              - numberOfChunks
+              - numberOfShards
+              - replicasPerShards
               type: object
             status:
               enum:
@@ -112,5 +128,9 @@ spec:
               type: string
             version:
               type: string
+          required:
+          - status
+          - type
+          - version
           type: object
       type: object

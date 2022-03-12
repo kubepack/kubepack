@@ -15,11 +15,6 @@ spec:
     name: replicasets
     scope: Namespaced
     version: v1beta1
-  ui:
-    editor:
-      name: extensions-replicaset-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: DEPRECATED - This group version of ReplicaSet is deprecated by apps/v1beta2/ReplicaSet. See the release notes for more information. ReplicaSet ensures that a specified number of pod replicas are running at any given time.

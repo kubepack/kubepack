@@ -9,22 +9,12 @@ metadata:
     k8s.io/version: v1alpha1
   name: catalog.kubevault.com-v1alpha1-vaultserverversions
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/catalog.kubevault.com/vaultserverversions.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/catalog.kubevault.com/vaultserverversions.png
-    type: image/png
   resource:
     group: catalog.kubevault.com
     kind: VaultServerVersion
     name: vaultserverversions
     scope: Cluster
     version: v1alpha1
-  ui:
-    editor:
-      name: catalogkubevaultcom-vaultserverversion-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       properties:

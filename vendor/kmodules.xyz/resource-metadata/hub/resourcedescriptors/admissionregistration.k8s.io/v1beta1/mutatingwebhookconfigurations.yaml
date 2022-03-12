@@ -9,11 +9,6 @@ metadata:
     k8s.io/version: v1beta1
   name: admissionregistration.k8s.io-v1beta1-mutatingwebhookconfigurations
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/admissionregistration.k8s.io/mutatingwebhookconfigurations.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/admissionregistration.k8s.io/mutatingwebhookconfigurations.png
-    type: image/png
   resource:
     group: admissionregistration.k8s.io
     kind: MutatingWebhookConfiguration

@@ -20,8 +20,6 @@ import (
 	"context"
 	"fmt"
 	"io/fs"
-	"math"
-	"sort"
 	"strings"
 	"sync"
 	"time"
@@ -30,9 +28,7 @@ import (
 	kmapi "kmodules.xyz/client-go/api/v1"
 	disco_util "kmodules.xyz/client-go/discovery"
 	"kmodules.xyz/resource-metadata/apis/meta/v1alpha1"
-	"kmodules.xyz/resource-metadata/hub/resourceclasses"
 	"kmodules.xyz/resource-metadata/hub/resourcedescriptors"
-	"kmodules.xyz/resource-metadata/hub/resourceoutlines"
 
 	stringz "gomodules.xyz/x/strings"
 	crd_cs "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/typed/apiextensions/v1"
@@ -45,7 +41,7 @@ import (
 )
 
 const (
-	crdIconSVG = "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg"
+	CRDIconSVG = "https://cdn.appscode.com/k8s/icons/apiextensions.k8s.io/customresourcedefinitions.svg"
 )
 
 // ttl for cached preferred list
@@ -96,7 +92,7 @@ func NewRegistry(uid string, cache KV) *Registry {
 
 func NewRegistryOfKnownResources() *Registry {
 	return NewRegistry(KnownUID, &KVMap{
-		cache: resourcedescriptors.KnownDescriptors,
+		cache: resourcedescriptors.KnownDescriptors(),
 	})
 }
 
@@ -242,7 +238,7 @@ func (r *Registry) createRegistry(cfg *rest.Config) (map[schema.GroupResource]sc
 		preferred[gvr.GroupResource()] = gvr
 	}
 
-	err = fs.WalkDir(resourcedescriptors.FS(), ".", func(filename string, e fs.DirEntry, err error) error {
+	err = fs.WalkDir(resourcedescriptors.EmbeddedFS(), ".", func(filename string, e fs.DirEntry, err error) error {
 		if !e.IsDir() {
 			delete(reg, filename)
 		}
@@ -271,9 +267,11 @@ func (r *Registry) Missing(in schema.GroupVersionResource) bool {
 	return true
 }
 
-func (r *Registry) findGVR(in *metav1.GroupKind, keepOfficialTypes bool) (schema.GroupVersionResource, bool) {
+func (r *Registry) FindGVR(in *metav1.GroupKind, keepOfficialTypes bool) (schema.GroupVersionResource, bool) {
 	r.m.RLock()
 	defer r.m.RUnlock()
+
+	latestGVRs := resourcedescriptors.LatestGVRs()
 
 	for gvk, rid := range r.regGVK {
 		if gvk.Group == in.Group && gvk.Kind == in.Kind {
@@ -285,7 +283,7 @@ func (r *Registry) findGVR(in *metav1.GroupKind, keepOfficialTypes bool) (schema
 
 	gk := schema.GroupKind{Group: in.Group, Kind: in.Kind}
 	if keepOfficialTypes || !v1alpha1.IsOfficialType(in.Group) {
-		gvr, ok := resourcedescriptors.LatestGVRs[gk]
+		gvr, ok := latestGVRs[gk]
 		return gvr, ok
 	}
 	return schema.GroupVersionResource{}, false
@@ -460,162 +458,6 @@ func (r *Registry) LoadByFile(filename string) (*v1alpha1.ResourceDescriptor, er
 	return obj, nil
 }
 
-func (r *Registry) CompleteResourcePanel(namespace resourceclasses.UINamespace) (*v1alpha1.ResourcePanel, error) {
-	return r.createResourcePanel(namespace, true)
-}
-
-func (r *Registry) DefaultResourcePanel(namespace resourceclasses.UINamespace) (*v1alpha1.ResourcePanel, error) {
-	return r.createResourcePanel(namespace, false)
-}
-
-func (r *Registry) createResourcePanel(namespace resourceclasses.UINamespace, keepOfficialTypes bool) (*v1alpha1.ResourcePanel, error) {
-	sections := make(map[string]*v1alpha1.PanelSection)
-	existingGRs := map[schema.GroupResource]bool{}
-
-	// first add the known required sections
-	for group, rc := range resourceclasses.KnownClasses[namespace] {
-		if !rc.IsRequired() && "Helm 3" != rc.Name {
-			continue
-		}
-
-		section := &v1alpha1.PanelSection{
-			Name:              rc.Name,
-			ResourceClassInfo: rc.Spec.ResourceClassInfo,
-			Weight:            rc.Spec.Weight,
-		}
-		for _, entry := range rc.Spec.Entries {
-			pe := v1alpha1.PanelEntry{
-				Name:       entry.Name,
-				Path:       entry.Path,
-				Required:   entry.Required,
-				Icons:      entry.Icons,
-				Namespaced: rc.Name == "Helm 3",
-				LayoutName: entry.LayoutName,
-			}
-			if entry.Type != nil {
-				gvr, ok := r.findGVR(entry.Type, keepOfficialTypes)
-				if !ok {
-					continue
-				}
-				pe.Resource = &kmapi.ResourceID{
-					Group:   gvr.Group,
-					Version: gvr.Version,
-					Name:    gvr.Resource,
-				}
-				existingGRs[gvr.GroupResource()] = true
-				if rd, err := r.LoadByGVR(gvr); err == nil {
-					pe.Resource = &rd.Spec.Resource
-					pe.Namespaced = rd.Spec.Resource.Scope == kmapi.NamespaceScoped
-					pe.Icons = rd.Spec.Icons
-					pe.Missing = r.Missing(gvr)
-					pe.Installer = rd.Spec.Installer
-					if pe.LayoutName == "" {
-						pe.LayoutName = resourceoutlines.DefaultLayoutName(rd.Spec.Resource.GroupVersionResource())
-					}
-				}
-			}
-			section.Entries = append(section.Entries, pe)
-		}
-		sections[group] = section
-	}
-
-	// now, auto discover sections from registry
-	r.Visit(func(_ string, rd *v1alpha1.ResourceDescriptor) {
-		if !keepOfficialTypes && v1alpha1.IsOfficialType(rd.Spec.Resource.Group) {
-			return // skip k8s.io api groups
-		}
-
-		gvr := rd.Spec.Resource.GroupVersionResource()
-		if _, found := existingGRs[gvr.GroupResource()]; found {
-			return
-		}
-
-		section, found := sections[rd.Spec.Resource.Group]
-		if !found {
-			if rc, found := resourceclasses.KnownClasses[namespace][rd.Spec.Resource.Group]; found {
-				w := math.MaxInt16
-				if rc.Spec.Weight > 0 {
-					w = rc.Spec.Weight
-				}
-				section = &v1alpha1.PanelSection{
-					Name:              rc.Name,
-					ResourceClassInfo: rc.Spec.ResourceClassInfo,
-					Weight:            w,
-				}
-			} else {
-				// unknown api group, so use CRD icon
-				name := resourceclasses.ResourceClassName(rd.Spec.Resource.Group)
-				section = &v1alpha1.PanelSection{
-					Name: name,
-					ResourceClassInfo: v1alpha1.ResourceClassInfo{
-						APIGroup: rd.Spec.Resource.Group,
-					},
-					Weight: math.MaxInt16,
-				}
-			}
-			sections[rd.Spec.Resource.Group] = section
-		}
-
-		section.Entries = append(section.Entries, v1alpha1.PanelEntry{
-			Name:       rd.Spec.Resource.Kind,
-			Resource:   &rd.Spec.Resource,
-			Icons:      rd.Spec.Icons,
-			Namespaced: rd.Spec.Resource.Scope == kmapi.NamespaceScoped,
-			Missing:    r.Missing(gvr),
-			Installer:  rd.Spec.Installer,
-			LayoutName: resourceoutlines.DefaultLayoutName(rd.Spec.Resource.GroupVersionResource()),
-		})
-		existingGRs[gvr.GroupResource()] = true
-	})
-
-	return toPanel(sections)
-}
-
-func toPanel(in map[string]*v1alpha1.PanelSection) (*v1alpha1.ResourcePanel, error) {
-	sections := make([]*v1alpha1.PanelSection, 0, len(in))
-
-	for key, section := range in {
-		if !strings.HasSuffix(key, ".local") {
-			sort.Slice(section.Entries, func(i, j int) bool {
-				return section.Entries[i].Name < section.Entries[j].Name
-			})
-		}
-
-		// Set icon for sections missing icon
-		if len(section.Icons) == 0 {
-			// TODO: Use a different icon for section
-			section.Icons = []v1alpha1.ImageSpec{
-				{
-					Source: crdIconSVG,
-					Type:   "image/svg+xml",
-				},
-			}
-		}
-		// set icons for entries missing icon
-		for i := range section.Entries {
-			if len(section.Entries[i].Icons) == 0 {
-				section.Entries[i].Icons = []v1alpha1.ImageSpec{
-					{
-						Source: crdIconSVG,
-						Type:   "image/svg+xml",
-					},
-				}
-			}
-		}
-
-		sections = append(sections, section)
-	}
-
-	sort.Slice(sections, func(i, j int) bool {
-		if sections[i].Weight == sections[j].Weight {
-			return sections[i].Name < sections[j].Name
-		}
-		return sections[i].Weight < sections[j].Weight
-	})
-
-	return &v1alpha1.ResourcePanel{Sections: sections}, nil
-}
-
 type UnregisteredErr struct {
 	t string
 }
@@ -624,4 +466,10 @@ var _ error = UnregisteredErr{}
 
 func (e UnregisteredErr) Error() string {
 	return e.t + " isn't registered"
+}
+
+func IsUnregisteredErr(err error) bool {
+	_, ok := err.(UnregisteredErr)
+	_, okp := err.(*UnregisteredErr)
+	return err != nil && (ok || okp)
 }

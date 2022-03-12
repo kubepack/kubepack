@@ -9,22 +9,12 @@ metadata:
     k8s.io/version: v1
   name: monitoring.coreos.com-v1-prometheusrules
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/monitoring.coreos.com/prometheusrules.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/monitoring.coreos.com/prometheusrules.png
-    type: image/png
   resource:
     group: monitoring.coreos.com
     kind: PrometheusRule
     name: prometheusrules
     scope: Namespaced
     version: v1
-  ui:
-    editor:
-      name: monitoringcoreoscom-prometheusrule-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: PrometheusRule defines recording and alerting rules for a Prometheus instance

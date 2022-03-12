@@ -9,22 +9,12 @@ metadata:
     k8s.io/version: v1alpha1
   name: engine.kubevault.com-v1alpha1-awsroles
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/engine.kubevault.com/awsroles.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/engine.kubevault.com/awsroles.png
-    type: image/png
   resource:
     group: engine.kubevault.com
     kind: AWSRole
     name: awsroles
     scope: Namespaced
     version: v1alpha1
-  ui:
-    editor:
-      name: enginekubevaultcom-awsrole-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       properties:

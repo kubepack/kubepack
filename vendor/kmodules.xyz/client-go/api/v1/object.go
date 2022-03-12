@@ -26,6 +26,19 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
+// TypedObjectReference represents an typed namespaced object.
+type TypedObjectReference struct {
+	APIGroup string `json:"apiGroup,omitempty" protobuf:"bytes,1,opt,name=apiGroup"`
+	Kind     string `json:"kind,omitempty" protobuf:"bytes,2,opt,name=kind"`
+	// Namespace of the referent.
+	// More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+	// +optional
+	Namespace string `json:"namespace,omitempty" protobuf:"bytes,3,opt,name=namespace"`
+	// Name of the referent.
+	// More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+	Name string `json:"name" protobuf:"bytes,4,opt,name=name"`
+}
+
 // ObjectReference contains enough information to let you inspect or modify the referred object.
 type ObjectReference struct {
 	// Namespace of the referent.
@@ -130,6 +143,49 @@ func ParseObjectID(key OID) (*ObjectID, error) {
 	return &id, nil
 }
 
+func ObjectIDMap(key OID) (map[string]interface{}, error) {
+	id := map[string]interface{}{
+		"group":     "",
+		"kind":      "",
+		"namespace": "",
+		"name":      "",
+	}
+
+	chunks := strings.Split(string(key), ",")
+	for _, chunk := range chunks {
+		parts := strings.FieldsFunc(chunk, func(r rune) bool {
+			return r == '=' || unicode.IsSpace(r)
+		})
+		if len(parts) == 0 || len(parts) > 2 {
+			return nil, fmt.Errorf("invalid chunk %s", chunk)
+		}
+
+		switch parts[0] {
+		case "G":
+			if len(parts) == 2 {
+				id["group"] = parts[1]
+			}
+		case "K":
+			if len(parts) == 1 {
+				return nil, fmt.Errorf("kind not set")
+			}
+			id["kind"] = parts[1]
+		case "NS":
+			if len(parts) == 2 {
+				id["namespace"] = parts[1]
+			}
+		case "N":
+			if len(parts) == 1 {
+				return nil, fmt.Errorf("name not set")
+			}
+			id["name"] = parts[1]
+		default:
+			return nil, fmt.Errorf("unknown key %s", parts[0])
+		}
+	}
+	return id, nil
+}
+
 func (oid *ObjectID) GroupKind() schema.GroupKind {
 	return schema.GroupKind{Group: oid.Group, Kind: oid.Kind}
 }
@@ -151,7 +207,7 @@ type ObjectInfo struct {
 	Ref      ObjectReference `json:"ref" protobuf:"bytes,2,opt,name=ref"`
 }
 
-// +kubebuilder:validation:Enum=auth_via;backup_via;catalog;connect_via;exposed_by;monitored_by;offshoot;restore_into;scaled_by;view
+// +kubebuilder:validation:Enum=auth_via;backup_via;catalog;connect_via;exposed_by;monitored_by;offshoot;restore_into;scaled_by;view;cert_issuer;policy
 type EdgeLabel string
 
 const (
@@ -165,4 +221,6 @@ const (
 	EdgeRestoreInto EdgeLabel = "restore_into"
 	EdgeScaledBy    EdgeLabel = "scaled_by"
 	EdgeView        EdgeLabel = "view"
+	EdgeCertIssuer  EdgeLabel = "cert_issuer"
+	EdgePolicy      EdgeLabel = "policy"
 )

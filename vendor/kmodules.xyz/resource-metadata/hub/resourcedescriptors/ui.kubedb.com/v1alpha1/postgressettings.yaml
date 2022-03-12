@@ -56,6 +56,10 @@ spec:
                     type: string
                   unit:
                     type: string
+                required:
+                - currentValue
+                - defaultValue
+                - name
                 type: object
               type: array
           required:

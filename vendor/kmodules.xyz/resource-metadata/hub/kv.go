@@ -69,7 +69,7 @@ var _ KV = &KVLocal{}
 func NewKVLocal() KV {
 	return &KVLocal{
 		known: &KVMap{
-			cache: resourcedescriptors.KnownDescriptors,
+			cache: resourcedescriptors.KnownDescriptors(),
 		},
 		cache: map[string]*v1alpha1.ResourceDescriptor{},
 	}

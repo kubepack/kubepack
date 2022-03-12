@@ -9,38 +9,9 @@ metadata:
     k8s.io/version: v1
   name: rbac.authorization.k8s.io-v1-rolebindings
 spec:
-  columns:
-  - name: Name
-    pathTemplate: '{{ .metadata.name }}'
-    priority: 3
-    type: string
-  - name: Namespace
-    pathTemplate: '{{ .metadata.namespace }}'
-    priority: 3
-    type: string
-  - name: Labels
-    pathTemplate: '{{ .metadata.labels | toRawJson }}'
-    priority: 3
-    type: object
-  - name: Annotations
-    pathTemplate: '{{ .metadata.annotations | toRawJson }}'
-    priority: 1
-    type: object
-  - name: Role Ref
-    pathTemplate: '{{ .roleRef.kind }}/{{ .roleRef.name }}'
-    priority: 3
-    type: string
-  - name: Subjects
-    pathTemplate: '{{ .subjects | rbac_subjects}}'
-    priority: 3
-    type: string
-  - name: Age
-    pathTemplate: '{{ .metadata.creationTimestamp }}'
-    priority: 3
-    type: date
   connections:
   - labels:
-    - offshoot
+    - auth_via
     namespacePath: metadata.namespace
     references:
     - '{range .subjects[*]}{.name},{.namespace},{.kind}{"\n"}{end}'
@@ -49,7 +20,7 @@ spec:
       kind: ServiceAccount
     type: MatchRef
   - labels:
-    - offshoot
+    - auth_via
     namespacePath: metadata.namespace
     references:
     - '{.roleRef.name},{.metadata.namespace},{.roleRef.kind}'
@@ -57,22 +28,12 @@ spec:
       apiVersion: rbac.authorization.k8s.io/v1
       kind: Role
     type: MatchRef
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/rbac.authorization.k8s.io/rolebindings.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/rbac.authorization.k8s.io/rolebindings.png
-    type: image/png
   resource:
     group: rbac.authorization.k8s.io
     kind: RoleBinding
     name: rolebindings
     scope: Namespaced
     version: v1
-  ui:
-    editor:
-      name: rbacauthorizationk8sio-rolebinding-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: RoleBinding references a role, but does not contain it.  It can reference a Role in the same namespace or a ClusterRole in the global namespace. It adds who information via Subjects and namespace information by which namespace it exists in.  RoleBindings in a given namespace only have effect in that namespace.

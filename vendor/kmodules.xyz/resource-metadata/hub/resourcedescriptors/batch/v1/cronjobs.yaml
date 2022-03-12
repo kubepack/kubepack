@@ -9,22 +9,12 @@ metadata:
     k8s.io/version: v1
   name: batch-v1-cronjobs
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/batch/cronjobs.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/batch/cronjobs.png
-    type: image/png
   resource:
     group: batch
     kind: CronJob
     name: cronjobs
     scope: Namespaced
     version: v1
-  ui:
-    editor:
-      name: batch-cronjob-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: CronJob represents the configuration of a single cron job.

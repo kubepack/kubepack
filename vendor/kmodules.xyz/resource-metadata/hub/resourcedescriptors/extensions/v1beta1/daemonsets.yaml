@@ -15,11 +15,6 @@ spec:
     name: daemonsets
     scope: Namespaced
     version: v1beta1
-  ui:
-    editor:
-      name: extensions-daemonset-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: DEPRECATED - This group version of DaemonSet is deprecated by apps/v1beta2/DaemonSet. See the release notes for more information. DaemonSet represents the configuration of a daemon set.

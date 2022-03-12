@@ -9,39 +9,6 @@ metadata:
     k8s.io/version: v1alpha1
   name: ops.kubedb.com-v1alpha1-redisopsrequests
 spec:
-  columns:
-  - name: Name
-    pathTemplate: '{{ .metadata.name }}'
-    priority: 3
-    type: string
-  - name: Namespace
-    pathTemplate: '{{ .metadata.namespace }}'
-    priority: 3
-    type: string
-  - name: Labels
-    pathTemplate: '{{ .metadata.labels | toRawJson }}'
-    priority: 3
-    type: object
-  - name: Annotations
-    pathTemplate: '{{ .metadata.annotations | toRawJson }}'
-    priority: 1
-    type: object
-  - name: Type
-    pathTemplate: '{{ .spec.type }}'
-    priority: 3
-    type: string
-  - name: Target Database
-    pathTemplate: '{{ .spec.databaseRef.name }}'
-    priority: 3
-    type: string
-  - name: Status
-    pathTemplate: '{{ .status.phase }}'
-    priority: 3
-    type: string
-  - name: Age
-    pathTemplate: '{{ .metadata.creationTimestamp }}'
-    priority: 3
-    type: date
   connections:
   - labels:
     - offshoot
@@ -51,22 +18,12 @@ spec:
       apiVersion: kubedb.com/v1alpha2
       kind: Redis
     type: MatchRef
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/ops.kubedb.com/redisopsrequests.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/ops.kubedb.com/redisopsrequests.png
-    type: image/png
   resource:
     group: ops.kubedb.com
     kind: RedisOpsRequest
     name: redisopsrequests
     scope: Namespaced
     version: v1alpha1
-  ui:
-    editor:
-      name: opskubedbcom-redisopsrequest-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       properties:
@@ -1675,6 +1632,7 @@ spec:
             type:
               enum:
               - Upgrade
+              - UpdateVersion
               - HorizontalScaling
               - VerticalScaling
               - VolumeExpansion

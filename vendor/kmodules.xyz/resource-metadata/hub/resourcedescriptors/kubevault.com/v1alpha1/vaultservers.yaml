@@ -9,26 +9,12 @@ metadata:
     k8s.io/version: v1alpha1
   name: kubevault.com-v1alpha1-vaultservers
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/kubevault.com/vaultservers.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/kubevault.com/vaultservers.png
-    type: image/png
   resource:
     group: kubevault.com
     kind: VaultServer
     name: vaultservers
     scope: Namespaced
     version: v1alpha1
-  ui:
-    editor:
-      name: kubevaultcom-vaultserver-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
-    options:
-      name: kubevaultcom-vaultserver-editor-options
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       properties:
@@ -1937,6 +1923,11 @@ spec:
                         type: string
                       description: 'Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
                       type: object
+                    labels:
+                      additionalProperties:
+                        type: string
+                      description: 'Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+                      type: object
                   type: object
                 metadata:
                   description: 'Standard object''s metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata'
@@ -1945,6 +1936,11 @@ spec:
                       additionalProperties:
                         type: string
                       description: 'Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+                      type: object
+                    labels:
+                      additionalProperties:
+                        type: string
+                      description: 'Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
                       type: object
                   type: object
                 spec:
@@ -3853,6 +3849,11 @@ spec:
                         additionalProperties:
                           type: string
                         description: 'Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: 'Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
                         type: object
                     type: object
                   spec:

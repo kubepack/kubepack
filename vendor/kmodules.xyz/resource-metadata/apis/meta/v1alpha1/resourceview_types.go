@@ -39,14 +39,32 @@ type ResourcePageView struct {
 }
 
 type PageBlockView struct {
-	Kind    TableKind       `json:"kind"` // Connection | Subtable(Field)
-	Name    string          `json:"name,omitempty"`
-	Actions ResourceActions `json:"actions"`
+	Kind    TableKind        `json:"kind"` // Connection | Subtable(Field)
+	Name    string           `json:"name,omitempty"`
+	Actions *ResourceActions `json:"actions,omitempty"`
 
 	Resource *kmapi.ResourceID `json:"resource,omitempty"`
-	Missing  bool              `json:"missing,omitempty"`
 	// +optional
 	Items []unstructured.Unstructured `json:"items,omitempty"`
 	// +optional
-	Table *Table `json:"table,omitempty"`
+	Table  *Table       `json:"table,omitempty"`
+	Result RenderResult `json:"result"`
+}
+
+// +kubebuilder:validation:Enum=Success;Missing;Error
+type RenderStatus string
+
+const (
+	RenderSuccess RenderStatus = "Success"
+	RenderMissing RenderStatus = "Missing"
+	RenderError   RenderStatus = "Error"
+)
+
+// Result contains the results of a call to compute the status of
+// a resource.
+type RenderResult struct {
+	// Status
+	Status RenderStatus `json:"status"`
+	// Message
+	Message string `json:"message,omitempty"`
 }

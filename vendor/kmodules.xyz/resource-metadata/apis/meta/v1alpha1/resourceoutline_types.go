@@ -70,14 +70,13 @@ const (
 )
 
 type PageBlockOutline struct {
-	Kind            TableKind `json:"kind"` // ResourceBlockDefinition | Connection | Subtable(Field)
-	Name            string    `json:"name,omitempty"`
-	FieldPath       string    `json:"fieldPath,omitempty"`
-	ResourceLocator `json:",inline"`
-	DisplayMode     ResourceDisplayMode `json:"displayMode"`
-	Actions         ResourceActions     `json:"actions"`
-
-	View ResourceTableDefinitionRef `json:"view"`
+	Kind             TableKind `json:"kind"` // ResourceBlockDefinition | Connection | Subtable(Field)
+	Name             string    `json:"name,omitempty"`
+	FieldPath        string    `json:"fieldPath,omitempty"`
+	*ResourceLocator `json:",inline,omitempty"`
+	DisplayMode      ResourceDisplayMode         `json:"displayMode,omitempty"`
+	Actions          *ResourceActions            `json:"actions,omitempty"`
+	View             *ResourceTableDefinitionRef `json:"view,omitempty"`
 }
 
 type ResourceTableDefinitionRef struct {

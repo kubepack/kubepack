@@ -20,6 +20,7 @@ import (
 	"bytes"
 	"fmt"
 	"strings"
+	"sync"
 	"text/template"
 
 	kmapi "kmodules.xyz/client-go/api/v1"
@@ -28,6 +29,8 @@ import (
 
 	"github.com/Masterminds/sprig/v3"
 	"github.com/pkg/errors"
+	crdv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	"sigs.k8s.io/yaml"
 )
 
 func (v ResourceDescriptor) CustomResourceDefinition() *apiextensions.CustomResourceDefinition {
@@ -36,6 +39,31 @@ func (v ResourceDescriptor) CustomResourceDefinition() *apiextensions.CustomReso
 
 func (v ResourceDescriptor) IsValid() error {
 	return nil
+}
+
+// MarshalYAML implements https://pkg.go.dev/gopkg.in/yaml.v2#Marshaler
+func (rd ResourceDescriptor) ToYAML() ([]byte, error) {
+	if rd.Spec.Validation != nil &&
+		rd.Spec.Validation.OpenAPIV3Schema != nil {
+
+		var mc crdv1.JSONSchemaProps
+		err := yaml.Unmarshal([]byte(ObjectMetaSchema), &mc)
+		if err != nil {
+			return nil, err
+		}
+		if rd.Spec.Resource.Scope == kmapi.ClusterScoped {
+			delete(mc.Properties, "namespace")
+		}
+		rd.Spec.Validation.OpenAPIV3Schema.Properties["metadata"] = mc
+		delete(rd.Spec.Validation.OpenAPIV3Schema.Properties, "status")
+	}
+
+	data, err := yaml.Marshal(rd)
+	if err != nil {
+		return nil, err
+	}
+
+	return FormatMetadata(data)
 }
 
 func IsOfficialType(group string) bool {
@@ -60,6 +88,12 @@ const (
 	GraphQueryVarTargetGroup = "targetGroup"
 	GraphQueryVarTargetKind  = "targetKind"
 )
+
+var pool = sync.Pool{
+	New: func() interface{} {
+		return new(bytes.Buffer)
+	},
+}
 
 func (r ResourceLocator) GraphQuery(oid kmapi.OID) (string, map[string]interface{}, error) {
 	if r.Query.Type == GraphQLQuery {
@@ -94,12 +128,16 @@ func (r ResourceLocator) GraphQuery(oid kmapi.OID) (string, map[string]interface
 		// We mitigate that later.
 		tpl.Option("missingkey=default")
 
-		objID, err := kmapi.ParseObjectID(oid)
+		objID, err := kmapi.ObjectIDMap(oid)
 		if err != nil {
 			return "", nil, errors.Wrapf(err, "failed to parse oid=%s", oid)
 		}
-		var buf bytes.Buffer
-		err = tpl.Execute(&buf, objID)
+
+		buf := pool.Get().(*bytes.Buffer)
+		defer pool.Put(buf)
+		buf.Reset()
+
+		err = tpl.Execute(buf, objID)
 		if err != nil {
 			return "", nil, errors.Wrap(err, "failed to resolve template")
 		}

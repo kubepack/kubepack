@@ -36,18 +36,6 @@ type Table struct {
 	Columns []ResourceColumn `json:"columns"`
 	// rows is the list of items in the table.
 	Rows []TableRow `json:"rows"`
-
-	SubTables []SubTable `json:"subTables,omitempty"`
-}
-
-type SubTable struct {
-	// name is a human readable name for the sub table.
-	Name string `json:"name"`
-	// columns describes each column in the returned items array. The number of cells per row
-	// will always match the number of column definitions.
-	Columns []ResourceColumn `json:"columns"`
-	// rows is the list of items in the table.
-	Rows []TableRow `json:"rows"`
 }
 
 // TableRow is an individual row in a table.
@@ -62,11 +50,12 @@ type TableCell struct {
 	// cells will be as wide as the column definitions array and may contain strings, numbers (float64 or
 	// int64), booleans, simple maps, lists, or null. See the type field of the column definition for a
 	// more detailed description.
-	Data  interface{} `json:"data"`
-	Sort  interface{} `json:"sort,omitempty"`
-	Link  string      `json:"link,omitempty"`
-	Icon  string      `json:"icon,omitempty"`
-	Color string      `json:"color,omitempty"`
+	Data    interface{} `json:"data"`
+	Sort    interface{} `json:"sort,omitempty"`
+	Link    string      `json:"link,omitempty"`
+	Tooltip string      `json:"tooltip,omitempty"`
+	Icon    string      `json:"icon,omitempty"`
+	Color   string      `json:"color,omitempty"`
 }
 
 // IncludeObjectPolicy controls which portion of the object is returned with a Table.

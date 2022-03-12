@@ -9,22 +9,12 @@ metadata:
     k8s.io/version: v1alpha1
   name: catalog.kubedb.com-v1alpha1-postgresversions
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/postgresversions.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/postgresversions.png
-    type: image/png
   resource:
     group: catalog.kubedb.com
     kind: PostgresVersion
     name: postgresversions
     scope: Cluster
     version: v1alpha1
-  ui:
-    editor:
-      name: catalogkubedbcom-postgresversion-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       properties:

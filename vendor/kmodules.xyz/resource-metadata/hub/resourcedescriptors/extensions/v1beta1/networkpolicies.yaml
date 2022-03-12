@@ -9,22 +9,12 @@ metadata:
     k8s.io/version: v1beta1
   name: extensions-v1beta1-networkpolicies
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/extensions/networkpolicies.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/extensions/networkpolicies.png
-    type: image/png
   resource:
     group: extensions
     kind: NetworkPolicy
     name: networkpolicies
     scope: Namespaced
     version: v1beta1
-  ui:
-    editor:
-      name: extensions-networkpolicy-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: DEPRECATED 1.9 - This group version of NetworkPolicy is deprecated by networking/v1/NetworkPolicy. NetworkPolicy describes what network traffic is allowed for a set of Pods
