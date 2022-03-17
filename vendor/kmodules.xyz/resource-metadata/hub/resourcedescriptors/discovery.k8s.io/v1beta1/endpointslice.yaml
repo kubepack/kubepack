@@ -15,6 +15,11 @@ spec:
     name: endpointslice
     scope: Namespaced
     version: v1beta1
+  ui:
+    editor:
+      name: discoveryk8sio-endpointslice-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: EndpointSlice represents a subset of the endpoints that implement a service. For a given service there may be multiple EndpointSlice objects, selected by labels, which must be joined to produce the full set of endpoints.

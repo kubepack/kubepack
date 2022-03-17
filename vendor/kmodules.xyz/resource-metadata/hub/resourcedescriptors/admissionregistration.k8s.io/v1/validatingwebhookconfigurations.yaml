@@ -9,12 +9,22 @@ metadata:
     k8s.io/version: v1
   name: admissionregistration.k8s.io-v1-validatingwebhookconfigurations
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/admissionregistration.k8s.io/validatingwebhookconfigurations.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/admissionregistration.k8s.io/validatingwebhookconfigurations.png
+    type: image/png
   resource:
     group: admissionregistration.k8s.io
     kind: ValidatingWebhookConfiguration
     name: validatingwebhookconfigurations
     scope: Cluster
     version: v1
+  ui:
+    editor:
+      name: admissionregistrationk8sio-validatingwebhookconfiguration-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: ValidatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and object without changing it.

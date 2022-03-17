@@ -9,6 +9,31 @@ metadata:
     k8s.io/version: v2beta1
   name: autoscaling-v2beta1-horizontalpodautoscalers
 spec:
+  columns:
+  - name: Name
+    pathTemplate: '{{ .metadata.name }}'
+    priority: 3
+    type: string
+  - name: Namespace
+    pathTemplate: '{{ .metadata.namespace }}'
+    priority: 3
+    type: string
+  - name: Reference
+    pathTemplate: '{{ .spec.scaleTargetRef.kind }}/{{ .spec.scaleTargetRef.name }}'
+    priority: 3
+    type: string
+  - name: Min-Replica(s)
+    pathTemplate: '{{ .spec.minReplicas }}'
+    priority: 3
+    type: string
+  - name: Max-Replica(s)
+    pathTemplate: '{{ .spec.maxReplicas }}'
+    priority: 3
+    type: string
+  - name: Age
+    pathTemplate: '{{ .metadata.creationTimestamp }}'
+    priority: 3
+    type: date
   connections:
   - labels:
     - offshoot
@@ -50,6 +75,11 @@ spec:
       apiVersion: apps/v1
       kind: StatefulSet
     type: MatchRef
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/autoscaling/horizontalpodautoscalers.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/autoscaling/horizontalpodautoscalers.png
+    type: image/png
   resource:
     group: autoscaling
     kind: HorizontalPodAutoscaler

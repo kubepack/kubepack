@@ -9,12 +9,22 @@ metadata:
     k8s.io/version: v1beta1
   name: node.k8s.io-v1beta1-runtimeclasses
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/node.k8s.io/runtimeclasses.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/node.k8s.io/runtimeclasses.png
+    type: image/png
   resource:
     group: node.k8s.io
     kind: RuntimeClass
     name: runtimeclasses
     scope: Cluster
     version: v1beta1
+  ui:
+    editor:
+      name: nodek8sio-runtimeclass-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: RuntimeClass defines a class of container runtime supported in the cluster. The RuntimeClass is used to determine which container runtime is used to run all containers in a pod. RuntimeClasses are (currently) manually defined by a user or cluster provisioner, and referenced in the PodSpec. The Kubelet is responsible for resolving the RuntimeClassName reference before running the pod.  For more details, see https://git.k8s.io/enhancements/keps/sig-node/runtime-class.md

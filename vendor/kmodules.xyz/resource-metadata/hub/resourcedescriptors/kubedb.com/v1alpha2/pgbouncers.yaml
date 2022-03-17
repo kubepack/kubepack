@@ -9,6 +9,59 @@ metadata:
     k8s.io/version: v1alpha2
   name: kubedb.com-v1alpha2-pgbouncers
 spec:
+  columns:
+  - name: Name
+    pathTemplate: '{{ .metadata.name }}'
+    priority: 3
+    type: string
+  - name: Namespace
+    pathTemplate: '{{ .metadata.namespace }}'
+    priority: 3
+    type: string
+  - name: Labels
+    pathTemplate: '{{ .metadata.labels | toRawJson }}'
+    priority: 3
+    type: object
+  - name: Annotations
+    pathTemplate: '{{ .metadata.annotations | toRawJson }}'
+    priority: 1
+    type: object
+  - name: Version
+    pathTemplate: '{{ .spec.version }}'
+    priority: 3
+    type: string
+  - name: Mode
+    pathTemplate: '{{ k8s_resource_mode . }}'
+    priority: 3
+    type: string
+  - name: Replicas
+    pathTemplate: '{{ k8s_resource_replicas_by_roles . | toRawJson }}'
+    priority: 3
+    type: string
+  - name: Phase
+    pathTemplate: '{{ .status.phase }}'
+    priority: 3
+    type: string
+  - name: Total Resources
+    pathTemplate: '{{ k8s_total_resource_limits . | toRawJson }}'
+    priority: 3
+    type: object
+  - name: Auth Secret
+    pathTemplate: '{{ .spec.authSecret.name }}'
+    priority: 1
+    type: string
+  - name: Termination Policy
+    pathTemplate: '{{ .spec.terminationPolicy }}'
+    priority: 3
+    type: string
+  - name: Halted
+    pathTemplate: '{{ .spec.halted }}'
+    priority: 1
+    type: string
+  - name: Age
+    pathTemplate: '{{ .metadata.creationTimestamp }}'
+    priority: 3
+    type: date
   connections:
   - labels:
     - offshoot
@@ -24,6 +77,7 @@ spec:
       kind: StatefulSet
     type: MatchSelector
   - labels:
+    - offshoot
     - exposed_by
     level: Owner
     namespacePath: metadata.namespace
@@ -47,6 +101,7 @@ spec:
       kind: AppBinding
     type: MatchName
   - labels:
+    - offshoot
     - catalog
     references:
     - '{.spec.version}'
@@ -55,7 +110,7 @@ spec:
       kind: PgBouncerVersion
     type: MatchRef
   - labels:
-    - cert_issuer
+    - offshoot
     namespacePath: metadata.namespace
     references:
     - '{.spec.tls.issuerRef.name},{.metadata.namespace}'
@@ -64,19 +119,222 @@ spec:
       kind: Issuer
     type: MatchRef
   - labels:
-    - cert_issuer
+    - offshoot
     references:
     - '{.spec.tls.issuerRef.name}'
     target:
       apiVersion: cert-manager.io/v1
       kind: ClusterIssuer
     type: MatchRef
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/pgbouncers.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/pgbouncers.png
+    type: image/png
+  pages:
+  - name: Basic
+    resources:
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: appcatalog.appscode.com
+        kind: AppBinding
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: catalog.kubedb.com
+        kind: PgBouncerVersion
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: apps
+        kind: StatefulSet
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: ""
+        kind: Pod
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: ""
+        kind: Service
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: ""
+        kind: Secret
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: ""
+        kind: PersistentVolumeClaim
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: policy
+        kind: PodDisruptionBudget
+  - name: Security
+    resources:
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: ""
+        kind: ServiceAccount
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: rbac.authorization.k8s.io
+        kind: Role
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: rbac.authorization.k8s.io
+        kind: RoleBinding
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: cert-manager.io
+        kind: Certificate
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: cert-manager.io
+        kind: Issuer
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: cert-manager.io
+        kind: ClusterIssuer
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: policy
+        kind: PodSecurityPolicy
+  - name: Operations
+    resources:
+    - actions:
+        create: Always
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: ops.kubedb.com
+        kind: PgbouncerOpsRequest
+  - name: Monitoring
+    resources:
+    - actions:
+        create: IfEmpty
+      displayMode: List
+      query:
+        byLabel: monitored_by
+      ref:
+        group: monitoring.coreos.com
+        kind: ServiceMonitor
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: monitored_by
+      ref:
+        group: monitoring.coreos.com
+        kind: Prometheus
   resource:
     group: kubedb.com
     kind: PgBouncer
     name: pgbouncers
     scope: Namespaced
     version: v1alpha2
+  status:
+    danger:
+    - NotReady
+    success:
+    - Ready
+    warning:
+    - Critical
+    - Halted
+  subTables:
+  - columns:
+    - name: Type
+      pathTemplate: '{{ .type }}'
+      priority: 0
+      type: string
+    - name: Status
+      pathTemplate: '{{ .status }}'
+      priority: 0
+      type: string
+    - name: Reason
+      pathTemplate: '{{ .reason }}'
+      priority: 0
+      type: string
+    - name: Last Transition Time
+      pathTemplate: '{{ .lastTransitionTime }}'
+      priority: 0
+      type: date
+    - name: Observed Generation
+      pathTemplate: '{{ .observedGeneration }}'
+      priority: 0
+      type: string
+    - name: Message
+      pathTemplate: '{{ .message }}'
+      priority: 0
+      type: string
+    fieldPath: .status.conditions
+    name: Conditions
+  ui:
+    editor:
+      name: kubedbcom-pgbouncer-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
+    options:
+      name: kubedbcom-pgbouncer-editor-options
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       properties:

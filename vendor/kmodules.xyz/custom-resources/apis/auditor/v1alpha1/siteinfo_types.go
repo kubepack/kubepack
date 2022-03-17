@@ -17,8 +17,6 @@ limitations under the License.
 package v1alpha1
 
 import (
-	kmapi "kmodules.xyz/client-go/api/v1"
-
 	core "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/version"
@@ -40,8 +38,8 @@ const (
 type SiteInfo struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Product           *ProductInfo    `json:"product,omitempty"`
-	Kubernetes        *KubernetesInfo `json:"kubernetes,omitempty"`
+	Product           *ProductInfo   `json:"product,omitempty"`
+	Kubernetes        KubernetesInfo `json:"kubernetes"`
 }
 
 type Version struct {
@@ -69,10 +67,12 @@ type ProductInfo struct {
 }
 
 type KubernetesInfo struct {
-	Cluster      kmapi.ClusterMetadata `json:"cluster,omitempty"`
-	Version      *version.Info         `json:"version,omitempty"`
-	ControlPlane *ControlPlaneInfo     `json:"controlPlane,omitempty"`
-	NodeStats    NodeStats             `json:"nodeStats"`
+	// https://github.com/kmodules/client-go/blob/master/tools/clusterid/lib.go
+	ClusterName  string            `json:"clusterName,omitempty"`
+	ClusterUID   string            `json:"clusterUID,omitempty"`
+	Version      *version.Info     `json:"version,omitempty"`
+	ControlPlane *ControlPlaneInfo `json:"controlPlane,omitempty"`
+	NodeStats    NodeStats         `json:"nodeStats"`
 }
 
 // https://github.com/kmodules/client-go/blob/kubernetes-1.16.3/tools/analytics/analytics.go#L66

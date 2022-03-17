@@ -25,7 +25,6 @@ import (
 	"path/filepath"
 	"sort"
 
-	"github.com/pkg/errors"
 	core "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -82,10 +81,12 @@ func processResources(filename string, data []byte, fn ResourceFn) error {
 
 func ProcessPath(root string, fn ResourceFn) error {
 	return filepath.WalkDir(root, func(path string, info os.DirEntry, err error) error {
-		if info.IsDir() || err != nil {
+		if err != nil {
 			return err
 		}
-
+		if info.IsDir() {
+			return nil
+		}
 		ext := filepath.Ext(info.Name())
 		if ext != ".yaml" && ext != ".yml" && ext != ".json" {
 			return nil
@@ -93,7 +94,7 @@ func ProcessPath(root string, fn ResourceFn) error {
 
 		data, err := ioutil.ReadFile(path)
 		if err != nil {
-			return errors.Wrap(err, path)
+			return err
 		}
 
 		return processResources(path, data, fn)
@@ -102,10 +103,12 @@ func ProcessPath(root string, fn ResourceFn) error {
 
 func ProcessFS(fsys fs.FS, fn ResourceFn) error {
 	return fs.WalkDir(fsys, ".", func(path string, d fs.DirEntry, err error) error {
-		if d.IsDir() || err != nil {
+		if err != nil {
 			return err
 		}
-
+		if d.IsDir() {
+			return nil
+		}
 		ext := filepath.Ext(d.Name())
 		if ext != ".yaml" && ext != ".yml" && ext != ".json" {
 			return nil
@@ -113,7 +116,7 @@ func ProcessFS(fsys fs.FS, fn ResourceFn) error {
 
 		data, err := fs.ReadFile(fsys, path)
 		if err != nil {
-			return errors.Wrap(err, path)
+			return err
 		}
 
 		return processResources(path, data, fn)

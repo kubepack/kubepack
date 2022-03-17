@@ -9,6 +9,51 @@ metadata:
     k8s.io/version: v1alpha1
   name: appcatalog.appscode.com-v1alpha1-appbindings
 spec:
+  columns:
+  - name: Name
+    pathTemplate: '{{ .metadata.name }}'
+    priority: 3
+    type: string
+  - name: Namespace
+    pathTemplate: '{{ .metadata.namespace }}'
+    priority: 3
+    type: string
+  - name: Labels
+    pathTemplate: '{{ .metadata.labels | toRawJson }}'
+    priority: 3
+    type: object
+  - name: Annotations
+    pathTemplate: '{{ .metadata.annotations | toRawJson }}'
+    priority: 1
+    type: object
+  - name: Type
+    pathTemplate: '{{ .spec.type }}'
+    priority: 3
+    type: string
+  - name: Version
+    pathTemplate: '{{ .spec.version }}'
+    priority: 3
+    type: string
+  - name: Service
+    pathTemplate: '{{ .spec.clientConfig.service.name }}'
+    priority: 3
+    type: string
+  - name: Secret
+    pathTemplate: '{{ .spec.secret.name }}'
+    priority: 3
+    type: string
+  - name: Backup Task
+    pathTemplate: '{{ .spec.parameters.stash.addon.backupTask.name }}'
+    priority: 1
+    type: string
+  - name: Restore Task
+    pathTemplate: '{{ .spec.parameters.stash.addon.restoreTask.name }}'
+    priority: 1
+    type: string
+  - name: Age
+    pathTemplate: '{{ .metadata.creationTimestamp }}'
+    priority: 3
+    type: date
   connections:
   - labels:
     - exposed_by
@@ -20,7 +65,7 @@ spec:
       kind: Service
     type: MatchRef
   - labels:
-    - offshoot
+    - auth_via
     namespacePath: metadata.namespace
     references:
     - '{.spec.clientConfig.secret.name}'
@@ -28,12 +73,22 @@ spec:
       apiVersion: v1
       kind: Secret
     type: MatchRef
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/appcatalog.appscode.com/appbindings.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/appcatalog.appscode.com/appbindings.png
+    type: image/png
   resource:
     group: appcatalog.appscode.com
     kind: AppBinding
     name: appbindings
     scope: Namespaced
     version: v1alpha1
+  ui:
+    editor:
+      name: appcatalogappscodecom-appbinding-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       properties:
@@ -80,9 +135,6 @@ spec:
                   properties:
                     name:
                       description: '`name` is the name of the service. Required'
-                      type: string
-                    namespace:
-                      description: '`namespace` is the namespace of the service.'
                       type: string
                     path:
                       description: '`path` is an optional URL path which will be sent in any request to this service.'
@@ -146,7 +198,10 @@ spec:
                         description: The reference to the Secret that should be merged into the credentials Secret.
                         properties:
                           name:
-                            description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+                            description: Name of the referent.
+                            type: string
+                          namespace:
+                            description: Namespace of the referent.
                             type: string
                         type: object
                     type: object

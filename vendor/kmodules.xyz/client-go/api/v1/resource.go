@@ -17,9 +17,6 @@ limitations under the License.
 package v1
 
 import (
-	"fmt"
-
-	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 )
@@ -48,10 +45,6 @@ func (r ResourceID) GroupVersion() schema.GroupVersion {
 	return schema.GroupVersion{Group: r.Group, Version: r.Version}
 }
 
-func (r ResourceID) GroupKind() schema.GroupKind {
-	return schema.GroupKind{Group: r.Group, Kind: r.Kind}
-}
-
 func (r ResourceID) GroupResource() schema.GroupResource {
 	return schema.GroupResource{Group: r.Group, Resource: r.Name}
 }
@@ -74,20 +67,6 @@ func (r ResourceID) MetaGVR() metav1.GroupVersionResource {
 
 func (r ResourceID) MetaGVK() metav1.GroupVersionKind {
 	return metav1.GroupVersionKind{Group: r.Group, Version: r.Version, Kind: r.Kind}
-}
-
-func NewResourceID(mapping *meta.RESTMapping) *ResourceID {
-	scope := ClusterScoped
-	if mapping.Scope == meta.RESTScopeNamespace {
-		scope = NamespaceScoped
-	}
-	return &ResourceID{
-		Group:   mapping.Resource.Group,
-		Version: mapping.Resource.Version,
-		Name:    mapping.Resource.Resource,
-		Kind:    mapping.GroupVersionKind.Kind,
-		Scope:   scope,
-	}
 }
 
 func FromMetaGVR(in metav1.GroupVersionResource) schema.GroupVersionResource {
@@ -142,45 +121,4 @@ func EqualsGVR(a schema.GroupVersionResource, b metav1.GroupVersionResource) boo
 	return a.Group == b.Group &&
 		a.Version == b.Version &&
 		a.Resource == b.Resource
-}
-
-func ExtractResourceID(mapper meta.RESTMapper, in ResourceID) (*ResourceID, error) {
-	if in.Group == "core" {
-		in.Group = ""
-	}
-
-	kindFound := in.Kind != ""
-	resFOund := in.Name != ""
-	if kindFound {
-		if resFOund {
-			return &in, nil
-		} else {
-			var versions []string
-			if in.Version != "" {
-				versions = append(versions, in.Version)
-			}
-			mapping, err := mapper.RESTMapping(schema.GroupKind{
-				Group: in.Group,
-				Kind:  in.Kind,
-			}, versions...)
-			if err != nil {
-				return nil, err
-			}
-			return NewResourceID(mapping), nil
-		}
-	} else {
-		if resFOund {
-			gvk, err := mapper.KindFor(in.GroupVersionResource())
-			if err != nil {
-				return nil, err
-			}
-			mapping, err := mapper.RESTMapping(gvk.GroupKind(), gvk.Version)
-			if err != nil {
-				return nil, err
-			}
-			return NewResourceID(mapping), nil
-		} else {
-			return nil, fmt.Errorf("missing both Kind and Resource name for %+v", in)
-		}
-	}
 }

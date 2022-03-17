@@ -132,7 +132,7 @@ func UpdateValidatingWebhookCABundle(config *rest.Config, webhookConfigName stri
 		},
 	}
 
-	conditions := append([]watchtools.ConditionFunc{
+	var conditions = append([]watchtools.ConditionFunc{
 		func(event watch.Event) (bool, error) {
 			switch event.Type {
 			case watch.Deleted:

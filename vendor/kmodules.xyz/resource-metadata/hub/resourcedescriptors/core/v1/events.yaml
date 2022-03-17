@@ -9,12 +9,55 @@ metadata:
     k8s.io/version: v1
   name: core-v1-events
 spec:
+  columns:
+  - name: Type
+    pathTemplate: '{{ .type }}'
+    priority: 3
+    type: string
+  - name: Reason
+    pathTemplate: '{{ .reason }}'
+    priority: 3
+    type: string
+  - name: Source
+    pathTemplate: '{{ .source.component }}'
+    priority: 3
+    type: string
+  - name: Involved Object
+    pathTemplate: '{{ .involvedObject.kind }}/{{ .involvedObject.name }}'
+    priority: 3
+    type: string
+  - name: Count
+    pathTemplate: '{{ .count }}'
+    priority: 3
+    type: string
+  - name: First Seen
+    pathTemplate: '{{ .firstTimestamp }}'
+    priority: 0
+    type: date
+  - name: Last Seen
+    pathTemplate: '{{ .firstTimestamp }}'
+    priority: 0
+    type: date
+  - name: Message
+    pathTemplate: '{{ .message }}'
+    priority: 0
+    type: string
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/core/events.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/core/events.png
+    type: image/png
   resource:
     group: ""
     kind: Event
     name: events
     scope: Namespaced
     version: v1
+  ui:
+    editor:
+      name: core-event-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: Event is a report of an event somewhere in the cluster.  Events have a limited retention time and triggers and messages may evolve with time.  Event consumers should not rely on the timing of an event with a given Reason reflecting a consistent underlying trigger, or the continued existence of events with that Reason.  Events should be treated as informative, best-effort, supplemental data.

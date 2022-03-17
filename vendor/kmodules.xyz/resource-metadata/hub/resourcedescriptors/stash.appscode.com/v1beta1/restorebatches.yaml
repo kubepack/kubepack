@@ -9,12 +9,22 @@ metadata:
     k8s.io/version: v1beta1
   name: stash.appscode.com-v1beta1-restorebatches
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/stash.appscode.com/restorebatches.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/stash.appscode.com/restorebatches.png
+    type: image/png
   resource:
     group: stash.appscode.com
     kind: RestoreBatch
     name: restorebatches
     scope: Namespaced
     version: v1beta1
+  ui:
+    editor:
+      name: stashappscodecom-restorebatch-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       properties:
@@ -1929,11 +1939,6 @@ spec:
                       alias:
                         description: Alias represents the identifier of the backed up data in the repository. This will be used as `sourceHost` and `targetHosts` or will be used to generate them.
                         type: string
-                      args:
-                        description: Args specifies a list of arguments to pass to the restore driver.
-                        items:
-                          type: string
-                        type: array
                       ref:
                         description: Ref refers to the restore,target
                         properties:
@@ -2256,13 +2261,8 @@ spec:
               description: Repository refer to the Repository crd that holds backend information
               properties:
                 name:
-                  description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                  description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
                   type: string
-                namespace:
-                  description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
-                  type: string
-              required:
-              - name
               type: object
           type: object
       type: object

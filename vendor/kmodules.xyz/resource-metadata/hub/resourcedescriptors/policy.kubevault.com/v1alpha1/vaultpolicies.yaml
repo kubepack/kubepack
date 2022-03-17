@@ -9,12 +9,22 @@ metadata:
     k8s.io/version: v1alpha1
   name: policy.kubevault.com-v1alpha1-vaultpolicies
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/policy.kubevault.com/vaultpolicies.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/policy.kubevault.com/vaultpolicies.png
+    type: image/png
   resource:
     group: policy.kubevault.com
     kind: VaultPolicy
     name: vaultpolicies
     scope: Namespaced
     version: v1alpha1
+  ui:
+    editor:
+      name: policykubevaultcom-vaultpolicy-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       properties:

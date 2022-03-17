@@ -48,14 +48,10 @@ spec:
                 properties:
                   indexName:
                     type: string
-                  primaryStoreSizeBytes:
+                  primaryStoreSizeInBytes:
                     type: string
-                  totalStoreSizeBytes:
+                  totalStoreSizeInBytes:
                     type: string
-                required:
-                - indexName
-                - primaryStoreSizeBytes
-                - totalStoreSizeBytes
                 type: object
               type: array
           required:

@@ -9,6 +9,11 @@ metadata:
     k8s.io/version: v1beta1
   name: cert-manager.io-v1beta1-certificaterequests
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/cert-manager.io/certificaterequests.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/cert-manager.io/certificaterequests.png
+    type: image/png
   resource:
     group: cert-manager.io
     kind: CertificateRequest

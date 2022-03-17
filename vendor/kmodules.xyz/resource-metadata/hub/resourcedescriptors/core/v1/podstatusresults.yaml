@@ -15,6 +15,11 @@ spec:
     name: podstatusresults
     scope: Namespaced
     version: v1
+  ui:
+    editor:
+      name: core-podstatusresult-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: PodStatusResult is a wrapper for PodStatus returned by kubelet that can be encode/decoded

@@ -48,8 +48,13 @@ type ResourceDescriptor struct {
 }
 
 type ResourceDescriptorSpec struct {
-	Resource    kmapi.ResourceID     `json:"resource"`
-	Connections []ResourceConnection `json:"connections,omitempty"`
+	Resource kmapi.ResourceID           `json:"resource"`
+	Columns  []ResourceColumnDefinition `json:"columns,omitempty"`
+	// For array type fields of the resource
+	SubTables   []ResourceSubTableDefinition `json:"subTables,omitempty"`
+	Connections []ResourceConnection         `json:"connections,omitempty"`
+	Pages       []RelatedResourcePage        `json:"pages,omitempty"`
+	Status      *StatusCodes                 `json:"status,omitempty"`
 
 	// validation describes the schema used for validation and pruning of the custom resource.
 	// If present, this validation schema is used to validate all versions.
@@ -57,12 +62,31 @@ type ResourceDescriptorSpec struct {
 	// +optional
 	Validation *crdv1.CustomResourceValidation `json:"validation,omitempty"`
 
+	// Icons is an optional list of icons for an application. Icon information includes the source, size,
+	// and mime type.
+	Icons []ImageSpec `json:"icons,omitempty"`
+
 	// Maintainers is an optional list of maintainers of the application. The maintainers in this list maintain the
 	// the source code, images, and package for the application.
 	Maintainers []ContactData `json:"maintainers,omitempty"`
 
 	// Links are a list of descriptive URLs intended to be used to surface additional documentation, dashboards, etc.
 	Links []Link `json:"links,omitempty"`
+
+	UI *UIParameters `json:"ui,omitempty"`
+
+	Installer *DeploymentParameters `json:"installer,omitempty"`
+}
+
+type RelatedResourcePage struct {
+	Name      string            `json:"name"`
+	Resources []ResourceSection `json:"resources"`
+}
+
+type ResourceSection struct {
+	ResourceLocator `json:",inline"`
+	DisplayMode     ResourceDisplayMode `json:"displayMode"`
+	Actions         ResourceActions     `json:"actions"`
 }
 
 type ResourceLocator struct {
@@ -70,26 +94,16 @@ type ResourceLocator struct {
 	Query ResourceQuery    `json:"query"`
 }
 
-// +kubebuilder:validation:Enum=REST;GraphQL
-type QueryType string
-
-const (
-	RESTQuery    QueryType = "REST"
-	GraphQLQuery QueryType = "GraphQL"
-)
-
 type ResourceQuery struct {
-	Type    QueryType       `json:"type"`
-	ByLabel kmapi.EdgeLabel `json:"byLabel,omitempty"`
-	Raw     string          `json:"raw,omitempty"`
+	ByLabel EdgeLabel `json:"byLabel,omitempty"`
+	Raw     string    `json:"raw,omitempty"`
 }
 
-// +kubebuilder:validation:Enum=List;Field
 type ResourceDisplayMode string
 
 const (
-	DisplayModeList  ResourceDisplayMode = "List"
-	DisplayModeField ResourceDisplayMode = "Field"
+	DisplayModeList  = "List"
+	DisplayModeField = "Field"
 )
 
 type ResourceActions struct {
@@ -104,6 +118,33 @@ const (
 	ActionIfEmpty = "IfEmpty"
 )
 
+type StatusCodes struct {
+	Success []string `json:"success,omitempty"`
+	Danger  []string `json:"danger,omitempty"`
+	Warning []string `json:"warning,omitempty"`
+}
+
+type UIParameters struct {
+	Options *ChartRepoRef `json:"options,omitempty"`
+	Editor  *ChartRepoRef `json:"editor,omitempty"`
+	// app.kubernetes.io/instance label must be updated at these paths when refilling metadata
+	// +optional
+	InstanceLabelPaths []string `json:"instanceLabelPaths,omitempty"`
+}
+
+type DeploymentParameters struct {
+	ProductID string        `json:"productID,omitempty"`
+	PlanID    string        `json:"planID,omitempty"`
+	Chart     *ChartRepoRef `json:"chart,omitempty"`
+}
+
+// ChartRepoRef references to a single version of a Chart
+type ChartRepoRef struct {
+	Name    string `json:"name"`
+	URL     string `json:"url"`
+	Version string `json:"version"`
+}
+
 // +kubebuilder:validation:Enum=MatchSelector;MatchName;MatchRef;OwnedBy
 type ConnectionType string
 
@@ -114,9 +155,24 @@ const (
 	OwnedBy       ConnectionType = "OwnedBy"
 )
 
+// +kubebuilder:validation:Enum=auth_via;backup_via;catalog;connect_via;exposed_by;monitored_by;offshoot;restore_into;scaled_by
+type EdgeLabel string
+
+const (
+	EdgeAuthVia     EdgeLabel = "auth_via"
+	EdgeBackupVia   EdgeLabel = "backup_via"
+	EdgeCatalog     EdgeLabel = "catalog"
+	EdgeConnectVia  EdgeLabel = "connect_via"
+	EdgeExposedBy   EdgeLabel = "exposed_by"
+	EdgeMonitoredBy EdgeLabel = "monitored_by"
+	EdgeOffshoot    EdgeLabel = "offshoot"
+	EdgeRestoreInto EdgeLabel = "restore_into"
+	EdgeScaledBy    EdgeLabel = "scaled_by"
+)
+
 type ResourceConnection struct {
-	Target                 metav1.TypeMeta   `json:"target"`
-	Labels                 []kmapi.EdgeLabel `json:"labels"`
+	Target                 metav1.TypeMeta `json:"target"`
+	Labels                 []EdgeLabel     `json:"labels"`
 	ResourceConnectionSpec `json:",inline,omitempty"`
 }
 
@@ -168,11 +224,7 @@ type Priority int32
 const (
 	Field Priority = 1 << iota
 	List
-	Metadata
 )
-
-// ColumnTypeRef refers to a ResourceTableDefinition whose columns should be used in its place
-const ColumnTypeRef = "Ref"
 
 // ResourceColumnDefinition specifies a column for server side printing.
 type ResourceColumnDefinition struct {
@@ -199,75 +251,12 @@ type ResourceColumnDefinition struct {
 	// Example: {{ jp "{.a.b}" . }} or {{ jp "{.a.b}" true }}, if json output is desired from JSONPath parser
 	// +optional
 	PathTemplate string `json:"pathTemplate,omitempty"`
-
-	Sort      *SortDefinition      `json:"sort,omitempty"`
-	Link      *AttributeDefinition `json:"link,omitempty"`
-	Tooltip   *AttributeDefinition `json:"tooltip,omitempty"`
-	Shape     ShapeProperty        `json:"shape,omitempty"`
-	Icon      *AttributeDefinition `json:"icon,omitempty"`
-	Color     *ColorDefinition     `json:"color,omitempty"`
-	TextAlign string               `json:"textAlign,omitempty"`
 }
 
-type SortDefinition struct {
-	Enable   bool   `json:"enable,omitempty"`
-	Template string `json:"template,omitempty"`
-	// type is an OpenAPI type definition for this column.
-	// See https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for more.
-	Type string `json:"type"`
-	// format is an optional OpenAPI type definition for this column. The 'name' format is applied
-	// to the primary identifier column to assist in clients identifying column is the resource name.
-	// See https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for more.
-	// +optional
-	Format string `json:"format,omitempty"`
-}
-
-type SortHeader struct {
-	Enable bool   `json:"enable,omitempty"`
-	Type   string `json:"type,omitempty"`
-	Format string `json:"format,omitempty"`
-}
-
-type AttributeDefinition struct {
-	Template string `json:"template,omitempty"`
-}
-
-// +kubebuilder:validation:Enum=Rectangle;Pill
-type ShapeProperty string
-
-const (
-	ShapeRectangle ShapeProperty = "Rectangle"
-	ShapePill      ShapeProperty = "Pill"
-)
-
-type ColorDefinition struct {
-	// Available color codes: success,danger,warning,info, link, white, light, dark, black
-	// see https://bulma.io/documentation/elements/tag/#colors
-	Template string `json:"template,omitempty"`
-}
-
-type ResourceColumn struct {
-	// name is a human readable name for the column.
-	Name string `json:"name"`
-	// type is an OpenAPI type definition for this column.
-	// See https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for more.
-	Type string `json:"type"`
-	// format is an optional OpenAPI type definition for this column. The 'name' format is applied
-	// to the primary identifier column to assist in clients identifying column is the resource name.
-	// See https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for more.
-	// +optional
-	Format string `json:"format,omitempty"`
-	// priority is an integer defining the relative importance of this column compared to others. Lower
-	// numbers are considered higher priority. Columns that may be omitted in limited space scenarios
-	// should be given a higher priority.
-	Priority int32 `json:"priority"`
-
-	Sort      *SortHeader   `json:"sort,omitempty"`
-	Link      bool          `json:"link,omitempty"`
-	Tooltip   bool          `json:"tooltip,omitempty"`
-	Shape     ShapeProperty `json:"shape,omitempty"`
-	Icon      bool          `json:"icon,omitempty"`
-	TextAlign string        `json:"textAlign,omitempty"`
+type ResourceSubTableDefinition struct {
+	Name      string                     `json:"name"`
+	FieldPath string                     `json:"fieldPath,omitempty"`
+	Columns   []ResourceColumnDefinition `json:"columns,omitempty"`
 }
 
 // ImageSpec contains information about an image used as an icon.

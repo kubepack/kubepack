@@ -9,6 +9,59 @@ metadata:
     k8s.io/version: v1beta1
   name: batch-v1beta1-cronjobs
 spec:
+  columns:
+  - name: Name
+    pathTemplate: '{{ .metadata.name }}'
+    priority: 3
+    type: string
+  - name: Namespace
+    pathTemplate: '{{ .metadata.namespace }}'
+    priority: 3
+    type: string
+  - name: Labels
+    pathTemplate: '{{ .metadata.labels | toRawJson }}'
+    priority: 3
+    type: object
+  - name: Annotations
+    pathTemplate: '{{ .metadata.annotations | toRawJson }}'
+    priority: 3
+    type: object
+  - name: Schedule
+    pathTemplate: '{{ .spec.schedule }}'
+    priority: 3
+    type: string
+  - name: Suspend
+    pathTemplate: '{{ .spec.suspend }}'
+    priority: 3
+    type: string
+  - name: Active
+    pathTemplate: '{{ jp "{.status.Active}" . | len }}'
+    priority: 3
+    type: string
+  - name: Last Schedule
+    pathTemplate: '{{ .status.lastScheduleTime }}'
+    priority: 3
+    type: date
+  - name: Images
+    pathTemplate: '{{ .spec.jobTemplate.spec.template.spec.containers | k8s_container_images }}'
+    priority: 2
+    type: string
+  - name: Security Context
+    pathTemplate: '{ "runAsUser": "{{ jp "{.spec.jobTemplate.spec.template.spec.securityContext.runAsUser}" . }}", "runAsGroup": "{{ jp "{.spec.jobTemplate.spec.template.spec.securityContext.runAsGroup}" . }}","fsGroup": "{{ jp "{.spec.jobTemplate.spec.template.spec.securityContext.fsGroup}" . }}" }'
+    priority: 1
+    type: object
+  - name: ServiceAccount Name
+    pathTemplate: '{{ .spec.jobTemplate.spec.template.spec.serviceAccountName }}'
+    priority: 1
+    type: string
+  - name: Volumes
+    pathTemplate: '{{ .spec.jobTemplate.spec.template.spec.volumes | k8s_volumes }}'
+    priority: 1
+    type: object
+  - name: Age
+    pathTemplate: '{{ .metadata.creationTimestamp }}'
+    priority: 3
+    type: date
   connections:
   - labels:
     - offshoot
@@ -17,12 +70,146 @@ spec:
       apiVersion: stash.appscode.com/v1beta1
       kind: BackupConfiguration
     type: OwnedBy
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/batch/cronjobs.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/batch/cronjobs.png
+    type: image/png
+  pages:
+  - name: Basic
+    resources:
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: batch
+        kind: Job
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: ""
+        kind: Pod
   resource:
     group: batch
     kind: CronJob
     name: cronjobs
     scope: Namespaced
     version: v1beta1
+  subTables:
+  - columns:
+    - name: Name
+      pathTemplate: '{{ .name }}'
+      priority: 0
+      type: string
+    - name: Image
+      pathTemplate: '{{ .image }}'
+      priority: 0
+      type: string
+    - name: Arguments
+      pathTemplate: '{{ .args | fmt_list }}'
+      priority: 0
+      type: object
+    - name: Environment Variables
+      pathTemplate: '{{ .env | fmt_list }}'
+      priority: 0
+      type: object
+    - name: Ports
+      pathTemplate: '{{ .ports | k8s_container_ports }}'
+      priority: 0
+      type: string
+    - name: Volume Mounts
+      pathTemplate: '{{ .volumeMounts | k8s_volumeMounts }}'
+      priority: 0
+      type: string
+    fieldPath: .spec.jobTemplate.spec.template.spec.containers
+    name: Containers
+  - columns:
+    - name: Name
+      pathTemplate: '{{ .name }}'
+      priority: 0
+      type: string
+    - name: Image
+      pathTemplate: '{{ .image }}'
+      priority: 0
+      type: string
+    - name: Arguments
+      pathTemplate: '{{ .args | fmt_list }}'
+      priority: 0
+      type: object
+    - name: Environment Variables
+      pathTemplate: '{{ .env | fmt_list }}'
+      priority: 0
+      type: object
+    - name: Ports
+      pathTemplate: '{{ .ports | k8s_container_ports }}'
+      priority: 0
+      type: string
+    - name: Volume Mounts
+      pathTemplate: '{{ .volumeMounts | k8s_volumeMounts }}'
+      priority: 0
+      type: string
+    fieldPath: .spec.jobTemplate.spec.template.spec.initContainers
+    name: Init-Containers
+  - columns:
+    - name: Type
+      pathTemplate: '{{ .type }}'
+      priority: 0
+      type: string
+    - name: Status
+      pathTemplate: '{{ .status }}'
+      priority: 0
+      type: string
+    - name: Reason
+      pathTemplate: '{{ .reason }}'
+      priority: 0
+      type: string
+    - name: Last Transition Time
+      pathTemplate: '{{ .lastTransitionTime }}'
+      priority: 0
+      type: date
+    - name: Last Update Time
+      pathTemplate: '{{ .lastUpdateTime }}'
+      priority: 0
+      type: date
+    - name: Message
+      pathTemplate: '{{ .message }}'
+      priority: 0
+      type: string
+    fieldPath: .status.conditions
+    name: Conditions
+  - columns:
+    - name: API Version
+      pathTemplate: '{{ .apiVersion }}'
+      priority: 0
+      type: string
+    - name: Kind
+      pathTemplate: '{{ .kind }}'
+      priority: 0
+      type: string
+    - name: Name
+      pathTemplate: '{{ .name }}'
+      priority: 0
+      type: string
+    - name: Controller
+      pathTemplate: '{{ .controller }}'
+      priority: 0
+      type: string
+    - name: Block Onwer Deletion
+      pathTemplate: '{{ .blockOwnerDeletion }}'
+      priority: 0
+      type: string
+    fieldPath: .metadata.ownerReferences
+    name: Owners
+  ui:
+    editor:
+      name: batch-cronjob-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: CronJob represents the configuration of a single cron job.

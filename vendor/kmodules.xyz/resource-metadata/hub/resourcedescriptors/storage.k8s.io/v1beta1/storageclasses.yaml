@@ -9,6 +9,11 @@ metadata:
     k8s.io/version: v1beta1
   name: storage.k8s.io-v1beta1-storageclasses
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/storage.k8s.io/storageclasses.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/storage.k8s.io/storageclasses.png
+    type: image/png
   resource:
     group: storage.k8s.io
     kind: StorageClass

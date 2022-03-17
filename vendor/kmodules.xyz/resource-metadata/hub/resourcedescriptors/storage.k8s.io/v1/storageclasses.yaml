@@ -9,12 +9,22 @@ metadata:
     k8s.io/version: v1
   name: storage.k8s.io-v1-storageclasses
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/storage.k8s.io/storageclasses.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/storage.k8s.io/storageclasses.png
+    type: image/png
   resource:
     group: storage.k8s.io
     kind: StorageClass
     name: storageclasses
     scope: Cluster
     version: v1
+  ui:
+    editor:
+      name: storagek8sio-storageclass-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: "StorageClass describes the parameters for a class of storage for which PersistentVolumes can be dynamically provisioned. \n StorageClasses are non-namespaced; the name of the storage class according to etcd is in ObjectMeta.Name."

@@ -9,12 +9,22 @@ metadata:
     k8s.io/version: v1
   name: storage.k8s.io-v1-csinodes
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/storage.k8s.io/csinodes.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/storage.k8s.io/csinodes.png
+    type: image/png
   resource:
     group: storage.k8s.io
     kind: CSINode
     name: csinodes
     scope: Cluster
     version: v1
+  ui:
+    editor:
+      name: storagek8sio-csinode-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: CSINode holds information about all CSI drivers installed on a node. CSI drivers do not need to create the CSINode object directly. As long as they use the node-driver-registrar sidecar container, the kubelet will automatically populate the CSINode object for the CSI driver as part of kubelet plugin registration. CSINode has the same name as a node. If the object is missing, it means either there are no CSI Drivers available on the node, or the Kubelet version is low enough that it doesn't create this object. CSINode has an OwnerReference that points to the corresponding node object.

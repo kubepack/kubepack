@@ -15,6 +15,11 @@ spec:
     name: localsubjectaccessreviews
     scope: Namespaced
     version: v1
+  ui:
+    editor:
+      name: authorizationk8sio-localsubjectaccessreview-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: LocalSubjectAccessReview checks whether or not a user or group can perform an action in a given namespace. Having a namespace scoped resource makes it much easier to grant namespace scoped policy that includes permissions checking.

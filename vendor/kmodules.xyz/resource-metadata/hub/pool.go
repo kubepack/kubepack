@@ -46,7 +46,7 @@ func MustPool(kvFactory func() KV) *Pool {
 	return pool
 }
 
-func (p *Pool) GetRegistry(uid string) *Registry {
+func (p *Pool) GetRegistry(uid string, helm HelmVersion) *Registry {
 	p.m.Lock()
 	defer p.m.Unlock()
 
@@ -54,7 +54,7 @@ func (p *Pool) GetRegistry(uid string) *Registry {
 	if found {
 		return val.(*Registry)
 	}
-	r := NewRegistry(uid, p.f())
+	r := NewRegistry(uid, helm, p.f())
 	p.cache.Add(uid, r)
 	return r
 }

@@ -9,12 +9,63 @@ metadata:
     k8s.io/version: v1alpha1
   name: catalog.kubedb.com-v1alpha1-mongodbversions
 spec:
+  columns:
+  - name: Name
+    pathTemplate: '{{ .metadata.name }}'
+    priority: 3
+    type: string
+  - name: Labels
+    pathTemplate: '{{ .metadata.labels | toRawJson }}'
+    priority: 3
+    type: object
+  - name: Annotations
+    pathTemplate: '{{ .metadata.annotations | toRawJson }}'
+    priority: 1
+    type: object
+  - name: Version
+    pathTemplate: '{{ .spec.version }}'
+    priority: 3
+    type: string
+  - name: Distribution
+    pathTemplate: '{{ .spec.distribution }}'
+    priority: 3
+    type: string
+  - name: DB Image
+    pathTemplate: '{{ .spec.db.image }}'
+    priority: 3
+    type: string
+  - name: Deprecated
+    pathTemplate: '{{ .spec.deprecated }}'
+    priority: 3
+    type: string
+  - name: Backup Task
+    pathTemplate: '{{ .spec.stash.addon.backupTask.name }}'
+    priority: 3
+    type: string
+  - name: Restore Task
+    pathTemplate: '{{ .spec.stash.addon.restoreTask.name }}'
+    priority: 3
+    type: string
+  - name: Age
+    pathTemplate: '{{ .metadata.creationTimestamp }}'
+    priority: 3
+    type: date
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/mongodbversions.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/mongodbversions.png
+    type: image/png
   resource:
     group: catalog.kubedb.com
     kind: MongoDBVersion
     name: mongodbversions
     scope: Cluster
     version: v1alpha1
+  ui:
+    editor:
+      name: catalogkubedbcom-mongodbversion-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       properties:

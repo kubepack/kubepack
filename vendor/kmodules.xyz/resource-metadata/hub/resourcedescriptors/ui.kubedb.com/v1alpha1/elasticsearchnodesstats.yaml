@@ -143,9 +143,9 @@ spec:
                       type: string
                     type: array
                   timestamp:
-                    format: date-time
-                    type: string
-                  transportAddr:
+                    format: int64
+                    type: integer
+                  transport_addr:
                     type: string
                 required:
                 - host
@@ -155,7 +155,7 @@ spec:
                 - os
                 - roles
                 - timestamp
-                - transportAddr
+                - transport_addr
                 type: object
               type: array
           required:

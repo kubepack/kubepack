@@ -15,6 +15,11 @@ spec:
     name: selfsubjectaccessreviews
     scope: Cluster
     version: v1
+  ui:
+    editor:
+      name: authorizationk8sio-selfsubjectaccessreview-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: SelfSubjectAccessReview checks whether or the current user can perform an action.  Not filling in a spec.namespace means "in all namespaces".  Self is a special case, because users should always be able to check whether they can perform an action

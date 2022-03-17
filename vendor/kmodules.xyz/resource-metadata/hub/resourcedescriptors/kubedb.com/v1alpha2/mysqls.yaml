@@ -9,6 +9,75 @@ metadata:
     k8s.io/version: v1alpha2
   name: kubedb.com-v1alpha2-mysqls
 spec:
+  columns:
+  - name: Name
+    pathTemplate: '{{ .metadata.name }}'
+    priority: 3
+    type: string
+  - name: Namespace
+    pathTemplate: '{{ .metadata.namespace }}'
+    priority: 3
+    type: string
+  - name: Labels
+    pathTemplate: '{{ .metadata.labels | toRawJson }}'
+    priority: 3
+    type: object
+  - name: Annotations
+    pathTemplate: '{{ .metadata.annotations | toRawJson }}'
+    priority: 1
+    type: object
+  - name: Version
+    pathTemplate: '{{ .spec.version }}'
+    priority: 3
+    type: string
+  - name: Mode
+    pathTemplate: '{{ k8s_resource_mode . }}'
+    priority: 3
+    type: string
+  - name: Replicas
+    pathTemplate: '{{ k8s_resource_replicas_by_roles . | toRawJson }}'
+    priority: 3
+    type: string
+  - name: Phase
+    pathTemplate: '{{ .status.phase }}'
+    priority: 3
+    type: string
+  - name: Total Resources
+    pathTemplate: '{{ k8s_total_resource_limits . | toRawJson }}'
+    priority: 3
+    type: object
+  - name: Auth Secret
+    pathTemplate: '{{ .spec.authSecret.name }}'
+    priority: 1
+    type: string
+  - name: SSL Required
+    pathTemplate: '{{ .spec.requireSSL }}'
+    priority: 3
+    type: string
+  - name: Cluster Auth Mode
+    pathTemplate: '{{ .spec.clusterAuthMode }}'
+    priority: 1
+    type: string
+  - name: Storage Engine
+    pathTemplate: '{{ .spec.storageEngine }}'
+    priority: 1
+    type: string
+  - name: Address Type
+    pathTemplate: '{{ .spec.useAddressType }}'
+    priority: 1
+    type: string
+  - name: Termination Policy
+    pathTemplate: '{{ .spec.terminationPolicy }}'
+    priority: 3
+    type: string
+  - name: Halted
+    pathTemplate: '{{ .spec.halted }}'
+    priority: 1
+    type: string
+  - name: Age
+    pathTemplate: '{{ .metadata.creationTimestamp }}'
+    priority: 3
+    type: date
   connections:
   - labels:
     - offshoot
@@ -24,6 +93,7 @@ spec:
       kind: StatefulSet
     type: MatchSelector
   - labels:
+    - offshoot
     - exposed_by
     level: Owner
     namespacePath: metadata.namespace
@@ -47,6 +117,7 @@ spec:
       kind: AppBinding
     type: MatchName
   - labels:
+    - offshoot
     - catalog
     references:
     - '{.spec.version}'
@@ -55,7 +126,7 @@ spec:
       kind: MySQLVersion
     type: MatchRef
   - labels:
-    - cert_issuer
+    - offshoot
     namespacePath: metadata.namespace
     references:
     - '{.spec.tls.issuerRef.name},{.metadata.namespace}'
@@ -64,59 +135,304 @@ spec:
       kind: Issuer
     type: MatchRef
   - labels:
-    - cert_issuer
+    - offshoot
     references:
     - '{.spec.tls.issuerRef.name}'
     target:
       apiVersion: cert-manager.io/v1
       kind: ClusterIssuer
     type: MatchRef
-  - labels:
-    - view
-    nameTemplate: '{.metadata.name}~MySQL.kubedb.com'
-    namespacePath: metadata.namespace
-    target:
-      apiVersion: core.k8s.appscode.com/v1alpha1
-      kind: GenericResource
-    type: MatchName
-  - labels:
-    - view
-    nameTemplate: '{.metadata.name}~MySQL.kubedb.com'
-    namespacePath: metadata.namespace
-    target:
-      apiVersion: core.k8s.appscode.com/v1alpha1
-      kind: GenericResourceService
-    type: MatchName
-  - labels:
-    - view
-    nameTemplate: '{.metadata.name}'
-    namespacePath: metadata.namespace
-    target:
-      apiVersion: ui.kubedb.com/v1alpha1
-      kind: MySQLInsight
-    type: MatchName
-  - labels:
-    - view
-    nameTemplate: '{.metadata.name}'
-    namespacePath: metadata.namespace
-    target:
-      apiVersion: ui.kubedb.com/v1alpha1
-      kind: MySQLQueries
-    type: MatchName
-  - labels:
-    - view
-    nameTemplate: '{.metadata.name}'
-    namespacePath: metadata.namespace
-    target:
-      apiVersion: ui.kubedb.com/v1alpha1
-      kind: MySQLSchemaOverview
-    type: MatchName
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/mysqls.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/mysqls.png
+    type: image/png
+  pages:
+  - name: Basic
+    resources:
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: appcatalog.appscode.com
+        kind: AppBinding
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: catalog.kubedb.com
+        kind: MySQLVersion
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: apps
+        kind: StatefulSet
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: ""
+        kind: Pod
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: ""
+        kind: Service
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: ""
+        kind: Secret
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: ""
+        kind: PersistentVolumeClaim
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: policy
+        kind: PodDisruptionBudget
+  - name: Backups
+    resources:
+    - actions:
+        create: IfEmpty
+      displayMode: List
+      query:
+        raw: |-
+          query Find($src: String!, $targetGroup: String!, $targetKind: String!) {
+            find(oid: $src) {
+              backup_via(group: "stash.appscode.com", kind: "BackupConfiguration") {
+                refs: offshoot(group: $targetGroup, kind: $targetKind) {
+                  namespace
+                  name
+                }
+              }
+            }
+          }
+      ref:
+        group: stash.appscode.com
+        kind: Repository
+    - actions:
+        create: IfEmpty
+      displayMode: List
+      query:
+        byLabel: backup_via
+      ref:
+        group: stash.appscode.com
+        kind: BackupConfiguration
+    - actions:
+        create: Always
+      displayMode: List
+      query:
+        raw: |-
+          query Find($src: String!, $targetGroup: String!, $targetKind: String!) {
+            find(oid: $src) {
+              backup_via(group: "stash.appscode.com", kind: "BackupConfiguration") {
+                refs: offshoot(group: $targetGroup, kind: $targetKind) {
+                  namespace
+                  name
+                }
+              }
+            }
+          }
+      ref:
+        group: stash.appscode.com
+        kind: BackupSession
+    - actions:
+        create: Always
+      displayMode: List
+      query:
+        raw: |-
+          query Find($src: String!, $targetGroup: String!, $targetKind: String!) {
+            find(oid: $src) {
+              backup_via(group: "stash.appscode.com", kind: "BackupConfiguration") {
+                refs: offshoot(group: $targetGroup, kind: $targetKind) {
+                  namespace
+                  name
+                }
+              }
+            }
+          }
+      ref:
+        group: stash.appscode.com
+        kind: RestoreSession
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        raw: |-
+          query Find($src: String!, $targetGroup: String!, $targetKind: String!) {
+            find(oid: $src) {
+              backup_via(group: "stash.appscode.com", kind: "BackupConfiguration") {
+                refs: offshoot(group: $targetGroup, kind: $targetKind) {
+                  namespace
+                  name
+                }
+              }
+            }
+          }
+      ref:
+        group: batch
+        kind: CronJob
+  - name: Security
+    resources:
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: ""
+        kind: ServiceAccount
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: rbac.authorization.k8s.io
+        kind: Role
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: rbac.authorization.k8s.io
+        kind: RoleBinding
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: cert-manager.io
+        kind: Certificate
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: cert-manager.io
+        kind: Issuer
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: cert-manager.io
+        kind: ClusterIssuer
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: policy
+        kind: PodSecurityPolicy
+  - name: Operations
+    resources:
+    - actions:
+        create: Always
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: ops.kubedb.com
+        kind: MySQLOpsRequest
+  - name: Monitoring
+    resources:
+    - actions:
+        create: IfEmpty
+      displayMode: List
+      query:
+        byLabel: monitored_by
+      ref:
+        group: monitoring.coreos.com
+        kind: ServiceMonitor
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: monitored_by
+      ref:
+        group: monitoring.coreos.com
+        kind: Prometheus
   resource:
     group: kubedb.com
     kind: MySQL
     name: mysqls
     scope: Namespaced
     version: v1alpha2
+  status:
+    danger:
+    - NotReady
+    success:
+    - Ready
+    warning:
+    - Critical
+    - Halted
+  subTables:
+  - columns:
+    - name: Type
+      pathTemplate: '{{ .type }}'
+      priority: 0
+      type: string
+    - name: Status
+      pathTemplate: '{{ .status }}'
+      priority: 0
+      type: string
+    - name: Reason
+      pathTemplate: '{{ .reason }}'
+      priority: 0
+      type: string
+    - name: Last Transition Time
+      pathTemplate: '{{ .lastTransitionTime }}'
+      priority: 0
+      type: date
+    - name: Observed Generation
+      pathTemplate: '{{ .observedGeneration }}'
+      priority: 0
+      type: string
+    - name: Message
+      pathTemplate: '{{ .message }}'
+      priority: 0
+      type: string
+    fieldPath: .status.conditions
+    name: Conditions
+  ui:
+    editor:
+      name: kubedbcom-mysql-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
+    options:
+      name: kubedbcom-mysql-editor-options
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       properties:
@@ -145,134 +461,6 @@ spec:
           type: object
         spec:
           properties:
-            allowedReadReplicas:
-              default:
-                namespaces:
-                  from: Same
-              properties:
-                namespaces:
-                  default:
-                    from: Same
-                  properties:
-                    from:
-                      default: Same
-                      enum:
-                      - All
-                      - Selector
-                      - Same
-                      type: string
-                    selector:
-                      properties:
-                        matchExpressions:
-                          items:
-                            properties:
-                              key:
-                                type: string
-                              operator:
-                                type: string
-                              values:
-                                items:
-                                  type: string
-                                type: array
-                            required:
-                            - key
-                            - operator
-                            type: object
-                          type: array
-                        matchLabels:
-                          additionalProperties:
-                            type: string
-                          type: object
-                      type: object
-                  type: object
-                selector:
-                  properties:
-                    matchExpressions:
-                      items:
-                        properties:
-                          key:
-                            type: string
-                          operator:
-                            type: string
-                          values:
-                            items:
-                              type: string
-                            type: array
-                        required:
-                        - key
-                        - operator
-                        type: object
-                      type: array
-                    matchLabels:
-                      additionalProperties:
-                        type: string
-                      type: object
-                  type: object
-              type: object
-            allowedSchemas:
-              default:
-                namespaces:
-                  from: Same
-              properties:
-                namespaces:
-                  default:
-                    from: Same
-                  properties:
-                    from:
-                      default: Same
-                      enum:
-                      - All
-                      - Selector
-                      - Same
-                      type: string
-                    selector:
-                      properties:
-                        matchExpressions:
-                          items:
-                            properties:
-                              key:
-                                type: string
-                              operator:
-                                type: string
-                              values:
-                                items:
-                                  type: string
-                                type: array
-                            required:
-                            - key
-                            - operator
-                            type: object
-                          type: array
-                        matchLabels:
-                          additionalProperties:
-                            type: string
-                          type: object
-                      type: object
-                  type: object
-                selector:
-                  properties:
-                    matchExpressions:
-                      items:
-                        properties:
-                          key:
-                            type: string
-                          operator:
-                            type: string
-                          values:
-                            items:
-                              type: string
-                            type: array
-                        required:
-                        - key
-                        - operator
-                        type: object
-                      type: array
-                    matchLabels:
-                      additionalProperties:
-                        type: string
-                      type: object
-                  type: object
-              type: object
             authSecret:
               properties:
                 name:
@@ -4397,30 +4585,7 @@ spec:
                   enum:
                   - GroupReplication
                   - InnoDBCluster
-                  - ReadReplica
                   type: string
-                readReplica:
-                  properties:
-                    sourceRef:
-                      properties:
-                        apiVersion:
-                          type: string
-                        fieldPath:
-                          type: string
-                        kind:
-                          type: string
-                        name:
-                          type: string
-                        namespace:
-                          type: string
-                        resourceVersion:
-                          type: string
-                        uid:
-                          type: string
-                      type: object
-                  required:
-                  - sourceRef
-                  type: object
               type: object
             useAddressType:
               default: DNS

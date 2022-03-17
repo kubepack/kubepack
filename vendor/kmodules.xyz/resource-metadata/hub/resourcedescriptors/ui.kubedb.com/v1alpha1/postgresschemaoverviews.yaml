@@ -50,7 +50,7 @@ spec:
                     type: string
                   tableName:
                     type: string
-                  tableSizeBytes:
+                  tableSizeInBytes:
                     type: string
                 type: object
               type: array

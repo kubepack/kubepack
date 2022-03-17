@@ -15,6 +15,11 @@ spec:
     name: siteinfos
     scope: Cluster
     version: v1alpha1
+  ui:
+    editor:
+      name: auditorappscodecom-siteinfo-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       properties:
@@ -26,32 +31,11 @@ spec:
           type: string
         kubernetes:
           properties:
-            cluster:
-              properties:
-                displayName:
-                  type: string
-                name:
-                  type: string
-                provider:
-                  enum:
-                  - Aws
-                  - Azure
-                  - DigitalOcean
-                  - GoogleCloud
-                  - Linode
-                  - Packet
-                  - Scaleway
-                  - Vultr
-                  - BareMetal
-                  - KIND
-                  - Generic
-                  - Private
-                  type: string
-                uid:
-                  type: string
-              required:
-              - uid
-              type: object
+            clusterName:
+              description: https://github.com/kmodules/client-go/blob/master/tools/clusterid/lib.go
+              type: string
+            clusterUID:
+              type: string
             controlPlane:
               description: https://github.com/kmodules/client-go/blob/kubernetes-1.16.3/tools/analytics/analytics.go#L66
               properties:

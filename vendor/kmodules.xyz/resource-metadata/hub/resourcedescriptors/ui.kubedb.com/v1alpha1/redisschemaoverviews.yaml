@@ -46,18 +46,14 @@ spec:
             databases:
               items:
                 properties:
-                  avgTTLMilliSeconds:
+                  avgTTL:
                     type: string
                   dbId:
                     type: string
                   expires:
-                    format: date-time
                     type: string
                   keys:
                     type: string
-                required:
-                - dbId
-                - keys
                 type: object
               type: array
           required:

@@ -9,12 +9,22 @@ metadata:
     k8s.io/version: v1
   name: core-v1-limitranges
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/core/limitranges.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/core/limitranges.png
+    type: image/png
   resource:
     group: ""
     kind: LimitRange
     name: limitranges
     scope: Namespaced
     version: v1
+  ui:
+    editor:
+      name: core-limitrange-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: LimitRange sets resource usage limits for each kind of resource in a Namespace.

@@ -9,12 +9,22 @@ metadata:
     k8s.io/version: v1
   name: core-v1-nodes
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/core/nodes.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/core/nodes.png
+    type: image/png
   resource:
     group: ""
     kind: Node
     name: nodes
     scope: Cluster
     version: v1
+  ui:
+    editor:
+      name: core-node-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: Node is a worker node in Kubernetes. Each node will have a unique identifier in the cache (i.e. in etcd).

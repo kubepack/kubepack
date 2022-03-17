@@ -60,6 +60,8 @@ spec:
                 - currentValue
                 - defaultValue
                 - name
+                - source
+                - unit
                 type: object
               type: array
           required:

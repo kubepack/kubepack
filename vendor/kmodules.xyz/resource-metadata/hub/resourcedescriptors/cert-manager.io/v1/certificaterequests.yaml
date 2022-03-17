@@ -9,12 +9,27 @@ metadata:
     k8s.io/version: v1
   name: cert-manager.io-v1-certificaterequests
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/cert-manager.io/certificaterequests.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/cert-manager.io/certificaterequests.png
+    type: image/png
+  installer:
+    chart:
+      name: cert-manager
+      url: https://charts.jetstack.io
+      version: ""
   resource:
     group: cert-manager.io
     kind: CertificateRequest
     name: certificaterequests
     scope: Namespaced
     version: v1
+  ui:
+    editor:
+      name: certmanagerio-certificaterequest-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: "A CertificateRequest is used to request a signed certificate from one of the configured issuers. \n All fields within the CertificateRequest's `spec` are immutable after creation. A CertificateRequest will either succeed or fail, as denoted by its `status.state` field. \n A CertificateRequest is a one-shot resource, meaning it represents a single point in time request for a certificate and cannot be re-used."

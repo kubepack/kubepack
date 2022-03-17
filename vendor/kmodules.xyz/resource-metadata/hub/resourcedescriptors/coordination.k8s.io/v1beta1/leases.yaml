@@ -9,6 +9,11 @@ metadata:
     k8s.io/version: v1beta1
   name: coordination.k8s.io-v1beta1-leases
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/coordination.k8s.io/leases.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/coordination.k8s.io/leases.png
+    type: image/png
   resource:
     group: coordination.k8s.io
     kind: Lease

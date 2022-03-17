@@ -50,18 +50,18 @@ spec:
                     items:
                       type: string
                     type: array
-                  execTimeMicroSeconds:
+                  execTimeInMircoSeconds:
                     format: int64
                     type: integer
                   queryId:
                     format: int64
                     type: integer
                   queryTimestamp:
-                    format: date-time
-                    type: string
+                    format: int64
+                    type: integer
                 required:
                 - args
-                - execTimeMicroSeconds
+                - execTimeInMircoSeconds
                 - queryId
                 - queryTimestamp
                 type: object

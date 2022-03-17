@@ -9,6 +9,31 @@ metadata:
     k8s.io/version: v2beta2
   name: autoscaling-v2beta2-horizontalpodautoscalers
 spec:
+  columns:
+  - name: Name
+    pathTemplate: '{{ .metadata.name }}'
+    priority: 3
+    type: string
+  - name: Namespace
+    pathTemplate: '{{ .metadata.namespace }}'
+    priority: 3
+    type: string
+  - name: Reference
+    pathTemplate: '{{ .spec.scaleTargetRef.kind }}/{{ .spec.scaleTargetRef.name }}'
+    priority: 3
+    type: string
+  - name: Min-Replica(s)
+    pathTemplate: '{{ .spec.minReplicas }}'
+    priority: 3
+    type: string
+  - name: Max-Replica(s)
+    pathTemplate: '{{ .spec.maxReplicas }}'
+    priority: 3
+    type: string
+  - name: Age
+    pathTemplate: '{{ .metadata.creationTimestamp }}'
+    priority: 3
+    type: date
   connections:
   - labels:
     - offshoot
@@ -50,12 +75,33 @@ spec:
       apiVersion: apps/v1
       kind: StatefulSet
     type: MatchRef
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/autoscaling/horizontalpodautoscalers.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/autoscaling/horizontalpodautoscalers.png
+    type: image/png
+  pages:
+  - name: Basic
+    resources:
+    - actions:
+        create: Never
+      displayMode: List
+      query:
+        byLabel: offshoot
+      ref:
+        group: apps
+        kind: Deployment
   resource:
     group: autoscaling
     kind: HorizontalPodAutoscaler
     name: horizontalpodautoscalers
     scope: Namespaced
     version: v2beta2
+  ui:
+    editor:
+      name: autoscaling-horizontalpodautoscaler-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: HorizontalPodAutoscaler is the configuration for a horizontal pod autoscaler, which automatically manages the replica count of any resource implementing the scale subresource based on the metrics specified.

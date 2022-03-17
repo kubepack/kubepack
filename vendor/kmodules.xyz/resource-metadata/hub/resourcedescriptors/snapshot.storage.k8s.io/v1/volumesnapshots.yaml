@@ -15,6 +15,11 @@ spec:
     name: volumesnapshots
     scope: Namespaced
     version: v1
+  ui:
+    editor:
+      name: snapshotstoragek8sio-volumesnapshot-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.3.0
   validation:
     openAPIV3Schema:
       description: VolumeSnapshot is a user's request for either creating a point-in-time snapshot of a persistent volume, or binding to a pre-existing snapshot.
