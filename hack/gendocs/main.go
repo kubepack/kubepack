@@ -28,6 +28,8 @@ import (
 	"kubepack.dev/kubepack/pkg/cmds"
 
 	"github.com/spf13/cobra/doc"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 	"gomodules.xyz/runtime"
 	"k8s.io/klog/v2"
 )
@@ -95,7 +97,7 @@ func main() {
 			RootCmd bool
 		}{
 			strings.Replace(base, "_", "-", -1),
-			strings.Title(strings.Replace(base, "_", " ", -1)),
+			cases.Title(language.English).String(strings.Replace(base, "_", " ", -1)),
 			version,
 			!strings.ContainsRune(base, '_'),
 		}
