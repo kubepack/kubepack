@@ -17128,17 +17128,12 @@ func schema_resource_metadata_apis_meta_v1alpha1_ResourceOutlineSpec(ref common.
 							},
 						},
 					},
-					"ui": {
-						SchemaProps: spec.SchemaProps{
-							Ref: ref("kmodules.xyz/resource-metadata/apis/meta/v1alpha1.UIParameters"),
-						},
-					},
 				},
 				Required: []string{"resource", "defaultLayout"},
 			},
 		},
 		Dependencies: []string{
-			"kmodules.xyz/client-go/api/v1.ResourceID", "kmodules.xyz/resource-metadata/apis/meta/v1alpha1.PageBlockOutline", "kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourcePageOutline", "kmodules.xyz/resource-metadata/apis/meta/v1alpha1.UIParameters"},
+			"kmodules.xyz/client-go/api/v1.ResourceID", "kmodules.xyz/resource-metadata/apis/meta/v1alpha1.PageBlockOutline", "kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourcePageOutline"},
 	}
 }
 

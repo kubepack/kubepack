@@ -1627,11 +1627,6 @@ func (in *ResourceOutlineSpec) DeepCopyInto(out *ResourceOutlineSpec) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
-	if in.UI != nil {
-		in, out := &in.UI, &out.UI
-		*out = new(UIParameters)
-		(*in).DeepCopyInto(*out)
-	}
 	return
 }
 

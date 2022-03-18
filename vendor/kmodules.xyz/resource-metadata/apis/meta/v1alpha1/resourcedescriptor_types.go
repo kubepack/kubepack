@@ -166,9 +166,9 @@ const (
 type Priority int32
 
 const (
-	Field Priority = 1 << iota
-	List
-	Metadata
+	Field    Priority = 1 << iota // 2^0 = 1
+	List                          // 2^1 = 2
+	Metadata                      // 2^2 = 4
 )
 
 // ColumnTypeRef refers to a ResourceTableDefinition whose columns should be used in its place
