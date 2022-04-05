@@ -1216,6 +1216,9 @@ spec:
                       type: string
                   type: object
               type: object
+            repoNamespace:
+              description: RepoNamespace specifies the namespace where the Repository will be created for the respective target
+              type: string
             retentionPolicy:
               description: RetentionPolicy indicates the policy to follow to clean old backup snapshots
               properties:
@@ -2289,6 +2292,11 @@ spec:
                         type: string
                       description: 'NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node''s labels for the pod to be scheduled on that node. More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/'
                       type: object
+                    podAnnotations:
+                      additionalProperties:
+                        type: string
+                      description: PodAnnotations are the annotations that will be attached with the respective Pod
+                      type: object
                     priority:
                       description: The priority value. Various system components use this field to find the priority of the pod. When Priority Admission Controller is enabled, it prevents users from setting this field. The admission controller populates this field from PriorityClassName. The higher the value, the higher the priority.
                       format: int32
@@ -2399,6 +2407,11 @@ spec:
                               type: string
                           type: object
                       type: object
+                    serviceAccountAnnotations:
+                      additionalProperties:
+                        type: string
+                      description: ServiceAccountAnnotations are the annotations that will be attached with the respective ServiceAccount
+                      type: object
                     serviceAccountName:
                       description: 'ServiceAccountName is the name of the ServiceAccount to use to run this pod. More info: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/'
                       type: string
@@ -2428,6 +2441,7 @@ spec:
                   type: object
               type: object
             schedule:
+              description: Schedule specifies the default schedule for backup. You can overwrite this schedule for a particular target using 'stash.appscode.com/schedule' annotation.
               type: string
             task:
               description: Task specify the Task crd that specifies steps for backup process

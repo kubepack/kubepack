@@ -61,7 +61,6 @@ spec:
                     type: string
                 required:
                 - args
-                - execTimeMicroSeconds
                 - queryId
                 - queryTimestamp
                 type: object

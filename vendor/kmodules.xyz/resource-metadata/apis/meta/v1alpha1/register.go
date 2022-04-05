@@ -69,6 +69,7 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 		&RenderAPI{},
 		&RenderMenu{},
 		&ResourceGraph{},
+		&RenderDashboard{},
 	)
 
 	scheme.AddKnownTypes(SchemeGroupVersion,
