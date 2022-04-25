@@ -1,0 +1,17 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ui.kubedb.com
+    k8s.io/kind: PostgresQueries
+    k8s.io/resource: postgresqueries
+    k8s.io/version: v1alpha1
+  name: ui.kubedb.com-v1alpha1-postgresqueries
+spec:
+  resource:
+    group: ui.kubedb.com
+    kind: PostgresQueries
+    name: postgresqueries
+    scope: Namespaced
+    version: v1alpha1

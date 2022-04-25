@@ -1,0 +1,17 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ui.kubedb.com
+    k8s.io/kind: ElasticsearchNodesStats
+    k8s.io/resource: elasticsearchnodesstats
+    k8s.io/version: v1alpha1
+  name: ui.kubedb.com-v1alpha1-elasticsearchnodesstats
+spec:
+  resource:
+    group: ui.kubedb.com
+    kind: ElasticsearchNodesStats
+    name: elasticsearchnodesstats
+    scope: Namespaced
+    version: v1alpha1

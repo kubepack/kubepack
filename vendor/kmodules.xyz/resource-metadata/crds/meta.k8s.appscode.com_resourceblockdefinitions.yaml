@@ -112,6 +112,11 @@ spec:
                                       link, white, light, dark, black see https://bulma.io/documentation/elements/tag/#colors'
                                     type: string
                                 type: object
+                              dashboard:
+                                properties:
+                                  name:
+                                    type: string
+                                type: object
                               description:
                                 description: description is a human readable description
                                   of this column.

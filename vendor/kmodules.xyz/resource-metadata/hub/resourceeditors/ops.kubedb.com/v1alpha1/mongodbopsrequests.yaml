@@ -1,0 +1,27 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ops.kubedb.com
+    k8s.io/kind: MongoDBOpsRequest
+    k8s.io/resource: mongodbopsrequests
+    k8s.io/version: v1alpha1
+  name: ops.kubedb.com-v1alpha1-mongodbopsrequests
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/ops.kubedb.com/mongodbopsrequests.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/ops.kubedb.com/mongodbopsrequests.png
+    type: image/png
+  resource:
+    group: ops.kubedb.com
+    kind: MongoDBOpsRequest
+    name: mongodbopsrequests
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: opskubedbcom-mongodbopsrequest-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

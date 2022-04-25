@@ -1,0 +1,27 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: coordination.k8s.io
+    k8s.io/kind: Lease
+    k8s.io/resource: leases
+    k8s.io/version: v1
+  name: coordination.k8s.io-v1-leases
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/coordination.k8s.io/leases.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/coordination.k8s.io/leases.png
+    type: image/png
+  resource:
+    group: coordination.k8s.io
+    kind: Lease
+    name: leases
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: coordinationk8sio-lease-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

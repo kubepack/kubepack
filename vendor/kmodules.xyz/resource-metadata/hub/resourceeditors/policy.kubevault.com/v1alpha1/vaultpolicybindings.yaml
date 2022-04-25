@@ -1,0 +1,27 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: policy.kubevault.com
+    k8s.io/kind: VaultPolicyBinding
+    k8s.io/resource: vaultpolicybindings
+    k8s.io/version: v1alpha1
+  name: policy.kubevault.com-v1alpha1-vaultpolicybindings
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/policy.kubevault.com/vaultpolicybindings.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/policy.kubevault.com/vaultpolicybindings.png
+    type: image/png
+  resource:
+    group: policy.kubevault.com
+    kind: VaultPolicyBinding
+    name: vaultpolicybindings
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: policykubevaultcom-vaultpolicybinding-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

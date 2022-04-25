@@ -1,0 +1,22 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: autoscaling.kubedb.com
+    k8s.io/kind: RedisAutoscaler
+    k8s.io/resource: redisautoscalers
+    k8s.io/version: v1alpha1
+  name: autoscaling.kubedb.com-v1alpha1-redisautoscalers
+spec:
+  resource:
+    group: autoscaling.kubedb.com
+    kind: RedisAutoscaler
+    name: redisautoscalers
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: autoscalingkubedbcom-redisautoscaler-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

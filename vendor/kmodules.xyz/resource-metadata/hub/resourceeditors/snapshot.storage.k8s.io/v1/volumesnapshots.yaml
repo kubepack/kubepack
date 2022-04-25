@@ -1,0 +1,22 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: snapshot.storage.k8s.io
+    k8s.io/kind: VolumeSnapshot
+    k8s.io/resource: volumesnapshots
+    k8s.io/version: v1
+  name: snapshot.storage.k8s.io-v1-volumesnapshots
+spec:
+  resource:
+    group: snapshot.storage.k8s.io
+    kind: VolumeSnapshot
+    name: volumesnapshots
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: snapshotstoragek8sio-volumesnapshot-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

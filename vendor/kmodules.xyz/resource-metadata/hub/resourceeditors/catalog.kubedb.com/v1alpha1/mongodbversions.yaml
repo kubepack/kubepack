@@ -1,0 +1,27 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: catalog.kubedb.com
+    k8s.io/kind: MongoDBVersion
+    k8s.io/resource: mongodbversions
+    k8s.io/version: v1alpha1
+  name: catalog.kubedb.com-v1alpha1-mongodbversions
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/mongodbversions.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/mongodbversions.png
+    type: image/png
+  resource:
+    group: catalog.kubedb.com
+    kind: MongoDBVersion
+    name: mongodbversions
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: catalogkubedbcom-mongodbversion-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

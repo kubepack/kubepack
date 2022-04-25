@@ -1,0 +1,27 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ""
+    k8s.io/kind: Node
+    k8s.io/resource: nodes
+    k8s.io/version: v1
+  name: core-v1-nodes
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/core/nodes.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/core/nodes.png
+    type: image/png
+  resource:
+    group: ""
+    kind: Node
+    name: nodes
+    scope: Cluster
+    version: v1
+  ui:
+    editor:
+      name: core-node-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

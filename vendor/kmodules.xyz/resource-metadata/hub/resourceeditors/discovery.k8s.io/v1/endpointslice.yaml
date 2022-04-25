@@ -1,0 +1,22 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: discovery.k8s.io
+    k8s.io/kind: EndpointSlice
+    k8s.io/resource: endpointslice
+    k8s.io/version: v1
+  name: discovery.k8s.io-v1-endpointslice
+spec:
+  resource:
+    group: discovery.k8s.io
+    kind: EndpointSlice
+    name: endpointslice
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: discoveryk8sio-endpointslice-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

@@ -1,0 +1,31 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: kubedb.com
+    k8s.io/kind: Postgres
+    k8s.io/resource: postgreses
+    k8s.io/version: v1alpha2
+  name: kubedb.com-v1alpha2-postgreses
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/postgreses.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/postgreses.png
+    type: image/png
+  resource:
+    group: kubedb.com
+    kind: Postgres
+    name: postgreses
+    scope: Namespaced
+    version: v1alpha2
+  ui:
+    editor:
+      name: kubedbcom-postgres-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3
+    options:
+      name: kubedbcom-postgres-editor-options
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

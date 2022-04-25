@@ -1,0 +1,22 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ""
+    k8s.io/kind: EphemeralContainers
+    k8s.io/resource: ephemeralcontainers
+    k8s.io/version: v1
+  name: core-v1-ephemeralcontainers
+spec:
+  resource:
+    group: ""
+    kind: EphemeralContainers
+    name: ephemeralcontainers
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: core-ephemeralcontainers-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

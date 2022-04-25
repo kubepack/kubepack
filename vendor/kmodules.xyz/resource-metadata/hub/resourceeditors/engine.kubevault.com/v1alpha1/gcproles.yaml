@@ -1,0 +1,27 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: engine.kubevault.com
+    k8s.io/kind: GCPRole
+    k8s.io/resource: gcproles
+    k8s.io/version: v1alpha1
+  name: engine.kubevault.com-v1alpha1-gcproles
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/engine.kubevault.com/gcproles.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/engine.kubevault.com/gcproles.png
+    type: image/png
+  resource:
+    group: engine.kubevault.com
+    kind: GCPRole
+    name: gcproles
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: enginekubevaultcom-gcprole-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

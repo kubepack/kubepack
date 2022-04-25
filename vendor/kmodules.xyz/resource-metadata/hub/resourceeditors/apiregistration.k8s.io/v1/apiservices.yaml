@@ -1,0 +1,27 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: apiregistration.k8s.io
+    k8s.io/kind: APIService
+    k8s.io/resource: apiservices
+    k8s.io/version: v1
+  name: apiregistration.k8s.io-v1-apiservices
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/apiregistration.k8s.io/apiservices.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/apiregistration.k8s.io/apiservices.png
+    type: image/png
+  resource:
+    group: apiregistration.k8s.io
+    kind: APIService
+    name: apiservices
+    scope: Cluster
+    version: v1
+  ui:
+    editor:
+      name: apiregistrationk8sio-apiservice-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

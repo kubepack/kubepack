@@ -41,7 +41,7 @@ type ResourceGraph struct {
 }
 
 type ResourceGraphRequest struct {
-	Source kmapi.ObjectID `json:"source"`
+	Source kmapi.ObjectInfo `json:"source"`
 }
 
 type ResourceGraphResponse struct {

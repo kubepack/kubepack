@@ -1,0 +1,27 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ""
+    k8s.io/kind: PersistentVolume
+    k8s.io/resource: persistentvolumes
+    k8s.io/version: v1
+  name: core-v1-persistentvolumes
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/core/persistentvolumes.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/core/persistentvolumes.png
+    type: image/png
+  resource:
+    group: ""
+    kind: PersistentVolume
+    name: persistentvolumes
+    scope: Cluster
+    version: v1
+  ui:
+    editor:
+      name: core-persistentvolume-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

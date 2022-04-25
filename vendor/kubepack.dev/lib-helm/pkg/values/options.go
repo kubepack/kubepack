@@ -27,6 +27,7 @@ type Options struct {
 	ReplaceValues map[string]interface{} `json:"replaceValues"`
 	ValuesFile    string                 `json:"valuesFile"`
 	ValuesPatch   *runtime.RawExtension  `json:"valuesPatch"`
+	ValueBytes    [][]byte               `json:"valueBytes"`
 	StringValues  []string               `json:"stringValues"`
 	Values        []string               `json:"values"`
 	KVPairs       []KV                   `json:"kv_pairs"`
@@ -94,6 +95,17 @@ func (opts *Options) MergeValues(chrt *chart.Chart) (map[string]interface{}, err
 		return nil, errors.Wrapf(err, "failed to parse %s", opts.ValuesFile)
 	}
 
+	// User specified a values files via -f/--values
+	for _, bytes := range opts.ValueBytes {
+		currentMap := map[string]interface{}{}
+
+		if err := yaml.Unmarshal(bytes, &currentMap); err != nil {
+			return nil, errors.Wrapf(err, "failed to parse %s", bytes)
+		}
+		// Merge with the previous map
+		base = mergeMaps(base, currentMap)
+	}
+
 	// User specified a value via --set
 	for _, value := range opts.Values {
 		if err := strvals.ParseInto(value, base); err != nil {
@@ -116,4 +128,23 @@ func (opts *Options) MergeValues(chrt *chart.Chart) (map[string]interface{}, err
 	}
 
 	return base, nil
+}
+
+func mergeMaps(a, b map[string]interface{}) map[string]interface{} {
+	out := make(map[string]interface{}, len(a))
+	for k, v := range a {
+		out[k] = v
+	}
+	for k, v := range b {
+		if v, ok := v.(map[string]interface{}); ok {
+			if bv, ok := out[k]; ok {
+				if bv, ok := bv.(map[string]interface{}); ok {
+					out[k] = mergeMaps(bv, v)
+					continue
+				}
+			}
+		}
+		out[k] = v
+	}
+	return out
 }

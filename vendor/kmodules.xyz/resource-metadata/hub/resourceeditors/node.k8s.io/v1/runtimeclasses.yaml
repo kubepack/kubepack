@@ -1,0 +1,27 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: node.k8s.io
+    k8s.io/kind: RuntimeClass
+    k8s.io/resource: runtimeclasses
+    k8s.io/version: v1
+  name: node.k8s.io-v1-runtimeclasses
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/node.k8s.io/runtimeclasses.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/node.k8s.io/runtimeclasses.png
+    type: image/png
+  resource:
+    group: node.k8s.io
+    kind: RuntimeClass
+    name: runtimeclasses
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: nodek8sio-runtimeclass-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

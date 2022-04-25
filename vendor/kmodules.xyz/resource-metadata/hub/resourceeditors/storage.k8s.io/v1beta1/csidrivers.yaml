@@ -1,0 +1,22 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: storage.k8s.io
+    k8s.io/kind: CSIDriver
+    k8s.io/resource: csidrivers
+    k8s.io/version: v1beta1
+  name: storage.k8s.io-v1beta1-csidrivers
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/storage.k8s.io/csidrivers.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/storage.k8s.io/csidrivers.png
+    type: image/png
+  resource:
+    group: storage.k8s.io
+    kind: CSIDriver
+    name: csidrivers
+    scope: Cluster
+    version: v1beta1

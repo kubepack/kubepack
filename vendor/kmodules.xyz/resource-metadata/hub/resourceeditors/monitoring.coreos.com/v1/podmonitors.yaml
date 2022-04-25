@@ -1,0 +1,27 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: monitoring.coreos.com
+    k8s.io/kind: PodMonitor
+    k8s.io/resource: podmonitors
+    k8s.io/version: v1
+  name: monitoring.coreos.com-v1-podmonitors
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/monitoring.coreos.com/podmonitors.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/monitoring.coreos.com/podmonitors.png
+    type: image/png
+  resource:
+    group: monitoring.coreos.com
+    kind: PodMonitor
+    name: podmonitors
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: monitoringcoreoscom-podmonitor-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

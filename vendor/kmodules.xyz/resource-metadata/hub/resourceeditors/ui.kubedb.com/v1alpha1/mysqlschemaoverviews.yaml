@@ -1,0 +1,17 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ui.kubedb.com
+    k8s.io/kind: MySQLSchemaOverview
+    k8s.io/resource: mysqlschemaoverviews
+    k8s.io/version: v1alpha1
+  name: ui.kubedb.com-v1alpha1-mysqlschemaoverviews
+spec:
+  resource:
+    group: ui.kubedb.com
+    kind: MySQLSchemaOverview
+    name: mysqlschemaoverviews
+    scope: Namespaced
+    version: v1alpha1

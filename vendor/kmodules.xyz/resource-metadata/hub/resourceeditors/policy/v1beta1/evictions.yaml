@@ -1,0 +1,22 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: policy
+    k8s.io/kind: Eviction
+    k8s.io/resource: evictions
+    k8s.io/version: v1beta1
+  name: policy-v1beta1-evictions
+spec:
+  resource:
+    group: policy
+    kind: Eviction
+    name: evictions
+    scope: Namespaced
+    version: v1beta1
+  ui:
+    editor:
+      name: policy-eviction-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

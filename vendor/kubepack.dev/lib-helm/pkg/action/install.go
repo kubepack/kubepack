@@ -12,7 +12,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
-	"kmodules.xyz/resource-metadata/hub"
+	"k8s.io/klog/v2"
 	libchart "kubepack.dev/lib-helm/pkg/chart"
 	"kubepack.dev/lib-helm/pkg/engine"
 	"kubepack.dev/lib-helm/pkg/repo"
@@ -24,6 +24,7 @@ type InstallOptions struct {
 	ChartName                string         `json:"chartName"`
 	Version                  string         `json:"version"`
 	Values                   values.Options `json:",inline,omitempty"`
+	ClientOnly               bool           `json:"clientOnly"`
 	DryRun                   bool           `json:"dryRun"`
 	DisableHooks             bool           `json:"disableHooks"`
 	Replace                  bool           `json:"replace"`
@@ -102,7 +103,7 @@ func (x *Installer) Run() (*release.Release, *engine.State, error) {
 	cmd.ReleaseName = x.opts.ReleaseName
 	cmd.Namespace = x.opts.Namespace
 	cmd.Replace = x.opts.Replace // Skip the name check
-	cmd.ClientOnly = false
+	cmd.ClientOnly = x.opts.ClientOnly
 	cmd.APIVersions = chartutil.VersionSet(extraAPIs)
 	cmd.Version = x.opts.Version
 	cmd.DisableHooks = x.opts.DisableHooks
@@ -122,10 +123,7 @@ func (x *Installer) Run() (*release.Release, *engine.State, error) {
 	}
 
 	if chrt.Metadata.Deprecated {
-		_, err = fmt.Println("# WARNING: This chart is deprecated")
-		if err != nil {
-			return nil, nil, err
-		}
+		klog.Warningf("WARNING: chart url=%s,name=%s,version=%s is deprecated", x.opts.ChartURL, x.opts.ChartName, x.opts.Version)
 	}
 
 	if req := chrt.Metadata.Dependencies; req != nil {
@@ -135,6 +133,11 @@ func (x *Installer) Run() (*release.Release, *engine.State, error) {
 		if err := ha.CheckDependencies(chrt.Chart, req); err != nil {
 			return nil, nil, err
 		}
+	}
+
+	kc, err := NewUncachedClient(x.cfg.RESTClientGetter)
+	if err != nil {
+		return nil, nil, err
 	}
 
 	vals, err := x.opts.Values.MergeValues(chrt.Chart)
@@ -150,7 +153,7 @@ func (x *Installer) Run() (*release.Release, *engine.State, error) {
 			Namespace: x.opts.Namespace,
 			Name:      x.opts.ReleaseName,
 		}
-		if err := RefillMetadata(hub.NewRegistryOfKnownResources(), chrt.Chart.Values, vals, gvr, rls); err != nil {
+		if err := RefillMetadata(kc, chrt.Chart.Values, vals, gvr, rls); err != nil {
 			return nil, nil, err
 		}
 	}

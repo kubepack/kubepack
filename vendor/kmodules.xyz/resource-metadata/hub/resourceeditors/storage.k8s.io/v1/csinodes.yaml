@@ -1,0 +1,27 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: storage.k8s.io
+    k8s.io/kind: CSINode
+    k8s.io/resource: csinodes
+    k8s.io/version: v1
+  name: storage.k8s.io-v1-csinodes
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/storage.k8s.io/csinodes.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/storage.k8s.io/csinodes.png
+    type: image/png
+  resource:
+    group: storage.k8s.io
+    kind: CSINode
+    name: csinodes
+    scope: Cluster
+    version: v1
+  ui:
+    editor:
+      name: storagek8sio-csinode-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

@@ -1,0 +1,22 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: autoscaling.kubedb.com
+    k8s.io/kind: PerconaXtraDBAutoscaler
+    k8s.io/resource: perconaxtradbautoscalers
+    k8s.io/version: v1alpha1
+  name: autoscaling.kubedb.com-v1alpha1-perconaxtradbautoscalers
+spec:
+  resource:
+    group: autoscaling.kubedb.com
+    kind: PerconaXtraDBAutoscaler
+    name: perconaxtradbautoscalers
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: autoscalingkubedbcom-perconaxtradbautoscaler-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

@@ -69,10 +69,14 @@ type ProductInfo struct {
 }
 
 type KubernetesInfo struct {
-	Cluster      kmapi.ClusterMetadata `json:"cluster,omitempty"`
-	Version      *version.Info         `json:"version,omitempty"`
-	ControlPlane *ControlPlaneInfo     `json:"controlPlane,omitempty"`
-	NodeStats    NodeStats             `json:"nodeStats"`
+	// Deprecated
+	ClusterName string `json:"clusterName,omitempty"`
+	// Deprecated
+	ClusterUID   string                 `json:"clusterUID,omitempty"`
+	Cluster      *kmapi.ClusterMetadata `json:"cluster,omitempty"`
+	Version      *version.Info          `json:"version,omitempty"`
+	ControlPlane *ControlPlaneInfo      `json:"controlPlane,omitempty"`
+	NodeStats    NodeStats              `json:"nodeStats"`
 }
 
 // https://github.com/kmodules/client-go/blob/kubernetes-1.16.3/tools/analytics/analytics.go#L66
@@ -104,6 +108,6 @@ type NodeStats struct {
 // SiteInfoList is a list of SiteInfo
 type SiteInfoList struct {
 	metav1.TypeMeta `json:",inline"`
-	metav1.ListMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
-	Items           []SiteInfo `json:"items,omitempty" protobuf:"bytes,2,rep,name=items"`
+	metav1.ListMeta `json:"metadata,omitempty"`
+	Items           []SiteInfo `json:"items,omitempty"`
 }

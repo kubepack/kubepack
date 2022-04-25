@@ -1,0 +1,22 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: extensions
+    k8s.io/kind: ReplicaSet
+    k8s.io/resource: replicasets
+    k8s.io/version: v1beta1
+  name: extensions-v1beta1-replicasets
+spec:
+  resource:
+    group: extensions
+    kind: ReplicaSet
+    name: replicasets
+    scope: Namespaced
+    version: v1beta1
+  ui:
+    editor:
+      name: extensions-replicaset-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

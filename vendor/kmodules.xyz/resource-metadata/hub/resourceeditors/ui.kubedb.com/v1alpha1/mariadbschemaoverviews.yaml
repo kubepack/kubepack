@@ -1,0 +1,17 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ui.kubedb.com
+    k8s.io/kind: MariaDBSchemaOverview
+    k8s.io/resource: mariadbschemaoverviews
+    k8s.io/version: v1alpha1
+  name: ui.kubedb.com-v1alpha1-mariadbschemaoverviews
+spec:
+  resource:
+    group: ui.kubedb.com
+    kind: MariaDBSchemaOverview
+    name: mariadbschemaoverviews
+    scope: Namespaced
+    version: v1alpha1

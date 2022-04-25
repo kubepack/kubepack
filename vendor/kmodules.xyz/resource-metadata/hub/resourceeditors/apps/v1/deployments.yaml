@@ -1,0 +1,27 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: apps
+    k8s.io/kind: Deployment
+    k8s.io/resource: deployments
+    k8s.io/version: v1
+  name: apps-v1-deployments
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/apps/deployments.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/apps/deployments.png
+    type: image/png
+  resource:
+    group: apps
+    kind: Deployment
+    name: deployments
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: apps-deployment-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

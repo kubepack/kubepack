@@ -65,5 +65,12 @@ func Convert_ResourceColumnDefinition_To_ResourceColumn(def ResourceColumnDefini
 	if def.TextAlign != "" {
 		col.TextAlign = def.TextAlign
 	}
+	if def.Dashboard != nil && def.Dashboard.Dashboard != nil {
+		col.Dashboard = &DashboardResult{
+			Title:   def.Dashboard.Dashboard.Title,
+			Status:  def.Dashboard.Status,
+			Message: def.Dashboard.Message,
+		}
+	}
 	return col
 }

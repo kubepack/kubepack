@@ -1,0 +1,22 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: monitoring.coreos.com
+    k8s.io/kind: Probe
+    k8s.io/resource: probes
+    k8s.io/version: v1
+  name: monitoring.coreos.com-v1-probes
+spec:
+  resource:
+    group: monitoring.coreos.com
+    kind: Probe
+    name: probes
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: monitoringcoreoscom-probe-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

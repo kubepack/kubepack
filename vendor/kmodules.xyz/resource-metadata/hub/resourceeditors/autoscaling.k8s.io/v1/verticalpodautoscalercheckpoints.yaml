@@ -1,0 +1,22 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: autoscaling.k8s.io
+    k8s.io/kind: VerticalPodAutoscalerCheckpoint
+    k8s.io/resource: verticalpodautoscalercheckpoints
+    k8s.io/version: v1
+  name: autoscaling.k8s.io-v1-verticalpodautoscalercheckpoints
+spec:
+  resource:
+    group: autoscaling.k8s.io
+    kind: VerticalPodAutoscalerCheckpoint
+    name: verticalpodautoscalercheckpoints
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: autoscalingk8sio-verticalpodautoscalercheckpoint-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

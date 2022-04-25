@@ -1,0 +1,22 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: storage.k8s.io
+    k8s.io/kind: StorageClass
+    k8s.io/resource: storageclasses
+    k8s.io/version: v1beta1
+  name: storage.k8s.io-v1beta1-storageclasses
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/storage.k8s.io/storageclasses.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/storage.k8s.io/storageclasses.png
+    type: image/png
+  resource:
+    group: storage.k8s.io
+    kind: StorageClass
+    name: storageclasses
+    scope: Cluster
+    version: v1beta1

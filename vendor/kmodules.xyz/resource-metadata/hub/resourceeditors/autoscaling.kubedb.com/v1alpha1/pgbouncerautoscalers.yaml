@@ -1,0 +1,22 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: autoscaling.kubedb.com
+    k8s.io/kind: PgBouncerAutoscaler
+    k8s.io/resource: pgbouncerautoscalers
+    k8s.io/version: v1alpha1
+  name: autoscaling.kubedb.com-v1alpha1-pgbouncerautoscalers
+spec:
+  resource:
+    group: autoscaling.kubedb.com
+    kind: PgBouncerAutoscaler
+    name: pgbouncerautoscalers
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: autoscalingkubedbcom-pgbouncerautoscaler-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

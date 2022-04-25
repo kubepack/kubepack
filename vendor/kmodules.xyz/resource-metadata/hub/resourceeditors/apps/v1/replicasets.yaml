@@ -1,0 +1,27 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: apps
+    k8s.io/kind: ReplicaSet
+    k8s.io/resource: replicasets
+    k8s.io/version: v1
+  name: apps-v1-replicasets
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/apps/replicasets.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/apps/replicasets.png
+    type: image/png
+  resource:
+    group: apps
+    kind: ReplicaSet
+    name: replicasets
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: apps-replicaset-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.3

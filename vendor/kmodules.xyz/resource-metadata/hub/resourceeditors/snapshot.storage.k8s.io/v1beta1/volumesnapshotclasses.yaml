@@ -1,0 +1,17 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: snapshot.storage.k8s.io
+    k8s.io/kind: VolumeSnapshotClass
+    k8s.io/resource: volumesnapshotclasses
+    k8s.io/version: v1beta1
+  name: snapshot.storage.k8s.io-v1beta1-volumesnapshotclasses
+spec:
+  resource:
+    group: snapshot.storage.k8s.io
+    kind: VolumeSnapshotClass
+    name: volumesnapshotclasses
+    scope: Cluster
+    version: v1beta1

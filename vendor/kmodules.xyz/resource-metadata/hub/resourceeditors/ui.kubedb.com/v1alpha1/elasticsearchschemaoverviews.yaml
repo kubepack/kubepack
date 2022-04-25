@@ -1,0 +1,17 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ui.kubedb.com
+    k8s.io/kind: ElasticsearchSchemaOverview
+    k8s.io/resource: elasticsearchschemaoverviews
+    k8s.io/version: v1alpha1
+  name: ui.kubedb.com-v1alpha1-elasticsearchschemaoverviews
+spec:
+  resource:
+    group: ui.kubedb.com
+    kind: ElasticsearchSchemaOverview
+    name: elasticsearchschemaoverviews
+    scope: Namespaced
+    version: v1alpha1
