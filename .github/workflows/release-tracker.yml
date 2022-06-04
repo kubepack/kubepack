@@ -3,6 +3,11 @@ name: release-tracker
 on:
   pull_request:
     types: [closed]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
