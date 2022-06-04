@@ -79,12 +79,16 @@ func NewUncachedClientForConfig(cfg *rest.Config) (client.Client, error) {
 }
 
 func RefillMetadata(kc client.Client, ref, actual map[string]interface{}, gvr metav1.GroupVersionResource, rls types.NamespacedName) error {
+	// WARNING: Don't use kc.RESTMapper().KindFor to find Kind because the CRD may be yet exist in the cluster
+	rsMeta, ok, err := unstructured.NestedMap(ref, "metadata", "resource")
+	if err != nil {
+		return err
+	} else if !ok {
+		return fmt.Errorf(".metadata.resource not found in ref values")
+	}
+
 	actual["metadata"] = map[string]interface{}{
-		"resource": map[string]interface{}{
-			"group":    gvr.Group,
-			"version":  gvr.Version,
-			"resource": gvr.Resource,
-		},
+		"resource": rsMeta,
 		"release": map[string]interface{}{
 			"name":      rls.Name,
 			"namespace": rls.Namespace,
@@ -110,6 +114,8 @@ func RefillMetadata(kc client.Client, ref, actual map[string]interface{}, gvr me
 	//}
 	mapper := discovery.NewResourceMapper(kc.RESTMapper())
 
+	_, usesForm := ref["form"]
+
 	for key, o := range actualResources {
 		// apiVersion
 		// kind
@@ -120,6 +126,9 @@ func RefillMetadata(kc client.Client, ref, actual map[string]interface{}, gvr me
 
 		refObj, ok := refResources[key].(map[string]interface{})
 		if !ok {
+			if usesForm {
+				continue // in case of form, we will see form objects which are not present in the ref resources
+			}
 			return fmt.Errorf("missing key %s in reference chart values", key)
 		}
 		obj := o.(map[string]interface{})

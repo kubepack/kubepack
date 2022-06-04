@@ -111,7 +111,7 @@ func (c *FakeProducts) UpdateStatus(ctx context.Context, product *v1alpha1.Produ
 // Delete takes name of the product and deletes it. Returns an error if one occurs.
 func (c *FakeProducts) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	_, err := c.Fake.
-		Invokes(testing.NewRootDeleteAction(productsResource, name), &v1alpha1.Product{})
+		Invokes(testing.NewRootDeleteActionWithOptions(productsResource, name, opts), &v1alpha1.Product{})
 	return err
 }
 

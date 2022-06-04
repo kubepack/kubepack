@@ -68,7 +68,7 @@ spec:
                               items:
                                 description: GroupVersionResource unambiguously identifies
                                   a resource.  It doesn't anonymously include GroupVersion
-                                  to avoid automatic coersion.  It doesn't use a GroupVersion
+                                  to avoid automatic coercion.  It doesn't use a GroupVersion
                                   to avoid custom marshalling
                                 properties:
                                   group:
@@ -87,7 +87,7 @@ spec:
                               items:
                                 description: GroupVersionResource unambiguously identifies
                                   a resource.  It doesn't anonymously include GroupVersion
-                                  to avoid automatic coersion.  It doesn't use a GroupVersion
+                                  to avoid automatic coercion.  It doesn't use a GroupVersion
                                   to avoid custom marshalling
                                 properties:
                                   group:

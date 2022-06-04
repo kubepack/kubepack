@@ -31,6 +31,8 @@
 // default Azure public domain "blob.core.windows.net" will be used. Check
 // the Azure Developer Guide for your particular cloud environment to see
 // the proper blob storage domain name to provide.
+// If there are multiple identities assigned to your account, you can also provide
+// AZURE_CLIENT_ID to designate which identity should be used for authentication.
 // To customize the URL opener, or for more details on the URL format,
 // see URLOpener.
 // See https://gocloud.dev/concepts/urls/ for background information.
@@ -115,12 +117,26 @@ type Options struct {
 	// The default value is "blob.core.windows.net". Possible values will look similar
 	// to this but are different for each cloud (i.e. "blob.core.govcloudapi.net" for USGovernment).
 	// Check the Azure developer guide for the cloud environment where your bucket resides.
+	// The full URL used is "<Protocol>://<account name>.<StorageDomain>", where the
+	// "<account name>." part is dropped if IsCDN is set to true.
 	StorageDomain StorageDomain
 
 	// Protocol can be provided to specify protocol to access Azure Blob Storage.
 	// Protocols that can be specified are "http" for local emulator and "https" for general.
 	// If blank is specified, "https" will be used.
+	// The full URL used is "<Protocol>://<account name>.<StorageDomain>", where the
+	// "<account name>." part is dropped if IsCDN is set to true.
 	Protocol Protocol
+
+	// IsCDN can be set to true when using a CDN URL pointing to a blob storage account:
+	// https://docs.microsoft.com/en-us/azure/cdn/cdn-create-a-storage-account-with-cdn
+	// The full URL used is "<Protocol>://<account name>.<StorageDomain>", where the
+	// "<account name>." part is dropped if IsCDN is set to true.
+	IsCDN bool
+
+	// IsLocalEmulator should be set to true when targetting Local Storage Emulator (Azurite).
+	// The URL format is "<Protocol>://<StorageDomain>/<account name>" (ex: http://127.0.0.1:10000/devstoreaccount1).
+	IsLocalEmulator bool
 }
 
 const (
@@ -155,18 +171,25 @@ func (o *lazyCredsOpener) OpenBucketURL(ctx context.Context, u *url.URL) (*blob.
 		// Ignore errors, as we'll get errors from OpenBucket later.
 		accountName, _ := DefaultAccountName()
 		accountKey, _ := DefaultAccountKey()
+		clientId, _ := DefaultClientId()
 		sasToken, _ := DefaultSASToken()
 		storageDomain, _ := DefaultStorageDomain()
+		isCDN, _ := DefaultIsCDN()
 		protocol, _ := DefaultProtocol()
 
 		isMSIEnvironment := adal.MSIAvailable(ctx, adal.CreateSender())
+		opts := Options{
+			StorageDomain: storageDomain,
+			Protocol:      protocol,
+			IsCDN:         isCDN,
+		}
 
 		if accountKey != "" || sasToken != "" {
-			o.opener, o.err = openerFromEnv(accountName, accountKey, sasToken, storageDomain, protocol)
+			o.opener, o.err = openerFromEnv(accountName, accountKey, sasToken, opts)
 		} else if isMSIEnvironment {
-			o.opener, o.err = openerFromMSI(accountName, storageDomain, protocol)
+			o.opener, o.err = openerFromMSI(accountName, clientId, opts)
 		} else {
-			o.opener, o.err = openerFromAnon(accountName, storageDomain, protocol)
+			o.opener, o.err = openerFromAnon(accountName, opts)
 		}
 	})
 	if o.err != nil {
@@ -185,6 +208,11 @@ const Scheme = "azblob"
 //
 // The following query options are supported:
 //  - domain: The domain name used to access the Azure Blob storage (e.g. blob.core.windows.net)
+//  - protocol: The protocol to use (e.g., http or https; default to https)
+//  - cdn: Set to true when domain represents a CDN
+//  - localemu: Set to true when domain points to the Local Storage Emulator (Azurite)
+//
+// See Options for more details.
 type URLOpener struct {
 	// AccountName must be specified.
 	AccountName AccountName
@@ -196,7 +224,7 @@ type URLOpener struct {
 	Options Options
 }
 
-func openerFromEnv(accountName AccountName, accountKey AccountKey, sasToken SASToken, storageDomain StorageDomain, protocol Protocol) (*URLOpener, error) {
+func openerFromEnv(accountName AccountName, accountKey AccountKey, sasToken SASToken, opts Options) (*URLOpener, error) {
 	// azblob.Credential is an interface; we will use either a SharedKeyCredential
 	// or anonymous credentials. If the former, we will also fill in
 	// Options.Credential so that SignedURL will work.
@@ -212,27 +240,21 @@ func openerFromEnv(accountName AccountName, accountKey AccountKey, sasToken SAST
 	} else {
 		credential = azblob.NewAnonymousCredential()
 	}
+	opts.Credential = storageAccountCredential
+	opts.SASToken = sasToken
 	return &URLOpener{
 		AccountName: accountName,
 		Pipeline:    NewPipeline(credential, azblob.PipelineOptions{}),
-		Options: Options{
-			Credential:    storageAccountCredential,
-			SASToken:      sasToken,
-			StorageDomain: storageDomain,
-			Protocol:      protocol,
-		},
+		Options:     opts,
 	}, nil
 }
 
 // openerFromAnon creates an anonymous credential backend URLOpener
-func openerFromAnon(accountName AccountName, storageDomain StorageDomain, protocol Protocol) (*URLOpener, error) {
+func openerFromAnon(accountName AccountName, opts Options) (*URLOpener, error) {
 	return &URLOpener{
 		AccountName: accountName,
 		Pipeline:    NewPipeline(azblob.NewAnonymousCredential(), azblob.PipelineOptions{}),
-		Options: Options{
-			StorageDomain: storageDomain,
-			Protocol:      protocol,
-		},
+		Options:     opts,
 	}, nil
 }
 
@@ -252,9 +274,9 @@ var defaultTokenRefreshFunction = func(spToken *adal.ServicePrincipalToken) func
 }
 
 // openerFromMSI acquires an MSI token and returns TokenCredential backed URLOpener
-func openerFromMSI(accountName AccountName, storageDomain StorageDomain, protocol Protocol) (*URLOpener, error) {
+func openerFromMSI(accountName AccountName, clientId ClientId, opts Options) (*URLOpener, error) {
 
-	spToken, err := getMSIServicePrincipalToken(azure.PublicCloud.ResourceIdentifiers.Storage)
+	spToken, err := getMSIServicePrincipalToken(azure.PublicCloud.ResourceIdentifiers.Storage, clientId)
 	if err != nil {
 		return nil, fmt.Errorf("failure acquiring token from MSI endpoint %w", err)
 	}
@@ -268,22 +290,28 @@ func openerFromMSI(accountName AccountName, storageDomain StorageDomain, protoco
 	return &URLOpener{
 		AccountName: accountName,
 		Pipeline:    NewPipeline(credential, azblob.PipelineOptions{}),
-		Options: Options{
-			StorageDomain: storageDomain,
-			Protocol:      protocol,
-		},
+		Options:     opts,
 	}, nil
 }
 
 // getMSIServicePrincipalToken retrieves Azure API Service Principal token.
-func getMSIServicePrincipalToken(resource string) (*adal.ServicePrincipalToken, error) {
+func getMSIServicePrincipalToken(resource string, clientId ClientId) (*adal.ServicePrincipalToken, error) {
 
 	msiEndpoint, err := adal.GetMSIEndpoint()
 	if err != nil {
 		return nil, fmt.Errorf("failed to get the managed service identity endpoint: %v", err)
 	}
 
-	token, err := adal.NewServicePrincipalTokenFromMSI(msiEndpoint, resource)
+	var token *adal.ServicePrincipalToken
+	if clientId == "" {
+		token, err = adal.NewServicePrincipalTokenFromMSI(msiEndpoint, resource)
+	} else {
+		opts := &adal.ManagedIdentityOptions{
+			ClientID: string(clientId),
+		}
+		token, err = adal.NewServicePrincipalTokenFromManagedIdentity(resource, opts)
+	}
+
 	if err != nil {
 		return nil, fmt.Errorf("failed to create the managed service identity token: %v", err)
 	}
@@ -314,6 +342,20 @@ func setOptionsFromURLParams(q url.Values, o *Options) error {
 		switch param {
 		case "domain":
 			o.StorageDomain = StorageDomain(value)
+		case "protocol":
+			o.Protocol = Protocol(value)
+		case "cdn":
+			isCDN, err := strconv.ParseBool(value)
+			if err != nil {
+				return err
+			}
+			o.IsCDN = isCDN
+		case "localemu":
+			isLocalEmulator, err := strconv.ParseBool(value)
+			if err != nil {
+				return err
+			}
+			o.IsLocalEmulator = isLocalEmulator
 		default:
 			return fmt.Errorf("unknown query parameter %q", param)
 		}
@@ -346,6 +388,9 @@ type AccountName string
 
 // AccountKey is an Azure storage account key (primary or secondary).
 type AccountKey string
+
+// ClientID is an Azure client id
+type ClientId string
 
 // SASToken is an Azure shared access signature.
 // https://docs.microsoft.com/en-us/azure/storage/common/storage-dotnet-shared-access-signature-part-1
@@ -381,6 +426,13 @@ func DefaultAccountKey() (AccountKey, error) {
 	return AccountKey(s), nil
 }
 
+// DefaultClientId loads the Azure client Id from the
+// AZURE_CLIENT_ID environment variable. Use of the client Id is optional
+func DefaultClientId() (ClientId, error) {
+	s := os.Getenv("AZURE_CLIENT_ID")
+	return ClientId(s), nil
+}
+
 // DefaultSASToken loads a Azure SAS token from the AZURE_STORAGE_SAS_TOKEN
 // environment variable.
 func DefaultSASToken() (SASToken, error) {
@@ -403,6 +455,16 @@ func DefaultStorageDomain() (StorageDomain, error) {
 func DefaultProtocol() (Protocol, error) {
 	s := os.Getenv("AZURE_STORAGE_PROTOCOL")
 	return Protocol(s), nil
+}
+
+// DefaultIsCDN loads the desired value of IsCDN from the
+// AZURE_STORAGE_IS_CDN environment variable.
+func DefaultIsCDN() (bool, error) {
+	s := os.Getenv("AZURE_STORAGE_IS_CDN")
+	if s == "" {
+		return false, nil
+	}
+	return strconv.ParseBool(s)
 }
 
 // NewCredential creates a SharedKeyCredential.
@@ -471,8 +533,10 @@ func openBucket(ctx context.Context, pipeline pipeline.Pipeline, accountName Acc
 	d := string(opts.StorageDomain)
 	var u string
 	// The URL structure of the local emulator is a bit different from the real one.
-	if strings.HasPrefix(d, "127.0.0.1") || strings.HasPrefix(d, "localhost") {
+	if strings.HasPrefix(d, "127.0.0.1") || strings.HasPrefix(d, "localhost") || opts.IsLocalEmulator {
 		u = fmt.Sprintf("%s://%s/%s", opts.Protocol, opts.StorageDomain, accountName) // http://127.0.0.1:10000/devstoreaccount1
+	} else if opts.IsCDN {
+		u = fmt.Sprintf("%s://%s", opts.Protocol, opts.StorageDomain) // https://mycdnname.azureedge.net
 	} else {
 		u = fmt.Sprintf("%s://%s.%s", opts.Protocol, accountName, opts.StorageDomain) // https://myaccount.blob.core.windows.net
 	}
@@ -510,7 +574,6 @@ func (b *bucket) Copy(ctx context.Context, dstKey, srcKey string, opts *driver.C
 	mac := azblob.ModifiedAccessConditions{}
 	bac := azblob.BlobAccessConditions{}
 	at := azblob.AccessTierNone
-	btm := azblob.BlobTagsMap{}
 	if opts.BeforeCopy != nil {
 		asFunc := func(i interface{}) bool {
 			switch v := i.(type) {
@@ -530,7 +593,7 @@ func (b *bucket) Copy(ctx context.Context, dstKey, srcKey string, opts *driver.C
 			return err
 		}
 	}
-	resp, err := dstBlobURL.StartCopyFromURL(ctx, srcURL, md, mac, bac, at, btm)
+	resp, err := dstBlobURL.StartCopyFromURL(ctx, srcURL, md, mac, bac, at, nil /* BlobTagsMap */)
 	if err != nil {
 		return err
 	}

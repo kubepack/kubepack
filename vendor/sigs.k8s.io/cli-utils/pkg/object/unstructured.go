@@ -7,63 +7,34 @@ package object
 import (
 	"fmt"
 
-	corev1 "k8s.io/api/core/v1"
-	extensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	"sigs.k8s.io/kustomize/kyaml/kio/kioutil"
 )
 
 var (
-	CoreNamespace   = CoreV1Namespace.GroupKind()
-	CoreV1Namespace = corev1.SchemeGroupVersion.WithKind("Namespace")
-	ExtensionsCRD   = ExtensionsV1CRD.GroupKind()
-	ExtensionsV1CRD = extensionsv1.SchemeGroupVersion.WithKind("CustomResourceDefinition")
+	namespaceGK = schema.GroupKind{Group: "", Kind: "Namespace"}
+	crdGK       = schema.GroupKind{Group: "apiextensions.k8s.io", Kind: "CustomResourceDefinition"}
 )
 
-// UnstructuredsToObjMetas converts a slice of unstructureds to a slice of
-// ObjMetadata. If the values for any of the unstructured objects doesn't
-// pass validation, an error will be returned.
-func UnstructuredsToObjMetas(objs []*unstructured.Unstructured) ([]ObjMetadata, error) {
-	objMetas := make([]ObjMetadata, 0, len(objs))
-	for _, obj := range objs {
-		objMeta, err := UnstructuredToObjMeta(obj)
-		if err != nil {
-			return nil, err
-		}
-		objMetas = append(objMetas, objMeta)
-	}
-	return objMetas, nil
-}
-
-// UnstructuredsToObjMetasOrDie converts a slice of unstructureds to a slice of
-// ObjMetadata. If the values for any of the unstructured objects doesn't
-// pass validation, the function will panic.
-func UnstructuredsToObjMetasOrDie(objs []*unstructured.Unstructured) []ObjMetadata {
-	objMetas, err := UnstructuredsToObjMetas(objs)
-	if err != nil {
-		panic(err)
+// UnstructuredSetToObjMetadataSet converts a UnstructuredSet to a ObjMetadataSet.
+func UnstructuredSetToObjMetadataSet(objs UnstructuredSet) ObjMetadataSet {
+	objMetas := make([]ObjMetadata, len(objs))
+	for i, obj := range objs {
+		objMetas[i] = UnstructuredToObjMetadata(obj)
 	}
 	return objMetas
 }
 
-// UnstructuredToObjMeta extracts the identifying information from an
-// Unstructured object and returns it as Objmetadata. If the values doesn't
-// pass validation, an error will be returned.
-func UnstructuredToObjMeta(obj *unstructured.Unstructured) (ObjMetadata, error) {
-	return CreateObjMetadata(obj.GetNamespace(), obj.GetName(),
-		obj.GroupVersionKind().GroupKind())
-}
-
-// UnstructuredToObjMetaOrDie extracts the identifying information from an
-// Unstructured object and returns it as Objmetadata. If the values doesn't
-// pass validation, the function will panic.
-func UnstructuredToObjMetaOrDie(obj *unstructured.Unstructured) ObjMetadata {
-	objMeta, err := UnstructuredToObjMeta(obj)
-	if err != nil {
-		panic(err)
+// UnstructuredToObjMetadata extracts the identifying information from an
+// Unstructured object and returns it as ObjMetadata object.
+func UnstructuredToObjMetadata(obj *unstructured.Unstructured) ObjMetadata {
+	return ObjMetadata{
+		Namespace: obj.GetNamespace(),
+		Name:      obj.GetName(),
+		GroupKind: obj.GroupVersionKind().GroupKind(),
 	}
-	return objMeta
 }
 
 // IsKindNamespace returns true if the passed Unstructured object is
@@ -73,7 +44,7 @@ func IsKindNamespace(u *unstructured.Unstructured) bool {
 		return false
 	}
 	gvk := u.GroupVersionKind()
-	return CoreNamespace == gvk.GroupKind()
+	return namespaceGK == gvk.GroupKind()
 }
 
 // IsNamespaced returns true if the passed Unstructured object
@@ -85,6 +56,17 @@ func IsNamespaced(u *unstructured.Unstructured) bool {
 	return u.GetNamespace() != ""
 }
 
+// IsNamespace returns true if the passed Unstructured object
+// is Namespace in the core (empty string) group.
+func IsNamespace(u *unstructured.Unstructured) bool {
+	if u == nil {
+		return false
+	}
+	gvk := u.GroupVersionKind()
+	// core group, any version
+	return gvk.Group == "" && gvk.Kind == "Namespace"
+}
+
 // IsCRD returns true if the passed Unstructured object has
 // GroupKind == Extensions/CustomResourceDefinition; false otherwise.
 func IsCRD(u *unstructured.Unstructured) bool {
@@ -92,7 +74,7 @@ func IsCRD(u *unstructured.Unstructured) bool {
 		return false
 	}
 	gvk := u.GroupVersionKind()
-	return ExtensionsCRD == gvk.GroupKind()
+	return crdGK == gvk.GroupKind()
 }
 
 // GetCRDGroupKind returns the GroupKind stored in the passed
@@ -116,11 +98,11 @@ func GetCRDGroupKind(u *unstructured.Unstructured) (schema.GroupKind, bool) {
 // UnknownTypeError captures information about a type for which no information
 // could be found in the cluster or among the known CRDs.
 type UnknownTypeError struct {
-	GroupKind schema.GroupKind
+	GroupVersionKind schema.GroupVersionKind
 }
 
 func (e *UnknownTypeError) Error() string {
-	return fmt.Sprintf("unknown resource type: %q", e.GroupKind.String())
+	return fmt.Sprintf("unknown resource type: %q", e.GroupVersionKind.String())
 }
 
 // LookupResourceScope tries to look up the scope of the type of the provided
@@ -131,42 +113,102 @@ func LookupResourceScope(u *unstructured.Unstructured, crds []*unstructured.Unst
 	gvk := u.GroupVersionKind()
 	// First see if we can find the type (and the scope) in the cluster through
 	// the RESTMapper.
-	mapping, err := mapper.RESTMapping(gvk.GroupKind())
+	mapping, err := mapper.RESTMapping(gvk.GroupKind(), gvk.Version)
+	if err == nil {
+		// If we find the type in the cluster, we just look up the scope there.
+		return mapping.Scope, nil
+	}
 	// Not finding a match is not an error here, so only error out for other
 	// error types.
-	if err != nil && !meta.IsNoMatchError(err) {
+	if !meta.IsNoMatchError(err) {
 		return nil, err
 	}
 
-	var scope meta.RESTScope
-	if err == nil {
-		// If we find the type in the cluster, we just look up the scope there.
-		scope = mapping.Scope
-	} else {
-		// If we couldn't find the type in the cluster, check if we find a
-		// match in any of the provided CRDs.
-		for _, crd := range crds {
-			group, _, _ := unstructured.NestedString(crd.Object, "spec", "group")
-			kind, _, _ := unstructured.NestedString(crd.Object, "spec", "names", "kind")
-			if gvk.Kind == kind && gvk.Group == group {
-				scopeName, _, _ := unstructured.NestedString(crd.Object, "spec", "scope")
-				switch scopeName {
-				case "Namespaced":
-					scope = meta.RESTScopeNamespace
-				case "Cluster":
-					scope = meta.RESTScopeRoot
-				default:
-					return nil, fmt.Errorf("unknown scope %q", scopeName)
-				}
-				break
+	// If we couldn't find the type in the cluster, check if we find a
+	// match in any of the provided CRDs.
+	for _, crd := range crds {
+		group, found, err := NestedField(crd.Object, "spec", "group")
+		if err != nil {
+			return nil, err
+		}
+		if !found || group == "" {
+			return nil, NotFound([]interface{}{"spec", "group"}, group)
+		}
+		kind, found, err := NestedField(crd.Object, "spec", "names", "kind")
+		if err != nil {
+			return nil, err
+		}
+		if !found || kind == "" {
+			return nil, NotFound([]interface{}{"spec", "kind"}, group)
+		}
+		if gvk.Kind != kind || gvk.Group != group {
+			continue
+		}
+		versionDefined, err := crdDefinesVersion(crd, gvk.Version)
+		if err != nil {
+			return nil, err
+		}
+		if !versionDefined {
+			return nil, &UnknownTypeError{
+				GroupVersionKind: gvk,
 			}
 		}
-	}
-
-	if scope == nil {
-		return nil, &UnknownTypeError{
-			GroupKind: gvk.GroupKind(),
+		scopeName, _, err := NestedField(crd.Object, "spec", "scope")
+		if err != nil {
+			return nil, err
+		}
+		switch scopeName {
+		case "Namespaced":
+			return meta.RESTScopeNamespace, nil
+		case "Cluster":
+			return meta.RESTScopeRoot, nil
+		default:
+			return nil, Invalid([]interface{}{"spec", "scope"}, scopeName,
+				"expected Namespaced or Cluster")
 		}
 	}
-	return scope, nil
+	return nil, &UnknownTypeError{
+		GroupVersionKind: gvk,
+	}
+}
+
+func crdDefinesVersion(crd *unstructured.Unstructured, version string) (bool, error) {
+	versions, found, err := NestedField(crd.Object, "spec", "versions")
+	if err != nil {
+		return false, err
+	}
+	if !found {
+		return false, NotFound([]interface{}{"spec", "versions"}, versions)
+	}
+	versionsSlice, ok := versions.([]interface{})
+	if !ok {
+		return false, InvalidType([]interface{}{"spec", "versions"}, versions, "[]interface{}")
+	}
+	if len(versionsSlice) == 0 {
+		return false, Invalid([]interface{}{"spec", "versions"}, versionsSlice, "must not be empty")
+	}
+	for i := range versionsSlice {
+		name, found, err := NestedField(crd.Object, "spec", "versions", i, "name")
+		if err != nil {
+			return false, err
+		}
+		if !found {
+			return false, NotFound([]interface{}{"spec", "versions", i, "name"}, name)
+		}
+		if name == version {
+			return true, nil
+		}
+	}
+	return false, nil
+}
+
+// StripKyamlAnnotations removes any path and index annotations from the
+// unstructured resource.
+func StripKyamlAnnotations(u *unstructured.Unstructured) {
+	annos := u.GetAnnotations()
+	delete(annos, kioutil.PathAnnotation)
+	delete(annos, kioutil.LegacyPathAnnotation) //nolint:staticcheck
+	delete(annos, kioutil.IndexAnnotation)
+	delete(annos, kioutil.LegacyIndexAnnotation) //nolint:staticcheck
+	u.SetAnnotations(annos)
 }

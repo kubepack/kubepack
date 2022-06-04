@@ -21,7 +21,7 @@ COMPRESS ?= no
 
 # Produce CRDs that work back to Kubernetes 1.11 (no version conversion)
 CRD_OPTIONS          ?= "crd:allowDangerousTypes=true,crdVersions={v1}"
-CODE_GENERATOR_IMAGE ?= appscode/gengo:release-1.21
+CODE_GENERATOR_IMAGE ?= appscode/gengo:release-1.24
 API_GROUPS           ?= kubepack:v1alpha1
 
 # Where to push the docker image.
@@ -52,7 +52,7 @@ endif
 ###
 
 SRC_PKGS := apis client cmd crds pkg # directories which hold app source excluding tests (not vendored)
-SRC_DIRS := $(SRC_PKGS) test hack/gencrd hack/gendocs # directories which hold app source (not vendored)
+SRC_DIRS := $(SRC_PKGS) hack/gencrd # directories which hold app source (not vendored)
 
 DOCKER_PLATFORMS := linux/amd64 linux/arm linux/arm64
 BIN_PLATFORMS    := $(DOCKER_PLATFORMS)

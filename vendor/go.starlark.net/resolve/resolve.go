@@ -214,8 +214,7 @@ type resolver struct {
 	// isGlobal may be nil.
 	isGlobal, isPredeclared, isUniversal func(name string) bool
 
-	loops   int // number of enclosing for/while loops
-	ifstmts int // number of enclosing if statements loops
+	loops int // number of enclosing for loops
 
 	errors ErrorList
 }
@@ -498,10 +497,8 @@ func (r *resolver) stmt(stmt syntax.Stmt) {
 			r.errorf(stmt.If, "if statement not within a function")
 		}
 		r.expr(stmt.Cond)
-		r.ifstmts++
 		r.stmts(stmt.True)
 		r.stmts(stmt.False)
-		r.ifstmts--
 
 	case *syntax.AssignStmt:
 		r.expr(stmt.RHS)
@@ -554,13 +551,8 @@ func (r *resolver) stmt(stmt syntax.Stmt) {
 		}
 
 	case *syntax.LoadStmt:
-		// A load statement may not be nested in any other statement.
 		if r.container().function != nil {
 			r.errorf(stmt.Load, "load statement within a function")
-		} else if r.loops > 0 {
-			r.errorf(stmt.Load, "load statement within a loop")
-		} else if r.ifstmts > 0 {
-			r.errorf(stmt.Load, "load statement within a conditional")
 		}
 
 		for i, from := range stmt.From {
@@ -605,6 +597,9 @@ func (r *resolver) assign(lhs syntax.Expr, isAugmented bool) {
 
 	case *syntax.TupleExpr:
 		// (x, y) = ...
+		if len(lhs.List) == 0 {
+			r.errorf(syntax.Start(lhs), "can't assign to ()")
+		}
 		if isAugmented {
 			r.errorf(syntax.Start(lhs), "can't use tuple expression in augmented assignment")
 		}
@@ -614,6 +609,9 @@ func (r *resolver) assign(lhs syntax.Expr, isAugmented bool) {
 
 	case *syntax.ListExpr:
 		// [x, y, z] = ...
+		if len(lhs.List) == 0 {
+			r.errorf(syntax.Start(lhs), "can't assign to []")
+		}
 		if isAugmented {
 			r.errorf(syntax.Start(lhs), "can't use list expression in augmented assignment")
 		}

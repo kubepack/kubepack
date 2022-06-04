@@ -20,6 +20,15 @@ func ObjMetadataSetEquals(setA []ObjMetadata, setB []ObjMetadata) bool {
 	return ObjMetadataSet(setA).Equal(ObjMetadataSet(setB))
 }
 
+// ObjMetadataSetFromMap constructs a set from a map
+func ObjMetadataSetFromMap(mapA map[ObjMetadata]struct{}) ObjMetadataSet {
+	setA := make(ObjMetadataSet, 0, len(mapA))
+	for f := range mapA {
+		setA = append(setA, f)
+	}
+	return setA
+}
+
 // Equal returns true if the two sets contain equivalent objects. Duplicates are
 // ignored.
 // This function satisfies the cmp.Equal interface from github.com/google/go-cmp
@@ -64,6 +73,38 @@ func (setA ObjMetadataSet) Remove(obj ObjMetadata) ObjMetadataSet {
 	return setA
 }
 
+// Intersection returns the set of unique objects in both set A and set B.
+func (setA ObjMetadataSet) Intersection(setB ObjMetadataSet) ObjMetadataSet {
+	var maxlen int
+	if len(setA) > len(setB) {
+		maxlen = len(setA)
+	} else {
+		maxlen = len(setB)
+	}
+	mapI := make(map[ObjMetadata]struct{}, maxlen)
+	mapB := setB.ToMap()
+	for _, a := range setA {
+		if _, ok := mapB[a]; ok {
+			mapI[a] = struct{}{}
+		}
+	}
+	intersection := make(ObjMetadataSet, 0, len(mapI))
+	// Iterate over setA & setB to retain input order and have stable output
+	for _, id := range setA {
+		if _, ok := mapI[id]; ok {
+			intersection = append(intersection, id)
+			delete(mapI, id)
+		}
+	}
+	for _, id := range setB {
+		if _, ok := mapI[id]; ok {
+			intersection = append(intersection, id)
+			delete(mapI, id)
+		}
+	}
+	return intersection
+}
+
 // Union returns the set of unique objects from the merging of set A and set B.
 func (setA ObjMetadataSet) Union(setB ObjMetadataSet) ObjMetadataSet {
 	m := make(map[ObjMetadata]struct{}, len(setA)+len(setB))
@@ -74,8 +115,18 @@ func (setA ObjMetadataSet) Union(setB ObjMetadataSet) ObjMetadataSet {
 		m[b] = struct{}{}
 	}
 	union := make(ObjMetadataSet, 0, len(m))
-	for u := range m {
-		union = append(union, u)
+	// Iterate over setA & setB to retain input order and have stable output
+	for _, id := range setA {
+		if _, ok := m[id]; ok {
+			union = append(union, id)
+			delete(m, id)
+		}
+	}
+	for _, id := range setB {
+		if _, ok := m[id]; ok {
+			union = append(union, id)
+			delete(m, id)
+		}
 	}
 	return union
 }
@@ -93,40 +144,46 @@ func (setA ObjMetadataSet) Diff(setB ObjMetadataSet) ObjMetadataSet {
 	}
 	// Create/return slice from the map of remaining items
 	diff := make(ObjMetadataSet, 0, len(m))
-	for r := range m {
-		diff = append(diff, r)
+	// Iterate over setA to retain input order and have stable output
+	for _, id := range setA {
+		if _, ok := m[id]; ok {
+			diff = append(diff, id)
+			delete(m, id)
+		}
 	}
 	return diff
 }
 
+// Unique returns the set with duplicates removed.
+// Order may or may not remain consistent.
+func (setA ObjMetadataSet) Unique() ObjMetadataSet {
+	return ObjMetadataSetFromMap(setA.ToMap())
+}
+
 // Hash the objects in the set by serializing, sorting, concatonating, and
 // hashing the result with the 32-bit FNV-1a algorithm.
-func (setA ObjMetadataSet) Hash() (string, error) {
+func (setA ObjMetadataSet) Hash() string {
 	objStrs := make([]string, 0, len(setA))
 	for _, obj := range setA {
 		objStrs = append(objStrs, obj.String())
 	}
-	hashInt, err := calcHash(objStrs)
-	if err != nil {
-		return "", err
+	sort.Strings(objStrs)
+	h := fnv.New32a()
+	for _, obj := range objStrs {
+		// Hash32.Write never returns an error
+		// https://pkg.go.dev/hash#pkg-types
+		_, _ = h.Write([]byte(obj))
 	}
-	return strconv.FormatUint(uint64(hashInt), 16), nil
+	return strconv.FormatUint(uint64(h.Sum32()), 16)
 }
 
-// calcHash returns an unsigned int32 representing the hash
-// of the obj metadata strings. If there is an error writing bytes to
-// the hash, then the error is returned; nil is returned otherwise.
-// Used to quickly identify the set of resources in the inventory object.
-func calcHash(objs []string) (uint32, error) {
-	sort.Strings(objs)
-	h := fnv.New32a()
-	for _, obj := range objs {
-		_, err := h.Write([]byte(obj))
-		if err != nil {
-			return uint32(0), err
-		}
+// ToMap returns the set as a map, with objMeta keys and empty struct values.
+func (setA ObjMetadataSet) ToMap() map[ObjMetadata]struct{} {
+	m := make(map[ObjMetadata]struct{}, len(setA))
+	for _, objMeta := range setA {
+		m[objMeta] = struct{}{}
 	}
-	return h.Sum32(), nil
+	return m
 }
 
 // ToStringMap returns the set as a serializable map, with objMeta keys and
