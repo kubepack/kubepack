@@ -111,7 +111,7 @@ func (c *FakeOrders) UpdateStatus(ctx context.Context, order *v1alpha1.Order, op
 // Delete takes name of the order and deletes it. Returns an error if one occurs.
 func (c *FakeOrders) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	_, err := c.Fake.
-		Invokes(testing.NewRootDeleteAction(ordersResource, name), &v1alpha1.Order{})
+		Invokes(testing.NewRootDeleteActionWithOptions(ordersResource, name, opts), &v1alpha1.Order{})
 	return err
 }
 

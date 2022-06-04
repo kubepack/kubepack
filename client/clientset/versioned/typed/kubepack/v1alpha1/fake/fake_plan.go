@@ -111,7 +111,7 @@ func (c *FakePlans) UpdateStatus(ctx context.Context, plan *v1alpha1.Plan, opts 
 // Delete takes name of the plan and deletes it. Returns an error if one occurs.
 func (c *FakePlans) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	_, err := c.Fake.
-		Invokes(testing.NewRootDeleteAction(plansResource, name), &v1alpha1.Plan{})
+		Invokes(testing.NewRootDeleteActionWithOptions(plansResource, name, opts), &v1alpha1.Plan{})
 	return err
 }
 

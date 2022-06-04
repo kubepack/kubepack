@@ -158,13 +158,9 @@ func newApplicationObject(rls *rspb.Release) *v1beta1.Application {
 	if editorGVR, ok := rls.Chart.Metadata.Annotations["meta.x-helm.dev/editor"]; ok {
 		obj.Annotations["editor.x-helm.dev/"+rls.Name] = editorGVR
 
-		if values, ok := rls.Chart.Values["Values"]; ok {
-			if v2, ok := values.(map[string]interface{}); ok {
-				if f, ok := v2["form"]; ok {
-					if fd, err := json.Marshal(f); err == nil {
-						obj.Annotations["form.release.x-helm.dev/"+rls.Name] = string(fd)
-					}
-				}
+		if f, ok := rls.Config["form"]; ok {
+			if fd, err := json.Marshal(f); err == nil {
+				obj.Annotations["form.release.x-helm.dev/"+rls.Name] = string(fd)
 			}
 		}
 	}

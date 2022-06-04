@@ -111,7 +111,7 @@ func (c *FakeBundles) UpdateStatus(ctx context.Context, bundle *v1alpha1.Bundle,
 // Delete takes name of the bundle and deletes it. Returns an error if one occurs.
 func (c *FakeBundles) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	_, err := c.Fake.
-		Invokes(testing.NewRootDeleteAction(bundlesResource, name), &v1alpha1.Bundle{})
+		Invokes(testing.NewRootDeleteActionWithOptions(bundlesResource, name, opts), &v1alpha1.Bundle{})
 	return err
 }
 

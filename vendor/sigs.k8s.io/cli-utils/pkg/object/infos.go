@@ -31,9 +31,12 @@ func InfoToObjMeta(info *resource.Info) (ObjMetadata, error) {
 	if info == nil || info.Object == nil {
 		return ObjMetadata{}, fmt.Errorf("attempting to transform info, but it is empty")
 	}
-	obj := info.Object
-	gk := obj.GetObjectKind().GroupVersionKind().GroupKind()
-	return CreateObjMetadata(info.Namespace, info.Name, gk)
+	id := ObjMetadata{
+		Namespace: info.Namespace,
+		Name:      info.Name,
+		GroupKind: info.Object.GetObjectKind().GroupVersionKind().GroupKind(),
+	}
+	return id, nil
 }
 
 // InfoToUnstructured transforms the passed info object into unstructured format.
@@ -44,15 +47,17 @@ func InfoToUnstructured(info *resource.Info) *unstructured.Unstructured {
 // UnstructuredToInfo transforms the passed Unstructured object into Info format,
 // or an error if one occurs.
 func UnstructuredToInfo(obj *unstructured.Unstructured) (*resource.Info, error) {
+	// make a copy of the input object to avoid modifying the input
+	obj = obj.DeepCopy()
+
 	annos := obj.GetAnnotations()
 
 	source := "unstructured"
 	path, ok := annos[kioutil.PathAnnotation]
 	if ok {
 		source = path
-		delete(annos, kioutil.PathAnnotation)
-		obj.SetAnnotations(annos)
 	}
+	StripKyamlAnnotations(obj)
 
 	return &resource.Info{
 		Name:      obj.GetName(),

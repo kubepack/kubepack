@@ -6,10 +6,11 @@ package statusreaders
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"sort"
 
-	"k8s.io/apimachinery/pkg/api/errors"
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -30,10 +31,6 @@ import (
 // implementation of the resourceTypeStatusReader interface and therefore each
 // of the instances will be able to handle different resource types.
 type baseStatusReader struct {
-	// reader is an implementation of the ClusterReader interface. It provides a
-	// way for the StatusReader to fetch resources from the cluster.
-	reader engine.ClusterReader
-
 	// mapper provides a way to look up the resource types that are available
 	// in the cluster.
 	mapper meta.RESTMapper
@@ -48,30 +45,35 @@ type baseStatusReader struct {
 // resourceTypeStatusReader is an interface that can be implemented differently
 // for each resource type.
 type resourceTypeStatusReader interface {
-	ReadStatusForObject(ctx context.Context, object *unstructured.Unstructured) *event.ResourceStatus
+	Supports(gk schema.GroupKind) bool
+	ReadStatusForObject(ctx context.Context, reader engine.ClusterReader, object *unstructured.Unstructured) (*event.ResourceStatus, error)
+}
+
+func (b *baseStatusReader) Supports(gk schema.GroupKind) bool {
+	return b.resourceStatusReader.Supports(gk)
 }
 
 // ReadStatus reads the object identified by the passed-in identifier and computes it's status. It reads
 // the resource here, but computing status is delegated to the ReadStatusForObject function.
-func (b *baseStatusReader) ReadStatus(ctx context.Context, identifier object.ObjMetadata) *event.ResourceStatus {
-	object, err := b.lookupResource(ctx, identifier)
+func (b *baseStatusReader) ReadStatus(ctx context.Context, reader engine.ClusterReader, identifier object.ObjMetadata) (*event.ResourceStatus, error) {
+	object, err := b.lookupResource(ctx, reader, identifier)
 	if err != nil {
-		return handleResourceStatusError(identifier, err)
+		return errIdentifierToResourceStatus(err, identifier)
 	}
-	return b.resourceStatusReader.ReadStatusForObject(ctx, object)
+	return b.resourceStatusReader.ReadStatusForObject(ctx, reader, object)
 }
 
 // ReadStatusForObject computes the status for the passed-in object. Since this is specific for each
 // resource type, the actual work is delegated to the implementation of the resourceTypeStatusReader interface.
-func (b *baseStatusReader) ReadStatusForObject(ctx context.Context, object *unstructured.Unstructured) *event.ResourceStatus {
-	return b.resourceStatusReader.ReadStatusForObject(ctx, object)
+func (b *baseStatusReader) ReadStatusForObject(ctx context.Context, reader engine.ClusterReader, object *unstructured.Unstructured) (*event.ResourceStatus, error) {
+	return b.resourceStatusReader.ReadStatusForObject(ctx, reader, object)
 }
 
 // lookupResource looks up a resource with the given identifier. It will use the rest mapper to resolve
 // the version of the GroupKind given in the identifier.
 // If the resource is found, it is returned. If it is not found or something
 // went wrong, the function will return an error.
-func (b *baseStatusReader) lookupResource(ctx context.Context, identifier object.ObjMetadata) (*unstructured.Unstructured, error) {
+func (b *baseStatusReader) lookupResource(ctx context.Context, reader engine.ClusterReader, identifier object.ObjMetadata) (*unstructured.Unstructured, error) {
 	GVK, err := gvk(identifier.GroupKind, b.mapper)
 	if err != nil {
 		return nil, err
@@ -83,7 +85,7 @@ func (b *baseStatusReader) lookupResource(ctx context.Context, identifier object
 		Name:      identifier.Name,
 		Namespace: identifier.Namespace,
 	}
-	err = b.reader.Get(ctx, key, &u)
+	err = reader.Get(ctx, key, &u)
 	if err != nil {
 		return nil, err
 	}
@@ -120,28 +122,14 @@ func statusForGeneratedResources(ctx context.Context, mapper meta.RESTMapper, re
 	var resourceStatuses event.ResourceStatuses
 	for i := range objectList.Items {
 		generatedObject := objectList.Items[i]
-		resourceStatus := statusReader.ReadStatusForObject(ctx, &generatedObject)
+		resourceStatus, err := statusReader.ReadStatusForObject(ctx, reader, &generatedObject)
+		if err != nil {
+			return event.ResourceStatuses{}, err
+		}
 		resourceStatuses = append(resourceStatuses, resourceStatus)
 	}
 	sort.Sort(resourceStatuses)
 	return resourceStatuses, nil
-}
-
-// handleResourceStatusError construct the appropriate ResourceStatus
-// object based on the type of error.
-func handleResourceStatusError(identifier object.ObjMetadata, err error) *event.ResourceStatus {
-	if errors.IsNotFound(err) {
-		return &event.ResourceStatus{
-			Identifier: identifier,
-			Status:     status.NotFoundStatus,
-			Message:    "Resource not found",
-		}
-	}
-	return &event.ResourceStatus{
-		Identifier: identifier,
-		Status:     status.UnknownStatus,
-		Error:      err,
-	}
 }
 
 // gvk looks up the GVK from a GroupKind using the rest mapper.
@@ -171,4 +159,53 @@ func toSelector(resource *unstructured.Unstructured, path ...string) (labels.Sel
 		return nil, err
 	}
 	return metav1.LabelSelectorAsSelector(&s)
+}
+
+// errResourceToResourceStatus construct the appropriate ResourceStatus
+// object based on an error and the resource itself.
+func errResourceToResourceStatus(err error, resource *unstructured.Unstructured, genResources ...*event.ResourceStatus) (*event.ResourceStatus, error) {
+	// If the error is from the context, we don't attach that to the ResourceStatus,
+	// but just return it directly so the caller can decide how to handle this
+	// situation.
+	if errors.Is(err, context.Canceled) || errors.Is(err, context.DeadlineExceeded) {
+		return nil, err
+	}
+	identifier := object.UnstructuredToObjMetadata(resource)
+	if apierrors.IsNotFound(err) {
+		return &event.ResourceStatus{
+			Identifier: identifier,
+			Status:     status.NotFoundStatus,
+			Message:    "Resource not found",
+		}, nil
+	}
+	return &event.ResourceStatus{
+		Identifier:         identifier,
+		Status:             status.UnknownStatus,
+		Resource:           resource,
+		Error:              err,
+		GeneratedResources: genResources,
+	}, nil
+}
+
+// errIdentifierToResourceStatus construct the appropriate ResourceStatus
+// object based on an error and the identifier for a resource.
+func errIdentifierToResourceStatus(err error, identifier object.ObjMetadata) (*event.ResourceStatus, error) {
+	// If the error is from the context, we don't attach that to the ResourceStatus,
+	// but just return it directly so the caller can decide how to handle this
+	// situation.
+	if errors.Is(err, context.Canceled) || errors.Is(err, context.DeadlineExceeded) {
+		return nil, err
+	}
+	if apierrors.IsNotFound(err) {
+		return &event.ResourceStatus{
+			Identifier: identifier,
+			Status:     status.NotFoundStatus,
+			Message:    "Resource not found",
+		}, nil
+	}
+	return &event.ResourceStatus{
+		Identifier: identifier,
+		Status:     status.UnknownStatus,
+		Error:      err,
+	}, nil
 }

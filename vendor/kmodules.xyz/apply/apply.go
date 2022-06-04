@@ -56,7 +56,7 @@ type ApplyOptions struct {
 	FieldManager    string
 	Selector        string
 	DryRunStrategy  cmdutil.DryRunStrategy
-	DryRunVerifier  *resource.DryRunVerifier
+	DryRunVerifier  *resource.QueryParamVerifier
 	cmdBaseName     string
 	All             bool
 	Overwrite       bool
@@ -182,7 +182,16 @@ func (o *ApplyOptions) CompleteFlags(f cmdutil.Factory, cmd *cobra.Command) erro
 	}
 	o.FieldManager = cmdutil.GetFieldManagerFlag(cmd)
 
-	o.Validator, err = f.Validator(cmdutil.GetFlagBool(cmd, "validate"))
+	dynamicClient, err := f.DynamicClient()
+	if err != nil {
+		return err
+	}
+	fieldValidationVerifier := resource.NewQueryParamVerifier(dynamicClient, f.OpenAPIGetter(), resource.QueryParamFieldValidation)
+	validationDirective, err := cmdutil.GetValidationDirective(cmd)
+	if err != nil {
+		return err
+	}
+	o.Validator, err = f.Validator(validationDirective, fieldValidationVerifier)
 	if err != nil {
 		return err
 	}
@@ -196,11 +205,7 @@ func (o *ApplyOptions) Complete(f cmdutil.Factory) error {
 	if err != nil {
 		return err
 	}
-	discoveryClient, err := f.ToDiscoveryClient()
-	if err != nil {
-		return err
-	}
-	o.DryRunVerifier = resource.NewDryRunVerifier(o.DynamicClient, discoveryClient)
+	o.DryRunVerifier = resource.NewQueryParamVerifier(o.DynamicClient, f.OpenAPIGetter(), resource.QueryParamDryRun)
 
 	if o.ForceConflicts && !o.ServerSideApply {
 		return fmt.Errorf("--force-conflicts only works with --server-side")

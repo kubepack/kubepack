@@ -4,30 +4,36 @@
 package event
 
 import (
+	"fmt"
+
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"sigs.k8s.io/cli-utils/pkg/kstatus/status"
 	"sigs.k8s.io/cli-utils/pkg/object"
 )
 
-// EventType is the type that describes the type of an Event that is passed back to the caller
+// Type is the type that describes the type of an Event that is passed back to the caller
 // as resources in the cluster are being polled.
 //
-//go:generate stringer -type=EventType
-type EventType int
+//go:generate stringer -type=Type -linecomment
+type Type int
 
 const (
 	// ResourceUpdateEvent describes events related to a change in the status of one of the polled resources.
-	ResourceUpdateEvent EventType = iota
+	ResourceUpdateEvent Type = iota // Update
 	// ErrorEvent signals that the engine has encountered an error that it can not recover from. The engine
 	// is shutting down and the event channel will be closed after this event.
-	ErrorEvent
+	ErrorEvent // Error
+	// SyncEvent signals that the engine has completed its initial
+	// synchronization, and the cache is primed. After this point, it's safe to
+	// assume that you won't miss events caused by your own subsequent actions.
+	SyncEvent // Sync
 )
 
 // Event defines that type that is passed back through the event channel to notify the caller of changes
 // as resources are being polled.
 type Event struct {
-	// EventType defines the type of event.
-	EventType EventType
+	// Type defines the type of event.
+	Type Type
 
 	// Resource is only available for ResourceUpdateEvents. It includes information about the resource,
 	// including the resource status, any errors and the resource itself (as an unstructured).
@@ -36,6 +42,16 @@ type Event struct {
 	// Error is only available for ErrorEvents. It contains the error that caused the engine to
 	// give up.
 	Error error
+}
+
+// String returns a string suitable for logging
+func (e Event) String() string {
+	if e.Error != nil {
+		return fmt.Sprintf("Event{ Type: %q, Resource: %v, Error: %q }",
+			e.Type, e.Resource, e.Error)
+	}
+	return fmt.Sprintf("Event{ Type: %q, Resource: %v }",
+		e.Type, e.Resource)
 }
 
 // ResourceStatus contains information about a resource after we have
@@ -63,6 +79,16 @@ type ResourceStatus struct {
 	// contains information and status for any generated resources
 	// of the current resource.
 	GeneratedResources ResourceStatuses
+}
+
+// String returns a string suitable for logging
+func (rs ResourceStatus) String() string {
+	if rs.Error != nil {
+		return fmt.Sprintf("ResourceStatus{ Identifier: %q, Status: %q, Message: %q, Resource: %v, GeneratedResources: %v, Error: %q }",
+			rs.Identifier, rs.Status, rs.Message, rs.Resource, rs.GeneratedResources, rs.Error)
+	}
+	return fmt.Sprintf("ResourceStatus{ Identifier: %q, Status: %q, Message: %q, Resource: %v, GeneratedResources: %v }",
+		rs.Identifier, rs.Status, rs.Message, rs.Resource, rs.GeneratedResources)
 }
 
 type ResourceStatuses []*ResourceStatus

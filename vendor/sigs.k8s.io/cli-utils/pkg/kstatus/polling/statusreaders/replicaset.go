@@ -6,18 +6,18 @@ package statusreaders
 import (
 	"context"
 
+	appsv1 "k8s.io/api/apps/v1"
 	"k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"sigs.k8s.io/cli-utils/pkg/kstatus/polling/engine"
 	"sigs.k8s.io/cli-utils/pkg/kstatus/polling/event"
 )
 
-func NewReplicaSetStatusReader(reader engine.ClusterReader, mapper meta.RESTMapper, podStatusReader resourceTypeStatusReader) engine.StatusReader {
+func NewReplicaSetStatusReader(mapper meta.RESTMapper, podStatusReader resourceTypeStatusReader) engine.StatusReader {
 	return &baseStatusReader{
-		reader: reader,
 		mapper: mapper,
 		resourceStatusReader: &replicaSetStatusReader{
-			reader:          reader,
 			mapper:          mapper,
 			podStatusReader: podStatusReader,
 		},
@@ -28,7 +28,6 @@ func NewReplicaSetStatusReader(reader engine.ClusterReader, mapper meta.RESTMapp
 // from the cluster, knows how to find any Pods belonging to the ReplicaSet,
 // and compute status for the ReplicaSet.
 type replicaSetStatusReader struct {
-	reader engine.ClusterReader
 	mapper meta.RESTMapper
 
 	podStatusReader resourceTypeStatusReader
@@ -36,6 +35,10 @@ type replicaSetStatusReader struct {
 
 var _ resourceTypeStatusReader = &replicaSetStatusReader{}
 
-func (r *replicaSetStatusReader) ReadStatusForObject(ctx context.Context, rs *unstructured.Unstructured) *event.ResourceStatus {
-	return newPodControllerStatusReader(r.reader, r.mapper, r.podStatusReader).readStatus(ctx, rs)
+func (r *replicaSetStatusReader) Supports(gk schema.GroupKind) bool {
+	return gk == appsv1.SchemeGroupVersion.WithKind("ReplicaSet").GroupKind()
+}
+
+func (r *replicaSetStatusReader) ReadStatusForObject(ctx context.Context, reader engine.ClusterReader, rs *unstructured.Unstructured) (*event.ResourceStatus, error) {
+	return newPodControllerStatusReader(r.mapper, r.podStatusReader).readStatus(ctx, reader, rs)
 }

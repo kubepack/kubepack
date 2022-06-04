@@ -5,8 +5,6 @@ package starlark
 import (
 	"fmt"
 	"os"
-	"sync/atomic"
-	"unsafe"
 
 	"go.starlark.net/internal/compile"
 	"go.starlark.net/internal/spell"
@@ -21,9 +19,6 @@ const vmdebug = false // TODO(adonovan): use a bitfield of specific kinds of err
 // - opt: record MaxIterStack during compilation and preallocate the stack.
 
 func (fn *Function) CallInternal(thread *Thread, args Tuple, kwargs []Tuple) (Value, error) {
-	// Postcondition: args is not mutated. This is stricter than required by Callable,
-	// but allows CALL to avoid a copy.
-
 	if !resolve.AllowRecursion {
 		// detect recursion
 		for _, fr := range thread.stack[:len(thread.stack)-1] {
@@ -87,15 +82,6 @@ func (fn *Function) CallInternal(thread *Thread, args Tuple, kwargs []Tuple) (Va
 	code := f.Code
 loop:
 	for {
-		thread.steps++
-		if thread.steps >= thread.maxSteps {
-			thread.Cancel("too many steps")
-		}
-		if reason := atomic.LoadPointer((*unsafe.Pointer)(unsafe.Pointer(&thread.cancelReason))); reason != nil {
-			err = fmt.Errorf("Starlark computation cancelled: %s", *(*string)(reason))
-			break loop
-		}
-
 		fr.pc = pc
 
 		op := compile.Opcode(code[pc])
@@ -290,15 +276,9 @@ loop:
 			// positional args
 			var positional Tuple
 			if npos := int(arg >> 8); npos > 0 {
-				positional = stack[sp-npos : sp]
+				positional = make(Tuple, npos)
 				sp -= npos
-
-				// Copy positional arguments into a new array,
-				// unless the callee is another Starlark function,
-				// in which case it can be trusted not to mutate them.
-				if _, ok := stack[sp-1].(*Function); !ok || args != nil {
-					positional = append(Tuple(nil), positional...)
-				}
+				copy(positional, stack[sp:])
 			}
 			if args != nil {
 				// Add elements from *args sequence.
