@@ -24,8 +24,8 @@ spec:
     editor:
       name: kubedbcom-pgbouncer-editor
       url: https://bundles.byte.builders/ui/
-      version: v0.4.3
+      version: v0.4.7
     options:
       name: kubedbcom-pgbouncer-editor-options
       url: https://bundles.byte.builders/ui/
-      version: v0.4.3
+      version: v0.4.7
