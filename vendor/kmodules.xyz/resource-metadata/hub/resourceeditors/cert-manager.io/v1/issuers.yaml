@@ -29,4 +29,4 @@ spec:
     editor:
       name: certmanagerio-issuer-editor
       url: https://bundles.byte.builders/ui/
-      version: v0.4.7
+      version: v0.4.8
