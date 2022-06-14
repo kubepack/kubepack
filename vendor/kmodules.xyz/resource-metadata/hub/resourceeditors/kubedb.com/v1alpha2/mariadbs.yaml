@@ -24,8 +24,8 @@ spec:
     editor:
       name: kubedbcom-mariadb-editor
       url: https://bundles.byte.builders/ui/
-      version: v0.4.7
+      version: v0.4.8
     options:
       name: kubedbcom-mariadb-editor-options
       url: https://bundles.byte.builders/ui/
-      version: v0.4.7
+      version: v0.4.8
