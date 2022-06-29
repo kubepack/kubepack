@@ -6,22 +6,12 @@ import (
 	"strings"
 
 	"github.com/gobuffalo/flect"
-	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/chart"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
-	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
-	"k8s.io/client-go/rest"
-	"kmodules.xyz/client-go/discovery"
-	"kmodules.xyz/resource-metadata/hub/resourceeditors"
-	chartsapi "kubepack.dev/preset/apis/charts/v1alpha1"
-	storeapi "kubepack.dev/preset/apis/store/v1alpha1"
-	appapi "sigs.k8s.io/application/api/app/v1beta1"
-	"sigs.k8s.io/controller-runtime/pkg/client"
-	"sigs.k8s.io/controller-runtime/pkg/client/apiutil"
+	"kmodules.xyz/resource-metadata/hub"
 )
 
 func debug(format string, v ...interface{}) {
@@ -40,55 +30,13 @@ func setAnnotations(chrt *chart.Chart, k, v string) {
 	}
 }
 
-func NewUncachedClient(getter action.RESTClientGetter) (client.Client, error) {
-	cfg, err := getter.ToRESTConfig()
-	if err != nil {
-		return nil, err
-	}
-
-	return NewUncachedClientForConfig(cfg)
-}
-
-func NewUncachedClientForConfig(cfg *rest.Config) (client.Client, error) {
-	mapper, err := apiutil.NewDynamicRESTMapper(cfg)
-	if err != nil {
-		return nil, err
-	}
-
-	scheme := runtime.NewScheme()
-	if err := clientgoscheme.AddToScheme(scheme); err != nil {
-		return nil, err
-	}
-	if err := chartsapi.AddToScheme(scheme); err != nil {
-		return nil, err
-	}
-	if err := storeapi.AddToScheme(scheme); err != nil {
-		return nil, err
-	}
-	if err := appapi.AddToScheme(scheme); err != nil {
-		return nil, err
-	}
-	return client.New(cfg, client.Options{
-		Scheme: scheme,
-		Mapper: mapper,
-		//Opts: client.WarningHandlerOptions{
-		//	SuppressWarnings:   false,
-		//	AllowDuplicateLogs: false,
-		//},
-	})
-}
-
-func RefillMetadata(kc client.Client, ref, actual map[string]interface{}, gvr metav1.GroupVersionResource, rls types.NamespacedName) error {
-	// WARNING: Don't use kc.RESTMapper().KindFor to find Kind because the CRD may be yet exist in the cluster
-	rsMeta, ok, err := unstructured.NestedMap(ref, "metadata", "resource")
-	if err != nil {
-		return err
-	} else if !ok {
-		return fmt.Errorf(".metadata.resource not found in ref values")
-	}
-
+func RefillMetadata(reg *hub.Registry, ref, actual map[string]interface{}, gvr metav1.GroupVersionResource, rls types.NamespacedName) error {
 	actual["metadata"] = map[string]interface{}{
-		"resource": rsMeta,
+		"resource": map[string]interface{}{
+			"group":    gvr.Group,
+			"version":  gvr.Version,
+			"resource": gvr.Resource,
+		},
 		"release": map[string]interface{}{
 			"name":      rls.Name,
 			"namespace": rls.Namespace,
@@ -112,9 +60,6 @@ func RefillMetadata(kc client.Client, ref, actual map[string]interface{}, gvr me
 	//if err != nil {
 	//	return err
 	//}
-	mapper := discovery.NewResourceMapper(kc.RESTMapper())
-
-	_, usesForm := ref["form"]
 
 	for key, o := range actualResources {
 		// apiVersion
@@ -126,9 +71,6 @@ func RefillMetadata(kc client.Client, ref, actual map[string]interface{}, gvr me
 
 		refObj, ok := refResources[key].(map[string]interface{})
 		if !ok {
-			if usesForm {
-				continue // in case of form, we will see form objects which are not present in the ref resources
-			}
 			return fmt.Errorf("missing key %s in reference chart values", key)
 		}
 		obj := o.(map[string]interface{})
@@ -160,10 +102,10 @@ func RefillMetadata(kc client.Client, ref, actual map[string]interface{}, gvr me
 		}
 
 		gvk := schema.FromAPIVersionAndKind(refObj["apiVersion"].(string), refObj["kind"].(string))
-		if gvr, err := mapper.GVR(gvk); err == nil {
-			if ed, ok := resourceeditors.LoadByGVR(kc, gvr); ok {
-				if ed.Spec.UI != nil {
-					for _, fields := range ed.Spec.UI.InstanceLabelPaths {
+		if gvr, err := reg.GVR(gvk); err == nil {
+			if rd, err := reg.LoadByGVR(gvr); err == nil {
+				if rd.Spec.UI != nil {
+					for _, fields := range rd.Spec.UI.InstanceLabelPaths {
 						fields := strings.Trim(fields, ".")
 						err = updateLabels(rls.Name, obj, strings.Split(fields, ".")...)
 						if err != nil {

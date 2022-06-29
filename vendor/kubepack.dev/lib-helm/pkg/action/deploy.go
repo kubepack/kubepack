@@ -18,7 +18,6 @@ type DeployOptions struct {
 	ChartName                string         `json:"chartName"`
 	Version                  string         `json:"version"`
 	Values                   values.Options `json:",inline,omitempty"`
-	ClientOnly               bool           `json:"clientOnly"`
 	DryRun                   bool           `json:"dryRun"`
 	DisableHooks             bool           `json:"disableHooks"`
 	Replace                  bool           `json:"replace"`
@@ -88,7 +87,6 @@ func (x *Deployer) Run() (*release.Release, *engine.State, error) {
 				ChartName:                x.opts.ChartName,
 				Version:                  x.opts.Version,
 				Values:                   x.opts.Values,
-				ClientOnly:               x.opts.ClientOnly,
 				DryRun:                   x.opts.DryRun,
 				DisableHooks:             x.opts.DisableHooks,
 				Replace:                  false,

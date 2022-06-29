@@ -18,7 +18,7 @@ require (
 	gomodules.xyz/jsonpatch/v2 v2.2.0
 	gomodules.xyz/runtime v0.3.0
 	gomodules.xyz/x v0.0.14
-	helm.sh/helm/v3 v3.0.0-00010101000000-000000000000
+	helm.sh/helm/v3 v3.6.1
 	k8s.io/api v0.24.1
 	k8s.io/apiextensions-apiserver v0.24.1
 	k8s.io/apimachinery v0.24.1
@@ -28,8 +28,8 @@ require (
 	k8s.io/kube-openapi v0.0.0-20220413171646-5e7f5fdc6da6
 	kmodules.xyz/client-go v0.24.0
 	kmodules.xyz/crd-schema-fuzz v0.24.0
-	kubepack.dev/lib-helm v0.3.2-0.20220604063230-32de2acacbfb
-	sigs.k8s.io/application v0.0.0-00010101000000-000000000000
+	kubepack.dev/lib-helm v0.3.1
+	sigs.k8s.io/application v0.8.2-0.20200306235134-f10d9ca8abd4
 	sigs.k8s.io/yaml v1.3.0
 )
 
@@ -104,6 +104,7 @@ require (
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
 	github.com/go-openapi/jsonreference v0.20.0 // indirect
+	github.com/go-openapi/spec v0.19.8 // indirect
 	github.com/go-openapi/swag v0.19.15 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/golang-jwt/jwt/v4 v4.4.1 // indirect
@@ -119,6 +120,7 @@ require (
 	github.com/gosuri/uitable v0.0.4 // indirect
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0 // indirect
+	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/howeyc/gopass v0.0.0-20210920133722-c8aef6fb66ef // indirect
 	github.com/huandu/xstrings v1.3.2 // indirect
 	github.com/imdario/mergo v0.3.13 // indirect
@@ -216,9 +218,9 @@ require (
 	k8s.io/component-base v0.24.1 // indirect
 	k8s.io/kubectl v0.24.1 // indirect
 	k8s.io/utils v0.0.0-20220210201930-3a6ce19ff2f9 // indirect
+	kmodules.xyz/apiversion v0.2.0 // indirect
 	kmodules.xyz/apply v0.24.1 // indirect
-	kmodules.xyz/resource-metadata v0.11.3 // indirect
-	kubepack.dev/preset v0.0.0-20220318014008-5b564b7dc9e7 // indirect
+	kmodules.xyz/resource-metadata v0.10.17 // indirect
 	oras.land/oras-go v1.1.0 // indirect
 	sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.0.30 // indirect
 	sigs.k8s.io/cli-utils v0.31.1 // indirect
