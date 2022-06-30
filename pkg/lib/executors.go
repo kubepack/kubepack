@@ -379,7 +379,7 @@ func (x *Helm3CommandPrinter) Do() error {
 		if err != nil {
 			return err
 		}
-		_, err = fmt.Fprintf(&buf, "%s--values=libchart.yaml", indent)
+		_, err = fmt.Fprintf(&buf, "%s--values=values.yaml", indent)
 		if err != nil {
 			return err
 		}
