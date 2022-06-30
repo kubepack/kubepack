@@ -17,14 +17,14 @@ limitations under the License.
 package v1alpha1
 
 import (
-	meta "kmodules.xyz/resource-metadata/apis/meta"
+	"kmodules.xyz/resource-metadata/apis/ui"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 )
 
-var SchemeGroupVersion = schema.GroupVersion{Group: meta.GroupName, Version: "v1alpha1"}
+var SchemeGroupVersion = schema.GroupVersion{Group: ui.GroupName, Version: "v1alpha1"}
 
 var (
 	// TODO: move SchemeBuilder with zz_generated.deepcopy.go to k8s.io/api.
@@ -49,28 +49,10 @@ func Resource(resource string) schema.GroupResource {
 // Adds the list of known types to api.Scheme.
 func addKnownTypes(scheme *runtime.Scheme) error {
 	scheme.AddKnownTypes(SchemeGroupVersion,
-		&ResourceDescriptor{},
-		&ResourceDescriptorList{},
-		&ResourceTableDefinition{},
-		&ResourceTableDefinitionList{},
-		&ResourceBlockDefinition{},
-		&ResourceBlockDefinitionList{},
-		&ResourceOutline{},
-		&ResourceOutlineList{},
-		&ResourceLayout{},
-		&ResourceLayoutList{},
 		&ResourceEditor{},
 		&ResourceEditorList{},
-		&Menu{},
-		&MenuList{},
-		&MenuOutline{},
-		&MenuOutlineList{},
-		&Render{},
-		&RenderAPI{},
-		&RenderMenu{},
-		&ResourceGraph{},
-		&RenderRawGraph{},
-		&RenderDashboard{},
+		&ResourceDashboard{},
+		&ResourceDashboardList{},
 	)
 
 	scheme.AddKnownTypes(SchemeGroupVersion,

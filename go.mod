@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/Masterminds/semver/v3 v3.1.1
 	github.com/evanphx/json-patch v4.12.0+incompatible
+	github.com/evanphx/json-patch/v5 v5.6.0
 	github.com/gabriel-vasile/mimetype v1.4.0
 	github.com/gobuffalo/flect v0.2.5
 	github.com/gogo/protobuf v1.3.2
@@ -15,6 +16,7 @@ require (
 	github.com/spf13/pflag v1.0.5
 	gocloud.dev v0.25.0
 	gomodules.xyz/blobfs v0.1.10
+	gomodules.xyz/encoding v0.0.5
 	gomodules.xyz/jsonpatch/v2 v2.2.0
 	gomodules.xyz/runtime v0.3.0
 	gomodules.xyz/x v0.0.14
@@ -26,9 +28,9 @@ require (
 	k8s.io/client-go v0.24.1
 	k8s.io/klog/v2 v2.60.1
 	k8s.io/kube-openapi v0.0.0-20220413171646-5e7f5fdc6da6
-	kmodules.xyz/client-go v0.24.0
+	kmodules.xyz/client-go v0.24.5
 	kmodules.xyz/crd-schema-fuzz v0.24.0
-	kubepack.dev/lib-helm v0.3.2-0.20220604063230-32de2acacbfb
+	kubepack.dev/lib-helm v0.3.2-0.20220630023647-c2726d41f0fd
 	sigs.k8s.io/application v0.0.0-00010101000000-000000000000
 	sigs.k8s.io/yaml v1.3.0
 )
@@ -79,7 +81,7 @@ require (
 	github.com/blang/semver/v4 v4.0.0 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/chai2010/gettext-go v0.0.0-20160711120539-c6fed771bfd5 // indirect
-	github.com/containerd/containerd v1.6.3 // indirect
+	github.com/containerd/containerd v1.6.6 // indirect
 	github.com/coreos/go-semver v0.3.0 // indirect
 	github.com/coreos/go-systemd/v22 v22.3.2 // indirect
 	github.com/cyphar/filepath-securejoin v0.2.3 // indirect
@@ -217,7 +219,7 @@ require (
 	k8s.io/kubectl v0.24.1 // indirect
 	k8s.io/utils v0.0.0-20220210201930-3a6ce19ff2f9 // indirect
 	kmodules.xyz/apply v0.24.1 // indirect
-	kmodules.xyz/resource-metadata v0.11.3 // indirect
+	kmodules.xyz/resource-metadata v0.12.3 // indirect
 	kubepack.dev/preset v0.0.0-20220318014008-5b564b7dc9e7 // indirect
 	oras.land/oras-go v1.1.0 // indirect
 	sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.0.30 // indirect

@@ -343,6 +343,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.FeatureTable":                                       schema_kubepack_apis_kubepack_v1alpha1_FeatureTable(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Hub":                                                schema_kubepack_apis_kubepack_v1alpha1_Hub(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.ImageSpec":                                          schema_kubepack_apis_kubepack_v1alpha1_ImageSpec(ref),
+		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.InstallOptions":                                     schema_kubepack_apis_kubepack_v1alpha1_InstallOptions(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.Link":                                               schema_kubepack_apis_kubepack_v1alpha1_Link(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.MediaSpec":                                          schema_kubepack_apis_kubepack_v1alpha1_MediaSpec(ref),
 		"kubepack.dev/kubepack/apis/kubepack/v1alpha1.OneOfBundleOption":                                  schema_kubepack_apis_kubepack_v1alpha1_OneOfBundleOption(ref),
@@ -17191,6 +17192,54 @@ func schema_kubepack_apis_kubepack_v1alpha1_ImageSpec(ref common.ReferenceCallba
 					},
 				},
 				Required: []string{"src"},
+			},
+		},
+	}
+}
+
+func schema_kubepack_apis_kubepack_v1alpha1_InstallOptions(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"url": {
+						SchemaProps: spec.SchemaProps{
+							Default: "",
+							Type:    []string{"string"},
+							Format:  "",
+						},
+					},
+					"name": {
+						SchemaProps: spec.SchemaProps{
+							Default: "",
+							Type:    []string{"string"},
+							Format:  "",
+						},
+					},
+					"version": {
+						SchemaProps: spec.SchemaProps{
+							Default: "",
+							Type:    []string{"string"},
+							Format:  "",
+						},
+					},
+					"releaseName": {
+						SchemaProps: spec.SchemaProps{
+							Default: "",
+							Type:    []string{"string"},
+							Format:  "",
+						},
+					},
+					"namespace": {
+						SchemaProps: spec.SchemaProps{
+							Default: "",
+							Type:    []string{"string"},
+							Format:  "",
+						},
+					},
+				},
+				Required: []string{"url", "name", "version", "releaseName", "namespace"},
 			},
 		},
 	}

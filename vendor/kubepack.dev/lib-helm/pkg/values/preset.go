@@ -7,6 +7,7 @@ import (
 
 	"github.com/pkg/errors"
 	"helm.sh/helm/v3/pkg/chart"
+	core "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -16,13 +17,13 @@ import (
 )
 
 func MergePresetValues(kc client.Client, chrt *chart.Chart, ref chartsapi.ChartPresetRef) (map[string]interface{}, error) {
-	vpsMap, err := LoadVendorPresets(chrt)
-	if err != nil {
-		return nil, err
-	}
-
 	var valOpts Options
 	if ref.PresetName != "" {
+		vpsMap, err := LoadVendorPresets(chrt)
+		if err != nil {
+			return nil, err
+		}
+
 		ps, err := ref.ClusterChartPreset()
 		if err != nil {
 			return nil, err
@@ -62,7 +63,7 @@ func mergeClusterChartPresetValues(kc client.Client, vpsMap map[string]*chartsap
 				}
 			}
 		} else if ps.Kind == chartsapi.ResourceKindClusterChartPreset {
-			obj, err := getPreset(kc, in, ns)
+			obj, err := getPreset(kc, ps, ns)
 			if err != nil {
 				return err
 			}
@@ -79,17 +80,19 @@ func mergeClusterChartPresetValues(kc client.Client, vpsMap map[string]*chartsap
 	return nil
 }
 
-func getPreset(kc client.Client, in chartsapi.Preset, ns string) (chartsapi.Preset, error) {
-	var cp chartsapi.ChartPreset
-	err := kc.Get(context.TODO(), client.ObjectKey{Namespace: ns, Name: in.GetName()}, &cp)
-	if client.IgnoreNotFound(err) != nil {
-		return nil, err
-	} else if err == nil {
-		return &cp, nil
+func getPreset(kc client.Client, in core.TypedLocalObjectReference, ns string) (chartsapi.Preset, error) {
+	// Usually namespace is set nby user for Options chart values
+	if ns != "" {
+		var cp chartsapi.ChartPreset
+		err := kc.Get(context.TODO(), client.ObjectKey{Namespace: ns, Name: in.Name}, &cp)
+		if client.IgnoreNotFound(err) != nil {
+			return nil, err
+		} else if err == nil {
+			return &cp, nil
+		}
 	}
-
 	var ccp chartsapi.ClusterChartPreset
-	err = kc.Get(context.TODO(), client.ObjectKey{Name: in.GetName()}, &ccp)
+	err := kc.Get(context.TODO(), client.ObjectKey{Name: in.Name}, &ccp)
 	return &ccp, err
 }
 

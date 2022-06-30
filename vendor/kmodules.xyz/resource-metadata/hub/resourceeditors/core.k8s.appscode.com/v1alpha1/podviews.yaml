@@ -1,4 +1,4 @@
-apiVersion: meta.k8s.appscode.com/v1alpha1
+apiVersion: ui.k8s.appscode.com/v1alpha1
 kind: ResourceEditor
 metadata:
   creationTimestamp: null

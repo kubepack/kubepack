@@ -12,7 +12,7 @@ spec:
     listKind: MenuOutlineList
     plural: menuoutlines
     singular: menuoutline
-  scope: Namespaced
+  scope: Cluster
   versions:
   - additionalPrinterColumns:
     - jsonPath: .status.phase

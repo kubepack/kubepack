@@ -14,8 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package meta
+package v1alpha1
 
-const (
-	GroupName = "meta.k8s.appscode.com"
+import (
+	"kmodules.xyz/client-go/apiextensions"
+	"kmodules.xyz/resource-metadata/crds"
 )
+
+func (v ResourceDashboard) CustomResourceDefinition() *apiextensions.CustomResourceDefinition {
+	return crds.MustCustomResourceDefinition(SchemeGroupVersion.WithResource(ResourceResourceDashboards))
+}
