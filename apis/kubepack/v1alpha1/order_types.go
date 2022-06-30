@@ -37,38 +37,38 @@ const (
 // +kubebuilder:subresource:status
 type Order struct {
 	metav1.TypeMeta   `json:",inline"`
-	metav1.ObjectMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
-	Spec              OrderSpec   `json:"spec,omitempty" protobuf:"bytes,2,opt,name=spec"`
-	Status            OrderStatus `json:"status,omitempty" protobuf:"bytes,3,opt,name=status"`
+	metav1.ObjectMeta `json:"metadata,omitempty"`
+	Spec              OrderSpec   `json:"spec,omitempty"`
+	Status            OrderStatus `json:"status,omitempty"`
 }
 
 type OrderSpec struct {
-	Packages []PackageSelection `json:"items" protobuf:"bytes,1,rep,name=items"`
+	Packages []PackageSelection `json:"items"`
 	// KubeVersion is a SemVer constraint specifying the version of Kubernetes required.
-	KubeVersion string `json:"kubeVersion,omitempty" protobuf:"bytes,2,opt,name=kubeVersion"`
+	KubeVersion string `json:"kubeVersion,omitempty"`
 }
 
 type PackageSelection struct {
-	Chart *ChartSelection `json:"chart,omitempty" protobuf:"bytes,1,opt,name=chart"`
+	Chart *ChartSelection `json:"chart,omitempty"`
 }
 
 type ChartSelection struct {
-	ChartRef    `json:",inline" protobuf:"bytes,1,opt,name=chartRef"`
-	Version     string `json:"version" protobuf:"bytes,2,opt,name=version"`
-	ReleaseName string `json:"releaseName" protobuf:"bytes,3,opt,name=releaseName"`
-	Namespace   string `json:"namespace" protobuf:"bytes,4,opt,name=namespace"`
+	ChartRef    `json:",inline"`
+	Version     string `json:"version"`
+	ReleaseName string `json:"releaseName"`
+	Namespace   string `json:"namespace"`
 
 	// Bundle points to the parent bundle which was used to install this, if any.
 	// If the chart was installed directly it will be unset.
-	Bundle *ChartRepoRef `json:"bundle,omitempty" protobuf:"bytes,5,opt,name=bundle"`
+	Bundle *ChartRepoRef `json:"bundle,omitempty"`
 
-	ValuesFile string `json:"valuesFile,omitempty" protobuf:"bytes,6,opt,name=valuesFile"`
+	ValuesFile string `json:"valuesFile,omitempty"`
 	// RFC 6902 compatible json patch. ref: http://jsonpatch.com
 	// +optional
 	// +kubebuilder:pruning:PreserveUnknownFields
-	ValuesPatch *runtime.RawExtension `json:"valuesPatch,omitempty" protobuf:"bytes,7,opt,name=valuesPatch"`
-	Resources   *ResourceDefinitions  `json:"resources,omitempty" protobuf:"bytes,8,opt,name=resources"`
-	WaitFors    []WaitFlags           `json:"waitFors,omitempty" protobuf:"bytes,9,rep,name=waitFors"`
+	ValuesPatch *runtime.RawExtension `json:"valuesPatch,omitempty"`
+	Resources   *ResourceDefinitions  `json:"resources,omitempty"`
+	WaitFors    []WaitFlags           `json:"waitFors,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
@@ -76,13 +76,13 @@ type ChartSelection struct {
 
 type OrderList struct {
 	metav1.TypeMeta `json:",inline"`
-	metav1.ListMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
-	Items           []Order `json:"items,omitempty" protobuf:"bytes,2,rep,name=items"`
+	metav1.ListMeta `json:"metadata,omitempty"`
+	Items           []Order `json:"items,omitempty"`
 }
 
 type OrderStatus struct {
 	// ObservedGeneration is the most recent generation observed for this resource. It corresponds to the
 	// resource's generation, which is updated on mutation by the API Server.
 	// +optional
-	ObservedGeneration int64 `json:"observedGeneration,omitempty" protobuf:"varint,1,opt,name=observedGeneration"`
+	ObservedGeneration int64 `json:"observedGeneration,omitempty"`
 }

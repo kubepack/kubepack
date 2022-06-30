@@ -22,27 +22,27 @@ import (
 
 // ChartRepoRef references to a single version of a Chart
 type ChartRepoRef struct {
-	Name    string `json:"name" protobuf:"bytes,1,opt,name=name"`
-	URL     string `json:"url" protobuf:"bytes,2,opt,name=url"`
-	Version string `json:"version" protobuf:"bytes,3,opt,name=version"`
+	Name    string `json:"name"`
+	URL     string `json:"url"`
+	Version string `json:"version"`
 }
 
 type Feature struct {
-	Trait string `json:"trait" protobuf:"bytes,1,opt,name=trait"`
-	Value string `json:"value" protobuf:"bytes,2,opt,name=value"`
+	Trait string `json:"trait"`
+	Value string `json:"value"`
 }
 
 type ResourceDefinitions struct {
-	Owned    []metav1.GroupVersionResource `json:"owned" protobuf:"bytes,1,rep,name=owned"`
-	Required []metav1.GroupVersionResource `json:"required" protobuf:"bytes,2,rep,name=required"`
+	Owned    []metav1.GroupVersionResource `json:"owned"`
+	Required []metav1.GroupVersionResource `json:"required"`
 }
 
 // wait ([-f FILENAME] | resource.group/resource.name | resource.group [(-l label | --all)]) [--for=delete|--for condition=available]
 
 type WaitFlags struct {
-	Resource     metav1.GroupResource  `json:"resource" protobuf:"bytes,1,opt,name=resource"`
-	Labels       *metav1.LabelSelector `json:"labels" protobuf:"bytes,2,opt,name=labels"`
-	All          bool                  `json:"all" protobuf:"varint,3,opt,name=all"`
-	Timeout      metav1.Duration       `json:"timeout" protobuf:"bytes,4,opt,name=timeout"`
-	ForCondition string                `json:"for" protobuf:"bytes,5,opt,name=for"`
+	Resource     metav1.GroupResource  `json:"resource"`
+	Labels       *metav1.LabelSelector `json:"labels"`
+	All          bool                  `json:"all"`
+	Timeout      metav1.Duration       `json:"timeout"`
+	ForCondition string                `json:"for"`
 }
