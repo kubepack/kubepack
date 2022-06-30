@@ -16,6 +16,7 @@ import (
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/rest"
 	"kmodules.xyz/client-go/discovery"
+	uiapi "kmodules.xyz/resource-metadata/apis/ui/v1alpha1"
 	"kmodules.xyz/resource-metadata/hub/resourceeditors"
 	chartsapi "kubepack.dev/preset/apis/charts/v1alpha1"
 	storeapi "kubepack.dev/preset/apis/store/v1alpha1"
@@ -66,6 +67,9 @@ func NewUncachedClientForConfig(cfg *rest.Config) (client.Client, error) {
 		return nil, err
 	}
 	if err := appapi.AddToScheme(scheme); err != nil {
+		return nil, err
+	}
+	if err := uiapi.AddToScheme(scheme); err != nil {
 		return nil, err
 	}
 	return client.New(cfg, client.Options{

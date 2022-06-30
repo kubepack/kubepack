@@ -18,6 +18,7 @@ package v1alpha1
 
 import (
 	kmapi "kmodules.xyz/client-go/api/v1"
+	"kmodules.xyz/resource-metadata/apis/shared"
 
 	core "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -36,7 +37,7 @@ const (
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 // +kubebuilder:object:root=true
-// +kubebuilder:resource:path=resourceeditors,singular=resourceeditor
+// +kubebuilder:resource:path=resourceeditors,singular=resourceeditor,scope=Cluster
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="Status",type="string",JSONPath=".status.phase"
 // +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp"
@@ -48,14 +49,14 @@ type ResourceEditor struct {
 }
 
 type ResourceEditorSpec struct {
-	Resource kmapi.ResourceID `json:"resource"`
-	UI       *UIParameters    `json:"ui,omitempty"`
+	Resource kmapi.ResourceID     `json:"resource"`
+	UI       *shared.UIParameters `json:"ui,omitempty"`
 	// Icons is an optional list of icons for an application. Icon information includes the source, size,
 	// and mime type.
-	Icons []ImageSpec `json:"icons,omitempty"`
+	Icons []shared.ImageSpec `json:"icons,omitempty"`
 	// Kind == VendorChartPreset | ClusterChartPreset
-	Variants  []VariantRef          `json:"variants,omitempty"`
-	Installer *DeploymentParameters `json:"installer,omitempty"`
+	Variants  []VariantRef                 `json:"variants,omitempty"`
+	Installer *shared.DeploymentParameters `json:"installer,omitempty"`
 }
 
 type VariantRef struct {
@@ -63,29 +64,7 @@ type VariantRef struct {
 
 	// Icons is an optional list of icons for an application. Icon information includes the source, size,
 	// and mime type.
-	Icons []ImageSpec `json:"icons,omitempty"`
-}
-
-type UIParameters struct {
-	Options *ChartRepoRef `json:"options,omitempty"`
-	Editor  *ChartRepoRef `json:"editor,omitempty"`
-	// app.kubernetes.io/instance label must be updated at these paths when refilling metadata
-	// +optional
-	InstanceLabelPaths []string `json:"instanceLabelPaths,omitempty"`
-}
-
-type DeploymentParameters struct {
-	ProductID string        `json:"productID,omitempty"`
-	PlanID    string        `json:"planID,omitempty"`
-	Chart     *ChartRepoRef `json:"chart,omitempty"`
-}
-
-// ChartRepoRef references to a single version of a Chart
-type ChartRepoRef struct {
-	// +optional
-	URL     string `json:"url,omitempty"`
-	Name    string `json:"name"`
-	Version string `json:"version"`
+	Icons []shared.ImageSpec `json:"icons,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

@@ -34,12 +34,12 @@ import (
 	"kubepack.dev/kubepack/apis"
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/lib-helm/pkg/application"
-	chart2 "kubepack.dev/lib-helm/pkg/chart"
 	libchart "kubepack.dev/lib-helm/pkg/chart"
 	"kubepack.dev/lib-helm/pkg/repo"
+	"kubepack.dev/lib-helm/pkg/values"
 
 	"github.com/Masterminds/semver/v3"
-	jsonpatch "github.com/evanphx/json-patch"
+	jsonpatch "github.com/evanphx/json-patch/v5"
 	"gocloud.dev/blob"
 	_ "gocloud.dev/blob/azureblob"
 	_ "gocloud.dev/blob/fileblob"
@@ -287,15 +287,16 @@ func (x *CRDReadinessChecker) Do() error {
 }
 
 type Helm3CommandPrinter struct {
-	Registry    *repo.Registry
-	ChartRef    v1alpha1.ChartRef
-	Version     string
-	ReleaseName string
-	Namespace   string
-	ValuesFile  string
-	ValuesPatch *runtime.RawExtension
+	Registry      *repo.Registry
+	ChartRef      v1alpha1.ChartRef
+	Version       string
+	ReleaseName   string
+	Namespace     string
+	Values        values.Options
+	UseValuesFile bool
 
-	W io.Writer
+	W          io.Writer
+	valuesFile []byte
 }
 
 const indent = "  "
@@ -369,42 +370,21 @@ func (x *Helm3CommandPrinter) Do() error {
 		}
 	}
 
-	if x.ValuesPatch != nil {
-		vals := chrt.Values
-
-		if x.ValuesFile != "" {
-			for _, f := range chrt.Raw {
-				if f.Name == x.ValuesFile {
-					if err := yamllib.Unmarshal(f.Data, &vals); err != nil {
-						return fmt.Errorf("cannot load %s. Reason: %v", f.Name, err.Error())
-					}
-					break
-				}
-			}
-		}
-		values, err := json.Marshal(vals)
+	modified, err := x.Values.MergeValues(chrt.Chart)
+	if err != nil {
+		return err
+	}
+	if x.UseValuesFile {
+		x.valuesFile, err = values.GetValuesDiffYAML(chrt.Values, modified)
 		if err != nil {
 			return err
 		}
-
-		patchData, err := json.Marshal(x.ValuesPatch)
+		_, err = fmt.Fprintf(&buf, "%s--values=libchart.yaml", indent)
 		if err != nil {
 			return err
 		}
-		patch, err := jsonpatch.DecodePatch(patchData)
-		if err != nil {
-			return err
-		}
-		modifiedValues, err := patch.Apply(values)
-		if err != nil {
-			return err
-		}
-		var modified map[string]interface{}
-		err = json.Unmarshal(modifiedValues, &modified)
-		if err != nil {
-			return err
-		}
-		setValues, err := chart2.GetChangedValues(chrt.Values, modified)
+	} else {
+		setValues, err := values.GetChangedValues(chrt.Values, modified)
 		if err != nil {
 			return err
 		}
@@ -414,8 +394,8 @@ func (x *Helm3CommandPrinter) Do() error {
 				return err
 			}
 		}
+		buf.Truncate(buf.Len() - 3)
 	}
-	buf.Truncate(buf.Len() - 3)
 
 	_, err = buf.WriteRune('\n')
 	if err != nil {
@@ -424,6 +404,10 @@ func (x *Helm3CommandPrinter) Do() error {
 
 	_, err = buf.WriteTo(x.W)
 	return err
+}
+
+func (x *Helm3CommandPrinter) ValuesFile() []byte {
+	return x.valuesFile
 }
 
 type YAMLPrinter struct {

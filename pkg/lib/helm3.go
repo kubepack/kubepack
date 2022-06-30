@@ -26,6 +26,9 @@ import (
 	"kubepack.dev/kubepack/apis"
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/lib-helm/pkg/repo"
+	"kubepack.dev/lib-helm/pkg/values"
+
+	"gomodules.xyz/encoding/json"
 )
 
 func GenerateHelm3Script(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order, opts ...ScriptOption) ([]ScriptRef, error) {
@@ -69,9 +72,11 @@ func GenerateHelm3Script(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 			Version:     pkg.Chart.Version,
 			ReleaseName: pkg.Chart.ReleaseName,
 			Namespace:   pkg.Chart.Namespace,
-			ValuesFile:  pkg.Chart.ValuesFile,
-			ValuesPatch: pkg.Chart.ValuesPatch,
-			W:           &buf,
+			Values: values.Options{
+				ValuesFile:  pkg.Chart.ValuesFile,
+				ValuesPatch: pkg.Chart.ValuesPatch,
+			},
+			W: &buf,
 		}
 		err = f3.Do()
 		if err != nil {
@@ -161,4 +166,59 @@ func GenerateHelm3Script(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 			Script:  buf.String(),
 		},
 	}, nil
+}
+
+func PrintHelm3CommandFromStructValues(opts v1alpha1.InstallOptions, baseValuesStruct, modValuesStruct interface{}, useValuesFile bool) (string, []byte, error) {
+	baseMap, err := toJson(baseValuesStruct)
+	if err != nil {
+		return "", nil, err
+	}
+	modMap, err := toJson(modValuesStruct)
+	if err != nil {
+		return "", nil, err
+	}
+	applyValues, err := values.GetValuesDiff(baseMap, modMap)
+	if err != nil {
+		return "", nil, err
+	}
+	return PrintHelm3Command(opts, applyValues, useValuesFile)
+}
+
+func PrintHelm3Command(opts v1alpha1.InstallOptions, applyValues map[string]interface{}, useValuesFile bool) (string, []byte, error) {
+	valuesBytes, err := json.Marshal(applyValues)
+	if err != nil {
+		return "", nil, err
+	}
+
+	var buf bytes.Buffer
+	f3 := &Helm3CommandPrinter{
+		Registry:    DefaultRegistry,
+		ChartRef:    opts.ChartRef,
+		Version:     opts.Version,
+		ReleaseName: opts.ReleaseName,
+		Namespace:   opts.Namespace,
+		Values: values.Options{
+			ValueBytes: [][]byte{valuesBytes},
+		},
+		UseValuesFile: useValuesFile,
+		W:             &buf,
+	}
+	err = f3.Do()
+	if err != nil {
+		return "", nil, err
+	}
+	return buf.String(), f3.ValuesFile(), nil
+}
+
+func toJson(v interface{}) (map[string]interface{}, error) {
+	data, err := json.Marshal(v)
+	if err != nil {
+		return nil, err
+	}
+	var out map[string]interface{}
+	err = json.Unmarshal(data, &out)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }

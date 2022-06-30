@@ -121,3 +121,10 @@ type BundleStatus struct {
 	// +optional
 	ObservedGeneration int64 `json:"observedGeneration,omitempty"`
 }
+
+type InstallOptions struct {
+	ChartRef    `json:",inline"`
+	Version     string `json:"version"`
+	ReleaseName string `json:"releaseName"`
+	Namespace   string `json:"namespace"`
+}

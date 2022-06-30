@@ -18,6 +18,7 @@ package v1alpha1
 
 import (
 	kmapi "kmodules.xyz/client-go/api/v1"
+	"kmodules.xyz/resource-metadata/apis/shared"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -34,8 +35,14 @@ const (
 // +k8s:openapi-gen=true
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
+// +genclient
+// +genclient:nonNamespaced
+// +genclient:skipVerbs=updateStatus
+// +k8s:openapi-gen=true
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
 // +kubebuilder:object:root=true
-// +kubebuilder:resource:path=resourcedashboards,singular=resourcedashboard
+// +kubebuilder:resource:path=resourcedashboards,singular=resourcedashboard,scope=Cluster
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="Status",type="string",JSONPath=".status.phase"
 // +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp"
@@ -54,41 +61,9 @@ const (
 )
 
 type ResourceDashboardSpec struct {
-	Resource   kmapi.ResourceID  `json:"resource"`
-	Provider   DashboardProvider `json:"provider,omitempty"`
-	Dashboards []Dashboard       `json:"dashboards"`
-}
-
-// +kubebuilder:validation:Enum=Source;Target
-type DashboardVarType string
-
-const (
-	DashboardVarTypeSource DashboardVarType = "Source"
-	DashboardVarTypeTarget DashboardVarType = "Target"
-)
-
-type DashboardVar struct {
-	Name  string `json:"name"`
-	Value string `json:"value"`
-	// +optional
-	// +kubebuilder:default:=Source
-	Type DashboardVarType `json:"type,omitempty"`
-}
-
-type Dashboard struct {
-	// +optional
-	Title string `json:"title,omitempty"`
-	// +optional
-	Vars []DashboardVar `json:"vars,omitempty"`
-	// +optional
-	Panels []string `json:"panels,omitempty"`
-	// +optional
-	If *If `json:"if,omitempty"`
-}
-
-type If struct {
-	Condition string           `json:"condition,omitempty"`
-	Connected *ResourceLocator `json:"connected,omitempty"`
+	Resource   kmapi.ResourceID   `json:"resource"`
+	Provider   DashboardProvider  `json:"provider,omitempty"`
+	Dashboards []shared.Dashboard `json:"dashboards"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

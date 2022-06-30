@@ -27,7 +27,8 @@ import (
 	"sync"
 
 	kmapi "kmodules.xyz/client-go/api/v1"
-	"kmodules.xyz/resource-metadata/apis/meta/v1alpha1"
+	"kmodules.xyz/resource-metadata/apis/shared"
+	"kmodules.xyz/resource-metadata/apis/ui/v1alpha1"
 
 	"github.com/pkg/errors"
 	ioutilx "gomodules.xyz/x/ioutil"
@@ -119,11 +120,44 @@ func LoadByGVR(kc client.Client, gvr schema.GroupVersionResource) (*v1alpha1.Res
 	var ed v1alpha1.ResourceEditor
 	err := kc.Get(context.TODO(), client.ObjectKey{Name: DefaultEditorName(gvr)}, &ed)
 	if err == nil {
-		return &ed, true
+		d, _ := LoadDefaultByGVR(gvr)
+		return merge(&ed, d), true
 	} else if client.IgnoreNotFound(err) != nil {
 		klog.V(3).InfoS(fmt.Sprintf("failed to load resource editor for %+v", gvr))
 	}
 	return LoadDefaultByGVR(gvr)
+}
+
+func merge(in, d *v1alpha1.ResourceEditor) *v1alpha1.ResourceEditor {
+	if d == nil {
+		return in
+	}
+
+	in.Labels = d.Labels
+	in.Spec.Resource = d.Spec.Resource
+
+	if d.Spec.UI != nil {
+		if in.Spec.UI == nil {
+			in.Spec.UI = &shared.UIParameters{
+				InstanceLabelPaths: d.Spec.UI.InstanceLabelPaths,
+			}
+		}
+
+		if d.Spec.UI.Options != nil && in.Spec.UI.Options == nil {
+			in.Spec.UI.Options = d.Spec.UI.Options
+		}
+		if d.Spec.UI.Editor != nil && in.Spec.UI.Editor == nil {
+			in.Spec.UI.Editor = d.Spec.UI.Editor
+		}
+	}
+
+	if len(in.Spec.Icons) == 0 {
+		in.Spec.Icons = d.Spec.Icons
+	}
+	if in.Spec.Installer == nil {
+		in.Spec.Installer = d.Spec.Installer
+	}
+	return in
 }
 
 func LoadByResourceID(kc client.Client, rid *kmapi.ResourceID) (*v1alpha1.ResourceEditor, bool) {
