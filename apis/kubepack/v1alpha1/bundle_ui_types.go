@@ -23,45 +23,45 @@ import (
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type BundleView struct {
 	metav1.TypeMeta  `json:",inline"`
-	BundleOptionView `json:",inline" protobuf:"bytes,1,opt,name=bundleOptionView"`
-	LicenseKey       string `json:"licenseKey,omitempty" protobuf:"bytes,2,opt,name=licenseKey"`
+	BundleOptionView `json:",inline"`
+	LicenseKey       string `json:"licenseKey,omitempty"`
 }
 
 type BundleOptionView struct {
-	PackageMeta `json:",inline" protobuf:"bytes,1,opt,name=packageMeta"`
-	DisplayName string        `json:"displayName" protobuf:"bytes,2,opt,name=displayName"`
-	Features    []Feature     `json:"features,omitempty" protobuf:"bytes,3,rep,name=features"`
-	Packages    []PackageCard `json:"packages" protobuf:"bytes,4,rep,name=packages"`
+	PackageMeta `json:",inline"`
+	DisplayName string        `json:"displayName"`
+	Features    []Feature     `json:"features,omitempty"`
+	Packages    []PackageCard `json:"packages"`
 }
 
 type PackageCard struct {
-	Chart  *ChartCard             `json:"chart,omitempty" protobuf:"bytes,1,opt,name=chart"`
-	Bundle *BundleOptionView      `json:"bundle,omitempty" protobuf:"bytes,2,opt,name=bundle"`
-	OneOf  *OneOfBundleOptionView `json:"oneOf,omitempty" protobuf:"bytes,3,rep,name=oneOf"`
+	Chart  *ChartCard             `json:"chart,omitempty"`
+	Bundle *BundleOptionView      `json:"bundle,omitempty"`
+	OneOf  *OneOfBundleOptionView `json:"oneOf,omitempty"`
 }
 
 type OneOfBundleOptionView struct {
-	Description string              `json:"description" protobuf:"bytes,1,opt,name=description"`
-	Bundles     []*BundleOptionView `json:"bundles,omitempty" protobuf:"bytes,2,rep,name=bundles"`
+	Description string              `json:"description"`
+	Bundles     []*BundleOptionView `json:"bundles,omitempty"`
 }
 
 type ChartCard struct {
-	ChartRef          `json:",inline" protobuf:"bytes,1,opt,name=chartRef"`
-	PackageDescriptor `json:",inline" protobuf:"bytes,2,opt,name=packageDescriptor"`
-	Features          []string        `json:"features,omitempty" protobuf:"bytes,3,rep,name=features"`
-	Namespace         string          `json:"namespace,omitempty" protobuf:"bytes,4,opt,name=namespace"`
-	Versions          []VersionOption `json:"versions" protobuf:"bytes,5,rep,name=versions"`
-	MultiSelect       bool            `json:"multiSelect,omitempty" protobuf:"varint,6,opt,name=multiSelect"`
-	Required          bool            `json:"required,omitempty" protobuf:"varint,7,opt,name=required"`
-	Selected          bool            `json:"selected,omitempty" protobuf:"varint,8,opt,name=selected"`
+	ChartRef          `json:",inline"`
+	PackageDescriptor `json:",inline"`
+	Features          []string        `json:"features,omitempty"`
+	Namespace         string          `json:"namespace,omitempty"`
+	Versions          []VersionOption `json:"versions"`
+	MultiSelect       bool            `json:"multiSelect,omitempty"`
+	Required          bool            `json:"required,omitempty"`
+	Selected          bool            `json:"selected,omitempty"`
 }
 
 type FeatureTable struct {
-	Plans []Plan `json:"plans" protobuf:"bytes,1,rep,name=plans"`
-	Rows  []*Row `json:"rows" protobuf:"bytes,2,rep,name=rows"`
+	Plans []Plan `json:"plans"`
+	Rows  []*Row `json:"rows"`
 }
 
 type Row struct {
-	Trait  string   `json:"trait" protobuf:"bytes,1,opt,name=trait"`
-	Values []string `json:"values" protobuf:"bytes,2,rep,name=values"`
+	Trait  string   `json:"trait"`
+	Values []string `json:"values"`
 }

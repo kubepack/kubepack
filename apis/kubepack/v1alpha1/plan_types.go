@@ -37,72 +37,72 @@ const (
 // +kubebuilder:subresource:status
 type Plan struct {
 	metav1.TypeMeta   `json:",inline"`
-	metav1.ObjectMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
-	Spec              PlanSpec   `json:"spec,omitempty" protobuf:"bytes,2,opt,name=spec"`
-	Status            PlanStatus `json:"status,omitempty" protobuf:"bytes,3,opt,name=status"`
+	metav1.ObjectMeta `json:"metadata,omitempty"`
+	Spec              PlanSpec   `json:"spec,omitempty"`
+	Status            PlanStatus `json:"status,omitempty"`
 }
 
 type PlanSpec struct {
-	StripeID    string `json:"id" protobuf:"bytes,1,opt,name=id"`
-	NickName    string `json:"name" protobuf:"bytes,2,opt,name=name"`
-	DisplayName string `json:"displayName" protobuf:"bytes,3,opt,name=displayName"`
-	Description string `json:"description" protobuf:"bytes,4,opt,name=description"`
-	ProductID   string `json:"productID" protobuf:"bytes,5,opt,name=productID"`
-	Phase       Phase  `json:"phase" protobuf:"bytes,6,opt,name=phase,casttype=Phase"`
+	StripeID    string `json:"id"`
+	NickName    string `json:"name"`
+	DisplayName string `json:"displayName"`
+	Description string `json:"description"`
+	ProductID   string `json:"productID"`
+	Phase       Phase  `json:"phase"`
 	// Plans for sorted by weight before displaying to users
-	Weight int32 `json:"weight" protobuf:"varint,7,opt,name=weight"`
+	Weight int32 `json:"weight"`
 
-	Bundle *ChartRef `json:"bundle,omitempty" protobuf:"bytes,8,opt,name=bundle"`
+	Bundle *ChartRef `json:"bundle,omitempty"`
 	//+optional
-	IncludedPlans []string `json:"includedPlans,omitempty" protobuf:"bytes,9,rep,name=includedPlans"`
+	IncludedPlans []string `json:"includedPlans,omitempty"`
 
 	//+optional
-	PricingPattern map[ResourceGroup]PricingPattern `json:"pricingPattern,omitempty" protobuf:"bytes,10,rep,name=pricingPattern,castkey=ResourceGroup"`
+	PricingPattern map[ResourceGroup]PricingPattern `json:"pricingPattern,omitempty"`
 
-	AggregateUsage  *string             `json:"aggregateUsage,omitempty" protobuf:"bytes,11,opt,name=aggregateUsage"`
-	Amount          *int64              `json:"amount,omitempty" protobuf:"varint,12,opt,name=amount"`
-	AmountDecimal   *float64            `json:"amountDecimal,string,omitempty" protobuf:"fixed64,13,opt,name=amountDecimal"`
-	BillingScheme   *string             `json:"billingScheme,omitempty" protobuf:"bytes,14,opt,name=billingScheme"`
-	Currency        *string             `json:"currency,omitempty" protobuf:"bytes,15,opt,name=currency"`
-	Interval        *string             `json:"interval,omitempty" protobuf:"bytes,16,opt,name=interval"`
-	IntervalCount   *int64              `json:"intervalCount,omitempty" protobuf:"varint,17,opt,name=intervalCount"`
-	Tiers           []*PlanTier         `json:"tiers,omitempty" protobuf:"bytes,18,rep,name=tiers"`
-	TiersMode       *string             `json:"tiersMode,omitempty" protobuf:"bytes,19,opt,name=tiersMode"`
-	TransformUsage  *PlanTransformUsage `json:"transformUsage,omitempty" protobuf:"bytes,20,opt,name=transformUsage"`
-	TrialPeriodDays *int64              `json:"trialPeriodDays,omitempty" protobuf:"varint,21,opt,name=trialPeriodDays"`
-	UsageType       *string             `json:"usageType,omitempty" protobuf:"bytes,22,opt,name=usageType"`
+	AggregateUsage  *string             `json:"aggregateUsage,omitempty"`
+	Amount          *int64              `json:"amount,omitempty"`
+	AmountDecimal   *float64            `json:"amountDecimal,string,omitempty"`
+	BillingScheme   *string             `json:"billingScheme,omitempty"`
+	Currency        *string             `json:"currency,omitempty"`
+	Interval        *string             `json:"interval,omitempty"`
+	IntervalCount   *int64              `json:"intervalCount,omitempty"`
+	Tiers           []*PlanTier         `json:"tiers,omitempty"`
+	TiersMode       *string             `json:"tiersMode,omitempty"`
+	TransformUsage  *PlanTransformUsage `json:"transformUsage,omitempty"`
+	TrialPeriodDays *int64              `json:"trialPeriodDays,omitempty"`
+	UsageType       *string             `json:"usageType,omitempty"`
 }
 
 type ResourceGroup string
 
 type PricingPattern struct {
 	//+optional
-	Expression Expression `json:"expression,omitempty" protobuf:"bytes,1,opt,name=expression,casttype=Expression"`
+	Expression Expression `json:"expression,omitempty"`
 	//+optional
-	SizedPrices []SizedPrice `json:"sizedPrices,omitempty" protobuf:"bytes,2,rep,name=sizedPrices"`
+	SizedPrices []SizedPrice `json:"sizedPrices,omitempty"`
 }
 
 type Expression string
 
 type SizedPrice struct {
-	CPU    string  `json:"cpu" protobuf:"bytes,1,opt,name=cpu"`
-	Memory string  `json:"memory" protobuf:"bytes,2,opt,name=memory"`
-	Price  float64 `json:"price" protobuf:"fixed64,3,opt,name=price"`
+	CPU    string  `json:"cpu"`
+	Memory string  `json:"memory"`
+	Price  float64 `json:"price"`
 }
 
 // PlanTier configures tiered pricing
 type PlanTier struct {
-	FlatAmount        *int64   `json:"flatAmount,omitempty" protobuf:"varint,1,opt,name=flatAmount"`
-	FlatAmountDecimal *float64 `json:"flatAmountDecimal,string,omitempty" protobuf:"fixed64,2,opt,name=flatAmountDecimal"`
-	UnitAmount        *int64   `json:"unitAmount,omitempty" protobuf:"varint,3,opt,name=unitAmount"`
-	UnitAmountDecimal *float64 `json:"unitAmountDecimal,string,omitempty" protobuf:"fixed64,4,opt,name=unitAmountDecimal"`
-	UpTo              *int64   `json:"upTo,omitempty" protobuf:"varint,5,opt,name=upTo"`
+	FlatAmount        *int64   `json:"flatAmount,omitempty"`
+	FlatAmountDecimal *float64 `json:"flatAmountDecimal,string,omitempty"`
+	UnitAmount        *int64   `json:"unitAmount,omitempty"`
+	UnitAmountDecimal *float64 `json:"unitAmountDecimal,string,omitempty"`
+	UpTo              *int64   `json:"upTo,omitempty"`
 }
 
 // PlanTransformUsage represents the bucket billing configuration.
 type PlanTransformUsage struct {
-	DivideBy *int64  `json:"divideBy,omitempty" protobuf:"varint,1,opt,name=divideBy"`
-	Round    *string `json:"round,omitempty" protobuf:"bytes,2,opt,name=round"`
+	DivideBy *int64  `json:"divideBy,omitempty"`
+	Round    *string `json:"round,omitempty"`
 }
 
 func (p Plan) BundledPlans() []string {
@@ -116,13 +116,13 @@ func (p Plan) BundledPlans() []string {
 
 type PlanList struct {
 	metav1.TypeMeta `json:",inline"`
-	metav1.ListMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
-	Items           []Plan `json:"items,omitempty" protobuf:"bytes,2,rep,name=items"`
+	metav1.ListMeta `json:"metadata,omitempty"`
+	Items           []Plan `json:"items,omitempty"`
 }
 
 type PlanStatus struct {
 	// ObservedGeneration is the most recent generation observed for this resource. It corresponds to the
 	// resource's generation, which is updated on mutation by the API Server.
 	// +optional
-	ObservedGeneration int64 `json:"observedGeneration,omitempty" protobuf:"varint,1,opt,name=observedGeneration"`
+	ObservedGeneration int64 `json:"observedGeneration,omitempty"`
 }

@@ -85,15 +85,15 @@ message BundleRef {
 }
 
 message BundleSpec {
-  optional PackageDescriptor packageDescriptor = 3;
+  optional PackageDescriptor packageDescriptor = 1;
 
-  optional string displayName = 4;
+  optional string displayName = 2;
 
-  repeated Feature features = 5;
+  repeated Feature features = 3;
 
-  optional string namespace = 6;
+  optional string namespace = 4;
 
-  repeated PackageRef packages = 7;
+  repeated PackageRef packages = 5;
 }
 
 message BundleStatus {
@@ -570,13 +570,13 @@ message ValuesFile {
 message VersionDetail {
   optional VersionOption versionOption = 1;
 
-  optional ResourceDefinitions resources = 3;
+  optional ResourceDefinitions resources = 2;
 
-  repeated WaitFlags waitFors = 4;
+  repeated WaitFlags waitFors = 3;
 
   // jsonpatch path in Values where the license key will be set using replace operation, if defined.
   // See: http://jsonpatch.com
-  optional string licenseKeyPath = 5;
+  optional string licenseKeyPath = 4;
 }
 
 message VersionOption {
