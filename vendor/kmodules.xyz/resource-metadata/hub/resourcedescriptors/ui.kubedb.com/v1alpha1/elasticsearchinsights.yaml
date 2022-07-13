@@ -1,0 +1,97 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ui.kubedb.com
+    k8s.io/kind: ElasticsearchInsight
+    k8s.io/resource: elasticsearchinsights
+    k8s.io/version: v1alpha1
+  name: ui.kubedb.com-v1alpha1-elasticsearchinsights
+spec:
+  resource:
+    group: ui.kubedb.com
+    kind: ElasticsearchInsight
+    name: elasticsearchinsights
+    scope: Namespaced
+    version: v1alpha1
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the \"default\" namespace, but \"default\" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          properties:
+            activePrimaryShards:
+              format: double
+              type: number
+            activeShards:
+              format: double
+              type: number
+            activeShardsPercentAsNumber:
+              format: double
+              type: number
+            clusterName:
+              type: string
+            clusterStatus:
+              type: string
+            delayedUnassignedShards:
+              format: double
+              type: number
+            initializingShards:
+              format: double
+              type: number
+            mode:
+              type: string
+            numberOfDataNodes:
+              format: double
+              type: number
+            numberOfInFlightFetch:
+              format: double
+              type: number
+            numberOfNodes:
+              format: double
+              type: number
+            numberOfPendingTasks:
+              format: double
+              type: number
+            relocatingShards:
+              format: double
+              type: number
+            status:
+              type: string
+            taskMaxWaitingInQueueMilliSeconds:
+              format: double
+              type: number
+            unassignedShards:
+              format: double
+              type: number
+            version:
+              type: string
+          required:
+          - mode
+          - status
+          - version
+          type: object
+      type: object

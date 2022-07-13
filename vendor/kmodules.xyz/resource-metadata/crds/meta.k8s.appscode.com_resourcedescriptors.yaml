@@ -14,7 +14,7 @@ spec:
     shortNames:
     - rd
     singular: resourcedescriptor
-  scope: Cluster
+  scope: Namespaced
   versions:
   - additionalPrinterColumns:
     - jsonPath: .status.phase

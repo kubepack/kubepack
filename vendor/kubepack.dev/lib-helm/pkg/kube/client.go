@@ -23,8 +23,6 @@ import (
 	"kmodules.xyz/apply"
 	kutil "kmodules.xyz/client-go"
 	"sigs.k8s.io/cli-utils/pkg/kstatus/polling"
-	"sigs.k8s.io/cli-utils/pkg/kstatus/polling/clusterreader"
-	"sigs.k8s.io/cli-utils/pkg/kstatus/polling/engine"
 	"sigs.k8s.io/cli-utils/pkg/kstatus/polling/event"
 	"sigs.k8s.io/cli-utils/pkg/kstatus/status"
 	"sigs.k8s.io/cli-utils/pkg/object"
@@ -286,10 +284,7 @@ func (c *Client) checkStatusExceptJobs(resources kube.ResourceList, timeout time
 	if err != nil {
 		return err
 	}
-	poller := polling.NewStatusPoller(reader, mapper, polling.Options{
-		CustomStatusReaders:  nil,
-		ClusterReaderFactory: engine.ClusterReaderFactoryFunc(clusterreader.NewDirectClusterReader),
-	})
+	poller := polling.NewStatusPoller(reader, mapper)
 
 	ctx, cancel := context.WithTimeout(context.TODO(), timeout)
 	defer cancel()
@@ -306,11 +301,12 @@ func (c *Client) checkStatusExceptJobs(resources kube.ResourceList, timeout time
 				GroupKind: r.Mapping.GroupVersionKind.GroupKind(),
 			},
 		}
-		ch := poller.Poll(ctx, objs, polling.PollOptions{
+		ch := poller.Poll(ctx, objs, polling.Options{
 			PollInterval: kutil.RetryInterval,
+			UseCache:     false,
 		})
 		for ev := range ch {
-			if ev.Type == event.ErrorEvent {
+			if ev.EventType == event.ErrorEvent {
 				return fmt.Errorf("status polling failed, reason: %v", ev.Error)
 			}
 			if ev.Resource.Status == status.CurrentStatus {

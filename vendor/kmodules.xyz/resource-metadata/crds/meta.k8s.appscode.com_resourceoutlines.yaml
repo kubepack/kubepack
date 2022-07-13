@@ -12,7 +12,7 @@ spec:
     listKind: ResourceOutlineList
     plural: resourceoutlines
     singular: resourceoutline
-  scope: Cluster
+  scope: Namespaced
   versions:
   - name: v1alpha1
     schema:

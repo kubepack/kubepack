@@ -35,7 +35,7 @@ type HTTPGetter struct {
 	opts options
 }
 
-// Get performs a Get from repo.Getter and returns the body.
+//Get performs a Get from repo.Getter and returns the body.
 func (g *HTTPGetter) Get(href string, options ...Option) (*bytes.Reader, error) {
 	for _, opt := range options {
 		opt(&g.opts)

@@ -57,7 +57,7 @@ func NewMemoryCacheRegistry() *Registry {
 
 func NewDiskCacheRegistry() *Registry {
 	dir := helmpath.CachePath("kubepack")
-	_ = os.MkdirAll(dir, 0o755)
+	_ = os.MkdirAll(dir, 0755)
 	return NewCachedRegistry(diskcache.New(dir))
 }
 

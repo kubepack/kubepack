@@ -12,7 +12,7 @@ spec:
     listKind: ResourceLayoutList
     plural: resourcelayouts
     singular: resourcelayout
-  scope: Cluster
+  scope: Namespaced
   versions:
   - name: v1alpha1
     schema:
