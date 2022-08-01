@@ -30,7 +30,7 @@ require (
 	k8s.io/kube-openapi v0.0.0-20220413171646-5e7f5fdc6da6
 	kmodules.xyz/client-go v0.24.5
 	kmodules.xyz/crd-schema-fuzz v0.24.0
-	kubepack.dev/lib-helm v0.3.2-0.20220630023647-c2726d41f0fd
+	kubepack.dev/lib-helm v0.4.0
 	sigs.k8s.io/application v0.0.0-00010101000000-000000000000
 	sigs.k8s.io/yaml v1.3.0
 )
@@ -203,7 +203,7 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20220411224347-583f2d630306 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
-	gomodules.xyz/password-generator v0.2.7 // indirect
+	gomodules.xyz/password-generator v0.2.8 // indirect
 	gomodules.xyz/sets v0.2.1 // indirect
 	google.golang.org/api v0.74.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
@@ -219,7 +219,7 @@ require (
 	k8s.io/kubectl v0.24.1 // indirect
 	k8s.io/utils v0.0.0-20220210201930-3a6ce19ff2f9 // indirect
 	kmodules.xyz/apply v0.24.1 // indirect
-	kmodules.xyz/resource-metadata v0.12.4 // indirect
+	kmodules.xyz/resource-metadata v0.12.5 // indirect
 	kubepack.dev/preset v0.0.0-20220318014008-5b564b7dc9e7 // indirect
 	oras.land/oras-go v1.1.0 // indirect
 	sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.0.30 // indirect

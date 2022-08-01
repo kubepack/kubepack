@@ -926,7 +926,7 @@ gomodules.xyz/encoding/json
 # gomodules.xyz/jsonpatch/v2 v2.2.0
 ## explicit; go 1.12
 gomodules.xyz/jsonpatch/v2
-# gomodules.xyz/password-generator v0.2.7
+# gomodules.xyz/password-generator v0.2.8
 ## explicit; go 1.15
 gomodules.xyz/password-generator
 # gomodules.xyz/runtime v0.3.0
@@ -1752,14 +1752,14 @@ kmodules.xyz/client-go/tools/wait
 # kmodules.xyz/crd-schema-fuzz v0.24.0
 ## explicit; go 1.18
 kmodules.xyz/crd-schema-fuzz
-# kmodules.xyz/resource-metadata v0.12.4
+# kmodules.xyz/resource-metadata v0.12.5
 ## explicit; go 1.18
 kmodules.xyz/resource-metadata/apis/shared
 kmodules.xyz/resource-metadata/apis/ui
 kmodules.xyz/resource-metadata/apis/ui/v1alpha1
 kmodules.xyz/resource-metadata/crds
 kmodules.xyz/resource-metadata/hub/resourceeditors
-# kubepack.dev/lib-helm v0.3.2-0.20220630023647-c2726d41f0fd
+# kubepack.dev/lib-helm v0.4.0
 ## explicit; go 1.18
 kubepack.dev/lib-helm/pkg/action
 kubepack.dev/lib-helm/pkg/application
