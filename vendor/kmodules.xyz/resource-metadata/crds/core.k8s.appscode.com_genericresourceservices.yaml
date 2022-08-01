@@ -137,6 +137,45 @@ spec:
                     required:
                     - usage
                     type: object
+                  exec:
+                    items:
+                      properties:
+                        alias:
+                          type: string
+                        command:
+                          items:
+                            type: string
+                          type: array
+                        container:
+                          type: string
+                        help:
+                          type: string
+                        kubectlCommand:
+                          type: string
+                        ref:
+                          description: ObjectReference contains enough information
+                            to let you inspect or modify the referred object.
+                          properties:
+                            name:
+                              description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                              type: string
+                            namespace:
+                              description: 'Namespace of the referent. More info:
+                                https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                              type: string
+                          required:
+                          - name
+                          type: object
+                        resource:
+                          type: string
+                      required:
+                      - alias
+                      - command
+                      - container
+                      - ref
+                      - resource
+                      type: object
+                    type: array
                   exposed:
                     properties:
                       refs:

@@ -122,6 +122,21 @@ spec:
                               description: description is a human readable description
                                 of this column.
                               type: string
+                            exec:
+                              properties:
+                                alias:
+                                  type: string
+                                command:
+                                  items:
+                                    type: string
+                                  type: array
+                                container:
+                                  type: string
+                                help:
+                                  type: string
+                                serviceNameTemplate:
+                                  type: string
+                              type: object
                             format:
                               description: format is an optional OpenAPI type definition
                                 for this column. The 'name' format is applied to the
@@ -305,6 +320,21 @@ spec:
                                       description: description is a human readable
                                         description of this column.
                                       type: string
+                                    exec:
+                                      properties:
+                                        alias:
+                                          type: string
+                                        command:
+                                          items:
+                                            type: string
+                                          type: array
+                                        container:
+                                          type: string
+                                        help:
+                                          type: string
+                                        serviceNameTemplate:
+                                          type: string
+                                      type: object
                                     format:
                                       description: format is an optional OpenAPI type
                                         definition for this column. The 'name' format
@@ -489,6 +519,21 @@ spec:
                                     description: description is a human readable description
                                       of this column.
                                     type: string
+                                  exec:
+                                    properties:
+                                      alias:
+                                        type: string
+                                      command:
+                                        items:
+                                          type: string
+                                        type: array
+                                      container:
+                                        type: string
+                                      help:
+                                        type: string
+                                      serviceNameTemplate:
+                                        type: string
+                                    type: object
                                   format:
                                     description: format is an optional OpenAPI type
                                       definition for this column. The 'name' format
@@ -671,6 +716,21 @@ spec:
                                     description: description is a human readable description
                                       of this column.
                                     type: string
+                                  exec:
+                                    properties:
+                                      alias:
+                                        type: string
+                                      command:
+                                        items:
+                                          type: string
+                                        type: array
+                                      container:
+                                        type: string
+                                      help:
+                                        type: string
+                                      serviceNameTemplate:
+                                        type: string
+                                    type: object
                                   format:
                                     description: format is an optional OpenAPI type
                                       definition for this column. The 'name' format
@@ -885,6 +945,21 @@ spec:
                               description: description is a human readable description
                                 of this column.
                               type: string
+                            exec:
+                              properties:
+                                alias:
+                                  type: string
+                                command:
+                                  items:
+                                    type: string
+                                  type: array
+                                container:
+                                  type: string
+                                help:
+                                  type: string
+                                serviceNameTemplate:
+                                  type: string
+                              type: object
                             format:
                               description: format is an optional OpenAPI type definition
                                 for this column. The 'name' format is applied to the

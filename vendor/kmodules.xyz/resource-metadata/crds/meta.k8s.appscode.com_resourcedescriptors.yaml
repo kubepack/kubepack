@@ -164,6 +164,77 @@ spec:
                   - type
                   type: object
                 type: array
+              exec:
+                items:
+                  properties:
+                    alias:
+                      type: string
+                    command:
+                      items:
+                        type: string
+                      type: array
+                    container:
+                      type: string
+                    help:
+                      type: string
+                    if:
+                      properties:
+                        condition:
+                          type: string
+                        connected:
+                          properties:
+                            query:
+                              properties:
+                                byLabel:
+                                  enum:
+                                  - auth_via
+                                  - backup_via
+                                  - catalog
+                                  - connect_via
+                                  - exposed_by
+                                  - monitored_by
+                                  - offshoot
+                                  - restore_into
+                                  - scaled_by
+                                  - view
+                                  - cert_issuer
+                                  - policy
+                                  type: string
+                                raw:
+                                  type: string
+                                type:
+                                  enum:
+                                  - REST
+                                  - GraphQL
+                                  type: string
+                              required:
+                              - type
+                              type: object
+                            ref:
+                              description: GroupKind specifies a Group and a Kind,
+                                but does not force a version.  This is useful for
+                                identifying concepts during lookup stages without
+                                having partially valid types
+                              properties:
+                                group:
+                                  type: string
+                                kind:
+                                  type: string
+                              required:
+                              - group
+                              - kind
+                              type: object
+                          required:
+                          - query
+                          - ref
+                          type: object
+                      type: object
+                    serviceNameTemplate:
+                      type: string
+                  required:
+                  - alias
+                  type: object
+                type: array
               links:
                 description: Links are a list of descriptive URLs intended to be used
                   to surface additional documentation, dashboards, etc.
