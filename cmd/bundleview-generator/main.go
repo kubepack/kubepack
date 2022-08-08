@@ -18,7 +18,6 @@ package main
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"os"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
@@ -30,9 +29,9 @@ import (
 )
 
 var (
-	url     = "https://bundles.kubepack.com"
+	url     = "https://bundles.byte.builders/stable/"
 	name    = "kubedb-community"
-	version = "v0.13.0-rc.0"
+	version = "*"
 )
 
 func main() {
@@ -60,7 +59,7 @@ func main() {
 		if err != nil {
 			klog.Fatal(err)
 		}
-		err = ioutil.WriteFile("artifacts/"+name+"/bundleview.yaml", data, 0o644)
+		err = os.WriteFile("artifacts/"+name+"/bundleview.yaml", data, 0o644)
 		if err != nil {
 			klog.Fatal(err)
 		}
@@ -71,7 +70,7 @@ func main() {
 		if err != nil {
 			klog.Fatal(err)
 		}
-		err = ioutil.WriteFile("artifacts/"+name+"/bundleview.json", data, 0o644)
+		err = os.WriteFile("artifacts/"+name+"/bundleview.json", data, 0o644)
 		if err != nil {
 			klog.Fatal(err)
 		}
