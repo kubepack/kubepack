@@ -1725,12 +1725,12 @@ k8s.io/utils v0.0.0-20220210201930-3a6ce19ff2f9 h1:HNSDgDCrr/6Ly3WEGKZftiE7IY19V
 k8s.io/utils v0.0.0-20220210201930-3a6ce19ff2f9/go.mod h1:jPW/WVKK9YHAvNhRxK0md/EJ228hCsBRufyofKtW8HA=
 kmodules.xyz/apply v0.24.1 h1:u6/iEB3JQsyRSmf2Xl39psiHxV3dc6VtQUY5WUQZ1y0=
 kmodules.xyz/apply v0.24.1/go.mod h1:iA3BjyTtth8+IcWRY2l5D6Cpfi8sh+VMlDgH41Cn79o=
-kmodules.xyz/client-go v0.24.5 h1:vZcVfRv3o+E+t0reUwk5pxg9fe1v61/FGDh8sWi1RDk=
-kmodules.xyz/client-go v0.24.5/go.mod h1:wTV6xDTJT8PYnHg33tg1ofVWvIXAboQGH+OKUCJwja0=
+kmodules.xyz/client-go v0.24.8 h1:oCU1mYwb+0jw0j1IBcuu2qQmTYfamqXsuvyYFjSKcYU=
+kmodules.xyz/client-go v0.24.8/go.mod h1:wTV6xDTJT8PYnHg33tg1ofVWvIXAboQGH+OKUCJwja0=
 kmodules.xyz/crd-schema-fuzz v0.24.0 h1:PQ1Lx5PYnuAeHBpSV6iyDGv+9aH7tGxV1CTNftGLFdM=
 kmodules.xyz/crd-schema-fuzz v0.24.0/go.mod h1:i3m5JNBm5J12ygQszbcqLcQ+q0ogWJrAQQySOgiWzc8=
-kmodules.xyz/resource-metadata v0.12.5 h1:yPS/0im3TTSfhfzQeS1glZI0i+X/GkqJSzGP7HPThBo=
-kmodules.xyz/resource-metadata v0.12.5/go.mod h1:i9+cwehXHOAD/UG/WDlVcnNqKJEd1BzCjvNzy0tc/4Y=
+kmodules.xyz/resource-metadata v0.12.6 h1:heh+6+kHjXu/lKlCMPmVQnEP1EapFiGfzD31vfZ7Bw0=
+kmodules.xyz/resource-metadata v0.12.6/go.mod h1:7DqxAbOiNeAisIzxjGnAFrBA6AfX5bDbC2zHiU5PHSI=
 kubepack.dev/lib-helm v0.4.0 h1:Th9F92mvAvwAE8yqjJnRT0GRFiefsHg3m99b+UIOAHE=
 kubepack.dev/lib-helm v0.4.0/go.mod h1:cX4DzMAKV0m0PW9z6gDQt0aMBgM64wcG8IoMm0c7Zto=
 kubepack.dev/preset v0.0.0-20220318014008-5b564b7dc9e7 h1:ukvKo3UrEbimaHD76wBp0DyeN0ZBAAD7kgaE1Dyw8a4=
