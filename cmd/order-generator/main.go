@@ -17,7 +17,6 @@ limitations under the License.
 package main
 
 import (
-	"io/ioutil"
 	"os"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
@@ -34,7 +33,7 @@ func main() {
 	flag.StringVar(&file, "file", file, "Path to BundleView file")
 	flag.Parse()
 
-	data, err := ioutil.ReadFile(file)
+	data, err := os.ReadFile(file)
 	if err != nil {
 		klog.Fatal(err)
 	}
@@ -57,7 +56,7 @@ func main() {
 	if err != nil {
 		klog.Fatal(err)
 	}
-	err = ioutil.WriteFile("artifacts/"+bv.Name+"/order.yaml", data, 0o644)
+	err = os.WriteFile("artifacts/"+bv.Name+"/order.yaml", data, 0o644)
 	if err != nil {
 		klog.Fatal(err)
 	}

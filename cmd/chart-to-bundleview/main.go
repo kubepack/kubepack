@@ -18,7 +18,6 @@ package main
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"os"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
@@ -60,7 +59,7 @@ func main() {
 		if err != nil {
 			klog.Fatal(err)
 		}
-		err = ioutil.WriteFile("artifacts/"+name+"/bundleview.yaml", data, 0o644)
+		err = os.WriteFile("artifacts/"+name+"/bundleview.yaml", data, 0o644)
 		if err != nil {
 			klog.Fatal(err)
 		}
@@ -71,7 +70,7 @@ func main() {
 		if err != nil {
 			klog.Fatal(err)
 		}
-		err = ioutil.WriteFile("artifacts/"+name+"/bundleview.json", data, 0o644)
+		err = os.WriteFile("artifacts/"+name+"/bundleview.json", data, 0o644)
 		if err != nil {
 			klog.Fatal(err)
 		}

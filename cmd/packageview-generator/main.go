@@ -18,7 +18,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 
 	"kubepack.dev/kubepack/pkg/lib"
@@ -72,7 +71,7 @@ func main() {
 	if err != nil {
 		klog.Fatal(err)
 	}
-	err = ioutil.WriteFile("artifacts/"+name+"/packageview.yaml", data, 0o644)
+	err = os.WriteFile("artifacts/"+name+"/packageview.yaml", data, 0o644)
 	if err != nil {
 		klog.Fatal(err)
 	}

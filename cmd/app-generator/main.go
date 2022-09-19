@@ -17,7 +17,6 @@ limitations under the License.
 package main
 
 import (
-	"io/ioutil"
 	"os"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
@@ -37,30 +36,31 @@ var (
 
 /*
 spec:
-  package:
-    bundle:
-      name:
-      url:
-      version:
-    chart:
-      name:
-      url:
-      version:
-    channel:
-    - rapid
-    - regular
-    - stable
 
-  info:
-    - name: HelmStorageDriver
-      type: Reference
-      valueFrom:
-        type: SecretKeyRef
-        secretKeyRef:
-          kind:
-          namespace:
-          name:
-          key:
+	package:
+	  bundle:
+	    name:
+	    url:
+	    version:
+	  chart:
+	    name:
+	    url:
+	    version:
+	  channel:
+	  - rapid
+	  - regular
+	  - stable
+
+	info:
+	  - name: HelmStorageDriver
+	    type: Reference
+	    valueFrom:
+	      type: SecretKeyRef
+	      secretKeyRef:
+	        kind:
+	        namespace:
+	        name:
+	        key:
 */
 func main() {
 	flag.StringVar(&file, "file", file, "Path to Order file")
@@ -69,7 +69,7 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	data, err := ioutil.ReadFile(file)
+	data, err := os.ReadFile(file)
 	if err != nil {
 		klog.Fatal(err)
 	}
@@ -113,7 +113,7 @@ func main() {
 	if err != nil {
 		klog.Fatal(err)
 	}
-	err = ioutil.WriteFile("artifacts/"+name+"/application.yaml", data, 0o644)
+	err = os.WriteFile("artifacts/"+name+"/application.yaml", data, 0o644)
 	if err != nil {
 		klog.Fatal(err)
 	}

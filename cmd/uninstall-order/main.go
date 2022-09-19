@@ -17,7 +17,7 @@ limitations under the License.
 package main
 
 import (
-	"io/ioutil"
+	"os"
 	"path/filepath"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
@@ -44,7 +44,7 @@ func main() {
 	flag.StringVar(&file, "file", file, "Path to Order file")
 	flag.Parse()
 
-	data, err := ioutil.ReadFile(file)
+	data, err := os.ReadFile(file)
 	if err != nil {
 		klog.Fatal(err)
 	}
