@@ -18,7 +18,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
@@ -164,7 +163,7 @@ func main() {
 	if err != nil {
 		klog.Fatal(err)
 	}
-	err = ioutil.WriteFile("testdata/charts/"+name+"/templates/bundle.yaml", data, 0o644)
+	err = os.WriteFile("testdata/charts/"+name+"/templates/bundle.yaml", data, 0o644)
 	if err != nil {
 		klog.Fatal(err)
 	}

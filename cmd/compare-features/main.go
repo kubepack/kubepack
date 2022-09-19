@@ -17,7 +17,6 @@ limitations under the License.
 package main
 
 import (
-	"io/ioutil"
 	"os"
 
 	"kubepack.dev/kubepack/pkg/lib"
@@ -52,7 +51,7 @@ func main() {
 	if err != nil {
 		klog.Fatal(err)
 	}
-	err = ioutil.WriteFile("artifacts/table.yaml", data, 0o644)
+	err = os.WriteFile("artifacts/table.yaml", data, 0o644)
 	if err != nil {
 		klog.Fatal(err)
 	}

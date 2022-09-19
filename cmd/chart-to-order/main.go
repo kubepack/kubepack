@@ -18,7 +18,6 @@ package main
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"os"
 	"time"
 
@@ -86,7 +85,7 @@ func main() {
 		if err != nil {
 			klog.Fatal(err)
 		}
-		err = ioutil.WriteFile("artifacts/"+name+"/order.yaml", data, 0o644)
+		err = os.WriteFile("artifacts/"+name+"/order.yaml", data, 0o644)
 		if err != nil {
 			klog.Fatal(err)
 		}
@@ -97,7 +96,7 @@ func main() {
 		if err != nil {
 			klog.Fatal(err)
 		}
-		err = ioutil.WriteFile("artifacts/"+name+"/order.json", data, 0o644)
+		err = os.WriteFile("artifacts/"+name+"/order.json", data, 0o644)
 		if err != nil {
 			klog.Fatal(err)
 		}

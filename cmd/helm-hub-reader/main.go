@@ -18,7 +18,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"strings"
@@ -38,7 +38,7 @@ func main() {
 	resp, err := http.Get("https://raw.githubusercontent.com/helm/hub/master/repos.yaml")
 	if err == nil {
 		defer resp.Body.Close()
-		if data, err := ioutil.ReadAll(resp.Body); err == nil {
+		if data, err := io.ReadAll(resp.Body); err == nil {
 			var hub v1alpha1.Hub
 			err = yaml.Unmarshal(data, &hub)
 			if err == nil {
@@ -51,7 +51,7 @@ func main() {
 						if err != nil {
 							klog.Fatalln(err)
 						}
-						data, err := ioutil.ReadAll(resp.Body)
+						data, err := io.ReadAll(resp.Body)
 						if err != nil {
 							klog.Fatalln(err)
 						}
@@ -60,7 +60,7 @@ func main() {
 						if err != nil {
 							klog.Fatalln(err)
 						}
-						err = ioutil.WriteFile("artifacts/hub/"+repo.Name+"-index.yaml", data, 0o644)
+						err = os.WriteFile("artifacts/hub/"+repo.Name+"-index.yaml", data, 0o644)
 						if err != nil {
 							klog.Fatalln(err)
 						}
