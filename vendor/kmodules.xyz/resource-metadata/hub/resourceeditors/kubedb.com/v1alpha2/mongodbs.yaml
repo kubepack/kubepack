@@ -24,8 +24,8 @@ spec:
     editor:
       name: kubedbcom-mongodb-editor
       url: https://bundles.byte.builders/ui/
-      version: v0.4.10
+      version: v0.4.9
     options:
       name: kubedbcom-mongodb-editor-options
       url: https://bundles.byte.builders/ui/
-      version: v0.4.10
+      version: v0.4.9
