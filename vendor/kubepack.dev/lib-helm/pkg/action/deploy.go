@@ -37,6 +37,8 @@ type DeployOptions struct {
 	CreateNamespace          bool           `json:"createNamespace"`
 	Force                    bool           `json:"force"`
 	Recreate                 bool           `json:"recreate"`
+	ResetValues              bool           `json:"resetValues"`
+	ReuseValues              bool           `json:"reuseValues"`
 	CleanupOnFail            bool           `json:"cleanupOnFail"`
 }
 
@@ -127,8 +129,8 @@ func (x *Deployer) Run() (*release.Release, *engine.State, error) {
 			DisableHooks:  x.opts.DisableHooks,
 			DryRun:        x.opts.DryRun,
 			Force:         x.opts.Force,
-			ResetValues:   false,
-			ReuseValues:   false,
+			ResetValues:   x.opts.ResetValues,
+			ReuseValues:   x.opts.ReuseValues,
 			Recreate:      x.opts.Recreate,
 			MaxHistory:    0,
 			Atomic:        x.opts.Atomic,
