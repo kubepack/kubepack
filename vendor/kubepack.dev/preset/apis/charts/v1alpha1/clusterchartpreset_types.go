@@ -32,6 +32,9 @@ const (
 
 // ClusterChartPresetSpec defines the desired state of ClusterChartPreset
 type ClusterChartPresetSpec struct {
+	// +optional
+	DisplayName string `json:"displayName,omitempty"`
+
 	// selector is a label query over pods that should match the replica count.
 	// It must match the pod template's labels.
 	// More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors

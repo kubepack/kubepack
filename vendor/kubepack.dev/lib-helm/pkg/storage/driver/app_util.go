@@ -54,13 +54,12 @@ var empty = struct{}{}
 //
 // The following labels are used within each configmap:
 //
-//    "modifiedAt"     - timestamp indicating when this configmap was last modified. (set in Update)
-//    "createdAt"      - timestamp indicating when this configmap was created. (set in Create)
-//    "version"        - version of the release.
-//    "status"         - status of the release (see pkg/release/status.go for variants)
-//    "owner"          - owner of the configmap, currently "helm".
-//    "name"           - name of the release.
-//
+//	"modifiedAt"     - timestamp indicating when this configmap was last modified. (set in Update)
+//	"createdAt"      - timestamp indicating when this configmap was created. (set in Create)
+//	"version"        - version of the release.
+//	"status"         - status of the release (see pkg/release/status.go for variants)
+//	"owner"          - owner of the configmap, currently "helm".
+//	"name"           - name of the release.
 func newApplicationObject(rls *rspb.Release) *v1beta1.Application {
 	const owner = "helm"
 

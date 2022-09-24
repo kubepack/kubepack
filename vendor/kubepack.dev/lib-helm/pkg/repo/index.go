@@ -18,7 +18,7 @@ package repo
 
 import (
 	"bytes"
-	"io/ioutil"
+	"io"
 	"os"
 	"path"
 	"path/filepath"
@@ -91,7 +91,7 @@ func NewIndexFile() *IndexFile {
 
 // LoadIndexFile takes a file at the given path and returns an IndexFile object
 func LoadIndexFile(reader *bytes.Reader) (*IndexFile, error) {
-	b, err := ioutil.ReadAll(reader)
+	b, err := io.ReadAll(reader)
 	if err != nil {
 		return nil, err
 	}
@@ -204,7 +204,7 @@ func (i IndexFile) WriteFile(dest string, mode os.FileMode) error {
 	if err != nil {
 		return err
 	}
-	return ioutil.WriteFile(dest, b, mode)
+	return os.WriteFile(dest, b, mode)
 }
 
 // Merge merges the given index file into this index.

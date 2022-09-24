@@ -75,6 +75,8 @@ spec:
                         - view
                         - cert_issuer
                         - policy
+                        - recommended_for
+                        - ops
                         type: string
                       raw:
                         type: string
@@ -272,6 +274,8 @@ spec:
                                 - view
                                 - cert_issuer
                                 - policy
+                                - recommended_for
+                                - ops
                                 type: string
                               raw:
                                 type: string
@@ -471,6 +475,8 @@ spec:
                               - view
                               - cert_issuer
                               - policy
+                              - recommended_for
+                              - ops
                               type: string
                             raw:
                               type: string
@@ -668,6 +674,8 @@ spec:
                               - view
                               - cert_issuer
                               - policy
+                              - recommended_for
+                              - ops
                               type: string
                             raw:
                               type: string
@@ -898,6 +906,8 @@ spec:
                         - view
                         - cert_issuer
                         - policy
+                        - recommended_for
+                        - ops
                         type: string
                       raw:
                         type: string

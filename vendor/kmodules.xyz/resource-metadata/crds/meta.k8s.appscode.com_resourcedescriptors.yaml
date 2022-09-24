@@ -59,6 +59,8 @@ spec:
                         - view
                         - cert_issuer
                         - policy
+                        - recommended_for
+                        - ops
                         type: string
                       type: array
                     level:
@@ -127,6 +129,7 @@ spec:
                             only "value". The requirements are ANDed.
                           type: object
                       type: object
+                      x-kubernetes-map-type: atomic
                     selectorPath:
                       type: string
                     target:
@@ -199,6 +202,8 @@ spec:
                                   - view
                                   - cert_issuer
                                   - policy
+                                  - recommended_for
+                                  - ops
                                   type: string
                                 raw:
                                   type: string

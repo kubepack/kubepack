@@ -27,19 +27,34 @@ import (
 type Preset interface {
 	GetObjectKind() schema.ObjectKind
 	GetName() string
+	GetDisplayName() string
 	GetLabels() map[string]string
 	GetSpec() ClusterChartPresetSpec
 }
 
 var _ Preset = &ClusterChartPreset{}
 
-func (in *ClusterChartPreset) GetSpec() ClusterChartPresetSpec {
+func (in ClusterChartPreset) GetDisplayName() string {
+	if in.Spec.DisplayName != "" {
+		return in.Spec.DisplayName
+	}
+	return in.Name
+}
+
+func (in ClusterChartPreset) GetSpec() ClusterChartPresetSpec {
 	return in.Spec
 }
 
 var _ Preset = &ChartPreset{}
 
-func (in *ChartPreset) GetSpec() ClusterChartPresetSpec {
+func (in ChartPreset) GetDisplayName() string {
+	if in.Spec.DisplayName != "" {
+		return in.Spec.DisplayName
+	}
+	return in.Name
+}
+
+func (in ChartPreset) GetSpec() ClusterChartPresetSpec {
 	return in.Spec
 }
 

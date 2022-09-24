@@ -17,7 +17,7 @@ package getter
 
 import (
 	"bytes"
-	"io/ioutil"
+	"io"
 	"net"
 	"net/http"
 	"time"
@@ -77,7 +77,7 @@ func (g *HTTPGetter) get(href string) (out *bytes.Reader, err error) {
 		return nil, errors.Errorf("failed to fetch %s : %s", href, resp.Status)
 	}
 
-	data, err := ioutil.ReadAll(resp.Body)
+	data, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
