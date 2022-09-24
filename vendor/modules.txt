@@ -69,12 +69,9 @@ github.com/Masterminds/squirrel
 # github.com/NYTimes/gziphandler v1.1.1
 ## explicit; go 1.11
 github.com/NYTimes/gziphandler
-# github.com/PuerkitoBio/purell v1.1.1
-## explicit
+# github.com/PuerkitoBio/purell v1.2.0
+## explicit; go 1.19
 github.com/PuerkitoBio/purell
-# github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578
-## explicit
-github.com/PuerkitoBio/urlesc
 # github.com/alessio/shellescape v1.4.1
 ## explicit; go 1.14
 github.com/alessio/shellescape
@@ -846,7 +843,7 @@ golang.org/x/crypto/pkcs12/internal/rc2
 golang.org/x/crypto/salsa20/salsa
 golang.org/x/crypto/scrypt
 golang.org/x/crypto/ssh/terminal
-# golang.org/x/net v0.0.0-20220909164309-bea034e7d591
+# golang.org/x/net v0.0.0-20220921203646-d300de134e69
 ## explicit; go 1.17
 golang.org/x/net/context
 golang.org/x/net/context/ctxhttp
@@ -877,7 +874,7 @@ golang.org/x/oauth2/jwt
 golang.org/x/sync/errgroup
 golang.org/x/sync/semaphore
 golang.org/x/sync/singleflight
-# golang.org/x/sys v0.0.0-20220728004956-3c1f35247d10
+# golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab
 ## explicit; go 1.17
 golang.org/x/sys/cpu
 golang.org/x/sys/execabs
@@ -1693,7 +1690,7 @@ k8s.io/kube-openapi/pkg/util
 k8s.io/kube-openapi/pkg/util/proto
 k8s.io/kube-openapi/pkg/util/proto/validation
 k8s.io/kube-openapi/pkg/validation/spec
-# k8s.io/kubectl v0.25.0
+# k8s.io/kubectl v0.25.2
 ## explicit; go 1.19
 k8s.io/kubectl/pkg/apps
 k8s.io/kubectl/pkg/cmd/apiresources
@@ -1725,7 +1722,7 @@ k8s.io/kubectl/pkg/util/storage
 k8s.io/kubectl/pkg/util/templates
 k8s.io/kubectl/pkg/util/term
 k8s.io/kubectl/pkg/validation
-# k8s.io/utils v0.0.0-20220728103510-ee6ede2d64ed
+# k8s.io/utils v0.0.0-20220823124924-e9cbc92d1a73
 ## explicit; go 1.12
 k8s.io/utils/buffer
 k8s.io/utils/clock
@@ -1743,7 +1740,7 @@ k8s.io/utils/trace
 # kmodules.xyz/apiversion v0.2.0
 ## explicit; go 1.14
 kmodules.xyz/apiversion
-# kmodules.xyz/apply v0.24.1
+# kmodules.xyz/apply v0.25.0
 ## explicit; go 1.18
 kmodules.xyz/apply
 # kmodules.xyz/client-go v0.25.6
@@ -1761,14 +1758,14 @@ kmodules.xyz/client-go/tools/wait
 # kmodules.xyz/crd-schema-fuzz v0.25.0
 ## explicit; go 1.18
 kmodules.xyz/crd-schema-fuzz
-# kmodules.xyz/resource-metadata v0.12.5
+# kmodules.xyz/resource-metadata v0.13.0
 ## explicit; go 1.18
 kmodules.xyz/resource-metadata/apis/shared
 kmodules.xyz/resource-metadata/apis/ui
 kmodules.xyz/resource-metadata/apis/ui/v1alpha1
 kmodules.xyz/resource-metadata/crds
 kmodules.xyz/resource-metadata/hub/resourceeditors
-# kubepack.dev/lib-helm v0.4.1
+# kubepack.dev/lib-helm v0.5.0
 ## explicit; go 1.18
 kubepack.dev/lib-helm/pkg/action
 kubepack.dev/lib-helm/pkg/application
@@ -1786,8 +1783,8 @@ kubepack.dev/lib-helm/pkg/kube
 kubepack.dev/lib-helm/pkg/repo
 kubepack.dev/lib-helm/pkg/storage/driver
 kubepack.dev/lib-helm/pkg/values
-# kubepack.dev/preset v0.0.0-20220318014008-5b564b7dc9e7
-## explicit; go 1.17
+# kubepack.dev/preset v0.0.2
+## explicit; go 1.18
 kubepack.dev/preset/apis/charts/v1alpha1
 kubepack.dev/preset/apis/store/v1alpha1
 kubepack.dev/preset/crds
@@ -1815,7 +1812,7 @@ sigs.k8s.io/application/api/app/v1beta1
 sigs.k8s.io/application/client/clientset/versioned
 sigs.k8s.io/application/client/clientset/versioned/scheme
 sigs.k8s.io/application/client/clientset/versioned/typed/app/v1beta1
-# sigs.k8s.io/cli-utils v0.31.1
+# sigs.k8s.io/cli-utils v0.33.0
 ## explicit; go 1.17
 sigs.k8s.io/cli-utils/pkg/kstatus/polling
 sigs.k8s.io/cli-utils/pkg/kstatus/polling/clusterreader

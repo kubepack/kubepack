@@ -108,6 +108,7 @@ spec:
                                 required:
                                 - key
                                 type: object
+                                x-kubernetes-map-type: atomic
                               fieldRef:
                                 description: 'Selects a field of the pod: supports
                                   metadata.name, metadata.namespace, `metadata.labels[''<KEY>'']`,
@@ -126,6 +127,7 @@ spec:
                                 required:
                                 - fieldPath
                                 type: object
+                                x-kubernetes-map-type: atomic
                               resourceFieldRef:
                                 description: 'Selects a resource of the container:
                                   only resources limits and requests (limits.cpu,
@@ -151,6 +153,7 @@ spec:
                                 required:
                                 - resource
                                 type: object
+                                x-kubernetes-map-type: atomic
                               secretKeyRef:
                                 description: Selects a key of a secret in the pod's
                                   namespace
@@ -172,6 +175,7 @@ spec:
                                 required:
                                 - key
                                 type: object
+                                x-kubernetes-map-type: atomic
                             type: object
                         required:
                         - name
@@ -202,6 +206,7 @@ spec:
                                   defined
                                 type: boolean
                             type: object
+                            x-kubernetes-map-type: atomic
                           prefix:
                             description: An optional identifier to prepend to each
                               key in the ConfigMap. Must be a C_IDENTIFIER.
@@ -218,6 +223,7 @@ spec:
                                 description: Specify whether the Secret must be defined
                                 type: boolean
                             type: object
+                            x-kubernetes-map-type: atomic
                         type: object
                       type: array
                     image:
@@ -1503,8 +1509,7 @@ spec:
                 type: array
               ephemeralContainerStatuses:
                 description: Status for any ephemeral containers that have run in
-                  this pod. This field is beta-level and available on clusters that
-                  haven't disabled the EphemeralContainers feature gate.
+                  this pod.
                 items:
                   description: ContainerStatus contains details for the current status
                     of this container.
@@ -1883,9 +1888,9 @@ spec:
                   Pods may be allocated at most 1 value for each of IPv4 and IPv6.
                   This list is empty if no IPs have been allocated yet.
                 items:
-                  description: 'IP address information for entries in the (plural)
-                    PodIPs field. Each entry includes: IP: An IP address allocated
-                    to the pod. Routable at least within the cluster.'
+                  description: "IP address information for entries in the (plural)
+                    PodIPs field. Each entry includes: \n IP: An IP address allocated
+                    to the pod. Routable at least within the cluster."
                   properties:
                     ip:
                       description: ip is an IP address (IPv4 or IPv6) assigned to

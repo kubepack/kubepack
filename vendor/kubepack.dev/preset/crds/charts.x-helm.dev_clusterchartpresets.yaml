@@ -3,8 +3,6 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  annotations:
-    controller-gen.kubebuilder.io/version: v0.7.0
   creationTimestamp: null
   name: clusterchartpresets.charts.x-helm.dev
 spec:
@@ -37,6 +35,8 @@ spec:
           spec:
             description: ClusterChartPresetSpec defines the desired state of ClusterChartPreset
             properties:
+              displayName:
+                type: string
               selector:
                 description: 'selector is a label query over pods that should match
                   the replica count. It must match the pod template''s labels. More
@@ -115,9 +115,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

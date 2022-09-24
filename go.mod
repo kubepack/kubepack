@@ -30,7 +30,7 @@ require (
 	k8s.io/kube-openapi v0.0.0-20220803164354-a70c9af30aea
 	kmodules.xyz/client-go v0.25.6
 	kmodules.xyz/crd-schema-fuzz v0.25.0
-	kubepack.dev/lib-helm v0.4.1
+	kubepack.dev/lib-helm v0.5.0
 	sigs.k8s.io/application v0.0.0-00010101000000-000000000000
 	sigs.k8s.io/yaml v1.3.0
 )
@@ -55,8 +55,7 @@ require (
 	github.com/Masterminds/sprig/v3 v3.2.2 // indirect
 	github.com/Masterminds/squirrel v1.5.3 // indirect
 	github.com/NYTimes/gziphandler v1.1.1 // indirect
-	github.com/PuerkitoBio/purell v1.1.1 // indirect
-	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
+	github.com/PuerkitoBio/purell v1.2.0 // indirect
 	github.com/alessio/shellescape v1.4.1 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20200428143746-21a406dcc535 // indirect
 	github.com/aws/aws-sdk-go v1.43.31 // indirect
@@ -193,10 +192,10 @@ require (
 	go.uber.org/multierr v1.8.0 // indirect
 	go.uber.org/zap v1.21.0 // indirect
 	golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e // indirect
-	golang.org/x/net v0.0.0-20220909164309-bea034e7d591 // indirect
+	golang.org/x/net v0.0.0-20220921203646-d300de134e69 // indirect
 	golang.org/x/oauth2 v0.0.0-20220309155454-6242fa91716a // indirect
 	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4 // indirect
-	golang.org/x/sys v0.0.0-20220728004956-3c1f35247d10 // indirect
+	golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab // indirect
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20220722155302-e5dcc9cfc0b9 // indirect
@@ -214,15 +213,15 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	k8s.io/apiserver v0.25.2 // indirect
 	k8s.io/component-base v0.25.2 // indirect
-	k8s.io/kubectl v0.25.0 // indirect
-	k8s.io/utils v0.0.0-20220728103510-ee6ede2d64ed // indirect
+	k8s.io/kubectl v0.25.2 // indirect
+	k8s.io/utils v0.0.0-20220823124924-e9cbc92d1a73 // indirect
 	kmodules.xyz/apiversion v0.2.0 // indirect
-	kmodules.xyz/apply v0.24.1 // indirect
-	kmodules.xyz/resource-metadata v0.12.5 // indirect
-	kubepack.dev/preset v0.0.0-20220318014008-5b564b7dc9e7 // indirect
+	kmodules.xyz/apply v0.25.0 // indirect
+	kmodules.xyz/resource-metadata v0.13.0 // indirect
+	kubepack.dev/preset v0.0.2 // indirect
 	oras.land/oras-go v1.2.0 // indirect
 	sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.0.32 // indirect
-	sigs.k8s.io/cli-utils v0.31.1 // indirect
+	sigs.k8s.io/cli-utils v0.33.0 // indirect
 	sigs.k8s.io/controller-runtime v0.13.0 // indirect
 	sigs.k8s.io/json v0.0.0-20220713155537-f223a00ba0e2 // indirect
 	sigs.k8s.io/kustomize/api v0.12.1 // indirect
