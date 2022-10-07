@@ -389,6 +389,11 @@ func (x *Helm3CommandPrinter) Do() error {
 			return err
 		}
 		for _, v := range setValues {
+			// xref: https://github.com/kubepack/lib-helm/issues/72
+			if strings.ContainsRune(v, '\n') {
+				idx := strings.IndexRune(v, '=')
+				return fmt.Errorf(`found \n is values for %s`, v[:idx])
+			}
 			_, err = fmt.Fprintf(&buf, "%s--set %s \\\n", indent, v)
 			if err != nil {
 				return err
