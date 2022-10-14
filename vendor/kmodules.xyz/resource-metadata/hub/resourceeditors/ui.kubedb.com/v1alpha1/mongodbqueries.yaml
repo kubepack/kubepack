@@ -15,3 +15,8 @@ spec:
     name: mongodbqueries
     scope: Namespaced
     version: v1alpha1
+  ui:
+    editor:
+      name: uikubedbcom-mongodbqueries-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.11

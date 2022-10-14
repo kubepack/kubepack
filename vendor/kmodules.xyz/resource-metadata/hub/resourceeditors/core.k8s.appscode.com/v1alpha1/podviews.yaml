@@ -15,3 +15,8 @@ spec:
     name: podviews
     scope: Namespaced
     version: v1alpha1
+  ui:
+    editor:
+      name: corek8sappscodecom-podview-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.11

@@ -1,0 +1,22 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: schema.kubedb.com
+    k8s.io/kind: MySQLDatabase
+    k8s.io/resource: mysqldatabases
+    k8s.io/version: v1alpha1
+  name: schema.kubedb.com-v1alpha1-mysqldatabases
+spec:
+  resource:
+    group: schema.kubedb.com
+    kind: MySQLDatabase
+    name: mysqldatabases
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: schemakubedbcom-mysqldatabase-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.11

@@ -1,0 +1,22 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: postgres.kubedb.com
+    k8s.io/kind: Publisher
+    k8s.io/resource: publishers
+    k8s.io/version: v1alpha1
+  name: postgres.kubedb.com-v1alpha1-publishers
+spec:
+  resource:
+    group: postgres.kubedb.com
+    kind: Publisher
+    name: publishers
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: postgreskubedbcom-publisher-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.11

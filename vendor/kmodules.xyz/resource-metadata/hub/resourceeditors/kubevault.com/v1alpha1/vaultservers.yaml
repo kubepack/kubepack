@@ -9,23 +9,9 @@ metadata:
     k8s.io/version: v1alpha1
   name: kubevault.com-v1alpha1-vaultservers
 spec:
-  icons:
-  - src: https://cdn.appscode.com/k8s/icons/kubevault.com/vaultservers.svg
-    type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/kubevault.com/vaultservers.png
-    type: image/png
   resource:
     group: kubevault.com
     kind: VaultServer
     name: vaultservers
     scope: Namespaced
     version: v1alpha1
-  ui:
-    editor:
-      name: kubevaultcom-vaultserver-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.4.10
-    options:
-      name: kubevaultcom-vaultserver-editor-options
-      url: https://bundles.byte.builders/ui/
-      version: v0.4.10

@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: supervisor.appscode.com
+    k8s.io/kind: Recommendation
+    k8s.io/resource: recommendations
+    k8s.io/version: v1alpha1
+  name: supervisor.appscode.com-v1alpha1-recommendations
+spec:
+  resource:
+    group: supervisor.appscode.com
+    kind: Recommendation
+    name: recommendations
+    scope: Namespaced
+    version: v1alpha1

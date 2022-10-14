@@ -1,0 +1,22 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ops.kubevault.com
+    k8s.io/kind: VaultOpsRequest
+    k8s.io/resource: vaultopsrequests
+    k8s.io/version: v1alpha1
+  name: ops.kubevault.com-v1alpha1-vaultopsrequests
+spec:
+  resource:
+    group: ops.kubevault.com
+    kind: VaultOpsRequest
+    name: vaultopsrequests
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: opskubevaultcom-vaultopsrequest-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.11
