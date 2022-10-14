@@ -1,0 +1,22 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: meta.k8s.appscode.com
+    k8s.io/kind: ResourceEditor
+    k8s.io/resource: resourcedescriptors
+    k8s.io/version: v1alpha1
+  name: meta.k8s.appscode.com-v1alpha1-resourcedescriptors
+spec:
+  resource:
+    group: meta.k8s.appscode.com
+    kind: ResourceEditor
+    name: resourcedescriptors
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: metak8sappscodecom-resourcedescriptor-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.11

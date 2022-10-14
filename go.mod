@@ -217,7 +217,7 @@ require (
 	k8s.io/utils v0.0.0-20220823124924-e9cbc92d1a73 // indirect
 	kmodules.xyz/apiversion v0.2.0 // indirect
 	kmodules.xyz/apply v0.25.0 // indirect
-	kmodules.xyz/resource-metadata v0.13.0 // indirect
+	kmodules.xyz/resource-metadata v0.13.1 // indirect
 	kubepack.dev/preset v0.0.2 // indirect
 	oras.land/oras-go v1.2.0 // indirect
 	sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.0.32 // indirect

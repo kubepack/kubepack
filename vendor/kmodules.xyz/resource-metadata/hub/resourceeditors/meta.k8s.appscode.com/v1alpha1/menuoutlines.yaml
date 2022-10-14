@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: meta.k8s.appscode.com
+    k8s.io/kind: MenuOutline
+    k8s.io/resource: menuoutlines
+    k8s.io/version: v1alpha1
+  name: meta.k8s.appscode.com-v1alpha1-menuoutlines
+spec:
+  resource:
+    group: meta.k8s.appscode.com
+    kind: MenuOutline
+    name: menuoutlines
+    scope: Cluster
+    version: v1alpha1

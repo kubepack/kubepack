@@ -24,4 +24,4 @@ spec:
     editor:
       name: apiregistrationk8sio-apiservice-editor
       url: https://bundles.byte.builders/ui/
-      version: v0.4.10
+      version: v0.4.11

@@ -15,3 +15,8 @@ spec:
     name: grafanadashboardtemplates
     scope: Cluster
     version: v1alpha1
+  ui:
+    editor:
+      name: openvizdev-grafanadashboardtemplate-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.11

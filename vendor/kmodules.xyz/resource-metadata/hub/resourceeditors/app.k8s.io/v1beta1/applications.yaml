@@ -19,6 +19,6 @@ spec:
     editor:
       name: appk8sio-application-editor
       url: https://bundles.byte.builders/ui/
-      version: v0.4.10
+      version: v0.4.11
     instanceLabelPaths:
     - spec.selector.matchLabels

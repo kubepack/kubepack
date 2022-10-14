@@ -24,8 +24,8 @@ spec:
     editor:
       name: kubedbcom-mysql-editor
       url: https://bundles.byte.builders/ui/
-      version: v0.4.10
+      version: v0.4.11
     options:
       name: kubedbcom-mysql-editor-options
       url: https://bundles.byte.builders/ui/
-      version: v0.4.10
+      version: v0.4.11

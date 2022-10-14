@@ -15,3 +15,8 @@ spec:
     name: backupoverviews
     scope: Namespaced
     version: v1alpha1
+  ui:
+    editor:
+      name: uistashappscodecom-backupoverview-editor
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.11
