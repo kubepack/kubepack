@@ -20,25 +20,25 @@ import (
 )
 
 type UpgradeOptions struct {
-	ChartURL      string         `json:"chartURL"`
-	ChartName     string         `json:"chartName"`
-	Version       string         `json:"version"`
-	Values        values.Options `json:",inline,omitempty"`
-	Install       bool           `json:"install"`
-	Devel         bool           `json:"devel"`
-	Namespace     string         `json:"namespace"`
-	Timeout       time.Duration  `json:"timeout"`
-	Wait          bool           `json:"wait"`
-	DisableHooks  bool           `json:"disableHooks"`
-	DryRun        bool           `json:"dryRun"`
-	Force         bool           `json:"force"`
-	ResetValues   bool           `json:"resetValues"`
-	ReuseValues   bool           `json:"reuseValues"`
-	Recreate      bool           `json:"recreate"`
-	MaxHistory    int            `json:"maxHistory"`
-	Atomic        bool           `json:"atomic"`
-	CleanupOnFail bool           `json:"cleanupOnFail"`
-	PartOf        string         `json:"partOf"`
+	ChartURL       string `json:"chartURL"`
+	ChartName      string `json:"chartName"`
+	Version        string `json:"version"`
+	values.Options `json:",inline,omitempty"`
+	Install        bool          `json:"install"`
+	Devel          bool          `json:"devel"`
+	Namespace      string        `json:"namespace"`
+	Timeout        time.Duration `json:"timeout"`
+	Wait           bool          `json:"wait"`
+	DisableHooks   bool          `json:"disableHooks"`
+	DryRun         bool          `json:"dryRun"`
+	Force          bool          `json:"force"`
+	ResetValues    bool          `json:"resetValues"`
+	ReuseValues    bool          `json:"reuseValues"`
+	Recreate       bool          `json:"recreate"`
+	MaxHistory     int           `json:"maxHistory"`
+	Atomic         bool          `json:"atomic"`
+	CleanupOnFail  bool          `json:"cleanupOnFail"`
+	PartOf         string        `json:"partOf"`
 }
 
 type Upgrader struct {
@@ -139,7 +139,7 @@ func (x *Upgrader) Run() (*release.Release, *engine.State, error) {
 		return nil, nil, err
 	}
 
-	vals, err := x.opts.Values.MergeValues(chrt.Chart)
+	vals, err := x.opts.Options.MergeValues(chrt.Chart)
 	if err != nil {
 		return nil, nil, err
 	}

@@ -30,7 +30,7 @@ require (
 	k8s.io/kube-openapi v0.0.0-20220803164354-a70c9af30aea
 	kmodules.xyz/client-go v0.25.6
 	kmodules.xyz/crd-schema-fuzz v0.25.0
-	kubepack.dev/lib-helm v0.5.0
+	kubepack.dev/lib-helm v0.5.1-0.20221023015516-9dcae498c4f8
 	sigs.k8s.io/application v0.0.0-00010101000000-000000000000
 	sigs.k8s.io/yaml v1.3.0
 )
