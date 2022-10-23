@@ -14,32 +14,32 @@ import (
 )
 
 type DeployOptions struct {
-	ChartURL                 string         `json:"chartURL"`
-	ChartName                string         `json:"chartName"`
-	Version                  string         `json:"version"`
-	Values                   values.Options `json:",inline,omitempty"`
-	ClientOnly               bool           `json:"clientOnly"`
-	DryRun                   bool           `json:"dryRun"`
-	DisableHooks             bool           `json:"disableHooks"`
-	Replace                  bool           `json:"replace"`
-	Wait                     bool           `json:"wait"`
-	Devel                    bool           `json:"devel"`
-	Timeout                  time.Duration  `json:"timeout"`
-	Namespace                string         `json:"namespace"`
-	ReleaseName              string         `json:"releaseName"`
-	Description              string         `json:"description"`
-	Atomic                   bool           `json:"atomic"`
-	SkipCRDs                 bool           `json:"skipCRDs"`
-	SubNotes                 bool           `json:"subNotes"`
-	DisableOpenAPIValidation bool           `json:"disableOpenAPIValidation"`
-	IncludeCRDs              bool           `json:"includeCRDs"`
-	PartOf                   string         `json:"partOf"`
-	CreateNamespace          bool           `json:"createNamespace"`
-	Force                    bool           `json:"force"`
-	Recreate                 bool           `json:"recreate"`
-	ResetValues              bool           `json:"resetValues"`
-	ReuseValues              bool           `json:"reuseValues"`
-	CleanupOnFail            bool           `json:"cleanupOnFail"`
+	ChartURL                 string `json:"chartURL"`
+	ChartName                string `json:"chartName"`
+	Version                  string `json:"version"`
+	values.Options           `json:",inline,omitempty"`
+	ClientOnly               bool          `json:"clientOnly"`
+	DryRun                   bool          `json:"dryRun"`
+	DisableHooks             bool          `json:"disableHooks"`
+	Replace                  bool          `json:"replace"`
+	Wait                     bool          `json:"wait"`
+	Devel                    bool          `json:"devel"`
+	Timeout                  time.Duration `json:"timeout"`
+	Namespace                string        `json:"namespace"`
+	ReleaseName              string        `json:"releaseName"`
+	Description              string        `json:"description"`
+	Atomic                   bool          `json:"atomic"`
+	SkipCRDs                 bool          `json:"skipCRDs"`
+	SubNotes                 bool          `json:"subNotes"`
+	DisableOpenAPIValidation bool          `json:"disableOpenAPIValidation"`
+	IncludeCRDs              bool          `json:"includeCRDs"`
+	PartOf                   string        `json:"partOf"`
+	CreateNamespace          bool          `json:"createNamespace"`
+	Force                    bool          `json:"force"`
+	Recreate                 bool          `json:"recreate"`
+	ResetValues              bool          `json:"resetValues"`
+	ReuseValues              bool          `json:"reuseValues"`
+	CleanupOnFail            bool          `json:"cleanupOnFail"`
 }
 
 type Deployer struct {
@@ -89,7 +89,7 @@ func (x *Deployer) Run() (*release.Release, *engine.State, error) {
 				ChartURL:                 x.opts.ChartURL,
 				ChartName:                x.opts.ChartName,
 				Version:                  x.opts.Version,
-				Values:                   x.opts.Values,
+				Options:                  x.opts.Options,
 				ClientOnly:               x.opts.ClientOnly,
 				DryRun:                   x.opts.DryRun,
 				DisableHooks:             x.opts.DisableHooks,
@@ -120,7 +120,7 @@ func (x *Deployer) Run() (*release.Release, *engine.State, error) {
 			ChartURL:      x.opts.ChartURL,
 			ChartName:     x.opts.ChartName,
 			Version:       x.opts.Version,
-			Values:        x.opts.Values,
+			Options:       x.opts.Options,
 			Install:       false,
 			Devel:         x.opts.Devel,
 			Namespace:     x.opts.Namespace,

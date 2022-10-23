@@ -73,7 +73,7 @@ func main() {
 			ChartURL:  url,
 			ChartName: name,
 			Version:   version,
-			Values: values.Options{
+			Options: values.Options{
 				ValuesFile:  "",
 				ValuesPatch: nil,
 			},

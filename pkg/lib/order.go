@@ -221,7 +221,7 @@ func InstallOrder(getter genericclioptions.RESTClientGetter, reg *repo.Registry,
 				ChartURL:  pkg.Chart.ChartRef.URL,
 				ChartName: pkg.Chart.ChartRef.Name,
 				Version:   pkg.Chart.Version,
-				Values: values.Options{
+				Options: values.Options{
 					ValuesFile:  pkg.Chart.ValuesFile,
 					ValuesPatch: pkg.Chart.ValuesPatch,
 				},
