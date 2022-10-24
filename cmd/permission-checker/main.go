@@ -22,6 +22,7 @@ import (
 	"path/filepath"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+	"kubepack.dev/kubepack/cmd/internal"
 	"kubepack.dev/kubepack/pkg/lib"
 
 	"github.com/google/uuid"
@@ -71,7 +72,7 @@ func main() {
 	}
 	order.UID = types.UID(uuid.New().String())
 
-	allowed, err := lib.CheckPermissions(getter, lib.DefaultRegistry, order)
+	allowed, err := lib.CheckPermissions(getter, internal.DefaultRegistry, order)
 	if err != nil {
 		klog.Fatal(err)
 	}

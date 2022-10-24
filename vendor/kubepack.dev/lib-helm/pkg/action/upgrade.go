@@ -45,7 +45,7 @@ type Upgrader struct {
 	cfg *Configuration
 
 	opts        UpgradeOptions
-	reg         *repo.Registry
+	reg         repo.IRegistry
 	releaseName string
 	result      *release.Release
 }
@@ -73,7 +73,7 @@ func (x *Upgrader) WithOptions(opts UpgradeOptions) *Upgrader {
 	return x
 }
 
-func (x *Upgrader) WithRegistry(reg *repo.Registry) *Upgrader {
+func (x *Upgrader) WithRegistry(reg repo.IRegistry) *Upgrader {
 	x.reg = reg
 	return x
 }

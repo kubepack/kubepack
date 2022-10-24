@@ -17,6 +17,7 @@ limitations under the License.
 package repo
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -25,17 +26,22 @@ import (
 	"time"
 
 	"github.com/PuerkitoBio/purell"
+	fluxsrc "github.com/fluxcd/source-controller/api/v1beta2"
 	"github.com/gregjones/httpcache"
 	"github.com/gregjones/httpcache/diskcache"
 	"github.com/pkg/errors"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/helmpath"
+	core "k8s.io/api/core/v1"
+	kmapi "kmodules.xyz/client-go/api/v1"
 	"kubepack.dev/lib-helm/pkg/chart/loader"
 	"kubepack.dev/lib-helm/pkg/downloader"
 	"kubepack.dev/lib-helm/pkg/getter"
+	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
 type Registry struct {
+	kc    client.Client
 	repos map[string]*Entry
 	cache httpcache.Cache
 	m     sync.RWMutex
@@ -43,22 +49,26 @@ type Registry struct {
 
 var _ IRegistry = &Registry{}
 
-func NewCachedRegistry(cache httpcache.Cache) *Registry {
-	return &Registry{repos: make(map[string]*Entry), cache: cache}
+func NewCachedRegistry(kc client.Client, cache httpcache.Cache) *Registry {
+	return &Registry{repos: make(map[string]*Entry), kc: kc, cache: cache}
 }
 
 func NewRegistry() *Registry {
-	return NewCachedRegistry(nil)
+	return NewCachedRegistry(nil, nil)
 }
 
 func NewMemoryCacheRegistry() *Registry {
-	return NewCachedRegistry(httpcache.NewMemoryCache())
+	return NewCachedRegistry(nil, httpcache.NewMemoryCache())
+}
+
+func DefaultDiskCache() httpcache.Cache {
+	dir := helmpath.CachePath("kubepack")
+	_ = os.MkdirAll(dir, 0o755)
+	return diskcache.New(dir)
 }
 
 func NewDiskCacheRegistry() *Registry {
-	dir := helmpath.CachePath("kubepack")
-	_ = os.MkdirAll(dir, 0o755)
-	return NewCachedRegistry(diskcache.New(dir))
+	return NewCachedRegistry(nil, DefaultDiskCache())
 }
 
 func (r *Registry) Add(e *Entry) error {
@@ -67,6 +77,11 @@ func (r *Registry) Add(e *Entry) error {
 		return err
 	}
 	e.URL = url
+	if e.Username != "" || e.Password != "" || e.CAFile != "" || e.CertFile != "" || e.KeyFile != "" {
+		e.Cache = nil
+	} else {
+		e.Cache = r.cache
+	}
 
 	r.m.Lock()
 	r.repos[url] = e
@@ -110,6 +125,70 @@ func (r *Registry) Delete(url string) (*Entry, error) {
 	r.m.Unlock()
 
 	return entry, nil
+}
+
+func (r *Registry) Register(srcRef kmapi.TypedObjectReference) (string, error) {
+	var repository string
+
+	if srcRef.APIGroup == fluxsrc.GroupVersion.Group && srcRef.Kind == "HelmRepository" {
+		if srcRef.Namespace == "" || srcRef.Name == "" {
+			return "", fmt.Errorf("missing name or namespace for HelmRepository %+v", srcRef)
+		}
+		if r.kc == nil {
+			return "", fmt.Errorf("kubernetes client not initialized for HelmRepository %+v", srcRef)
+		}
+
+		var src fluxsrc.HelmRepository
+		err := r.kc.Get(context.TODO(), client.ObjectKey{Namespace: srcRef.Namespace, Name: srcRef.Name}, &src)
+		if err != nil {
+			return "", err
+		}
+		entry, found, err := r.Get(src.Spec.URL)
+		if err != nil {
+			return "", err
+		}
+		if !found {
+			if src.Spec.SecretRef != nil {
+				var secret core.Secret
+				err := r.kc.Get(context.TODO(), client.ObjectKey{Namespace: srcRef.Namespace, Name: src.Spec.SecretRef.Name}, &secret)
+				if err != nil {
+					return "", err
+				}
+				if v, ok := secret.Data[core.BasicAuthUsernameKey]; ok {
+					entry.Username = string(v)
+				}
+				if v, ok := secret.Data[core.BasicAuthPasswordKey]; ok {
+					entry.Password = string(v)
+				}
+
+				// TODO(tamal): correct keys?
+				if v, ok := secret.Data["ca.crt"]; ok {
+					entry.CAFile = string(v)
+				}
+				if v, ok := secret.Data[core.TLSCertKey]; ok {
+					entry.CertFile = string(v)
+				}
+				if v, ok := secret.Data[core.TLSPrivateKeyKey]; ok {
+					entry.KeyFile = string(v)
+				}
+			}
+
+			// TODO(tamal): enforce
+			// PassCredentials
+			// src.Spec.AccessFrom
+
+			if err = r.Add(entry); err != nil {
+				return "", err
+			}
+		}
+		repository = entry.URL
+	} else {
+		if srcRef.APIGroup != "" || srcRef.Kind != "" || srcRef.Namespace != "" {
+			return "", fmt.Errorf("only repository name is expected, found %+v", srcRef)
+		}
+		repository = strings.TrimSpace(srcRef.Name)
+	}
+	return repository, nil
 }
 
 // LocateChart looks for a chart and returns either the reader or an error.

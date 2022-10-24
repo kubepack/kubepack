@@ -28,7 +28,7 @@ import (
 	disco_util "kmodules.xyz/client-go/discovery"
 )
 
-func CheckPermissions(getter genericclioptions.RESTClientGetter, reg *repo.Registry, order v1alpha1.Order) (bool, error) {
+func CheckPermissions(getter genericclioptions.RESTClientGetter, reg repo.IRegistry, order v1alpha1.Order) (bool, error) {
 	config, err := getter.ToRESTConfig()
 	if err != nil {
 		return false, err

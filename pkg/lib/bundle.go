@@ -31,7 +31,7 @@ import (
 	"sigs.k8s.io/yaml"
 )
 
-func GetBundle(reg *repo.Registry, in *v1alpha1.BundleOption) (*chart.Chart, *v1alpha1.Bundle, error) {
+func GetBundle(reg repo.IRegistry, in *v1alpha1.BundleOption) (*chart.Chart, *v1alpha1.Bundle, error) {
 	chrt, err := reg.GetChart(in.URL, in.Name, in.Version)
 	if err != nil {
 		return nil, nil, err

@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"kubepack.dev/kubepack/pkg/lib"
+	"kubepack.dev/kubepack/cmd/internal"
 	"kubepack.dev/lib-helm/pkg/action"
 	"kubepack.dev/lib-helm/pkg/values"
 
@@ -68,7 +68,7 @@ func main() {
 	if err != nil {
 		klog.Fatal(err)
 	}
-	i.WithRegistry(lib.DefaultRegistry).
+	i.WithRegistry(internal.DefaultRegistry).
 		WithOptions(action.InstallOptions{
 			ChartURL:  url,
 			ChartName: name,

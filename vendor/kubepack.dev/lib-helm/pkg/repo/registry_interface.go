@@ -1,14 +1,17 @@
 package repo
 
 import (
+	"errors"
 	"fmt"
 	"io/fs"
 	"strings"
 
+	kmapi "kmodules.xyz/client-go/api/v1"
 	"kubepack.dev/lib-helm/pkg/chart/loader"
 )
 
 type IRegistry interface {
+	Register(srcRef kmapi.TypedObjectReference) (string, error) // url, error
 	GetChart(repository, chartName, chartVersion string) (*ChartExtended, error)
 }
 
@@ -20,7 +23,11 @@ func NewEmbeddedRegistry(fsys fs.FS) IRegistry {
 	return &EmbeddedRegistry{rootFS: fsys}
 }
 
-func (r EmbeddedRegistry) GetChart(repository, chartName, chartVersion string) (*ChartExtended, error) {
+func (r EmbeddedRegistry) Register(_ kmapi.TypedObjectReference) (string, error) {
+	return "", errors.New("unsupported method")
+}
+
+func (r EmbeddedRegistry) GetChart(repository, chartName, _ string) (*ChartExtended, error) {
 	name, embedded := IsEmbedded(repository)
 	if !embedded {
 		return nil, fmt.Errorf("invalid repository format, expected embed://{chartName}, found: %s", repository)

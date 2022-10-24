@@ -21,7 +21,7 @@ import (
 	"kubepack.dev/lib-helm/pkg/repo"
 )
 
-func ComparePlans(reg *repo.Registry, url string, names []string, version string) (v1alpha1.FeatureTable, error) {
+func ComparePlans(reg repo.IRegistry, url string, names []string, version string) (v1alpha1.FeatureTable, error) {
 	var table v1alpha1.FeatureTable
 
 	ids := map[string]int{} // trait -> idx

@@ -21,6 +21,7 @@ import (
 	"path/filepath"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+	"kubepack.dev/kubepack/cmd/internal"
 	"kubepack.dev/kubepack/pkg/lib"
 
 	flag "github.com/spf13/pflag"
@@ -63,7 +64,7 @@ func main() {
 	}
 	getter := clientcmdutil.NewClientGetter(&kubeconfig)
 
-	err = lib.InstallOrder(getter, lib.DefaultRegistry, order)
+	err = lib.InstallOrder(getter, internal.DefaultRegistry, order)
 	if err != nil {
 		klog.Fatal(err)
 	}

@@ -22,7 +22,6 @@ import (
 	"strings"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/lib-helm/pkg/repo"
 
 	"github.com/gabriel-vasile/mimetype"
 	"helm.sh/helm/v3/pkg/chart"
@@ -75,8 +74,6 @@ func GetPackageDescriptor(pkgChart *chart.Chart) v1alpha1.PackageDescriptor {
 
 	return out
 }
-
-var DefaultRegistry = repo.NewDiskCacheRegistry()
 
 func CreatePackageView(url string, chrt *chart.Chart) (*v1alpha1.PackageView, error) {
 	p := v1alpha1.PackageView{

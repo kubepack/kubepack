@@ -25,7 +25,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-func CreateBundleViewForBundle(reg *repo.Registry, ref *v1alpha1.ChartRepoRef) (*v1alpha1.BundleView, error) {
+func CreateBundleViewForBundle(reg repo.IRegistry, ref *v1alpha1.ChartRepoRef) (*v1alpha1.BundleView, error) {
 	view, err := toBundleOptionView(reg, &v1alpha1.BundleOption{
 		BundleRef: v1alpha1.BundleRef{
 			URL:  ref.URL,
@@ -46,7 +46,7 @@ func CreateBundleViewForBundle(reg *repo.Registry, ref *v1alpha1.ChartRepoRef) (
 	return &bv, nil
 }
 
-func toBundleOptionView(reg *repo.Registry, in *v1alpha1.BundleOption, level int) (*v1alpha1.BundleOptionView, error) {
+func toBundleOptionView(reg repo.IRegistry, in *v1alpha1.BundleOption, level int) (*v1alpha1.BundleOptionView, error) {
 	chrt, bundle, err := GetBundle(reg, in)
 	if err != nil {
 		return nil, err
@@ -135,7 +135,7 @@ func toBundleOptionView(reg *repo.Registry, in *v1alpha1.BundleOption, level int
 	return &bv, nil
 }
 
-func CreateBundleViewForChart(reg *repo.Registry, ref *v1alpha1.ChartRepoRef) (*v1alpha1.BundleView, error) {
+func CreateBundleViewForChart(reg repo.IRegistry, ref *v1alpha1.ChartRepoRef) (*v1alpha1.BundleView, error) {
 	pkgChart, err := reg.GetChart(ref.URL, ref.Name, ref.Version)
 	if err != nil {
 		return nil, err

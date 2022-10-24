@@ -47,7 +47,7 @@ type Installer struct {
 	cfg *Configuration
 
 	opts   InstallOptions
-	reg    *repo.Registry
+	reg    repo.IRegistry
 	result *release.Release
 }
 
@@ -74,7 +74,7 @@ func (x *Installer) WithOptions(opts InstallOptions) *Installer {
 	return x
 }
 
-func (x *Installer) WithRegistry(reg *repo.Registry) *Installer {
+func (x *Installer) WithRegistry(reg repo.IRegistry) *Installer {
 	x.reg = reg
 	return x
 }

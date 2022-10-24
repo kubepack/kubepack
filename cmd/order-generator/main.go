@@ -20,6 +20,7 @@ import (
 	"os"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+	"kubepack.dev/kubepack/cmd/internal"
 	"kubepack.dev/kubepack/pkg/lib"
 
 	flag "github.com/spf13/pflag"
@@ -43,7 +44,7 @@ func main() {
 		klog.Fatal(err)
 	}
 
-	out, err := lib.CreateOrder(lib.DefaultRegistry, bv)
+	out, err := lib.CreateOrder(internal.DefaultRegistry, bv)
 	if err != nil {
 		klog.Fatal(err)
 	}

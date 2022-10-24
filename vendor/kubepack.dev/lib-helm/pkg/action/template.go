@@ -21,7 +21,7 @@ type Renderer struct {
 	cfg *ha.Configuration
 
 	opts InstallOptions
-	reg  *repo.Registry
+	reg  repo.IRegistry
 }
 
 func NewRenderer() (*Renderer, error) {
@@ -70,7 +70,7 @@ func (x *Renderer) ForChart(url, name, version string) *Renderer {
 	return x
 }
 
-func (x *Renderer) WithRegistry(reg *repo.Registry) *Renderer {
+func (x *Renderer) WithRegistry(reg repo.IRegistry) *Renderer {
 	x.reg = reg
 	return x
 }

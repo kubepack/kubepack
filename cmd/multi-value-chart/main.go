@@ -19,7 +19,7 @@ package main
 import (
 	"fmt"
 
-	"kubepack.dev/kubepack/pkg/lib"
+	"kubepack.dev/kubepack/cmd/internal"
 
 	flag "github.com/spf13/pflag"
 	"k8s.io/klog/v2"
@@ -41,7 +41,7 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	chrt, err := lib.DefaultRegistry.GetChart(url, name, version)
+	chrt, err := internal.DefaultRegistry.GetChart(url, name, version)
 	if err != nil {
 		klog.Fatalln(err)
 	}

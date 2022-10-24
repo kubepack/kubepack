@@ -22,6 +22,7 @@ import (
 	"os"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+	"kubepack.dev/kubepack/cmd/internal"
 	"kubepack.dev/kubepack/pkg/lib"
 
 	"github.com/google/uuid"
@@ -53,7 +54,7 @@ func main() {
 	}
 	order.UID = types.UID(uuid.New().String())
 
-	scripts, err := lib.GenerateHelm3Script(bs, lib.DefaultRegistry, order)
+	scripts, err := lib.GenerateHelm3Script(bs, internal.DefaultRegistry, order)
 	if err != nil {
 		klog.Fatal(err)
 	}
