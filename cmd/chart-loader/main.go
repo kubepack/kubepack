@@ -19,13 +19,13 @@ package main
 import (
 	"fmt"
 
-	"kubepack.dev/kubepack/pkg/lib"
+	"kubepack.dev/kubepack/cmd/internal"
 
 	"gomodules.xyz/x/term"
 )
 
 func main() {
-	reg := lib.DefaultRegistry
+	reg := internal.DefaultRegistry
 	chart, err := reg.GetChart("https://charts.appscode.com/stable", "stash", "v0.9.0-rc.6")
 	term.ExitOnError(err)
 

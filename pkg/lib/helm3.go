@@ -31,7 +31,7 @@ import (
 	"gomodules.xyz/encoding/json"
 )
 
-func GenerateHelm3Script(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order, opts ...ScriptOption) ([]ScriptRef, error) {
+func GenerateHelm3Script(bs *BlobStore, reg repo.IRegistry, order v1alpha1.Order, opts ...ScriptOption) ([]ScriptRef, error) {
 	var buf bytes.Buffer
 	var err error
 
@@ -168,7 +168,7 @@ func GenerateHelm3Script(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order
 	}, nil
 }
 
-func PrintHelm3CommandFromStructValues(opts v1alpha1.InstallOptions, baseValuesStruct, modValuesStruct interface{}, useValuesFile bool) (string, []byte, error) {
+func PrintHelm3CommandFromStructValues(reg repo.IRegistry, opts v1alpha1.InstallOptions, baseValuesStruct, modValuesStruct interface{}, useValuesFile bool) (string, []byte, error) {
 	baseMap, err := toJson(baseValuesStruct)
 	if err != nil {
 		return "", nil, err
@@ -181,10 +181,10 @@ func PrintHelm3CommandFromStructValues(opts v1alpha1.InstallOptions, baseValuesS
 	if err != nil {
 		return "", nil, err
 	}
-	return PrintHelm3Command(opts, applyValues, useValuesFile)
+	return PrintHelm3Command(reg, opts, applyValues, useValuesFile)
 }
 
-func PrintHelm3Command(opts v1alpha1.InstallOptions, applyValues map[string]interface{}, useValuesFile bool) (string, []byte, error) {
+func PrintHelm3Command(reg repo.IRegistry, opts v1alpha1.InstallOptions, applyValues map[string]interface{}, useValuesFile bool) (string, []byte, error) {
 	valuesBytes, err := json.Marshal(applyValues)
 	if err != nil {
 		return "", nil, err
@@ -192,7 +192,7 @@ func PrintHelm3Command(opts v1alpha1.InstallOptions, applyValues map[string]inte
 
 	var buf bytes.Buffer
 	f3 := &Helm3CommandPrinter{
-		Registry:    DefaultRegistry,
+		Registry:    reg,
 		ChartRef:    opts.ChartRef,
 		Version:     opts.Version,
 		ReleaseName: opts.ReleaseName,

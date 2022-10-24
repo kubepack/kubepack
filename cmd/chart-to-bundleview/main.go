@@ -21,6 +21,7 @@ import (
 	"os"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+	"kubepack.dev/kubepack/cmd/internal"
 	"kubepack.dev/kubepack/pkg/lib"
 
 	flag "github.com/spf13/pflag"
@@ -40,7 +41,7 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	bv, err := lib.CreateBundleViewForChart(lib.DefaultRegistry, &v1alpha1.ChartRepoRef{
+	bv, err := lib.CreateBundleViewForChart(internal.DefaultRegistry, &v1alpha1.ChartRepoRef{
 		URL:     url,
 		Name:    name,
 		Version: version,

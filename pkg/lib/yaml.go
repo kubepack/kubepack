@@ -28,7 +28,7 @@ import (
 	"kubepack.dev/lib-helm/pkg/repo"
 )
 
-func GenerateYAMLScript(bs *BlobStore, reg *repo.Registry, order v1alpha1.Order, opts ...ScriptOption) ([]ScriptRef, error) {
+func GenerateYAMLScript(bs *BlobStore, reg repo.IRegistry, order v1alpha1.Order, opts ...ScriptOption) ([]ScriptRef, error) {
 	var buf bytes.Buffer
 	var err error
 

@@ -23,6 +23,7 @@ import (
 	"strings"
 
 	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
+	"kubepack.dev/kubepack/cmd/internal"
 	"kubepack.dev/kubepack/pkg/lib"
 
 	"github.com/gobuffalo/flect"
@@ -95,7 +96,7 @@ func main() {
 			ns = strings.TrimSpace(parts[5])
 		}
 
-		pkgChart, err := lib.DefaultRegistry.GetChart(url, chartName, primaryVersion)
+		pkgChart, err := internal.DefaultRegistry.GetChart(url, chartName, primaryVersion)
 		if err != nil {
 			klog.Fatalln(err)
 		}
@@ -139,7 +140,7 @@ func main() {
 		bundleName := parts[1]
 		version := parts[2]
 
-		chart, err := lib.DefaultRegistry.GetChart(url, bundleName, version)
+		chart, err := internal.DefaultRegistry.GetChart(url, bundleName, version)
 		if err != nil {
 			klog.Fatalln(err)
 		}

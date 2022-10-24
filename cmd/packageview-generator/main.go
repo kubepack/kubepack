@@ -20,6 +20,7 @@ import (
 	"fmt"
 	"os"
 
+	"kubepack.dev/kubepack/cmd/internal"
 	"kubepack.dev/kubepack/pkg/lib"
 
 	flag "github.com/spf13/pflag"
@@ -51,7 +52,7 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	pkgChart, err := lib.DefaultRegistry.GetChart(url, name, version)
+	pkgChart, err := internal.DefaultRegistry.GetChart(url, name, version)
 	if err != nil {
 		klog.Fatalln(err)
 	}

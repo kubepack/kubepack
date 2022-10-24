@@ -38,7 +38,7 @@ import (
 	"sigs.k8s.io/application/client/clientset/versioned"
 )
 
-func CreateOrder(reg *repo.Registry, bv v1alpha1.BundleView) (*v1alpha1.Order, error) {
+func CreateOrder(reg repo.IRegistry, bv v1alpha1.BundleView) (*v1alpha1.Order, error) {
 	selection, err := toPackageSelection(reg, &bv.BundleOptionView, bv.LicenseKey)
 	if err != nil {
 		return nil, err
@@ -68,7 +68,7 @@ func CreateOrder(reg *repo.Registry, bv v1alpha1.BundleView) (*v1alpha1.Order, e
 // xref: helm.sh/helm/v3/pkg/action/install.go
 const releaseNameMaxLen = 53
 
-func toPackageSelection(reg *repo.Registry, in *v1alpha1.BundleOptionView, licenseKey string) ([]v1alpha1.PackageSelection, error) {
+func toPackageSelection(reg repo.IRegistry, in *v1alpha1.BundleOptionView, licenseKey string) ([]v1alpha1.PackageSelection, error) {
 	var out []v1alpha1.PackageSelection
 
 	_, bundle, err := GetBundle(reg, &v1alpha1.BundleOption{
@@ -168,7 +168,7 @@ func FindChartData(bundle *v1alpha1.Bundle, chrtRef v1alpha1.ChartRef, chrtVersi
 	return nil, nil, ""
 }
 
-func InstallOrder(getter genericclioptions.RESTClientGetter, reg *repo.Registry, order v1alpha1.Order, opts ...ScriptOption) error {
+func InstallOrder(getter genericclioptions.RESTClientGetter, reg repo.IRegistry, order v1alpha1.Order, opts ...ScriptOption) error {
 	config, err := getter.ToRESTConfig()
 	if err != nil {
 		return err

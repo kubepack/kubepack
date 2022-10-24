@@ -19,6 +19,7 @@ package main
 import (
 	"os"
 
+	"kubepack.dev/kubepack/cmd/internal"
 	"kubepack.dev/kubepack/pkg/lib"
 
 	flag "github.com/spf13/pflag"
@@ -38,7 +39,7 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	table, err := lib.ComparePlans(lib.DefaultRegistry, url, names, version)
+	table, err := lib.ComparePlans(internal.DefaultRegistry, url, names, version)
 	if err != nil {
 		klog.Fatal(err)
 	}

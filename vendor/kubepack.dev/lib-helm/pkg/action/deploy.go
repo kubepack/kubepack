@@ -46,7 +46,7 @@ type Deployer struct {
 	cfg *Configuration
 
 	opts   DeployOptions
-	reg    *repo.Registry
+	reg    repo.IRegistry
 	result *release.Release
 }
 
@@ -73,7 +73,7 @@ func (x *Deployer) WithOptions(opts DeployOptions) *Deployer {
 	return x
 }
 
-func (x *Deployer) WithRegistry(reg *repo.Registry) *Deployer {
+func (x *Deployer) WithRegistry(reg repo.IRegistry) *Deployer {
 	x.reg = reg
 	return x
 }

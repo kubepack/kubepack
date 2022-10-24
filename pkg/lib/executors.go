@@ -287,7 +287,7 @@ func (x *CRDReadinessChecker) Do() error {
 }
 
 type Helm3CommandPrinter struct {
-	Registry      *repo.Registry
+	Registry      repo.IRegistry
 	ChartRef      v1alpha1.ChartRef
 	Version       string
 	ReleaseName   string
@@ -416,7 +416,7 @@ func (x *Helm3CommandPrinter) ValuesFile() []byte {
 }
 
 type YAMLPrinter struct {
-	Registry    *repo.Registry
+	Registry    repo.IRegistry
 	ChartRef    v1alpha1.ChartRef
 	Version     string
 	ReleaseName string
@@ -660,7 +660,7 @@ type ResourcePermission struct {
 }
 
 type PermissionChecker struct {
-	Registry    *repo.Registry
+	Registry    repo.IRegistry
 	ChartRef    v1alpha1.ChartRef
 	Version     string
 	ReleaseName string
@@ -948,7 +948,7 @@ func (x *ApplicationCreator) Do() error {
 }
 
 type ApplicationGenerator struct {
-	Registry *repo.Registry
+	Registry repo.IRegistry
 	Chart    v1alpha1.ChartSelection
 	chrt     *chart.Chart
 

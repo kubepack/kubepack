@@ -5,6 +5,8 @@ import (
 	"log"
 	"strings"
 
+	fluxhelm "github.com/fluxcd/helm-controller/api/v2beta1"
+	fluxsrc "github.com/fluxcd/source-controller/api/v1beta2"
 	"github.com/gobuffalo/flect"
 	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/chart"
@@ -70,6 +72,13 @@ func NewUncachedClientForConfig(cfg *rest.Config) (client.Client, error) {
 		return nil, err
 	}
 	if err := uiapi.AddToScheme(scheme); err != nil {
+		return nil, err
+	}
+	// FluxCD
+	if err := fluxsrc.AddToScheme(scheme); err != nil {
+		return nil, err
+	}
+	if err := fluxhelm.AddToScheme(scheme); err != nil {
 		return nil, err
 	}
 	return client.New(cfg, client.Options{
