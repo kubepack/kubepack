@@ -32,6 +32,72 @@ spec:
             type: object
           spec:
             properties:
+              actions:
+                items:
+                  properties:
+                    description:
+                      type: string
+                    items:
+                      items:
+                        properties:
+                          description:
+                            type: string
+                          disabledTemplate:
+                            type: string
+                          editor:
+                            description: ExpandedChartRepoRef references to a single
+                              version of a Chart
+                            properties:
+                              name:
+                                type: string
+                              url:
+                                type: string
+                              version:
+                                type: string
+                            required:
+                            - name
+                            - version
+                            type: object
+                          flow:
+                            type: string
+                          icons:
+                            items:
+                              description: ImageSpec contains information about an
+                                image used as an icon.
+                              properties:
+                                size:
+                                  description: (optional) The size of the image in
+                                    pixels (e.g., 25x25).
+                                  type: string
+                                src:
+                                  description: The source for image represented as
+                                    either an absolute URL to the image or a Data
+                                    URL containing the image. Data URLs are defined
+                                    in RFC 2397.
+                                  type: string
+                                type:
+                                  description: (optional) The mine type of the image
+                                    (e.g., "image/png").
+                                  type: string
+                              required:
+                              - src
+                              type: object
+                            type: array
+                          name:
+                            type: string
+                          operationId:
+                            type: string
+                        required:
+                        - flow
+                        - operationId
+                        type: object
+                      type: array
+                    name:
+                      type: string
+                  required:
+                  - items
+                  type: object
+                type: array
               defaultLayout:
                 type: boolean
               header:

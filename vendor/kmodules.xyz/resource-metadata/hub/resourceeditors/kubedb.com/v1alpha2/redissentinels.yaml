@@ -18,5 +18,8 @@ spec:
   ui:
     editor:
       name: kubedbcom-redissentinel-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.4.11
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.12
