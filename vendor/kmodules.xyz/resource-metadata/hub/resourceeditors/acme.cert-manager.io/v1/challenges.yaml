@@ -17,7 +17,10 @@ spec:
   installer:
     chart:
       name: cert-manager
-      url: https://charts.jetstack.io
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: jetstack
       version: ""
   resource:
     group: acme.cert-manager.io
@@ -28,5 +31,8 @@ spec:
   ui:
     editor:
       name: acmecertmanagerio-challenge-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.4.11
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.12

@@ -27,12 +27,12 @@ import (
 	"sync"
 
 	kmapi "kmodules.xyz/client-go/api/v1"
-	"kmodules.xyz/resource-metadata/apis/shared"
 	"kmodules.xyz/resource-metadata/apis/ui/v1alpha1"
 
 	"github.com/pkg/errors"
 	ioutilx "gomodules.xyz/x/ioutil"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
+	"k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/klog/v2"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -122,7 +122,7 @@ func LoadByGVR(kc client.Client, gvr schema.GroupVersionResource) (*v1alpha1.Res
 	if err == nil {
 		d, _ := LoadDefaultByGVR(gvr)
 		return merge(&ed, d), true
-	} else if client.IgnoreNotFound(err) != nil {
+	} else if !meta.IsNoMatchError(err) && !apierrors.IsNotFound(err) {
 		klog.V(3).InfoS(fmt.Sprintf("failed to load resource editor for %+v", gvr))
 	}
 	return LoadDefaultByGVR(gvr)
@@ -138,7 +138,8 @@ func merge(in, d *v1alpha1.ResourceEditor) *v1alpha1.ResourceEditor {
 
 	if d.Spec.UI != nil {
 		if in.Spec.UI == nil {
-			in.Spec.UI = &shared.UIParameters{
+			in.Spec.UI = &v1alpha1.UIParameters{
+				Actions:            d.Spec.UI.Actions,
 				InstanceLabelPaths: d.Spec.UI.InstanceLabelPaths,
 			}
 		}

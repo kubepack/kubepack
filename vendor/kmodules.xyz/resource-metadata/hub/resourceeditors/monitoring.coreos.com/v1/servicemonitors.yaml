@@ -23,7 +23,10 @@ spec:
   ui:
     editor:
       name: monitoringcoreoscom-servicemonitor-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.4.11
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.12
     instanceLabelPaths:
     - spec.selector.matchLabels

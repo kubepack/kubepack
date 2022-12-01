@@ -21,11 +21,145 @@ spec:
     scope: Namespaced
     version: v1alpha2
   ui:
+    actions:
+    - items:
+      - editor:
+          name: kubedbcom-mysql-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: bytebuilders-ui
+          version: v0.4.12
+        flow: standalone-edit
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/stash.appscode.com/backupconfigurations.svg
+          type: image/svg+xml
+        name: Backup
+        operationId: edit-self-backupconfiguration
+      - editor:
+          name: stashappscodecom-restoresession-editor-options
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: bytebuilders-ui
+          version: v0.4.12
+        flow: standalone-create
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/stash.appscode.com/restoresessions.svg
+          type: image/svg+xml
+        name: Restore
+        operationId: create-restoresession
+      name: Backups
+    - items:
+      - editor:
+          name: opskubedbcom-mysqlopsrequest-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: bytebuilders-ui
+          version: v0.4.12
+        flow: standalone-create
+        icons:
+        - src: https://img.icons8.com/plasticine/512/buy-upgrade.png
+          type: image/svg+xml
+        name: Update Version
+        operationId: create-opsrequest-upgrade
+      - editor:
+          name: opskubedbcom-mysqlopsrequest-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: bytebuilders-ui
+          version: v0.4.12
+        flow: standalone-create
+        icons:
+        - src: https://img.icons8.com/plasticine/512/restart.png
+          type: image/svg+xml
+        name: Restart
+        operationId: create-opsrequest-restart
+      name: Operations
+    - items:
+      - disabledTemplate: |
+          {{ not (and (hasKey .spec "topology") (hasKey .spec.topology "mode")) }}
+        editor:
+          name: opskubedbcom-mysqlopsrequest-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: bytebuilders-ui
+          version: v0.4.12
+        flow: standalone-create
+        icons:
+        - src: https://img.icons8.com/plasticine/512/resize-horizontal.png
+          type: image/svg+xml
+        name: Horizontal Scale
+        operationId: create-opsrequest-horizontalscaling
+      - editor:
+          name: opskubedbcom-mysqlopsrequest-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: bytebuilders-ui
+          version: v0.4.12
+        flow: standalone-create
+        icons:
+        - src: https://img.icons8.com/plasticine/512/resize-vertical.png
+          type: image/svg+xml
+        name: Vertical Scale
+        operationId: create-opsrequest-verticalscaling
+      - editor:
+          name: opskubedbcom-mysqlopsrequest-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: bytebuilders-ui
+          version: v0.4.12
+        flow: standalone-create
+        icons:
+        - src: https://img.icons8.com/plasticine/512/expand.png
+          type: image/svg+xml
+        name: Expand Volume
+        operationId: create-opsrequest-volumeexpansion
+      name: Scaling
+    - items:
+      - editor:
+          name: opskubedbcom-mysqlopsrequest-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: bytebuilders-ui
+          version: v0.4.12
+        flow: standalone-create
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/menu/networking.svg
+          type: image/svg+xml
+        name: TLS Configure
+        operationId: create-opsrequest-reconfiguretls
+      - editor:
+          name: kubedbcom-mysql-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: bytebuilders-ui
+          version: v0.4.12
+        flow: standalone-edit
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/menu/monitoring.svg
+          type: image/svg+xml
+        name: Monitoring
+        operationId: edit-self-monitoring
+      name: Security & Monitoring
     editor:
       name: kubedbcom-mysql-editor
-      url: https://bundles.byte.builders/ui/
-      version: v0.4.11
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.12
     options:
       name: kubedbcom-mysql-editor-options
-      url: https://bundles.byte.builders/ui/
-      version: v0.4.11
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.12
