@@ -15,11 +15,3 @@ spec:
     name: redisqueries
     scope: Namespaced
     version: v1alpha1
-  ui:
-    editor:
-      name: uikubedbcom-redisqueries-editor
-      sourceRef:
-        apiGroup: source.toolkit.fluxcd.io
-        kind: HelmRepository
-        name: bytebuilders-ui
-      version: v0.4.13

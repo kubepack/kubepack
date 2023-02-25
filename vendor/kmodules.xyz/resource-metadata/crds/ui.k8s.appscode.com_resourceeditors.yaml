@@ -70,28 +70,12 @@ spec:
                     properties:
                       name:
                         type: string
-                      sourceRef:
-                        description: TypedObjectReference represents an typed namespaced
-                          object.
-                        properties:
-                          apiGroup:
-                            type: string
-                          kind:
-                            type: string
-                          name:
-                            description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
-                            type: string
-                          namespace:
-                            description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
-                            type: string
-                        required:
-                        - name
-                        type: object
+                      url:
+                        type: string
                       version:
                         type: string
                     required:
                     - name
-                    - sourceRef
                     - version
                     type: object
                   planID:
@@ -128,118 +112,18 @@ spec:
                 type: object
               ui:
                 properties:
-                  actions:
-                    items:
-                      properties:
-                        description:
-                          type: string
-                        items:
-                          items:
-                            properties:
-                              description:
-                                type: string
-                              disabledTemplate:
-                                type: string
-                              editor:
-                                description: ChartRepoRef references to a single version
-                                  of a Chart
-                                properties:
-                                  name:
-                                    type: string
-                                  sourceRef:
-                                    description: TypedObjectReference represents an
-                                      typed namespaced object.
-                                    properties:
-                                      apiGroup:
-                                        type: string
-                                      kind:
-                                        type: string
-                                      name:
-                                        description: 'Name of the referent. More info:
-                                          https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
-                                        type: string
-                                      namespace:
-                                        description: 'Namespace of the referent. More
-                                          info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
-                                        type: string
-                                    required:
-                                    - name
-                                    type: object
-                                  version:
-                                    type: string
-                                required:
-                                - name
-                                - sourceRef
-                                - version
-                                type: object
-                              flow:
-                                type: string
-                              icons:
-                                items:
-                                  description: ImageSpec contains information about
-                                    an image used as an icon.
-                                  properties:
-                                    size:
-                                      description: (optional) The size of the image
-                                        in pixels (e.g., 25x25).
-                                      type: string
-                                    src:
-                                      description: The source for image represented
-                                        as either an absolute URL to the image or
-                                        a Data URL containing the image. Data URLs
-                                        are defined in RFC 2397.
-                                      type: string
-                                    type:
-                                      description: (optional) The mine type of the
-                                        image (e.g., "image/png").
-                                      type: string
-                                  required:
-                                  - src
-                                  type: object
-                                type: array
-                              name:
-                                type: string
-                              operationId:
-                                type: string
-                            required:
-                            - flow
-                            - operationId
-                            type: object
-                          type: array
-                        name:
-                          type: string
-                      required:
-                      - items
-                      type: object
-                    type: array
                   editor:
                     description: ChartRepoRef references to a single version of a
                       Chart
                     properties:
                       name:
                         type: string
-                      sourceRef:
-                        description: TypedObjectReference represents an typed namespaced
-                          object.
-                        properties:
-                          apiGroup:
-                            type: string
-                          kind:
-                            type: string
-                          name:
-                            description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
-                            type: string
-                          namespace:
-                            description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
-                            type: string
-                        required:
-                        - name
-                        type: object
+                      url:
+                        type: string
                       version:
                         type: string
                     required:
                     - name
-                    - sourceRef
                     - version
                     type: object
                   instanceLabelPaths:
@@ -254,28 +138,12 @@ spec:
                     properties:
                       name:
                         type: string
-                      sourceRef:
-                        description: TypedObjectReference represents an typed namespaced
-                          object.
-                        properties:
-                          apiGroup:
-                            type: string
-                          kind:
-                            type: string
-                          name:
-                            description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
-                            type: string
-                          namespace:
-                            description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
-                            type: string
-                        required:
-                        - name
-                        type: object
+                      url:
+                        type: string
                       version:
                         type: string
                     required:
                     - name
-                    - sourceRef
                     - version
                     type: object
                 type: object

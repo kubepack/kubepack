@@ -23,15 +23,9 @@ spec:
   ui:
     editor:
       name: kubedbcom-memcached-editor
-      sourceRef:
-        apiGroup: source.toolkit.fluxcd.io
-        kind: HelmRepository
-        name: bytebuilders-ui
-      version: v0.4.13
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.10
     options:
       name: kubedbcom-memcached-editor-options
-      sourceRef:
-        apiGroup: source.toolkit.fluxcd.io
-        kind: HelmRepository
-        name: bytebuilders-ui
-      version: v0.4.13
+      url: https://bundles.byte.builders/ui/
+      version: v0.4.10

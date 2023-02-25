@@ -15,11 +15,3 @@ spec:
     name: postgresschemaoverviews
     scope: Namespaced
     version: v1alpha1
-  ui:
-    editor:
-      name: uikubedbcom-postgresschemaoverview-editor
-      sourceRef:
-        apiGroup: source.toolkit.fluxcd.io
-        kind: HelmRepository
-        name: bytebuilders-ui
-      version: v0.4.13

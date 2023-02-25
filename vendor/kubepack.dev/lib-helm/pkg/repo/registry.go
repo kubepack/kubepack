@@ -41,16 +41,38 @@ import (
 )
 
 type Registry struct {
-	kc    client.Client
-	repos map[string]*Entry
-	cache httpcache.Cache
-	m     sync.RWMutex
+	repos     map[string]*Entry
+	kc        client.Reader
+	helmrepos map[string]client.ObjectKey // url -> secret
+	cache     httpcache.Cache
+	m         sync.RWMutex
 }
 
 var _ IRegistry = &Registry{}
 
-func NewCachedRegistry(kc client.Client, cache httpcache.Cache) *Registry {
-	return &Registry{repos: make(map[string]*Entry), kc: kc, cache: cache}
+func NewCachedRegistry(kc client.Reader, cache httpcache.Cache) *Registry {
+	reg := &Registry{
+		repos:     make(map[string]*Entry),
+		kc:        kc,
+		helmrepos: make(map[string]client.ObjectKey),
+		cache:     cache,
+	}
+	if kc != nil {
+		var list fluxsrc.HelmRepositoryList
+		if err := kc.List(context.TODO(), &list); err == nil {
+			for _, item := range list.Items {
+				if item.Spec.SecretRef != nil {
+					if url, err := purell.NormalizeURLString(item.Spec.URL, purell.FlagsUsuallySafeGreedy); err == nil {
+						reg.helmrepos[url] = client.ObjectKey{
+							Namespace: item.Namespace,
+							Name:      item.Spec.SecretRef.Name,
+						}
+					}
+				}
+			}
+		}
+	}
+	return reg
 }
 
 func NewRegistry() *Registry {
@@ -102,6 +124,11 @@ func (r *Registry) Get(url string) (*Entry, bool, error) {
 		entry = &Entry{
 			URL: url,
 		}
+		if secretRef, hasAuth := r.helmrepos[url]; hasAuth {
+			if err := r.addAuthInfo(secretRef, entry); err != nil {
+				return nil, false, err
+			}
+		}
 	}
 	if entry.Username != "" || entry.Password != "" || entry.CAFile != "" || entry.CertFile != "" || entry.KeyFile != "" {
 		entry.Cache = nil
@@ -149,27 +176,9 @@ func (r *Registry) Register(srcRef kmapi.TypedObjectReference) (string, error) {
 		}
 		if !found {
 			if src.Spec.SecretRef != nil {
-				var secret core.Secret
-				err := r.kc.Get(context.TODO(), client.ObjectKey{Namespace: srcRef.Namespace, Name: src.Spec.SecretRef.Name}, &secret)
-				if err != nil {
+				key := client.ObjectKey{Namespace: srcRef.Namespace, Name: src.Spec.SecretRef.Name}
+				if err := r.addAuthInfo(key, entry); err != nil {
 					return "", err
-				}
-				if v, ok := secret.Data[core.BasicAuthUsernameKey]; ok {
-					entry.Username = string(v)
-				}
-				if v, ok := secret.Data[core.BasicAuthPasswordKey]; ok {
-					entry.Password = string(v)
-				}
-
-				// TODO(tamal): correct keys?
-				if v, ok := secret.Data["ca.crt"]; ok {
-					entry.CAFile = string(v)
-				}
-				if v, ok := secret.Data[core.TLSCertKey]; ok {
-					entry.CertFile = string(v)
-				}
-				if v, ok := secret.Data[core.TLSPrivateKeyKey]; ok {
-					entry.KeyFile = string(v)
 				}
 			}
 
@@ -189,6 +198,32 @@ func (r *Registry) Register(srcRef kmapi.TypedObjectReference) (string, error) {
 		repository = strings.TrimSpace(srcRef.Name)
 	}
 	return repository, nil
+}
+
+func (r *Registry) addAuthInfo(key client.ObjectKey, entry *Entry) error {
+	var secret core.Secret
+	err := r.kc.Get(context.TODO(), key, &secret)
+	if err != nil {
+		return err
+	}
+	if v, ok := secret.Data[core.BasicAuthUsernameKey]; ok {
+		entry.Username = string(v)
+	}
+	if v, ok := secret.Data[core.BasicAuthPasswordKey]; ok {
+		entry.Password = string(v)
+	}
+
+	// TODO(tamal): correct keys?
+	if v, ok := secret.Data["ca.crt"]; ok {
+		entry.CAFile = string(v)
+	}
+	if v, ok := secret.Data[core.TLSCertKey]; ok {
+		entry.CertFile = string(v)
+	}
+	if v, ok := secret.Data[core.TLSPrivateKeyKey]; ok {
+		entry.KeyFile = string(v)
+	}
+	return nil
 }
 
 // LocateChart looks for a chart and returns either the reader or an error.

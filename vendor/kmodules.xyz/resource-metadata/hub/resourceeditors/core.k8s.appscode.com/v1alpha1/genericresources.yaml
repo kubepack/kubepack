@@ -15,11 +15,3 @@ spec:
     name: genericresources
     scope: Namespaced
     version: v1alpha1
-  ui:
-    editor:
-      name: corek8sappscodecom-genericresource-editor
-      sourceRef:
-        apiGroup: source.toolkit.fluxcd.io
-        kind: HelmRepository
-        name: bytebuilders-ui
-      version: v0.4.13
