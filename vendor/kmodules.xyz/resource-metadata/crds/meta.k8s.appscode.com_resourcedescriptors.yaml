@@ -47,7 +47,8 @@ spec:
                     labels:
                       items:
                         enum:
-                        - auth_via
+                        - id
+                        - config
                         - backup_via
                         - catalog
                         - connect_via
@@ -190,7 +191,8 @@ spec:
                               properties:
                                 byLabel:
                                   enum:
-                                  - auth_via
+                                  - id
+                                  - config
                                   - backup_via
                                   - catalog
                                   - connect_via

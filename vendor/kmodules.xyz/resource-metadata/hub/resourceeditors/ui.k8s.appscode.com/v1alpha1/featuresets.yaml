@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ui.k8s.appscode.com
+    k8s.io/kind: FeatureSet
+    k8s.io/resource: featuresets
+    k8s.io/version: v1alpha1
+  name: ui.k8s.appscode.com-v1alpha1-featuresets
+spec:
+  resource:
+    group: ui.k8s.appscode.com
+    kind: FeatureSet
+    name: featuresets
+    scope: Cluster
+    version: v1alpha1
