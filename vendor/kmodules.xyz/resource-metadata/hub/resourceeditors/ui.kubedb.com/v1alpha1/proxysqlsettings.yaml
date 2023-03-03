@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ui.kubedb.com
+    k8s.io/kind: ProxySQLSettings
+    k8s.io/resource: proxysqlsettings
+    k8s.io/version: v1alpha1
+  name: ui.kubedb.com-v1alpha1-proxysqlsettings
+spec:
+  resource:
+    group: ui.kubedb.com
+    kind: ProxySQLSettings
+    name: proxysqlsettings
+    scope: Namespaced
+    version: v1alpha1

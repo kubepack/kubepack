@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: kubedb.com
+    k8s.io/kind: Kafka
+    k8s.io/resource: kafkas
+    k8s.io/version: v1alpha2
+  name: kubedb.com-v1alpha2-kafkas
+spec:
+  resource:
+    group: kubedb.com
+    kind: Kafka
+    name: kafkas
+    scope: Namespaced
+    version: v1alpha2

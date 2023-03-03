@@ -53,6 +53,10 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 		&ResourceEditorList{},
 		&ResourceDashboard{},
 		&ResourceDashboardList{},
+		&Feature{},
+		&FeatureList{},
+		&FeatureSet{},
+		&FeatureSetList{},
 	)
 
 	scheme.AddKnownTypes(SchemeGroupVersion,
