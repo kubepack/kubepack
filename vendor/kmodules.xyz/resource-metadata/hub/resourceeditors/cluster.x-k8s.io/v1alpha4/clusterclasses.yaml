@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: cluster.x-k8s.io
+    k8s.io/kind: ClusterClass
+    k8s.io/resource: clusterclasses
+    k8s.io/version: v1alpha4
+  name: cluster.x-k8s.io-v1alpha4-clusterclasses
+spec:
+  resource:
+    group: cluster.x-k8s.io
+    kind: ClusterClass
+    name: clusterclasses
+    scope: Namespaced
+    version: v1alpha4

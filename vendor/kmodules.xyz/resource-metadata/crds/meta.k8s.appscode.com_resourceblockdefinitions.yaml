@@ -49,12 +49,35 @@ spec:
                       type: string
                     fieldPath:
                       type: string
+                    icons:
+                      items:
+                        description: ImageSpec contains information about an image
+                          used as an icon.
+                        properties:
+                          size:
+                            description: (optional) The size of the image in pixels
+                              (e.g., 25x25).
+                            type: string
+                          src:
+                            description: The source for image represented as either
+                              an absolute URL to the image or a Data URL containing
+                              the image. Data URLs are defined in RFC 2397.
+                            type: string
+                          type:
+                            description: (optional) The mine type of the image (e.g.,
+                              "image/png").
+                            type: string
+                        required:
+                        - src
+                        type: object
+                      type: array
                     kind:
                       enum:
                       - Block
                       - Self
                       - SubTable
                       - Connection
+                      - Custom
                       type: string
                     name:
                       type: string
@@ -226,6 +249,8 @@ spec:
                         name:
                           type: string
                       type: object
+                    width:
+                      type: integer
                   required:
                   - kind
                   - query
@@ -254,10 +279,6 @@ spec:
                     type: string
                 required:
                 - group
-                - kind
-                - name
-                - scope
-                - version
                 type: object
             required:
             - blocks

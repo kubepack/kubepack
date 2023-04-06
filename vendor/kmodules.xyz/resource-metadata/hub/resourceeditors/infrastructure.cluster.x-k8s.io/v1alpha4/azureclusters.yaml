@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: infrastructure.cluster.x-k8s.io
+    k8s.io/kind: AzureCluster
+    k8s.io/resource: azureclusters
+    k8s.io/version: v1alpha4
+  name: infrastructure.cluster.x-k8s.io-v1alpha4-azureclusters
+spec:
+  resource:
+    group: infrastructure.cluster.x-k8s.io
+    kind: AzureCluster
+    name: azureclusters
+    scope: Namespaced
+    version: v1alpha4

@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: infrastructure.cluster.x-k8s.io
+    k8s.io/kind: AzureMachinePool
+    k8s.io/resource: azuremachinepools
+    k8s.io/version: v1alpha3
+  name: infrastructure.cluster.x-k8s.io-v1alpha3-azuremachinepools
+spec:
+  resource:
+    group: infrastructure.cluster.x-k8s.io
+    kind: AzureMachinePool
+    name: azuremachinepools
+    scope: Namespaced
+    version: v1alpha3

@@ -54,10 +54,6 @@ spec:
                     type: string
                 required:
                 - group
-                - kind
-                - name
-                - scope
-                - version
                 type: object
               appResource:
                 description: ResourceRequirements describes the compute resource requirements.

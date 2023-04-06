@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ipam.cluster.x-k8s.io
+    k8s.io/kind: IPAddress
+    k8s.io/resource: ipaddresses
+    k8s.io/version: v1alpha1
+  name: ipam.cluster.x-k8s.io-v1alpha1-ipaddresses
+spec:
+  resource:
+    group: ipam.cluster.x-k8s.io
+    kind: IPAddress
+    name: ipaddresses
+    scope: Namespaced
+    version: v1alpha1

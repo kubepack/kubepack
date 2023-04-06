@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: infrastructure.cluster.x-k8s.io
+    k8s.io/kind: AWSMachine
+    k8s.io/resource: awsmachines
+    k8s.io/version: v1beta1
+  name: infrastructure.cluster.x-k8s.io-v1beta1-awsmachines
+spec:
+  resource:
+    group: infrastructure.cluster.x-k8s.io
+    kind: AWSMachine
+    name: awsmachines
+    scope: Namespaced
+    version: v1beta1

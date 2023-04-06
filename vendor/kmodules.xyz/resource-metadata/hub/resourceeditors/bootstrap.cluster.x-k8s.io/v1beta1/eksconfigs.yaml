@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: bootstrap.cluster.x-k8s.io
+    k8s.io/kind: EKSConfig
+    k8s.io/resource: eksconfigs
+    k8s.io/version: v1beta1
+  name: bootstrap.cluster.x-k8s.io-v1beta1-eksconfigs
+spec:
+  resource:
+    group: bootstrap.cluster.x-k8s.io
+    kind: EKSConfig
+    name: eksconfigs
+    scope: Namespaced
+    version: v1beta1

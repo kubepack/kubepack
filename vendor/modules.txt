@@ -1771,7 +1771,7 @@ kmodules.xyz/apiversion
 # kmodules.xyz/apply v0.25.0
 ## explicit; go 1.18
 kmodules.xyz/apply
-# kmodules.xyz/client-go v0.25.14
+# kmodules.xyz/client-go v0.25.16
 ## explicit; go 1.18
 kmodules.xyz/client-go
 kmodules.xyz/client-go/api/v1
@@ -1786,7 +1786,7 @@ kmodules.xyz/client-go/tools/wait
 # kmodules.xyz/crd-schema-fuzz v0.25.0
 ## explicit; go 1.18
 kmodules.xyz/crd-schema-fuzz
-# kmodules.xyz/resource-metadata v0.15.0
+# kmodules.xyz/resource-metadata v0.16.2
 ## explicit; go 1.18
 kmodules.xyz/resource-metadata/apis/shared
 kmodules.xyz/resource-metadata/apis/ui

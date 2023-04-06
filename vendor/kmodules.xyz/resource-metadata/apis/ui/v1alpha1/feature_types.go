@@ -17,6 +17,7 @@ limitations under the License.
 package v1alpha1
 
 import (
+	v1 "kmodules.xyz/client-go/api/v1"
 	"kmodules.xyz/resource-metadata/apis/shared"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -64,6 +65,9 @@ type FeatureSpec struct {
 	// Requirements specifies the requirements for this feature to consider enabled.
 	// +optional
 	Requirements Requirements `json:"requirements,omitempty"`
+	// Chart specifies the chart information that will be used by the FluxCD to install the respective feature
+	// +optional
+	Chart ChartInfo `json:"chart,omitempty"`
 }
 
 type Requirements struct {
@@ -73,6 +77,28 @@ type Requirements struct {
 	// Resources specifies the resources that should be registered to consider this feature as enabled.
 	// +optional
 	Resources []metav1.GroupVersionKind `json:"resources,omitempty"`
+	// Workloads specifies the workloads that should exist to consider this feature as enabled.
+	// +optional
+	Workloads []WorkloadInfo `json:"workloads,omitempty"`
+}
+
+type WorkloadInfo struct {
+	metav1.GroupVersionKind `json:",inline"`
+	// Selector specifies label selector that should be used to select this workload
+	Selector map[string]string `json:"selector"`
+}
+
+type ChartInfo struct {
+	// Name specifies the name of the chart
+	Name string `json:"name"`
+	// Namespace where the respective feature resources will be deployed.
+	// +optional
+	Namespace string `json:"namespace,omitempty"`
+	// Version specifies the version of the chart.
+	// +optional
+	Version string `json:"version,omitempty"`
+	// SourceRef specifies the source of the chart
+	SourceRef v1.TypedObjectReference `json:"sourceRef"`
 }
 
 type FeatureStatus struct {
