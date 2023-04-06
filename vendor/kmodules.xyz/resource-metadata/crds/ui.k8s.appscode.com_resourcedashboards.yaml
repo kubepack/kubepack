@@ -99,14 +99,7 @@ spec:
                       type: object
                     panels:
                       items:
-                        properties:
-                          title:
-                            type: string
-                          width:
-                            type: integer
-                        required:
-                        - title
-                        type: object
+                        type: string
                       type: array
                     title:
                       type: string
@@ -156,6 +149,10 @@ spec:
                     type: string
                 required:
                 - group
+                - kind
+                - name
+                - scope
+                - version
                 type: object
             required:
             - dashboards

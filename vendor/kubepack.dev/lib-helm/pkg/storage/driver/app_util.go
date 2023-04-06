@@ -134,9 +134,10 @@ func newApplicationObject(rls *rspb.Release) *v1beta1.Application {
 		})
 	}
 
-	lbl := map[string]string{
-		"app.kubernetes.io/managed-by": "Helm",
-	}
+	//lbl := map[string]string{
+	//	"app.kubernetes.io/managed-by": "Helm",
+	//}
+	lbl := make(map[string]string)
 	if partOf, ok := rls.Chart.Metadata.Annotations["app.kubernetes.io/part-of"]; ok && partOf != "" {
 		lbl["app.kubernetes.io/part-of"] = partOf
 	} else {

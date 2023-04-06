@@ -315,9 +315,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kmodules.xyz/resource-metadata/apis/shared.UIParameters":               schema_kmodulesxyz_resource_metadata_apis_shared_UIParameters(ref),
 		"kmodules.xyz/resource-metadata/apis/ui/v1alpha1.ActionTemplate":        schema_resource_metadata_apis_ui_v1alpha1_ActionTemplate(ref),
 		"kmodules.xyz/resource-metadata/apis/ui/v1alpha1.ActionTemplateGroup":   schema_resource_metadata_apis_ui_v1alpha1_ActionTemplateGroup(ref),
-		"kmodules.xyz/resource-metadata/apis/ui/v1alpha1.ChartInfo":             schema_resource_metadata_apis_ui_v1alpha1_ChartInfo(ref),
 		"kmodules.xyz/resource-metadata/apis/ui/v1alpha1.ComponentStatus":       schema_resource_metadata_apis_ui_v1alpha1_ComponentStatus(ref),
-		"kmodules.xyz/resource-metadata/apis/ui/v1alpha1.Dashboard":             schema_resource_metadata_apis_ui_v1alpha1_Dashboard(ref),
 		"kmodules.xyz/resource-metadata/apis/ui/v1alpha1.Feature":               schema_resource_metadata_apis_ui_v1alpha1_Feature(ref),
 		"kmodules.xyz/resource-metadata/apis/ui/v1alpha1.FeatureList":           schema_resource_metadata_apis_ui_v1alpha1_FeatureList(ref),
 		"kmodules.xyz/resource-metadata/apis/ui/v1alpha1.FeatureSet":            schema_resource_metadata_apis_ui_v1alpha1_FeatureSet(ref),
@@ -326,7 +324,6 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kmodules.xyz/resource-metadata/apis/ui/v1alpha1.FeatureSetStatus":      schema_resource_metadata_apis_ui_v1alpha1_FeatureSetStatus(ref),
 		"kmodules.xyz/resource-metadata/apis/ui/v1alpha1.FeatureSpec":           schema_resource_metadata_apis_ui_v1alpha1_FeatureSpec(ref),
 		"kmodules.xyz/resource-metadata/apis/ui/v1alpha1.FeatureStatus":         schema_resource_metadata_apis_ui_v1alpha1_FeatureStatus(ref),
-		"kmodules.xyz/resource-metadata/apis/ui/v1alpha1.PanelLinkRequest":      schema_resource_metadata_apis_ui_v1alpha1_PanelLinkRequest(ref),
 		"kmodules.xyz/resource-metadata/apis/ui/v1alpha1.Requirements":          schema_resource_metadata_apis_ui_v1alpha1_Requirements(ref),
 		"kmodules.xyz/resource-metadata/apis/ui/v1alpha1.ResourceDashboard":     schema_resource_metadata_apis_ui_v1alpha1_ResourceDashboard(ref),
 		"kmodules.xyz/resource-metadata/apis/ui/v1alpha1.ResourceDashboardList": schema_resource_metadata_apis_ui_v1alpha1_ResourceDashboardList(ref),
@@ -336,7 +333,6 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kmodules.xyz/resource-metadata/apis/ui/v1alpha1.ResourceEditorSpec":    schema_resource_metadata_apis_ui_v1alpha1_ResourceEditorSpec(ref),
 		"kmodules.xyz/resource-metadata/apis/ui/v1alpha1.UIParameters":          schema_resource_metadata_apis_ui_v1alpha1_UIParameters(ref),
 		"kmodules.xyz/resource-metadata/apis/ui/v1alpha1.VariantRef":            schema_resource_metadata_apis_ui_v1alpha1_VariantRef(ref),
-		"kmodules.xyz/resource-metadata/apis/ui/v1alpha1.WorkloadInfo":          schema_resource_metadata_apis_ui_v1alpha1_WorkloadInfo(ref),
 	}
 }
 
@@ -15350,50 +15346,6 @@ func schema_resource_metadata_apis_ui_v1alpha1_ActionTemplateGroup(ref common.Re
 	}
 }
 
-func schema_resource_metadata_apis_ui_v1alpha1_ChartInfo(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Type: []string{"object"},
-				Properties: map[string]spec.Schema{
-					"name": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Name specifies the name of the chart",
-							Default:     "",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"namespace": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Namespace where the respective feature resources will be deployed.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"version": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Version specifies the version of the chart.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"sourceRef": {
-						SchemaProps: spec.SchemaProps{
-							Description: "SourceRef specifies the source of the chart",
-							Default:     map[string]interface{}{},
-							Ref:         ref("kmodules.xyz/client-go/api/v1.TypedObjectReference"),
-						},
-					},
-				},
-				Required: []string{"name", "sourceRef"},
-			},
-		},
-		Dependencies: []string{
-			"kmodules.xyz/client-go/api/v1.TypedObjectReference"},
-	}
-}
-
 func schema_resource_metadata_apis_ui_v1alpha1_ComponentStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -15415,75 +15367,10 @@ func schema_resource_metadata_apis_ui_v1alpha1_ComponentStatus(ref common.Refere
 							Format:      "",
 						},
 					},
-					"ready": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Ready specifies whether the component feature is ready or not.",
-							Type:        []string{"boolean"},
-							Format:      "",
-						},
-					},
-					"managed": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Managed specifies whether the component is managed by platform or not.",
-							Type:        []string{"boolean"},
-							Format:      "",
-						},
-					},
 				},
 				Required: []string{"name"},
 			},
 		},
-	}
-}
-
-func schema_resource_metadata_apis_ui_v1alpha1_Dashboard(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Type: []string{"object"},
-				Properties: map[string]spec.Schema{
-					"title": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
-					"vars": {
-						SchemaProps: spec.SchemaProps{
-							Type: []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("kmodules.xyz/resource-metadata/apis/shared.DashboardVar"),
-									},
-								},
-							},
-						},
-					},
-					"panels": {
-						SchemaProps: spec.SchemaProps{
-							Type: []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("kmodules.xyz/resource-metadata/apis/ui/v1alpha1.PanelLinkRequest"),
-									},
-								},
-							},
-						},
-					},
-					"if": {
-						SchemaProps: spec.SchemaProps{
-							Ref: ref("kmodules.xyz/resource-metadata/apis/shared.If"),
-						},
-					},
-				},
-			},
-		},
-		Dependencies: []string{
-			"kmodules.xyz/resource-metadata/apis/shared.DashboardVar", "kmodules.xyz/resource-metadata/apis/shared.If", "kmodules.xyz/resource-metadata/apis/ui/v1alpha1.PanelLinkRequest"},
 	}
 }
 
@@ -15718,7 +15605,7 @@ func schema_resource_metadata_apis_ui_v1alpha1_FeatureSetSpec(ref common.Referen
 					},
 					"requiredFeatures": {
 						SchemaProps: spec.SchemaProps{
-							Description: "RequiredFeatures specifies list of features that are necessary to consider this feature set as ready.",
+							Description: "RequiredFeatures specifies list of features that are necessary to consider this feature set as enabled.",
 							Type:        []string{"array"},
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
@@ -15756,13 +15643,6 @@ func schema_resource_metadata_apis_ui_v1alpha1_FeatureSetStatus(ref common.Refer
 					"enabled": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Enabled specifies whether this feature set is enabled or not.",
-							Type:        []string{"boolean"},
-							Format:      "",
-						},
-					},
-					"ready": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Ready specifies whether this feature set is ready not.",
 							Type:        []string{"boolean"},
 							Format:      "",
 						},
@@ -15854,19 +15734,12 @@ func schema_resource_metadata_apis_ui_v1alpha1_FeatureSpec(ref common.ReferenceC
 							Ref:         ref("kmodules.xyz/resource-metadata/apis/ui/v1alpha1.Requirements"),
 						},
 					},
-					"chart": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Chart specifies the chart information that will be used by the FluxCD to install the respective feature",
-							Default:     map[string]interface{}{},
-							Ref:         ref("kmodules.xyz/resource-metadata/apis/ui/v1alpha1.ChartInfo"),
-						},
-					},
 				},
 				Required: []string{"title", "description", "featureSet"},
 			},
 		},
 		Dependencies: []string{
-			"kmodules.xyz/resource-metadata/apis/shared.ImageSpec", "kmodules.xyz/resource-metadata/apis/ui/v1alpha1.ChartInfo", "kmodules.xyz/resource-metadata/apis/ui/v1alpha1.Requirements"},
+			"kmodules.xyz/resource-metadata/apis/shared.ImageSpec", "kmodules.xyz/resource-metadata/apis/ui/v1alpha1.Requirements"},
 	}
 }
 
@@ -15910,32 +15783,6 @@ func schema_resource_metadata_apis_ui_v1alpha1_FeatureStatus(ref common.Referenc
 	}
 }
 
-func schema_resource_metadata_apis_ui_v1alpha1_PanelLinkRequest(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Type: []string{"object"},
-				Properties: map[string]spec.Schema{
-					"title": {
-						SchemaProps: spec.SchemaProps{
-							Default: "",
-							Type:    []string{"string"},
-							Format:  "",
-						},
-					},
-					"width": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"integer"},
-							Format: "int32",
-						},
-					},
-				},
-				Required: []string{"title"},
-			},
-		},
-	}
-}
-
 func schema_resource_metadata_apis_ui_v1alpha1_Requirements(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -15971,25 +15818,11 @@ func schema_resource_metadata_apis_ui_v1alpha1_Requirements(ref common.Reference
 							},
 						},
 					},
-					"workloads": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Workloads specifies the workloads that should exist to consider this feature as enabled.",
-							Type:        []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("kmodules.xyz/resource-metadata/apis/ui/v1alpha1.WorkloadInfo"),
-									},
-								},
-							},
-						},
-					},
 				},
 			},
 		},
 		Dependencies: []string{
-			"k8s.io/apimachinery/pkg/apis/meta/v1.GroupVersionKind", "kmodules.xyz/resource-metadata/apis/ui/v1alpha1.WorkloadInfo"},
+			"k8s.io/apimachinery/pkg/apis/meta/v1.GroupVersionKind"},
 	}
 }
 
@@ -16105,7 +15938,7 @@ func schema_resource_metadata_apis_ui_v1alpha1_ResourceDashboardSpec(ref common.
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
 										Default: map[string]interface{}{},
-										Ref:     ref("kmodules.xyz/resource-metadata/apis/ui/v1alpha1.Dashboard"),
+										Ref:     ref("kmodules.xyz/resource-metadata/apis/shared.Dashboard"),
 									},
 								},
 							},
@@ -16116,7 +15949,7 @@ func schema_resource_metadata_apis_ui_v1alpha1_ResourceDashboardSpec(ref common.
 			},
 		},
 		Dependencies: []string{
-			"kmodules.xyz/client-go/api/v1.ResourceID", "kmodules.xyz/resource-metadata/apis/ui/v1alpha1.Dashboard"},
+			"kmodules.xyz/client-go/api/v1.ResourceID", "kmodules.xyz/resource-metadata/apis/shared.Dashboard"},
 	}
 }
 
@@ -16366,55 +16199,5 @@ func schema_resource_metadata_apis_ui_v1alpha1_VariantRef(ref common.ReferenceCa
 		},
 		Dependencies: []string{
 			"kmodules.xyz/resource-metadata/apis/shared.ImageSpec"},
-	}
-}
-
-func schema_resource_metadata_apis_ui_v1alpha1_WorkloadInfo(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Type: []string{"object"},
-				Properties: map[string]spec.Schema{
-					"group": {
-						SchemaProps: spec.SchemaProps{
-							Default: "",
-							Type:    []string{"string"},
-							Format:  "",
-						},
-					},
-					"version": {
-						SchemaProps: spec.SchemaProps{
-							Default: "",
-							Type:    []string{"string"},
-							Format:  "",
-						},
-					},
-					"kind": {
-						SchemaProps: spec.SchemaProps{
-							Default: "",
-							Type:    []string{"string"},
-							Format:  "",
-						},
-					},
-					"selector": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Selector specifies label selector that should be used to select this workload",
-							Type:        []string{"object"},
-							AdditionalProperties: &spec.SchemaOrBool{
-								Allows: true,
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Default: "",
-										Type:    []string{"string"},
-										Format:  "",
-									},
-								},
-							},
-						},
-					},
-				},
-				Required: []string{"group", "version", "kind", "selector"},
-			},
-		},
 	}
 }

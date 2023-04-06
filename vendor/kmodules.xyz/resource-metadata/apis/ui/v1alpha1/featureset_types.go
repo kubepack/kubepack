@@ -36,9 +36,7 @@ const (
 // +kubebuilder:object:root=true
 // +kubebuilder:resource:path=featuresets,singular=featureset,scope=Cluster
 // +kubebuilder:subresource:status
-// +kubebuilder:printcolumn:name="Required",type="boolean",JSONPath=".spec.required"
 // +kubebuilder:printcolumn:name="Enabled",type="boolean",JSONPath=".status.enabled"
-// +kubebuilder:printcolumn:name="Ready",type="boolean",JSONPath=".status.ready"
 // +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp"
 type FeatureSet struct {
 	metav1.TypeMeta `json:",inline"`
@@ -59,7 +57,7 @@ type FeatureSetSpec struct {
 	// Required specify whether this feature set is mandatory or not for using the UI.
 	// +optional
 	Required bool `json:"required,omitempty"`
-	// RequiredFeatures specifies list of features that are necessary to consider this feature set as ready.
+	// RequiredFeatures specifies list of features that are necessary to consider this feature set as enabled.
 	// +optional
 	RequiredFeatures []string `json:"requiredFeatures,omitempty"`
 	// Chart specifies the chart that contains the respective resources for component features and the UI wizard.
@@ -70,9 +68,6 @@ type FeatureSetStatus struct {
 	// Enabled specifies whether this feature set is enabled or not.
 	// +optional
 	Enabled *bool `json:"enabled,omitempty"`
-	// Ready specifies whether this feature set is ready not.
-	// +optional
-	Ready *bool `json:"ready,omitempty"`
 	// Features specifies the status of the component features that belong to this feature set.
 	// +optional
 	Features []ComponentStatus `json:"features,omitempty"`
@@ -87,12 +82,6 @@ type ComponentStatus struct {
 	// Enabled specifies whether the component feature has been enabled or not.
 	// +optional
 	Enabled *bool `json:"enabled,omitempty"`
-	// Ready specifies whether the component feature is ready or not.
-	// +optional
-	Ready *bool `json:"ready,omitempty"`
-	// Managed specifies whether the component is managed by platform or not.
-	// +optional
-	Managed *bool `json:"managed,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

@@ -19,6 +19,7 @@ package repo
 import (
 	"context"
 	"fmt"
+	"net/url"
 	"os"
 	"path/filepath"
 	"strings"
@@ -30,6 +31,8 @@ import (
 	"github.com/gregjones/httpcache"
 	"github.com/gregjones/httpcache/diskcache"
 	"github.com/pkg/errors"
+	"github.com/spf13/pflag"
+	"gomodules.xyz/sets"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/helmpath"
 	core "k8s.io/api/core/v1"
@@ -41,16 +44,38 @@ import (
 )
 
 type Registry struct {
-	kc    client.Client
-	repos map[string]*Entry
-	cache httpcache.Cache
-	m     sync.RWMutex
+	repos     map[string]*Entry
+	kc        client.Reader
+	helmrepos map[string]client.ObjectKey // url -> secret
+	cache     httpcache.Cache
+	m         sync.RWMutex
 }
 
 var _ IRegistry = &Registry{}
 
-func NewCachedRegistry(kc client.Client, cache httpcache.Cache) *Registry {
-	return &Registry{repos: make(map[string]*Entry), kc: kc, cache: cache}
+func NewCachedRegistry(kc client.Reader, cache httpcache.Cache) *Registry {
+	reg := &Registry{
+		repos:     make(map[string]*Entry),
+		kc:        kc,
+		helmrepos: make(map[string]client.ObjectKey),
+		cache:     cache,
+	}
+	if kc != nil {
+		var list fluxsrc.HelmRepositoryList
+		if err := kc.List(context.TODO(), &list); err == nil {
+			for _, item := range list.Items {
+				if item.Spec.SecretRef != nil {
+					if url, err := purell.NormalizeURLString(item.Spec.URL, purell.FlagsUsuallySafeGreedy); err == nil {
+						reg.helmrepos[url] = client.ObjectKey{
+							Namespace: item.Namespace,
+							Name:      item.Spec.SecretRef.Name,
+						}
+					}
+				}
+			}
+		}
+	}
+	return reg
 }
 
 func NewRegistry() *Registry {
@@ -102,6 +127,11 @@ func (r *Registry) Get(url string) (*Entry, bool, error) {
 		entry = &Entry{
 			URL: url,
 		}
+		if secretRef, hasAuth := r.helmrepos[url]; hasAuth {
+			if err := r.addAuthInfo(secretRef, entry); err != nil {
+				return nil, false, err
+			}
+		}
 	}
 	if entry.Username != "" || entry.Password != "" || entry.CAFile != "" || entry.CertFile != "" || entry.KeyFile != "" {
 		entry.Cache = nil
@@ -149,27 +179,9 @@ func (r *Registry) Register(srcRef kmapi.TypedObjectReference) (string, error) {
 		}
 		if !found {
 			if src.Spec.SecretRef != nil {
-				var secret core.Secret
-				err := r.kc.Get(context.TODO(), client.ObjectKey{Namespace: srcRef.Namespace, Name: src.Spec.SecretRef.Name}, &secret)
-				if err != nil {
+				key := client.ObjectKey{Namespace: srcRef.Namespace, Name: src.Spec.SecretRef.Name}
+				if err := r.addAuthInfo(key, entry); err != nil {
 					return "", err
-				}
-				if v, ok := secret.Data[core.BasicAuthUsernameKey]; ok {
-					entry.Username = string(v)
-				}
-				if v, ok := secret.Data[core.BasicAuthPasswordKey]; ok {
-					entry.Password = string(v)
-				}
-
-				// TODO(tamal): correct keys?
-				if v, ok := secret.Data["ca.crt"]; ok {
-					entry.CAFile = string(v)
-				}
-				if v, ok := secret.Data[core.TLSCertKey]; ok {
-					entry.CertFile = string(v)
-				}
-				if v, ok := secret.Data[core.TLSPrivateKeyKey]; ok {
-					entry.KeyFile = string(v)
 				}
 			}
 
@@ -191,18 +203,65 @@ func (r *Registry) Register(srcRef kmapi.TypedObjectReference) (string, error) {
 	return repository, nil
 }
 
+func (r *Registry) addAuthInfo(key client.ObjectKey, entry *Entry) error {
+	var secret core.Secret
+	err := r.kc.Get(context.TODO(), key, &secret)
+	if err != nil {
+		return err
+	}
+	if v, ok := secret.Data[core.BasicAuthUsernameKey]; ok {
+		entry.Username = string(v)
+	}
+	if v, ok := secret.Data[core.BasicAuthPasswordKey]; ok {
+		entry.Password = string(v)
+	}
+
+	// TODO(tamal): correct keys?
+	if v, ok := secret.Data["ca.crt"]; ok {
+		entry.CAFile = string(v)
+	}
+	if v, ok := secret.Data[core.TLSCertKey]; ok {
+		entry.CertFile = string(v)
+	}
+	if v, ok := secret.Data[core.TLSPrivateKeyKey]; ok {
+		entry.KeyFile = string(v)
+	}
+	return nil
+}
+
+var (
+	bypassChartRegistries  []string
+	once                   sync.Once
+	bypassChartRegistrySet sets.String
+)
+
+// AddBypassChartRegistriesFlag is for explicitly initializing the --bypass-chart-registries flag
+func AddBypassChartRegistriesFlag(fs *pflag.FlagSet) {
+	if fs == nil {
+		fs = pflag.CommandLine
+	}
+	fs.StringSliceVar(&bypassChartRegistries, "bypass-chart-registries", bypassChartRegistries, "List of Helm chart registries that can bypass using UI_WIZARD_CHARTS_DIR env variable")
+}
+
 // LocateChart looks for a chart and returns either the reader or an error.
 func (r *Registry) LocateChart(repository, name, version string) (loader.ChartLoader, *ChartVersion, error) {
 	repository = strings.TrimSpace(repository)
 	name = strings.TrimSpace(name)
 	version = strings.TrimSpace(version)
 
-	if dir, ok := os.LookupEnv("UI_WIZARD_CHARTS_DIR"); ok {
-		repository = filepath.Join(dir, name)
-	}
-
 	if repository == "" {
 		return nil, nil, fmt.Errorf("can't find repository for chart %s", name)
+	}
+
+	once.Do(func() {
+		bypassChartRegistrySet = sets.NewString(bypassChartRegistries...)
+		bypassChartRegistrySet.Insert("charts.appscode.com", "bundles.byte.builders")
+	})
+
+	if u, err := url.Parse(repository); err == nil && bypassChartRegistrySet.Has(u.Hostname()) {
+		if dir, ok := os.LookupEnv("UI_WIZARD_CHARTS_DIR"); ok {
+			repository = filepath.Join(dir, name)
+		}
 	}
 
 	if fi, err := os.Stat(repository); err == nil {

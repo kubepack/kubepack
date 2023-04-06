@@ -45,40 +45,6 @@ spec:
             type: object
           spec:
             properties:
-              chart:
-                description: Chart specifies the chart information that will be used
-                  by the FluxCD to install the respective feature
-                properties:
-                  name:
-                    description: Name specifies the name of the chart
-                    type: string
-                  namespace:
-                    description: Namespace where the respective feature resources
-                      will be deployed.
-                    type: string
-                  sourceRef:
-                    description: SourceRef specifies the source of the chart
-                    properties:
-                      apiGroup:
-                        type: string
-                      kind:
-                        type: string
-                      name:
-                        description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
-                        type: string
-                      namespace:
-                        description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
-                        type: string
-                    required:
-                    - name
-                    type: object
-                  version:
-                    description: Version specifies the version of the chart.
-                    type: string
-                required:
-                - name
-                - sourceRef
-                type: object
               description:
                 description: Description specifies a short description of the service
                   this feature provides.
@@ -142,30 +108,6 @@ spec:
                       required:
                       - group
                       - kind
-                      - version
-                      type: object
-                    type: array
-                  workloads:
-                    description: Workloads specifies the workloads that should exist
-                      to consider this feature as enabled.
-                    items:
-                      properties:
-                        group:
-                          type: string
-                        kind:
-                          type: string
-                        selector:
-                          additionalProperties:
-                            type: string
-                          description: Selector specifies label selector that should
-                            be used to select this workload
-                          type: object
-                        version:
-                          type: string
-                      required:
-                      - group
-                      - kind
-                      - selector
                       - version
                       type: object
                     type: array

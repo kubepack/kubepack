@@ -54,11 +54,13 @@ func (c *Configuration) Init(getter genericclioptions.RESTClientGetter, namespac
 	switch helmDriver {
 	case "secret", "secrets", "", "configmap", "configmaps", "memory", "sql":
 		client := kube.New(getter)
+		client.Namespace = namespace
 		client.Log = log
 		kc = client
 		factory = client.Factory
 	case "storage.x-helm.dev/apps":
 		client, err := kubex.New(getter, log)
+		client.Namespace = namespace
 		if err != nil {
 			return err
 		}
