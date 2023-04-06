@@ -29,7 +29,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: bytebuilders-ui
-          version: v0.4.14
+          version: v0.4.13
         flow: standalone-edit
         icons:
         - src: https://cdn.appscode.com/k8s/icons/stash.appscode.com/backupconfigurations.svg
@@ -42,7 +42,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: bytebuilders-ui
-          version: v0.4.14
+          version: v0.4.13
         flow: standalone-create
         icons:
         - src: https://cdn.appscode.com/k8s/icons/stash.appscode.com/restoresessions.svg
@@ -57,7 +57,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: bytebuilders-ui
-          version: v0.4.14
+          version: v0.4.13
         flow: standalone-create
         icons:
         - src: https://img.icons8.com/plasticine/512/buy-upgrade.png
@@ -70,7 +70,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: bytebuilders-ui
-          version: v0.4.14
+          version: v0.4.13
         flow: standalone-create
         icons:
         - src: https://img.icons8.com/plasticine/512/restart.png
@@ -85,7 +85,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: bytebuilders-ui
-          version: v0.4.14
+          version: v0.4.13
         flow: standalone-create
         icons:
         - src: https://img.icons8.com/plasticine/512/resize-horizontal.png
@@ -98,7 +98,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: bytebuilders-ui
-          version: v0.4.14
+          version: v0.4.13
         flow: standalone-create
         icons:
         - src: https://img.icons8.com/plasticine/512/resize-vertical.png
@@ -111,7 +111,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: bytebuilders-ui
-          version: v0.4.14
+          version: v0.4.13
         flow: standalone-create
         icons:
         - src: https://img.icons8.com/plasticine/512/expand.png
@@ -128,7 +128,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: bytebuilders-ui
-          version: v0.4.14
+          version: v0.4.13
         flow: standalone-create
         icons:
         - src: https://cdn.appscode.com/k8s/icons/menu/networking.svg
@@ -141,7 +141,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: bytebuilders-ui
-          version: v0.4.14
+          version: v0.4.13
         flow: standalone-edit
         icons:
         - src: https://cdn.appscode.com/k8s/icons/menu/monitoring.svg
@@ -155,11 +155,11 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: bytebuilders-ui
-      version: v0.4.14
+      version: v0.4.13
     options:
       name: kubedbcom-elasticsearch-editor-options
       sourceRef:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: bytebuilders-ui
-      version: v0.4.14
+      version: v0.4.13
