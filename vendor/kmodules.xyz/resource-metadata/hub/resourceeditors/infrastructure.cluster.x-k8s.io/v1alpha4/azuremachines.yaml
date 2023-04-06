@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: infrastructure.cluster.x-k8s.io
+    k8s.io/kind: AzureMachine
+    k8s.io/resource: azuremachines
+    k8s.io/version: v1alpha4
+  name: infrastructure.cluster.x-k8s.io-v1alpha4-azuremachines
+spec:
+  resource:
+    group: infrastructure.cluster.x-k8s.io
+    kind: AzureMachine
+    name: azuremachines
+    scope: Namespaced
+    version: v1alpha4

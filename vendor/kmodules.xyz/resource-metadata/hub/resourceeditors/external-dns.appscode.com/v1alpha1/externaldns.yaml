@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: external-dns.appscode.com
+    k8s.io/kind: ExternalDNS
+    k8s.io/resource: externaldns
+    k8s.io/version: v1alpha1
+  name: external-dns.appscode.com-v1alpha1-externaldns
+spec:
+  resource:
+    group: external-dns.appscode.com
+    kind: ExternalDNS
+    name: externaldns
+    scope: Namespaced
+    version: v1alpha1

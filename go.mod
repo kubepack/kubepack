@@ -28,7 +28,7 @@ require (
 	k8s.io/client-go v0.25.3
 	k8s.io/klog/v2 v2.80.1
 	k8s.io/kube-openapi v0.0.0-20220803164354-a70c9af30aea
-	kmodules.xyz/client-go v0.25.14
+	kmodules.xyz/client-go v0.25.16
 	kmodules.xyz/crd-schema-fuzz v0.25.0
 	kubepack.dev/lib-helm v0.5.4
 	sigs.k8s.io/application v0.0.0-00010101000000-000000000000
@@ -224,7 +224,7 @@ require (
 	k8s.io/utils v0.0.0-20220823124924-e9cbc92d1a73 // indirect
 	kmodules.xyz/apiversion v0.2.0 // indirect
 	kmodules.xyz/apply v0.25.0 // indirect
-	kmodules.xyz/resource-metadata v0.15.0 // indirect
+	kmodules.xyz/resource-metadata v0.16.2 // indirect
 	kubepack.dev/preset v0.0.2 // indirect
 	oras.land/oras-go v1.2.0 // indirect
 	sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.0.33 // indirect

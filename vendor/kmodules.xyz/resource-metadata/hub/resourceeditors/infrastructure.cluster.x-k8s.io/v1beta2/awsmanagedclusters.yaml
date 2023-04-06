@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: infrastructure.cluster.x-k8s.io
+    k8s.io/kind: AWSManagedCluster
+    k8s.io/resource: awsmanagedclusters
+    k8s.io/version: v1beta2
+  name: infrastructure.cluster.x-k8s.io-v1beta2-awsmanagedclusters
+spec:
+  resource:
+    group: infrastructure.cluster.x-k8s.io
+    kind: AWSManagedCluster
+    name: awsmanagedclusters
+    scope: Namespaced
+    version: v1beta2

@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: source.toolkit.fluxcd.io
+    k8s.io/kind: HelmChart
+    k8s.io/resource: helmcharts
+    k8s.io/version: v1beta1
+  name: source.toolkit.fluxcd.io-v1beta1-helmcharts
+spec:
+  resource:
+    group: source.toolkit.fluxcd.io
+    kind: HelmChart
+    name: helmcharts
+    scope: Namespaced
+    version: v1beta1
