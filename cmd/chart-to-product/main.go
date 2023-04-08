@@ -26,7 +26,8 @@ import (
 	flag "github.com/spf13/pflag"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/klog/v2"
-	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
+	"x-helm.dev/apimachinery/apis/products/v1alpha1"
+	"x-helm.dev/apimachinery/apis/shared"
 )
 
 var (
@@ -72,18 +73,18 @@ func main() {
 	} else {
 		nu.Spec.Phase = v1alpha1.PhaseActive
 	}
-	nu.Spec.Media = []v1alpha1.MediaSpec{
+	nu.Spec.Media = []shared.MediaSpec{
 		{
-			Description: v1alpha1.MediaIcon,
-			ImageSpec: v1alpha1.ImageSpec{
-				Source:    chrt.Metadata.Icon,
-				TotalSize: "",
-				Type:      "",
+			Description: shared.MediaIcon,
+			ImageSpec: shared.ImageSpec{
+				Source: chrt.Metadata.Icon,
+				Size:   "",
+				Type:   "",
 			},
 		},
 	}
 	for _, maintainer := range chrt.Metadata.Maintainers {
-		nu.Spec.Maintainers = append(nu.Spec.Maintainers, v1alpha1.ContactData{
+		nu.Spec.Maintainers = append(nu.Spec.Maintainers, shared.ContactData{
 			Name:  maintainer.Name,
 			URL:   maintainer.URL,
 			Email: maintainer.Email,
@@ -91,9 +92,9 @@ func main() {
 	}
 	nu.Spec.Keywords = chrt.Metadata.Keywords
 	if chrt.Metadata.Home != "" {
-		nu.Spec.Links = []v1alpha1.Link{
+		nu.Spec.Links = []shared.Link{
 			{
-				Description: v1alpha1.LinkWebsite,
+				Description: string(shared.LinkWebsite),
 				URL:         chrt.Metadata.Home,
 			},
 		}

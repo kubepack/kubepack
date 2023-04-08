@@ -64,7 +64,7 @@ func main() {
 	*/
 	b := v1alpha1.Bundle{
 		TypeMeta: metav1.TypeMeta{
-			APIVersion: v1alpha1.SchemeGroupVersion.String(),
+			APIVersion: v1alpha1.GroupVersion.String(),
 			Kind:       v1alpha1.ResourceKindBundle,
 		},
 		ObjectMeta: metav1.ObjectMeta{

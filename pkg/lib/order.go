@@ -33,7 +33,6 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
-	"sigs.k8s.io/application/client/clientset/versioned"
 	"x-helm.dev/apimachinery/apis"
 	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
@@ -45,7 +44,7 @@ func CreateOrder(reg repo.IRegistry, bv v1alpha1.BundleView) (*v1alpha1.Order, e
 	}
 	out := v1alpha1.Order{
 		TypeMeta: metav1.TypeMeta{
-			APIVersion: v1alpha1.SchemeGroupVersion.String(),
+			APIVersion: v1alpha1.GroupVersion.String(),
 			Kind:       v1alpha1.ResourceKindOrder,
 		},
 		ObjectMeta: metav1.ObjectMeta{
@@ -266,9 +265,13 @@ func InstallOrder(getter genericclioptions.RESTClientGetter, reg repo.IRegistry,
 				return err
 			}
 
+			kc, err := action.NewUncachedClientForConfig(config)
+			if err != nil {
+				return err
+			}
 			f7 := &ApplicationCreator{
 				App:    f6.Result(),
-				Client: versioned.NewForConfigOrDie(config),
+				Client: kc,
 			}
 			err = f7.Do()
 			if err != nil {

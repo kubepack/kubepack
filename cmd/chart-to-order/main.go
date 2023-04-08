@@ -44,7 +44,7 @@ func main() {
 
 	order := v1alpha1.Order{
 		TypeMeta: metav1.TypeMeta{
-			APIVersion: v1alpha1.SchemeGroupVersion.String(),
+			APIVersion: v1alpha1.GroupVersion.String(),
 			Kind:       v1alpha1.ResourceKindOrder,
 		}, ObjectMeta: metav1.ObjectMeta{
 			Name:              name,

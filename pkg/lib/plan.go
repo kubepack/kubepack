@@ -19,32 +19,33 @@ package lib
 import (
 	"kubepack.dev/lib-helm/pkg/repo"
 
-	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
+	productsapi "x-helm.dev/apimachinery/apis/products/v1alpha1"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
-func ComparePlans(reg repo.IRegistry, url string, names []string, version string) (v1alpha1.FeatureTable, error) {
-	var table v1alpha1.FeatureTable
+func ComparePlans(reg repo.IRegistry, url string, names []string, version string) (productsapi.FeatureTable, error) {
+	var table productsapi.FeatureTable
 
 	ids := map[string]int{} // trait -> idx
 	idx := 0
 
 	for bundleIdx, bundleName := range names {
-		_, bundle, err := GetBundle(reg, &v1alpha1.BundleOption{
-			BundleRef: v1alpha1.BundleRef{
+		_, bundle, err := GetBundle(reg, &releasesapi.BundleOption{
+			BundleRef: releasesapi.BundleRef{
 				URL:  url,
 				Name: bundleName,
 			},
 			Version: version,
 		})
 		if err != nil {
-			return v1alpha1.FeatureTable{}, err
+			return productsapi.FeatureTable{}, err
 		}
 		for _, feature := range bundle.Spec.Features {
 			id, ok := ids[feature.Trait]
 			if !ok {
 				id = idx
 				ids[feature.Trait] = id
-				table.Rows = append(table.Rows, &v1alpha1.Row{
+				table.Rows = append(table.Rows, &productsapi.Row{
 					Trait:  feature.Trait,
 					Values: make([]string, len(names)),
 				})

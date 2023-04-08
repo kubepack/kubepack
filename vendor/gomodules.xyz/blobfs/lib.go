@@ -18,10 +18,14 @@ type BlobFS struct {
 }
 
 func New(storageURL string, prefix ...string) Interface {
-	prefix = append(prefix, "")
+	var bucketPrefix string
+	if len(prefix) > 0 {
+		bucketPrefix = prefix[0]
+	}
+
 	return &BlobFS{
 		storageURL: storageURL,
-		prefix:     prefix[0],
+		prefix:     bucketPrefix,
 	}
 }
 

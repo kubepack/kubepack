@@ -31,6 +31,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/yaml"
 	yamllib "sigs.k8s.io/yaml"
 	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
+	"x-helm.dev/apimachinery/apis/shared"
 )
 
 func GetPackageDescriptor(pkgChart *chart.Chart) v1alpha1.PackageDescriptor {
@@ -45,7 +46,7 @@ func GetPackageDescriptor(pkgChart *chart.Chart) v1alpha1.PackageDescriptor {
 			}
 			_ = resp.Body.Close()
 		}
-		out.Icons = []v1alpha1.ImageSpec{
+		out.Icons = []shared.ImageSpec{
 			{
 				Source: pkgChart.Metadata.Icon,
 				// TotalSize: "",
@@ -54,7 +55,7 @@ func GetPackageDescriptor(pkgChart *chart.Chart) v1alpha1.PackageDescriptor {
 		}
 	}
 	for _, maintainer := range pkgChart.Metadata.Maintainers {
-		out.Maintainers = append(out.Maintainers, v1alpha1.ContactData{
+		out.Maintainers = append(out.Maintainers, shared.ContactData{
 			Name:  maintainer.Name,
 			URL:   maintainer.URL,
 			Email: maintainer.Email,
@@ -63,9 +64,9 @@ func GetPackageDescriptor(pkgChart *chart.Chart) v1alpha1.PackageDescriptor {
 	out.Keywords = pkgChart.Metadata.Keywords
 
 	if pkgChart.Metadata.Home != "" {
-		out.Links = []v1alpha1.Link{
+		out.Links = []shared.Link{
 			{
-				Description: v1alpha1.LinkWebsite,
+				Description: string(shared.LinkWebsite),
 				URL:         pkgChart.Metadata.Home,
 			},
 		}
@@ -77,7 +78,7 @@ func GetPackageDescriptor(pkgChart *chart.Chart) v1alpha1.PackageDescriptor {
 func CreatePackageView(url string, chrt *chart.Chart) (*v1alpha1.PackageView, error) {
 	p := v1alpha1.PackageView{
 		TypeMeta: metav1.TypeMeta{
-			APIVersion: v1alpha1.SchemeGroupVersion.String(),
+			APIVersion: v1alpha1.GroupVersion.String(),
 			Kind:       "PackageView",
 		},
 		PackageMeta: v1alpha1.PackageMeta{

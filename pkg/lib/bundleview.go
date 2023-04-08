@@ -38,7 +38,7 @@ func CreateBundleViewForBundle(reg repo.IRegistry, ref *v1alpha1.ChartRepoRef) (
 	}
 	bv := v1alpha1.BundleView{
 		TypeMeta: metav1.TypeMeta{
-			APIVersion: v1alpha1.SchemeGroupVersion.String(),
+			APIVersion: v1alpha1.GroupVersion.String(),
 			Kind:       "BundleView",
 		},
 		BundleOptionView: *view,
@@ -150,7 +150,7 @@ func CreateBundleViewForChart(reg repo.IRegistry, ref *v1alpha1.ChartRepoRef) (*
 
 	return &v1alpha1.BundleView{
 		TypeMeta: metav1.TypeMeta{
-			APIVersion: v1alpha1.SchemeGroupVersion.String(),
+			APIVersion: v1alpha1.GroupVersion.String(),
 			Kind:       "BundleView",
 		},
 		BundleOptionView: v1alpha1.BundleOptionView{

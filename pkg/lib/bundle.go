@@ -65,7 +65,7 @@ func getBundle(chrt *chart.Chart) (*chart.Chart, *v1alpha1.Bundle, error) {
 		if err != nil {
 			continue // Not a json file, ignore
 		}
-		if tm.APIVersion == v1alpha1.SchemeGroupVersion.String() &&
+		if tm.APIVersion == v1alpha1.GroupVersion.String() &&
 			tm.Kind == v1alpha1.ResourceKindBundle {
 
 			var bundle v1alpha1.Bundle
@@ -77,7 +77,7 @@ func getBundle(chrt *chart.Chart) (*chart.Chart, *v1alpha1.Bundle, error) {
 		}
 	}
 	return chrt, nil, kerr.NewNotFound(schema.GroupResource{
-		Group:    v1alpha1.SchemeGroupVersion.Group,
+		Group:    v1alpha1.GroupVersion.Group,
 		Resource: v1alpha1.ResourceBundles,
 	}, "bundle")
 }
