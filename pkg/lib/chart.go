@@ -24,18 +24,18 @@ import (
 	"github.com/gabriel-vasile/mimetype"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chartutil"
-	crdv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	crdv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/yaml"
 	yamllib "sigs.k8s.io/yaml"
-	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 	"x-helm.dev/apimachinery/apis/shared"
 )
 
-func GetPackageDescriptor(pkgChart *chart.Chart) v1alpha1.PackageDescriptor {
-	var out v1alpha1.PackageDescriptor
+func GetPackageDescriptor(pkgChart *chart.Chart) releasesapi.PackageDescriptor {
+	var out releasesapi.PackageDescriptor
 
 	out.Description = pkgChart.Metadata.Description
 	if pkgChart.Metadata.Icon != "" {
@@ -75,13 +75,13 @@ func GetPackageDescriptor(pkgChart *chart.Chart) v1alpha1.PackageDescriptor {
 	return out
 }
 
-func CreatePackageView(url string, chrt *chart.Chart) (*v1alpha1.PackageView, error) {
-	p := v1alpha1.PackageView{
+func CreatePackageView(url string, chrt *chart.Chart) (*releasesapi.PackageView, error) {
+	p := releasesapi.PackageView{
 		TypeMeta: metav1.TypeMeta{
-			APIVersion: v1alpha1.GroupVersion.String(),
+			APIVersion: releasesapi.GroupVersion.String(),
 			Kind:       "PackageView",
 		},
-		PackageMeta: v1alpha1.PackageMeta{
+		PackageMeta: releasesapi.PackageMeta{
 			Name:              chrt.Name(),
 			URL:               url,
 			Version:           chrt.Metadata.Version,
@@ -97,7 +97,7 @@ func CreatePackageView(url string, chrt *chart.Chart) (*v1alpha1.PackageView, er
 				return nil, err
 			}
 
-			p.ValuesFiles = append(p.ValuesFiles, v1alpha1.ValuesFile{
+			p.ValuesFiles = append(p.ValuesFiles, releasesapi.ValuesFile{
 				Filename: f.Name,
 				Values: &runtime.RawExtension{
 					Object: &unstructured.Unstructured{Object: values},
@@ -105,7 +105,7 @@ func CreatePackageView(url string, chrt *chart.Chart) (*v1alpha1.PackageView, er
 			})
 		}
 		if f.Name == "values.openapiv3_schema.json" || f.Name == "values.openapiv3_schema.yaml" || f.Name == "values.openapiv3_schema.yml" {
-			var schema crdv1beta1.JSONSchemaProps
+			var schema crdv1.JSONSchemaProps
 			reader := yaml.NewYAMLOrJSONDecoder(bytes.NewReader(f.Data), 2048)
 			err := reader.Decode(&schema)
 			if err != nil {

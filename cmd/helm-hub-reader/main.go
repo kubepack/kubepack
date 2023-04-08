@@ -26,7 +26,7 @@ import (
 	"github.com/gregjones/httpcache"
 	"k8s.io/klog/v2"
 	"sigs.k8s.io/yaml"
-	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 func main() {
@@ -38,7 +38,7 @@ func main() {
 	if err == nil {
 		defer resp.Body.Close()
 		if data, err := io.ReadAll(resp.Body); err == nil {
-			var hub v1alpha1.Hub
+			var hub releasesapi.Hub
 			err = yaml.Unmarshal(data, &hub)
 			if err == nil {
 				for _, repo := range hub.Repositories {

@@ -228,15 +228,15 @@ func decodeReleaseFromApp(kc client.Client, app *driversapi.AppRelease, rlsNames
 		// This is not needed or used from release
 		//chartURL, ok := app.Annotations[apis.LabelChartURL]
 		//if !ok {
-		//	return nil, fmt.Errorf("missing %s annotation on appRelease %s/%s", apis.LabelChartURL, app.Namespace, app.Name)
+		//	return nil, fmt.Errorf("missing %s annotation on AppRelease %s/%s", apis.LabelChartURL, app.Namespace, app.Name)
 		//}
 		//chartName, ok := app.Annotations[apis.LabelChartName]
 		//if !ok {
-		//	return nil, fmt.Errorf("missing %s annotation on appRelease %s/%s", apis.LabelChartName, app.Namespace, app.Name)
+		//	return nil, fmt.Errorf("missing %s annotation on AppRelease %s/%s", apis.LabelChartName, app.Namespace, app.Name)
 		//}
 		//chartVersion, ok := app.Annotations[apis.LabelChartVersion]
 		//if !ok {
-		//	return nil, fmt.Errorf("missing %s annotation on appRelease %s/%s", apis.LabelChartVersion, app.Namespace, app.Name)
+		//	return nil, fmt.Errorf("missing %s annotation on AppRelease %s/%s", apis.LabelChartVersion, app.Namespace, app.Name)
 		//}
 		//chrt, err := lib.DefaultRegistry.GetChart(chartURL, chartName, chartVersion)
 		//if err != nil {
@@ -380,7 +380,7 @@ func EditorChartValueManifest(kc client.Client, app *driversapi.AppRelease, rls 
 				return nil, err
 			}
 			if _, ok := resourceMap[rsKey]; ok {
-				return nil, fmt.Errorf("duplicate resource key %s for appRelease %s/%s", rsKey, app.Namespace, app.Name)
+				return nil, fmt.Errorf("duplicate resource key %s for AppRelease %s/%s", rsKey, app.Namespace, app.Name)
 			}
 			resourceMap[rsKey] = &obj
 		}

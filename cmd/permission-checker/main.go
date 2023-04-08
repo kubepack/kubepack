@@ -33,7 +33,7 @@ import (
 	"k8s.io/klog/v2"
 	clientcmdutil "kmodules.xyz/client-go/tools/clientcmd"
 	"sigs.k8s.io/yaml"
-	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 var (
@@ -65,7 +65,7 @@ func main() {
 	if err != nil {
 		klog.Fatal(err)
 	}
-	var order v1alpha1.Order
+	var order releasesapi.Order
 	err = yaml.Unmarshal(data, &order)
 	if err != nil {
 		klog.Fatal(err)

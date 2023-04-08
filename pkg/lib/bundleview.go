@@ -22,12 +22,12 @@ import (
 	"github.com/gobuffalo/flect"
 	kerr "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
-func CreateBundleViewForBundle(reg repo.IRegistry, ref *v1alpha1.ChartRepoRef) (*v1alpha1.BundleView, error) {
-	view, err := toBundleOptionView(reg, &v1alpha1.BundleOption{
-		BundleRef: v1alpha1.BundleRef{
+func CreateBundleViewForBundle(reg repo.IRegistry, ref *releasesapi.ChartRepoRef) (*releasesapi.BundleView, error) {
+	view, err := toBundleOptionView(reg, &releasesapi.BundleOption{
+		BundleRef: releasesapi.BundleRef{
 			URL:  ref.URL,
 			Name: ref.Name,
 		},
@@ -36,9 +36,9 @@ func CreateBundleViewForBundle(reg repo.IRegistry, ref *v1alpha1.ChartRepoRef) (
 	if err != nil {
 		return nil, err
 	}
-	bv := v1alpha1.BundleView{
+	bv := releasesapi.BundleView{
 		TypeMeta: metav1.TypeMeta{
-			APIVersion: v1alpha1.GroupVersion.String(),
+			APIVersion: releasesapi.GroupVersion.String(),
 			Kind:       "BundleView",
 		},
 		BundleOptionView: *view,
@@ -46,14 +46,14 @@ func CreateBundleViewForBundle(reg repo.IRegistry, ref *v1alpha1.ChartRepoRef) (
 	return &bv, nil
 }
 
-func toBundleOptionView(reg repo.IRegistry, in *v1alpha1.BundleOption, level int) (*v1alpha1.BundleOptionView, error) {
+func toBundleOptionView(reg repo.IRegistry, in *releasesapi.BundleOption, level int) (*releasesapi.BundleOptionView, error) {
 	chrt, bundle, err := GetBundle(reg, in)
 	if err != nil {
 		return nil, err
 	}
 
-	bv := v1alpha1.BundleOptionView{
-		PackageMeta: v1alpha1.PackageMeta{
+	bv := releasesapi.BundleOptionView{
+		PackageMeta: releasesapi.PackageMeta{
 			Name:              chrt.Name(),
 			URL:               in.URL,
 			Version:           chrt.Metadata.Version,
@@ -85,9 +85,9 @@ func toBundleOptionView(reg repo.IRegistry, in *v1alpha1.BundleOption, level int
 				required = false
 			}
 
-			card := v1alpha1.PackageCard{
-				Chart: &v1alpha1.ChartCard{
-					ChartRef: v1alpha1.ChartRef{
+			card := releasesapi.PackageCard{
+				Chart: &releasesapi.ChartCard{
+					ChartRef: releasesapi.ChartRef{
 						Name: pkg.Chart.Name,
 						URL:  pkg.Chart.URL,
 					},
@@ -111,11 +111,11 @@ func toBundleOptionView(reg repo.IRegistry, in *v1alpha1.BundleOption, level int
 			if err != nil {
 				return nil, err
 			}
-			bv.Packages = append(bv.Packages, v1alpha1.PackageCard{
+			bv.Packages = append(bv.Packages, releasesapi.PackageCard{
 				Bundle: view,
 			})
 		} else if pkg.OneOf != nil {
-			bovs := make([]*v1alpha1.BundleOptionView, 0, len(pkg.OneOf.Bundles))
+			bovs := make([]*releasesapi.BundleOptionView, 0, len(pkg.OneOf.Bundles))
 			for _, bo := range pkg.OneOf.Bundles {
 				view, err := toBundleOptionView(reg, bo, level+1)
 				if err != nil {
@@ -123,8 +123,8 @@ func toBundleOptionView(reg repo.IRegistry, in *v1alpha1.BundleOption, level int
 				}
 				bovs = append(bovs, view)
 			}
-			bv.Packages = append(bv.Packages, v1alpha1.PackageCard{
-				OneOf: &v1alpha1.OneOfBundleOptionView{
+			bv.Packages = append(bv.Packages, releasesapi.PackageCard{
+				OneOf: &releasesapi.OneOfBundleOptionView{
 					Description: pkg.OneOf.Description,
 					Bundles:     bovs,
 				},
@@ -135,7 +135,7 @@ func toBundleOptionView(reg repo.IRegistry, in *v1alpha1.BundleOption, level int
 	return &bv, nil
 }
 
-func CreateBundleViewForChart(reg repo.IRegistry, ref *v1alpha1.ChartRepoRef) (*v1alpha1.BundleView, error) {
+func CreateBundleViewForChart(reg repo.IRegistry, ref *releasesapi.ChartRepoRef) (*releasesapi.BundleView, error) {
 	pkgChart, err := reg.GetChart(ref.URL, ref.Name, ref.Version)
 	if err != nil {
 		return nil, err
@@ -148,13 +148,13 @@ func CreateBundleViewForChart(reg repo.IRegistry, ref *v1alpha1.ChartRepoRef) (*
 		return nil, err
 	}
 
-	return &v1alpha1.BundleView{
+	return &releasesapi.BundleView{
 		TypeMeta: metav1.TypeMeta{
-			APIVersion: v1alpha1.GroupVersion.String(),
+			APIVersion: releasesapi.GroupVersion.String(),
 			Kind:       "BundleView",
 		},
-		BundleOptionView: v1alpha1.BundleOptionView{
-			PackageMeta: v1alpha1.PackageMeta{
+		BundleOptionView: releasesapi.BundleOptionView{
+			PackageMeta: releasesapi.PackageMeta{
 				PackageDescriptor: GetPackageDescriptor(pkgChart.Chart),
 				URL:               ref.URL,
 				Name:              ref.Name,
@@ -162,17 +162,17 @@ func CreateBundleViewForChart(reg repo.IRegistry, ref *v1alpha1.ChartRepoRef) (*
 			},
 			DisplayName: flect.Titleize(flect.Humanize(ref.Name)),
 			// Features:    nil,
-			Packages: []v1alpha1.PackageCard{
+			Packages: []releasesapi.PackageCard{
 				{
-					Chart: &v1alpha1.ChartCard{
-						ChartRef: v1alpha1.ChartRef{
+					Chart: &releasesapi.ChartCard{
+						ChartRef: releasesapi.ChartRef{
 							URL:  ref.URL,
 							Name: ref.Name,
 						},
 						PackageDescriptor: GetPackageDescriptor(pkgChart.Chart),
 						Features:          []string{pkgChart.Metadata.Description},
 						Namespace:         "default",
-						Versions: []v1alpha1.VersionOption{
+						Versions: []releasesapi.VersionOption{
 							{
 								Version:  ref.Version,
 								Selected: true,

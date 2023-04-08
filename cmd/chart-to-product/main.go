@@ -26,7 +26,7 @@ import (
 	flag "github.com/spf13/pflag"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/klog/v2"
-	"x-helm.dev/apimachinery/apis/products/v1alpha1"
+	productsapi "x-helm.dev/apimachinery/apis/products/v1alpha1"
 	"x-helm.dev/apimachinery/apis/shared"
 )
 
@@ -56,7 +56,7 @@ func main() {
 		klog.Fatalln(err)
 	}
 
-	var nu v1alpha1.Product
+	var nu productsapi.Product
 	nu.Name = repoName + "-" + chrt.Name()
 
 	nu.Spec.StripeID = ""
@@ -69,9 +69,9 @@ func main() {
 	nu.Spec.Description = chrt.Metadata.Description
 	nu.Spec.UnitLabel = ""
 	if chrt.Removed {
-		nu.Spec.Phase = v1alpha1.PhaseArchived
+		nu.Spec.Phase = productsapi.PhaseArchived
 	} else {
-		nu.Spec.Phase = v1alpha1.PhaseActive
+		nu.Spec.Phase = productsapi.PhaseActive
 	}
 	nu.Spec.Media = []shared.MediaSpec{
 		{
@@ -100,7 +100,7 @@ func main() {
 		}
 	}
 	rlDate := metav1.NewTime(chrt.Created)
-	nu.Spec.Versions = []v1alpha1.ProductVersion{
+	nu.Spec.Versions = []productsapi.ProductVersion{
 		{
 			Version:     chrt.Metadata.Version,
 			ReleaseDate: &rlDate,

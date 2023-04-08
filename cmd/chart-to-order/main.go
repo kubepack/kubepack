@@ -27,7 +27,7 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/klog/v2"
 	"sigs.k8s.io/yaml"
-	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 var (
@@ -42,20 +42,20 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	order := v1alpha1.Order{
+	order := releasesapi.Order{
 		TypeMeta: metav1.TypeMeta{
-			APIVersion: v1alpha1.GroupVersion.String(),
-			Kind:       v1alpha1.ResourceKindOrder,
+			APIVersion: releasesapi.GroupVersion.String(),
+			Kind:       releasesapi.ResourceKindOrder,
 		}, ObjectMeta: metav1.ObjectMeta{
 			Name:              name,
 			UID:               types.UID(uuid.New().String()),
 			CreationTimestamp: metav1.NewTime(time.Now()),
 		},
-		Spec: v1alpha1.OrderSpec{
-			Packages: []v1alpha1.PackageSelection{
+		Spec: releasesapi.OrderSpec{
+			Packages: []releasesapi.PackageSelection{
 				{
-					Chart: &v1alpha1.ChartSelection{
-						ChartRef: v1alpha1.ChartRef{
+					Chart: &releasesapi.ChartSelection{
+						ChartRef: releasesapi.ChartRef{
 							URL:  url,
 							Name: name,
 						},

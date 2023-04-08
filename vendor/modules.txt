@@ -1380,7 +1380,7 @@ kmodules.xyz/resource-metadata/apis/ui
 kmodules.xyz/resource-metadata/apis/ui/v1alpha1
 kmodules.xyz/resource-metadata/crds
 kmodules.xyz/resource-metadata/hub/resourceeditors
-# kubepack.dev/lib-helm v0.5.10-0.20230408184418-7ea918da7232
+# kubepack.dev/lib-helm v0.5.10-0.20230408202616-896b2d0d6e7c
 ## explicit; go 1.18
 kubepack.dev/lib-helm/pkg/action
 kubepack.dev/lib-helm/pkg/chart
@@ -1526,7 +1526,7 @@ sigs.k8s.io/structured-merge-diff/v4/value
 # sigs.k8s.io/yaml v1.3.0
 ## explicit; go 1.12
 sigs.k8s.io/yaml
-# x-helm.dev/apimachinery v0.0.1
+# x-helm.dev/apimachinery v0.0.2-0.20230408194503-10de296ed1a4
 ## explicit; go 1.19
 x-helm.dev/apimachinery/apis
 x-helm.dev/apimachinery/apis/charts/v1alpha1

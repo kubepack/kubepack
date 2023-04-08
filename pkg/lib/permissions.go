@@ -25,10 +25,10 @@ import (
 
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 	disco_util "kmodules.xyz/client-go/discovery"
-	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
-func CheckPermissions(getter genericclioptions.RESTClientGetter, reg repo.IRegistry, order v1alpha1.Order) (bool, error) {
+func CheckPermissions(getter genericclioptions.RESTClientGetter, reg repo.IRegistry, order releasesapi.Order) (bool, error) {
 	config, err := getter.ToRESTConfig()
 	if err != nil {
 		return false, err

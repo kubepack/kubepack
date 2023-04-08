@@ -17,7 +17,7 @@ limitations under the License.
 package v1alpha1
 
 import (
-	crdv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	crdv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	"x-helm.dev/apimachinery/apis/shared"
@@ -68,7 +68,7 @@ type PackageView struct {
 
 	// openAPIV3Schema describes the schema used for validation and pruning of the Values file.
 	// +optional
-	OpenAPIV3Schema *crdv1beta1.JSONSchemaProps `json:"openAPIV3Schema,omitempty"`
+	OpenAPIV3Schema *crdv1.JSONSchemaProps `json:"openAPIV3Schema,omitempty"`
 }
 
 type ValuesFile struct {
