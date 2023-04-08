@@ -23,15 +23,15 @@ import (
 	"path"
 	"strings"
 
-	"kubepack.dev/kubepack/apis"
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/lib-helm/pkg/repo"
 	"kubepack.dev/lib-helm/pkg/values"
 
 	"gomodules.xyz/encoding/json"
+	"x-helm.dev/apimachinery/apis"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
-func GenerateHelm3Script(bs *BlobStore, reg repo.IRegistry, order v1alpha1.Order, opts ...ScriptOption) ([]ScriptRef, error) {
+func GenerateHelm3Script(bs *BlobStore, reg repo.IRegistry, order releasesapi.Order, opts ...ScriptOption) ([]ScriptRef, error) {
 	var buf bytes.Buffer
 	var err error
 
@@ -168,7 +168,7 @@ func GenerateHelm3Script(bs *BlobStore, reg repo.IRegistry, order v1alpha1.Order
 	}, nil
 }
 
-func PrintHelm3CommandFromStructValues(reg repo.IRegistry, opts v1alpha1.InstallOptions, baseValuesStruct, modValuesStruct interface{}, useValuesFile bool) (string, []byte, error) {
+func PrintHelm3CommandFromStructValues(reg repo.IRegistry, opts releasesapi.InstallOptions, baseValuesStruct, modValuesStruct interface{}, useValuesFile bool) (string, []byte, error) {
 	baseMap, err := toJson(baseValuesStruct)
 	if err != nil {
 		return "", nil, err
@@ -184,7 +184,7 @@ func PrintHelm3CommandFromStructValues(reg repo.IRegistry, opts v1alpha1.Install
 	return PrintHelm3Command(reg, opts, applyValues, useValuesFile)
 }
 
-func PrintHelm3Command(reg repo.IRegistry, opts v1alpha1.InstallOptions, applyValues map[string]interface{}, useValuesFile bool) (string, []byte, error) {
+func PrintHelm3Command(reg repo.IRegistry, opts releasesapi.InstallOptions, applyValues map[string]interface{}, useValuesFile bool) (string, []byte, error) {
 	valuesBytes, err := json.Marshal(applyValues)
 	if err != nil {
 		return "", nil, err

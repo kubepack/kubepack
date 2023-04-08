@@ -20,13 +20,14 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/cmd/internal"
 	"kubepack.dev/lib-helm/pkg/repo"
 
 	flag "github.com/spf13/pflag"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/klog/v2"
+	productsapi "x-helm.dev/apimachinery/apis/products/v1alpha1"
+	"x-helm.dev/apimachinery/apis/shared"
 )
 
 var (
@@ -55,7 +56,7 @@ func main() {
 		klog.Fatalln(err)
 	}
 
-	var nu v1alpha1.Product
+	var nu productsapi.Product
 	nu.Name = repoName + "-" + chrt.Name()
 
 	nu.Spec.StripeID = ""
@@ -68,22 +69,22 @@ func main() {
 	nu.Spec.Description = chrt.Metadata.Description
 	nu.Spec.UnitLabel = ""
 	if chrt.Removed {
-		nu.Spec.Phase = v1alpha1.PhaseArchived
+		nu.Spec.Phase = productsapi.PhaseArchived
 	} else {
-		nu.Spec.Phase = v1alpha1.PhaseActive
+		nu.Spec.Phase = productsapi.PhaseActive
 	}
-	nu.Spec.Media = []v1alpha1.MediaSpec{
+	nu.Spec.Media = []shared.MediaSpec{
 		{
-			Description: v1alpha1.MediaIcon,
-			ImageSpec: v1alpha1.ImageSpec{
-				Source:    chrt.Metadata.Icon,
-				TotalSize: "",
-				Type:      "",
+			Description: shared.MediaIcon,
+			ImageSpec: shared.ImageSpec{
+				Source: chrt.Metadata.Icon,
+				Size:   "",
+				Type:   "",
 			},
 		},
 	}
 	for _, maintainer := range chrt.Metadata.Maintainers {
-		nu.Spec.Maintainers = append(nu.Spec.Maintainers, v1alpha1.ContactData{
+		nu.Spec.Maintainers = append(nu.Spec.Maintainers, shared.ContactData{
 			Name:  maintainer.Name,
 			URL:   maintainer.URL,
 			Email: maintainer.Email,
@@ -91,15 +92,15 @@ func main() {
 	}
 	nu.Spec.Keywords = chrt.Metadata.Keywords
 	if chrt.Metadata.Home != "" {
-		nu.Spec.Links = []v1alpha1.Link{
+		nu.Spec.Links = []shared.Link{
 			{
-				Description: v1alpha1.LinkWebsite,
+				Description: string(shared.LinkWebsite),
 				URL:         chrt.Metadata.Home,
 			},
 		}
 	}
 	rlDate := metav1.NewTime(chrt.Created)
-	nu.Spec.Versions = []v1alpha1.ProductVersion{
+	nu.Spec.Versions = []productsapi.ProductVersion{
 		{
 			Version:     chrt.Metadata.Version,
 			ReleaseDate: &rlDate,

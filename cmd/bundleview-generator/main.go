@@ -20,13 +20,13 @@ import (
 	"encoding/json"
 	"os"
 
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/cmd/internal"
 	"kubepack.dev/kubepack/pkg/lib"
 
 	flag "github.com/spf13/pflag"
 	"k8s.io/klog/v2"
 	"sigs.k8s.io/yaml"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 var (
@@ -41,7 +41,7 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	bv, err := lib.CreateBundleViewForBundle(internal.DefaultRegistry, &v1alpha1.ChartRepoRef{
+	bv, err := lib.CreateBundleViewForBundle(internal.DefaultRegistry, &releasesapi.ChartRepoRef{
 		URL:     url,
 		Name:    name,
 		Version: version,

@@ -31,9 +31,6 @@ import (
 	"sync"
 	"time"
 
-	"kubepack.dev/kubepack/apis"
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/lib-helm/pkg/application"
 	libchart "kubepack.dev/lib-helm/pkg/chart"
 	"kubepack.dev/lib-helm/pkg/repo"
 	"kubepack.dev/lib-helm/pkg/values"
@@ -51,7 +48,7 @@ import (
 	"helm.sh/helm/v3/pkg/release"
 	authorization "k8s.io/api/authorization/v1"
 	core "k8s.io/api/core/v1"
-	crdv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	crdv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	crd_cs "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -68,9 +65,11 @@ import (
 	disco_util "kmodules.xyz/client-go/discovery"
 	"kmodules.xyz/client-go/tools/parser"
 	wait2 "kmodules.xyz/client-go/tools/wait"
-	"sigs.k8s.io/application/api/app/v1beta1"
-	"sigs.k8s.io/application/client/clientset/versioned"
+	"sigs.k8s.io/controller-runtime/pkg/client"
 	yamllib "sigs.k8s.io/yaml"
+	"x-helm.dev/apimachinery/apis"
+	driversapi "x-helm.dev/apimachinery/apis/drivers/v1alpha1"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 type DoFn func() error
@@ -78,7 +77,7 @@ type DoFn func() error
 type WaitForPrinter struct {
 	Name      string
 	Namespace string
-	WaitFors  []v1alpha1.WaitFlags
+	WaitFors  []releasesapi.WaitFlags
 	W         io.Writer
 }
 
@@ -145,7 +144,7 @@ func (x *WaitForPrinter) Do() error {
 
 type WaitForChecker struct {
 	Namespace string
-	WaitFors  []v1alpha1.WaitFlags
+	WaitFors  []releasesapi.WaitFlags
 
 	ClientGetter genericclioptions.RESTClientGetter
 }
@@ -262,19 +261,18 @@ func (x *CRDReadinessChecker) Do() error {
 	crds := make([]*apiextensions.CustomResourceDefinition, 0, len(x.CRDs))
 	for _, crd := range x.CRDs {
 		crds = append(crds, &apiextensions.CustomResourceDefinition{
-			V1beta1: &crdv1beta1.CustomResourceDefinition{
+			V1: &crdv1.CustomResourceDefinition{
 				ObjectMeta: v1.ObjectMeta{
 					Name: fmt.Sprintf("%s.%s", crd.Resource, crd.Group),
 				},
-				Spec: crdv1beta1.CustomResourceDefinitionSpec{
-					Group:   crd.Group,
-					Version: crd.Version,
-					Names: crdv1beta1.CustomResourceDefinitionNames{
+				Spec: crdv1.CustomResourceDefinitionSpec{
+					Group: crd.Group,
+					Names: crdv1.CustomResourceDefinitionNames{
 						Plural: crd.Resource,
 						// Kind:   crd.Kind,
 					},
 					// Scope: crdv1beta1.ResourceScope(string(crd.Scope)),
-					Versions: []crdv1beta1.CustomResourceDefinitionVersion{
+					Versions: []crdv1.CustomResourceDefinitionVersion{
 						{
 							Name: crd.Version,
 						},
@@ -288,7 +286,7 @@ func (x *CRDReadinessChecker) Do() error {
 
 type Helm3CommandPrinter struct {
 	Registry      repo.IRegistry
-	ChartRef      v1alpha1.ChartRef
+	ChartRef      releasesapi.ChartRef
 	Version       string
 	ReleaseName   string
 	Namespace     string
@@ -417,7 +415,7 @@ func (x *Helm3CommandPrinter) ValuesFile() []byte {
 
 type YAMLPrinter struct {
 	Registry    repo.IRegistry
-	ChartRef    v1alpha1.ChartRef
+	ChartRef    releasesapi.ChartRef
 	Version     string
 	ReleaseName string
 	Namespace   string
@@ -661,7 +659,7 @@ type ResourcePermission struct {
 
 type PermissionChecker struct {
 	Registry    repo.IRegistry
-	ChartRef    v1alpha1.ChartRef
+	ChartRef    releasesapi.ChartRef
 	Version     string
 	ReleaseName string
 	Namespace   string
@@ -889,12 +887,12 @@ func (x *ApplicationCRDRegistrar) Do() error {
 		return err
 	}
 	return apiextensions.RegisterCRDs(apiextClient, []*apiextensions.CustomResourceDefinition{
-		application.CustomResourceDefinition(),
+		driversapi.AppRelease{}.CustomResourceDefinition(),
 	})
 }
 
 type ApplicationUploader struct {
-	App       *v1beta1.Application
+	App       *driversapi.AppRelease
 	UID       string
 	BucketURL string
 	PublicURL string
@@ -938,18 +936,18 @@ func (x *ApplicationUploader) Do() error {
 }
 
 type ApplicationCreator struct {
-	App    *v1beta1.Application
-	Client *versioned.Clientset
+	App    *driversapi.AppRelease
+	Client client.Client
 }
 
 func (x *ApplicationCreator) Do() error {
-	_, err := x.Client.AppV1beta1().Applications(x.App.Namespace).Create(context.TODO(), x.App, metav1.CreateOptions{})
+	err := x.Client.Create(context.TODO(), x.App)
 	return err
 }
 
 type ApplicationGenerator struct {
 	Registry repo.IRegistry
-	Chart    v1alpha1.ChartSelection
+	Chart    releasesapi.ChartSelection
 	chrt     *chart.Chart
 
 	KubeVersion string
@@ -1110,12 +1108,12 @@ func (x *ApplicationGenerator) Do() error {
 	return err
 }
 
-func (x *ApplicationGenerator) Result() *v1beta1.Application {
+func (x *ApplicationGenerator) Result() *driversapi.AppRelease {
 	desc := GetPackageDescriptor(x.chrt)
 
-	b := &v1beta1.Application{
+	b := &driversapi.AppRelease{
 		TypeMeta: metav1.TypeMeta{
-			APIVersion: v1alpha1.SchemeGroupVersion.String(),
+			APIVersion: releasesapi.GroupVersion.String(),
 			Kind:       "Application",
 		},
 		ObjectMeta: metav1.ObjectMeta{
@@ -1128,21 +1126,21 @@ func (x *ApplicationGenerator) Result() *v1beta1.Application {
 				apis.LabelChartVersion: x.Chart.Version,
 			},
 		},
-		Spec: v1beta1.ApplicationSpec{
-			Descriptor: v1beta1.Descriptor{
+		Spec: driversapi.AppReleaseSpec{
+			Descriptor: driversapi.Descriptor{
 				Type:        x.chrt.Name(),
 				Description: desc.Description,
-				Icons:       v1alpha1.ConvertImageSpec(desc.Icons),
-				Maintainers: v1alpha1.ConvertContactData(desc.Maintainers),
+				Icons:       desc.Icons,
+				Maintainers: desc.Maintainers,
 				Keywords:    desc.Keywords,
-				Links:       v1alpha1.ConvertLink(desc.Links),
+				Links:       desc.Links,
 				Notes:       "",
 				Version:     x.chrt.Metadata.AppVersion,
 				Owners:      nil, // TODO: Add the user email who is installing this app
 			},
 			AddOwnerRef:   false,
 			Info:          nil,
-			AssemblyPhase: v1beta1.Ready,
+			AssemblyPhase: driversapi.Ready,
 		},
 	}
 

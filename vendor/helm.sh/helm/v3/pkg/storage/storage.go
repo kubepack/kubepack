@@ -135,7 +135,7 @@ func (s *Storage) DeployedAll(name string) ([]*rspb.Release, error) {
 	s.Log("getting deployed releases from %q history", name)
 
 	var lbls map[string]string
-	if s.Name() == "storage.x-helm.dev/apps" {
+	if s.Name() == "drivers.x-helm.dev/appreleases" {
 		// WARNING(tamal): These lbls are required for Kubepack/Application driver.
 		lbls = map[string]string{
 			"name.release.x-helm.dev/" + name:   name,
@@ -165,7 +165,7 @@ func (s *Storage) History(name string) ([]*rspb.Release, error) {
 	s.Log("getting release history for %q", name)
 
 	var lbls map[string]string
-	if s.Name() == "storage.x-helm.dev/apps" {
+	if s.Name() == "drivers.x-helm.dev/appreleases" {
 		// WARNING(tamal): These lbls are required for Kubepack/Application driver.
 		lbls = map[string]string{
 			"name.release.x-helm.dev/" + name: name,

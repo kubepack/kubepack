@@ -19,7 +19,6 @@ package lib
 import (
 	"strings"
 
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/lib-helm/pkg/repo"
 
 	"helm.sh/helm/v3/pkg/chart"
@@ -29,9 +28,10 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"sigs.k8s.io/yaml"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
-func GetBundle(reg repo.IRegistry, in *v1alpha1.BundleOption) (*chart.Chart, *v1alpha1.Bundle, error) {
+func GetBundle(reg repo.IRegistry, in *releasesapi.BundleOption) (*chart.Chart, *releasesapi.Bundle, error) {
 	chrt, err := reg.GetChart(in.URL, in.Name, in.Version)
 	if err != nil {
 		return nil, nil, err
@@ -40,7 +40,7 @@ func GetBundle(reg repo.IRegistry, in *v1alpha1.BundleOption) (*chart.Chart, *v1
 	return getBundle(chrt.Chart)
 }
 
-func getBundle(chrt *chart.Chart) (*chart.Chart, *v1alpha1.Bundle, error) {
+func getBundle(chrt *chart.Chart) (*chart.Chart, *releasesapi.Bundle, error) {
 	options := chartutil.ReleaseOptions{
 		Name:      chrt.Name(),
 		Namespace: "",
@@ -65,10 +65,10 @@ func getBundle(chrt *chart.Chart) (*chart.Chart, *v1alpha1.Bundle, error) {
 		if err != nil {
 			continue // Not a json file, ignore
 		}
-		if tm.APIVersion == v1alpha1.SchemeGroupVersion.String() &&
-			tm.Kind == v1alpha1.ResourceKindBundle {
+		if tm.APIVersion == releasesapi.GroupVersion.String() &&
+			tm.Kind == releasesapi.ResourceKindBundle {
 
-			var bundle v1alpha1.Bundle
+			var bundle releasesapi.Bundle
 			err = yaml.Unmarshal([]byte(data), &bundle)
 			if err != nil {
 				return nil, nil, err
@@ -77,8 +77,8 @@ func getBundle(chrt *chart.Chart) (*chart.Chart, *v1alpha1.Bundle, error) {
 		}
 	}
 	return chrt, nil, kerr.NewNotFound(schema.GroupResource{
-		Group:    v1alpha1.SchemeGroupVersion.Group,
-		Resource: v1alpha1.ResourceBundles,
+		Group:    releasesapi.GroupVersion.Group,
+		Resource: releasesapi.ResourceBundles,
 	}, "bundle")
 }
 

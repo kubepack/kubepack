@@ -19,13 +19,13 @@ package main
 import (
 	"os"
 
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/cmd/internal"
 	"kubepack.dev/kubepack/pkg/lib"
 
 	flag "github.com/spf13/pflag"
 	"k8s.io/klog/v2"
 	"sigs.k8s.io/yaml"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 var file = "artifacts/kubedb-community/bundleview.yaml"
@@ -38,7 +38,7 @@ func main() {
 	if err != nil {
 		klog.Fatal(err)
 	}
-	var bv v1alpha1.BundleView
+	var bv releasesapi.BundleView
 	err = yaml.Unmarshal(data, &bv)
 	if err != nil {
 		klog.Fatal(err)

@@ -23,12 +23,13 @@ import (
 	"path"
 	"strings"
 
-	"kubepack.dev/kubepack/apis"
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/lib-helm/pkg/repo"
+
+	"x-helm.dev/apimachinery/apis"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
-func GenerateYAMLScript(bs *BlobStore, reg repo.IRegistry, order v1alpha1.Order, opts ...ScriptOption) ([]ScriptRef, error) {
+func GenerateYAMLScript(bs *BlobStore, reg repo.IRegistry, order releasesapi.Order, opts ...ScriptOption) ([]ScriptRef, error) {
 	var buf bytes.Buffer
 	var err error
 

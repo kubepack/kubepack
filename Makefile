@@ -19,13 +19,8 @@ REPO     := $(notdir $(shell pwd))
 BIN      := kubepack-operator
 COMPRESS ?= no
 
-# Produce CRDs that work back to Kubernetes 1.11 (no version conversion)
-CRD_OPTIONS          ?= "crd:allowDangerousTypes=true,crdVersions={v1}"
-CODE_GENERATOR_IMAGE ?= ghcr.io/appscode/gengo:release-1.25
-API_GROUPS           ?= kubepack:v1alpha1
-
 # Where to push the docker image.
-REGISTRY ?= kubepack
+REGISTRY ?= ghcr.io/appscode
 
 # This version-strategy uses git tags to set the version string
 git_branch       := $(shell git rev-parse --abbrev-ref HEAD)
@@ -51,8 +46,8 @@ endif
 ### These variables should not need tweaking.
 ###
 
-SRC_PKGS := apis client cmd crds pkg # directories which hold app source excluding tests (not vendored)
-SRC_DIRS := $(SRC_PKGS) hack/gencrd # directories which hold app source (not vendored)
+SRC_PKGS := cmd pkg # directories which hold app source excluding tests (not vendored)
+SRC_DIRS := $(SRC_PKGS) # directories which hold app source (not vendored)
 
 DOCKER_PLATFORMS := linux/amd64 linux/arm linux/arm64
 BIN_PLATFORMS    := $(DOCKER_PLATFORMS)
@@ -126,125 +121,21 @@ all-container: $(addprefix container-, $(subst /,_, $(DOCKER_PLATFORMS)))
 
 all-push: $(addprefix push-, $(subst /,_, $(DOCKER_PLATFORMS)))
 
-version:
-	@echo ::set-output name=version::$(VERSION)
-	@echo ::set-output name=version_strategy::$(version_strategy)
-	@echo ::set-output name=git_tag::$(git_tag)
-	@echo ::set-output name=git_branch::$(git_branch)
-	@echo ::set-output name=commit_hash::$(commit_hash)
-	@echo ::set-output name=commit_timestamp::$(commit_timestamp)
-
-# Generate a typed clientset
-.PHONY: clientset
-clientset:
-	@docker run --rm                                     \
-		-u $$(id -u):$$(id -g)                           \
-		-v /tmp:/.cache                                  \
-		-v $$(pwd):$(DOCKER_REPO_ROOT)                   \
-		-w $(DOCKER_REPO_ROOT)                           \
-		--env HTTP_PROXY=$(HTTP_PROXY)                   \
-		--env HTTPS_PROXY=$(HTTPS_PROXY)                 \
-		$(CODE_GENERATOR_IMAGE)                          \
-		/go/src/k8s.io/code-generator/generate-groups.sh \
-			all                                          \
-			$(GO_PKG)/$(REPO)/client                     \
-			$(GO_PKG)/$(REPO)/apis                       \
-			"$(API_GROUPS)"                              \
-			--go-header-file "./hack/license/go.txt"
-
-# Generate openapi schema
-.PHONY: openapi
-openapi: $(addprefix openapi-, $(subst :,_, $(API_GROUPS)))
-	@echo "Generating openapi/swagger.json"
-	@docker run --rm                                     \
-		-u $$(id -u):$$(id -g)                           \
-		-v /tmp:/.cache                                  \
-		-v $$(pwd):$(DOCKER_REPO_ROOT)                   \
-		-w $(DOCKER_REPO_ROOT)                           \
-		--env HTTP_PROXY=$(HTTP_PROXY)                   \
-		--env HTTPS_PROXY=$(HTTPS_PROXY)                 \
-	    --env GO111MODULE=on                             \
-	    --env GOFLAGS="-mod=vendor"                      \
-		$(BUILD_IMAGE)                                   \
-		go run hack/gencrd/main.go
-
-openapi-%:
-	@echo "Generating openapi schema for $(subst _,/,$*)"
-	@mkdir -p .config/api-rules
-	@docker run --rm                                     \
-		-u $$(id -u):$$(id -g)                           \
-		-v /tmp:/.cache                                  \
-		-v $$(pwd):$(DOCKER_REPO_ROOT)                   \
-		-w $(DOCKER_REPO_ROOT)                           \
-		--env HTTP_PROXY=$(HTTP_PROXY)                   \
-		--env HTTPS_PROXY=$(HTTPS_PROXY)                 \
-		$(CODE_GENERATOR_IMAGE)                          \
-		openapi-gen                                      \
-			--v 1 --logtostderr                          \
-			--go-header-file "./hack/license/go.txt" \
-			--input-dirs "$(GO_PKG)/$(REPO)/apis/$(subst _,/,$*),k8s.io/apimachinery/pkg/apis/meta/v1,k8s.io/apimachinery/pkg/api/resource,k8s.io/apimachinery/pkg/runtime,k8s.io/apimachinery/pkg/util/intstr,k8s.io/apimachinery/pkg/version,k8s.io/api/core/v1,k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1" \
-			--output-package "$(GO_PKG)/$(REPO)/apis/$(subst _,/,$*)" \
-			--report-filename .config/api-rules/violation_exceptions.list
-
-# Generate CRD manifests
-.PHONY: gen-crds
-gen-crds:
-	@echo "Generating CRD manifests"
-	@docker run --rm                        \
-		-u $$(id -u):$$(id -g)              \
-		-v /tmp:/.cache                     \
-		-v $$(pwd):$(DOCKER_REPO_ROOT)      \
-		-w $(DOCKER_REPO_ROOT)              \
-	    --env HTTP_PROXY=$(HTTP_PROXY)      \
-	    --env HTTPS_PROXY=$(HTTPS_PROXY)    \
-		$(CODE_GENERATOR_IMAGE)             \
-		controller-gen                      \
-			$(CRD_OPTIONS)                  \
-			paths="./apis/..."              \
-			output:crd:artifacts:config=crds
-
-crds_to_patch :=
-
-.PHONY: patch-crds
-patch-crds: $(addprefix patch-crd-, $(crds_to_patch))
-patch-crd-%: $(BUILD_DIRS)
-	@echo "patching $*"
-	@kubectl patch -f crds/$* -p "$$(cat hack/crd-patch.json)" --type=json --local=true -o yaml > bin/$*
-	@mv bin/$* crds/$*
-
-.PHONY: label-crds
-label-crds: $(BUILD_DIRS)
-	@for f in crds/*.yaml; do \
-		echo "applying app.kubernetes.io/name=kubepack label to $$f"; \
-		kubectl label --overwrite -f $$f --local=true -o yaml app.kubernetes.io/name=kubepack > bin/crd.yaml; \
-		mv bin/crd.yaml $$f; \
-	done
-
-.PHONY: gen-crd-protos
-gen-crd-protos: $(addprefix gen-crd-protos-, $(subst :,_, $(API_GROUPS)))
-
-gen-crd-protos-%:
-	@echo "Generating protobuf for $(subst _,/,$*)"
-	@docker run --rm                                     \
-		-u $$(id -u):$$(id -g)                           \
-		-v /tmp:/.cache                                  \
-		-v $$(pwd):$(DOCKER_REPO_ROOT)                   \
-		-w $(DOCKER_REPO_ROOT)                           \
-		--env HTTP_PROXY=$(HTTP_PROXY)                   \
-		--env HTTPS_PROXY=$(HTTPS_PROXY)                 \
-		$(CODE_GENERATOR_IMAGE)                          \
-		go-to-protobuf                                   \
-			--go-header-file "./hack/license/go.txt"     \
-			--proto-import=$(DOCKER_REPO_ROOT)/vendor    \
-			--proto-import=$(DOCKER_REPO_ROOT)/third_party/protobuf \
-			--apimachinery-packages=-k8s.io/apimachinery/pkg/api/resource,-k8s.io/apimachinery/pkg/apis/meta/v1,-k8s.io/apimachinery/pkg/apis/meta/v1beta1,-k8s.io/apimachinery/pkg/runtime,-k8s.io/apimachinery/pkg/runtime/schema,-k8s.io/apimachinery/pkg/util/intstr \
-			--packages=-k8s.io/api/core/v1,-k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1,kubepack.dev/kubepack/apis/$(subst _,/,$*)
-
-.PHONY: manifests
-manifests: gen-crds label-crds
+version: version-PROD version-DBG
+	@echo IMAGE=$(IMAGE)
+	@echo BIN=$(BIN)
+	@echo version=$(VERSION)
+	@echo version_strategy=$(version_strategy)
+	@echo git_tag=$(git_tag)
+	@echo git_branch=$(git_branch)
+	@echo commit_hash=$(commit_hash)
+	@echo commit_timestamp=$(commit_timestamp)
+version-%:
+	@echo TAG_$*=$(TAG_$*)
 
 .PHONY: gen
-gen: clientset manifests openapi #gen-crd-protos
+gen:
+	@true
 
 fmt: $(BUILD_DIRS)
 	@docker run                                                 \

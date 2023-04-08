@@ -24,7 +24,7 @@ type Renderer struct {
 	reg  repo.IRegistry
 }
 
-func NewRenderer() (*Renderer, error) {
+func NewRenderer(options ...InstallOptions) (*Renderer, error) {
 	cfg := new(ha.Configuration)
 	err := cfg.Init(nil, "default", "secret", debug)
 	if err != nil {
@@ -32,30 +32,35 @@ func NewRenderer() (*Renderer, error) {
 	}
 	cfg.Capabilities = chartutil.DefaultCapabilities
 
-	return NewRendererForConfig(cfg), nil
+	return NewRendererForConfig(cfg, options...), nil
 }
 
-func NewRendererForConfig(cfg *ha.Configuration) *Renderer {
-	opts := InstallOptions{
-		// ChartURL:  url,
-		// ChartName: name,
-		// Version:   version,
-		Options: values.Options{
-			ValuesFile:  "",
-			ValuesPatch: nil,
-		},
-		ClientOnly:   true,
-		DryRun:       true,
-		DisableHooks: false,
-		Replace:      true, // Skip the name check
-		Wait:         false,
-		Devel:        false,
-		Timeout:      0,
-		Namespace:    "default",
-		ReleaseName:  "release-name",
-		Atomic:       false,
-		IncludeCRDs:  false, //
-		SkipCRDs:     true,  //
+func NewRendererForConfig(cfg *ha.Configuration, options ...InstallOptions) *Renderer {
+	var opts InstallOptions
+	if len(options) == 1 {
+		opts = options[0]
+	} else {
+		opts = InstallOptions{
+			// ChartURL:  url,
+			// ChartName: name,
+			// Version:   version,
+			Options: values.Options{
+				ValuesFile:  "",
+				ValuesPatch: nil,
+			},
+			ClientOnly:   true,
+			DryRun:       true,
+			DisableHooks: false,
+			Replace:      true, // Skip the name check
+			Wait:         false,
+			Devel:        false,
+			Timeout:      0,
+			Namespace:    "default",
+			ReleaseName:  "release-name",
+			Atomic:       false,
+			IncludeCRDs:  false, //
+			SkipCRDs:     true,  //
+		}
 	}
 	return &Renderer{
 		cfg:  cfg,

@@ -22,7 +22,6 @@ import (
 	"strconv"
 	"strings"
 
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/cmd/internal"
 	"kubepack.dev/kubepack/pkg/lib"
 
@@ -31,6 +30,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/klog/v2"
 	"sigs.k8s.io/yaml"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 var (
@@ -62,16 +62,16 @@ func main() {
 	  labels:
 	    {{- include "stash-mongodb-bundle.labels" . : nindent 4 }}
 	*/
-	b := v1alpha1.Bundle{
+	b := releasesapi.Bundle{
 		TypeMeta: metav1.TypeMeta{
-			APIVersion: v1alpha1.SchemeGroupVersion.String(),
-			Kind:       v1alpha1.ResourceKindBundle,
+			APIVersion: releasesapi.GroupVersion.String(),
+			Kind:       releasesapi.ResourceKindBundle,
 		},
 		ObjectMeta: metav1.ObjectMeta{
 			Name: fmt.Sprintf(`{{ include "%s.fullname" . }}`, name),
 			// TODO: set labels
 		},
-		Spec: v1alpha1.BundleSpec{
+		Spec: releasesapi.BundleSpec{
 			DisplayName: lib.XorY(displayName, flect.Titleize(flect.Humanize(name))),
 			Namespace:   namespace,
 		},
@@ -100,9 +100,9 @@ func main() {
 		if err != nil {
 			klog.Fatalln(err)
 		}
-		ref := v1alpha1.PackageRef{
-			Chart: &v1alpha1.ChartOption{
-				ChartRef: v1alpha1.ChartRef{
+		ref := releasesapi.PackageRef{
+			Chart: &releasesapi.ChartOption{
+				ChartRef: releasesapi.ChartRef{
 					URL:  url,
 					Name: pkgChart.Name(),
 				},
@@ -123,8 +123,8 @@ func main() {
 			if len(vparts) == 2 {
 				selected, _ = strconv.ParseBool(vparts[1])
 			}
-			ref.Chart.Versions = append(ref.Chart.Versions, v1alpha1.VersionDetail{
-				VersionOption: v1alpha1.VersionOption{
+			ref.Chart.Versions = append(ref.Chart.Versions, releasesapi.VersionDetail{
+				VersionOption: releasesapi.VersionOption{
 					Version:  version,
 					Selected: selected,
 				},
@@ -144,9 +144,9 @@ func main() {
 		if err != nil {
 			klog.Fatalln(err)
 		}
-		ref := v1alpha1.PackageRef{
-			Bundle: &v1alpha1.BundleOption{
-				BundleRef: v1alpha1.BundleRef{
+		ref := releasesapi.PackageRef{
+			Bundle: &releasesapi.BundleOption{
+				BundleRef: releasesapi.BundleRef{
 					URL:  url,
 					Name: chart.Name(),
 				},

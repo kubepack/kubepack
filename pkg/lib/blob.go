@@ -17,10 +17,9 @@ limitations under the License.
 package lib
 
 import (
-	"kubepack.dev/kubepack/apis"
-
 	"gomodules.xyz/blobfs"
 	"gomodules.xyz/blobfs/testing"
+	"x-helm.dev/apimachinery/apis"
 )
 
 const GoogleApplicationCredentials = "/personal/AppsCode/credentials/bytebuilders@byte-builders.json"

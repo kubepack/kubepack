@@ -21,7 +21,6 @@ import (
 	"fmt"
 	"os"
 
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/cmd/internal"
 	"kubepack.dev/kubepack/pkg/lib"
 
@@ -30,6 +29,7 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/klog/v2"
 	"sigs.k8s.io/yaml"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 var file = "artifacts/kubedb-community/order.yaml"
@@ -47,7 +47,7 @@ func main() {
 	if err != nil {
 		klog.Fatal(err)
 	}
-	var order v1alpha1.Order
+	var order releasesapi.Order
 	err = yaml.Unmarshal(data, &order)
 	if err != nil {
 		klog.Fatal(err)
