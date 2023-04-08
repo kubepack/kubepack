@@ -19,12 +19,12 @@ package main
 import (
 	"os"
 
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/pkg/lib"
 
 	flag "github.com/spf13/pflag"
 	"k8s.io/klog/v2"
 	"sigs.k8s.io/yaml"
+	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 var (

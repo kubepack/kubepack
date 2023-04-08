@@ -17,12 +17,12 @@ limitations under the License.
 package lib
 
 import (
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/lib-helm/pkg/repo"
 
 	"github.com/gobuffalo/flect"
 	kerr "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 func CreateBundleViewForBundle(reg repo.IRegistry, ref *v1alpha1.ChartRepoRef) (*v1alpha1.BundleView, error) {

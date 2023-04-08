@@ -17,8 +17,9 @@ limitations under the License.
 package lib
 
 import (
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/lib-helm/pkg/repo"
+
+	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 func ComparePlans(reg repo.IRegistry, url string, names []string, version string) (v1alpha1.FeatureTable, error) {

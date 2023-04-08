@@ -19,7 +19,6 @@ package lib
 import (
 	"strings"
 
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/lib-helm/pkg/repo"
 
 	"helm.sh/helm/v3/pkg/chart"
@@ -29,6 +28,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"sigs.k8s.io/yaml"
+	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 func GetBundle(reg repo.IRegistry, in *v1alpha1.BundleOption) (*chart.Chart, *v1alpha1.Bundle, error) {

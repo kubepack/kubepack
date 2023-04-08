@@ -23,12 +23,12 @@ import (
 	"path"
 	"strings"
 
-	"kubepack.dev/kubepack/apis"
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/lib-helm/pkg/repo"
 	"kubepack.dev/lib-helm/pkg/values"
 
 	"gomodules.xyz/encoding/json"
+	"x-helm.dev/apimachinery/apis"
+	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 func GenerateHelm3Script(bs *BlobStore, reg repo.IRegistry, order v1alpha1.Order, opts ...ScriptOption) ([]ScriptRef, error) {

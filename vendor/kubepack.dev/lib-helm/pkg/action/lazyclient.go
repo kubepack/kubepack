@@ -21,113 +21,125 @@ import (
 	"sync"
 
 	v1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/apimachinery/pkg/watch"
 	applycorev1 "k8s.io/client-go/applyconfigurations/core/v1"
 	"k8s.io/client-go/kubernetes"
 	corev1 "k8s.io/client-go/kubernetes/typed/core/v1"
-	appapi "sigs.k8s.io/application/api/app/v1beta1"
-	appcs "sigs.k8s.io/application/client/clientset/versioned"
-	"sigs.k8s.io/application/client/clientset/versioned/typed/app/v1beta1"
+	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
-// lazyClient is a workaround to deal with Kubernetes having an unstable client API.
+// lazyClient is a workaround to deal with Kubernetes having an unstable kb API.
 // In Kubernetes v1.18 the defaults where removed which broke creating a
-// client without an explicit configuration. ಠ_ಠ
+// kb without an explicit configuration. ಠ_ಠ
 type lazyClient struct {
-	// client caches an initialized kubernetes client
+	// kb caches an initialized kubernetes kb
 	initClient sync.Once
-	client     kubernetes.Interface
-	appClient  appcs.Interface
+	kc         kubernetes.Interface
+	kb         client.Client
 	clientErr  error
 
 	// clientFn loads a kubernetes client
-	clientFn    func() (*kubernetes.Clientset, error)
-	appClientFn func() (*appcs.Clientset, error)
+	kcFn func() (*kubernetes.Clientset, error)
+	kbFn func() (client.Client, error)
 
-	// namespace passed to each client request
+	// namespace passed to each kb request
 	namespace string
 }
 
 func (s *lazyClient) init() error {
 	s.initClient.Do(func() {
-		s.client, s.clientErr = s.clientFn()
-		s.appClient, s.clientErr = s.appClientFn()
+		s.kc, s.clientErr = s.kcFn()
+		s.kb, s.clientErr = s.kbFn()
 	})
 	return s.clientErr
 }
 
-// applicationClient implements a coreappv1beta1.ApplicationInterface
-type applicationClient struct{ *lazyClient }
+// appReleaseClient implements a coreappv1beta1.AppReleaseInterface
+type appReleaseClient struct{ *lazyClient }
 
-var _ v1beta1.ApplicationInterface = (*applicationClient)(nil)
-
-func newApplicationClient(lc *lazyClient) *applicationClient {
-	return &applicationClient{lazyClient: lc}
-}
-
-func (c *applicationClient) Create(ctx context.Context, application *appapi.Application, opts metav1.CreateOptions) (*appapi.Application, error) {
-	if err := c.init(); err != nil {
-		return nil, err
-	}
-	return c.appClient.AppV1beta1().Applications(c.namespace).Create(ctx, application, opts)
-}
-
-func (c *applicationClient) Update(ctx context.Context, application *appapi.Application, opts metav1.UpdateOptions) (*appapi.Application, error) {
-	if err := c.init(); err != nil {
-		return nil, err
-	}
-	return c.appClient.AppV1beta1().Applications(c.namespace).Update(ctx, application, opts)
-}
-
-func (c *applicationClient) Delete(ctx context.Context, name string, opts metav1.DeleteOptions) error {
-	if err := c.init(); err != nil {
+func (a *appReleaseClient) Get(ctx context.Context, key client.ObjectKey, obj client.Object, opts ...client.GetOption) error {
+	if err := a.init(); err != nil {
 		return err
 	}
-	return c.appClient.AppV1beta1().Applications(c.namespace).Delete(ctx, name, opts)
+	obj.SetNamespace(a.namespace)
+	return a.kb.Get(ctx, key, obj, opts...)
 }
 
-func (c *applicationClient) DeleteCollection(ctx context.Context, opts metav1.DeleteOptions, listOpts metav1.ListOptions) error {
-	if err := c.init(); err != nil {
+func (a *appReleaseClient) List(ctx context.Context, list client.ObjectList, opts ...client.ListOption) error {
+	if err := a.init(); err != nil {
 		return err
 	}
-	return c.appClient.AppV1beta1().Applications(c.namespace).DeleteCollection(ctx, opts, listOpts)
+	return a.kb.List(ctx, list, append(opts, client.InNamespace(a.namespace))...)
 }
 
-func (c *applicationClient) Get(ctx context.Context, name string, opts metav1.GetOptions) (*appapi.Application, error) {
-	if err := c.init(); err != nil {
-		return nil, err
+func (a *appReleaseClient) Create(ctx context.Context, obj client.Object, opts ...client.CreateOption) error {
+	if err := a.init(); err != nil {
+		return err
 	}
-	return c.appClient.AppV1beta1().Applications(c.namespace).Get(ctx, name, opts)
+	obj.SetNamespace(a.namespace)
+	return a.kb.Create(ctx, obj, opts...)
 }
 
-func (c *applicationClient) List(ctx context.Context, opts metav1.ListOptions) (*appapi.ApplicationList, error) {
-	if err := c.init(); err != nil {
-		return nil, err
+func (a *appReleaseClient) Delete(ctx context.Context, obj client.Object, opts ...client.DeleteOption) error {
+	if err := a.init(); err != nil {
+		return err
 	}
-	return c.appClient.AppV1beta1().Applications(c.namespace).List(ctx, opts)
+	obj.SetNamespace(a.namespace)
+	return a.kb.Delete(ctx, obj, opts...)
 }
 
-func (c *applicationClient) Watch(ctx context.Context, opts metav1.ListOptions) (watch.Interface, error) {
-	if err := c.init(); err != nil {
-		return nil, err
+func (a *appReleaseClient) Update(ctx context.Context, obj client.Object, opts ...client.UpdateOption) error {
+	if err := a.init(); err != nil {
+		return err
 	}
-	return c.appClient.AppV1beta1().Applications(c.namespace).Watch(ctx, opts)
+	obj.SetNamespace(a.namespace)
+	return a.kb.Update(ctx, obj, opts...)
 }
 
-func (c *applicationClient) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts metav1.PatchOptions, subresources ...string) (*appapi.Application, error) {
-	if err := c.init(); err != nil {
-		return nil, err
+func (a *appReleaseClient) Patch(ctx context.Context, obj client.Object, patch client.Patch, opts ...client.PatchOption) error {
+	if err := a.init(); err != nil {
+		return err
 	}
-	return c.appClient.AppV1beta1().Applications(c.namespace).Patch(ctx, name, pt, data, opts, subresources...)
+	obj.SetNamespace(a.namespace)
+	return a.kb.Patch(ctx, obj, patch, opts...)
 }
 
-func (c *applicationClient) UpdateStatus(ctx context.Context, application *appapi.Application, opts metav1.UpdateOptions) (*appapi.Application, error) {
-	if err := c.init(); err != nil {
-		return nil, err
+func (a *appReleaseClient) DeleteAllOf(ctx context.Context, obj client.Object, opts ...client.DeleteAllOfOption) error {
+	if err := a.init(); err != nil {
+		return err
 	}
-	return c.appClient.AppV1beta1().Applications(c.namespace).UpdateStatus(ctx, application, opts)
+	return a.kb.DeleteAllOf(ctx, obj, append(opts, client.InNamespace(a.namespace))...)
+}
+
+func (a *appReleaseClient) Status() client.StatusWriter {
+	if err := a.init(); err != nil {
+		panic(err)
+	}
+	return a.kb
+}
+
+func (a *appReleaseClient) Scheme() *runtime.Scheme {
+	if err := a.init(); err != nil {
+		panic(err)
+	}
+	return a.kb.Scheme()
+}
+
+func (a *appReleaseClient) RESTMapper() meta.RESTMapper {
+	if err := a.init(); err != nil {
+		panic(err)
+	}
+	return a.kb.RESTMapper()
+}
+
+var _ client.Client = (*appReleaseClient)(nil)
+
+func newAppReleaseClient(lc *lazyClient) *appReleaseClient {
+	return &appReleaseClient{lazyClient: lc}
 }
 
 // ------------ COPY from HELM
@@ -145,63 +157,63 @@ func (s *secretClient) Create(ctx context.Context, secret *v1.Secret, opts metav
 	if err := s.init(); err != nil {
 		return nil, err
 	}
-	return s.client.CoreV1().Secrets(s.namespace).Create(ctx, secret, opts)
+	return s.kc.CoreV1().Secrets(s.namespace).Create(ctx, secret, opts)
 }
 
 func (s *secretClient) Update(ctx context.Context, secret *v1.Secret, opts metav1.UpdateOptions) (*v1.Secret, error) {
 	if err := s.init(); err != nil {
 		return nil, err
 	}
-	return s.client.CoreV1().Secrets(s.namespace).Update(ctx, secret, opts)
+	return s.kc.CoreV1().Secrets(s.namespace).Update(ctx, secret, opts)
 }
 
 func (s *secretClient) Delete(ctx context.Context, name string, opts metav1.DeleteOptions) error {
 	if err := s.init(); err != nil {
 		return err
 	}
-	return s.client.CoreV1().Secrets(s.namespace).Delete(ctx, name, opts)
+	return s.kc.CoreV1().Secrets(s.namespace).Delete(ctx, name, opts)
 }
 
 func (s *secretClient) DeleteCollection(ctx context.Context, opts metav1.DeleteOptions, listOpts metav1.ListOptions) error {
 	if err := s.init(); err != nil {
 		return err
 	}
-	return s.client.CoreV1().Secrets(s.namespace).DeleteCollection(ctx, opts, listOpts)
+	return s.kc.CoreV1().Secrets(s.namespace).DeleteCollection(ctx, opts, listOpts)
 }
 
 func (s *secretClient) Get(ctx context.Context, name string, opts metav1.GetOptions) (*v1.Secret, error) {
 	if err := s.init(); err != nil {
 		return nil, err
 	}
-	return s.client.CoreV1().Secrets(s.namespace).Get(ctx, name, opts)
+	return s.kc.CoreV1().Secrets(s.namespace).Get(ctx, name, opts)
 }
 
 func (s *secretClient) List(ctx context.Context, opts metav1.ListOptions) (*v1.SecretList, error) {
 	if err := s.init(); err != nil {
 		return nil, err
 	}
-	return s.client.CoreV1().Secrets(s.namespace).List(ctx, opts)
+	return s.kc.CoreV1().Secrets(s.namespace).List(ctx, opts)
 }
 
 func (s *secretClient) Watch(ctx context.Context, opts metav1.ListOptions) (watch.Interface, error) {
 	if err := s.init(); err != nil {
 		return nil, err
 	}
-	return s.client.CoreV1().Secrets(s.namespace).Watch(ctx, opts)
+	return s.kc.CoreV1().Secrets(s.namespace).Watch(ctx, opts)
 }
 
 func (s *secretClient) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts metav1.PatchOptions, subresources ...string) (*v1.Secret, error) {
 	if err := s.init(); err != nil {
 		return nil, err
 	}
-	return s.client.CoreV1().Secrets(s.namespace).Patch(ctx, name, pt, data, opts, subresources...)
+	return s.kc.CoreV1().Secrets(s.namespace).Patch(ctx, name, pt, data, opts, subresources...)
 }
 
 func (s *secretClient) Apply(ctx context.Context, secretConfiguration *applycorev1.SecretApplyConfiguration, opts metav1.ApplyOptions) (*v1.Secret, error) {
 	if err := s.init(); err != nil {
 		return nil, err
 	}
-	return s.client.CoreV1().Secrets(s.namespace).Apply(ctx, secretConfiguration, opts)
+	return s.kc.CoreV1().Secrets(s.namespace).Apply(ctx, secretConfiguration, opts)
 }
 
 // configMapClient implements a corev1.ConfigMapInterface
@@ -217,61 +229,61 @@ func (c *configMapClient) Create(ctx context.Context, configMap *v1.ConfigMap, o
 	if err := c.init(); err != nil {
 		return nil, err
 	}
-	return c.client.CoreV1().ConfigMaps(c.namespace).Create(ctx, configMap, opts)
+	return c.kc.CoreV1().ConfigMaps(c.namespace).Create(ctx, configMap, opts)
 }
 
 func (c *configMapClient) Update(ctx context.Context, configMap *v1.ConfigMap, opts metav1.UpdateOptions) (*v1.ConfigMap, error) {
 	if err := c.init(); err != nil {
 		return nil, err
 	}
-	return c.client.CoreV1().ConfigMaps(c.namespace).Update(ctx, configMap, opts)
+	return c.kc.CoreV1().ConfigMaps(c.namespace).Update(ctx, configMap, opts)
 }
 
 func (c *configMapClient) Delete(ctx context.Context, name string, opts metav1.DeleteOptions) error {
 	if err := c.init(); err != nil {
 		return err
 	}
-	return c.client.CoreV1().ConfigMaps(c.namespace).Delete(ctx, name, opts)
+	return c.kc.CoreV1().ConfigMaps(c.namespace).Delete(ctx, name, opts)
 }
 
 func (c *configMapClient) DeleteCollection(ctx context.Context, opts metav1.DeleteOptions, listOpts metav1.ListOptions) error {
 	if err := c.init(); err != nil {
 		return err
 	}
-	return c.client.CoreV1().ConfigMaps(c.namespace).DeleteCollection(ctx, opts, listOpts)
+	return c.kc.CoreV1().ConfigMaps(c.namespace).DeleteCollection(ctx, opts, listOpts)
 }
 
 func (c *configMapClient) Get(ctx context.Context, name string, opts metav1.GetOptions) (*v1.ConfigMap, error) {
 	if err := c.init(); err != nil {
 		return nil, err
 	}
-	return c.client.CoreV1().ConfigMaps(c.namespace).Get(ctx, name, opts)
+	return c.kc.CoreV1().ConfigMaps(c.namespace).Get(ctx, name, opts)
 }
 
 func (c *configMapClient) List(ctx context.Context, opts metav1.ListOptions) (*v1.ConfigMapList, error) {
 	if err := c.init(); err != nil {
 		return nil, err
 	}
-	return c.client.CoreV1().ConfigMaps(c.namespace).List(ctx, opts)
+	return c.kc.CoreV1().ConfigMaps(c.namespace).List(ctx, opts)
 }
 
 func (c *configMapClient) Watch(ctx context.Context, opts metav1.ListOptions) (watch.Interface, error) {
 	if err := c.init(); err != nil {
 		return nil, err
 	}
-	return c.client.CoreV1().ConfigMaps(c.namespace).Watch(ctx, opts)
+	return c.kc.CoreV1().ConfigMaps(c.namespace).Watch(ctx, opts)
 }
 
 func (c *configMapClient) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts metav1.PatchOptions, subresources ...string) (*v1.ConfigMap, error) {
 	if err := c.init(); err != nil {
 		return nil, err
 	}
-	return c.client.CoreV1().ConfigMaps(c.namespace).Patch(ctx, name, pt, data, opts, subresources...)
+	return c.kc.CoreV1().ConfigMaps(c.namespace).Patch(ctx, name, pt, data, opts, subresources...)
 }
 
 func (c *configMapClient) Apply(ctx context.Context, configMap *applycorev1.ConfigMapApplyConfiguration, opts metav1.ApplyOptions) (*v1.ConfigMap, error) {
 	if err := c.init(); err != nil {
 		return nil, err
 	}
-	return c.client.CoreV1().ConfigMaps(c.namespace).Apply(ctx, configMap, opts)
+	return c.kc.CoreV1().ConfigMaps(c.namespace).Apply(ctx, configMap, opts)
 }

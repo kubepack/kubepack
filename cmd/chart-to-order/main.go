@@ -21,14 +21,13 @@ import (
 	"os"
 	"time"
 
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-
 	"github.com/google/uuid"
 	flag "github.com/spf13/pflag"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/klog/v2"
 	"sigs.k8s.io/yaml"
+	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 var (

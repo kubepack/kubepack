@@ -22,7 +22,6 @@ import (
 	"strconv"
 	"strings"
 
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/cmd/internal"
 	"kubepack.dev/kubepack/pkg/lib"
 
@@ -31,6 +30,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/klog/v2"
 	"sigs.k8s.io/yaml"
+	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 var (

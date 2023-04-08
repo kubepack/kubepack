@@ -20,13 +20,13 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/kubepack/cmd/internal"
 	"kubepack.dev/lib-helm/pkg/repo"
 
 	flag "github.com/spf13/pflag"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/klog/v2"
+	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 var (

@@ -23,11 +23,10 @@ import (
 	"os"
 	"strings"
 
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-
 	"github.com/gregjones/httpcache"
 	"k8s.io/klog/v2"
 	"sigs.k8s.io/yaml"
+	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 func main() {

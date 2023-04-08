@@ -20,8 +20,6 @@ import (
 	"encoding/json"
 	"time"
 
-	"kubepack.dev/kubepack/apis"
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
 	"kubepack.dev/lib-helm/pkg/action"
 	"kubepack.dev/lib-helm/pkg/repo"
 	"kubepack.dev/lib-helm/pkg/values"
@@ -36,6 +34,8 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 	"sigs.k8s.io/application/client/clientset/versioned"
+	"x-helm.dev/apimachinery/apis"
+	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 func CreateOrder(reg repo.IRegistry, bv v1alpha1.BundleView) (*v1alpha1.Order, error) {

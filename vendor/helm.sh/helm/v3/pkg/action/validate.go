@@ -199,7 +199,7 @@ func mergeStrStrMaps(current, desired map[string]string) map[string]string {
 func getAppLabels(rel *release.Release, cfg *Configuration) (map[string]string, error) {
 	result := map[string]string{}
 	// check storage driver name
-	if cfg.Releases.Name() == "storage.x-helm.dev/apps" {
+	if cfg.Releases.Name() == "drivers.x-helm.dev/appreleases" {
 		result[appInstanceLabel] = rel.Name
 
 		if partOf, ok := rel.Chart.Metadata.Annotations[appPartOfLabel]; ok {

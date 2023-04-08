@@ -31,9 +31,6 @@ import (
 	"sync"
 	"time"
 
-	"kubepack.dev/kubepack/apis"
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-	"kubepack.dev/lib-helm/pkg/application"
 	libchart "kubepack.dev/lib-helm/pkg/chart"
 	"kubepack.dev/lib-helm/pkg/repo"
 	"kubepack.dev/lib-helm/pkg/values"
@@ -71,6 +68,8 @@ import (
 	"sigs.k8s.io/application/api/app/v1beta1"
 	"sigs.k8s.io/application/client/clientset/versioned"
 	yamllib "sigs.k8s.io/yaml"
+	"x-helm.dev/apimachinery/apis"
+	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 type DoFn func() error
@@ -889,7 +888,7 @@ func (x *ApplicationCRDRegistrar) Do() error {
 		return err
 	}
 	return apiextensions.RegisterCRDs(apiextClient, []*apiextensions.CustomResourceDefinition{
-		application.CustomResourceDefinition(),
+		v1alpha1.AppRelease{}.CustomResourceDefinition(),
 	})
 }
 

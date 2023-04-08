@@ -21,8 +21,6 @@ import (
 	"net/http"
 	"strings"
 
-	"kubepack.dev/kubepack/apis/kubepack/v1alpha1"
-
 	"github.com/gabriel-vasile/mimetype"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chartutil"
@@ -32,6 +30,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/yaml"
 	yamllib "sigs.k8s.io/yaml"
+	"x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 func GetPackageDescriptor(pkgChart *chart.Chart) v1alpha1.PackageDescriptor {

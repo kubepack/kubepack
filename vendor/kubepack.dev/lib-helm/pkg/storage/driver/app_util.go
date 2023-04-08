@@ -38,17 +38,17 @@ import (
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
-	"k8s.io/client-go/dynamic"
 	"k8s.io/klog/v2"
-	"kmodules.xyz/client-go/discovery"
 	"kmodules.xyz/client-go/tools/parser"
-	"sigs.k8s.io/application/api/app/v1beta1"
+	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/yaml"
+	driversapi "x-helm.dev/apimachinery/apis/drivers/v1alpha1"
+	"x-helm.dev/apimachinery/apis/shared"
 )
 
 var empty = struct{}{}
 
-// newApplicationSecretsObject constructs a kubernetes Application object
+// newAppReleaseSecretsObject constructs a kubernetes AppRelease object
 // to store a release. Each configmap data entry is the base64
 // encoded gzipped string of a release.
 //
@@ -60,7 +60,7 @@ var empty = struct{}{}
 //	"status"         - status of the release (see pkg/release/status.go for variants)
 //	"owner"          - owner of the configmap, currently "helm".
 //	"name"           - name of the release.
-func newApplicationObject(rls *rspb.Release) *v1beta1.Application {
+func newAppReleaseObject(rls *rspb.Release) *driversapi.AppRelease {
 	const owner = "helm"
 
 	/*
@@ -74,7 +74,7 @@ func newApplicationObject(rls *rspb.Release) *v1beta1.Application {
 	}
 
 	// create and return configmap object
-	obj := &v1beta1.Application{
+	obj := &driversapi.AppRelease{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      appName,
 			Namespace: rls.Namespace,
@@ -89,14 +89,14 @@ func newApplicationObject(rls *rspb.Release) *v1beta1.Application {
 				"last-deployed.release.x-helm.dev/" + rls.Name:  rls.Info.LastDeployed.UTC().Format(time.RFC3339),
 			},
 		},
-		Spec: v1beta1.ApplicationSpec{
-			Descriptor: v1beta1.Descriptor{
+		Spec: driversapi.AppReleaseSpec{
+			Descriptor: driversapi.Descriptor{
 				Type:        rls.Chart.Metadata.Type,
 				Version:     rls.Chart.Metadata.AppVersion,
 				Description: rls.Info.Description,
 				Owners:      nil, // FIX
 				Keywords:    rls.Chart.Metadata.Keywords,
-				Links: []v1beta1.Link{
+				Links: []shared.Link{
 					{
 						Description: "website",
 						URL:         rls.Chart.Metadata.Home,
@@ -118,7 +118,7 @@ func newApplicationObject(rls *rspb.Release) *v1beta1.Application {
 			}
 			_ = resp.Body.Close()
 		}
-		obj.Spec.Descriptor.Icons = []v1beta1.ImageSpec{
+		obj.Spec.Descriptor.Icons = []shared.ImageSpec{
 			{
 				Source: rls.Chart.Metadata.Icon,
 				// TotalSize: "",
@@ -127,16 +127,17 @@ func newApplicationObject(rls *rspb.Release) *v1beta1.Application {
 		}
 	}
 	for _, maintainer := range rls.Chart.Metadata.Maintainers {
-		obj.Spec.Descriptor.Maintainers = append(obj.Spec.Descriptor.Maintainers, v1beta1.ContactData{
+		obj.Spec.Descriptor.Maintainers = append(obj.Spec.Descriptor.Maintainers, shared.ContactData{
 			Name:  maintainer.Name,
 			URL:   maintainer.URL,
 			Email: maintainer.Email,
 		})
 	}
 
-	lbl := map[string]string{
-		"app.kubernetes.io/managed-by": "Helm",
-	}
+	//lbl := map[string]string{
+	//	"app.kubernetes.io/managed-by": "Helm",
+	//}
+	lbl := make(map[string]string)
 	if partOf, ok := rls.Chart.Metadata.Annotations["app.kubernetes.io/part-of"]; ok && partOf != "" {
 		lbl["app.kubernetes.io/part-of"] = partOf
 	} else {
@@ -195,14 +196,14 @@ func newApplicationObject(rls *rspb.Release) *v1beta1.Application {
 	return obj
 }
 
-func toAssemblyPhase(status release.Status) v1beta1.ApplicationAssemblyPhase {
+func toAssemblyPhase(status release.Status) driversapi.AppReleaseAssemblyPhase {
 	switch status {
 	case release.StatusUnknown, release.StatusUninstalling, release.StatusPendingInstall, release.StatusPendingUpgrade, release.StatusPendingRollback:
-		return v1beta1.Pending
+		return driversapi.Pending
 	case release.StatusDeployed, release.StatusUninstalled, release.StatusSuperseded:
-		return v1beta1.Succeeded
+		return driversapi.Succeeded
 	case release.StatusFailed:
-		return v1beta1.Failed
+		return driversapi.Failed
 	}
 	panic(fmt.Sprintf("unknown status: %s", status.String()))
 }
@@ -210,7 +211,7 @@ func toAssemblyPhase(status release.Status) v1beta1.ApplicationAssemblyPhase {
 // decodeRelease decodes the bytes of data into a release
 // type. Data must contain a base64 encoded gzipped string of a
 // valid release, otherwise an error is returned.
-func decodeReleaseFromApp(app *v1beta1.Application, rlsNames []string, di dynamic.Interface, cl discovery.ResourceMapper) ([]*rspb.Release, error) {
+func decodeReleaseFromApp(kc client.Client, app *driversapi.AppRelease, rlsNames []string) ([]*rspb.Release, error) {
 	if len(rlsNames) == 0 {
 		rlsNames = relevantReleases(app.Labels)
 	}
@@ -227,15 +228,15 @@ func decodeReleaseFromApp(app *v1beta1.Application, rlsNames []string, di dynami
 		// This is not needed or used from release
 		//chartURL, ok := app.Annotations[apis.LabelChartURL]
 		//if !ok {
-		//	return nil, fmt.Errorf("missing %s annotation on application %s/%s", apis.LabelChartURL, app.Namespace, app.Name)
+		//	return nil, fmt.Errorf("missing %s annotation on appRelease %s/%s", apis.LabelChartURL, app.Namespace, app.Name)
 		//}
 		//chartName, ok := app.Annotations[apis.LabelChartName]
 		//if !ok {
-		//	return nil, fmt.Errorf("missing %s annotation on application %s/%s", apis.LabelChartName, app.Namespace, app.Name)
+		//	return nil, fmt.Errorf("missing %s annotation on appRelease %s/%s", apis.LabelChartName, app.Namespace, app.Name)
 		//}
 		//chartVersion, ok := app.Annotations[apis.LabelChartVersion]
 		//if !ok {
-		//	return nil, fmt.Errorf("missing %s annotation on application %s/%s", apis.LabelChartVersion, app.Namespace, app.Name)
+		//	return nil, fmt.Errorf("missing %s annotation on appRelease %s/%s", apis.LabelChartVersion, app.Namespace, app.Name)
 		//}
 		//chrt, err := lib.DefaultRegistry.GetChart(chartURL, chartName, chartVersion)
 		//if err != nil {
@@ -264,7 +265,7 @@ func decodeReleaseFromApp(app *v1beta1.Application, rlsNames []string, di dynami
 			Name:      rls.Name,
 			Namespace: rls.Namespace,
 		}
-		tpl, err := EditorChartValueManifest(app, cl, di, rlm, editorGVR)
+		tpl, err := EditorChartValueManifest(kc, app, rlm, editorGVR)
 		if err != nil {
 			return nil, err
 		}
@@ -294,7 +295,7 @@ func decodeReleaseFromApp(app *v1beta1.Application, rlsNames []string, di dynami
 	return releases, nil
 }
 
-func EditorChartValueManifest(app *v1beta1.Application, mapper discovery.ResourceMapper, dc dynamic.Interface, rls types.NamespacedName, editorGVR *metav1.GroupVersionResource) (*EditorTemplate, error) {
+func EditorChartValueManifest(kc client.Client, app *driversapi.AppRelease, rls types.NamespacedName, editorGVR *metav1.GroupVersionResource) (*EditorTemplate, error) {
 	labels := app.Spec.Selector
 	labels.MatchLabels["app.kubernetes.io/instance"] = rls.Name
 
@@ -302,35 +303,26 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper discovery.Resourc
 	if err != nil {
 		return nil, err
 	}
-	labelSelector := selector.String()
+	// labelSelector := selector.String()
 
 	var buf bytes.Buffer
 	resourceMap := map[string]interface{}{}
 
 	for _, gk := range app.Spec.ComponentGroupKinds {
-		gvr, err := mapper.GVR(schema.GroupVersionKind{
-			Group:   gk.Group,
-			Kind:    gk.Kind,
-			Version: "", // use the preferred version
+		mapping, err := kc.RESTMapper().RESTMapping(schema.GroupKind{
+			Group: gk.Group,
+			Kind:  gk.Kind,
+			// Version: "", // use the preferred version
 		})
 		if err != nil {
 			klog.Warningf("failed to detect GVR for gk %v, reason %v", gk, err)
 			continue
 		}
-		namespaced, err := mapper.IsGVRNamespaced(gvr)
-		if err != nil {
-			return nil, fmt.Errorf("failed to detect if gvr %v is namespaced, reason %v", gvr, err)
-		}
-		var rc dynamic.ResourceInterface
-		if namespaced {
-			rc = dc.Resource(gvr).Namespace(rls.Namespace)
-		} else {
-			rc = dc.Resource(gvr)
-		}
+		gvr := mapping.Resource
 
-		list, err := rc.List(context.TODO(), metav1.ListOptions{
-			LabelSelector: labelSelector,
-		})
+		var list unstructured.UnstructuredList
+		list.SetGroupVersionKind(mapping.GroupVersionKind)
+		err = kc.List(context.TODO(), &list, client.InNamespace(rls.Namespace), client.MatchingLabelsSelector{Selector: selector})
 		if err != nil {
 			return nil, err
 		}
@@ -361,11 +353,15 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper discovery.Resourc
 				}
 				if gv.Version != gvr.Version {
 					// object not using preferred version, so we need to load the correct version again
-					o2, err := rc.Get(context.TODO(), obj.GetName(), metav1.GetOptions{})
+
+					var o2 unstructured.Unstructured
+					o2.SetGroupVersionKind(mapping.GroupVersionKind)
+					o2.SetAPIVersion(gv.Version)
+					err = kc.Get(context.TODO(), client.ObjectKeyFromObject(&obj), &o2)
 					if err != nil {
 						return nil, fmt.Errorf("failed to get object with correct apiVersion, reason %v", err)
 					}
-					obj = *o2
+					obj = o2
 				}
 			}
 
@@ -384,7 +380,7 @@ func EditorChartValueManifest(app *v1beta1.Application, mapper discovery.Resourc
 				return nil, err
 			}
 			if _, ok := resourceMap[rsKey]; ok {
-				return nil, fmt.Errorf("duplicate resource key %s for application %s/%s", rsKey, app.Namespace, app.Name)
+				return nil, fmt.Errorf("duplicate resource key %s for appRelease %s/%s", rsKey, app.Namespace, app.Name)
 			}
 			resourceMap[rsKey] = &obj
 		}
