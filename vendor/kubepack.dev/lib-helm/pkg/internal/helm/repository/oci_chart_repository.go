@@ -29,12 +29,10 @@ import (
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/fluxcd/pkg/version"
-	"github.com/google/go-containerregistry/pkg/name"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/getter"
 	"helm.sh/helm/v3/pkg/registry"
 	"helm.sh/helm/v3/pkg/repo"
-	"kubepack.dev/lib-helm/pkg/internal/oci"
 	"kubepack.dev/lib-helm/pkg/internal/transport"
 )
 
@@ -65,22 +63,11 @@ type OCIChartRepository struct {
 	RegistryClient RegistryClient
 	// credentialsFile is a temporary credentials file to use while downloading tags or charts from a registry.
 	credentialsFile string
-
-	// verifiers is a list of verifiers to use when verifying a chart.
-	verifiers []oci.Verifier
 }
 
 // OCIChartRepositoryOption is a function that can be passed to NewOCIChartRepository
 // to configure an OCIChartRepository.
 type OCIChartRepositoryOption func(*OCIChartRepository) error
-
-// WithVerifiers returns a ChartRepositoryOption that will set the chart verifiers
-func WithVerifiers(verifiers []oci.Verifier) OCIChartRepositoryOption {
-	return func(r *OCIChartRepository) error {
-		r.verifiers = verifiers
-		return nil
-	}
-}
 
 // WithOCIRegistryClient returns a ChartRepositoryOption that will set the registry client
 func WithOCIRegistryClient(client RegistryClient) OCIChartRepositoryOption {
@@ -313,27 +300,5 @@ func getLastMatchingVersionOrConstraint(cvs []string, ver string) (string, error
 // If no signature is provided, a keyless verification is performed.
 // It returns an error on failure.
 func (r *OCIChartRepository) VerifyChart(ctx context.Context, chart *repo.ChartVersion) error {
-	if len(r.verifiers) == 0 {
-		return fmt.Errorf("no verifiers available")
-	}
-
-	if len(chart.URLs) == 0 {
-		return fmt.Errorf("chart '%s' has no downloadable URLs", chart.Name)
-	}
-
-	ref, err := name.ParseReference(strings.TrimPrefix(chart.URLs[0], fmt.Sprintf("%s://", registry.OCIScheme)))
-	if err != nil {
-		return fmt.Errorf("invalid chart reference: %s", err)
-	}
-
-	// verify the chart
-	for _, verifier := range r.verifiers {
-		if verified, err := verifier.Verify(ctx, ref); err != nil {
-			return fmt.Errorf("failed to verify %s: %w", chart.URLs[0], err)
-		} else if verified {
-			return nil
-		}
-	}
-
-	return fmt.Errorf("no matching signatures were found for '%s'", ref.Name())
+	return fmt.Errorf("no verifiers available")
 }
