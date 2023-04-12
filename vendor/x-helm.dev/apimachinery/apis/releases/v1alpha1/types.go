@@ -49,14 +49,6 @@ type ChartSourceFlatRef struct {
 	SourceName      string `json:"sourceName"`
 }
 
-// ChartRepoRef references to a single version of a Chart
-type ChartRepoRef struct {
-	// +optional
-	URL     string `json:"url,omitempty"`
-	Name    string `json:"name"`
-	Version string `json:"version"`
-}
-
 type Feature struct {
 	Trait string `json:"trait"`
 	Value string `json:"value"`
