@@ -96,7 +96,7 @@ func (r *Registry) add(e *Entry) error {
 	return nil
 }
 
-func (r *Registry) get(url string) (*Entry, bool, error) {
+func (r *Registry) Get(url string) (*Entry, bool, error) {
 	url, err := purell.NormalizeURLString(url, purell.FlagsUsuallySafeGreedy)
 	if err != nil {
 		return nil, false, err
@@ -165,7 +165,7 @@ func (r *Registry) register(srcRef kmapi.TypedObjectReference) (string, error) {
 }
 
 func (r *Registry) registerHelmRepository(src fluxsrc.HelmRepository) (string, error) {
-	entry, found, err := r.get(src.Spec.URL)
+	entry, found, err := r.Get(src.Spec.URL)
 	if err != nil {
 		return "", err
 	}
@@ -268,7 +268,7 @@ func (r *Registry) find(repository, name, version string) (loader.ChartLoader, *
 		return nil, nil, errors.Errorf("path %q not found", repository)
 	}
 
-	rc, _, err := r.get(repository)
+	rc, _, err := r.Get(repository)
 	if err != nil {
 		return nil, nil, err
 	}

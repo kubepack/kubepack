@@ -93,13 +93,12 @@ type BucketFileRef struct {
 }
 
 type ChartTemplate struct {
-	ChartRef    `json:",inline"`
-	Version     string           `json:"version,omitempty"`
-	ReleaseName string           `json:"releaseName,omitempty"`
-	Namespace   string           `json:"namespace,omitempty"`
-	CRDs        []BucketObject   `json:"crds,omitempty"`
-	Manifest    *BucketFileRef   `json:"manifest,omitempty"`
-	Resources   []ResourceObject `json:"resources,omitempty"`
+	ChartSourceRef `json:",inline"`
+	ReleaseName    string           `json:"releaseName,omitempty"`
+	Namespace      string           `json:"namespace,omitempty"`
+	CRDs           []BucketObject   `json:"crds,omitempty"`
+	Manifest       *BucketFileRef   `json:"manifest,omitempty"`
+	Resources      []ResourceObject `json:"resources,omitempty"`
 }
 
 type BucketFileOutput struct {
@@ -112,13 +111,12 @@ type BucketFileOutput struct {
 }
 
 type ChartTemplateOutput struct {
-	ChartRef    `json:",inline"`
-	Version     string             `json:"version,omitempty"`
-	ReleaseName string             `json:"releaseName,omitempty"`
-	Namespace   string             `json:"namespace,omitempty"`
-	CRDs        []BucketFileOutput `json:"crds,omitempty"`
-	Manifest    *BucketFileRef     `json:"manifest,omitempty"`
-	Resources   []ResourceFile     `json:"resources,omitempty"`
+	ChartSourceRef `json:",inline"`
+	ReleaseName    string             `json:"releaseName,omitempty"`
+	Namespace      string             `json:"namespace,omitempty"`
+	CRDs           []BucketFileOutput `json:"crds,omitempty"`
+	Manifest       *BucketFileRef     `json:"manifest,omitempty"`
+	Resources      []ResourceFile     `json:"resources,omitempty"`
 }
 
 type EditorTemplate struct {
