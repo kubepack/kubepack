@@ -54,23 +54,24 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	pkgChart, err := internal.DefaultRegistry.GetChart(releasesapi.ChartSourceRef{
+	obj := releasesapi.ChartSourceRef{
 		Name:    name,
 		Version: version,
 		SourceRef: kmapi.TypedObjectReference{
-			APIGroup:  "charts.x-helm.dev",
-			Kind:      "Legacy",
+			APIGroup:  releasesapi.SourceGroupLegacy,
+			Kind:      releasesapi.SourceKindLegacy,
 			Namespace: "",
 			Name:      url,
 		},
-	})
+	}
+	pkgChart, err := internal.DefaultRegistry.GetChart(obj)
 	if err != nil {
 		klog.Fatalln(err)
 	}
 
 	fmt.Println(pkgChart.Metadata.Description)
 
-	b, err := lib.CreatePackageView(url, pkgChart.Chart)
+	b, err := lib.CreatePackageView(obj.SourceRef, pkgChart.Chart)
 	if err != nil {
 		klog.Fatalln(err)
 	}

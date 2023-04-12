@@ -101,8 +101,8 @@ func main() {
 			Name:    chartName,
 			Version: primaryVersion,
 			SourceRef: kmapi.TypedObjectReference{
-				APIGroup:  "charts.x-helm.dev",
-				Kind:      "Legacy",
+				APIGroup:  releasesapi.SourceGroupLegacy,
+				Kind:      releasesapi.SourceKindLegacy,
 				Namespace: "",
 				Name:      url,
 			},
@@ -115,8 +115,8 @@ func main() {
 				ChartRef: releasesapi.ChartRef{
 					Name: pkgChart.Name(),
 					SourceRef: kmapi.TypedObjectReference{
-						APIGroup:  "charts.x-helm.dev",
-						Kind:      "Legacy",
+						APIGroup:  releasesapi.SourceGroupLegacy,
+						Kind:      releasesapi.SourceKindLegacy,
 						Namespace: "",
 						Name:      url,
 					},
@@ -159,8 +159,8 @@ func main() {
 			Name:    bundleName,
 			Version: version,
 			SourceRef: kmapi.TypedObjectReference{
-				APIGroup:  "charts.x-helm.dev",
-				Kind:      "Legacy",
+				APIGroup:  releasesapi.SourceGroupLegacy,
+				Kind:      releasesapi.SourceKindLegacy,
 				Namespace: "",
 				Name:      url,
 			},
@@ -173,8 +173,8 @@ func main() {
 				BundleRef: releasesapi.BundleRef{
 					Name: chart.Name(),
 					SourceRef: kmapi.TypedObjectReference{
-						APIGroup:  "charts.x-helm.dev",
-						Kind:      "Legacy",
+						APIGroup:  releasesapi.SourceGroupLegacy,
+						Kind:      releasesapi.SourceKindLegacy,
 						Namespace: "",
 						Name:      url,
 					},

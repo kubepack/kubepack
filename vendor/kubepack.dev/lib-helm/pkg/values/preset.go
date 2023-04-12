@@ -9,7 +9,7 @@ import (
 	chartsapi "x-helm.dev/apimachinery/apis/charts/v1alpha1"
 )
 
-func MergePresetValues(kc client.Client, chrt *chart.Chart, ref chartsapi.ChartPresetRef) (map[string]interface{}, error) {
+func MergePresetValues(kc client.Client, chrt *chart.Chart, ref chartsapi.ChartPresetFlatRef) (map[string]interface{}, error) {
 	var valOpts Options
 	if ref.PresetName != "" {
 		ps, err := ref.ClusterChartPreset()

@@ -21,7 +21,7 @@ func NewEmbeddedRegistry(fsys fs.FS) IRegistry {
 }
 
 func (r EmbeddedRegistry) GetChart(srcRef releasesapi.ChartSourceRef) (*ChartExtended, error) {
-	if srcRef.SourceRef.Kind != "Embed" {
+	if srcRef.SourceRef.Kind != releasesapi.SourceKindEmbed {
 		return nil, fmt.Errorf("invalid source kind, expected Embed, found: %s", srcRef.SourceRef.Kind)
 	}
 

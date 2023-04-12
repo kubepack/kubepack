@@ -6,12 +6,14 @@ import (
 
 func (ref *ChartSourceRef) SetDefaults() *ChartSourceRef {
 	if ref.SourceRef.APIGroup == "" {
-		ref.SourceRef.APIGroup = "source.toolkit.fluxcd.io"
+		ref.SourceRef.APIGroup = SourceGroupHelmRepository
 	}
 	if ref.SourceRef.Kind == "" {
-		ref.SourceRef.Kind = "HelmRepository"
-	} else if ref.SourceRef.Kind == "Legacy" || ref.SourceRef.Kind == "Local" || ref.SourceRef.Kind == "Embed" {
-		ref.SourceRef.APIGroup = "charts.x-helm.dev"
+		ref.SourceRef.Kind = SourceKindHelmRepository
+	} else if ref.SourceRef.Kind == SourceKindLegacy ||
+		ref.SourceRef.Kind == SourceKindLocal ||
+		ref.SourceRef.Kind == SourceKindEmbed {
+		ref.SourceRef.APIGroup = SourceGroupLegacy
 	}
 	return ref
 }

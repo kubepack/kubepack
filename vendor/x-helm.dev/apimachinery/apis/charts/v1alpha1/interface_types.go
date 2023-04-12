@@ -20,6 +20,7 @@ import (
 	"fmt"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	releasesv1alpha1 "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 // +kubebuilder:object:generate:=false
@@ -57,18 +58,16 @@ func (in ChartPreset) GetSpec() ClusterChartPresetSpec {
 	return in.Spec
 }
 
-type ChartPresetRef struct {
-	Name           string `json:"name"`
-	URL            string `json:"url"`
-	Version        string `json:"version"`
-	PresetGroup    string `json:"presetGroup,omitempty"`
-	PresetKind     string `json:"presetKind,omitempty"`
-	PresetName     string `json:"presetName,omitempty"`
-	PresetSelector string `json:"presetSelector,omitempty"`
-	Namespace      string `json:"namespace,omitempty"`
+type ChartPresetFlatRef struct {
+	releasesv1alpha1.ChartSourceFlatRef `json:",inline"`
+	PresetGroup                         string `json:"presetGroup,omitempty"`
+	PresetKind                          string `json:"presetKind,omitempty"`
+	PresetName                          string `json:"presetName,omitempty"`
+	PresetSelector                      string `json:"presetSelector,omitempty"`
+	Namespace                           string `json:"namespace,omitempty"`
 }
 
-func (ref ChartPresetRef) ClusterChartPreset() (*ClusterChartPreset, error) {
+func (ref ChartPresetFlatRef) ClusterChartPreset() (*ClusterChartPreset, error) {
 	if ref.PresetKind != ResourceKindClusterChartPreset {
 		return nil, fmt.Errorf("unknown preset kind %s", ref.PresetKind)
 	}

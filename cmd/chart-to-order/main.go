@@ -59,8 +59,8 @@ func main() {
 						ChartRef: releasesapi.ChartRef{
 							Name: name,
 							SourceRef: kmapi.TypedObjectReference{
-								APIGroup:  "charts.x-helm.dev",
-								Kind:      "Legacy",
+								APIGroup:  releasesapi.SourceGroupLegacy,
+								Kind:      releasesapi.SourceKindLegacy,
 								Namespace: "",
 								Name:      url,
 							},

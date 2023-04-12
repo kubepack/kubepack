@@ -76,7 +76,7 @@ func GetPackageDescriptor(pkgChart *chart.Chart) releasesapi.PackageDescriptor {
 	return out
 }
 
-func CreatePackageView(url string, chrt *chart.Chart) (*releasesapi.PackageView, error) {
+func CreatePackageView(srcRef kmapi.TypedObjectReference, chrt *chart.Chart) (*releasesapi.PackageView, error) {
 	p := releasesapi.PackageView{
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: releasesapi.GroupVersion.String(),
@@ -84,14 +84,9 @@ func CreatePackageView(url string, chrt *chart.Chart) (*releasesapi.PackageView,
 		},
 		PackageMeta: releasesapi.PackageMeta{
 			ChartSourceRef: releasesapi.ChartSourceRef{
-				Name:    chrt.Name(),
-				Version: chrt.Metadata.Version,
-				SourceRef: kmapi.TypedObjectReference{
-					APIGroup:  "charts.x-helm.dev",
-					Kind:      "Legacy",
-					Namespace: "",
-					Name:      url,
-				},
+				Name:      chrt.Name(),
+				Version:   chrt.Metadata.Version,
+				SourceRef: srcRef,
 			},
 			PackageDescriptor: GetPackageDescriptor(chrt),
 		},

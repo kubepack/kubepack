@@ -74,8 +74,8 @@ func main() {
 			ChartSourceFlatRef: releasesapi.ChartSourceFlatRef{
 				Name:            name,
 				Version:         version,
-				SourceAPIGroup:  "charts.x-helm.dev",
-				SourceKind:      "Legacy",
+				SourceAPIGroup:  releasesapi.SourceGroupLegacy,
+				SourceKind:      releasesapi.SourceKindLegacy,
 				SourceNamespace: "",
 				SourceName:      url,
 			},

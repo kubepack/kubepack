@@ -85,7 +85,7 @@ func main() {
 			continue
 		}
 		if pkg.Chart.Name == name &&
-			pkg.Chart.SourceRef.Kind == "Legacy" &&
+			pkg.Chart.SourceRef.Kind == releasesapi.SourceKindLegacy &&
 			pkg.Chart.SourceRef.Name == url &&
 			pkg.Chart.Version == version {
 			selection = pkg.Chart

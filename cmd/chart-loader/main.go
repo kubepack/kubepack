@@ -32,8 +32,8 @@ func main() {
 		Name:    "stash",
 		Version: "v0.9.0-rc.6",
 		SourceRef: kmapi.TypedObjectReference{
-			APIGroup:  "charts.x-helm.dev",
-			Kind:      "Legacy",
+			APIGroup:  releasesapi.SourceGroupLegacy,
+			Kind:      releasesapi.SourceKindLegacy,
 			Namespace: "",
 			Name:      "https://charts.appscode.com/stable",
 		},

@@ -310,29 +310,16 @@ func (r *Registry) find(repository, name, version string) (loader.ChartLoader, *
 func (r *Registry) GetChart(obj releasesapi.ChartSourceRef) (*ChartExtended, error) {
 	obj.SetDefaults()
 
-	/*
-		"source.toolkit.fluxcd.io"
-		"HelmRepository"
-
-		"charts.x-helm.dev"
-		"Legacy"
-
-		"charts.x-helm.dev"
-		"Local"
-
-		"charts.x-helm.dev"
-		"Embed"
-	*/
 	switch obj.SourceRef.Kind {
-	case "HelmRepository":
+	case releasesapi.SourceKindHelmRepository:
 		return r.getFluxChart(obj)
-	case "Legacy":
+	case releasesapi.SourceKindLegacy:
 		_, err := r.register(obj.SourceRef)
 		if err != nil {
 			return nil, err
 		}
 		return r.getLegacyChart(obj.SourceRef.Name, obj.Name, obj.Version)
-	case "Local":
+	case releasesapi.SourceKindLocal:
 		return r.getLegacyChart(obj.SourceRef.Name, obj.Name, obj.Version)
 	default:
 		return nil, fmt.Errorf("unsupported kind %s", obj.SourceRef.Kind)
