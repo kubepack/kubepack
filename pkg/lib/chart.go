@@ -29,6 +29,7 @@ import (
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/yaml"
+	kmapi "kmodules.xyz/client-go/api/v1"
 	yamllib "sigs.k8s.io/yaml"
 	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 	"x-helm.dev/apimachinery/apis/shared"
@@ -82,9 +83,16 @@ func CreatePackageView(url string, chrt *chart.Chart) (*releasesapi.PackageView,
 			Kind:       "PackageView",
 		},
 		PackageMeta: releasesapi.PackageMeta{
-			Name:              chrt.Name(),
-			URL:               url,
-			Version:           chrt.Metadata.Version,
+			ChartSourceRef: releasesapi.ChartSourceRef{
+				Name:    chrt.Name(),
+				Version: chrt.Metadata.Version,
+				SourceRef: kmapi.TypedObjectReference{
+					APIGroup:  "charts.x-helm.dev",
+					Kind:      "Legacy",
+					Namespace: "",
+					Name:      url,
+				},
+			},
 			PackageDescriptor: GetPackageDescriptor(chrt),
 		},
 	}

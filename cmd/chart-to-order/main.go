@@ -26,6 +26,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/klog/v2"
+	kmapi "kmodules.xyz/client-go/api/v1"
 	"sigs.k8s.io/yaml"
 	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
@@ -56,8 +57,13 @@ func main() {
 				{
 					Chart: &releasesapi.ChartSelection{
 						ChartRef: releasesapi.ChartRef{
-							URL:  url,
 							Name: name,
+							SourceRef: kmapi.TypedObjectReference{
+								APIGroup:  "charts.x-helm.dev",
+								Kind:      "Legacy",
+								Namespace: "",
+								Name:      url,
+							},
 						},
 						Version:     version,
 						ReleaseName: name,

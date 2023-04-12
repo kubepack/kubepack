@@ -17,18 +17,17 @@ limitations under the License.
 package v1alpha1
 
 import (
+	"k8s.io/apimachinery/pkg/labels"
+	"kmodules.xyz/client-go/apiextensions"
 	"x-helm.dev/apimachinery/apis"
 	"x-helm.dev/apimachinery/crds"
-
-	"k8s.io/apimachinery/pkg/fields"
-	"kmodules.xyz/client-go/apiextensions"
 )
 
 func (_ Plan) CustomResourceDefinition() *apiextensions.CustomResourceDefinition {
 	return crds.MustCustomResourceDefinition(GroupVersion.WithResource(ResourcePlans))
 }
 
-func (plan *Plan) SetLabels(planName, planID, prodID, phase string) {
+func (plan *Plan) ResetLabels(planName, planID, prodID, phase string) {
 	labelMap := map[string]string{
 		apis.LabelPlanName:  planName,
 		apis.LabelPlanID:    planID,
@@ -38,7 +37,7 @@ func (plan *Plan) SetLabels(planName, planID, prodID, phase string) {
 	plan.ObjectMeta.SetLabels(labelMap)
 }
 
-func (_ Plan) FormatLabels(planName, planID, prodID, phase string) string {
+func (_ Plan) FormatLabels(planName, planID, prodID, phase string) labels.Selector {
 	labelMap := make(map[string]string)
 	if planName != "" {
 		labelMap[apis.LabelPlanName] = planName
@@ -52,5 +51,5 @@ func (_ Plan) FormatLabels(planName, planID, prodID, phase string) string {
 	if phase != "" {
 		labelMap[apis.LabelPlanPhase] = phase
 	}
-	return fields.SelectorFromSet(labelMap).String()
+	return labels.SelectorFromSet(labelMap)
 }

@@ -24,9 +24,9 @@ import (
 
 type ApplicationPackage struct {
 	metav1.TypeMeta `json:",inline"`
-	Bundle          *ChartRepoRef `json:"bundle,omitempty"`
-	Chart           ChartRepoRef  `json:"chart"`
-	Channel         ChannelType   `json:"channel"`
+	Bundle          *ChartSourceRef `json:"bundle,omitempty"`
+	Chart           ChartSourceRef  `json:"chart"`
+	Channel         ChannelType     `json:"channel"`
 }
 
 type ChannelType string

@@ -17,7 +17,6 @@ limitations under the License.
 package v1alpha1
 
 import (
-	core "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"kmodules.xyz/client-go/apiextensions"
@@ -35,19 +34,30 @@ type ClusterChartPresetSpec struct {
 	// +optional
 	DisplayName string `json:"displayName,omitempty"`
 
-	// selector is a label query over pods that should match the replica count.
-	// It must match the pod template's labels.
-	// More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
-	//
 	// +optional
-	Selector *metav1.LabelSelector `json:"selector,omitempty"`
-
-	// +optional
-	UsePresets []core.TypedLocalObjectReference `json:"usePresets,omitempty"`
+	UsePresets []TypedLocalObjectReference `json:"usePresets,omitempty"`
 
 	// +optional
 	// +kubebuilder:pruning:PreserveUnknownFields
 	Values *runtime.RawExtension `json:"values,omitempty"`
+}
+
+// TypedLocalObjectReference contains enough information to let you locate the
+// typed referenced object inside the same namespace.
+// +structType=atomic
+type TypedLocalObjectReference struct {
+	// APIGroup is the group for the resource being referenced.
+	// If APIGroup is not specified, the specified Kind must be in the core API group.
+	// For any other third-party types, APIGroup is required.
+	// +optional
+	APIGroup *string `json:"apiGroup"`
+	// Kind is the type of resource being referenced
+	Kind string `json:"kind"`
+	// Name is the name of resource being referenced
+	// +optional
+	Name string `json:"name,omitempty"`
+	// +optional
+	Selector *metav1.LabelSelector `json:"selector,omitempty"`
 }
 
 //+kubebuilder:object:root=true

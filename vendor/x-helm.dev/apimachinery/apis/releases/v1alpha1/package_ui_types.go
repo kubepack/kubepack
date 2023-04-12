@@ -52,10 +52,7 @@ type PackageDescriptor struct {
 type PackageMeta struct {
 	PackageDescriptor `json:",inline"`
 
-	Name string `json:"name"`
-	URL  string `json:"url"`
-	// Version is an optional version indicator for the Application.
-	Version string `json:"version,omitempty"`
+	ChartSourceRef `json:",inline"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

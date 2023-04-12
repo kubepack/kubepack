@@ -19,11 +19,12 @@ package lib
 import (
 	"kubepack.dev/lib-helm/pkg/repo"
 
+	kmapi "kmodules.xyz/client-go/api/v1"
 	productsapi "x-helm.dev/apimachinery/apis/products/v1alpha1"
 	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
-func ComparePlans(reg repo.IRegistry, url string, names []string, version string) (productsapi.FeatureTable, error) {
+func ComparePlans(reg repo.IRegistry, srcRef kmapi.TypedObjectReference, names []string, version string) (productsapi.FeatureTable, error) {
 	var table productsapi.FeatureTable
 
 	ids := map[string]int{} // trait -> idx
@@ -32,8 +33,8 @@ func ComparePlans(reg repo.IRegistry, url string, names []string, version string
 	for bundleIdx, bundleName := range names {
 		_, bundle, err := GetBundle(reg, &releasesapi.BundleOption{
 			BundleRef: releasesapi.BundleRef{
-				URL:  url,
-				Name: bundleName,
+				Name:      bundleName,
+				SourceRef: srcRef,
 			},
 			Version: version,
 		})

@@ -26,7 +26,9 @@ import (
 	flag "github.com/spf13/pflag"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/klog/v2"
+	kmapi "kmodules.xyz/client-go/api/v1"
 	productsapi "x-helm.dev/apimachinery/apis/products/v1alpha1"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 	"x-helm.dev/apimachinery/apis/shared"
 )
 
@@ -46,7 +48,16 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	chrt, err := internal.DefaultRegistry.GetChart(url, name, version)
+	chrt, err := internal.DefaultRegistry.GetChart(releasesapi.ChartSourceRef{
+		Name:    name,
+		Version: version,
+		SourceRef: kmapi.TypedObjectReference{
+			APIGroup:  "charts.x-helm.dev",
+			Kind:      "Legacy",
+			Namespace: "",
+			Name:      url,
+		},
+	})
 	if err != nil {
 		klog.Fatalln(err)
 	}
