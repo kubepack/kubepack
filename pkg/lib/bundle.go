@@ -32,7 +32,11 @@ import (
 )
 
 func GetBundle(reg repo.IRegistry, in *releasesapi.BundleOption) (*chart.Chart, *releasesapi.Bundle, error) {
-	chrt, err := reg.GetChart(in.URL, in.Name, in.Version)
+	chrt, err := reg.GetChart(releasesapi.ChartSourceRef{
+		Name:      in.Name,
+		Version:   in.Version,
+		SourceRef: in.SourceRef,
+	})
 	if err != nil {
 		return nil, nil, err
 	}

@@ -72,8 +72,8 @@ func toPackageSelection(reg repo.IRegistry, in *releasesapi.BundleOptionView, li
 
 	_, bundle, err := GetBundle(reg, &releasesapi.BundleOption{
 		BundleRef: releasesapi.BundleRef{
-			URL:  in.URL,
-			Name: in.Name,
+			Name:      in.Name,
+			SourceRef: in.SourceRef,
 		},
 		Version: in.Version,
 	})
@@ -127,10 +127,10 @@ func toPackageSelection(reg repo.IRegistry, in *releasesapi.BundleOptionView, li
 							ValuesPatch: v.ValuesPatch,
 							Resources:   crds,
 							WaitFors:    waitFors,
-							Bundle: &releasesapi.ChartRepoRef{
-								Name:    in.Name,
-								URL:     in.URL,
-								Version: in.Version,
+							Bundle: &releasesapi.ChartSourceRef{
+								Name:      in.Name,
+								Version:   in.Version,
+								SourceRef: in.SourceRef,
 							},
 						},
 					}
@@ -154,7 +154,7 @@ func toPackageSelection(reg repo.IRegistry, in *releasesapi.BundleOptionView, li
 func FindChartData(bundle *releasesapi.Bundle, chrtRef releasesapi.ChartRef, chrtVersion string) (*releasesapi.ResourceDefinitions, []releasesapi.WaitFlags, string) {
 	for _, pkg := range bundle.Spec.Packages {
 		if pkg.Chart != nil &&
-			pkg.Chart.URL == chrtRef.URL &&
+			pkg.Chart.SourceRef == chrtRef.SourceRef &&
 			pkg.Chart.Name == chrtRef.Name {
 
 			for _, v := range pkg.Chart.Versions {
@@ -217,9 +217,14 @@ func InstallOrder(getter genericclioptions.RESTClientGetter, reg repo.IRegistry,
 		f3.
 			WithRegistry(reg).
 			WithOptions(action.InstallOptions{
-				ChartURL:  pkg.Chart.ChartRef.URL,
-				ChartName: pkg.Chart.ChartRef.Name,
-				Version:   pkg.Chart.Version,
+				ChartSourceFlatRef: releasesapi.ChartSourceFlatRef{
+					Name:            pkg.Chart.Name,
+					Version:         pkg.Chart.Version,
+					SourceAPIGroup:  pkg.Chart.ChartRef.SourceRef.APIGroup,
+					SourceKind:      pkg.Chart.ChartRef.SourceRef.Kind,
+					SourceNamespace: pkg.Chart.ChartRef.SourceRef.Namespace,
+					SourceName:      pkg.Chart.ChartRef.SourceRef.Name,
+				},
 				Options: values.Options{
 					ValuesFile:  pkg.Chart.ValuesFile,
 					ValuesPatch: pkg.Chart.ValuesPatch,

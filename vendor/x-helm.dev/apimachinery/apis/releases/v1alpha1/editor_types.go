@@ -43,7 +43,7 @@ type Model struct {
 }
 
 type ChartOrder struct {
-	ChartRepoRef `json:",inline"`
+	ChartSourceFlatRef `json:",inline"`
 
 	ReleaseName string                     `json:"releaseName,omitempty"`
 	Namespace   string                     `json:"namespace,omitempty"`

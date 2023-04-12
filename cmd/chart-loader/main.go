@@ -22,11 +22,22 @@ import (
 	"kubepack.dev/kubepack/cmd/internal"
 
 	"gomodules.xyz/x/term"
+	kmapi "kmodules.xyz/client-go/api/v1"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 func main() {
 	reg := internal.DefaultRegistry
-	chart, err := reg.GetChart("https://charts.appscode.com/stable", "stash", "v0.9.0-rc.6")
+	chart, err := reg.GetChart(releasesapi.ChartSourceRef{
+		Name:    "stash",
+		Version: "v0.9.0-rc.6",
+		SourceRef: kmapi.TypedObjectReference{
+			APIGroup:  "charts.x-helm.dev",
+			Kind:      "Legacy",
+			Namespace: "",
+			Name:      "https://charts.appscode.com/stable",
+		},
+	})
 	term.ExitOnError(err)
 
 	for _, f := range chart.Raw {

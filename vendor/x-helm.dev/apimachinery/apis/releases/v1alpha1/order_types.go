@@ -58,7 +58,7 @@ type ChartSelection struct {
 
 	// Bundle points to the parent bundle which was used to install this, if any.
 	// If the chart was installed directly it will be unset.
-	Bundle *ChartRepoRef `json:"bundle,omitempty"`
+	Bundle *ChartSourceRef `json:"bundle,omitempty"`
 
 	ValuesFile string `json:"valuesFile,omitempty"`
 	// RFC 6902 compatible json patch. ref: http://jsonpatch.com

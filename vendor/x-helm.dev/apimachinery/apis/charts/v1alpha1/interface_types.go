@@ -18,7 +18,6 @@ package v1alpha1
 
 import (
 	"fmt"
-	core "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 )
@@ -83,34 +82,29 @@ func (ref ChartPresetRef) ClusterChartPreset() (*ClusterChartPreset, error) {
 			Name: "",
 		},
 		Spec: ClusterChartPresetSpec{
-			// select all
-			Selector: &metav1.LabelSelector{
-				MatchLabels:      map[string]string{},
-				MatchExpressions: nil,
-			},
 			// Values: nil,
 		},
 	}
-	if ref.PresetSelector != "" {
-		selector, err := metav1.ParseToLabelSelector(ref.PresetSelector)
-		if err != nil {
-			return nil, err
-		}
-		ps.Spec.Selector = selector
-	}
 
-	if ref.PresetName != "" {
+	if ref.PresetName != "" || ref.PresetSelector != "" {
 		group := ref.PresetGroup
 		if group == "" {
 			group = GroupVersion.Group
 		}
-		ps.Spec.UsePresets = []core.TypedLocalObjectReference{
-			{
-				APIGroup: &group,
-				Kind:     ref.PresetKind,
-				Name:     ref.PresetName,
-			},
+
+		presetRef := TypedLocalObjectReference{
+			APIGroup: &group,
+			Kind:     ref.PresetKind,
+			Name:     ref.PresetName,
 		}
+		if ref.PresetSelector != "" {
+			selector, err := metav1.ParseToLabelSelector(ref.PresetSelector)
+			if err != nil {
+				return nil, err
+			}
+			presetRef.Selector = selector
+		}
+		ps.Spec.UsePresets = []TypedLocalObjectReference{presetRef}
 	}
 
 	return &ps, nil

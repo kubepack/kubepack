@@ -317,11 +317,10 @@ type destinationObject struct {
 }
 
 type rewriteObjectRequest struct {
-	srcObject                sourceObject
-	dstObject                destinationObject
-	predefinedACL            string
-	token                    string
-	maxBytesRewrittenPerCall int64
+	srcObject     sourceObject
+	dstObject     destinationObject
+	predefinedACL string
+	token         string
 }
 
 type rewriteObjectResponse struct {

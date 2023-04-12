@@ -31,6 +31,7 @@ import (
 	"k8s.io/client-go/util/homedir"
 	"k8s.io/klog/v2"
 	clientcmdutil "kmodules.xyz/client-go/tools/clientcmd"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 var (
@@ -70,9 +71,14 @@ func main() {
 	}
 	i.WithRegistry(internal.DefaultRegistry).
 		WithOptions(action.InstallOptions{
-			ChartURL:  url,
-			ChartName: name,
-			Version:   version,
+			ChartSourceFlatRef: releasesapi.ChartSourceFlatRef{
+				Name:            name,
+				Version:         version,
+				SourceAPIGroup:  "charts.x-helm.dev",
+				SourceKind:      "Legacy",
+				SourceNamespace: "",
+				SourceName:      url,
+			},
 			Options: values.Options{
 				ValuesFile:  "",
 				ValuesPatch: nil,

@@ -300,15 +300,21 @@ type Helm3CommandPrinter struct {
 const indent = "  "
 
 func (x *Helm3CommandPrinter) Do() error {
-	chrt, err := x.Registry.GetChart(x.ChartRef.URL, x.ChartRef.Name, x.Version)
+	chrt, err := x.Registry.GetChart(releasesapi.ChartSourceRef{
+		Name:      x.ChartRef.Name,
+		Version:   x.Version,
+		SourceRef: x.ChartRef.SourceRef,
+	})
 	if err != nil {
 		return err
 	}
 
-	reponame, err := repo.DefaultNamer.Name(x.ChartRef.URL)
-	if err != nil {
-		return err
-	}
+	//reponame, err := repo.DefaultNamer.Name(x.ChartRef.URL)
+	//if err != nil {
+	//	return err
+	//}
+
+	reponame := x.ChartRef.Name
 
 	var buf bytes.Buffer
 
@@ -321,7 +327,8 @@ func (x *Helm3CommandPrinter) Do() error {
 	if err != nil {
 		return err
 	}
-	_, err = fmt.Fprintf(&buf, "helm repo add %s %s\n", reponame, x.ChartRef.URL)
+	// FixIt(tamal): generate command for OCI registry
+	_, err = fmt.Fprintf(&buf, "helm repo add %s %s\n", reponame, x.ChartRef.SourceRef.Namespace)
 	if err != nil {
 		return err
 	}
@@ -443,7 +450,11 @@ func (x *YAMLPrinter) Do() error {
 
 	var buf bytes.Buffer
 
-	chrt, err := x.Registry.GetChart(x.ChartRef.URL, x.ChartRef.Name, x.Version)
+	chrt, err := x.Registry.GetChart(releasesapi.ChartSourceRef{
+		Name:      x.ChartRef.Name,
+		Version:   x.Version,
+		SourceRef: x.ChartRef.SourceRef,
+	})
 	if err != nil {
 		return err
 	}
@@ -678,7 +689,11 @@ func (x *PermissionChecker) Do() error {
 		x.attrs = make(map[authorization.ResourceAttributes]*ResourcePermission)
 	}
 
-	chrt, err := x.Registry.GetChart(x.ChartRef.URL, x.ChartRef.Name, x.Version)
+	chrt, err := x.Registry.GetChart(releasesapi.ChartSourceRef{
+		Name:      x.ChartRef.Name,
+		Version:   x.Version,
+		SourceRef: x.ChartRef.SourceRef,
+	})
 	if err != nil {
 		return err
 	}
@@ -964,7 +979,11 @@ func (x *ApplicationGenerator) Do() error {
 		x.commonLabels = make(map[string]string)
 	}
 
-	chrt, err := x.Registry.GetChart(x.Chart.URL, x.Chart.Name, x.Chart.Version)
+	chrt, err := x.Registry.GetChart(releasesapi.ChartSourceRef{
+		Name:      x.Chart.Name,
+		Version:   x.Chart.Version,
+		SourceRef: x.Chart.SourceRef,
+	})
 	x.chrt = chrt.Chart
 	if err != nil {
 		return err
@@ -1114,14 +1133,14 @@ func (x *ApplicationGenerator) Result() *driversapi.AppRelease {
 	b := &driversapi.AppRelease{
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: releasesapi.GroupVersion.String(),
-			Kind:       "Application",
+			Kind:       "AppRelease",
 		},
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      x.Chart.ReleaseName,
 			Namespace: x.Chart.Namespace,
 			Labels:    nil, // TODO: ?
 			Annotations: map[string]string{
-				apis.LabelChartURL:     x.Chart.URL,
+				apis.LabelChartURL:     x.Chart.SourceRef.Namespace + "/" + x.Chart.SourceRef.Name,
 				apis.LabelChartName:    x.Chart.Name,
 				apis.LabelChartVersion: x.Chart.Version,
 			},

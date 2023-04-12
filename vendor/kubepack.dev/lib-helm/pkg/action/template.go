@@ -15,6 +15,8 @@ import (
 	libchart "kubepack.dev/lib-helm/pkg/chart"
 	"kubepack.dev/lib-helm/pkg/repo"
 	"kubepack.dev/lib-helm/pkg/values"
+	chartsapi "x-helm.dev/apimachinery/apis/charts/v1alpha1"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 type Renderer struct {
@@ -69,9 +71,19 @@ func NewRendererForConfig(cfg *ha.Configuration, options ...InstallOptions) *Ren
 }
 
 func (x *Renderer) ForChart(url, name, version string) *Renderer {
-	x.opts.ChartURL = url
-	x.opts.ChartName = name
-	x.opts.Version = version
+	x.opts.ChartSourceFlatRef = releasesapi.ChartSourceFlatRef{
+		Name:            name,
+		Version:         version,
+		SourceAPIGroup:  chartsapi.GroupVersion.Group,
+		SourceKind:      "Legacy",
+		SourceNamespace: "",
+		SourceName:      url,
+	}
+	return x
+}
+
+func (x *Renderer) ForChartSource(srcRef releasesapi.ChartSourceRef) *Renderer {
+	x.opts.ChartSourceFlatRef.FromAPIObject(srcRef)
 	return x
 }
 
@@ -103,7 +115,7 @@ func (x *Renderer) Run() (string, map[string]string, error) {
 	cmd.Namespace = x.opts.Namespace
 
 	// Check chart dependencies to make sure all are present in /charts
-	chrt, err := x.reg.GetChart(x.opts.ChartURL, x.opts.ChartName, x.opts.Version)
+	chrt, err := x.reg.GetChart(x.opts.ChartSourceFlatRef.ToAPIObject())
 	if err != nil {
 		return "", nil, err
 	}
@@ -112,7 +124,7 @@ func (x *Renderer) Run() (string, map[string]string, error) {
 	}
 
 	if chrt.Metadata.Deprecated {
-		klog.Warningf("WARNING: chart url=%s,name=%s,version=%s is deprecated", x.opts.ChartURL, x.opts.ChartName, x.opts.Version)
+		klog.Warningf("WARNING: chart %+v is deprecated", x.opts.ChartSourceFlatRef)
 	}
 
 	if req := chrt.Metadata.Dependencies; req != nil {

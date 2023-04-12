@@ -19,6 +19,7 @@ package v1alpha1
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
+	kmapi "kmodules.xyz/client-go/api/v1"
 )
 
 const (
@@ -60,8 +61,8 @@ type OneOfBundleOption struct {
 }
 
 type ChartRef struct {
-	URL  string `json:"url"`
-	Name string `json:"name"`
+	Name      string                     `json:"name"`
+	SourceRef kmapi.TypedObjectReference `json:"sourceRef"`
 }
 
 type SelectionMode string
@@ -76,8 +77,8 @@ type ChartOption struct {
 }
 
 type BundleRef struct {
-	URL  string `json:"url"`
-	Name string `json:"name"`
+	Name      string                     `json:"name"`
+	SourceRef kmapi.TypedObjectReference `json:"sourceRef"`
 }
 
 type BundleOption struct {

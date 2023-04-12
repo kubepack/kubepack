@@ -17,28 +17,27 @@ import (
 	"kubepack.dev/lib-helm/pkg/engine"
 	"kubepack.dev/lib-helm/pkg/repo"
 	"kubepack.dev/lib-helm/pkg/values"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 type UpgradeOptions struct {
-	ChartURL       string `json:"chartURL"`
-	ChartName      string `json:"chartName"`
-	Version        string `json:"version"`
-	values.Options `json:",inline,omitempty"`
-	Install        bool          `json:"install"`
-	Devel          bool          `json:"devel"`
-	Namespace      string        `json:"namespace"`
-	Timeout        time.Duration `json:"timeout"`
-	Wait           bool          `json:"wait"`
-	DisableHooks   bool          `json:"disableHooks"`
-	DryRun         bool          `json:"dryRun"`
-	Force          bool          `json:"force"`
-	ResetValues    bool          `json:"resetValues"`
-	ReuseValues    bool          `json:"reuseValues"`
-	Recreate       bool          `json:"recreate"`
-	MaxHistory     int           `json:"maxHistory"`
-	Atomic         bool          `json:"atomic"`
-	CleanupOnFail  bool          `json:"cleanupOnFail"`
-	PartOf         string        `json:"partOf"`
+	releasesapi.ChartSourceFlatRef `json:",inline,omitempty"`
+	values.Options                 `json:",inline,omitempty"`
+	Install                        bool          `json:"install"`
+	Devel                          bool          `json:"devel"`
+	Namespace                      string        `json:"namespace"`
+	Timeout                        time.Duration `json:"timeout"`
+	Wait                           bool          `json:"wait"`
+	DisableHooks                   bool          `json:"disableHooks"`
+	DryRun                         bool          `json:"dryRun"`
+	Force                          bool          `json:"force"`
+	ResetValues                    bool          `json:"resetValues"`
+	ReuseValues                    bool          `json:"reuseValues"`
+	Recreate                       bool          `json:"recreate"`
+	MaxHistory                     int           `json:"maxHistory"`
+	Atomic                         bool          `json:"atomic"`
+	CleanupOnFail                  bool          `json:"cleanupOnFail"`
+	PartOf                         string        `json:"partOf"`
 }
 
 type Upgrader struct {
@@ -93,7 +92,7 @@ func (x *Upgrader) Run() (*release.Release, *engine.State, error) {
 		return nil, nil, errors.New("x.reg is not set")
 	}
 
-	chrt, err := x.reg.GetChart(x.opts.ChartURL, x.opts.ChartName, x.opts.Version)
+	chrt, err := x.reg.GetChart(x.opts.ChartSourceFlatRef.ToAPIObject())
 	if err != nil {
 		return nil, nil, err
 	}
@@ -122,7 +121,7 @@ func (x *Upgrader) Run() (*release.Release, *engine.State, error) {
 	}
 
 	if chrt.Metadata.Deprecated {
-		klog.Warningf("WARNING: chart url=%s,name=%s,version=%s is deprecated", x.opts.ChartURL, x.opts.ChartName, x.opts.Version)
+		klog.Warningf("WARNING: chart %+v is deprecated", x.opts.ChartSourceFlatRef)
 	}
 
 	if req := chrt.Metadata.Dependencies; req != nil {

@@ -25,11 +25,11 @@ import (
 	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
-func CreateBundleViewForBundle(reg repo.IRegistry, ref *releasesapi.ChartRepoRef) (*releasesapi.BundleView, error) {
+func CreateBundleViewForBundle(reg repo.IRegistry, ref *releasesapi.ChartSourceRef) (*releasesapi.BundleView, error) {
 	view, err := toBundleOptionView(reg, &releasesapi.BundleOption{
 		BundleRef: releasesapi.BundleRef{
-			URL:  ref.URL,
-			Name: ref.Name,
+			Name:      ref.Name,
+			SourceRef: ref.SourceRef,
 		},
 		Version: ref.Version,
 	}, 0)
@@ -54,9 +54,11 @@ func toBundleOptionView(reg repo.IRegistry, in *releasesapi.BundleOption, level 
 
 	bv := releasesapi.BundleOptionView{
 		PackageMeta: releasesapi.PackageMeta{
-			Name:              chrt.Name(),
-			URL:               in.URL,
-			Version:           chrt.Metadata.Version,
+			ChartSourceRef: releasesapi.ChartSourceRef{
+				Name:      chrt.Name(),
+				Version:   chrt.Metadata.Version,
+				SourceRef: in.SourceRef,
+			},
 			PackageDescriptor: GetPackageDescriptor(chrt),
 		},
 		DisplayName: XorY(bundle.Spec.DisplayName, flect.Titleize(flect.Humanize(bundle.Name))),
@@ -74,7 +76,11 @@ func toBundleOptionView(reg repo.IRegistry, in *releasesapi.BundleOption, level 
 			if chartVersion == "" {
 				chartVersion = pkg.Chart.Versions[0].Version
 			}
-			pkgChart, err := reg.GetChart(pkg.Chart.URL, pkg.Chart.Name, chartVersion)
+			pkgChart, err := reg.GetChart(releasesapi.ChartSourceRef{
+				Name:      pkg.Chart.Name,
+				Version:   chartVersion,
+				SourceRef: pkg.Chart.SourceRef,
+			})
 			if err != nil {
 				return nil, err
 			}
@@ -88,8 +94,8 @@ func toBundleOptionView(reg repo.IRegistry, in *releasesapi.BundleOption, level 
 			card := releasesapi.PackageCard{
 				Chart: &releasesapi.ChartCard{
 					ChartRef: releasesapi.ChartRef{
-						Name: pkg.Chart.Name,
-						URL:  pkg.Chart.URL,
+						Name:      pkg.Chart.Name,
+						SourceRef: pkg.Chart.SourceRef,
 					},
 					PackageDescriptor: GetPackageDescriptor(pkgChart.Chart),
 					Features:          pkg.Chart.Features,
@@ -135,15 +141,15 @@ func toBundleOptionView(reg repo.IRegistry, in *releasesapi.BundleOption, level 
 	return &bv, nil
 }
 
-func CreateBundleViewForChart(reg repo.IRegistry, ref *releasesapi.ChartRepoRef) (*releasesapi.BundleView, error) {
-	pkgChart, err := reg.GetChart(ref.URL, ref.Name, ref.Version)
+func CreateBundleViewForChart(reg repo.IRegistry, ref releasesapi.ChartSourceRef) (*releasesapi.BundleView, error) {
+	pkgChart, err := reg.GetChart(ref)
 	if err != nil {
 		return nil, err
 	}
 
 	_, _, err = getBundle(pkgChart.Chart)
 	if err == nil {
-		return CreateBundleViewForBundle(reg, ref)
+		return CreateBundleViewForBundle(reg, &ref)
 	} else if !kerr.IsNotFound(err) {
 		return nil, err
 	}
@@ -156,9 +162,7 @@ func CreateBundleViewForChart(reg repo.IRegistry, ref *releasesapi.ChartRepoRef)
 		BundleOptionView: releasesapi.BundleOptionView{
 			PackageMeta: releasesapi.PackageMeta{
 				PackageDescriptor: GetPackageDescriptor(pkgChart.Chart),
-				URL:               ref.URL,
-				Name:              ref.Name,
-				Version:           ref.Version,
+				ChartSourceRef:    ref,
 			},
 			DisplayName: flect.Titleize(flect.Humanize(ref.Name)),
 			// Features:    nil,
@@ -166,8 +170,8 @@ func CreateBundleViewForChart(reg repo.IRegistry, ref *releasesapi.ChartRepoRef)
 				{
 					Chart: &releasesapi.ChartCard{
 						ChartRef: releasesapi.ChartRef{
-							URL:  ref.URL,
-							Name: ref.Name,
+							Name:      ref.Name,
+							SourceRef: ref.SourceRef,
 						},
 						PackageDescriptor: GetPackageDescriptor(pkgChart.Chart),
 						Features:          []string{pkgChart.Metadata.Description},

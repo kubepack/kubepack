@@ -128,13 +128,29 @@ spec:
                       properties:
                         name:
                           type: string
-                        url:
-                          type: string
+                        sourceRef:
+                          description: TypedObjectReference represents an typed namespaced
+                            object.
+                          properties:
+                            apiGroup:
+                              type: string
+                            kind:
+                              type: string
+                            name:
+                              description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                              type: string
+                            namespace:
+                              description: 'Namespace of the referent. More info:
+                                https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                              type: string
+                          required:
+                          - name
+                          type: object
                         version:
                           type: string
                       required:
                       - name
-                      - url
+                      - sourceRef
                       - version
                       type: object
                     chart:
@@ -151,8 +167,24 @@ spec:
                           type: string
                         required:
                           type: boolean
-                        url:
-                          type: string
+                        sourceRef:
+                          description: TypedObjectReference represents an typed namespaced
+                            object.
+                          properties:
+                            apiGroup:
+                              type: string
+                            kind:
+                              type: string
+                            name:
+                              description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                              type: string
+                            namespace:
+                              description: 'Namespace of the referent. More info:
+                                https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                              type: string
+                          required:
+                          - name
+                          type: object
                         versions:
                           items:
                             properties:
@@ -312,7 +344,7 @@ spec:
                           type: array
                       required:
                       - name
-                      - url
+                      - sourceRef
                       - versions
                       type: object
                     oneOf:
@@ -322,13 +354,30 @@ spec:
                             properties:
                               name:
                                 type: string
-                              url:
-                                type: string
+                              sourceRef:
+                                description: TypedObjectReference represents an typed
+                                  namespaced object.
+                                properties:
+                                  apiGroup:
+                                    type: string
+                                  kind:
+                                    type: string
+                                  name:
+                                    description: 'Name of the referent. More info:
+                                      https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                                    type: string
+                                  namespace:
+                                    description: 'Namespace of the referent. More
+                                      info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                                    type: string
+                                required:
+                                - name
+                                type: object
                               version:
                                 type: string
                             required:
                             - name
-                            - url
+                            - sourceRef
                             - version
                             type: object
                           type: array

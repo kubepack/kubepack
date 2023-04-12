@@ -24,6 +24,7 @@ import (
 
 	flag "github.com/spf13/pflag"
 	"k8s.io/klog/v2"
+	kmapi "kmodules.xyz/client-go/api/v1"
 	"sigs.k8s.io/yaml"
 )
 
@@ -39,7 +40,13 @@ func main() {
 	flag.StringVar(&version, "version", version, "Version of bundle")
 	flag.Parse()
 
-	table, err := lib.ComparePlans(internal.DefaultRegistry, url, names, version)
+	ref := kmapi.TypedObjectReference{
+		APIGroup:  "charts.x-helm.dev",
+		Kind:      "Legacy",
+		Namespace: "",
+		Name:      url,
+	}
+	table, err := lib.ComparePlans(internal.DefaultRegistry, ref, names, version)
 	if err != nil {
 		klog.Fatal(err)
 	}

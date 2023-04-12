@@ -85,7 +85,8 @@ func main() {
 			continue
 		}
 		if pkg.Chart.Name == name &&
-			pkg.Chart.URL == url &&
+			pkg.Chart.SourceRef.Kind == "Legacy" &&
+			pkg.Chart.SourceRef.Name == url &&
 			pkg.Chart.Version == version {
 			selection = pkg.Chart
 			break

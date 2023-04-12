@@ -41,6 +41,7 @@ import (
 	"kubepack.dev/lib-helm/pkg/downloader"
 	"kubepack.dev/lib-helm/pkg/getter"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 type Registry struct {
@@ -53,37 +54,17 @@ type Registry struct {
 
 var _ IRegistry = &Registry{}
 
-func NewCachedRegistry(kc client.Reader, cache httpcache.Cache) *Registry {
-	reg := &Registry{
+func NewRegistry(kc client.Reader, cache httpcache.Cache) *Registry {
+	return &Registry{
 		repos:     make(map[string]*Entry),
 		kc:        kc,
 		helmrepos: make(map[string]client.ObjectKey),
 		cache:     cache,
 	}
-	if kc != nil {
-		var list fluxsrc.HelmRepositoryList
-		if err := kc.List(context.TODO(), &list); err == nil {
-			for _, item := range list.Items {
-				if item.Spec.SecretRef != nil {
-					if url, err := purell.NormalizeURLString(item.Spec.URL, purell.FlagsUsuallySafeGreedy); err == nil {
-						reg.helmrepos[url] = client.ObjectKey{
-							Namespace: item.Namespace,
-							Name:      item.Spec.SecretRef.Name,
-						}
-					}
-				}
-			}
-		}
-	}
-	return reg
-}
-
-func NewRegistry() *Registry {
-	return NewCachedRegistry(nil, nil)
 }
 
 func NewMemoryCacheRegistry() *Registry {
-	return NewCachedRegistry(nil, httpcache.NewMemoryCache())
+	return NewRegistry(nil, httpcache.NewMemoryCache())
 }
 
 func DefaultDiskCache() httpcache.Cache {
@@ -93,10 +74,10 @@ func DefaultDiskCache() httpcache.Cache {
 }
 
 func NewDiskCacheRegistry() *Registry {
-	return NewCachedRegistry(nil, DefaultDiskCache())
+	return NewRegistry(nil, DefaultDiskCache())
 }
 
-func (r *Registry) Add(e *Entry) error {
+func (r *Registry) add(e *Entry) error {
 	url, err := purell.NormalizeURLString(e.URL, purell.FlagsUsuallySafeGreedy)
 	if err != nil {
 		return err
@@ -115,7 +96,7 @@ func (r *Registry) Add(e *Entry) error {
 	return nil
 }
 
-func (r *Registry) Get(url string) (*Entry, bool, error) {
+func (r *Registry) get(url string) (*Entry, bool, error) {
 	url, err := purell.NormalizeURLString(url, purell.FlagsUsuallySafeGreedy)
 	if err != nil {
 		return nil, false, err
@@ -143,7 +124,7 @@ func (r *Registry) Get(url string) (*Entry, bool, error) {
 	return entry, ok, nil
 }
 
-func (r *Registry) Delete(url string) (*Entry, error) {
+func (r *Registry) delete(url string) (*Entry, error) {
 	url, err := purell.NormalizeURLString(url, purell.FlagsUsuallySafeGreedy)
 	if err != nil {
 		return nil, err
@@ -157,7 +138,7 @@ func (r *Registry) Delete(url string) (*Entry, error) {
 	return entry, nil
 }
 
-func (r *Registry) Register(srcRef kmapi.TypedObjectReference) (string, error) {
+func (r *Registry) register(srcRef kmapi.TypedObjectReference) (string, error) {
 	var repository string
 
 	if srcRef.APIGroup == fluxsrc.GroupVersion.Group && srcRef.Kind == "HelmRepository" {
@@ -173,27 +154,7 @@ func (r *Registry) Register(srcRef kmapi.TypedObjectReference) (string, error) {
 		if err != nil {
 			return "", err
 		}
-		entry, found, err := r.Get(src.Spec.URL)
-		if err != nil {
-			return "", err
-		}
-		if !found {
-			if src.Spec.SecretRef != nil {
-				key := client.ObjectKey{Namespace: srcRef.Namespace, Name: src.Spec.SecretRef.Name}
-				if err := r.addAuthInfo(key, entry); err != nil {
-					return "", err
-				}
-			}
-
-			// TODO(tamal): enforce
-			// PassCredentials
-			// src.Spec.AccessFrom
-
-			if err = r.Add(entry); err != nil {
-				return "", err
-			}
-		}
-		repository = entry.URL
+		return r.registerHelmRepository(src)
 	} else {
 		if srcRef.APIGroup != "" || srcRef.Kind != "" || srcRef.Namespace != "" {
 			return "", fmt.Errorf("only repository name is expected, found %+v", srcRef)
@@ -201,6 +162,30 @@ func (r *Registry) Register(srcRef kmapi.TypedObjectReference) (string, error) {
 		repository = strings.TrimSpace(srcRef.Name)
 	}
 	return repository, nil
+}
+
+func (r *Registry) registerHelmRepository(src fluxsrc.HelmRepository) (string, error) {
+	entry, found, err := r.get(src.Spec.URL)
+	if err != nil {
+		return "", err
+	}
+	if !found {
+		if src.Spec.SecretRef != nil {
+			key := client.ObjectKey{Namespace: src.Namespace, Name: src.Spec.SecretRef.Name}
+			if err := r.addAuthInfo(key, entry); err != nil {
+				return "", err
+			}
+		}
+
+		// TODO(tamal): enforce
+		// PassCredentials
+		// src.Spec.AccessFrom
+
+		if err = r.add(entry); err != nil {
+			return "", err
+		}
+	}
+	return entry.URL, nil
 }
 
 func (r *Registry) addAuthInfo(key client.ObjectKey, entry *Entry) error {
@@ -243,8 +228,8 @@ func AddBypassChartRegistriesFlag(fs *pflag.FlagSet) {
 	fs.StringSliceVar(&bypassChartRegistries, "bypass-chart-registries", bypassChartRegistries, "List of Helm chart registries that can bypass using UI_WIZARD_CHARTS_DIR env variable")
 }
 
-// LocateChart looks for a chart and returns either the reader or an error.
-func (r *Registry) LocateChart(repository, name, version string) (loader.ChartLoader, *ChartVersion, error) {
+// find looks for a chart and returns either the reader or an error.
+func (r *Registry) find(repository, name, version string) (loader.ChartLoader, *ChartVersion, error) {
 	repository = strings.TrimSpace(repository)
 	name = strings.TrimSpace(name)
 	version = strings.TrimSpace(version)
@@ -283,7 +268,7 @@ func (r *Registry) LocateChart(repository, name, version string) (loader.ChartLo
 		return nil, nil, errors.Errorf("path %q not found", repository)
 	}
 
-	rc, _, err := r.Get(repository)
+	rc, _, err := r.get(repository)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -322,8 +307,40 @@ func (r *Registry) LocateChart(repository, name, version string) (loader.ChartLo
 	return &l2, cv, nil
 }
 
-func (r *Registry) GetChart(repository, chartName, chartVersion string) (*ChartExtended, error) {
-	chartLoader, cv, err := r.LocateChart(repository, chartName, chartVersion)
+func (r *Registry) GetChart(obj releasesapi.ChartSourceRef) (*ChartExtended, error) {
+	obj.SetDefaults()
+
+	/*
+		"source.toolkit.fluxcd.io"
+		"HelmRepository"
+
+		"charts.x-helm.dev"
+		"Legacy"
+
+		"charts.x-helm.dev"
+		"Local"
+
+		"charts.x-helm.dev"
+		"Embed"
+	*/
+	switch obj.SourceRef.Kind {
+	case "HelmRepository":
+		return r.getFluxChart(obj)
+	case "Legacy":
+		_, err := r.register(obj.SourceRef)
+		if err != nil {
+			return nil, err
+		}
+		return r.getLegacyChart(obj.SourceRef.Name, obj.Name, obj.Version)
+	case "Local":
+		return r.getLegacyChart(obj.SourceRef.Name, obj.Name, obj.Version)
+	default:
+		return nil, fmt.Errorf("unsupported kind %s", obj.SourceRef.Kind)
+	}
+}
+
+func (r *Registry) getLegacyChart(repository, chartName, chartVersion string) (*ChartExtended, error) {
+	chartLoader, cv, err := r.find(repository, chartName, chartVersion)
 	if err != nil {
 		return nil, err
 	}

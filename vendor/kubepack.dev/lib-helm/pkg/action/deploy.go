@@ -11,35 +11,34 @@ import (
 	"kubepack.dev/lib-helm/pkg/engine"
 	"kubepack.dev/lib-helm/pkg/repo"
 	"kubepack.dev/lib-helm/pkg/values"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 type DeployOptions struct {
-	ChartURL                 string `json:"chartURL"`
-	ChartName                string `json:"chartName"`
-	Version                  string `json:"version"`
-	values.Options           `json:",inline,omitempty"`
-	ClientOnly               bool          `json:"clientOnly"`
-	DryRun                   bool          `json:"dryRun"`
-	DisableHooks             bool          `json:"disableHooks"`
-	Replace                  bool          `json:"replace"`
-	Wait                     bool          `json:"wait"`
-	Devel                    bool          `json:"devel"`
-	Timeout                  time.Duration `json:"timeout"`
-	Namespace                string        `json:"namespace"`
-	ReleaseName              string        `json:"releaseName"`
-	Description              string        `json:"description"`
-	Atomic                   bool          `json:"atomic"`
-	SkipCRDs                 bool          `json:"skipCRDs"`
-	SubNotes                 bool          `json:"subNotes"`
-	DisableOpenAPIValidation bool          `json:"disableOpenAPIValidation"`
-	IncludeCRDs              bool          `json:"includeCRDs"`
-	PartOf                   string        `json:"partOf"`
-	CreateNamespace          bool          `json:"createNamespace"`
-	Force                    bool          `json:"force"`
-	Recreate                 bool          `json:"recreate"`
-	ResetValues              bool          `json:"resetValues"`
-	ReuseValues              bool          `json:"reuseValues"`
-	CleanupOnFail            bool          `json:"cleanupOnFail"`
+	releasesapi.ChartSourceFlatRef `json:",inline,omitempty"`
+	values.Options                 `json:",inline,omitempty"`
+	ClientOnly                     bool          `json:"clientOnly"`
+	DryRun                         bool          `json:"dryRun"`
+	DisableHooks                   bool          `json:"disableHooks"`
+	Replace                        bool          `json:"replace"`
+	Wait                           bool          `json:"wait"`
+	Devel                          bool          `json:"devel"`
+	Timeout                        time.Duration `json:"timeout"`
+	Namespace                      string        `json:"namespace"`
+	ReleaseName                    string        `json:"releaseName"`
+	Description                    string        `json:"description"`
+	Atomic                         bool          `json:"atomic"`
+	SkipCRDs                       bool          `json:"skipCRDs"`
+	SubNotes                       bool          `json:"subNotes"`
+	DisableOpenAPIValidation       bool          `json:"disableOpenAPIValidation"`
+	IncludeCRDs                    bool          `json:"includeCRDs"`
+	PartOf                         string        `json:"partOf"`
+	CreateNamespace                bool          `json:"createNamespace"`
+	Force                          bool          `json:"force"`
+	Recreate                       bool          `json:"recreate"`
+	ResetValues                    bool          `json:"resetValues"`
+	ReuseValues                    bool          `json:"reuseValues"`
+	CleanupOnFail                  bool          `json:"cleanupOnFail"`
 }
 
 type Deployer struct {
@@ -86,9 +85,7 @@ func (x *Deployer) Run() (*release.Release, *engine.State, error) {
 		i := NewInstallerForConfig(x.cfg)
 		i.WithRegistry(x.reg).
 			WithOptions(InstallOptions{
-				ChartURL:                 x.opts.ChartURL,
-				ChartName:                x.opts.ChartName,
-				Version:                  x.opts.Version,
+				ChartSourceFlatRef:       x.opts.ChartSourceFlatRef,
 				Options:                  x.opts.Options,
 				ClientOnly:               x.opts.ClientOnly,
 				DryRun:                   x.opts.DryRun,
@@ -117,25 +114,23 @@ func (x *Deployer) Run() (*release.Release, *engine.State, error) {
 	i.WithRegistry(x.reg).
 		WithReleaseName(x.opts.ReleaseName).
 		WithOptions(UpgradeOptions{
-			ChartURL:      x.opts.ChartURL,
-			ChartName:     x.opts.ChartName,
-			Version:       x.opts.Version,
-			Options:       x.opts.Options,
-			Install:       false,
-			Devel:         x.opts.Devel,
-			Namespace:     x.opts.Namespace,
-			Timeout:       x.opts.Timeout,
-			Wait:          x.opts.Wait,
-			DisableHooks:  x.opts.DisableHooks,
-			DryRun:        x.opts.DryRun,
-			Force:         x.opts.Force,
-			ResetValues:   x.opts.ResetValues,
-			ReuseValues:   x.opts.ReuseValues,
-			Recreate:      x.opts.Recreate,
-			MaxHistory:    0,
-			Atomic:        x.opts.Atomic,
-			CleanupOnFail: x.opts.CleanupOnFail,
-			PartOf:        x.opts.PartOf,
+			ChartSourceFlatRef: x.opts.ChartSourceFlatRef,
+			Options:            x.opts.Options,
+			Install:            false,
+			Devel:              x.opts.Devel,
+			Namespace:          x.opts.Namespace,
+			Timeout:            x.opts.Timeout,
+			Wait:               x.opts.Wait,
+			DisableHooks:       x.opts.DisableHooks,
+			DryRun:             x.opts.DryRun,
+			Force:              x.opts.Force,
+			ResetValues:        x.opts.ResetValues,
+			ReuseValues:        x.opts.ReuseValues,
+			Recreate:           x.opts.Recreate,
+			MaxHistory:         0,
+			Atomic:             x.opts.Atomic,
+			CleanupOnFail:      x.opts.CleanupOnFail,
+			PartOf:             x.opts.PartOf,
 		})
 	return i.Run()
 }

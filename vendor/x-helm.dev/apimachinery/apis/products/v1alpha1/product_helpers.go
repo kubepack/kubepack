@@ -19,18 +19,17 @@ package v1alpha1
 import (
 	"strconv"
 
+	"k8s.io/apimachinery/pkg/labels"
+	"kmodules.xyz/client-go/apiextensions"
 	"x-helm.dev/apimachinery/apis"
 	"x-helm.dev/apimachinery/crds"
-
-	"k8s.io/apimachinery/pkg/fields"
-	"kmodules.xyz/client-go/apiextensions"
 )
 
 func (_ Product) CustomResourceDefinition() *apiextensions.CustomResourceDefinition {
 	return crds.MustCustomResourceDefinition(GroupVersion.WithResource(ResourceProducts))
 }
 
-func (prod *Product) SetLabels(prodID, prodKey, phase string, ownerID int64) {
+func (prod *Product) ResetLabels(prodID, prodKey, phase string, ownerID int64) {
 	labelMap := map[string]string{
 		apis.LabelProductID:      prodID,
 		apis.LabelProductKey:     prodKey,
@@ -40,7 +39,7 @@ func (prod *Product) SetLabels(prodID, prodKey, phase string, ownerID int64) {
 	prod.ObjectMeta.SetLabels(labelMap)
 }
 
-func (_ Product) FormatLabels(prodID, prodKey, phase string, ownerID int64) string {
+func (_ Product) FormatLabels(prodID, prodKey, phase string, ownerID int64) labels.Selector {
 	labelMap := make(map[string]string)
 	if prodID != "" {
 		labelMap[apis.LabelProductID] = prodID
@@ -54,5 +53,5 @@ func (_ Product) FormatLabels(prodID, prodKey, phase string, ownerID int64) stri
 	if ownerID != 0 {
 		labelMap[apis.LabelProductOwnerID] = strconv.FormatInt(ownerID, 10)
 	}
-	return fields.SelectorFromSet(labelMap).String()
+	return labels.SelectorFromSet(labelMap)
 }
