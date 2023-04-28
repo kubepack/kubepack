@@ -26,10 +26,10 @@ require (
 	k8s.io/client-go v0.25.3
 	k8s.io/klog/v2 v2.80.1
 	kmodules.xyz/client-go v0.25.21
-	kubepack.dev/lib-helm v0.6.3
+	kubepack.dev/lib-helm v0.6.4
 	sigs.k8s.io/controller-runtime v0.13.1
 	sigs.k8s.io/yaml v1.3.0
-	x-helm.dev/apimachinery v0.0.7
+	x-helm.dev/apimachinery v0.0.8
 )
 
 require (

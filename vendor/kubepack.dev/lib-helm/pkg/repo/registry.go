@@ -138,30 +138,25 @@ func (r *Registry) delete(url string) (*Entry, error) {
 	return entry, nil
 }
 
-func (r *Registry) register(srcRef kmapi.TypedObjectReference) (string, error) {
-	var repository string
-
-	if srcRef.APIGroup == fluxsrc.GroupVersion.Group && srcRef.Kind == "HelmRepository" {
-		if srcRef.Namespace == "" || srcRef.Name == "" {
-			return "", fmt.Errorf("missing name or namespace for HelmRepository %+v", srcRef)
-		}
-		if r.kc == nil {
-			return "", fmt.Errorf("kubernetes client not initialized for HelmRepository %+v", srcRef)
-		}
-
-		var src fluxsrc.HelmRepository
-		err := r.kc.Get(context.TODO(), client.ObjectKey{Namespace: srcRef.Namespace, Name: srcRef.Name}, &src)
-		if err != nil {
-			return "", err
-		}
-		return r.registerHelmRepository(src)
-	} else {
-		if srcRef.APIGroup != "" || srcRef.Kind != "" || srcRef.Namespace != "" {
-			return "", fmt.Errorf("only repository name is expected, found %+v", srcRef)
-		}
-		repository = strings.TrimSpace(srcRef.Name)
+func (r *Registry) register(srcRef kmapi.TypedObjectReference) error {
+	if srcRef.Kind != releasesapi.SourceKindHelmRepository {
+		return nil
 	}
-	return repository, nil
+
+	if srcRef.Namespace == "" || srcRef.Name == "" {
+		return fmt.Errorf("missing name or namespace for HelmRepository %+v", srcRef)
+	}
+	if r.kc == nil {
+		return fmt.Errorf("kubernetes client not initialized for HelmRepository %+v", srcRef)
+	}
+
+	var src fluxsrc.HelmRepository
+	err := r.kc.Get(context.TODO(), client.ObjectKey{Namespace: srcRef.Namespace, Name: srcRef.Name}, &src)
+	if err != nil {
+		return err
+	}
+	_, err = r.registerHelmRepository(src)
+	return err
 }
 
 func (r *Registry) registerHelmRepository(src fluxsrc.HelmRepository) (string, error) {
@@ -314,7 +309,7 @@ func (r *Registry) GetChart(obj releasesapi.ChartSourceRef) (*ChartExtended, err
 	case releasesapi.SourceKindHelmRepository:
 		return r.getFluxChart(obj)
 	case releasesapi.SourceKindLegacy:
-		_, err := r.register(obj.SourceRef)
+		err := r.register(obj.SourceRef)
 		if err != nil {
 			return nil, err
 		}

@@ -189,11 +189,11 @@ func (r *Registry) getFluxChart(obj releasesapi.ChartSourceRef) (*ChartExtended,
 		}
 		return &ChartExtended{Chart: chrt}, nil
 	default:
-		_, err := r.registerHelmRepository(repo)
+		repositoryUrl, err := r.registerHelmRepository(repo)
 		if err != nil {
 			return nil, err
 		}
-		return r.getLegacyChart(obj.SourceRef.Name, obj.Name, obj.Version)
+		return r.getLegacyChart(repositoryUrl, obj.Name, obj.Version)
 	}
 }
 

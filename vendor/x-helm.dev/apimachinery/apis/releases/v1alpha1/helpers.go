@@ -38,7 +38,7 @@ func (ref *ChartSourceFlatRef) ToAPIObject() ChartSourceRef {
 			APIGroup:  ref.SourceAPIGroup,
 			Kind:      ref.SourceKind,
 			Namespace: ref.SourceNamespace,
-			Name:      ref.Name,
+			Name:      ref.SourceName,
 		},
 	}
 	obj.SetDefaults()
