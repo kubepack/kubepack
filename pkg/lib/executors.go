@@ -1123,7 +1123,7 @@ func (x *ApplicationGenerator) Do() error {
 			}
 		}
 	}
-	x.components, x.commonLabels, err = parser.ExtractComponents(manifestDoc.Bytes())
+	x.components, x.commonLabels, err = parser.ExtractComponentGKs(manifestDoc.Bytes())
 	return err
 }
 

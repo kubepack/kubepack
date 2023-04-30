@@ -165,7 +165,7 @@ func newAppReleaseObject(rls *rspb.Release) *driversapi.AppRelease {
 		}
 	}
 
-	components, _, err := parser.ExtractComponents([]byte(rls.Manifest))
+	components, _, err := parser.ExtractComponentGKs([]byte(rls.Manifest))
 	if err != nil {
 		// WARNING(tamal): This error should never happen
 		panic(err)
