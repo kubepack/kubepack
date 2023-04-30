@@ -21,6 +21,7 @@ import (
 	"fmt"
 
 	"github.com/pkg/errors"
+	"helm.sh/helm/v3/pkg/chart"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -44,7 +45,7 @@ const (
 	helmReleaseNamespaceAnnotation = "meta.helm.sh/release-namespace"
 )
 
-func existingResourceConflict(resources kube.ResourceList, releaseName, releaseNamespace string) (kube.ResourceList, error) {
+func existingResourceConflict(resources kube.ResourceList, releaseName, releaseNamespace string, editorChart bool) (kube.ResourceList, error) {
 	var requireUpdate kube.ResourceList
 
 	err := resources.Visit(func(info *resource.Info, err error) error {
@@ -61,9 +62,11 @@ func existingResourceConflict(resources kube.ResourceList, releaseName, releaseN
 			return errors.Wrapf(err, "could not get information about the resource %s", resourceString(info))
 		}
 
-		// Allow adoption of the resource if it is managed by Helm and is annotated with correct release name and namespace.
-		if err := checkOwnership(existing, releaseName, releaseNamespace); err != nil {
-			return fmt.Errorf("%s exists and cannot be imported into the current release: %s", resourceString(info), err)
+		if !editorChart {
+			// Allow adoption of the resource if it is managed by Helm and is annotated with correct release name and namespace.
+			if err := checkOwnership(existing, releaseName, releaseNamespace); err != nil {
+				return fmt.Errorf("%s exists and cannot be imported into the current release: %s", resourceString(info), err)
+			}
 		}
 
 		requireUpdate.Append(info)
@@ -214,4 +217,9 @@ func getAppLabels(rel *release.Release, cfg *Configuration) (map[string]string, 
 		}
 	}
 	return result, nil
+}
+
+func isEditorChart(ch *chart.Chart) bool {
+	_, ok := ch.Metadata.Annotations[editorLabel]
+	return ok
 }
