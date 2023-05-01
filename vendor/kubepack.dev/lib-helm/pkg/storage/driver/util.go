@@ -52,7 +52,7 @@ func ParseKey(key string) (string, int, error) {
 func relevantReleases(lbls map[string]string) []string {
 	var result []string
 	for k, v := range lbls {
-		if strings.HasPrefix(k, annotaionScopeReleaseName+"/") {
+		if strings.HasPrefix(k, labelScopeReleaseName+"/") {
 			result = append(result, v)
 		}
 	}

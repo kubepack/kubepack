@@ -4,10 +4,10 @@
 package v1alpha1
 
 import (
+	"k8s.io/apimachinery/pkg/runtime"
 	"regexp"
 	"strings"
 
-	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"kmodules.xyz/client-go/apiextensions"
 	"x-helm.dev/apimachinery/apis/shared"
@@ -18,22 +18,6 @@ const (
 	ResourceKindAppRelease = "AppRelease"
 	ResourceAppRelease     = "apprelease"
 	ResourceAppReleases    = "appreleases"
-)
-
-// Constants for condition
-const (
-	// Ready => controller considers this resource Ready
-	Ready = "Ready"
-	// Qualified => functionally tested
-	Qualified = "Qualified"
-	// Settled => observed generation == generation + settled means controller is done acting functionally tested
-	Settled = "Settled"
-	// Cleanup => it is set to track finalizer failures
-	Cleanup = "Cleanup"
-	// Error => last recorded error
-	Error = "Error"
-
-	ReasonInit = "Init"
 )
 
 // Descriptor defines the Metadata and informations about the AppRelease.
@@ -72,29 +56,34 @@ type Descriptor struct {
 
 // AppReleaseSpec defines the specification for an AppRelease.
 type AppReleaseSpec struct {
-	// ComponentGroupKinds is a list of Kinds for AppRelease's components (e.g. Deployments, Pods, Services, CRDs). It
-	// can be used in conjunction with the AppRelease's Selector to list or watch the AppReleases components.
-	ComponentGroupKinds []metav1.GroupKind `json:"componentKinds,omitempty"`
-
 	// Descriptor regroups information and metadata about an appRelease.
 	Descriptor Descriptor `json:"descriptor,omitempty"`
+
+	// Release regroups information and metadata about a Helm release.
+	Release ReleaseInfo `json:"release,omitempty"`
+
+	// Components is a list of Kinds for AppRelease's components (e.g. Deployments, Pods, Services, CRDs). It
+	// can be used in conjunction with the AppRelease's Selector to list or watch the AppReleases components.
+	Components []metav1.GroupVersionKind `json:"components,omitempty"`
 
 	// Selector is a label query over kinds that created by the appRelease. It must match the component objects' labels.
 	// More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
 	Selector *metav1.LabelSelector `json:"selector,omitempty"`
 
-	// AddOwnerRef objects - flag to indicate if we need to add OwnerRefs to matching objects
-	// Matching is done by using Selector to query all ComponentGroupKinds
-	AddOwnerRef bool `json:"addOwnerRef,omitempty"`
+	// +optional
+	ResourceKeys []string `json:"resourceKeys,omitempty"`
 
-	// Info contains human readable key,value pairs for the AppRelease.
-	// +patchStrategy=merge
-	// +patchMergeKey=name
-	Info []InfoItem `json:"info,omitempty" patchStrategy:"merge" patchMergeKey:"name"`
+	Editor *metav1.GroupVersionResource `json:"editor,omitempty"`
+}
 
-	// AssemblyPhase represents the current phase of the appRelease's assembly.
-	// An empty value is equivalent to "Succeeded".
-	AssemblyPhase AppReleaseAssemblyPhase `json:"assemblyPhase,omitempty"`
+type ReleaseInfo struct {
+	Name          string                `json:"name"`
+	Version       string                `json:"version,omitempty"`
+	Status        string                `json:"status,omitempty"`
+	FirstDeployed *metav1.Time          `json:"firstDeployed,omitempty"`
+	LastDeployed  *metav1.Time          `json:"lastDeployed,omitempty"`
+	ModifiedAt    *metav1.Time          `json:"modified-at,omitempty"`
+	Form          *runtime.RawExtension `json:"form,omitempty"`
 }
 
 // ComponentList is a generic status holder for the top level resource
@@ -117,29 +106,6 @@ type ObjectStatus struct {
 	Status string `json:"status,omitempty"`
 }
 
-// ConditionType encodes information on the condition
-type ConditionType string
-
-// Condition describes the state of an object at a certain point.
-type Condition struct {
-	// Type of condition.
-	Type ConditionType `json:"type" protobuf:"bytes,1,opt,name=type,casttype=StatefulSetConditionType"`
-	// Status of the condition, one of True, False, Unknown.
-	Status corev1.ConditionStatus `json:"status" protobuf:"bytes,2,opt,name=status,casttype=k8s.io/api/core/v1.ConditionStatus"`
-	// The reason for the condition's last transition.
-	// +optional
-	Reason string `json:"reason,omitempty" protobuf:"bytes,4,opt,name=reason"`
-	// A human readable message indicating details about the transition.
-	// +optional
-	Message string `json:"message,omitempty" protobuf:"bytes,5,opt,name=message"`
-	// Last time the condition was probed
-	// +optional
-	LastUpdateTime metav1.Time `json:"lastUpdateTime,omitempty" protobuf:"bytes,3,opt,name=lastProbeTime"`
-	// Last time the condition transitioned from one status to another.
-	// +optional
-	LastTransitionTime metav1.Time `json:"lastTransitionTime,omitempty" protobuf:"bytes,3,opt,name=lastTransitionTime"`
-}
-
 // AppReleaseStatus defines controller's the observed state of AppRelease
 type AppReleaseStatus struct {
 	// ObservedGeneration is the most recent generation observed. It corresponds to the
@@ -150,7 +116,7 @@ type AppReleaseStatus struct {
 	// +optional
 	// +patchMergeKey=type
 	// +patchStrategy=merge
-	Conditions []Condition `json:"conditions,omitempty" patchStrategy:"merge" patchMergeKey:"type" protobuf:"bytes,10,rep,name=conditions"`
+	Conditions []metav1.Condition `json:"conditions,omitempty" patchStrategy:"merge" patchMergeKey:"type" protobuf:"bytes,10,rep,name=conditions"`
 	// Resources embeds a list of object statuses
 	// +optional
 	ComponentList `json:",inline,omitempty"`
@@ -158,117 +124,6 @@ type AppReleaseStatus struct {
 	// +optional
 	ComponentsReady string `json:"componentsReady,omitempty"`
 }
-
-// InfoItem is a human readable key,value pair containing important information about how to access the AppRelease.
-type InfoItem struct {
-	// Name is a human readable title for this piece of information.
-	Name string `json:"name,omitempty"`
-
-	// Type of the value for this InfoItem.
-	Type InfoItemType `json:"type,omitempty"`
-
-	// Value is human readable content.
-	Value string `json:"value,omitempty"`
-
-	// ValueFrom defines a reference to derive the value from another source.
-	ValueFrom *InfoItemSource `json:"valueFrom,omitempty"`
-}
-
-// InfoItemType is a string that describes the value of InfoItem
-type InfoItemType string
-
-const (
-	// ValueInfoItemType const string for value type
-	ValueInfoItemType InfoItemType = "Value"
-	// ReferenceInfoItemType const string for ref type
-	ReferenceInfoItemType InfoItemType = "Reference"
-)
-
-// InfoItemSource represents a source for the value of an InfoItem.
-type InfoItemSource struct {
-	// Type of source.
-	Type InfoItemSourceType `json:"type,omitempty"`
-
-	// Selects a key of a Secret.
-	SecretKeyRef *SecretKeySelector `json:"secretKeyRef,omitempty"`
-
-	// Selects a key of a ConfigMap.
-	ConfigMapKeyRef *ConfigMapKeySelector `json:"configMapKeyRef,omitempty"`
-
-	// Select a Service.
-	ServiceRef *ServiceSelector `json:"serviceRef,omitempty"`
-
-	// Select an Ingress.
-	IngressRef *IngressSelector `json:"ingressRef,omitempty"`
-}
-
-// InfoItemSourceType is a string
-type InfoItemSourceType string
-
-// Constants for info type
-const (
-	SecretKeyRefInfoItemSourceType    InfoItemSourceType = "SecretKeyRef"
-	ConfigMapKeyRefInfoItemSourceType InfoItemSourceType = "ConfigMapKeyRef"
-	ServiceRefInfoItemSourceType      InfoItemSourceType = "ServiceRef"
-	IngressRefInfoItemSourceType      InfoItemSourceType = "IngressRef"
-)
-
-// ConfigMapKeySelector selects a key from a ConfigMap.
-type ConfigMapKeySelector struct {
-	// The ConfigMap to select from.
-	corev1.ObjectReference `json:",inline"`
-	// The key to select.
-	Key string `json:"key,omitempty"`
-}
-
-// SecretKeySelector selects a key from a Secret.
-type SecretKeySelector struct {
-	// The Secret to select from.
-	corev1.ObjectReference `json:",inline"`
-	// The key to select.
-	Key string `json:"key,omitempty"`
-}
-
-// ServiceSelector selects a Service.
-type ServiceSelector struct {
-	// The Service to select from.
-	corev1.ObjectReference `json:",inline"`
-	// The optional port to select.
-	Port *int32 `json:"port,omitempty"`
-	// The optional HTTP path.
-	Path string `json:"path,omitempty"`
-	// Protocol for the service
-	Protocol string `json:"protocol,omitempty"`
-}
-
-// IngressSelector selects an Ingress.
-type IngressSelector struct {
-	// The Ingress to select from.
-	corev1.ObjectReference `json:",inline"`
-	// The optional host to select.
-	Host string `json:"host,omitempty"`
-	// The optional HTTP path.
-	Path string `json:"path,omitempty"`
-	// Protocol for the ingress
-	Protocol string `json:"protocol,omitempty"`
-}
-
-// AppReleaseAssemblyPhase tracks the AppRelease CRD phases: pending, succeeded, failed
-type AppReleaseAssemblyPhase string
-
-// Constants
-const (
-	// Used to indicate that not all of appRelease's components
-	// have been deployed yet.
-	Pending AppReleaseAssemblyPhase = "Pending"
-	// Used to indicate that all of appRelease's components
-	// have already been deployed.
-	Succeeded = "Succeeded"
-	// Used to indicate that deployment of appRelease's components
-	// failed. Some components might be present, but deployment of
-	// the remaining ones will not be re-attempted.
-	Failed = "Failed"
-)
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 // +kubebuilder:object:root=true
