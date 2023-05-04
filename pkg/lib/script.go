@@ -17,8 +17,8 @@ limitations under the License.
 package lib
 
 type ScriptOptions struct {
-	DisableApplicationCRD bool
-	OsIndependentScript   bool
+	DisableAppReleaseCRD bool
+	OsIndependentScript  bool
 }
 
 type ScriptOption interface {
@@ -31,8 +31,8 @@ func (fn ScriptOptionFunc) Apply(opt *ScriptOptions) {
 	fn(opt)
 }
 
-var DisableApplicationCRD = ScriptOptionFunc(func(opt *ScriptOptions) {
-	opt.DisableApplicationCRD = true
+var DisableAppReleaseCRD = ScriptOptionFunc(func(opt *ScriptOptions) {
+	opt.DisableAppReleaseCRD = true
 })
 
 var OsIndependentScript = ScriptOptionFunc(func(opt *ScriptOptions) {

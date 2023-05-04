@@ -195,8 +195,8 @@ func InstallOrder(getter genericclioptions.RESTClientGetter, reg repo.IRegistry,
 		opt.Apply(&scriptOptions)
 	}
 
-	if !scriptOptions.DisableApplicationCRD {
-		f1 := &ApplicationCRDRegistrar{
+	if !scriptOptions.DisableAppReleaseCRD {
+		f1 := &AppReleaseCRDRegistrar{
 			Config: config,
 		}
 		err = f1.Do()
@@ -259,7 +259,7 @@ func InstallOrder(getter genericclioptions.RESTClientGetter, reg repo.IRegistry,
 			}
 		}
 
-		if !scriptOptions.DisableApplicationCRD {
+		if !scriptOptions.DisableAppReleaseCRD {
 			f6 := &ApplicationGenerator{
 				Registry:    reg,
 				Chart:       *pkg.Chart,

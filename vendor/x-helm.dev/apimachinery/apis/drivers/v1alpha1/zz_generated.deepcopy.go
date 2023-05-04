@@ -101,15 +101,20 @@ func (in *AppReleaseSpec) DeepCopyInto(out *AppReleaseSpec) {
 		*out = new(v1.LabelSelector)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.Editor != nil {
+		in, out := &in.Editor, &out.Editor
+		*out = new(v1.GroupVersionResource)
+		**out = **in
+	}
 	if in.ResourceKeys != nil {
 		in, out := &in.ResourceKeys, &out.ResourceKeys
 		*out = make([]string, len(*in))
 		copy(*out, *in)
 	}
-	if in.Editor != nil {
-		in, out := &in.Editor, &out.Editor
-		*out = new(v1.GroupVersionResource)
-		**out = **in
+	if in.FormKeys != nil {
+		in, out := &in.FormKeys, &out.FormKeys
+		*out = make([]string, len(*in))
+		copy(*out, *in)
 	}
 }
 

@@ -876,27 +876,27 @@ func (x *PermissionChecker) Result() (map[authorization.ResourceAttributes]*Reso
 	return x.attrs, true
 }
 
-type ApplicationCRDRegPrinter struct {
+type AppReleaseCRDRegPrinter struct {
 	W io.Writer
 }
 
-func (x *ApplicationCRDRegPrinter) Do() error {
-	_, err := fmt.Fprintln(x.W, "kubectl apply -f https://github.com/kubernetes-sigs/application/raw/c8e2959e57a02b3877b394984a288f9178977d8b/config/crd/bases/app.k8s.io_applications.yaml")
+func (x *AppReleaseCRDRegPrinter) Do() error {
+	_, err := fmt.Fprintln(x.W, "kubectl apply -f https://github.com/x-helm/apimachinery/raw/master/crds/drivers.x-helm.dev_appreleases.yaml")
 	if err != nil {
 		return err
 	}
-	_, err = fmt.Fprintln(x.W, "kubectl wait --for=condition=Established crds/applications.app.k8s.io --timeout=5m")
+	_, err = fmt.Fprintln(x.W, "kubectl wait --for=condition=Established crds/appreleases.drivers.x-helm.dev --timeout=5m")
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-type ApplicationCRDRegistrar struct {
+type AppReleaseCRDRegistrar struct {
 	Config *rest.Config
 }
 
-func (x *ApplicationCRDRegistrar) Do() error {
+func (x *AppReleaseCRDRegistrar) Do() error {
 	apiextClient, err := crd_cs.NewForConfig(x.Config)
 	if err != nil {
 		return err
