@@ -47,8 +47,8 @@ func GenerateHelm3Script(bs *BlobStore, reg repo.IRegistry, order releasesapi.Or
 		}
 	}
 
-	if !scriptOptions.DisableApplicationCRD {
-		f1 := &ApplicationCRDRegPrinter{
+	if !scriptOptions.DisableAppReleaseCRD {
+		f1 := &AppReleaseCRDRegPrinter{
 			W: &buf,
 		}
 		err = f1.Do()
@@ -105,7 +105,7 @@ func GenerateHelm3Script(bs *BlobStore, reg repo.IRegistry, order releasesapi.Or
 			}
 		}
 
-		if !scriptOptions.DisableApplicationCRD {
+		if !scriptOptions.DisableAppReleaseCRD {
 			f6 := &ApplicationGenerator{
 				Registry:    reg,
 				Chart:       *pkg.Chart,

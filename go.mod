@@ -26,10 +26,10 @@ require (
 	k8s.io/client-go v0.25.3
 	k8s.io/klog/v2 v2.80.1
 	kmodules.xyz/client-go v0.25.22
-	kubepack.dev/lib-helm v0.6.5-0.20230430191216-30788b05f46d
+	kubepack.dev/lib-helm v0.6.5-0.20230504074516-dc71cdc37f0c
 	sigs.k8s.io/controller-runtime v0.13.1
 	sigs.k8s.io/yaml v1.3.0
-	x-helm.dev/apimachinery v0.0.9-0.20230430191007-eaa20f4bc638
+	x-helm.dev/apimachinery v0.0.9-0.20230504073133-059a2432d5a2
 )
 
 require (
@@ -227,4 +227,4 @@ require (
 	sigs.k8s.io/structured-merge-diff/v4 v4.2.3 // indirect
 )
 
-replace helm.sh/helm/v3 => github.com/x-helm/helm/v3 v3.10.2-0.20230430184223-44219d018af9
+replace helm.sh/helm/v3 => github.com/x-helm/helm/v3 v3.10.2-0.20230503230011-a8f5ce951c95

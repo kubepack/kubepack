@@ -45,8 +45,8 @@ func GenerateYAMLScript(bs *BlobStore, reg repo.IRegistry, order releasesapi.Ord
 		}
 	}
 
-	if !scriptOptions.DisableApplicationCRD {
-		f1 := &ApplicationCRDRegPrinter{
+	if !scriptOptions.DisableAppReleaseCRD {
+		f1 := &AppReleaseCRDRegPrinter{
 			W: &buf,
 		}
 		err = f1.Do()
@@ -105,7 +105,7 @@ func GenerateYAMLScript(bs *BlobStore, reg repo.IRegistry, order releasesapi.Ord
 			}
 		}
 
-		if !scriptOptions.DisableApplicationCRD {
+		if !scriptOptions.DisableAppReleaseCRD {
 			f6 := &ApplicationGenerator{
 				Registry:    reg,
 				Chart:       *pkg.Chart,

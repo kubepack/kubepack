@@ -3,6 +3,7 @@ package action
 import (
 	"fmt"
 	"log"
+	"sort"
 	"strings"
 
 	fluxhelm "github.com/fluxcd/helm-controller/api/v2beta1"
@@ -220,4 +221,16 @@ func updateLabels(rlsName string, obj map[string]interface{}, fields ...string) 
 		labels[key] = rlsName
 	}
 	return unstructured.SetNestedStringMap(obj, labels, fields...)
+}
+
+func ExtractResourceKeys(vals map[string]interface{}) []string {
+	if resources, ok, err := unstructured.NestedMap(vals, "resources"); err == nil && ok {
+		resourceKeys := make([]string, 0, len(resources))
+		for k := range resources {
+			resourceKeys = append(resourceKeys, k)
+		}
+		sort.Strings(resourceKeys)
+		return resourceKeys
+	}
+	return nil
 }
