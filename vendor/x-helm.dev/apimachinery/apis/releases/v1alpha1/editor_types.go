@@ -28,6 +28,12 @@ type Metadata struct {
 	Release  ObjectMeta       `json:"release"`
 }
 
+type MetadataFlat struct {
+	kmapi.ResourceID `json:",inline"`
+	ReleaseName      string `json:"releaseName"`
+	Namespace        string `json:"namespace"`
+}
+
 type ObjectMeta struct {
 	Name      string `json:"name"`
 	Namespace string `json:"namespace"`

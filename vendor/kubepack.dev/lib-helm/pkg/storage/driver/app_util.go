@@ -25,6 +25,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/gabriel-vasile/mimetype"
 	"github.com/gobuffalo/flect"
@@ -33,16 +34,21 @@ import (
 	"helm.sh/helm/v3/pkg/release"
 	rspb "helm.sh/helm/v3/pkg/release"
 	helmtime "helm.sh/helm/v3/pkg/time"
+	crd_cs "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
+	"k8s.io/client-go/rest"
+	"kmodules.xyz/client-go/apiextensions"
+	disco_util "kmodules.xyz/client-go/discovery"
 	"kmodules.xyz/client-go/tools/parser"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/yaml"
 	driversapi "x-helm.dev/apimachinery/apis/drivers/v1alpha1"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 	"x-helm.dev/apimachinery/apis/shared"
 )
 
@@ -178,13 +184,7 @@ func newAppReleaseObject(rls *rspb.Release) (*driversapi.AppRelease, error) {
 		obj.Spec.FormKeys = strings.Split(rls.Chart.Metadata.Annotations["meta.x-helm.dev/form-keys"], ",")
 	}
 
-	components, _, err := parser.ExtractComponentGVKs([]byte(rls.Manifest))
-	if err != nil {
-		// WARNING(tamal): This error should never happen
-		return nil, err
-	}
-
-	// TODO(tamal): Should it be merged or be if/else based on whether it is an editor chart
+	components := make(map[metav1.GroupVersionKind]struct{})
 	if data, ok := rls.Chart.Metadata.Annotations["meta.x-helm.dev/resources"]; ok && data != "" {
 		var gvks []metav1.GroupVersionKind
 		err := yaml.Unmarshal([]byte(data), &gvks)
@@ -193,6 +193,13 @@ func newAppReleaseObject(rls *rspb.Release) (*driversapi.AppRelease, error) {
 		}
 		for _, gvk := range gvks {
 			components[gvk] = empty
+		}
+	} else {
+		var err error
+		components, _, err = parser.ExtractComponentGVKs([]byte(rls.Manifest))
+		if err != nil {
+			// WARNING(tamal): This error should never happen
+			return nil, err
 		}
 	}
 	gvks := make([]metav1.GroupVersionKind, 0, len(components))
@@ -425,4 +432,150 @@ func ResourceFilename(apiVersion, kind, chartName, name string) (string, string,
 	nameSuffix = flect.Pascalize(nameSuffix)
 
 	return flect.Underscore(kind), flect.Underscore(kind + nameSuffix), flect.Underscore(groupPrefix + kind + nameSuffix)
+}
+
+func GenerateAppReleaseObject(chrt *chart.Chart, model releasesapi.Metadata) (*driversapi.AppRelease, error) {
+	const owner = "helm"
+
+	appName := model.Release.Name
+	if partOf, ok := chrt.Metadata.Annotations["app.kubernetes.io/part-of"]; ok {
+		appName = partOf
+	}
+	now := time.Now()
+
+	// create and return configmap object
+	obj := &driversapi.AppRelease{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      appName,
+			Namespace: model.Release.Namespace,
+			// labels are required by https://github.com/x-helm/helm/blob/ac-1.25.1/pkg/storage/storage.go#L140-L144
+			Labels: map[string]string{
+				"owner":                 owner,
+				labelScopeReleaseName:   model.Release.Name,
+				labelScopeReleaseStatus: release.StatusDeployed.String(),
+			},
+		},
+		Spec: driversapi.AppReleaseSpec{
+			Descriptor: driversapi.Descriptor{
+				Type:        chrt.Metadata.Type,
+				Version:     chrt.Metadata.AppVersion,
+				Description: chrt.Metadata.Description, // rls.Info.Description,
+				Owners:      nil,                       // FIX
+				Keywords:    chrt.Metadata.Keywords,
+				Links: []shared.Link{
+					{
+						Description: "website",
+						URL:         chrt.Metadata.Home,
+					},
+				},
+				Notes: "", // rls.Info.Notes,
+			},
+			Release: driversapi.ReleaseInfo{
+				Name:    model.Release.Name,
+				Version: "1", // strconv.Itoa(rls.Version),
+				Status:  release.StatusDeployed.String(),
+				// Status:        string(rls.Info.Status),
+				FirstDeployed: &metav1.Time{Time: now.UTC()},
+				LastDeployed:  &metav1.Time{Time: now.UTC()},
+			},
+			Components:   nil,
+			Selector:     nil,
+			ResourceKeys: nil,
+		},
+	}
+	if chrt.Metadata.Icon != "" {
+		var imgType string
+		if resp, err := http.Get(chrt.Metadata.Icon); err == nil {
+			if mime, err := mimetype.DetectReader(resp.Body); err == nil {
+				imgType = mime.String()
+			}
+			_ = resp.Body.Close()
+		}
+		obj.Spec.Descriptor.Icons = []shared.ImageSpec{
+			{
+				Source: chrt.Metadata.Icon,
+				// TotalSize: "",
+				Type: imgType,
+			},
+		}
+	}
+	for _, maintainer := range chrt.Metadata.Maintainers {
+		obj.Spec.Descriptor.Maintainers = append(obj.Spec.Descriptor.Maintainers, shared.ContactData{
+			Name:  maintainer.Name,
+			URL:   maintainer.URL,
+			Email: maintainer.Email,
+		})
+	}
+
+	if data, ok := chrt.Metadata.Annotations["meta.x-helm.dev/editor"]; ok && data != "" {
+		var gvr metav1.GroupVersionResource
+		if err := json.Unmarshal([]byte(data), &gvr); err != nil {
+			return nil, err
+		} else {
+			obj.Spec.Editor = &gvr
+		}
+	}
+
+	//lbl := map[string]string{
+	//	"app.kubernetes.io/managed-by": "Helm",
+	//}
+	lbl := map[string]string{}
+	if partOf, ok := chrt.Metadata.Annotations["app.kubernetes.io/part-of"]; ok && partOf != "" {
+		lbl["app.kubernetes.io/part-of"] = partOf
+	} else {
+		lbl["app.kubernetes.io/instance"] = model.Release.Name
+
+		// ref : https://github.com/x-helm/helm/blob/ac-1.25.1/pkg/action/validate.go#L211-L217
+		if obj.Spec.Editor != nil {
+			lbl["app.kubernetes.io/name"] = fmt.Sprintf("%s.%s", obj.Spec.Editor.Resource, obj.Spec.Editor.Group)
+		}
+	}
+	obj.Spec.Selector = &metav1.LabelSelector{
+		MatchLabels: lbl,
+	}
+
+	if obj.Spec.Editor != nil {
+		if f, ok := chrt.Values["form"]; ok {
+			if fd, err := json.Marshal(f); err == nil {
+				obj.Spec.Release.Form = &runtime.RawExtension{Raw: fd}
+			}
+		}
+
+		obj.Spec.ResourceKeys = strings.Split(chrt.Metadata.Annotations["meta.x-helm.dev/resource-keys"], ",")
+		obj.Spec.FormKeys = strings.Split(chrt.Metadata.Annotations["meta.x-helm.dev/form-keys"], ",")
+	}
+
+	if data, ok := chrt.Metadata.Annotations["meta.x-helm.dev/resources"]; ok && data != "" {
+		var gvks []metav1.GroupVersionKind
+		err := yaml.Unmarshal([]byte(data), &gvks)
+		if err != nil {
+			return nil, err
+		}
+		obj.Spec.Components = gvks
+	}
+
+	return obj, nil
+}
+
+func EnsureAppReleaseCRD(restcfg *rest.Config, mapper meta.RESTMapper) error {
+	rsmapper := disco_util.NewResourceMapper(mapper)
+	appcrdRegistered, err := rsmapper.ExistsGVR(driversapi.GroupVersion.WithResource("appreleases"))
+	if err != nil {
+		return fmt.Errorf("failed to detect if AppRelease CRD is registered, reason %v", err)
+	}
+	if !appcrdRegistered {
+		// register AppRelease CRD
+		crds := []*apiextensions.CustomResourceDefinition{
+			driversapi.AppRelease{}.CustomResourceDefinition(),
+		}
+		crdClient, err := crd_cs.NewForConfig(restcfg)
+		if err != nil {
+			return fmt.Errorf("failed to create crd client, reason %v", err)
+		}
+		err = apiextensions.RegisterCRDs(crdClient, crds)
+		if err != nil {
+			return fmt.Errorf("failed to register appRelease crd, reason %v", err)
+		}
+	}
+	return nil
 }

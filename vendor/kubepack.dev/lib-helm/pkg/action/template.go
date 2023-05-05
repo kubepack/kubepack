@@ -92,7 +92,17 @@ func (x *Renderer) WithRegistry(reg repo.IRegistry) *Renderer {
 	return x
 }
 
-func (x *Renderer) Run() (string, map[string]string, error) {
+func (x *Renderer) WithReleaseName(name string) *Renderer {
+	x.opts.ReleaseName = name
+	return x
+}
+
+func (x *Renderer) WithNamespace(ns string) *Renderer {
+	x.opts.Namespace = ns
+	return x
+}
+
+func (x *Renderer) Run() (string, map[string][]string, error) {
 	cmd := ha.NewInstall(x.cfg)
 	var extraAPIs []string
 	cmd.DryRun = x.opts.DryRun
@@ -162,7 +172,7 @@ func (x *Renderer) Run() (string, map[string]string, error) {
 		}
 	}
 
-	files := map[string]string{}
+	files := map[string][]string{}
 
 	// This is necessary to ensure consistent manifest ordering when using --show-only
 	// with globs or directory names.
@@ -181,7 +191,7 @@ func (x *Renderer) Run() (string, map[string]string, error) {
 		// well as macOS/linux
 		manifestPath := strings.Join(manifestPathSplit, "/")
 
-		files[manifestPath] = manifest
+		files[manifestPath] = append(files[manifestPath], manifest)
 	}
 
 	return manifests.String(), files, nil

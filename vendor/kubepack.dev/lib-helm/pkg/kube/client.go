@@ -271,7 +271,7 @@ func (c *Client) checkStatusExceptJobs(resources kube.ResourceList, timeout time
 		return fmt.Errorf("c.Client.Factory is not a cmdutil.Factory")
 	}
 
-	cfg, err := factory.ToRawKubeConfigLoader().ClientConfig()
+	cfg, err := factory.ToRESTConfig()
 	if err != nil {
 		return err
 	}

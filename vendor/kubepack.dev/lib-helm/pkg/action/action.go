@@ -24,14 +24,10 @@ import (
 	"helm.sh/helm/v3/pkg/kube"
 	"helm.sh/helm/v3/pkg/storage"
 	"helm.sh/helm/v3/pkg/storage/driver"
-	crd_cs "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
-	"kmodules.xyz/client-go/apiextensions"
-	disco_util "kmodules.xyz/client-go/discovery"
 	kubex "kubepack.dev/lib-helm/pkg/kube"
 	driver2 "kubepack.dev/lib-helm/pkg/storage/driver"
 	"sigs.k8s.io/controller-runtime/pkg/client"
-	driversapi "x-helm.dev/apimachinery/apis/drivers/v1alpha1"
 )
 
 // Configuration injects the dependencies that all actions share.
@@ -70,7 +66,7 @@ func (c *Configuration) Init(getter genericclioptions.RESTClientGetter, namespac
 		namespace: namespace,
 		kcFn:      factory.KubernetesClientSet,
 		kbFn: func() (client.Client, error) {
-			config, err := factory.ToRawKubeConfigLoader().ClientConfig()
+			config, err := getter.ToRESTConfig()
 			if err != nil {
 				return nil, err
 			}
@@ -81,33 +77,19 @@ func (c *Configuration) Init(getter genericclioptions.RESTClientGetter, namespac
 	var store *storage.Storage
 	switch helmDriver {
 	case "drivers.x-helm.dev/appreleases":
+		restcfg, err := getter.ToRESTConfig()
+		if err != nil {
+			return fmt.Errorf("failed to get rest config, reason %v", err)
+		}
 		mapper, err := getter.ToRESTMapper()
 		if err != nil {
 			return err
 		}
-		rsmapper := disco_util.NewResourceMapper(mapper)
-		appcrdRegistered, err := rsmapper.ExistsGVR(driversapi.GroupVersion.WithResource("appreleases"))
+		err = driver2.EnsureAppReleaseCRD(restcfg, mapper)
 		if err != nil {
-			return fmt.Errorf("failed to detect if AppRelease CRD is registered, reason %v", err)
+			return err
 		}
-		if !appcrdRegistered {
-			// register AppRelease CRD
-			crds := []*apiextensions.CustomResourceDefinition{
-				driversapi.AppRelease{}.CustomResourceDefinition(),
-			}
-			restcfg, err := getter.ToRESTConfig()
-			if err != nil {
-				return fmt.Errorf("failed to get rest config, reason %v", err)
-			}
-			crdClient, err := crd_cs.NewForConfig(restcfg)
-			if err != nil {
-				return fmt.Errorf("failed to create crd client, reason %v", err)
-			}
-			err = apiextensions.RegisterCRDs(crdClient, crds)
-			if err != nil {
-				return fmt.Errorf("failed to register appRelease crd, reason %v", err)
-			}
-		}
+
 		d := driver2.NewAppReleases(newAppReleaseClient(lazyClient))
 		d.Log = log
 		store = storage.Init(d)
