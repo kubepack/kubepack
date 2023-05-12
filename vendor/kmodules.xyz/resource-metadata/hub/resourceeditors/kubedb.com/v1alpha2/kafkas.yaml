@@ -9,9 +9,45 @@ metadata:
     k8s.io/version: v1alpha2
   name: kubedb.com-v1alpha2-kafkas
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/kafkas.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/kafkas.png
+    type: image/png
   resource:
     group: kubedb.com
     kind: Kafka
     name: kafkas
     scope: Namespaced
     version: v1alpha2
+  ui:
+    actions:
+    - items:
+      - editor:
+          name: kubedbcom-kafka-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: bytebuilders-ui
+          version: v0.4.15
+        flow: standalone-edit
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/menu/monitoring.svg
+          type: image/svg+xml
+        name: Monitoring
+        operationId: edit-self-monitoring
+      name: Security & Monitoring
+    editor:
+      name: kubedbcom-kafka-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.15
+    options:
+      name: kubedbcom-kafka-editor-options
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.15

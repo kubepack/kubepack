@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: mutations.gatekeeper.sh
+    k8s.io/kind: AssignMetadata
+    k8s.io/resource: assignmetadata
+    k8s.io/version: v1
+  name: mutations.gatekeeper.sh-v1-assignmetadata
+spec:
+  resource:
+    group: mutations.gatekeeper.sh
+    kind: AssignMetadata
+    name: assignmetadata
+    scope: Cluster
+    version: v1
+  ui:
+    editor:
+      name: mutationsgatekeepersh-assignmetadata-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.15

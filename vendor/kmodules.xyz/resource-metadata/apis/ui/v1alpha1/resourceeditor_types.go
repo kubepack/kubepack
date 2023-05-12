@@ -22,6 +22,8 @@ import (
 
 	core "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
+	helmshared "x-helm.dev/apimachinery/apis/shared"
 )
 
 const (
@@ -53,15 +55,15 @@ type ResourceEditorSpec struct {
 	UI       *UIParameters    `json:"ui,omitempty"`
 	// Icons is an optional list of icons for an application. Icon information includes the source, size,
 	// and mime type.
-	Icons []shared.ImageSpec `json:"icons,omitempty"`
+	Icons []helmshared.ImageSpec `json:"icons,omitempty"`
 	// Kind == VendorChartPreset | ClusterChartPreset
 	Variants  []VariantRef                 `json:"variants,omitempty"`
 	Installer *shared.DeploymentParameters `json:"installer,omitempty"`
 }
 
 type UIParameters struct {
-	Options *shared.ChartRepoRef `json:"options,omitempty"`
-	Editor  *shared.ChartRepoRef `json:"editor,omitempty"`
+	Options *releasesapi.ChartSourceRef `json:"options,omitempty"`
+	Editor  *releasesapi.ChartSourceRef `json:"editor,omitempty"`
 	// app.kubernetes.io/instance label must be updated at these paths when refilling metadata
 	// +optional
 	InstanceLabelPaths []string `json:"instanceLabelPaths,omitempty"`
@@ -77,11 +79,11 @@ type ActionTemplateGroup struct {
 type ActionTemplate struct {
 	shared.ActionInfo `json:",inline,omitempty"`
 	// +optional
-	Icons            []shared.ImageSpec   `json:"icons,omitempty"`
-	OperationID      string               `json:"operationId"`
-	Flow             string               `json:"flow"`
-	DisabledTemplate string               `json:"disabledTemplate,omitempty"`
-	Editor           *shared.ChartRepoRef `json:"editor,omitempty"`
+	Icons            []helmshared.ImageSpec      `json:"icons,omitempty"`
+	OperationID      string                      `json:"operationId"`
+	Flow             string                      `json:"flow"`
+	DisabledTemplate string                      `json:"disabledTemplate,omitempty"`
+	Editor           *releasesapi.ChartSourceRef `json:"editor,omitempty"`
 }
 
 type VariantRef struct {
@@ -89,7 +91,7 @@ type VariantRef struct {
 
 	// Icons is an optional list of icons for an application. Icon information includes the source, size,
 	// and mime type.
-	Icons []shared.ImageSpec `json:"icons,omitempty"`
+	Icons []helmshared.ImageSpec `json:"icons,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

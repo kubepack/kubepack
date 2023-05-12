@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: match.gatekeeper.sh
+    k8s.io/kind: DummyCRD
+    k8s.io/resource: matchcrd
+    k8s.io/version: match
+  name: match.gatekeeper.sh-match-matchcrd
+spec:
+  resource:
+    group: match.gatekeeper.sh
+    kind: DummyCRD
+    name: matchcrd
+    scope: Namespaced
+    version: match
+  ui:
+    editor:
+      name: matchgatekeepersh-dummycrd-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.15

@@ -9,6 +9,11 @@ metadata:
     k8s.io/version: v1alpha2
   name: kubedb.com-v1alpha2-redissentinels
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/redissentinels.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/redissentinels.png
+    type: image/png
   resource:
     group: kubedb.com
     kind: RedisSentinel
@@ -22,4 +27,4 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: bytebuilders-ui
-      version: v0.4.14
+      version: v0.4.15

@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: mutations.gatekeeper.sh
+    k8s.io/kind: ModifySet
+    k8s.io/resource: modifyset
+    k8s.io/version: v1alpha1
+  name: mutations.gatekeeper.sh-v1alpha1-modifyset
+spec:
+  resource:
+    group: mutations.gatekeeper.sh
+    kind: ModifySet
+    name: modifyset
+    scope: Cluster
+    version: v1alpha1

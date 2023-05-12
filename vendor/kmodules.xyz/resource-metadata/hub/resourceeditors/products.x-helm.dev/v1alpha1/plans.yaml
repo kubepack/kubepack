@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: products.x-helm.dev
+    k8s.io/kind: Plan
+    k8s.io/resource: plans
+    k8s.io/version: v1alpha1
+  name: products.x-helm.dev-v1alpha1-plans
+spec:
+  resource:
+    group: products.x-helm.dev
+    kind: Plan
+    name: plans
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: productsxhelmdev-plan-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.15

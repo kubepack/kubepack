@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: config.gatekeeper.sh
+    k8s.io/kind: Config
+    k8s.io/resource: configs
+    k8s.io/version: v1alpha1
+  name: config.gatekeeper.sh-v1alpha1-configs
+spec:
+  resource:
+    group: config.gatekeeper.sh
+    kind: Config
+    name: configs
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: configgatekeepersh-config-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.15

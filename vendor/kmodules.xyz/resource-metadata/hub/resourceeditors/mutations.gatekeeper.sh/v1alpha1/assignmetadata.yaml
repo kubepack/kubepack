@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: mutations.gatekeeper.sh
+    k8s.io/kind: AssignMetadata
+    k8s.io/resource: assignmetadata
+    k8s.io/version: v1alpha1
+  name: mutations.gatekeeper.sh-v1alpha1-assignmetadata
+spec:
+  resource:
+    group: mutations.gatekeeper.sh
+    kind: AssignMetadata
+    name: assignmetadata
+    scope: Cluster
+    version: v1alpha1

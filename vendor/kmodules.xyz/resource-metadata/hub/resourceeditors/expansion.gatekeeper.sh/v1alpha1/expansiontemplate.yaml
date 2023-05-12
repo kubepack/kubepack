@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: expansion.gatekeeper.sh
+    k8s.io/kind: ExpansionTemplate
+    k8s.io/resource: expansiontemplate
+    k8s.io/version: v1alpha1
+  name: expansion.gatekeeper.sh-v1alpha1-expansiontemplate
+spec:
+  resource:
+    group: expansion.gatekeeper.sh
+    kind: ExpansionTemplate
+    name: expansiontemplate
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: expansiongatekeepersh-expansiontemplate-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.15

@@ -17,9 +17,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"kmodules.xyz/resource-metadata/apis/shared"
-
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
+	helmshared "x-helm.dev/apimachinery/apis/shared"
 )
 
 const (
@@ -55,7 +55,7 @@ type FeatureSetSpec struct {
 	Description string `json:"description"`
 	// Icons is an optional list of icons for an application. Icon information includes the source, size,
 	// and mime type. These icons will be used in UI.
-	Icons []shared.ImageSpec `json:"icons,omitempty"`
+	Icons []helmshared.ImageSpec `json:"icons,omitempty"`
 	// Required specify whether this feature set is mandatory or not for using the UI.
 	// +optional
 	Required bool `json:"required,omitempty"`
@@ -63,7 +63,7 @@ type FeatureSetSpec struct {
 	// +optional
 	RequiredFeatures []string `json:"requiredFeatures,omitempty"`
 	// Chart specifies the chart that contains the respective resources for component features and the UI wizard.
-	Chart shared.ExpandedChartRepoRef `json:"chart"`
+	Chart releasesapi.ChartSourceRef `json:"chart"`
 }
 
 type FeatureSetStatus struct {

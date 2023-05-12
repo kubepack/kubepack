@@ -9,9 +9,22 @@ metadata:
     k8s.io/version: v1beta1
   name: cluster.x-k8s.io-v1beta1-machinesets
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/cluster.x-k8s.io/machinesets.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/cluster.x-k8s.io/machinesets.png
+    type: image/png
   resource:
     group: cluster.x-k8s.io
     kind: MachineSet
     name: machinesets
     scope: Namespaced
     version: v1beta1
+  ui:
+    editor:
+      name: clusterxk8sio-machineset-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.15
