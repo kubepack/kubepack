@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: status.gatekeeper.sh
+    k8s.io/kind: ConstraintTemplatePodStatus
+    k8s.io/resource: constrainttemplatepodstatuses
+    k8s.io/version: v1beta1
+  name: status.gatekeeper.sh-v1beta1-constrainttemplatepodstatuses
+spec:
+  resource:
+    group: status.gatekeeper.sh
+    kind: ConstraintTemplatePodStatus
+    name: constrainttemplatepodstatuses
+    scope: Namespaced
+    version: v1beta1
+  ui:
+    editor:
+      name: statusgatekeepersh-constrainttemplatepodstatus-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.15

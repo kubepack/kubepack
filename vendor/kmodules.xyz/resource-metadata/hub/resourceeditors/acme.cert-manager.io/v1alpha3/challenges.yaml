@@ -9,6 +9,11 @@ metadata:
     k8s.io/version: v1alpha3
   name: acme.cert-manager.io-v1alpha3-challenges
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/acme.cert-manager.io/challenges.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/acme.cert-manager.io/challenges.png
+    type: image/png
   resource:
     group: acme.cert-manager.io
     kind: Challenge

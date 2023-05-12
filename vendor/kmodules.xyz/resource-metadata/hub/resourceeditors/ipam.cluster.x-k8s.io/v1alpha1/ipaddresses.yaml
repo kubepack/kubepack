@@ -15,3 +15,11 @@ spec:
     name: ipaddresses
     scope: Namespaced
     version: v1alpha1
+  ui:
+    editor:
+      name: ipamclusterxk8sio-ipaddress-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.15

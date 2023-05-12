@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: drivers.x-helm.dev
+    k8s.io/kind: AppRelease
+    k8s.io/resource: appreleases
+    k8s.io/version: v1alpha1
+  name: drivers.x-helm.dev-v1alpha1-appreleases
+spec:
+  resource:
+    group: drivers.x-helm.dev
+    kind: AppRelease
+    name: appreleases
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: driversxhelmdev-apprelease-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.15

@@ -45,17 +45,35 @@ spec:
                           disabledTemplate:
                             type: string
                           editor:
-                            description: ExpandedChartRepoRef references to a single
-                              version of a Chart
+                            description: ChartSourceRef references to a single version
+                              of a Chart
                             properties:
                               name:
                                 type: string
-                              url:
-                                type: string
+                              sourceRef:
+                                description: TypedObjectReference represents an typed
+                                  namespaced object.
+                                properties:
+                                  apiGroup:
+                                    type: string
+                                  kind:
+                                    type: string
+                                  name:
+                                    description: 'Name of the referent. More info:
+                                      https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                                    type: string
+                                  namespace:
+                                    description: 'Namespace of the referent. More
+                                      info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                                    type: string
+                                required:
+                                - name
+                                type: object
                               version:
                                 type: string
                             required:
                             - name
+                            - sourceRef
                             - version
                             type: object
                           flow:

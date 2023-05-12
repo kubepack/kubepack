@@ -18,9 +18,9 @@ package v1alpha1
 
 import (
 	v1 "kmodules.xyz/client-go/api/v1"
-	"kmodules.xyz/resource-metadata/apis/shared"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	helmshared "x-helm.dev/apimachinery/apis/shared"
 )
 
 const (
@@ -56,7 +56,7 @@ type FeatureSpec struct {
 	Description string `json:"description"`
 	// Icons is an optional list of icons for an application. Icon information includes the source, size,
 	// and mime type. These icons will be used in UI.
-	Icons []shared.ImageSpec `json:"icons,omitempty"`
+	Icons []helmshared.ImageSpec `json:"icons,omitempty"`
 	// FeatureSet specifies the name of the FeatureSet where this feature belong to.
 	FeatureSet string `json:"featureSet"`
 	// Required specify whether this feature is mandatory or not for enabling the respecting FeatureSet.
