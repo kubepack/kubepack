@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"io/fs"
 
+	fluxsrc "github.com/fluxcd/source-controller/api/v1beta2"
 	"kubepack.dev/lib-helm/pkg/chart/loader"
 	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
 type IRegistry interface {
 	GetChart(srcRef releasesapi.ChartSourceRef) (*ChartExtended, error)
+	GetHelmRepository(srcRef releasesapi.ChartSourceRef) (*fluxsrc.HelmRepository, error)
 }
 
 type EmbeddedRegistry struct {
@@ -42,4 +44,8 @@ func (r EmbeddedRegistry) GetChart(srcRef releasesapi.ChartSourceRef) (*ChartExt
 	return &ChartExtended{
 		Chart: chrt,
 	}, nil
+}
+
+func (r EmbeddedRegistry) GetHelmRepository(obj releasesapi.ChartSourceRef) (*fluxsrc.HelmRepository, error) {
+	return nil, fmt.Errorf("no helmrepository exists for EmbeddedRegistry")
 }

@@ -344,6 +344,29 @@ func (r *Registry) getLegacyChart(repository, chartName, chartVersion string) (*
 	return cx, nil
 }
 
+func (r *Registry) GetHelmRepository(obj releasesapi.ChartSourceRef) (*fluxsrc.HelmRepository, error) {
+	obj.SetDefaults()
+
+	switch obj.SourceRef.Kind {
+	case releasesapi.SourceKindHelmRepository:
+		if obj.SourceRef.Namespace == "" || obj.SourceRef.Name == "" {
+			return nil, fmt.Errorf("missing name or namespace for HelmRepository %+v", obj.SourceRef)
+		}
+		if r.kc == nil {
+			return nil, fmt.Errorf("kubernetes client not initialized for HelmRepository %+v", obj.SourceRef)
+		}
+
+		var repo fluxsrc.HelmRepository
+		err := r.kc.Get(context.TODO(), client.ObjectKey{Namespace: obj.SourceRef.Namespace, Name: obj.SourceRef.Name}, &repo)
+		if err != nil {
+			return nil, err
+		}
+		return &repo, nil
+	default:
+		return nil, fmt.Errorf("source kind must be HelmRepository")
+	}
+}
+
 // ChartExtended represents a chart with metadata from its entry in the IndexFile
 type ChartExtended struct {
 	*chart.Chart

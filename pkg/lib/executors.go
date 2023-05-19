@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"net/url"
 	"os"
 	"path"
 	"sort"
@@ -45,6 +46,7 @@ import (
 	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chartutil"
+	"helm.sh/helm/v3/pkg/registry"
 	"helm.sh/helm/v3/pkg/release"
 	authorization "k8s.io/api/authorization/v1"
 	core "k8s.io/api/core/v1"
@@ -309,65 +311,104 @@ func (x *Helm3CommandPrinter) Do() error {
 		return err
 	}
 
-	//reponame, err := repo.DefaultNamer.Name(x.ChartRef.URL)
-	//if err != nil {
-	//	return err
-	//}
-
-	reponame := x.ChartRef.Name
-
-	var buf bytes.Buffer
+	repoURL := x.ChartRef.SourceRef.Name
+	switch x.ChartRef.SourceRef.Kind {
+	case releasesapi.SourceKindHelmRepository:
+		helmRepo, err := x.Registry.GetHelmRepository(releasesapi.ChartSourceRef{
+			Name:      x.ChartRef.Name,
+			Version:   x.Version,
+			SourceRef: x.ChartRef.SourceRef,
+		})
+		if err != nil {
+			return err
+		}
+		repoURL = helmRepo.Spec.URL
+	}
 
 	/*
 		$ helm repo add appscode https://charts.appscode.com/stable/
 		$ helm repo update
 		$ helm search repo appscode/voyager --version v12.0.0-rc.1
 	*/
-	_, err = fmt.Fprintf(&buf, "# add helm repository %s\n", reponame)
-	if err != nil {
-		return err
-	}
-	// FixIt(tamal): generate command for OCI registry
-	_, err = fmt.Fprintf(&buf, "helm repo add %s %s\n", reponame, x.ChartRef.SourceRef.Namespace)
-	if err != nil {
-		return err
-	}
-	_, err = fmt.Fprintf(&buf, "helm repo update\n")
-	if err != nil {
-		return err
-	}
-	if x.Version != "" {
-		_, err = fmt.Fprintf(&buf, "helm search repo %s/%s --version %s\n", reponame, x.ChartRef.Name, x.Version)
+
+	var buf bytes.Buffer
+	if !registry.IsOCI(repoURL) {
+		reponame, err := repo.DefaultNamer.Name(repoURL)
 		if err != nil {
 			return err
 		}
-	} else {
-		_, err = fmt.Fprintf(&buf, "helm search repo %s/%s\n", reponame, x.ChartRef.Name)
+
+		_, err = fmt.Fprintf(&buf, "# add helm repository %s\n", reponame)
 		if err != nil {
 			return err
+		}
+		_, err = fmt.Fprintf(&buf, "helm repo add %s %s\n", reponame, repoURL)
+		if err != nil {
+			return err
+		}
+		_, err = fmt.Fprintf(&buf, "helm repo update\n")
+		if err != nil {
+			return err
+		}
+
+		if x.Version != "" {
+			_, err = fmt.Fprintf(&buf, "helm search repo %s/%s --version %s\n", reponame, x.ChartRef.Name, x.Version)
+			if err != nil {
+				return err
+			}
+		} else {
+			_, err = fmt.Fprintf(&buf, "helm search repo %s/%s\n", reponame, x.ChartRef.Name)
+			if err != nil {
+				return err
+			}
+		}
+
+		/*
+			$ helm upgrade --install voyager-operator appscode/voyager --version v12.0.0-rc.1 \
+			  --namespace kube-system \
+			  --set cloudProvider=$provider
+		*/
+		_, err = fmt.Fprintf(&buf, "# install chart %s/%s\n", reponame, x.ChartRef.Name)
+		if err != nil {
+			return err
+		}
+		if x.Version != "" {
+			_, err = fmt.Fprintf(&buf, "helm upgrade --install %s %s/%s --version %s \\\n", x.ReleaseName, reponame, x.ChartRef.Name, x.Version)
+			if err != nil {
+				return err
+			}
+		} else {
+			_, err = fmt.Fprintf(&buf, "helm upgrade --install %s %s/%s \\\n", x.ReleaseName, reponame, x.ChartRef.Name)
+			if err != nil {
+				return err
+			}
+		}
+	} else {
+		u, err := url.Parse(repoURL)
+		if err != nil {
+			return err
+		}
+		u.Path = path.Join(u.Path, x.ChartRef.Name)
+		u.User = nil
+		repoURL = u.String()
+
+		_, err = fmt.Fprintf(&buf, "# install chart %s\n", repoURL)
+		if err != nil {
+			return err
+		}
+		if x.Version != "" {
+			_, err = fmt.Fprintf(&buf, "helm upgrade --install %s %s/%s --version %s \\\n", x.ReleaseName, repoURL, x.ChartRef.Name, x.Version)
+			if err != nil {
+				return err
+			}
+		} else {
+			_, err = fmt.Fprintf(&buf, "helm upgrade --install %s %s/%s \\\n", x.ReleaseName, repoURL, x.ChartRef.Name)
+			if err != nil {
+				return err
+			}
 		}
 	}
 
-	/*
-		$ helm upgrade --install voyager-operator appscode/voyager --version v12.0.0-rc.1 \
-		  --namespace kube-system \
-		  --set cloudProvider=$provider
-	*/
-	_, err = fmt.Fprintf(&buf, "# install chart %s/%s\n", reponame, x.ChartRef.Name)
-	if err != nil {
-		return err
-	}
-	if x.Version != "" {
-		_, err = fmt.Fprintf(&buf, "helm upgrade --install %s %s/%s --version %s \\\n", x.ReleaseName, reponame, x.ChartRef.Name, x.Version)
-		if err != nil {
-			return err
-		}
-	} else {
-		_, err = fmt.Fprintf(&buf, "helm upgrade --install %s %s/%s \\\n", x.ReleaseName, reponame, x.ChartRef.Name)
-		if err != nil {
-			return err
-		}
-	}
 	if x.Namespace != "" {
 		_, err = fmt.Fprintf(&buf, "%s--namespace %s --create-namespace \\\n", indent, x.Namespace)
 		if err != nil {
