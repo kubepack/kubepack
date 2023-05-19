@@ -26,7 +26,7 @@ require (
 	k8s.io/client-go v0.25.3
 	k8s.io/klog/v2 v2.80.1
 	kmodules.xyz/client-go v0.25.22
-	kubepack.dev/lib-helm v0.7.1-0.20230519115958-d6bf8560867b
+	kubepack.dev/lib-helm v0.7.1-0.20230519165954-10458737cc43
 	sigs.k8s.io/controller-runtime v0.13.1
 	sigs.k8s.io/yaml v1.3.0
 	x-helm.dev/apimachinery v0.0.9
