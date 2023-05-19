@@ -9,21 +9,33 @@ spec:
   - chart:
       bundle:
         name: kubedb-community
-        url: https://bundles.kubepack.com
         version: v0.13.0-rc.0
+        sourceRef:
+          apiGroup: charts.x-helm.dev
+          kind: Legacy
+          name: https://bundles.kubepack.com
       name: kubedb
+      sourceRef:
+        apiGroup: charts.x-helm.dev
+        kind: Legacy
+        name: https://charts.appscode.com/stable/
       namespace: kube-system
       releaseName: kubedb
-      url: https://charts.appscode.com/stable/
       version: v0.13.0-rc.0
   - chart:
       bundle:
         name: kubedb-community
-        url: https://bundles.kubepack.com
         version: v0.13.0-rc.0
+        sourceRef:
+          apiGroup: charts.x-helm.dev
+          kind: Legacy
+          name: https://bundles.kubepack.com
       name: kubedb-catalog
+      sourceRef:
+        apiGroup: charts.x-helm.dev
+        kind: Legacy
+        name: https://charts.appscode.com/stable/
       namespace: kube-system
       releaseName: kubedb-catalog
-      url: https://charts.appscode.com/stable/
       version: v0.13.0-rc.0
 status: {}

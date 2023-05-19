@@ -45,6 +45,7 @@ import (
 	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chartutil"
+	"helm.sh/helm/v3/pkg/registry"
 	"helm.sh/helm/v3/pkg/release"
 	authorization "k8s.io/api/authorization/v1"
 	core "k8s.io/api/core/v1"
@@ -309,42 +310,57 @@ func (x *Helm3CommandPrinter) Do() error {
 		return err
 	}
 
-	//reponame, err := repo.DefaultNamer.Name(x.ChartRef.URL)
-	//if err != nil {
-	//	return err
-	//}
-
-	reponame := x.ChartRef.Name
-
-	var buf bytes.Buffer
+	repoUrl := x.ChartRef.SourceRef.Name
+	switch x.ChartRef.SourceRef.Kind {
+	case releasesapi.SourceKindHelmRepository:
+		helmRepo, err := x.Registry.GetHelmRepository(releasesapi.ChartSourceRef{
+			Name:      x.ChartRef.Name,
+			Version:   x.Version,
+			SourceRef: x.ChartRef.SourceRef,
+		})
+		if err != nil {
+			return err
+		}
+		repoUrl = helmRepo.Spec.URL
+	}
 
 	/*
 		$ helm repo add appscode https://charts.appscode.com/stable/
 		$ helm repo update
 		$ helm search repo appscode/voyager --version v12.0.0-rc.1
 	*/
-	_, err = fmt.Fprintf(&buf, "# add helm repository %s\n", reponame)
-	if err != nil {
-		return err
-	}
-	// FixIt(tamal): generate command for OCI registry
-	_, err = fmt.Fprintf(&buf, "helm repo add %s %s\n", reponame, x.ChartRef.SourceRef.Namespace)
-	if err != nil {
-		return err
-	}
-	_, err = fmt.Fprintf(&buf, "helm repo update\n")
-	if err != nil {
-		return err
-	}
-	if x.Version != "" {
-		_, err = fmt.Fprintf(&buf, "helm search repo %s/%s --version %s\n", reponame, x.ChartRef.Name, x.Version)
+
+	var buf bytes.Buffer
+	reponame := repoUrl
+	if !registry.IsOCI(repoUrl) {
+		reponame, err = repo.DefaultNamer.Name(repoUrl)
 		if err != nil {
 			return err
 		}
-	} else {
-		_, err = fmt.Fprintf(&buf, "helm search repo %s/%s\n", reponame, x.ChartRef.Name)
+
+		_, err = fmt.Fprintf(&buf, "# add helm repository %s\n", reponame)
 		if err != nil {
 			return err
+		}
+		_, err = fmt.Fprintf(&buf, "helm repo add %s %s\n", reponame, repoUrl)
+		if err != nil {
+			return err
+		}
+		_, err = fmt.Fprintf(&buf, "helm repo update\n")
+		if err != nil {
+			return err
+		}
+
+		if x.Version != "" {
+			_, err = fmt.Fprintf(&buf, "helm search repo %s/%s --version %s\n", reponame, x.ChartRef.Name, x.Version)
+			if err != nil {
+				return err
+			}
+		} else {
+			_, err = fmt.Fprintf(&buf, "helm search repo %s/%s\n", reponame, x.ChartRef.Name)
+			if err != nil {
+				return err
+			}
 		}
 	}
 
