@@ -397,12 +397,12 @@ func (x *Helm3CommandPrinter) Do() error {
 			return err
 		}
 		if x.Version != "" {
-			_, err = fmt.Fprintf(&buf, "helm upgrade --install %s %s/%s --version %s \\\n", x.ReleaseName, repoURL, x.ChartRef.Name, x.Version)
+			_, err = fmt.Fprintf(&buf, "helm upgrade --install %s %s --version %s \\\n", x.ReleaseName, repoURL, x.Version)
 			if err != nil {
 				return err
 			}
 		} else {
-			_, err = fmt.Fprintf(&buf, "helm upgrade --install %s %s/%s \\\n", x.ReleaseName, repoURL, x.ChartRef.Name)
+			_, err = fmt.Fprintf(&buf, "helm upgrade --install %s %s \\\n", x.ReleaseName, repoURL)
 			if err != nil {
 				return err
 			}
