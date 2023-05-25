@@ -902,8 +902,8 @@ gomodules.xyz/blobfs/testing
 # gomodules.xyz/encoding v0.0.7
 ## explicit; go 1.17
 gomodules.xyz/encoding/json
-# gomodules.xyz/jsonpatch/v2 v2.2.0
-## explicit; go 1.12
+# gomodules.xyz/jsonpatch/v2 v2.3.0
+## explicit; go 1.20
 gomodules.xyz/jsonpatch/v2
 # gomodules.xyz/password-generator v0.2.7
 ## explicit; go 1.15
@@ -1464,7 +1464,7 @@ kmodules.xyz/apiversion
 # kmodules.xyz/apply v0.25.0
 ## explicit; go 1.18
 kmodules.xyz/apply
-# kmodules.xyz/client-go v0.25.22
+# kmodules.xyz/client-go v0.25.23
 ## explicit; go 1.18
 kmodules.xyz/client-go
 kmodules.xyz/client-go/api/v1
@@ -1478,7 +1478,7 @@ kmodules.xyz/client-go/tools/clientcmd
 kmodules.xyz/client-go/tools/clusterid
 kmodules.xyz/client-go/tools/parser
 kmodules.xyz/client-go/tools/wait
-# kmodules.xyz/resource-metadata v0.17.3
+# kmodules.xyz/resource-metadata v0.17.4
 ## explicit; go 1.18
 kmodules.xyz/resource-metadata/apis/shared
 kmodules.xyz/resource-metadata/apis/ui

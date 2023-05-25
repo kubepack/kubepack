@@ -16,7 +16,7 @@ require (
 	gocloud.dev v0.26.0
 	gomodules.xyz/blobfs v0.1.14
 	gomodules.xyz/encoding v0.0.7
-	gomodules.xyz/jsonpatch/v2 v2.2.0
+	gomodules.xyz/jsonpatch/v2 v2.3.0
 	gomodules.xyz/x v0.0.14
 	helm.sh/helm/v3 v3.10.3
 	k8s.io/api v0.25.3
@@ -25,7 +25,7 @@ require (
 	k8s.io/cli-runtime v0.25.3
 	k8s.io/client-go v0.25.3
 	k8s.io/klog/v2 v2.80.1
-	kmodules.xyz/client-go v0.25.22
+	kmodules.xyz/client-go v0.25.23
 	kubepack.dev/lib-helm v0.7.1-0.20230519165954-10458737cc43
 	sigs.k8s.io/controller-runtime v0.13.1
 	sigs.k8s.io/yaml v1.3.0
@@ -218,7 +218,7 @@ require (
 	k8s.io/utils v0.0.0-20221108210102-8e77b1f39fe2 // indirect
 	kmodules.xyz/apiversion v0.2.0 // indirect
 	kmodules.xyz/apply v0.25.0 // indirect
-	kmodules.xyz/resource-metadata v0.17.3 // indirect
+	kmodules.xyz/resource-metadata v0.17.4 // indirect
 	oras.land/oras-go v1.2.0 // indirect
 	sigs.k8s.io/cli-utils v0.34.0 // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
