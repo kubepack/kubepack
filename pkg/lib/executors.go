@@ -333,52 +333,23 @@ func (x *Helm3CommandPrinter) Do() error {
 
 	var buf bytes.Buffer
 	if !registry.IsOCI(repoURL) {
-		reponame, err := repo.DefaultNamer.Name(repoURL)
-		if err != nil {
-			return err
-		}
-
-		_, err = fmt.Fprintf(&buf, "# add helm repository %s\n", reponame)
-		if err != nil {
-			return err
-		}
-		_, err = fmt.Fprintf(&buf, "helm repo add %s %s\n", reponame, repoURL)
-		if err != nil {
-			return err
-		}
-		_, err = fmt.Fprintf(&buf, "helm repo update\n")
-		if err != nil {
-			return err
-		}
-
-		if x.Version != "" {
-			_, err = fmt.Fprintf(&buf, "helm search repo %s/%s --version %s\n", reponame, x.ChartRef.Name, x.Version)
-			if err != nil {
-				return err
-			}
-		} else {
-			_, err = fmt.Fprintf(&buf, "helm search repo %s/%s\n", reponame, x.ChartRef.Name)
-			if err != nil {
-				return err
-			}
-		}
-
 		/*
 			$ helm upgrade --install voyager-operator appscode/voyager --version v12.0.0-rc.1 \
 			  --namespace kube-system \
 			  --set cloudProvider=$provider
 		*/
-		_, err = fmt.Fprintf(&buf, "# install chart %s/%s\n", reponame, x.ChartRef.Name)
+		_, err = fmt.Fprintf(&buf, "helm upgrade --install %s %s \\\n", x.ReleaseName, x.ChartRef.Name)
 		if err != nil {
 			return err
 		}
+
 		if x.Version != "" {
-			_, err = fmt.Fprintf(&buf, "helm upgrade --install %s %s/%s --version %s \\\n", x.ReleaseName, reponame, x.ChartRef.Name, x.Version)
+			_, err = fmt.Fprintf(&buf, "%s--repo %s --version %s \\\n", indent, repoURL, x.Version)
 			if err != nil {
 				return err
 			}
 		} else {
-			_, err = fmt.Fprintf(&buf, "helm upgrade --install %s %s/%s \\\n", x.ReleaseName, reponame, x.ChartRef.Name)
+			_, err = fmt.Fprintf(&buf, "%s--repo %s \\\n", indent, repoURL)
 			if err != nil {
 				return err
 			}
@@ -392,10 +363,6 @@ func (x *Helm3CommandPrinter) Do() error {
 		u.User = nil
 		repoURL = u.String()
 
-		_, err = fmt.Fprintf(&buf, "# install chart %s\n", repoURL)
-		if err != nil {
-			return err
-		}
 		if x.Version != "" {
 			_, err = fmt.Fprintf(&buf, "helm upgrade --install %s %s --version %s \\\n", x.ReleaseName, repoURL, x.Version)
 			if err != nil {
@@ -414,6 +381,11 @@ func (x *Helm3CommandPrinter) Do() error {
 		if err != nil {
 			return err
 		}
+	}
+
+	_, err = fmt.Fprintf(&buf, "%s--wait --debug --burst-limit=1000 \\\n", indent)
+	if err != nil {
+		return err
 	}
 
 	modified, err := x.Values.MergeValues(chrt.Chart)
