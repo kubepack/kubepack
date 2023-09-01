@@ -121,6 +121,7 @@ func GenerateHelm3Script(bs *BlobStore, reg repo.IRegistry, order releasesapi.Or
 				UID:       string(order.UID),
 				BucketURL: bs.Bucket,
 				PublicURL: bs.Host,
+				Prefix:    bs.Prefix,
 				W:         &buf,
 			}
 			err = f7.Do()

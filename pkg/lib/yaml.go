@@ -76,6 +76,7 @@ func GenerateYAMLScript(bs *BlobStore, reg repo.IRegistry, order releasesapi.Ord
 			BucketURL:   bs.Bucket,
 			UID:         string(order.UID),
 			PublicURL:   bs.Host,
+			Prefix:      bs.Prefix,
 			W:           &buf,
 		}
 		err = f3.Do()
@@ -121,6 +122,7 @@ func GenerateYAMLScript(bs *BlobStore, reg repo.IRegistry, order releasesapi.Ord
 				UID:       string(order.UID),
 				BucketURL: bs.Bucket,
 				PublicURL: bs.Host,
+				Prefix:    bs.Prefix,
 				W:         &buf,
 			}
 			err = f7.Do()

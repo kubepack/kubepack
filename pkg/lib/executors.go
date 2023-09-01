@@ -474,6 +474,7 @@ type YAMLPrinter struct {
 	BucketURL string
 	UID       string
 	PublicURL string
+	Prefix    string
 	W         io.Writer
 }
 
@@ -484,6 +485,9 @@ func (x *YAMLPrinter) Do() error {
 		return err
 	}
 
+	if x.Prefix != "" {
+		bucket = blob.PrefixedBucket(bucket, strings.TrimSuffix(x.Prefix, "/")+"/")
+	}
 	dirManifest := blob.PrefixedBucket(bucket, x.UID+"/manifests/")
 	defer dirManifest.Close()
 	dirCRD := blob.PrefixedBucket(bucket, x.UID+"/crds/")
@@ -952,6 +956,7 @@ type ApplicationUploader struct {
 	UID       string
 	BucketURL string
 	PublicURL string
+	Prefix    string
 	W         io.Writer
 }
 
@@ -962,6 +967,9 @@ func (x *ApplicationUploader) Do() error {
 		return err
 	}
 
+	if x.Prefix != "" {
+		bucket = blob.PrefixedBucket(bucket, strings.TrimSuffix(x.Prefix, "/")+"/")
+	}
 	bucket = blob.PrefixedBucket(bucket, x.UID+"/apps/"+x.App.Namespace+"/")
 	defer bucket.Close()
 

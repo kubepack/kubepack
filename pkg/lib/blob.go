@@ -27,6 +27,7 @@ const GoogleApplicationCredentials = "/personal/AppsCode/credentials/bytebuilder
 type BlobStore struct {
 	Host   string
 	Bucket string
+	Prefix string
 	blobfs.Interface
 }
 
