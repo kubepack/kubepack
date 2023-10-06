@@ -123,6 +123,27 @@ spec:
             type: object
           status:
             properties:
+              dependents:
+                description: Dependents specifies the feature sets which depend on
+                  this FeatureSet
+                properties:
+                  featureSets:
+                    description: FeatureSets specifies a list of FeatureSet names
+                      that depend on this FeatureSet
+                    items:
+                      properties:
+                        features:
+                          description: Features specifies the Feature names of the
+                            dependent FeatureSet
+                          items:
+                            type: string
+                          type: array
+                        name:
+                          description: Name specifies the name of the dependent FeatureSet
+                          type: string
+                      type: object
+                    type: array
+                type: object
               enabled:
                 description: Enabled specifies whether this feature set is enabled
                   or not.

@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: catalog.kubeware.dev
+    k8s.io/kind: MariaDBBinding
+    k8s.io/resource: mariadbbindings
+    k8s.io/version: v1alpha1
+  name: catalog.kubeware.dev-v1alpha1-mariadbbindings
+spec:
+  resource:
+    group: catalog.kubeware.dev
+    kind: MariaDBBinding
+    name: mariadbbindings
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: catalogkubewaredev-mariadbbinding-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.17

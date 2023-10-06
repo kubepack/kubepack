@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: catalog.kubeware.dev
+    k8s.io/kind: RedisBinding
+    k8s.io/resource: redisbindings
+    k8s.io/version: v1alpha1
+  name: catalog.kubeware.dev-v1alpha1-redisbindings
+spec:
+  resource:
+    group: catalog.kubeware.dev
+    kind: RedisBinding
+    name: redisbindings
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: catalogkubewaredev-redisbinding-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.17

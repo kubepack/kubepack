@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: cluster.open-cluster-management.io
+    k8s.io/kind: ManagedClusterSetBinding
+    k8s.io/resource: managedclustersetbindings
+    k8s.io/version: v1beta2
+  name: cluster.open-cluster-management.io-v1beta2-managedclustersetbindings
+spec:
+  resource:
+    group: cluster.open-cluster-management.io
+    kind: ManagedClusterSetBinding
+    name: managedclustersetbindings
+    scope: Namespaced
+    version: v1beta2
+  ui:
+    editor:
+      name: clusteropenclustermanagementio-managedclustersetbinding-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.17

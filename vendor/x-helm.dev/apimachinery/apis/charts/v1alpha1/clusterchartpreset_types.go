@@ -32,12 +32,6 @@ const (
 // ClusterChartPresetSpec defines the desired state of ClusterChartPreset
 type ClusterChartPresetSpec struct {
 	// +optional
-	DisplayName string `json:"displayName,omitempty"`
-
-	// +optional
-	UsePresets []TypedLocalObjectReference `json:"usePresets,omitempty"`
-
-	// +optional
 	// +kubebuilder:pruning:PreserveUnknownFields
 	Values *runtime.RawExtension `json:"values,omitempty"`
 }

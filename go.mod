@@ -3,7 +3,7 @@ module kubepack.dev/kubepack
 go 1.18
 
 require (
-	github.com/Masterminds/semver/v3 v3.2.0
+	github.com/Masterminds/semver/v3 v3.2.1
 	github.com/evanphx/json-patch v5.6.0+incompatible
 	github.com/evanphx/json-patch/v5 v5.6.0
 	github.com/gabriel-vasile/mimetype v1.4.2
@@ -16,7 +16,7 @@ require (
 	gocloud.dev v0.26.0
 	gomodules.xyz/blobfs v0.1.14
 	gomodules.xyz/encoding v0.0.7
-	gomodules.xyz/jsonpatch/v2 v2.3.0
+	gomodules.xyz/jsonpatch/v2 v2.4.0
 	gomodules.xyz/x v0.0.14
 	helm.sh/helm/v3 v3.10.3
 	k8s.io/api v0.25.3
@@ -25,11 +25,11 @@ require (
 	k8s.io/cli-runtime v0.25.3
 	k8s.io/client-go v0.25.3
 	k8s.io/klog/v2 v2.80.1
-	kmodules.xyz/client-go v0.25.23
-	kubepack.dev/lib-helm v0.7.1-0.20230519165954-10458737cc43
+	kmodules.xyz/client-go v0.25.38
+	kubepack.dev/lib-helm v0.7.3
 	sigs.k8s.io/controller-runtime v0.13.1
 	sigs.k8s.io/yaml v1.3.0
-	x-helm.dev/apimachinery v0.0.9
+	x-helm.dev/apimachinery v0.0.12
 )
 
 require (
@@ -87,7 +87,7 @@ require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/chai2010/gettext-go v1.0.2 // indirect
 	github.com/containerd/containerd v1.6.6 // indirect
-	github.com/cyphar/filepath-securejoin v0.2.3 // indirect
+	github.com/cyphar/filepath-securejoin v0.2.4 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/docker/cli v20.10.22+incompatible // indirect
 	github.com/docker/distribution v2.8.1+incompatible // indirect
@@ -96,7 +96,7 @@ require (
 	github.com/docker/go-connections v0.4.0 // indirect
 	github.com/docker/go-metrics v0.0.1 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
-	github.com/emicklei/go-restful/v3 v3.8.0 // indirect
+	github.com/emicklei/go-restful/v3 v3.9.0 // indirect
 	github.com/exponent-io/jsonpath v0.0.0-20151013193312-d6023ce2651d // indirect
 	github.com/fatih/camelcase v1.0.0 // indirect
 	github.com/fatih/color v1.13.0 // indirect
@@ -116,6 +116,7 @@ require (
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
 	github.com/go-openapi/jsonreference v0.20.0 // indirect
 	github.com/go-openapi/swag v0.22.3 // indirect
+	github.com/go-task/slim-sprig v0.0.0-20210107165309-348f09dbbbc0 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/golang-jwt/jwt/v4 v4.4.2 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
@@ -165,7 +166,6 @@ require (
 	github.com/monochromegane/go-gitignore v0.0.0-20200626010858-205db1a8cc00 // indirect
 	github.com/morikuni/aec v1.0.0 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
-	github.com/onsi/ginkgo/v2 v2.9.1 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/opencontainers/image-spec v1.1.0-rc2 // indirect
 	github.com/peterbourgon/diskv v2.0.1+incompatible // indirect
@@ -191,16 +191,19 @@ require (
 	go.etcd.io/etcd/api/v3 v3.6.0-alpha.0 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	go.starlark.net v0.0.0-20200306205701-8dd3e2ee1dd5 // indirect
-	golang.org/x/crypto v0.6.0 // indirect
-	golang.org/x/net v0.9.0 // indirect
+	golang.org/x/crypto v0.13.0 // indirect
+	golang.org/x/net v0.15.0 // indirect
 	golang.org/x/oauth2 v0.7.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
-	golang.org/x/sys v0.7.0 // indirect
-	golang.org/x/term v0.7.0 // indirect
-	golang.org/x/text v0.9.0 // indirect
+	golang.org/x/sys v0.12.0 // indirect
+	golang.org/x/term v0.12.0 // indirect
+	golang.org/x/text v0.13.0 // indirect
 	golang.org/x/time v0.2.0 // indirect
+	golang.org/x/tools v0.7.0 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
+	gomodules.xyz/mergo v0.3.13 // indirect
 	gomodules.xyz/password-generator v0.2.7 // indirect
+	gomodules.xyz/pointer v0.1.0 // indirect
 	gomodules.xyz/sets v0.2.1 // indirect
 	google.golang.org/api v0.104.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
@@ -213,12 +216,12 @@ require (
 	k8s.io/apiserver v0.25.3 // indirect
 	k8s.io/component-base v0.25.3 // indirect
 	k8s.io/kube-aggregator v0.25.1 // indirect
-	k8s.io/kube-openapi v0.0.0-20220803164354-a70c9af30aea // indirect
+	k8s.io/kube-openapi v0.0.0-20221012153701-172d655c2280 // indirect
 	k8s.io/kubectl v0.25.3 // indirect
 	k8s.io/utils v0.0.0-20221108210102-8e77b1f39fe2 // indirect
 	kmodules.xyz/apiversion v0.2.0 // indirect
 	kmodules.xyz/apply v0.25.0 // indirect
-	kmodules.xyz/resource-metadata v0.17.4 // indirect
+	kmodules.xyz/resource-metadata v0.17.18 // indirect
 	oras.land/oras-go v1.2.0 // indirect
 	sigs.k8s.io/cli-utils v0.34.0 // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
@@ -227,4 +230,4 @@ require (
 	sigs.k8s.io/structured-merge-diff/v4 v4.2.3 // indirect
 )
 
-replace helm.sh/helm/v3 => github.com/x-helm/helm/v3 v3.10.2-0.20230503230011-a8f5ce951c95
+replace helm.sh/helm/v3 => github.com/x-helm/helm/v3 v3.10.2-0.20230910175645-ad538d5bfc73

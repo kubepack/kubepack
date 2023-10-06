@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: catalog.kubeware.dev
+    k8s.io/kind: PerconaXtraDBBinding
+    k8s.io/resource: perconaxtradbbindings
+    k8s.io/version: v1alpha1
+  name: catalog.kubeware.dev-v1alpha1-perconaxtradbbindings
+spec:
+  resource:
+    group: catalog.kubeware.dev
+    kind: PerconaXtraDBBinding
+    name: perconaxtradbbindings
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: catalogkubewaredev-perconaxtradbbinding-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.17

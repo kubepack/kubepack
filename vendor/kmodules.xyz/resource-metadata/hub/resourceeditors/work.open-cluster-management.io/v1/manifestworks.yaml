@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: work.open-cluster-management.io
+    k8s.io/kind: ManifestWork
+    k8s.io/resource: manifestworks
+    k8s.io/version: v1
+  name: work.open-cluster-management.io-v1-manifestworks
+spec:
+  resource:
+    group: work.open-cluster-management.io
+    kind: ManifestWork
+    name: manifestworks
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: workopenclustermanagementio-manifestwork-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.17

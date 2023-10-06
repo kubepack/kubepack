@@ -17,9 +17,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"fmt"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	kmapi "kmodules.xyz/client-go/api/v1"
 	releasesv1alpha1 "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
 
@@ -27,19 +27,11 @@ import (
 type Preset interface {
 	GetObjectKind() schema.ObjectKind
 	GetName() string
-	GetDisplayName() string
 	GetLabels() map[string]string
 	GetSpec() ClusterChartPresetSpec
 }
 
 var _ Preset = &ClusterChartPreset{}
-
-func (in ClusterChartPreset) GetDisplayName() string {
-	if in.Spec.DisplayName != "" {
-		return in.Spec.DisplayName
-	}
-	return in.Name
-}
 
 func (in ClusterChartPreset) GetSpec() ClusterChartPresetSpec {
 	return in.Spec
@@ -47,64 +39,29 @@ func (in ClusterChartPreset) GetSpec() ClusterChartPresetSpec {
 
 var _ Preset = &ChartPreset{}
 
-func (in ChartPreset) GetDisplayName() string {
-	if in.Spec.DisplayName != "" {
-		return in.Spec.DisplayName
-	}
-	return in.Name
-}
-
 func (in ChartPreset) GetSpec() ClusterChartPresetSpec {
 	return in.Spec
 }
 
 type ChartPresetFlatRef struct {
 	releasesv1alpha1.ChartSourceFlatRef `json:",inline"`
-	PresetGroup                         string `json:"presetGroup,omitempty"`
-	PresetKind                          string `json:"presetKind,omitempty"`
-	PresetName                          string `json:"presetName,omitempty"`
-	PresetSelector                      string `json:"presetSelector,omitempty"`
-	Namespace                           string `json:"namespace,omitempty"`
+
+	// Editor GVR
+	Group     string `json:"group,omitempty"`
+	Resource  string `json:"resource,omitempty"`
+	Kind      string `json:"kind,omitempty"`
+	Variant   string `json:"variant,omitempty"`
+	Namespace string `json:"namespace,omitempty"`
 }
 
-func (ref ChartPresetFlatRef) ClusterChartPreset() (*ClusterChartPreset, error) {
-	if ref.PresetKind != ResourceKindClusterChartPreset {
-		return nil, fmt.Errorf("unknown preset kind %s", ref.PresetKind)
-	}
+type ChartPresetValues struct {
+	Source SourceLocator         `json:"source"`
+	Values *runtime.RawExtension `json:"values"`
+}
 
-	ps := ClusterChartPreset{
-		TypeMeta: metav1.TypeMeta{
-			APIVersion: GroupVersion.String(),
-			Kind:       ResourceKindClusterChartPreset,
-		},
-		ObjectMeta: metav1.ObjectMeta{
-			Name: "",
-		},
-		Spec: ClusterChartPresetSpec{
-			// Values: nil,
-		},
-	}
-
-	if ref.PresetName != "" || ref.PresetSelector != "" {
-		group := ref.PresetGroup
-		if group == "" {
-			group = GroupVersion.Group
-		}
-
-		presetRef := TypedLocalObjectReference{
-			APIGroup: &group,
-			Kind:     ref.PresetKind,
-			Name:     ref.PresetName,
-		}
-		if ref.PresetSelector != "" {
-			selector, err := metav1.ParseToLabelSelector(ref.PresetSelector)
-			if err != nil {
-				return nil, err
-			}
-			presetRef.Selector = selector
-		}
-		ps.Spec.UsePresets = []TypedLocalObjectReference{presetRef}
-	}
-
-	return &ps, nil
+type SourceLocator struct {
+	// +optional
+	Resource kmapi.ResourceID `json:"resource"`
+	// +optional
+	Ref kmapi.ObjectReference `json:"ref"`
 }

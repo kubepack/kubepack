@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: operator.open-cluster-management.io
+    k8s.io/kind: Klusterlet
+    k8s.io/resource: klusterlets
+    k8s.io/version: v1
+  name: operator.open-cluster-management.io-v1-klusterlets
+spec:
+  resource:
+    group: operator.open-cluster-management.io
+    kind: Klusterlet
+    name: klusterlets
+    scope: Cluster
+    version: v1
+  ui:
+    editor:
+      name: operatoropenclustermanagementio-klusterlet-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.17

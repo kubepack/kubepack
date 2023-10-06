@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: pkg.crossplane.io
+    k8s.io/kind: ControllerConfig
+    k8s.io/resource: controllerconfigs
+    k8s.io/version: v1alpha1
+  name: pkg.crossplane.io-v1alpha1-controllerconfigs
+spec:
+  resource:
+    group: pkg.crossplane.io
+    kind: ControllerConfig
+    name: controllerconfigs
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: pkgcrossplaneio-controllerconfig-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.17

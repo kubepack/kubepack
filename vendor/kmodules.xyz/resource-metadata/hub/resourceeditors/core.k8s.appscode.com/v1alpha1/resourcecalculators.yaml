@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: core.k8s.appscode.com
+    k8s.io/kind: ResourceCalculator
+    k8s.io/resource: resourcecalculators
+    k8s.io/version: v1alpha1
+  name: core.k8s.appscode.com-v1alpha1-resourcecalculators
+spec:
+  resource:
+    group: core.k8s.appscode.com
+    kind: ResourceCalculator
+    name: resourcecalculators
+    scope: Namespaced
+    version: v1alpha1

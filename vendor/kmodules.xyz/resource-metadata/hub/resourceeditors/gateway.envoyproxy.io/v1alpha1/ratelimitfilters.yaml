@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: gateway.envoyproxy.io
+    k8s.io/kind: RateLimitFilter
+    k8s.io/resource: ratelimitfilters
+    k8s.io/version: v1alpha1
+  name: gateway.envoyproxy.io-v1alpha1-ratelimitfilters
+spec:
+  resource:
+    group: gateway.envoyproxy.io
+    kind: RateLimitFilter
+    name: ratelimitfilters
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: gatewayenvoyproxyio-ratelimitfilter-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.17

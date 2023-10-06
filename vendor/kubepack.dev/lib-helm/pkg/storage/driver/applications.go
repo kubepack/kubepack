@@ -189,7 +189,7 @@ func (d *AppReleases) Create(_ string, rls *rspb.Release) error {
 	obj := mustNewAppReleaseObject(rls)
 
 	// push the configmap object out into the kubiverse
-	_, _, err := cu.CreateOrPatch(context.Background(), d.kc, obj, func(o client.Object, createOp bool) client.Object {
+	_, err := cu.CreateOrPatch(context.Background(), d.kc, obj, func(o client.Object, createOp bool) client.Object {
 		in := o.(*driversapi.AppRelease)
 
 		in.Labels = meta_util.OverwriteKeys(in.Labels, obj.Labels)
@@ -247,7 +247,7 @@ func (d *AppReleases) Update(_ string, rls *rspb.Release) error {
 	obj.Spec.Release.ModifiedAt = &metav1.Time{Time: time.Now().UTC()}
 
 	// push the configmap object out into the kubiverse
-	_, _, err := cu.CreateOrPatch(context.Background(), d.kc, obj, func(o client.Object, createOp bool) client.Object {
+	_, err := cu.CreateOrPatch(context.Background(), d.kc, obj, func(o client.Object, createOp bool) client.Object {
 		in := o.(*driversapi.AppRelease)
 
 		in.Labels = meta_util.MergeKeys(in.Labels, obj.Labels)

@@ -29,10 +29,10 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: bytebuilders-ui
-          version: v0.4.15
+          version: v0.4.17
         flow: standalone-edit
         icons:
-        - src: https://cdn.appscode.com/k8s/icons/stash.appscode.com/backupconfigurations.svg
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/backup.svg
           type: image/svg+xml
         name: Backup
         operationId: edit-self-backupconfiguration
@@ -42,10 +42,10 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: bytebuilders-ui
-          version: v0.4.15
+          version: v0.4.17
         flow: standalone-create
         icons:
-        - src: https://cdn.appscode.com/k8s/icons/stash.appscode.com/restoresessions.svg
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/restore.svg
           type: image/svg+xml
         name: Restore
         operationId: create-restoresession
@@ -57,10 +57,10 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: bytebuilders-ui
-          version: v0.4.15
+          version: v0.4.17
         flow: standalone-create
         icons:
-        - src: https://img.icons8.com/plasticine/512/buy-upgrade.png
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/version.svg
           type: image/svg+xml
         name: Update Version
         operationId: create-opsrequest-upgrade
@@ -70,10 +70,10 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: bytebuilders-ui
-          version: v0.4.15
+          version: v0.4.17
         flow: standalone-create
         icons:
-        - src: https://img.icons8.com/plasticine/512/restart.png
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/restart.svg
           type: image/svg+xml
         name: Restart
         operationId: create-opsrequest-restart
@@ -83,10 +83,10 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: bytebuilders-ui
-          version: v0.4.15
+          version: v0.4.17
         flow: standalone-create
         icons:
-        - src: https://cdn.appscode.com/k8s/icons/menu/config.svg
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/reconfigure.svg
           type: image/svg+xml
         name: Reconfigure
         operationId: create-opsrequest-reconfigure
@@ -100,10 +100,10 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: bytebuilders-ui
-          version: v0.4.15
+          version: v0.4.17
         flow: standalone-create
         icons:
-        - src: https://img.icons8.com/plasticine/512/resize-horizontal.png
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/horizontal_scale.svg
           type: image/svg+xml
         name: Horizontal Scale
         operationId: create-opsrequest-horizontalscaling
@@ -113,10 +113,10 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: bytebuilders-ui
-          version: v0.4.15
+          version: v0.4.17
         flow: standalone-create
         icons:
-        - src: https://img.icons8.com/plasticine/512/resize-vertical.png
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/vertical_scale.svg
           type: image/svg+xml
         name: Vertical Scale
         operationId: create-opsrequest-verticalscaling
@@ -126,10 +126,10 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: bytebuilders-ui
-          version: v0.4.15
+          version: v0.4.17
         flow: standalone-create
         icons:
-        - src: https://img.icons8.com/plasticine/512/expand.png
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/expand.svg
           type: image/svg+xml
         name: Expand Volume
         operationId: create-opsrequest-volumeexpansion
@@ -141,10 +141,10 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: bytebuilders-ui
-          version: v0.4.15
+          version: v0.4.17
         flow: standalone-create
         icons:
-        - src: https://cdn.appscode.com/k8s/icons/menu/networking.svg
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/configure.svg
           type: image/svg+xml
         name: TLS Configure
         operationId: create-opsrequest-reconfiguretls
@@ -154,10 +154,10 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: bytebuilders-ui
-          version: v0.4.15
+          version: v0.4.17
         flow: standalone-edit
         icons:
-        - src: https://cdn.appscode.com/k8s/icons/menu/monitoring.svg
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/monitor.svg
           type: image/svg+xml
         name: Monitoring
         operationId: edit-self-monitoring
@@ -168,11 +168,16 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: bytebuilders-ui
-      version: v0.4.15
+      version: v0.4.17
     options:
       name: kubedbcom-mariadb-editor-options
       sourceRef:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: bytebuilders-ui
-      version: v0.4.15
+      version: v0.4.17
+  variants:
+  - name: default
+    selector:
+      matchLabels:
+        charts.x-helm.dev/is-default-preset: "true"

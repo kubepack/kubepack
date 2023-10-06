@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: gateway.voyagermesh.com
+    k8s.io/kind: MySQLRoute
+    k8s.io/resource: mysqlroutes
+    k8s.io/version: v1alpha1
+  name: gateway.voyagermesh.com-v1alpha1-mysqlroutes
+spec:
+  resource:
+    group: gateway.voyagermesh.com
+    kind: MySQLRoute
+    name: mysqlroutes
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: gatewayvoyagermeshcom-mysqlroute-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.17

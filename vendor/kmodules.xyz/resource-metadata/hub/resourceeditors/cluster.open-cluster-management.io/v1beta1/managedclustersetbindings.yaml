@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: cluster.open-cluster-management.io
+    k8s.io/kind: ManagedClusterSetBinding
+    k8s.io/resource: managedclustersetbindings
+    k8s.io/version: v1beta1
+  name: cluster.open-cluster-management.io-v1beta1-managedclustersetbindings
+spec:
+  resource:
+    group: cluster.open-cluster-management.io
+    kind: ManagedClusterSetBinding
+    name: managedclustersetbindings
+    scope: Namespaced
+    version: v1beta1

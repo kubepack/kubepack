@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: gcp.kubeform.com
+    k8s.io/kind: ProviderConfig
+    k8s.io/resource: providerconfigs
+    k8s.io/version: v1beta1
+  name: gcp.kubeform.com-v1beta1-providerconfigs
+spec:
+  resource:
+    group: gcp.kubeform.com
+    kind: ProviderConfig
+    name: providerconfigs
+    scope: Cluster
+    version: v1beta1
+  ui:
+    editor:
+      name: gcpkubeformcom-providerconfig-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.17

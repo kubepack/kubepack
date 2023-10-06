@@ -323,7 +323,7 @@ func (i *Install) RunWithContext(ctx context.Context, chrt *chart.Chart, vals ma
 		if err != nil {
 			return nil, err
 		}
-		resourceList, err := i.cfg.KubeClient.Build(bytes.NewBuffer(buf), true)
+		resourceList, err := i.cfg.KubeClient.Build(bytes.NewBuffer(buf), !i.DisableOpenAPIValidation)
 		if err != nil {
 			return nil, err
 		}

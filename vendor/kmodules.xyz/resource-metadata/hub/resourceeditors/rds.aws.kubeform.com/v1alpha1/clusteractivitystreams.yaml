@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: rds.aws.kubeform.com
+    k8s.io/kind: ClusterActivityStream
+    k8s.io/resource: clusteractivitystreams
+    k8s.io/version: v1alpha1
+  name: rds.aws.kubeform.com-v1alpha1-clusteractivitystreams
+spec:
+  resource:
+    group: rds.aws.kubeform.com
+    kind: ClusterActivityStream
+    name: clusteractivitystreams
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: rdsawskubeformcom-clusteractivitystream-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.17

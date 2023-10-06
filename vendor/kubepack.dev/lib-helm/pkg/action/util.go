@@ -165,14 +165,20 @@ func RefillMetadata(kc client.Client, ref, actual map[string]interface{}, gvr me
 		obj["kind"] = refObj["kind"]
 
 		// name
-		name := rls.Name
-		idx := strings.IndexRune(key, '_')
-		if idx != -1 {
-			name += "-" + flect.Dasherize(key[idx+1:])
+		featureset := metav1.GroupVersionResource{
+			Group:    "ui.k8s.appscode.com",
+			Resource: "featuresets",
 		}
-		err := unstructured.SetNestedField(obj, name, "metadata", "name")
-		if err != nil {
-			return err
+		if gvr.Group != featureset.Group || gvr.Resource != featureset.Resource {
+			name := rls.Name
+			idx := strings.IndexRune(key, '_')
+			if idx != -1 {
+				name += "-" + flect.Dasherize(key[idx+1:])
+			}
+			err := unstructured.SetNestedField(obj, name, "metadata", "name")
+			if err != nil {
+				return err
+			}
 		}
 
 		// namespace

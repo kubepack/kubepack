@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: cosmosdb.azure.kubeform.com
+    k8s.io/kind: GremlinDatabase
+    k8s.io/resource: gremlindatabases
+    k8s.io/version: v1alpha1
+  name: cosmosdb.azure.kubeform.com-v1alpha1-gremlindatabases
+spec:
+  resource:
+    group: cosmosdb.azure.kubeform.com
+    kind: GremlinDatabase
+    name: gremlindatabases
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: cosmosdbazurekubeformcom-gremlindatabase-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.17

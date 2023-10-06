@@ -45,7 +45,7 @@ endif
 ### These variables should not need tweaking.
 ###
 
-SRC_PKGS := admissionregistration api apiextensions apiregistration apps batch certificates client core discovery dynamic extensions meta networking openapi policy rbac storage tools
+SRC_PKGS := admissionregistration api apiextensions apiregistration apps batch certificates client cluster conditions core discovery dynamic extensions meta networking openapi policy rbac storage tools
 SRC_DIRS := $(SRC_PKGS) *.go
 
 DOCKER_PLATFORMS := linux/amd64 linux/arm linux/arm64
@@ -113,8 +113,8 @@ clientset:
 		--env HTTPS_PROXY=$(HTTPS_PROXY)                 \
 		$(CODE_GENERATOR_IMAGE)                          \
 		deepcopy-gen                                     \
-			--go-header-file "./hack/license/go.txt"     \
-			--input-dirs "$(GO_PKG)/$(REPO)/api/v1"      \
+			--go-header-file "./hack/license/go.txt"       \
+			--input-dirs "$(GO_PKG)/$(REPO)/api/v1"        \
 			--output-file-base zz_generated.deepcopy
 
 # Generate openapi schema
@@ -154,7 +154,7 @@ gen-crd-protos:
 			--packages=-k8s.io/api/core/v1,kmodules.xyz/client-go/api/v1
 
 .PHONY: gen-enum
-gen-enum:
+gen-enum: $(BUILD_DIRS)
 	@docker run                                                 \
 	    -i                                                      \
 	    --rm                                                    \
@@ -172,7 +172,7 @@ gen-enum:
 	    "
 
 .PHONY: gen
-gen: clientset gen-enum openapi gen-crd-protos
+gen: clientset gen-enum # openapi gen-crd-protos
 
 fmt: $(BUILD_DIRS)
 	@docker run                                                 \

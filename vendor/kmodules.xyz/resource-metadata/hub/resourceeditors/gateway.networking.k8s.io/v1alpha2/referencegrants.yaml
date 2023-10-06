@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: gateway.networking.k8s.io
+    k8s.io/kind: ReferenceGrant
+    k8s.io/resource: referencegrants
+    k8s.io/version: v1alpha2
+  name: gateway.networking.k8s.io-v1alpha2-referencegrants
+spec:
+  resource:
+    group: gateway.networking.k8s.io
+    kind: ReferenceGrant
+    name: referencegrants
+    scope: Namespaced
+    version: v1alpha2

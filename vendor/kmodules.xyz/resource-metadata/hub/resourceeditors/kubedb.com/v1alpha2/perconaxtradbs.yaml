@@ -27,11 +27,16 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: bytebuilders-ui
-      version: v0.4.15
+      version: v0.4.17
     options:
       name: kubedbcom-perconaxtradb-editor-options
       sourceRef:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: bytebuilders-ui
-      version: v0.4.15
+      version: v0.4.17
+  variants:
+  - name: default
+    selector:
+      matchLabels:
+        charts.x-helm.dev/is-default-preset: "true"

@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: sql.gcp.kubeform.com
+    k8s.io/kind: DatabaseInstance
+    k8s.io/resource: databaseinstances
+    k8s.io/version: v1alpha1
+  name: sql.gcp.kubeform.com-v1alpha1-databaseinstances
+spec:
+  resource:
+    group: sql.gcp.kubeform.com
+    kind: DatabaseInstance
+    name: databaseinstances
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: sqlgcpkubeformcom-databaseinstance-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.17

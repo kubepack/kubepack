@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: apiextensions.crossplane.io
+    k8s.io/kind: CompositionRevision
+    k8s.io/resource: compositionrevisions
+    k8s.io/version: v1beta1
+  name: apiextensions.crossplane.io-v1beta1-compositionrevisions
+spec:
+  resource:
+    group: apiextensions.crossplane.io
+    kind: CompositionRevision
+    name: compositionrevisions
+    scope: Cluster
+    version: v1beta1

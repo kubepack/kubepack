@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: addon.open-cluster-management.io
+    k8s.io/kind: ManagedClusterAddOn
+    k8s.io/resource: managedclusteraddons
+    k8s.io/version: v1alpha1
+  name: addon.open-cluster-management.io-v1alpha1-managedclusteraddons
+spec:
+  resource:
+    group: addon.open-cluster-management.io
+    kind: ManagedClusterAddOn
+    name: managedclusteraddons
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: addonopenclustermanagementio-managedclusteraddon-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.17

@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: falco.appscode.com
+    k8s.io/kind: FalcoEvent
+    k8s.io/resource: falcoevents
+    k8s.io/version: v1alpha1
+  name: falco.appscode.com-v1alpha1-falcoevents
+spec:
+  resource:
+    group: falco.appscode.com
+    kind: FalcoEvent
+    name: falcoevents
+    scope: Namespaced
+    version: v1alpha1

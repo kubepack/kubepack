@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: cluster.open-cluster-management.io
+    k8s.io/kind: Placement
+    k8s.io/resource: placements
+    k8s.io/version: v1beta1
+  name: cluster.open-cluster-management.io-v1beta1-placements
+spec:
+  resource:
+    group: cluster.open-cluster-management.io
+    kind: Placement
+    name: placements
+    scope: Namespaced
+    version: v1beta1
+  ui:
+    editor:
+      name: clusteropenclustermanagementio-placement-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.17

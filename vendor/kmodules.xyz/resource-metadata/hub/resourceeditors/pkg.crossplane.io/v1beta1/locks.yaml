@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: pkg.crossplane.io
+    k8s.io/kind: Lock
+    k8s.io/resource: locks
+    k8s.io/version: v1beta1
+  name: pkg.crossplane.io-v1beta1-locks
+spec:
+  resource:
+    group: pkg.crossplane.io
+    kind: Lock
+    name: locks
+    scope: Cluster
+    version: v1beta1
+  ui:
+    editor:
+      name: pkgcrossplaneio-lock-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.17

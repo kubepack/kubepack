@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: dbforpostgresql.azure.kubeform.com
+    k8s.io/kind: ActiveDirectoryAdministrator
+    k8s.io/resource: activedirectoryadministrators
+    k8s.io/version: v1alpha1
+  name: dbforpostgresql.azure.kubeform.com-v1alpha1-activedirectoryadministrators
+spec:
+  resource:
+    group: dbforpostgresql.azure.kubeform.com
+    kind: ActiveDirectoryAdministrator
+    name: activedirectoryadministrators
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: dbforpostgresqlazurekubeformcom-activedirectoryadministrator-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: bytebuilders-ui
+      version: v0.4.17
