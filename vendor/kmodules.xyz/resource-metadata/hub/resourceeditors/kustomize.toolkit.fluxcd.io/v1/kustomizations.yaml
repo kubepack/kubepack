@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: kustomize.toolkit.fluxcd.io
+    k8s.io/kind: Kustomization
+    k8s.io/resource: kustomizations
+    k8s.io/version: v1
+  name: kustomize.toolkit.fluxcd.io-v1-kustomizations
+spec:
+  resource:
+    group: kustomize.toolkit.fluxcd.io
+    kind: Kustomization
+    name: kustomizations
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: kustomizetoolkitfluxcdio-kustomization-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

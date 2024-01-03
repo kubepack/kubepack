@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: dbforpostgresql.azure.kubedb.com
+    k8s.io/kind: FlexibleServerConfiguration
+    k8s.io/resource: flexibleserverconfigurations
+    k8s.io/version: v1alpha1
+  name: dbforpostgresql.azure.kubedb.com-v1alpha1-flexibleserverconfigurations
+spec:
+  resource:
+    group: dbforpostgresql.azure.kubedb.com
+    kind: FlexibleServerConfiguration
+    name: flexibleserverconfigurations
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: dbforpostgresqlazurekubedbcom-flexibleserverconfiguration-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

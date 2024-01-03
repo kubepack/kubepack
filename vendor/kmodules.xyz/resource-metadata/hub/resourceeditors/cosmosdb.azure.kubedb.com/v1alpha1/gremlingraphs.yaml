@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: cosmosdb.azure.kubedb.com
+    k8s.io/kind: GremlinGraph
+    k8s.io/resource: gremlingraphs
+    k8s.io/version: v1alpha1
+  name: cosmosdb.azure.kubedb.com-v1alpha1-gremlingraphs
+spec:
+  resource:
+    group: cosmosdb.azure.kubedb.com
+    kind: GremlinGraph
+    name: gremlingraphs
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: cosmosdbazurekubedbcom-gremlingraph-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

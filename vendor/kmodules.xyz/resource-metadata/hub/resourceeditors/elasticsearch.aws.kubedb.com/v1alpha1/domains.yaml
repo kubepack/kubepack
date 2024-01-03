@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: elasticsearch.aws.kubedb.com
+    k8s.io/kind: Domain
+    k8s.io/resource: domains
+    k8s.io/version: v1alpha1
+  name: elasticsearch.aws.kubedb.com-v1alpha1-domains
+spec:
+  resource:
+    group: elasticsearch.aws.kubedb.com
+    kind: Domain
+    name: domains
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: elasticsearchawskubedbcom-domain-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

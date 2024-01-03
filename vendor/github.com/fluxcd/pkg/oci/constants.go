@@ -51,7 +51,4 @@ const (
 
 	// OCIRepositoryPrefix is the prefix used for OCIRepository URLs.
 	OCIRepositoryPrefix = "oci://"
-
-	// UserAgent string used for OCI calls.
-	UserAgent = "flux/v2"
 )

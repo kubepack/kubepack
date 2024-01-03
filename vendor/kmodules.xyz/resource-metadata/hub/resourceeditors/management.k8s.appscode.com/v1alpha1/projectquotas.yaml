@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: management.k8s.appscode.com
+    k8s.io/kind: ProjectQuota
+    k8s.io/resource: projectquotas
+    k8s.io/version: v1alpha1
+  name: management.k8s.appscode.com-v1alpha1-projectquotas
+spec:
+  resource:
+    group: management.k8s.appscode.com
+    kind: ProjectQuota
+    name: projectquotas
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: managementk8sappscodecom-projectquota-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

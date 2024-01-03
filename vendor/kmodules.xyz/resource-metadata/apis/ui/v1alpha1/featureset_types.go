@@ -58,7 +58,7 @@ type FeatureSetSpec struct {
 	Icons []helmshared.ImageSpec `json:"icons,omitempty"`
 	// Required specify whether this feature set is mandatory or not for using the UI.
 	// +optional
-	Required bool `json:"required,omitempty"`
+	Recommended bool `json:"recommended,omitempty"`
 	// RequiredFeatures specifies list of features that are necessary to consider this feature set as ready.
 	// +optional
 	RequiredFeatures []string `json:"requiredFeatures,omitempty"`

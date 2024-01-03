@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: addons.kubestash.com
+    k8s.io/kind: Function
+    k8s.io/resource: functions
+    k8s.io/version: v1alpha1
+  name: addons.kubestash.com-v1alpha1-functions
+spec:
+  resource:
+    group: addons.kubestash.com
+    kind: Function
+    name: functions
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: addonskubestashcom-function-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

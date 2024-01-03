@@ -28,8 +28,9 @@ spec:
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
-            name: bytebuilders-ui
-          version: v0.4.17
+            name: appscode-charts-oci
+          version: v0.4.18
+        enforceQuota: false
         flow: standalone-create
         icons:
         - src: https://cdn.appscode.com/k8s/icons/action-icons/version.svg
@@ -41,8 +42,9 @@ spec:
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
-            name: bytebuilders-ui
-          version: v0.4.17
+            name: appscode-charts-oci
+          version: v0.4.18
+        enforceQuota: false
         flow: standalone-create
         icons:
         - src: https://cdn.appscode.com/k8s/icons/action-icons/restart.svg
@@ -54,8 +56,9 @@ spec:
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
-            name: bytebuilders-ui
-          version: v0.4.17
+            name: appscode-charts-oci
+          version: v0.4.18
+        enforceQuota: false
         flow: standalone-create
         icons:
         - src: https://cdn.appscode.com/k8s/icons/action-icons/reconfigure.svg
@@ -69,8 +72,9 @@ spec:
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
-            name: bytebuilders-ui
-          version: v0.4.17
+            name: appscode-charts-oci
+          version: v0.4.18
+        enforceQuota: false
         flow: standalone-create
         icons:
         - src: https://cdn.appscode.com/k8s/icons/action-icons/horizontal_scale.svg
@@ -82,8 +86,9 @@ spec:
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
-            name: bytebuilders-ui
-          version: v0.4.17
+            name: appscode-charts-oci
+          version: v0.4.18
+        enforceQuota: false
         flow: standalone-create
         icons:
         - src: https://cdn.appscode.com/k8s/icons/action-icons/vertical_scale.svg
@@ -97,8 +102,9 @@ spec:
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
-            name: bytebuilders-ui
-          version: v0.4.17
+            name: appscode-charts-oci
+          version: v0.4.18
+        enforceQuota: false
         flow: standalone-create
         icons:
         - src: https://cdn.appscode.com/k8s/icons/action-icons/configure.svg
@@ -110,8 +116,9 @@ spec:
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
-            name: bytebuilders-ui
-          version: v0.4.17
+            name: appscode-charts-oci
+          version: v0.4.18
+        enforceQuota: false
         flow: standalone-edit
         icons:
         - src: https://cdn.appscode.com/k8s/icons/action-icons/monitor.svg
@@ -124,15 +131,16 @@ spec:
       sourceRef:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
-        name: bytebuilders-ui
-      version: v0.4.17
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false
     options:
       name: kubedbcom-proxysql-editor-options
       sourceRef:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
-        name: bytebuilders-ui
-      version: v0.4.17
+        name: appscode-charts-oci
+      version: v0.4.18
   variants:
   - name: default
     selector:

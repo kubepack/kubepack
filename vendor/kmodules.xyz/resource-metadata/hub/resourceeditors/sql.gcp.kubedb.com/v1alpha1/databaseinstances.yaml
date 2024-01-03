@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: sql.gcp.kubedb.com
+    k8s.io/kind: DatabaseInstance
+    k8s.io/resource: databaseinstances
+    k8s.io/version: v1alpha1
+  name: sql.gcp.kubedb.com-v1alpha1-databaseinstances
+spec:
+  resource:
+    group: sql.gcp.kubedb.com
+    kind: DatabaseInstance
+    name: databaseinstances
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: sqlgcpkubedbcom-databaseinstance-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

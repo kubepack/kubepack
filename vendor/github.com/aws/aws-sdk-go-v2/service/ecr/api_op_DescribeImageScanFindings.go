@@ -45,11 +45,11 @@ type DescribeImageScanFindingsInput struct {
 	RepositoryName *string
 
 	// The maximum number of image scan results returned by DescribeImageScanFindings
-	// in paginated output. When this parameter is used, DescribeImageScanFindings only
-	// returns maxResults results in a single page along with a nextToken response
-	// element. The remaining results of the initial request can be seen by sending
-	// another DescribeImageScanFindings request with the returned nextToken value.
-	// This value can be between 1 and 1000. If this parameter is not used, then
+	// in paginated output. When this parameter is used, DescribeImageScanFindings
+	// only returns maxResults results in a single page along with a nextToken
+	// response element. The remaining results of the initial request can be seen by
+	// sending another DescribeImageScanFindings request with the returned nextToken
+	// value. This value can be between 1 and 1000. If this parameter is not used, then
 	// DescribeImageScanFindings returns up to 100 results and a nextToken value, if
 	// applicable.
 	MaxResults *int32
@@ -81,7 +81,7 @@ type DescribeImageScanFindingsOutput struct {
 	ImageScanStatus *types.ImageScanStatus
 
 	// The nextToken value to include in a future DescribeImageScanFindings request.
-	// When the results of a DescribeImageScanFindings request exceed maxResults, this
+	// When the results of a DescribeImageScanFindings request exceed maxResults , this
 	// value can be used to retrieve the next page of results. This value is null when
 	// there are no more results to return.
 	NextToken *string
@@ -99,12 +99,22 @@ type DescribeImageScanFindingsOutput struct {
 }
 
 func (c *Client) addOperationDescribeImageScanFindingsMiddlewares(stack *middleware.Stack, options Options) (err error) {
+	if err := stack.Serialize.Add(&setOperationInputMiddleware{}, middleware.After); err != nil {
+		return err
+	}
 	err = stack.Serialize.Add(&awsAwsjson11_serializeOpDescribeImageScanFindings{}, middleware.After)
 	if err != nil {
 		return err
 	}
 	err = stack.Deserialize.Add(&awsAwsjson11_deserializeOpDescribeImageScanFindings{}, middleware.After)
 	if err != nil {
+		return err
+	}
+	if err := addProtocolFinalizerMiddlewares(stack, options, "DescribeImageScanFindings"); err != nil {
+		return fmt.Errorf("add protocol finalizers: %v", err)
+	}
+
+	if err = addlegacyEndpointContextSetter(stack, options); err != nil {
 		return err
 	}
 	if err = addSetLoggerMiddleware(stack, options); err != nil {
@@ -125,16 +135,13 @@ func (c *Client) addOperationDescribeImageScanFindingsMiddlewares(stack *middlew
 	if err = addRetryMiddlewares(stack, options); err != nil {
 		return err
 	}
-	if err = addHTTPSignerV4Middleware(stack, options); err != nil {
-		return err
-	}
 	if err = awsmiddleware.AddRawResponseToMetadata(stack); err != nil {
 		return err
 	}
 	if err = awsmiddleware.AddRecordResponseTiming(stack); err != nil {
 		return err
 	}
-	if err = addClientUserAgent(stack); err != nil {
+	if err = addClientUserAgent(stack, options); err != nil {
 		return err
 	}
 	if err = smithyhttp.AddErrorCloseResponseBodyMiddleware(stack); err != nil {
@@ -143,10 +150,16 @@ func (c *Client) addOperationDescribeImageScanFindingsMiddlewares(stack *middlew
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
 		return err
 	}
+	if err = addSetLegacyContextSigningOptionsMiddleware(stack); err != nil {
+		return err
+	}
 	if err = addOpDescribeImageScanFindingsValidationMiddleware(stack); err != nil {
 		return err
 	}
 	if err = stack.Initialize.Add(newServiceMetadataMiddleware_opDescribeImageScanFindings(options.Region), middleware.Before); err != nil {
+		return err
+	}
+	if err = awsmiddleware.AddRecursionDetection(stack); err != nil {
 		return err
 	}
 	if err = addRequestIDRetrieverMiddleware(stack); err != nil {
@@ -156,6 +169,9 @@ func (c *Client) addOperationDescribeImageScanFindingsMiddlewares(stack *middlew
 		return err
 	}
 	if err = addRequestResponseLogging(stack, options); err != nil {
+		return err
+	}
+	if err = addDisableHTTPSMiddleware(stack, options); err != nil {
 		return err
 	}
 	return nil
@@ -173,11 +189,11 @@ var _ DescribeImageScanFindingsAPIClient = (*Client)(nil)
 // DescribeImageScanFindings
 type DescribeImageScanFindingsPaginatorOptions struct {
 	// The maximum number of image scan results returned by DescribeImageScanFindings
-	// in paginated output. When this parameter is used, DescribeImageScanFindings only
-	// returns maxResults results in a single page along with a nextToken response
-	// element. The remaining results of the initial request can be seen by sending
-	// another DescribeImageScanFindings request with the returned nextToken value.
-	// This value can be between 1 and 1000. If this parameter is not used, then
+	// in paginated output. When this parameter is used, DescribeImageScanFindings
+	// only returns maxResults results in a single page along with a nextToken
+	// response element. The remaining results of the initial request can be seen by
+	// sending another DescribeImageScanFindings request with the returned nextToken
+	// value. This value can be between 1 and 1000. If this parameter is not used, then
 	// DescribeImageScanFindings returns up to 100 results and a nextToken value, if
 	// applicable.
 	Limit int32
@@ -273,9 +289,9 @@ type ImageScanCompleteWaiterOptions struct {
 	// MinDelay must resolve to a value lesser than or equal to the MaxDelay.
 	MinDelay time.Duration
 
-	// MaxDelay is the maximum amount of time to delay between retries. If unset or set
-	// to zero, ImageScanCompleteWaiter will use default max delay of 120 seconds. Note
-	// that MaxDelay must resolve to value greater than or equal to the MinDelay.
+	// MaxDelay is the maximum amount of time to delay between retries. If unset or
+	// set to zero, ImageScanCompleteWaiter will use default max delay of 120 seconds.
+	// Note that MaxDelay must resolve to value greater than or equal to the MinDelay.
 	MaxDelay time.Duration
 
 	// LogWaitAttempts is used to enable logging for waiter retry attempts
@@ -323,10 +339,10 @@ func (w *ImageScanCompleteWaiter) Wait(ctx context.Context, params *DescribeImag
 	return err
 }
 
-// WaitForOutput calls the waiter function for ImageScanComplete waiter and returns
-// the output of the successful operation. The maxWaitDur is the maximum wait
-// duration the waiter will wait. The maxWaitDur is required and must be greater
-// than zero.
+// WaitForOutput calls the waiter function for ImageScanComplete waiter and
+// returns the output of the successful operation. The maxWaitDur is the maximum
+// wait duration the waiter will wait. The maxWaitDur is required and must be
+// greater than zero.
 func (w *ImageScanCompleteWaiter) WaitForOutput(ctx context.Context, params *DescribeImageScanFindingsInput, maxWaitDur time.Duration, optFns ...func(*ImageScanCompleteWaiterOptions)) (*DescribeImageScanFindingsOutput, error) {
 	if maxWaitDur <= 0 {
 		return nil, fmt.Errorf("maximum wait time for waiter must be greater than zero")
@@ -441,7 +457,6 @@ func newServiceMetadataMiddleware_opDescribeImageScanFindings(region string) *aw
 	return &awsmiddleware.RegisterServiceMetadata{
 		Region:        region,
 		ServiceID:     ServiceID,
-		SigningName:   "ecr",
 		OperationName: "DescribeImageScanFindings",
 	}
 }

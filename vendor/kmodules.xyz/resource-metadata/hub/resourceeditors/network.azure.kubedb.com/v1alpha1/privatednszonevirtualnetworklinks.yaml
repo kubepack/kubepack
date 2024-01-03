@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: network.azure.kubedb.com
+    k8s.io/kind: PrivateDNSZoneVirtualNetworkLink
+    k8s.io/resource: privatednszonevirtualnetworklinks
+    k8s.io/version: v1alpha1
+  name: network.azure.kubedb.com-v1alpha1-privatednszonevirtualnetworklinks
+spec:
+  resource:
+    group: network.azure.kubedb.com
+    kind: PrivateDNSZoneVirtualNetworkLink
+    name: privatednszonevirtualnetworklinks
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: networkazurekubedbcom-privatednszonevirtualnetworklink-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

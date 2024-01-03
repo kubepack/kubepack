@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: core.kubestash.com
+    k8s.io/kind: BackupBlueprint
+    k8s.io/resource: backupblueprints
+    k8s.io/version: v1alpha1
+  name: core.kubestash.com-v1alpha1-backupblueprints
+spec:
+  resource:
+    group: core.kubestash.com
+    kind: BackupBlueprint
+    name: backupblueprints
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: corekubestashcom-backupblueprint-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

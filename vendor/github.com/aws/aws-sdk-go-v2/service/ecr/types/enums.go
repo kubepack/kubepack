@@ -73,6 +73,9 @@ const (
 	ImageFailureCodeMissingDigestAndTag           ImageFailureCode = "MissingDigestAndTag"
 	ImageFailureCodeImageReferencedByManifestList ImageFailureCode = "ImageReferencedByManifestList"
 	ImageFailureCodeKmsError                      ImageFailureCode = "KmsError"
+	ImageFailureCodeUpstreamAccessDenied          ImageFailureCode = "UpstreamAccessDenied"
+	ImageFailureCodeUpstreamTooManyRequests       ImageFailureCode = "UpstreamTooManyRequests"
+	ImageFailureCodeUpstreamUnavailable           ImageFailureCode = "UpstreamUnavailable"
 )
 
 // Values returns all known values for ImageFailureCode. Note that this can be
@@ -87,6 +90,9 @@ func (ImageFailureCode) Values() []ImageFailureCode {
 		"MissingDigestAndTag",
 		"ImageReferencedByManifestList",
 		"KmsError",
+		"UpstreamAccessDenied",
+		"UpstreamTooManyRequests",
+		"UpstreamUnavailable",
 	}
 }
 
@@ -154,9 +160,10 @@ const (
 	LifecyclePolicyPreviewStatusFailed     LifecyclePolicyPreviewStatus = "FAILED"
 )
 
-// Values returns all known values for LifecyclePolicyPreviewStatus. Note that this
-// can be expanded in the future, and so it is only as up to date as the client.
-// The ordering of this slice is not guaranteed to be stable across updates.
+// Values returns all known values for LifecyclePolicyPreviewStatus. Note that
+// this can be expanded in the future, and so it is only as up to date as the
+// client. The ordering of this slice is not guaranteed to be stable across
+// updates.
 func (LifecyclePolicyPreviewStatus) Values() []LifecyclePolicyPreviewStatus {
 	return []LifecyclePolicyPreviewStatus{
 		"IN_PROGRESS",
@@ -246,9 +253,10 @@ const (
 	ScanningRepositoryFilterTypeWildcard ScanningRepositoryFilterType = "WILDCARD"
 )
 
-// Values returns all known values for ScanningRepositoryFilterType. Note that this
-// can be expanded in the future, and so it is only as up to date as the client.
-// The ordering of this slice is not guaranteed to be stable across updates.
+// Values returns all known values for ScanningRepositoryFilterType. Note that
+// this can be expanded in the future, and so it is only as up to date as the
+// client. The ordering of this slice is not guaranteed to be stable across
+// updates.
 func (ScanningRepositoryFilterType) Values() []ScanningRepositoryFilterType {
 	return []ScanningRepositoryFilterType{
 		"WILDCARD",
@@ -312,13 +320,39 @@ const (
 	TagStatusAny      TagStatus = "ANY"
 )
 
-// Values returns all known values for TagStatus. Note that this can be expanded in
-// the future, and so it is only as up to date as the client. The ordering of this
-// slice is not guaranteed to be stable across updates.
+// Values returns all known values for TagStatus. Note that this can be expanded
+// in the future, and so it is only as up to date as the client. The ordering of
+// this slice is not guaranteed to be stable across updates.
 func (TagStatus) Values() []TagStatus {
 	return []TagStatus{
 		"TAGGED",
 		"UNTAGGED",
 		"ANY",
+	}
+}
+
+type UpstreamRegistry string
+
+// Enum values for UpstreamRegistry
+const (
+	UpstreamRegistryEcrPublic               UpstreamRegistry = "ecr-public"
+	UpstreamRegistryQuay                    UpstreamRegistry = "quay"
+	UpstreamRegistryK8s                     UpstreamRegistry = "k8s"
+	UpstreamRegistryDockerHub               UpstreamRegistry = "docker-hub"
+	UpstreamRegistryGitHubContainerRegistry UpstreamRegistry = "github-container-registry"
+	UpstreamRegistryAzureContainerRegistry  UpstreamRegistry = "azure-container-registry"
+)
+
+// Values returns all known values for UpstreamRegistry. Note that this can be
+// expanded in the future, and so it is only as up to date as the client. The
+// ordering of this slice is not guaranteed to be stable across updates.
+func (UpstreamRegistry) Values() []UpstreamRegistry {
+	return []UpstreamRegistry{
+		"ecr-public",
+		"quay",
+		"k8s",
+		"docker-hub",
+		"github-container-registry",
+		"azure-container-registry",
 	}
 }

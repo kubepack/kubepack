@@ -15,3 +15,12 @@ spec:
     name: featuresets
     scope: Cluster
     version: v1alpha1
+  ui:
+    editor:
+      name: uik8sappscodecom-featureset-{.metadata.release.name}-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

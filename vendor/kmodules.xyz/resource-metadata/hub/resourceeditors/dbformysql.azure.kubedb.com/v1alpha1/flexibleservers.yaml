@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: dbformysql.azure.kubedb.com
+    k8s.io/kind: FlexibleServer
+    k8s.io/resource: flexibleservers
+    k8s.io/version: v1alpha1
+  name: dbformysql.azure.kubedb.com-v1alpha1-flexibleservers
+spec:
+  resource:
+    group: dbformysql.azure.kubedb.com
+    kind: FlexibleServer
+    name: flexibleservers
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: dbformysqlazurekubedbcom-flexibleserver-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

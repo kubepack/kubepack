@@ -26,7 +26,7 @@ import (
 
 	"github.com/google/go-containerregistry/pkg/authn"
 	"github.com/google/go-containerregistry/pkg/name"
-	ctrl "sigs.k8s.io/controller-runtime"
+	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	"github.com/fluxcd/pkg/oci"
 )
@@ -105,10 +105,10 @@ func (c *Client) getLoginAuth(ctx context.Context) (authn.AuthConfig, error) {
 // ensure that the passed image is a valid GCR image using ValidHost().
 func (c *Client) Login(ctx context.Context, autoLogin bool, image string, ref name.Reference) (authn.Authenticator, error) {
 	if autoLogin {
-		ctrl.LoggerFrom(ctx).Info("logging in to GCP GCR for " + image)
+		log.FromContext(ctx).Info("logging in to GCP GCR for " + image)
 		authConfig, err := c.getLoginAuth(ctx)
 		if err != nil {
-			ctrl.LoggerFrom(ctx).Info("error logging into GCP " + err.Error())
+			log.FromContext(ctx).Info("error logging into GCP " + err.Error())
 			return nil, err
 		}
 
@@ -116,4 +116,16 @@ func (c *Client) Login(ctx context.Context, autoLogin bool, image string, ref na
 		return auth, nil
 	}
 	return nil, fmt.Errorf("GCR authentication failed: %w", oci.ErrUnconfiguredProvider)
+}
+
+// OIDCLogin attempts to get the authentication material for GCR from the token url set in the client.
+func (c *Client) OIDCLogin(ctx context.Context) (authn.Authenticator, error) {
+	authConfig, err := c.getLoginAuth(ctx)
+	if err != nil {
+		log.FromContext(ctx).Info("error logging into GCP " + err.Error())
+		return nil, err
+	}
+
+	auth := authn.FromConfig(authConfig)
+	return auth, nil
 }

@@ -27,7 +27,6 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	restclient "k8s.io/client-go/rest"
-	"sigs.k8s.io/controller-runtime/pkg/cache"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/client/apiutil"
 )
@@ -70,8 +69,9 @@ func NewDelegatingClient(in NewDelegatingClientInput) (client.Client, error) {
 			cacheUnstructured: in.CacheUnstructured,
 			cachable:          in.Cachable,
 		},
-		Writer:       in.Client,
-		StatusClient: in.Client,
+		Writer:                       in.Client,
+		StatusClient:                 in.Client,
+		SubResourceClientConstructor: in.Client,
 	}, nil
 }
 
@@ -79,9 +79,20 @@ type delegatingClient struct {
 	client.Reader
 	client.Writer
 	client.StatusClient
+	client.SubResourceClientConstructor
 
 	scheme *runtime.Scheme
 	mapper meta.RESTMapper
+}
+
+// GroupVersionKindFor returns the GroupVersionKind for the given object.
+func (d *delegatingClient) GroupVersionKindFor(obj runtime.Object) (schema.GroupVersionKind, error) {
+	return apiutil.GVKForObject(obj, d.scheme)
+}
+
+// IsObjectNamespaced returns true if the GroupVersionKind of the object is namespaced.
+func (d *delegatingClient) IsObjectNamespaced(obj runtime.Object) (bool, error) {
+	return apiutil.IsObjectNamespaced(obj, d.scheme, d.mapper)
 }
 
 // Scheme returns the scheme this client is using.
@@ -156,7 +167,11 @@ func (d *delegatingReader) List(ctx context.Context, list client.ObjectList, opt
 	return d.CacheReader.List(ctx, list, opts...)
 }
 
-func NewClient(cache cache.Cache, config *restclient.Config, options client.Options, uncachedObjects ...client.Object) (client.Client, error) {
+func (d *delegatingClient) SubResource(subResource string) client.SubResourceClient {
+	return d.SubResourceClientConstructor.SubResource(subResource)
+}
+
+func NewClient(config *restclient.Config, options client.Options) (client.Client, error) {
 	c, err := client.New(config, options)
 	if err != nil {
 		return nil, err
@@ -165,11 +180,14 @@ func NewClient(cache cache.Cache, config *restclient.Config, options client.Opti
 	if err != nil {
 		return nil, err
 	}
-	return NewDelegatingClient(NewDelegatingClientInput{
-		CacheReader:       cache,
-		Client:            c,
-		UncachedObjects:   uncachedObjects,
-		CacheUnstructured: true, // cache unstructured objects
-		Cachable:          cachable,
-	})
+	co := NewDelegatingClientInput{
+		Client:   c,
+		Cachable: cachable,
+	}
+	if options.Cache != nil {
+		co.CacheReader = options.Cache.Reader
+		co.UncachedObjects = options.Cache.DisableFor
+		co.CacheUnstructured = options.Cache.Unstructured // cache unstructured objects
+	}
+	return NewDelegatingClient(co)
 }

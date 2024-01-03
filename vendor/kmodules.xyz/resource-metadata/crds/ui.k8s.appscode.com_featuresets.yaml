@@ -103,7 +103,7 @@ spec:
                   - src
                   type: object
                 type: array
-              required:
+              recommended:
                 description: Required specify whether this feature set is mandatory
                   or not for using the UI.
                 type: boolean

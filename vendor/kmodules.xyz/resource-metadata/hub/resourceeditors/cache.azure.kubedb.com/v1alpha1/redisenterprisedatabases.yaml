@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: cache.azure.kubedb.com
+    k8s.io/kind: RedisEnterpriseDatabase
+    k8s.io/resource: redisenterprisedatabases
+    k8s.io/version: v1alpha1
+  name: cache.azure.kubedb.com-v1alpha1-redisenterprisedatabases
+spec:
+  resource:
+    group: cache.azure.kubedb.com
+    kind: RedisEnterpriseDatabase
+    name: redisenterprisedatabases
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: cacheazurekubedbcom-redisenterprisedatabase-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

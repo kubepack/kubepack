@@ -33,6 +33,9 @@ const (
 // interval. It must be supported by all kinds of the source.toolkit.fluxcd.io
 // API group.
 //
+// Deprecated: use the Source interface from api/v1 instead. This type will be
+// removed in a future release.
+//
 // +k8s:deepcopy-gen=false
 type Source interface {
 	runtime.Object

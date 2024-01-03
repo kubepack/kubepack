@@ -4,17 +4,18 @@ package ecr
 
 import (
 	"context"
+	"fmt"
 	awsmiddleware "github.com/aws/aws-sdk-go-v2/aws/middleware"
 	"github.com/aws/aws-sdk-go-v2/aws/signer/v4"
 	"github.com/aws/smithy-go/middleware"
 	smithyhttp "github.com/aws/smithy-go/transport/http"
 )
 
-// Retrieves the pre-signed Amazon S3 download URL corresponding to an image layer.
-// You can only get URLs for image layers that are referenced in an image. When an
-// image is pulled, the GetDownloadUrlForLayer API is called once per image layer
-// that is not already cached. This operation is used by the Amazon ECR proxy and
-// is not generally used by customers for pulling and pushing images. In most
+// Retrieves the pre-signed Amazon S3 download URL corresponding to an image
+// layer. You can only get URLs for image layers that are referenced in an image.
+// When an image is pulled, the GetDownloadUrlForLayer API is called once per image
+// layer that is not already cached. This operation is used by the Amazon ECR proxy
+// and is not generally used by customers for pulling and pushing images. In most
 // cases, you should use the docker CLI to pull, tag, and push images.
 func (c *Client) GetDownloadUrlForLayer(ctx context.Context, params *GetDownloadUrlForLayerInput, optFns ...func(*Options)) (*GetDownloadUrlForLayerOutput, error) {
 	if params == nil {
@@ -66,12 +67,22 @@ type GetDownloadUrlForLayerOutput struct {
 }
 
 func (c *Client) addOperationGetDownloadUrlForLayerMiddlewares(stack *middleware.Stack, options Options) (err error) {
+	if err := stack.Serialize.Add(&setOperationInputMiddleware{}, middleware.After); err != nil {
+		return err
+	}
 	err = stack.Serialize.Add(&awsAwsjson11_serializeOpGetDownloadUrlForLayer{}, middleware.After)
 	if err != nil {
 		return err
 	}
 	err = stack.Deserialize.Add(&awsAwsjson11_deserializeOpGetDownloadUrlForLayer{}, middleware.After)
 	if err != nil {
+		return err
+	}
+	if err := addProtocolFinalizerMiddlewares(stack, options, "GetDownloadUrlForLayer"); err != nil {
+		return fmt.Errorf("add protocol finalizers: %v", err)
+	}
+
+	if err = addlegacyEndpointContextSetter(stack, options); err != nil {
 		return err
 	}
 	if err = addSetLoggerMiddleware(stack, options); err != nil {
@@ -92,16 +103,13 @@ func (c *Client) addOperationGetDownloadUrlForLayerMiddlewares(stack *middleware
 	if err = addRetryMiddlewares(stack, options); err != nil {
 		return err
 	}
-	if err = addHTTPSignerV4Middleware(stack, options); err != nil {
-		return err
-	}
 	if err = awsmiddleware.AddRawResponseToMetadata(stack); err != nil {
 		return err
 	}
 	if err = awsmiddleware.AddRecordResponseTiming(stack); err != nil {
 		return err
 	}
-	if err = addClientUserAgent(stack); err != nil {
+	if err = addClientUserAgent(stack, options); err != nil {
 		return err
 	}
 	if err = smithyhttp.AddErrorCloseResponseBodyMiddleware(stack); err != nil {
@@ -110,10 +118,16 @@ func (c *Client) addOperationGetDownloadUrlForLayerMiddlewares(stack *middleware
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
 		return err
 	}
+	if err = addSetLegacyContextSigningOptionsMiddleware(stack); err != nil {
+		return err
+	}
 	if err = addOpGetDownloadUrlForLayerValidationMiddleware(stack); err != nil {
 		return err
 	}
 	if err = stack.Initialize.Add(newServiceMetadataMiddleware_opGetDownloadUrlForLayer(options.Region), middleware.Before); err != nil {
+		return err
+	}
+	if err = awsmiddleware.AddRecursionDetection(stack); err != nil {
 		return err
 	}
 	if err = addRequestIDRetrieverMiddleware(stack); err != nil {
@@ -125,6 +139,9 @@ func (c *Client) addOperationGetDownloadUrlForLayerMiddlewares(stack *middleware
 	if err = addRequestResponseLogging(stack, options); err != nil {
 		return err
 	}
+	if err = addDisableHTTPSMiddleware(stack, options); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -132,7 +149,6 @@ func newServiceMetadataMiddleware_opGetDownloadUrlForLayer(region string) *awsmi
 	return &awsmiddleware.RegisterServiceMetadata{
 		Region:        region,
 		ServiceID:     ServiceID,
-		SigningName:   "ecr",
 		OperationName: "GetDownloadUrlForLayer",
 	}
 }

@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: gateway.envoyproxy.io
+    k8s.io/kind: BackendTrafficPolicy
+    k8s.io/resource: backendtrafficpolicies
+    k8s.io/version: v1alpha1
+  name: gateway.envoyproxy.io-v1alpha1-backendtrafficpolicies
+spec:
+  resource:
+    group: gateway.envoyproxy.io
+    kind: BackendTrafficPolicy
+    name: backendtrafficpolicies
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: gatewayenvoyproxyio-backendtrafficpolicy-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

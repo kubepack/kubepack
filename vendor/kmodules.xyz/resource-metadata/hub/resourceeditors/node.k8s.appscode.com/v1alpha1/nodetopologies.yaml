@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: node.k8s.appscode.com
+    k8s.io/kind: NodeTopology
+    k8s.io/resource: nodetopologies
+    k8s.io/version: v1alpha1
+  name: node.k8s.appscode.com-v1alpha1-nodetopologies
+spec:
+  resource:
+    group: node.k8s.appscode.com
+    kind: NodeTopology
+    name: nodetopologies
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: nodek8sappscodecom-nodetopology-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

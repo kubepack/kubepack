@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: notification.toolkit.fluxcd.io
+    k8s.io/kind: Provider
+    k8s.io/resource: providers
+    k8s.io/version: v1beta3
+  name: notification.toolkit.fluxcd.io-v1beta3-providers
+spec:
+  resource:
+    group: notification.toolkit.fluxcd.io
+    kind: Provider
+    name: providers
+    scope: Namespaced
+    version: v1beta3
+  ui:
+    editor:
+      name: notificationtoolkitfluxcdio-provider-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

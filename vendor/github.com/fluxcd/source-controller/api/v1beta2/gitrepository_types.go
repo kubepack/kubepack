@@ -23,6 +23,8 @@ import (
 
 	"github.com/fluxcd/pkg/apis/acl"
 	"github.com/fluxcd/pkg/apis/meta"
+
+	apiv1 "github.com/fluxcd/source-controller/api/v1"
 )
 
 const (
@@ -55,7 +57,7 @@ type GitRepositorySpec struct {
 	// SecretRef specifies the Secret containing authentication credentials for
 	// the GitRepository.
 	// For HTTPS repositories the Secret must contain 'username' and 'password'
-	// fields.
+	// fields for basic auth or 'bearerToken' field for token auth.
 	// For SSH repositories the Secret must contain 'identity'
 	// and 'known_hosts' fields.
 	// +optional
@@ -106,7 +108,6 @@ type GitRepositorySpec struct {
 
 	// RecurseSubmodules enables the initialization of all submodules within
 	// the GitRepository as cloned from the URL, using their default settings.
-	// This option is available only when using the 'go-git' GitImplementation.
 	// +optional
 	RecurseSubmodules bool `json:"recurseSubmodules,omitempty"`
 
@@ -156,9 +157,6 @@ func (in *GitRepositoryInclude) GetToPath() string {
 // GitRepositoryRef specifies the Git reference to resolve and checkout.
 type GitRepositoryRef struct {
 	// Branch to check out, defaults to 'master' if no other field is defined.
-	//
-	// When GitRepositorySpec.GitImplementation is set to 'go-git', a shallow
-	// clone of the specified branch is performed.
 	// +optional
 	Branch string `json:"branch,omitempty"`
 
@@ -170,11 +168,17 @@ type GitRepositoryRef struct {
 	// +optional
 	SemVer string `json:"semver,omitempty"`
 
+	// Name of the reference to check out; takes precedence over Branch, Tag and SemVer.
+	//
+	// It must be a valid Git reference: https://git-scm.com/docs/git-check-ref-format#_description
+	// Examples: "refs/heads/main", "refs/tags/v0.1.0", "refs/pull/420/head", "refs/merge-requests/1/head"
+	// +optional
+	Name string `json:"name,omitempty"`
+
 	// Commit SHA to check out, takes precedence over all reference fields.
 	//
-	// When GitRepositorySpec.GitImplementation is set to 'go-git', this can be
-	// combined with Branch to shallow clone the branch, in which the commit is
-	// expected to exist.
+	// This can be combined with Branch to shallow clone the branch, in which
+	// the commit is expected to exist.
 	// +optional
 	Commit string `json:"commit,omitempty"`
 }
@@ -188,7 +192,7 @@ type GitRepositoryVerification struct {
 
 	// SecretRef specifies the Secret containing the public keys of trusted Git
 	// authors.
-	SecretRef meta.LocalObjectReference `json:"secretRef,omitempty"`
+	SecretRef meta.LocalObjectReference `json:"secretRef"`
 }
 
 // GitRepositoryStatus records the observed state of a Git repository.
@@ -210,12 +214,12 @@ type GitRepositoryStatus struct {
 
 	// Artifact represents the last successful GitRepository reconciliation.
 	// +optional
-	Artifact *Artifact `json:"artifact,omitempty"`
+	Artifact *apiv1.Artifact `json:"artifact,omitempty"`
 
 	// IncludedArtifacts contains a list of the last successfully included
 	// Artifacts as instructed by GitRepositorySpec.Include.
 	// +optional
-	IncludedArtifacts []*Artifact `json:"includedArtifacts,omitempty"`
+	IncludedArtifacts []*apiv1.Artifact `json:"includedArtifacts,omitempty"`
 
 	// ContentConfigChecksum is a checksum of all the configurations related to
 	// the content of the source artifact:
@@ -278,16 +282,16 @@ func (in GitRepository) GetRequeueAfter() time.Duration {
 
 // GetArtifact returns the latest Artifact from the GitRepository if present in
 // the status sub-resource.
-func (in *GitRepository) GetArtifact() *Artifact {
+func (in *GitRepository) GetArtifact() *apiv1.Artifact {
 	return in.Status.Artifact
 }
 
 // +genclient
 // +genclient:Namespaced
-// +kubebuilder:storageversion
 // +kubebuilder:object:root=true
 // +kubebuilder:resource:shortName=gitrepo
 // +kubebuilder:subresource:status
+// +kubebuilder:deprecatedversion:warning="v1beta2 GitRepository is deprecated, upgrade to v1"
 // +kubebuilder:printcolumn:name="URL",type=string,JSONPath=`.spec.url`
 // +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp",description=""
 // +kubebuilder:printcolumn:name="Ready",type="string",JSONPath=".status.conditions[?(@.type==\"Ready\")].status",description=""

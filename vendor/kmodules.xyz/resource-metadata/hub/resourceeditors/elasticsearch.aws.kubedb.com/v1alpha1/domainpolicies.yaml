@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: elasticsearch.aws.kubedb.com
+    k8s.io/kind: DomainPolicy
+    k8s.io/resource: domainpolicies
+    k8s.io/version: v1alpha1
+  name: elasticsearch.aws.kubedb.com-v1alpha1-domainpolicies
+spec:
+  resource:
+    group: elasticsearch.aws.kubedb.com
+    kind: DomainPolicy
+    name: domainpolicies
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: elasticsearchawskubedbcom-domainpolicy-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

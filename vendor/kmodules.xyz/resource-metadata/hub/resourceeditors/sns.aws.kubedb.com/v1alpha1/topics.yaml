@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: sns.aws.kubedb.com
+    k8s.io/kind: Topic
+    k8s.io/resource: topics
+    k8s.io/version: v1alpha1
+  name: sns.aws.kubedb.com-v1alpha1-topics
+spec:
+  resource:
+    group: sns.aws.kubedb.com
+    kind: Topic
+    name: topics
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: snsawskubedbcom-topic-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

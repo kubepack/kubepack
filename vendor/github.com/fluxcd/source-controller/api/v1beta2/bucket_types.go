@@ -23,6 +23,8 @@ import (
 
 	"github.com/fluxcd/pkg/apis/acl"
 	"github.com/fluxcd/pkg/apis/meta"
+
+	apiv1 "github.com/fluxcd/source-controller/api/v1"
 )
 
 const (
@@ -72,12 +74,18 @@ type BucketSpec struct {
 	// +optional
 	Region string `json:"region,omitempty"`
 
+	// Prefix to use for server-side filtering of files in the Bucket.
+	// +optional
+	Prefix string `json:"prefix,omitempty"`
+
 	// SecretRef specifies the Secret containing authentication credentials
 	// for the Bucket.
 	// +optional
 	SecretRef *meta.LocalObjectReference `json:"secretRef,omitempty"`
 
-	// Interval at which to check the Endpoint for updates.
+	// Interval at which the Bucket Endpoint is checked for updates.
+	// This interval is approximate and may be subject to jitter to ensure
+	// efficient use of resources.
 	// +kubebuilder:validation:Type=string
 	// +kubebuilder:validation:Pattern="^([0-9]+(\\.[0-9]+)?(ms|s|m|h))+$"
 	// +required
@@ -126,7 +134,7 @@ type BucketStatus struct {
 
 	// Artifact represents the last successful Bucket reconciliation.
 	// +optional
-	Artifact *Artifact `json:"artifact,omitempty"`
+	Artifact *apiv1.Artifact `json:"artifact,omitempty"`
 
 	// ObservedIgnore is the observed exclusion patterns used for constructing
 	// the source artifact.
@@ -162,7 +170,7 @@ func (in Bucket) GetRequeueAfter() time.Duration {
 }
 
 // GetArtifact returns the latest artifact from the source if present in the status sub-resource.
-func (in *Bucket) GetArtifact() *Artifact {
+func (in *Bucket) GetArtifact() *apiv1.Artifact {
 	return in.Status.Artifact
 }
 

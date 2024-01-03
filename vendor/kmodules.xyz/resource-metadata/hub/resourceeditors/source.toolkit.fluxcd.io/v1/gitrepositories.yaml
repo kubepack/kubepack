@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: source.toolkit.fluxcd.io
+    k8s.io/kind: GitRepository
+    k8s.io/resource: gitrepositories
+    k8s.io/version: v1
+  name: source.toolkit.fluxcd.io-v1-gitrepositories
+spec:
+  resource:
+    group: source.toolkit.fluxcd.io
+    kind: GitRepository
+    name: gitrepositories
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: sourcetoolkitfluxcdio-gitrepository-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

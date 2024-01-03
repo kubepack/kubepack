@@ -65,7 +65,7 @@ type FeatureSpec struct {
 	FeatureBlock string `json:"featureBlock,omitempty"`
 	// Required specifies whether this feature is mandatory or not for enabling the respecting FeatureSet.
 	// +optional
-	Required bool `json:"required,omitempty"`
+	Recommended bool `json:"recommended,omitempty"`
 	// Requirements specifies the requirements to enable this feature.
 	// +optional
 	Requirements Requirements `json:"requirements,omitempty"`

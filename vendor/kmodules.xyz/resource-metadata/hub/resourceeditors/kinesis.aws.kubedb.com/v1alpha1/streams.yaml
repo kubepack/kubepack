@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: kinesis.aws.kubedb.com
+    k8s.io/kind: Stream
+    k8s.io/resource: streams
+    k8s.io/version: v1alpha1
+  name: kinesis.aws.kubedb.com-v1alpha1-streams
+spec:
+  resource:
+    group: kinesis.aws.kubedb.com
+    kind: Stream
+    name: streams
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: kinesisawskubedbcom-stream-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

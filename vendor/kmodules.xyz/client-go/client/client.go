@@ -36,7 +36,11 @@ import (
 )
 
 func NewUncachedClient(cfg *rest.Config, funcs ...func(*runtime.Scheme) error) (client.Client, error) {
-	mapper, err := apiutil.NewDynamicRESTMapper(cfg)
+	hc, err := rest.HTTPClientFor(cfg)
+	if err != nil {
+		return nil, err
+	}
+	mapper, err := apiutil.NewDynamicRESTMapper(cfg, hc)
 	if err != nil {
 		return nil, err
 	}
@@ -65,14 +69,19 @@ type (
 )
 
 func CreateOrPatch(ctx context.Context, c client.Client, obj client.Object, transform TransformFunc, opts ...client.PatchOption) (kutil.VerbType, error) {
+	gvk, err := apiutil.GVKForObject(obj, c.Scheme())
+	if err != nil {
+		return kutil.VerbUnchanged, errors.Wrapf(err, "failed to get GVK for object %T", obj)
+	}
+
 	cur := obj.DeepCopyObject().(client.Object)
 	key := types.NamespacedName{
 		Namespace: cur.GetNamespace(),
 		Name:      cur.GetName(),
 	}
-	err := c.Get(ctx, key, cur)
+	err = c.Get(ctx, key, cur)
 	if kerr.IsNotFound(err) {
-		klog.V(3).Infof("Creating %+v %s/%s.", obj.GetObjectKind().GroupVersionKind(), key.Namespace, key.Name)
+		klog.V(3).Infof("Creating %+v %s/%s.", gvk, key.Namespace, key.Name)
 
 		createOpts := make([]client.CreateOption, 0, len(opts))
 		for i := range opts {
@@ -90,11 +99,6 @@ func CreateOrPatch(ctx context.Context, c client.Client, obj client.Object, tran
 		return kutil.VerbCreated, err
 	} else if err != nil {
 		return kutil.VerbUnchanged, err
-	}
-
-	gvk, err := apiutil.GVKForObject(obj, c.Scheme())
-	if err != nil {
-		return kutil.VerbUnchanged, errors.Wrapf(err, "failed to get GVK for object %T", obj)
 	}
 
 	_, unstructuredObj := obj.(*unstructured.Unstructured)
@@ -123,7 +127,7 @@ func assign(target, src any) {
 	reflect.ValueOf(target).Elem().Set(srcValue)
 }
 
-func PatchStatus(ctx context.Context, c client.Client, obj client.Object, transform TransformStatusFunc, opts ...client.PatchOption) (kutil.VerbType, error) {
+func PatchStatus(ctx context.Context, c client.Client, obj client.Object, transform TransformStatusFunc, opts ...client.SubResourcePatchOption) (kutil.VerbType, error) {
 	cur := obj.DeepCopyObject().(client.Object)
 	key := types.NamespacedName{
 		Namespace: cur.GetNamespace(),

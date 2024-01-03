@@ -29,12 +29,12 @@ import (
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/ecr"
 	"github.com/google/go-containerregistry/pkg/authn"
-	ctrl "sigs.k8s.io/controller-runtime"
+	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	"github.com/fluxcd/pkg/oci"
 )
 
-var registryPartRe = regexp.MustCompile(`([0-9+]*).dkr.ecr.([^/.]*)\.(amazonaws\.com[.cn]*)`)
+var registryPartRe = regexp.MustCompile(`([0-9+]*).dkr.ecr(?:-fips)?\.([^/.]*)\.(amazonaws\.com[.cn]*)`)
 
 // ParseRegistry returns the AWS account ID and region and `true` if
 // the image registry/repository is hosted in AWS's Elastic Container Registry,
@@ -132,12 +132,10 @@ func (c *Client) getLoginAuth(ctx context.Context, awsEcrRegion string) (authn.A
 	return authConfig, nil
 }
 
-// Login attempts to get the authentication material for ECR. It extracts
-// the account and region information from the image URI. The caller can ensure
-// that the passed image is a valid ECR image using ParseRegistry().
+// Login attempts to get the authentication material for ECR.
 func (c *Client) Login(ctx context.Context, autoLogin bool, image string) (authn.Authenticator, error) {
 	if autoLogin {
-		ctrl.LoggerFrom(ctx).Info("logging in to AWS ECR for " + image)
+		log.FromContext(ctx).Info("logging in to AWS ECR for " + image)
 		_, awsEcrRegion, ok := ParseRegistry(image)
 		if !ok {
 			return nil, errors.New("failed to parse AWS ECR image, invalid ECR image")
@@ -152,4 +150,20 @@ func (c *Client) Login(ctx context.Context, autoLogin bool, image string) (authn
 		return auth, nil
 	}
 	return nil, fmt.Errorf("ECR authentication failed: %w", oci.ErrUnconfiguredProvider)
+}
+
+// OIDCLogin attempts to get the authentication material for ECR.
+func (c *Client) OIDCLogin(ctx context.Context, registryURL string) (authn.Authenticator, error) {
+	_, awsEcrRegion, ok := ParseRegistry(registryURL)
+	if !ok {
+		return nil, errors.New("failed to parse AWS ECR image, invalid ECR image")
+	}
+
+	authConfig, err := c.getLoginAuth(ctx, awsEcrRegion)
+	if err != nil {
+		return nil, err
+	}
+
+	auth := authn.FromConfig(authConfig)
+	return auth, nil
 }

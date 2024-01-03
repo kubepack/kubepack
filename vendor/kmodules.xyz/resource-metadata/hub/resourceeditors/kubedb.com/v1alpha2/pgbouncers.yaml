@@ -26,15 +26,16 @@ spec:
       sourceRef:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
-        name: bytebuilders-ui
-      version: v0.4.17
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false
     options:
       name: kubedbcom-pgbouncer-editor-options
       sourceRef:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
-        name: bytebuilders-ui
-      version: v0.4.17
+        name: appscode-charts-oci
+      version: v0.4.18
   variants:
   - name: default
     selector:

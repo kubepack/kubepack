@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ops.kubedb.com
+    k8s.io/kind: KafkaOpsRequest
+    k8s.io/resource: kafkaopsrequests
+    k8s.io/version: v1alpha1
+  name: ops.kubedb.com-v1alpha1-kafkaopsrequests
+spec:
+  resource:
+    group: ops.kubedb.com
+    kind: KafkaOpsRequest
+    name: kafkaopsrequests
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: opskubedbcom-kafkaopsrequest-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

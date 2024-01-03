@@ -32,6 +32,7 @@ import (
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 	"k8s.io/cli-runtime/pkg/printers"
 	"k8s.io/cli-runtime/pkg/resource"
+	"k8s.io/client-go/discovery"
 	"k8s.io/client-go/dynamic"
 	"k8s.io/kubectl/pkg/cmd/delete"
 	cmdutil "k8s.io/kubectl/pkg/cmd/util"
@@ -56,7 +57,7 @@ type ApplyOptions struct {
 	FieldManager    string
 	Selector        string
 	DryRunStrategy  cmdutil.DryRunStrategy
-	DryRunVerifier  *resource.QueryParamVerifier
+	DryRunVerifier  resource.Verifier
 	cmdBaseName     string
 	All             bool
 	Overwrite       bool
@@ -182,20 +183,23 @@ func (o *ApplyOptions) CompleteFlags(f cmdutil.Factory, cmd *cobra.Command) erro
 	}
 	o.FieldManager = cmdutil.GetFieldManagerFlag(cmd)
 
-	dynamicClient, err := f.DynamicClient()
-	if err != nil {
-		return err
-	}
-	fieldValidationVerifier := resource.NewQueryParamVerifier(dynamicClient, f.OpenAPIGetter(), resource.QueryParamFieldValidation)
 	validationDirective, err := cmdutil.GetValidationDirective(cmd)
 	if err != nil {
 		return err
 	}
-	o.Validator, err = f.Validator(validationDirective, fieldValidationVerifier)
+	o.Validator, err = f.Validator(validationDirective)
 	if err != nil {
 		return err
 	}
 	return o.Complete(f)
+}
+
+func openAPIGetter(f cmdutil.Factory) discovery.OpenAPISchemaInterface {
+	discovery, err := f.ToDiscoveryClient()
+	if err != nil {
+		return nil
+	}
+	return openapi.NewOpenAPIGetter(discovery)
 }
 
 // Complete verifies if ApplyOptions are valid and without conflicts.
@@ -205,7 +209,19 @@ func (o *ApplyOptions) Complete(f cmdutil.Factory) error {
 	if err != nil {
 		return err
 	}
-	o.DryRunVerifier = resource.NewQueryParamVerifier(o.DynamicClient, f.OpenAPIGetter(), resource.QueryParamDryRun)
+
+	oapiV3Client, err := f.OpenAPIV3Client()
+	if err != nil {
+		return err
+	}
+	queryParam := resource.QueryParamFieldValidation
+	primary := resource.NewQueryParamVerifierV3(o.DynamicClient, oapiV3Client, queryParam)
+	disco, err := f.ToDiscoveryClient()
+	if err != nil {
+		return err
+	}
+	secondary := resource.NewQueryParamVerifier(o.DynamicClient, openapi.NewOpenAPIGetter(disco), queryParam)
+	o.DryRunVerifier = resource.NewFallbackQueryParamVerifier(primary, secondary)
 
 	if o.ForceConflicts && !o.ServerSideApply {
 		return fmt.Errorf("--force-conflicts only works with --server-side")

@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: elasticache.aws.kubedb.com
+    k8s.io/kind: UserGroup
+    k8s.io/resource: usergroups
+    k8s.io/version: v1alpha1
+  name: elasticache.aws.kubedb.com-v1alpha1-usergroups
+spec:
+  resource:
+    group: elasticache.aws.kubedb.com
+    kind: UserGroup
+    name: usergroups
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: elasticacheawskubedbcom-usergroup-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

@@ -24,6 +24,7 @@ import (
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/apimachinery/pkg/watch"
 	applycorev1 "k8s.io/client-go/applyconfigurations/core/v1"
@@ -115,11 +116,18 @@ func (a *appReleaseClient) DeleteAllOf(ctx context.Context, obj client.Object, o
 	return a.kb.DeleteAllOf(ctx, obj, append(opts, client.InNamespace(a.namespace))...)
 }
 
-func (a *appReleaseClient) Status() client.StatusWriter {
+func (a *appReleaseClient) Status() client.SubResourceWriter {
 	if err := a.init(); err != nil {
 		panic(err)
 	}
-	return a.kb
+	return a.kb.Status()
+}
+
+func (a *appReleaseClient) SubResource(subResource string) client.SubResourceClient {
+	if err := a.init(); err != nil {
+		panic(err)
+	}
+	return a.kb.SubResource(subResource)
 }
 
 func (a *appReleaseClient) Scheme() *runtime.Scheme {
@@ -134,6 +142,20 @@ func (a *appReleaseClient) RESTMapper() meta.RESTMapper {
 		panic(err)
 	}
 	return a.kb.RESTMapper()
+}
+
+func (a *appReleaseClient) GroupVersionKindFor(obj runtime.Object) (schema.GroupVersionKind, error) {
+	if err := a.init(); err != nil {
+		return schema.GroupVersionKind{}, err
+	}
+	return a.kb.GroupVersionKindFor(obj)
+}
+
+func (a *appReleaseClient) IsObjectNamespaced(obj runtime.Object) (bool, error) {
+	if err := a.init(); err != nil {
+		return false, err
+	}
+	return a.kb.IsObjectNamespaced(obj)
 }
 
 var _ client.Client = (*appReleaseClient)(nil)

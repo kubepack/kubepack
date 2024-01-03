@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: rds.aws.kubedb.com
+    k8s.io/kind: ClusterInstance
+    k8s.io/resource: clusterinstances
+    k8s.io/version: v1alpha1
+  name: rds.aws.kubedb.com-v1alpha1-clusterinstances
+spec:
+  resource:
+    group: rds.aws.kubedb.com
+    kind: ClusterInstance
+    name: clusterinstances
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: rdsawskubedbcom-clusterinstance-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: rds.aws.kubedb.com
+    k8s.io/kind: ParameterGroup
+    k8s.io/resource: parametergroups
+    k8s.io/version: v1alpha1
+  name: rds.aws.kubedb.com-v1alpha1-parametergroups
+spec:
+  resource:
+    group: rds.aws.kubedb.com
+    kind: ParameterGroup
+    name: parametergroups
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: rdsawskubedbcom-parametergroup-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

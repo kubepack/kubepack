@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ec2.aws.kubedb.com
+    k8s.io/kind: VPCPeeringConnection
+    k8s.io/resource: vpcpeeringconnections
+    k8s.io/version: v1alpha1
+  name: ec2.aws.kubedb.com-v1alpha1-vpcpeeringconnections
+spec:
+  resource:
+    group: ec2.aws.kubedb.com
+    kind: VPCPeeringConnection
+    name: vpcpeeringconnections
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: ec2awskubedbcom-vpcpeeringconnection-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

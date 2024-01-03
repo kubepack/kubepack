@@ -60,8 +60,9 @@ type ResourceEditorSpec struct {
 }
 
 type UIParameters struct {
-	Options *releasesapi.ChartSourceRef `json:"options,omitempty"`
-	Editor  *releasesapi.ChartSourceRef `json:"editor,omitempty"`
+	Options      *releasesapi.ChartSourceRef `json:"options,omitempty"`
+	Editor       *releasesapi.ChartSourceRef `json:"editor,omitempty"`
+	EnforceQuota bool                        `json:"enforceQuota"`
 	// app.kubernetes.io/instance label must be updated at these paths when refilling metadata
 	// +optional
 	InstanceLabelPaths []string `json:"instanceLabelPaths,omitempty"`
@@ -82,6 +83,7 @@ type ActionTemplate struct {
 	Flow             string                      `json:"flow"`
 	DisabledTemplate string                      `json:"disabledTemplate,omitempty"`
 	Editor           *releasesapi.ChartSourceRef `json:"editor,omitempty"`
+	EnforceQuota     bool                        `json:"enforceQuota"`
 }
 
 type VariantRef struct {

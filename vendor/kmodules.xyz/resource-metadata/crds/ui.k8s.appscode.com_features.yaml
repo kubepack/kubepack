@@ -163,7 +163,7 @@ spec:
                       type: object
                     type: array
                 type: object
-              required:
+              recommended:
                 description: Required specifies whether this feature is mandatory
                   or not for enabling the respecting FeatureSet.
                 type: boolean

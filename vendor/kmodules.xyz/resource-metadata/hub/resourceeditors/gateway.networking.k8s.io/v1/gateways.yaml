@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: gateway.networking.k8s.io
+    k8s.io/kind: Gateway
+    k8s.io/resource: gateways
+    k8s.io/version: v1
+  name: gateway.networking.k8s.io-v1-gateways
+spec:
+  resource:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: gateways
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: gatewaynetworkingk8sio-gateway-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

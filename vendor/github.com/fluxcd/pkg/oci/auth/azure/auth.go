@@ -28,7 +28,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"github.com/google/go-containerregistry/pkg/authn"
 	"github.com/google/go-containerregistry/pkg/name"
-	ctrl "sigs.k8s.io/controller-runtime"
+	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	"github.com/fluxcd/pkg/oci"
 )
@@ -58,8 +58,9 @@ func (c *Client) WithScheme(scheme string) *Client {
 }
 
 // getLoginAuth returns authentication for ACR. The details needed for authentication
-// are gotten from environment variable so there is not need to mount a host path.
-func (c *Client) getLoginAuth(ctx context.Context, ref name.Reference) (authn.AuthConfig, error) {
+// are gotten from environment variable so there is no need to mount a host path.
+// The endpoint is the registry server and will be queried for OAuth authorization token.
+func (c *Client) getLoginAuth(ctx context.Context, registryURL string) (authn.AuthConfig, error) {
 	var authConfig authn.AuthConfig
 
 	// Use default credentials if no token credential is provided.
@@ -73,18 +74,17 @@ func (c *Client) getLoginAuth(ctx context.Context, ref name.Reference) (authn.Au
 		c.credential = cred
 	}
 
+	configurationEnvironment := getCloudConfiguration(registryURL)
 	// Obtain access token using the token credential.
-	// TODO: Add support for other azure endpoints as well.
 	armToken, err := c.credential.GetToken(ctx, policy.TokenRequestOptions{
-		Scopes: []string{cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint + "/" + ".default"},
+		Scopes: []string{configurationEnvironment.Services[cloud.ResourceManager].Endpoint + "/" + ".default"},
 	})
 	if err != nil {
 		return authConfig, err
 	}
 
 	// Obtain ACR access token using exchanger.
-	endpoint := fmt.Sprintf("%s://%s", c.scheme, ref.Context().RegistryStr())
-	ex := newExchanger(endpoint)
+	ex := newExchanger(registryURL)
 	accessToken, err := ex.ExchangeACRAccessToken(string(armToken.Token))
 	if err != nil {
 		return authConfig, fmt.Errorf("error exchanging token: %w", err)
@@ -96,6 +96,19 @@ func (c *Client) getLoginAuth(ctx context.Context, ref name.Reference) (authn.Au
 		Username: "00000000-0000-0000-0000-000000000000",
 		Password: accessToken,
 	}, nil
+}
+
+// getCloudConfiguration returns the cloud configuration based on the registry URL.
+// List from https://github.com/Azure/azure-sdk-for-go/blob/main/sdk/containers/azcontainerregistry/cloud_config.go#L16
+func getCloudConfiguration(url string) cloud.Configuration {
+	switch {
+	case strings.HasSuffix(url, ".azurecr.cn"):
+		return cloud.AzureChina
+	case strings.HasSuffix(url, ".azurecr.us"):
+		return cloud.AzureGovernment
+	default:
+		return cloud.AzurePublic
+	}
 }
 
 // ValidHost returns if a given host is a Azure container registry.
@@ -113,10 +126,13 @@ func ValidHost(host string) bool {
 // ensure that the passed image is a valid ACR image using ValidHost().
 func (c *Client) Login(ctx context.Context, autoLogin bool, image string, ref name.Reference) (authn.Authenticator, error) {
 	if autoLogin {
-		ctrl.LoggerFrom(ctx).Info("logging in to Azure ACR for " + image)
-		authConfig, err := c.getLoginAuth(ctx, ref)
+		log.FromContext(ctx).Info("logging in to Azure ACR for " + image)
+		// get registry host from image
+		strArr := strings.SplitN(image, "/", 2)
+		endpoint := fmt.Sprintf("%s://%s", c.scheme, strArr[0])
+		authConfig, err := c.getLoginAuth(ctx, endpoint)
 		if err != nil {
-			ctrl.LoggerFrom(ctx).Info("error logging into ACR " + err.Error())
+			log.FromContext(ctx).Info("error logging into ACR " + err.Error())
 			return nil, err
 		}
 
@@ -124,4 +140,19 @@ func (c *Client) Login(ctx context.Context, autoLogin bool, image string, ref na
 		return auth, nil
 	}
 	return nil, fmt.Errorf("ACR authentication failed: %w", oci.ErrUnconfiguredProvider)
+}
+
+// OIDCLogin attempts to get an Authenticator for the provided ACR registry URL endpoint.
+//
+// If you want to construct an Authenticator based on an image reference,
+// you may want to use Login instead.
+func (c *Client) OIDCLogin(ctx context.Context, registryUrl string) (authn.Authenticator, error) {
+	authConfig, err := c.getLoginAuth(ctx, registryUrl)
+	if err != nil {
+		log.FromContext(ctx).Info("error logging into ACR " + err.Error())
+		return nil, err
+	}
+
+	auth := authn.FromConfig(authConfig)
+	return auth, nil
 }
