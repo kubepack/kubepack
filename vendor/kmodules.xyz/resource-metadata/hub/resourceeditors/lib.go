@@ -123,7 +123,7 @@ func LoadByGVR(kc client.Client, gvr schema.GroupVersionResource) (*v1alpha1.Res
 		d, _ := LoadDefaultByGVR(gvr)
 		return merge(&ed, d), true
 	} else if !meta.IsNoMatchError(err) && !apierrors.IsNotFound(err) {
-		klog.V(3).InfoS(fmt.Sprintf("failed to load resource editor for %+v", gvr))
+		klog.V(3).ErrorS(err, fmt.Sprintf("failed to load resource editor for %+v", gvr))
 	}
 	return LoadDefaultByGVR(gvr)
 }

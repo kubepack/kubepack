@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: monitoring.coreos.com
+    k8s.io/kind: PrometheusAgent
+    k8s.io/resource: prometheusagents
+    k8s.io/version: v1alpha1
+  name: monitoring.coreos.com-v1alpha1-prometheusagents
+spec:
+  resource:
+    group: monitoring.coreos.com
+    kind: PrometheusAgent
+    name: prometheusagents
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: monitoringcoreoscom-prometheusagent-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

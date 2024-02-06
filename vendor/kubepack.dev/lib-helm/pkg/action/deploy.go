@@ -8,7 +8,6 @@ import (
 	"helm.sh/helm/v3/pkg/release"
 	"helm.sh/helm/v3/pkg/storage/driver"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
-	"kubepack.dev/lib-helm/pkg/engine"
 	"kubepack.dev/lib-helm/pkg/repo"
 	"kubepack.dev/lib-helm/pkg/values"
 	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
@@ -77,7 +76,7 @@ func (x *Deployer) WithRegistry(reg repo.IRegistry) *Deployer {
 	return x
 }
 
-func (x *Deployer) Run() (*release.Release, *engine.State, error) {
+func (x *Deployer) Run() (*release.Release, error) {
 	// If a release does not exist, install it.
 	histClient := ha.NewHistory(&x.cfg.Configuration)
 	histClient.Max = 1
@@ -107,7 +106,7 @@ func (x *Deployer) Run() (*release.Release, *engine.State, error) {
 			})
 		return i.Run()
 	} else if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 
 	i := NewUpgraderForConfig(x.cfg)
@@ -137,7 +136,7 @@ func (x *Deployer) Run() (*release.Release, *engine.State, error) {
 
 func (x *Deployer) Do() error {
 	var err error
-	x.result, _, err = x.Run()
+	x.result, err = x.Run()
 	return err
 }
 

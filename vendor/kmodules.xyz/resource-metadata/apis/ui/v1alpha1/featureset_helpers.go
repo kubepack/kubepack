@@ -21,6 +21,10 @@ import (
 	"kmodules.xyz/resource-metadata/crds"
 )
 
+const (
+	UIServerCleanupFinalizer = "ui-server.kubeops.dev/cleanup"
+)
+
 func (v FeatureSet) CustomResourceDefinition() *apiextensions.CustomResourceDefinition {
 	return crds.MustCustomResourceDefinition(SchemeGroupVersion.WithResource(ResourceFeatureSets))
 }
