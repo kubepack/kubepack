@@ -39,10 +39,8 @@ func (w *Watcher) Run(stopCh <-chan struct{}) error {
 		for {
 			select {
 			case event := <-watcher.Events:
-				klog.Infoln("file watcher event: --------------------------------------", event)
-
 				filename := filepath.Clean(event.Name)
-				if !fileset.Has(filename) {
+				if fileset.Len() > 0 && !fileset.Has(filename) {
 					continue
 				}
 
@@ -53,7 +51,7 @@ func (w *Watcher) Run(stopCh <-chan struct{}) error {
 					}
 				case fsnotify.Write:
 					if err := w.Reload(); err != nil {
-						klog.Errorln(err)
+						klog.Errorln("error:", err)
 					} else {
 						w.incReloadCount(filename)
 					}
@@ -63,7 +61,9 @@ func (w *Watcher) Run(stopCh <-chan struct{}) error {
 					}
 				}
 			case err := <-watcher.Errors:
-				klog.Errorln("error:", err)
+				if err != nil {
+					klog.Errorln("error:", err)
+				}
 			}
 		}
 	}()
