@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: catalog.appscode.com
+    k8s.io/kind: MicrosoftSQLServerBinding
+    k8s.io/resource: microsoftsqlserverbindings
+    k8s.io/version: v1alpha1
+  name: catalog.appscode.com-v1alpha1-microsoftsqlserverbindings
+spec:
+  resource:
+    group: catalog.appscode.com
+    kind: MicrosoftSQLServerBinding
+    name: microsoftsqlserverbindings
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: catalogappscodecom-microsoftsqlserverbinding-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

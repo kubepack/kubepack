@@ -75,6 +75,9 @@ type FeatureSpec struct {
 	// Chart specifies the chart information that will be used by the FluxCD to install the respective feature
 	// +optional
 	Chart ChartInfo `json:"chart,omitempty"`
+	// ValuesFrom holds references to resources containing Helm values for this HelmRelease,
+	// and information about how they should be merged.
+	ValuesFrom []ValuesReference `json:"valuesFrom,omitempty"`
 	// Values holds the values for this Helm release.
 	// +optional
 	Values *apiextensionsv1.JSON `json:"values,omitempty"`
@@ -107,11 +110,57 @@ type ChartInfo struct {
 	// Namespace where the respective feature resources will be deployed.
 	// +optional
 	Namespace string `json:"namespace,omitempty"`
+	// +optional
+	CreateNamespace string `json:"createNamespace,omitempty"`
 	// Version specifies the version of the chart.
 	// +optional
 	Version string `json:"version,omitempty"`
 	// SourceRef specifies the source of the chart
 	SourceRef v1.TypedObjectReference `json:"sourceRef"`
+	// Alternative list of values files to use as the chart values (values.yaml
+	// is not included by default), expected to be a relative path in the SourceRef.
+	// Values files are merged in the order of this list with the last file overriding
+	// the first. Ignored when omitted.
+	// +optional
+	ValuesFiles []string `json:"valuesFiles,omitempty"`
+}
+
+// copied from: https://github.com/fluxcd/helm-controller/blob/v0.37.4/api/v2beta2/reference_types.go#L45-L80
+// ValuesReference contains a reference to a resource containing Helm values,
+// and optionally the key they can be found at.
+type ValuesReference struct {
+	// Kind of the values referent, valid values are ('Secret', 'ConfigMap').
+	// +kubebuilder:validation:Enum=Secret;ConfigMap
+	// +required
+	Kind string `json:"kind"`
+
+	// Name of the values referent. Should reside in the same namespace as the
+	// referring resource.
+	// +kubebuilder:validation:MinLength=1
+	// +kubebuilder:validation:MaxLength=253
+	// +required
+	Name string `json:"name"`
+
+	// ValuesKey is the data key where the values.yaml or a specific value can be
+	// found at. Defaults to 'values.yaml'.
+	// +kubebuilder:validation:MaxLength=253
+	// +kubebuilder:validation:Pattern=`^[\-._a-zA-Z0-9]+$`
+	// +optional
+	ValuesKey string `json:"valuesKey,omitempty"`
+
+	// TargetPath is the YAML dot notation path the value should be merged at. When
+	// set, the ValuesKey is expected to be a single flat value. Defaults to 'None',
+	// which results in the values getting merged at the root.
+	// +kubebuilder:validation:MaxLength=250
+	// +kubebuilder:validation:Pattern=`^([a-zA-Z0-9_\-.\\\/]|\[[0-9]{1,5}\])+$`
+	// +optional
+	TargetPath string `json:"targetPath,omitempty"`
+
+	// Optional marks this ValuesReference as optional. When set, a not found error
+	// for the values reference is ignored, but any ValuesKey, TargetPath or
+	// transient error will still result in a reconciliation failure.
+	// +optional
+	Optional bool `json:"optional,omitempty"`
 }
 
 type FeatureStatus struct {

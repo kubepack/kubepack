@@ -72,11 +72,11 @@ func getValuesDiff(original, modified map[string]any, prefix string, diff map[st
 }
 
 func GetValuesDiff(orig, od any) (map[string]any, error) {
-	origMap, err := toJson(orig)
+	origMap, err := ToJsonMap(orig)
 	if err != nil {
 		return nil, err
 	}
-	modMap, err := toJson(od)
+	modMap, err := ToJsonMap(od)
 	if err != nil {
 		return nil, err
 	}
@@ -85,11 +85,11 @@ func GetValuesDiff(orig, od any) (map[string]any, error) {
 }
 
 func GetValuesDiffYAML(orig, od any) ([]byte, error) {
-	origMap, err := toJson(orig)
+	origMap, err := ToJsonMap(orig)
 	if err != nil {
 		return nil, err
 	}
-	modMap, err := toJson(od)
+	modMap, err := ToJsonMap(od)
 	if err != nil {
 		return nil, err
 	}
@@ -102,11 +102,11 @@ func GetValuesDiffYAML(orig, od any) ([]byte, error) {
 }
 
 func GetValuesDiffJson(orig, od any) ([]byte, error) {
-	origMap, err := toJson(orig)
+	origMap, err := ToJsonMap(orig)
 	if err != nil {
 		return nil, err
 	}
-	modMap, err := toJson(od)
+	modMap, err := ToJsonMap(od)
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +118,7 @@ func GetValuesDiffJson(orig, od any) ([]byte, error) {
 	return json.Marshal(diff)
 }
 
-func toJson(v any) (map[string]any, error) {
+func ToJsonMap(v any) (map[string]any, error) {
 	data, err := kj.Marshal(v)
 	if err != nil {
 		return nil, err

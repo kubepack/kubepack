@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: catalog.kubedb.com
+    k8s.io/kind: ZooKeeperVersion
+    k8s.io/resource: zookeeperversions
+    k8s.io/version: v1alpha1
+  name: catalog.kubedb.com-v1alpha1-zookeeperversions
+spec:
+  resource:
+    group: catalog.kubedb.com
+    kind: ZooKeeperVersion
+    name: zookeeperversions
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: catalogkubedbcom-zookeeperversion-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

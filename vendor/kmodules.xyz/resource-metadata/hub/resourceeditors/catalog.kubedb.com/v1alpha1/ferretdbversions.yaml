@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: catalog.kubedb.com
+    k8s.io/kind: FerretDBVersion
+    k8s.io/resource: ferretdbversions
+    k8s.io/version: v1alpha1
+  name: catalog.kubedb.com-v1alpha1-ferretdbversions
+spec:
+  resource:
+    group: catalog.kubedb.com
+    kind: FerretDBVersion
+    name: ferretdbversions
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: catalogkubedbcom-ferretdbversion-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: kube-bind.appscode.com
+    k8s.io/kind: APIServiceNamespace
+    k8s.io/resource: apiservicenamespaces
+    k8s.io/version: v1alpha1
+  name: kube-bind.appscode.com-v1alpha1-apiservicenamespaces
+spec:
+  resource:
+    group: kube-bind.appscode.com
+    kind: APIServiceNamespace
+    name: apiservicenamespaces
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: kubebindappscodecom-apiservicenamespace-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

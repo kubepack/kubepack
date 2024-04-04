@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: catalog.kubedb.com
+    k8s.io/kind: PgpoolVersion
+    k8s.io/resource: pgpoolversions
+    k8s.io/version: v1alpha1
+  name: catalog.kubedb.com-v1alpha1-pgpoolversions
+spec:
+  resource:
+    group: catalog.kubedb.com
+    kind: PgpoolVersion
+    name: pgpoolversions
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: catalogkubedbcom-pgpoolversion-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

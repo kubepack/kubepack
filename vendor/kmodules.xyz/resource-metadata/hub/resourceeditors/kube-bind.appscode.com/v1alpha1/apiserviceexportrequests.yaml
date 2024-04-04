@@ -3,21 +3,21 @@ kind: ResourceEditor
 metadata:
   creationTimestamp: null
   labels:
-    k8s.io/group: dashboard.kubedb.com
-    k8s.io/kind: ElasticsearchDashboard
-    k8s.io/resource: elasticsearchdashboards
+    k8s.io/group: kube-bind.appscode.com
+    k8s.io/kind: APIServiceExportRequest
+    k8s.io/resource: apiserviceexportrequests
     k8s.io/version: v1alpha1
-  name: dashboard.kubedb.com-v1alpha1-elasticsearchdashboards
+  name: kube-bind.appscode.com-v1alpha1-apiserviceexportrequests
 spec:
   resource:
-    group: dashboard.kubedb.com
-    kind: ElasticsearchDashboard
-    name: elasticsearchdashboards
+    group: kube-bind.appscode.com
+    kind: APIServiceExportRequest
+    name: apiserviceexportrequests
     scope: Namespaced
     version: v1alpha1
   ui:
     editor:
-      name: dashboardkubedbcom-elasticsearchdashboard-editor
+      name: kubebindappscodecom-apiserviceexportrequest-editor
       sourceRef:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository

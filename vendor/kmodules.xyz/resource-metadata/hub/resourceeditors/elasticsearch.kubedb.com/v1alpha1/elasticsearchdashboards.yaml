@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: elasticsearch.kubedb.com
+    k8s.io/kind: ElasticsearchDashboard
+    k8s.io/resource: elasticsearchdashboards
+    k8s.io/version: v1alpha1
+  name: elasticsearch.kubedb.com-v1alpha1-elasticsearchdashboards
+spec:
+  resource:
+    group: elasticsearch.kubedb.com
+    kind: ElasticsearchDashboard
+    name: elasticsearchdashboards
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: elasticsearchkubedbcom-elasticsearchdashboard-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

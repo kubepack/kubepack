@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: kafka.kubedb.com
+    k8s.io/kind: ConnectCluster
+    k8s.io/resource: connectclusters
+    k8s.io/version: v1alpha1
+  name: kafka.kubedb.com-v1alpha1-connectclusters
+spec:
+  resource:
+    group: kafka.kubedb.com
+    kind: ConnectCluster
+    name: connectclusters
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: kafkakubedbcom-connectcluster-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

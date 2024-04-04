@@ -1,0 +1,31 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: catalog.appscode.com
+    k8s.io/kind: MongoDBBinding
+    k8s.io/resource: mongodbbindings
+    k8s.io/version: v1alpha1
+  name: catalog.appscode.com-v1alpha1-mongodbbindings
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/catalog.appscode.com/mongodbbindings.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/catalog.appscode.com/mongodbbindings.png
+    type: image/png
+  resource:
+    group: catalog.appscode.com
+    kind: MongoDBBinding
+    name: mongodbbindings
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: catalogappscodecom-mongodbbinding-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false

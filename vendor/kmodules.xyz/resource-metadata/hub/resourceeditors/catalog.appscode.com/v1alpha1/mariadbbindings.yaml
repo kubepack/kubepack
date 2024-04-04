@@ -1,0 +1,31 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: catalog.appscode.com
+    k8s.io/kind: MariaDBBinding
+    k8s.io/resource: mariadbbindings
+    k8s.io/version: v1alpha1
+  name: catalog.appscode.com-v1alpha1-mariadbbindings
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/catalog.appscode.com/mariadbbindings.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/catalog.appscode.com/mariadbbindings.png
+    type: image/png
+  resource:
+    group: catalog.appscode.com
+    kind: MariaDBBinding
+    name: mariadbbindings
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: catalogappscodecom-mariadbbinding-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.18
+    enforceQuota: false
