@@ -1,0 +1,135 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: infrastructure.cluster.x-k8s.io
+    k8s.io/kind: AWSClusterStaticIdentity
+    k8s.io/resource: awsclusterstaticidentities
+    k8s.io/version: v1beta1
+  name: infrastructure.cluster.x-k8s.io-v1beta1-awsclusterstaticidentities
+spec:
+  resource:
+    group: infrastructure.cluster.x-k8s.io
+    kind: AWSClusterStaticIdentity
+    name: awsclusterstaticidentities
+    scope: Cluster
+    version: v1beta1
+  validation:
+    openAPIV3Schema:
+      description: AWSClusterStaticIdentity is the Schema for the awsclusterstaticidentities
+        API It represents a reference to an AWS access key ID and secret access key,
+        stored in a secret.
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: Spec for this AWSClusterStaticIdentity
+          properties:
+            allowedNamespaces:
+              description: AllowedNamespaces is used to identify which namespaces
+                are allowed to use the identity from. Namespaces can be selected either
+                using an array of namespaces or with label selector. An empty allowedNamespaces
+                object indicates that AWSClusters can use this identity from any namespace.
+                If this object is nil, no namespaces will be allowed (default behaviour,
+                if this field is not provided) A namespace should be either in the
+                NamespaceList or match with Selector to use the identity.
+              nullable: true
+              properties:
+                list:
+                  description: An nil or empty list indicates that AWSClusters cannot
+                    use the identity from any namespace.
+                  items:
+                    type: string
+                  nullable: true
+                  type: array
+                selector:
+                  description: An empty selector indicates that AWSClusters cannot
+                    use this AWSClusterIdentity from any namespace.
+                  properties:
+                    matchExpressions:
+                      description: matchExpressions is a list of label selector requirements.
+                        The requirements are ANDed.
+                      items:
+                        description: A label selector requirement is a selector that
+                          contains values, a key, and an operator that relates the
+                          key and values.
+                        properties:
+                          key:
+                            description: key is the label key that the selector applies
+                              to.
+                            type: string
+                          operator:
+                            description: operator represents a key's relationship
+                              to a set of values. Valid operators are In, NotIn, Exists
+                              and DoesNotExist.
+                            type: string
+                          values:
+                            description: values is an array of string values. If the
+                              operator is In or NotIn, the values array must be non-empty.
+                              If the operator is Exists or DoesNotExist, the values
+                              array must be empty. This array is replaced during a
+                              strategic merge patch.
+                            items:
+                              type: string
+                            type: array
+                        required:
+                        - key
+                        - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      description: matchLabels is a map of {key,value} pairs. A single
+                        {key,value} in the matchLabels map is equivalent to an element
+                        of matchExpressions, whose key field is "key", the operator
+                        is "In", and the values array contains only "value". The requirements
+                        are ANDed.
+                      type: object
+                  type: object
+                  x-kubernetes-map-type: atomic
+              type: object
+            secretRef:
+              description: 'Reference to a secret containing the credentials. The
+                secret should contain the following data keys: AccessKeyID: AKIAIOSFODNN7EXAMPLE
+                SecretAccessKey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY SessionToken:
+                Optional'
+              type: string
+          required:
+          - secretRef
+          type: object
+      type: object

@@ -1,0 +1,118 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: azure.kubedb.com
+    k8s.io/kind: ProviderConfig
+    k8s.io/resource: providerconfigs
+    k8s.io/version: v1beta1
+  name: azure.kubedb.com-v1beta1-providerconfigs
+spec:
+  resource:
+    group: azure.kubedb.com
+    kind: ProviderConfig
+    name: providerconfigs
+    scope: Cluster
+    version: v1beta1
+  validation:
+    openAPIV3Schema:
+      description: A ProviderConfig configures a Azure provider.
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: A ProviderConfigSpec defines the desired state of a ProviderConfig.
+          properties:
+            credentials:
+              description: Credentials required to authenticate to this provider.
+              properties:
+                env:
+                  description: Env is a reference to an environment variable that
+                    contains credentials that must be used to connect to the provider.
+                  properties:
+                    name:
+                      description: Name is the name of an environment variable.
+                      type: string
+                  required:
+                  - name
+                  type: object
+                fs:
+                  description: Fs is a reference to a filesystem location that contains
+                    credentials that must be used to connect to the provider.
+                  properties:
+                    path:
+                      description: Path is a filesystem path.
+                      type: string
+                  required:
+                  - path
+                  type: object
+                secretRef:
+                  description: A SecretRef is a reference to a secret key that contains
+                    the credentials that must be used to connect to the provider.
+                  properties:
+                    key:
+                      description: The key to select.
+                      type: string
+                    name:
+                      description: Name of the secret.
+                      type: string
+                    namespace:
+                      description: Namespace of the secret.
+                      type: string
+                  required:
+                  - key
+                  - name
+                  - namespace
+                  type: object
+                source:
+                  description: Source of the provider credentials.
+                  enum:
+                  - None
+                  - Secret
+                  - InjectedIdentity
+                  - Environment
+                  - Filesystem
+                  type: string
+              required:
+              - source
+              type: object
+          required:
+          - credentials
+          type: object
+      required:
+      - spec
+      type: object

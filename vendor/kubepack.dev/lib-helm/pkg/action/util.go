@@ -6,8 +6,8 @@ import (
 	"sort"
 	"strings"
 
-	fluxhelm "github.com/fluxcd/helm-controller/api/v2beta2"
-	fluxsrc "github.com/fluxcd/source-controller/api/v1beta2"
+	fluxhelm "github.com/fluxcd/helm-controller/api/v2"
+	fluxsrc "github.com/fluxcd/source-controller/api/v1"
 	"github.com/gobuffalo/flect"
 	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/chart"
@@ -22,6 +22,7 @@ import (
 	apiregistrationapi "k8s.io/kube-aggregator/pkg/apis/apiregistration/v1"
 	"kmodules.xyz/client-go/discovery"
 	uiapi "kmodules.xyz/resource-metadata/apis/ui/v1alpha1"
+	"kmodules.xyz/resource-metadata/hub"
 	"kmodules.xyz/resource-metadata/hub/resourceeditors"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/client/apiutil"
@@ -169,11 +170,7 @@ func RefillMetadata(kc client.Client, ref, actual map[string]interface{}, gvr me
 		obj["kind"] = refObj["kind"]
 
 		// name
-		featureset := metav1.GroupVersionResource{
-			Group:    "ui.k8s.appscode.com",
-			Resource: "featuresets",
-		}
-		if gvr.Group != featureset.Group || gvr.Resource != featureset.Resource {
+		if !hub.IsFeaturesetGR(schema.GroupResource{Group: gvr.Group, Resource: gvr.Resource}) {
 			name := rls.Name
 			idx := strings.IndexRune(key, '_')
 			if idx != -1 {

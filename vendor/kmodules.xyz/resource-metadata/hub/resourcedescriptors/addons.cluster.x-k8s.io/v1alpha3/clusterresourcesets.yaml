@@ -1,0 +1,146 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: addons.cluster.x-k8s.io
+    k8s.io/kind: ClusterResourceSet
+    k8s.io/resource: clusterresourcesets
+    k8s.io/version: v1alpha3
+  name: addons.cluster.x-k8s.io-v1alpha3-clusterresourcesets
+spec:
+  resource:
+    group: addons.cluster.x-k8s.io
+    kind: ClusterResourceSet
+    name: clusterresourcesets
+    scope: Namespaced
+    version: v1alpha3
+  validation:
+    openAPIV3Schema:
+      description: "ClusterResourceSet is the Schema for the clusterresourcesets API.
+        \n Deprecated: This type will be removed in one of the next releases."
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: ClusterResourceSetSpec defines the desired state of ClusterResourceSet.
+          properties:
+            clusterSelector:
+              description: Label selector for Clusters. The Clusters that are selected
+                by this will be the ones affected by this ClusterResourceSet. It must
+                match the Cluster labels. This field is immutable.
+              properties:
+                matchExpressions:
+                  description: matchExpressions is a list of label selector requirements.
+                    The requirements are ANDed.
+                  items:
+                    description: A label selector requirement is a selector that contains
+                      values, a key, and an operator that relates the key and values.
+                    properties:
+                      key:
+                        description: key is the label key that the selector applies
+                          to.
+                        type: string
+                      operator:
+                        description: operator represents a key's relationship to a
+                          set of values. Valid operators are In, NotIn, Exists and
+                          DoesNotExist.
+                        type: string
+                      values:
+                        description: values is an array of string values. If the operator
+                          is In or NotIn, the values array must be non-empty. If the
+                          operator is Exists or DoesNotExist, the values array must
+                          be empty. This array is replaced during a strategic merge
+                          patch.
+                        items:
+                          type: string
+                        type: array
+                    required:
+                    - key
+                    - operator
+                    type: object
+                  type: array
+                matchLabels:
+                  additionalProperties:
+                    type: string
+                  description: matchLabels is a map of {key,value} pairs. A single
+                    {key,value} in the matchLabels map is equivalent to an element
+                    of matchExpressions, whose key field is "key", the operator is
+                    "In", and the values array contains only "value". The requirements
+                    are ANDed.
+                  type: object
+              type: object
+            resources:
+              description: Resources is a list of Secrets/ConfigMaps where each contains
+                1 or more resources to be applied to remote clusters.
+              items:
+                description: ResourceRef specifies a resource.
+                properties:
+                  kind:
+                    description: 'Kind of the resource. Supported kinds are: Secrets
+                      and ConfigMaps.'
+                    enum:
+                    - Secret
+                    - ConfigMap
+                    type: string
+                  name:
+                    description: Name of the resource that is in the same namespace
+                      with ClusterResourceSet object.
+                    minLength: 1
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              type: array
+            strategy:
+              description: Strategy is the strategy to be used during applying resources.
+                Defaults to ApplyOnce. This field is immutable.
+              enum:
+              - ApplyOnce
+              type: string
+          required:
+          - clusterSelector
+          type: object
+      type: object

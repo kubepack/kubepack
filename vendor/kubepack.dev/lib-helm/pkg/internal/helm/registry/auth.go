@@ -25,6 +25,7 @@ import (
 	"github.com/docker/cli/cli/config/credentials"
 	"github.com/google/go-containerregistry/pkg/authn"
 	"helm.sh/helm/v3/pkg/registry"
+	helmreg "helm.sh/helm/v3/pkg/registry"
 	corev1 "k8s.io/api/core/v1"
 	"kubepack.dev/lib-helm/pkg/internal/oci"
 )
@@ -138,4 +139,28 @@ func (r stringResource) String() string {
 
 func (r stringResource) RegistryStr() string {
 	return r.registry
+}
+
+// NewLoginOption returns a registry login option for the given HelmRepository.
+// If the HelmRepository does not specify a secretRef, a nil login option is returned.
+func NewLoginOption(auth authn.Authenticator, keychain authn.Keychain, registryURL string) (helmreg.LoginOption, error) {
+	if auth != nil {
+		return AuthAdaptHelper(auth)
+	}
+
+	if keychain != nil {
+		return KeychainAdaptHelper(keychain)(registryURL)
+	}
+
+	return nil, nil
+}
+
+// TLSLoginOption returns a LoginOption that can be used to configure the TLS client.
+// It requires either the caFile or both certFile and keyFile to be not blank.
+func TLSLoginOption(certFile, keyFile, caFile string) registry.LoginOption {
+	if (certFile != "" && keyFile != "") || caFile != "" {
+		return registry.LoginOptTLSClientConfig(certFile, keyFile, caFile)
+	}
+
+	return nil
 }

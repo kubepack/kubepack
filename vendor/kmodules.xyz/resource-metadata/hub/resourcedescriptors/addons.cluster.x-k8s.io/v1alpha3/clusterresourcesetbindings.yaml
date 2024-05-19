@@ -1,0 +1,127 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: addons.cluster.x-k8s.io
+    k8s.io/kind: ClusterResourceSetBinding
+    k8s.io/resource: clusterresourcesetbindings
+    k8s.io/version: v1alpha3
+  name: addons.cluster.x-k8s.io-v1alpha3-clusterresourcesetbindings
+spec:
+  resource:
+    group: addons.cluster.x-k8s.io
+    kind: ClusterResourceSetBinding
+    name: clusterresourcesetbindings
+    scope: Namespaced
+    version: v1alpha3
+  validation:
+    openAPIV3Schema:
+      description: "ClusterResourceSetBinding lists all matching ClusterResourceSets
+        with the cluster it belongs to. \n Deprecated: This type will be removed in
+        one of the next releases."
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: ClusterResourceSetBindingSpec defines the desired state of
+            ClusterResourceSetBinding.
+          properties:
+            bindings:
+              description: Bindings is a list of ClusterResourceSets and their resources.
+              items:
+                description: ResourceSetBinding keeps info on all of the resources
+                  in a ClusterResourceSet.
+                properties:
+                  clusterResourceSetName:
+                    description: ClusterResourceSetName is the name of the ClusterResourceSet
+                      that is applied to the owner cluster of the binding.
+                    type: string
+                  resources:
+                    description: Resources is a list of resources that the ClusterResourceSet
+                      has.
+                    items:
+                      description: ResourceBinding shows the status of a resource
+                        that belongs to a ClusterResourceSet matched by the owner
+                        cluster of the ClusterResourceSetBinding object.
+                      properties:
+                        applied:
+                          description: Applied is to track if a resource is applied
+                            to the cluster or not.
+                          type: boolean
+                        hash:
+                          description: Hash is the hash of a resource's data. This
+                            can be used to decide if a resource is changed. For "ApplyOnce"
+                            ClusterResourceSet.spec.strategy, this is no-op as that
+                            strategy does not act on change.
+                          type: string
+                        kind:
+                          description: 'Kind of the resource. Supported kinds are:
+                            Secrets and ConfigMaps.'
+                          enum:
+                          - Secret
+                          - ConfigMap
+                          type: string
+                        lastAppliedTime:
+                          description: LastAppliedTime identifies when this resource
+                            was last applied to the cluster.
+                          format: date-time
+                          type: string
+                        name:
+                          description: Name of the resource that is in the same namespace
+                            with ClusterResourceSet object.
+                          minLength: 1
+                          type: string
+                      required:
+                      - applied
+                      - kind
+                      - name
+                      type: object
+                    type: array
+                required:
+                - clusterResourceSetName
+                type: object
+              type: array
+          type: object
+      type: object

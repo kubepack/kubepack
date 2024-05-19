@@ -1,0 +1,189 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: products.x-helm.dev
+    k8s.io/kind: Plan
+    k8s.io/resource: plans
+    k8s.io/version: v1alpha1
+  name: products.x-helm.dev-v1alpha1-plans
+spec:
+  resource:
+    group: products.x-helm.dev
+    kind: Plan
+    name: plans
+    scope: Cluster
+    version: v1alpha1
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          properties:
+            aggregateUsage:
+              type: string
+            amount:
+              format: int64
+              type: integer
+            amountDecimal:
+              format: double
+              type: number
+            billingScheme:
+              type: string
+            bundle:
+              properties:
+                name:
+                  type: string
+                sourceRef:
+                  description: TypedObjectReference represents an typed namespaced
+                    object.
+                  properties:
+                    apiGroup:
+                      type: string
+                    kind:
+                      type: string
+                    name:
+                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                      type: string
+                    namespace:
+                      description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                      type: string
+                  required:
+                  - name
+                  type: object
+              required:
+              - name
+              - sourceRef
+              type: object
+            currency:
+              type: string
+            description:
+              type: string
+            displayName:
+              type: string
+            id:
+              type: string
+            includedPlans:
+              items:
+                type: string
+              type: array
+            interval:
+              type: string
+            intervalCount:
+              format: int64
+              type: integer
+            name:
+              type: string
+            phase:
+              type: string
+            pricingPattern:
+              additionalProperties:
+                properties:
+                  expression:
+                    type: string
+                  sizedPrices:
+                    items:
+                      properties:
+                        cpu:
+                          type: string
+                        memory:
+                          type: string
+                        price:
+                          format: double
+                          type: number
+                      required:
+                      - cpu
+                      - memory
+                      - price
+                      type: object
+                    type: array
+                type: object
+              type: object
+            productID:
+              type: string
+            tiers:
+              items:
+                description: PlanTier configures tiered pricing
+                properties:
+                  flatAmount:
+                    format: int64
+                    type: integer
+                  flatAmountDecimal:
+                    format: double
+                    type: number
+                  unitAmount:
+                    format: int64
+                    type: integer
+                  unitAmountDecimal:
+                    format: double
+                    type: number
+                  upTo:
+                    format: int64
+                    type: integer
+                type: object
+              type: array
+            tiersMode:
+              type: string
+            transformUsage:
+              description: PlanTransformUsage represents the bucket billing configuration.
+              properties:
+                divideBy:
+                  format: int64
+                  type: integer
+                round:
+                  type: string
+              type: object
+            trialPeriodDays:
+              format: int64
+              type: integer
+            usageType:
+              type: string
+            weight:
+              description: Plans for sorted by weight before displaying to users
+              format: int32
+              type: integer
+          required:
+          - description
+          - displayName
+          - id
+          - name
+          - phase
+          - productID
+          - weight
+          type: object
+      type: object

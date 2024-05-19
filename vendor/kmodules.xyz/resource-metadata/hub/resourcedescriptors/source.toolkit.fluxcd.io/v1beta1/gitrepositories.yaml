@@ -1,0 +1,224 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: source.toolkit.fluxcd.io
+    k8s.io/kind: GitRepository
+    k8s.io/resource: gitrepositories
+    k8s.io/version: v1beta1
+  name: source.toolkit.fluxcd.io-v1beta1-gitrepositories
+spec:
+  resource:
+    group: source.toolkit.fluxcd.io
+    kind: GitRepository
+    name: gitrepositories
+    scope: Namespaced
+    version: v1beta1
+  validation:
+    openAPIV3Schema:
+      description: GitRepository is the Schema for the gitrepositories API
+      properties:
+        apiVersion:
+          description: |-
+            APIVersion defines the versioned schema of this representation of an object.
+            Servers should convert recognized schemas to the latest internal value, and
+            may reject unrecognized values.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+          type: string
+        kind:
+          description: |-
+            Kind is a string value representing the REST resource this object represents.
+            Servers may infer this from the endpoint the client submits requests to.
+            Cannot be updated.
+            In CamelCase.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: GitRepositorySpec defines the desired state of a Git repository.
+          properties:
+            accessFrom:
+              description: AccessFrom defines an Access Control List for allowing
+                cross-namespace references to this object.
+              properties:
+                namespaceSelectors:
+                  description: |-
+                    NamespaceSelectors is the list of namespace selectors to which this ACL applies.
+                    Items in this list are evaluated using a logical OR operation.
+                  items:
+                    description: |-
+                      NamespaceSelector selects the namespaces to which this ACL applies.
+                      An empty map of MatchLabels matches all namespaces in a cluster.
+                    properties:
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          MatchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
+                          map is equivalent to an element of matchExpressions, whose key field is "key", the
+                          operator is "In", and the values array contains only "value". The requirements are ANDed.
+                        type: object
+                    type: object
+                  type: array
+              required:
+              - namespaceSelectors
+              type: object
+            gitImplementation:
+              default: go-git
+              description: |-
+                Determines which git client library to use.
+                Defaults to go-git, valid values are ('go-git', 'libgit2').
+              enum:
+              - go-git
+              - libgit2
+              type: string
+            ignore:
+              description: |-
+                Ignore overrides the set of excluded patterns in the .sourceignore format
+                (which is the same as .gitignore). If not provided, a default will be used,
+                consult the documentation for your version to find out what those are.
+              type: string
+            include:
+              description: Extra git repositories to map into the repository
+              items:
+                description: GitRepositoryInclude defines a source with a from and
+                  to path.
+                properties:
+                  fromPath:
+                    description: The path to copy contents from, defaults to the root
+                      directory.
+                    type: string
+                  repository:
+                    description: Reference to a GitRepository to include.
+                    properties:
+                      name:
+                        description: Name of the referent.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  toPath:
+                    description: The path to copy contents to, defaults to the name
+                      of the source ref.
+                    type: string
+                required:
+                - repository
+                type: object
+              type: array
+            interval:
+              description: The interval at which to check for repository updates.
+              type: string
+            recurseSubmodules:
+              description: |-
+                When enabled, after the clone is created, initializes all submodules within,
+                using their default settings.
+                This option is available only when using the 'go-git' GitImplementation.
+              type: boolean
+            ref:
+              description: |-
+                The Git reference to checkout and monitor for changes, defaults to
+                master branch.
+              properties:
+                branch:
+                  description: The Git branch to checkout, defaults to master.
+                  type: string
+                commit:
+                  description: The Git commit SHA to checkout, if specified Tag filters
+                    will be ignored.
+                  type: string
+                semver:
+                  description: The Git tag semver expression, takes precedence over
+                    Tag.
+                  type: string
+                tag:
+                  description: The Git tag to checkout, takes precedence over Branch.
+                  type: string
+              type: object
+            secretRef:
+              description: |-
+                The secret name containing the Git credentials.
+                For HTTPS repositories the secret must contain username and password
+                fields.
+                For SSH repositories the secret must contain identity and known_hosts
+                fields.
+              properties:
+                name:
+                  description: Name of the referent.
+                  type: string
+              required:
+              - name
+              type: object
+            suspend:
+              description: This flag tells the controller to suspend the reconciliation
+                of this source.
+              type: boolean
+            timeout:
+              default: 60s
+              description: The timeout for remote Git operations like cloning, defaults
+                to 60s.
+              type: string
+            url:
+              description: The repository URL, can be a HTTP/S or SSH address.
+              pattern: ^(http|https|ssh)://.*$
+              type: string
+            verify:
+              description: Verify OpenPGP signature for the Git commit HEAD points
+                to.
+              properties:
+                mode:
+                  description: Mode describes what git object should be verified,
+                    currently ('head').
+                  enum:
+                  - head
+                  type: string
+                secretRef:
+                  description: The secret name containing the public keys of all trusted
+                    Git authors.
+                  properties:
+                    name:
+                      description: Name of the referent.
+                      type: string
+                  required:
+                  - name
+                  type: object
+              required:
+              - mode
+              type: object
+          required:
+          - interval
+          - url
+          type: object
+      type: object

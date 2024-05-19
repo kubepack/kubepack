@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io/fs"
 
-	fluxsrc "github.com/fluxcd/source-controller/api/v1beta2"
+	fluxsrc "github.com/fluxcd/source-controller/api/v1"
 	"kubepack.dev/lib-helm/pkg/chart/loader"
 	releasesapi "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )

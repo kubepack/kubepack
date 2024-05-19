@@ -15720,6 +15720,13 @@ func schema_kmodulesxyz_resource_metadata_apis_shared_HelmInfo(ref common.Refere
 			SchemaProps: spec.SchemaProps{
 				Type: []string{"object"},
 				Properties: map[string]spec.Schema{
+					"createNamespace": {
+						SchemaProps: spec.SchemaProps{
+							Default: false,
+							Type:    []string{"boolean"},
+							Format:  "",
+						},
+					},
 					"repositories": {
 						SchemaProps: spec.SchemaProps{
 							Type: []string{"object"},
@@ -15747,7 +15754,7 @@ func schema_kmodulesxyz_resource_metadata_apis_shared_HelmInfo(ref common.Refere
 						},
 					},
 				},
-				Required: []string{"repositories", "releases"},
+				Required: []string{"createNamespace", "repositories", "releases"},
 			},
 		},
 		Dependencies: []string{
@@ -15901,6 +15908,35 @@ func schema_kmodulesxyz_resource_metadata_apis_shared_RegistryInfo(ref common.Re
 							Type: []string{"object"},
 							AdditionalProperties: &spec.SchemaOrBool{
 								Allows: true,
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: "",
+										Type:    []string{"string"},
+										Format:  "",
+									},
+								},
+							},
+						},
+					},
+					"certs": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"object"},
+							AdditionalProperties: &spec.SchemaOrBool{
+								Allows: true,
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: "",
+										Type:    []string{"string"},
+										Format:  "",
+									},
+								},
+							},
+						},
+					},
+					"imagePullSecrets": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
 										Default: "",
@@ -16307,7 +16343,7 @@ func schema_resource_metadata_apis_ui_v1alpha1_ChartInfo(ref common.ReferenceCal
 					},
 					"createNamespace": {
 						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
+							Type:   []string{"boolean"},
 							Format: "",
 						},
 					},

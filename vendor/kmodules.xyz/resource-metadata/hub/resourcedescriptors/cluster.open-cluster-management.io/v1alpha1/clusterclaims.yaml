@@ -1,0 +1,71 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: cluster.open-cluster-management.io
+    k8s.io/kind: ClusterClaim
+    k8s.io/resource: clusterclaims
+    k8s.io/version: v1alpha1
+  name: cluster.open-cluster-management.io-v1alpha1-clusterclaims
+spec:
+  resource:
+    group: cluster.open-cluster-management.io
+    kind: ClusterClaim
+    name: clusterclaims
+    scope: Cluster
+    version: v1alpha1
+  validation:
+    openAPIV3Schema:
+      description: "ClusterClaim represents cluster information that a managed cluster
+        claims ClusterClaims with well known names include,  1. id.k8s.io, it contains
+        a unique identifier for the cluster.  2. clusterset.k8s.io, it contains an
+        identifier that relates the cluster     to the ClusterSet in which it belongs.
+        \n ClusterClaims created on a managed cluster will be collected and saved
+        into the status of the corresponding ManagedCluster on hub."
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: Spec defines the attributes of the ClusterClaim.
+          properties:
+            value:
+              description: Value is a claim-dependent string
+              maxLength: 1024
+              minLength: 1
+              type: string
+          type: object
+      type: object

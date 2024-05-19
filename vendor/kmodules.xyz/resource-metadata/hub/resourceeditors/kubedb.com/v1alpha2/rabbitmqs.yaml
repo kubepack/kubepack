@@ -9,6 +9,11 @@ metadata:
     k8s.io/version: v1alpha2
   name: kubedb.com-v1alpha2-rabbitmqs
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/rabbitmqs.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/rabbitmqs.png
+    type: image/png
   resource:
     group: kubedb.com
     kind: RabbitMQ
@@ -22,5 +27,17 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-charts-oci
-      version: v0.4.18
-    enforceQuota: false
+      version: v0.4.19
+    enforceQuota: true
+    options:
+      name: kubedbcom-rabbitmq-editor-options
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.19
+  variants:
+  - name: default
+    selector:
+      matchLabels:
+        charts.x-helm.dev/is-default-preset: "true"

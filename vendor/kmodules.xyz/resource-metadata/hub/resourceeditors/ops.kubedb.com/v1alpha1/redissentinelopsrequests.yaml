@@ -9,6 +9,11 @@ metadata:
     k8s.io/version: v1alpha1
   name: ops.kubedb.com-v1alpha1-redissentinelopsrequests
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/ops.kubedb.com/redissentinelopsrequests.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/ops.kubedb.com/redissentinelopsrequests.png
+    type: image/png
   resource:
     group: ops.kubedb.com
     kind: RedisSentinelOpsRequest
@@ -22,5 +27,5 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-charts-oci
-      version: v0.4.18
+      version: v0.4.19
     enforceQuota: false

@@ -1,0 +1,168 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: gcp.kubedb.com
+    k8s.io/kind: StoreConfig
+    k8s.io/resource: storeconfigs
+    k8s.io/version: v1alpha1
+  name: gcp.kubedb.com-v1alpha1-storeconfigs
+spec:
+  resource:
+    group: gcp.kubedb.com
+    kind: StoreConfig
+    name: storeconfigs
+    scope: Cluster
+    version: v1alpha1
+  validation:
+    openAPIV3Schema:
+      description: A StoreConfig configures how GCP controller should store connection
+        details.
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: A StoreConfigSpec defines the desired state of a ProviderConfig.
+          properties:
+            defaultScope:
+              description: DefaultScope used for scoping secrets for "cluster-scoped"
+                resources. If store type is "Kubernetes", this would mean the default
+                namespace to store connection secrets for cluster scoped resources.
+                In case of "Vault", this would be used as the default parent path.
+                Typically, should be set as Crossplane installation namespace.
+              type: string
+            kubernetes:
+              description: Kubernetes configures a Kubernetes secret store. If the
+                "type" is "Kubernetes" but no config provided, in cluster config will
+                be used.
+              properties:
+                auth:
+                  description: Credentials used to connect to the Kubernetes API.
+                  properties:
+                    env:
+                      description: Env is a reference to an environment variable that
+                        contains credentials that must be used to connect to the provider.
+                      properties:
+                        name:
+                          description: Name is the name of an environment variable.
+                          type: string
+                      required:
+                      - name
+                      type: object
+                    fs:
+                      description: Fs is a reference to a filesystem location that
+                        contains credentials that must be used to connect to the provider.
+                      properties:
+                        path:
+                          description: Path is a filesystem path.
+                          type: string
+                      required:
+                      - path
+                      type: object
+                    secretRef:
+                      description: A SecretRef is a reference to a secret key that
+                        contains the credentials that must be used to connect to the
+                        provider.
+                      properties:
+                        key:
+                          description: The key to select.
+                          type: string
+                        name:
+                          description: Name of the secret.
+                          type: string
+                        namespace:
+                          description: Namespace of the secret.
+                          type: string
+                      required:
+                      - key
+                      - name
+                      - namespace
+                      type: object
+                    source:
+                      description: Source of the credentials.
+                      enum:
+                      - None
+                      - Secret
+                      - Environment
+                      - Filesystem
+                      type: string
+                  required:
+                  - source
+                  type: object
+              required:
+              - auth
+              type: object
+            plugin:
+              description: Plugin configures External secret store as a plugin.
+              properties:
+                configRef:
+                  description: ConfigRef contains store config reference info.
+                  properties:
+                    apiVersion:
+                      description: APIVersion of the referenced config.
+                      type: string
+                    kind:
+                      description: Kind of the referenced config.
+                      type: string
+                    name:
+                      description: Name of the referenced config.
+                      type: string
+                  required:
+                  - apiVersion
+                  - kind
+                  - name
+                  type: object
+                endpoint:
+                  description: Endpoint is the endpoint of the gRPC server.
+                  type: string
+              type: object
+            type:
+              default: Kubernetes
+              description: Type configures which secret store to be used. Only the
+                configuration block for this store will be used and others will be
+                ignored if provided. Default is Kubernetes.
+              enum:
+              - Kubernetes
+              - Vault
+              - Plugin
+              type: string
+          required:
+          - defaultScope
+          type: object
+      required:
+      - spec
+      type: object

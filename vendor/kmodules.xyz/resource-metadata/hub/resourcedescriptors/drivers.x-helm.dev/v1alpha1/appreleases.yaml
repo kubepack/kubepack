@@ -1,0 +1,288 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: drivers.x-helm.dev
+    k8s.io/kind: AppRelease
+    k8s.io/resource: appreleases
+    k8s.io/version: v1alpha1
+  name: drivers.x-helm.dev-v1alpha1-appreleases
+spec:
+  resource:
+    group: drivers.x-helm.dev
+    kind: AppRelease
+    name: appreleases
+    scope: Namespaced
+    version: v1alpha1
+  validation:
+    openAPIV3Schema:
+      description: AppRelease is the Schema for the appReleases API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: AppReleaseSpec defines the specification for an AppRelease.
+          properties:
+            components:
+              description: Components is a list of Kinds for AppRelease's components
+                (e.g. Deployments, Pods, Services, CRDs). It can be used in conjunction
+                with the AppRelease's Selector to list or watch the AppReleases components.
+              items:
+                description: GroupVersionKind unambiguously identifies a kind.  It
+                  doesn't anonymously include GroupVersion to avoid automatic coercion.  It
+                  doesn't use a GroupVersion to avoid custom marshalling
+                properties:
+                  group:
+                    type: string
+                  kind:
+                    type: string
+                  version:
+                    type: string
+                required:
+                - group
+                - kind
+                - version
+                type: object
+              type: array
+            descriptor:
+              description: Descriptor regroups information and metadata about an appRelease.
+              properties:
+                description:
+                  description: Description is a brief string description of the AppRelease.
+                  type: string
+                icons:
+                  description: Icons is an optional list of icons for an appRelease.
+                    Icon information includes the source, size, and mime type.
+                  items:
+                    description: ImageSpec contains information about an image used
+                      as an icon.
+                    properties:
+                      size:
+                        description: (optional) The size of the image in pixels (e.g.,
+                          25x25).
+                        type: string
+                      src:
+                        description: The source for image represented as either an
+                          absolute URL to the image or a Data URL containing the image.
+                          Data URLs are defined in RFC 2397.
+                        type: string
+                      type:
+                        description: (optional) The mine type of the image (e.g.,
+                          "image/png").
+                        type: string
+                    required:
+                    - src
+                    type: object
+                  type: array
+                keywords:
+                  description: Keywords is an optional list of key words associated
+                    with the appRelease (e.g. MySQL, RDBMS, database).
+                  items:
+                    type: string
+                  type: array
+                links:
+                  description: Links are a list of descriptive URLs intended to be
+                    used to surface additional documentation, dashboards, etc.
+                  items:
+                    description: Link contains information about an URL to surface
+                      documentation, dashboards, etc.
+                    properties:
+                      description:
+                        description: Description is human readable content explaining
+                          the purpose of the link.
+                        type: string
+                      url:
+                        description: Url typically points at a website address.
+                        type: string
+                    type: object
+                  type: array
+                maintainers:
+                  description: Maintainers is an optional list of maintainers of the
+                    appRelease. The maintainers in this list maintain the the source
+                    code, images, and package for the appRelease.
+                  items:
+                    description: ContactData contains information about an individual
+                      or organization.
+                    properties:
+                      email:
+                        description: Email is the email address.
+                        type: string
+                      name:
+                        description: Name is the descriptive name.
+                        type: string
+                      url:
+                        description: Url could typically be a website address.
+                        type: string
+                    type: object
+                  type: array
+                notes:
+                  description: Notes contain a human readable snippets intended as
+                    a quick start for the users of the AppRelease. CommonMark markdown
+                    syntax may be used for rich text representation.
+                  type: string
+                owners:
+                  description: Owners is an optional list of the owners of the installed
+                    appRelease. The owners of the appRelease should be contacted in
+                    the event of a planned or unplanned disruption affecting the appRelease.
+                  items:
+                    description: ContactData contains information about an individual
+                      or organization.
+                    properties:
+                      email:
+                        description: Email is the email address.
+                        type: string
+                      name:
+                        description: Name is the descriptive name.
+                        type: string
+                      url:
+                        description: Url could typically be a website address.
+                        type: string
+                    type: object
+                  type: array
+                type:
+                  description: Type is the type of the appRelease (e.g. WordPress,
+                    MySQL, Cassandra).
+                  type: string
+                version:
+                  description: Version is an optional version indicator for the AppRelease.
+                  type: string
+              type: object
+            editor:
+              description: GroupVersionResource unambiguously identifies a resource.  It
+                doesn't anonymously include GroupVersion to avoid automatic coercion.  It
+                doesn't use a GroupVersion to avoid custom marshalling
+              properties:
+                group:
+                  type: string
+                resource:
+                  type: string
+                version:
+                  type: string
+              required:
+              - group
+              - resource
+              - version
+              type: object
+            formKeys:
+              items:
+                type: string
+              type: array
+            release:
+              description: Release regroups information and metadata about a Helm
+                release.
+              properties:
+                firstDeployed:
+                  format: date-time
+                  type: string
+                form:
+                  type: object
+                  x-kubernetes-preserve-unknown-fields: true
+                lastDeployed:
+                  format: date-time
+                  type: string
+                modified-at:
+                  format: date-time
+                  type: string
+                name:
+                  type: string
+                status:
+                  type: string
+                version:
+                  type: string
+              required:
+              - name
+              type: object
+            resourceKeys:
+              items:
+                type: string
+              type: array
+            selector:
+              description: 'Selector is a label query over kinds that created by the
+                appRelease. It must match the component objects'' labels. More info:
+                https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors'
+              properties:
+                matchExpressions:
+                  description: matchExpressions is a list of label selector requirements.
+                    The requirements are ANDed.
+                  items:
+                    description: A label selector requirement is a selector that contains
+                      values, a key, and an operator that relates the key and values.
+                    properties:
+                      key:
+                        description: key is the label key that the selector applies
+                          to.
+                        type: string
+                      operator:
+                        description: operator represents a key's relationship to a
+                          set of values. Valid operators are In, NotIn, Exists and
+                          DoesNotExist.
+                        type: string
+                      values:
+                        description: values is an array of string values. If the operator
+                          is In or NotIn, the values array must be non-empty. If the
+                          operator is Exists or DoesNotExist, the values array must
+                          be empty. This array is replaced during a strategic merge
+                          patch.
+                        items:
+                          type: string
+                        type: array
+                    required:
+                    - key
+                    - operator
+                    type: object
+                  type: array
+                matchLabels:
+                  additionalProperties:
+                    type: string
+                  description: matchLabels is a map of {key,value} pairs. A single
+                    {key,value} in the matchLabels map is equivalent to an element
+                    of matchExpressions, whose key field is "key", the operator is
+                    "In", and the values array contains only "value". The requirements
+                    are ANDed.
+                  type: object
+              type: object
+              x-kubernetes-map-type: atomic
+          type: object
+      type: object

@@ -1,0 +1,109 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: core.kubestash.com
+    k8s.io/kind: BackupSession
+    k8s.io/resource: backupsessions
+    k8s.io/version: v1alpha1
+  name: core.kubestash.com-v1alpha1-backupsessions
+spec:
+  connections:
+  - labels:
+    - source
+    level: Controller
+    target:
+      apiVersion: core.kubestash.com/v1alpha1
+      kind: BackupConfiguration
+    type: OwnedBy
+  resource:
+    group: core.kubestash.com
+    kind: BackupSession
+    name: backupsessions
+    scope: Namespaced
+    version: v1alpha1
+  validation:
+    openAPIV3Schema:
+      description: BackupSession represent one backup run for the target(s) pointed
+        by the respective BackupConfiguration or BackupBatch
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: BackupSessionSpec specifies the information related to the
+            respective backup invoker and session.
+          properties:
+            invoker:
+              description: Invoker points to the respective BackupConfiguration or
+                BackupBatch which is responsible for triggering this backup.
+              properties:
+                apiGroup:
+                  description: APIGroup is the group for the resource being referenced.
+                    If APIGroup is not specified, the specified Kind must be in the
+                    core API group. For any other third-party types, APIGroup is required.
+                  type: string
+                kind:
+                  description: Kind is the type of resource being referenced
+                  type: string
+                name:
+                  description: Name is the name of resource being referenced
+                  type: string
+              required:
+              - kind
+              - name
+              type: object
+              x-kubernetes-map-type: atomic
+            retryLeft:
+              description: RetryLeft specifies number of retry attempts left for the
+                session. If this set to non-zero, KubeStash will create a new BackupSession
+                if the current one fails.
+              format: int32
+              type: integer
+            session:
+              description: Session specifies the name of the session that triggered
+                this backup
+              type: string
+          type: object
+      type: object

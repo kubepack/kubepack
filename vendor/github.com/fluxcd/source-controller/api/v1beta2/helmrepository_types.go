@@ -198,11 +198,10 @@ func (in *HelmRepository) GetArtifact() *apiv1.Artifact {
 }
 
 // +genclient
-// +genclient:Namespaced
-// +kubebuilder:storageversion
 // +kubebuilder:object:root=true
 // +kubebuilder:resource:shortName=helmrepo
 // +kubebuilder:subresource:status
+// +kubebuilder:deprecatedversion:warning="v1beta2 HelmRepository is deprecated, upgrade to v1"
 // +kubebuilder:printcolumn:name="URL",type=string,JSONPath=`.spec.url`
 // +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp",description=""
 // +kubebuilder:printcolumn:name="Ready",type="string",JSONPath=".status.conditions[?(@.type==\"Ready\")].status",description=""

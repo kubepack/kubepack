@@ -1,0 +1,200 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: gateway.envoyproxy.io
+    k8s.io/kind: RateLimitFilter
+    k8s.io/resource: ratelimitfilters
+    k8s.io/version: v1alpha1
+  name: gateway.envoyproxy.io-v1alpha1-ratelimitfilters
+spec:
+  resource:
+    group: gateway.envoyproxy.io
+    kind: RateLimitFilter
+    name: ratelimitfilters
+    scope: Namespaced
+    version: v1alpha1
+  validation:
+    openAPIV3Schema:
+      description: RateLimitFilter allows the user to limit the number of incoming
+        requests to a predefined value based on attributes within the traffic flow.
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: Spec defines the desired state of RateLimitFilter.
+          properties:
+            global:
+              description: Global defines global rate limit configuration.
+              properties:
+                rules:
+                  description: Rules are a list of RateLimit selectors and limits.
+                    Each rule and its associated limit is applied in a mutually exclusive
+                    way i.e. if multiple rules get selected, each of their associated
+                    limits get applied, so a single traffic request might increase
+                    the rate limit counters for multiple rules if selected.
+                  items:
+                    description: RateLimitRule defines the semantics for matching
+                      attributes from the incoming requests, and setting limits for
+                      them.
+                    properties:
+                      clientSelectors:
+                        description: ClientSelectors holds the list of select conditions
+                          to select specific clients using attributes from the traffic
+                          flow. All individual select conditions must hold True for
+                          this rule and its limit to be applied. If this field is
+                          empty, it is equivalent to True, and the limit is applied.
+                        items:
+                          description: RateLimitSelectCondition specifies the attributes
+                            within the traffic flow that can be used to select a subset
+                            of clients to be ratelimited. All the individual conditions
+                            must hold True for the overall condition to hold True.
+                          properties:
+                            headers:
+                              description: Headers is a list of request headers to
+                                match. Multiple header values are ANDed together,
+                                meaning, a request MUST match all the specified headers.
+                              items:
+                                description: HeaderMatch defines the match attributes
+                                  within the HTTP Headers of the request.
+                                properties:
+                                  name:
+                                    description: Name of the HTTP header.
+                                    maxLength: 256
+                                    minLength: 1
+                                    type: string
+                                  type:
+                                    default: Exact
+                                    description: Type specifies how to match against
+                                      the value of the header.
+                                    enum:
+                                    - Exact
+                                    - RegularExpression
+                                    - Distinct
+                                    type: string
+                                  value:
+                                    description: Value within the HTTP header. Due
+                                      to the case-insensitivity of header names, "foo"
+                                      and "Foo" are considered equivalent. Do not
+                                      set this field when Type="Distinct", implying
+                                      matching on any/all unique values within the
+                                      header.
+                                    maxLength: 1024
+                                    type: string
+                                required:
+                                - name
+                                type: object
+                              maxItems: 16
+                              type: array
+                              x-kubernetes-list-map-keys:
+                              - name
+                              x-kubernetes-list-type: map
+                            sourceCIDR:
+                              description: SourceCIDR is the client IP Address range
+                                to match on.
+                              properties:
+                                address:
+                                  description: Value is the IP CIDR that represents
+                                    the range of Source IP Addresses of the client.
+                                    These could also be the intermediate addresses
+                                    through which the request has flown through and
+                                    is part of the  `X-Forwarded-For` header. For
+                                    example, `192.168.0.1/32`, `192.168.0.0/24`, `001:db8::/64`.
+                                  type: string
+                                type:
+                                  type: string
+                              required:
+                              - address
+                              type: object
+                            sourceIP:
+                              description: 'Deprecated: Use SourceCIDR instead.'
+                              type: string
+                          type: object
+                        maxItems: 8
+                        type: array
+                      limit:
+                        description: Limit holds the rate limit values. This limit
+                          is applied for traffic flows when the selectors compute
+                          to True, causing the request to be counted towards the limit.
+                          The limit is enforced and the request is ratelimited, i.e.
+                          a response with 429 HTTP status code is sent back to the
+                          client when the selected requests have reached the limit.
+                        properties:
+                          requests:
+                            type: integer
+                          unit:
+                            description: RateLimitUnit specifies the intervals for
+                              setting rate limits. Valid RateLimitUnit values are
+                              "Second", "Minute", "Hour", and "Day".
+                            enum:
+                            - Second
+                            - Minute
+                            - Hour
+                            - Day
+                            type: string
+                        required:
+                        - requests
+                        - unit
+                        type: object
+                    required:
+                    - limit
+                    type: object
+                  maxItems: 16
+                  type: array
+              required:
+              - rules
+              type: object
+            type:
+              description: Type decides the scope for the RateLimits. Valid RateLimitType
+                values are "Global".
+              enum:
+              - Global
+              type: string
+          required:
+          - type
+          type: object
+      required:
+      - spec
+      type: object

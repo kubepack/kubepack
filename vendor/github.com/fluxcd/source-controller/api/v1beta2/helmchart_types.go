@@ -23,6 +23,7 @@ import (
 
 	"github.com/fluxcd/pkg/apis/acl"
 	"github.com/fluxcd/pkg/apis/meta"
+
 	apiv1 "github.com/fluxcd/source-controller/api/v1"
 )
 
@@ -79,6 +80,11 @@ type HelmChartSpec struct {
 	// +deprecated
 	ValuesFile string `json:"valuesFile,omitempty"`
 
+	// IgnoreMissingValuesFiles controls whether to silently ignore missing values
+	// files rather than failing.
+	// +optional
+	IgnoreMissingValuesFiles bool `json:"ignoreMissingValuesFiles,omitempty"`
+
 	// Suspend tells the controller to suspend the reconciliation of this
 	// source.
 	// +optional
@@ -96,7 +102,7 @@ type HelmChartSpec struct {
 	// This field is only supported when using HelmRepository source with spec.type 'oci'.
 	// Chart dependencies, which are not bundled in the umbrella chart artifact, are not verified.
 	// +optional
-	Verify *OCIRepositoryVerification `json:"verify,omitempty"`
+	Verify *apiv1.OCIRepositoryVerification `json:"verify,omitempty"`
 }
 
 const (
@@ -141,6 +147,12 @@ type HelmChartStatus struct {
 	// resolved chart reference.
 	// +optional
 	ObservedChartName string `json:"observedChartName,omitempty"`
+
+	// ObservedValuesFiles are the observed value files of the last successful
+	// reconciliation.
+	// It matches the chart in the last successfully reconciled artifact.
+	// +optional
+	ObservedValuesFiles []string `json:"observedValuesFiles,omitempty"`
 
 	// Conditions holds the conditions for the HelmChart.
 	// +optional
@@ -203,11 +215,10 @@ func (in *HelmChart) GetValuesFiles() []string {
 }
 
 // +genclient
-// +genclient:Namespaced
-// +kubebuilder:storageversion
 // +kubebuilder:object:root=true
 // +kubebuilder:resource:shortName=hc
 // +kubebuilder:subresource:status
+// +kubebuilder:deprecatedversion:warning="v1beta2 HelmChart is deprecated, upgrade to v1"
 // +kubebuilder:printcolumn:name="Chart",type=string,JSONPath=`.spec.chart`
 // +kubebuilder:printcolumn:name="Version",type=string,JSONPath=`.spec.version`
 // +kubebuilder:printcolumn:name="Source Kind",type=string,JSONPath=`.spec.sourceRef.kind`

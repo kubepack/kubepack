@@ -1,0 +1,31 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ops.kubedb.com
+    k8s.io/kind: RabbitMQOpsRequest
+    k8s.io/resource: rabbitmqopsrequests
+    k8s.io/version: v1alpha1
+  name: ops.kubedb.com-v1alpha1-rabbitmqopsrequests
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/ops.kubedb.com/rabbitmqopsrequests.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/ops.kubedb.com/rabbitmqopsrequests.png
+    type: image/png
+  resource:
+    group: ops.kubedb.com
+    kind: RabbitMQOpsRequest
+    name: rabbitmqopsrequests
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: opskubedbcom-rabbitmqopsrequest-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.19
+    enforceQuota: false

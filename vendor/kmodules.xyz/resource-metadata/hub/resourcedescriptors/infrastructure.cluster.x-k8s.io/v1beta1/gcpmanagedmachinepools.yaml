@@ -1,0 +1,131 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: infrastructure.cluster.x-k8s.io
+    k8s.io/kind: GCPManagedMachinePool
+    k8s.io/resource: gcpmanagedmachinepools
+    k8s.io/version: v1beta1
+  name: infrastructure.cluster.x-k8s.io-v1beta1-gcpmanagedmachinepools
+spec:
+  resource:
+    group: infrastructure.cluster.x-k8s.io
+    kind: GCPManagedMachinePool
+    name: gcpmanagedmachinepools
+    scope: Namespaced
+    version: v1beta1
+  validation:
+    openAPIV3Schema:
+      description: GCPManagedMachinePool is the Schema for the gcpmanagedmachinepools
+        API.
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: GCPManagedMachinePoolSpec defines the desired state of GCPManagedMachinePool.
+          properties:
+            additionalLabels:
+              additionalProperties:
+                type: string
+              description: AdditionalLabels is an optional set of tags to add to GCP
+                resources managed by the GCP provider, in addition to the ones added
+                by default.
+              type: object
+            kubernetesLabels:
+              additionalProperties:
+                type: string
+              description: KubernetesLabels specifies the labels to apply to the nodes
+                of the node pool.
+              type: object
+            kubernetesTaints:
+              description: KubernetesTaints specifies the taints to apply to the nodes
+                of the node pool.
+              items:
+                description: Taint represents a Kubernetes taint.
+                properties:
+                  effect:
+                    description: Effect specifies the effect for the taint.
+                    enum:
+                    - NoSchedule
+                    - NoExecute
+                    - PreferNoSchedule
+                    type: string
+                  key:
+                    description: Key is the key of the taint
+                    type: string
+                  value:
+                    description: Value is the value of the taint
+                    type: string
+                required:
+                - effect
+                - key
+                - value
+                type: object
+              type: array
+            nodePoolName:
+              description: NodePoolName specifies the name of the GKE node pool corresponding
+                to this MachinePool. If you don't specify a name then a default name
+                will be created based on the namespace and name of the managed machine
+                pool.
+              type: string
+            providerIDList:
+              description: ProviderIDList are the provider IDs of instances in the
+                managed instance group corresponding to the nodegroup represented
+                by this machine pool
+              items:
+                type: string
+              type: array
+            scaling:
+              description: Scaling specifies scaling for the node pool
+              properties:
+                maxCount:
+                  format: int32
+                  type: integer
+                minCount:
+                  format: int32
+                  type: integer
+              type: object
+          type: object
+      type: object

@@ -1,0 +1,153 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: cluster.open-cluster-management.io
+    k8s.io/kind: ManagedCluster
+    k8s.io/resource: managedclusters
+    k8s.io/version: v1
+  name: cluster.open-cluster-management.io-v1-managedclusters
+spec:
+  resource:
+    group: cluster.open-cluster-management.io
+    kind: ManagedCluster
+    name: managedclusters
+    scope: Cluster
+    version: v1
+  validation:
+    openAPIV3Schema:
+      description: "ManagedCluster represents the desired state and current status
+        of managed cluster. ManagedCluster is a cluster scoped resource. The name
+        is the cluster UID. \n The cluster join process follows a double opt-in process:
+        \n 1. Agent on managed cluster creates CSR on hub with cluster UID and agent
+        name. 2. Agent on managed cluster creates ManagedCluster on hub. 3. Cluster
+        admin on hub approves the CSR for UID and agent name of the ManagedCluster.
+        4. Cluster admin sets spec.acceptClient of ManagedCluster to true. 5. Cluster
+        admin on managed cluster creates credential of kubeconfig to hub. \n Once
+        the hub creates the cluster namespace, the Klusterlet agent on the ManagedCluster
+        pushes the credential to the hub to use against the kube-apiserver of the
+        ManagedCluster."
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: Spec represents a desired configuration for the agent on the
+            managed cluster.
+          properties:
+            hubAcceptsClient:
+              description: hubAcceptsClient represents that hub accepts the joining
+                of Klusterlet agent on the managed cluster with the hub. The default
+                value is false, and can only be set true when the user on hub has
+                an RBAC rule to UPDATE on the virtual subresource of managedclusters/accept.
+                When the value is set true, a namespace whose name is the same as
+                the name of ManagedCluster is created on the hub. This namespace represents
+                the managed cluster, also role/rolebinding is created on the namespace
+                to grant the permision of access from the agent on the managed cluster.
+                When the value is set to false, the namespace representing the managed
+                cluster is deleted.
+              type: boolean
+            leaseDurationSeconds:
+              default: 60
+              description: LeaseDurationSeconds is used to coordinate the lease update
+                time of Klusterlet agents on the managed cluster. If its value is
+                zero, the Klusterlet agent will update its lease every 60 seconds
+                by default
+              format: int32
+              type: integer
+            managedClusterClientConfigs:
+              description: ManagedClusterClientConfigs represents a list of the apiserver
+                address of the managed cluster. If it is empty, the managed cluster
+                has no accessible address for the hub to connect with it.
+              items:
+                description: ClientConfig represents the apiserver address of the
+                  managed cluster. TODO include credential to connect to managed cluster
+                  kube-apiserver
+                properties:
+                  caBundle:
+                    description: CABundle is the ca bundle to connect to apiserver
+                      of the managed cluster. System certs are used if it is not set.
+                    format: byte
+                    type: string
+                  url:
+                    description: URL is the URL of apiserver endpoint of the managed
+                      cluster.
+                    type: string
+                type: object
+              type: array
+            taints:
+              description: Taints is a property of managed cluster that allow the
+                cluster to be repelled when scheduling. Taints, including 'ManagedClusterUnavailable'
+                and 'ManagedClusterUnreachable', can not be added/removed by agent
+                running on the managed cluster; while it's fine to add/remove other
+                taints from either hub cluser or managed cluster.
+              items:
+                description: The managed cluster this Taint is attached to has the
+                  "effect" on any placement that does not tolerate the Taint.
+                properties:
+                  effect:
+                    description: Effect indicates the effect of the taint on placements
+                      that do not tolerate the taint. Valid effects are NoSelect,
+                      PreferNoSelect and NoSelectIfNew.
+                    enum:
+                    - NoSelect
+                    - PreferNoSelect
+                    - NoSelectIfNew
+                    type: string
+                  key:
+                    description: Key is the taint key applied to a cluster. e.g. bar
+                      or foo.example.com/bar. The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
+                    maxLength: 316
+                    pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                    type: string
+                  timeAdded:
+                    description: TimeAdded represents the time at which the taint
+                      was added.
+                    format: date-time
+                    nullable: true
+                    type: string
+                  value:
+                    description: Value is the taint value corresponding to the taint
+                      key.
+                    maxLength: 1024
+                    type: string
+                required:
+                - effect
+                - key
+                type: object
+              type: array
+          type: object
+      type: object

@@ -1,0 +1,116 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: supervisor.appscode.com
+    k8s.io/kind: MaintenanceWindow
+    k8s.io/resource: maintenancewindows
+    k8s.io/version: v1alpha1
+  name: supervisor.appscode.com-v1alpha1-maintenancewindows
+spec:
+  resource:
+    group: supervisor.appscode.com
+    kind: MaintenanceWindow
+    name: maintenancewindows
+    scope: Namespaced
+    version: v1alpha1
+  validation:
+    openAPIV3Schema:
+      description: MaintenanceWindow is the Schema for the maintenancewindows API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: MaintenanceWindowSpec defines the desired state of MaintenanceWindow
+          properties:
+            dates:
+              description: 'Dates consists of a list of Dates as Maintenance time.
+                Dates are always needed to be given in UTC format. Format: yyyy-mm-ddThh.mm.ssZ
+                [Here Z stands for Zero time zone / UTC time zone / GMT (+0000)] Example:
+                dates: - start: 2022-01-24T00:00:18Z end: 2022-01-24T23:41:18Z'
+              items:
+                properties:
+                  end:
+                    format: date-time
+                    type: string
+                  start:
+                    format: date-time
+                    type: string
+                required:
+                - end
+                - start
+                type: object
+              type: array
+            days:
+              additionalProperties:
+                items:
+                  properties:
+                    end:
+                      format: time
+                      type: string
+                    start:
+                      format: time
+                      type: string
+                  required:
+                  - end
+                  - start
+                  type: object
+                type: array
+              description: 'Days consists of a map of DayOfWeek and corresponding
+                list of TimeWindow. There is `Logical OR` relationship between Days
+                and Dates. Example: days: Monday: - start: 10:40AM end: 7:00PM'
+              type: object
+            isDefault:
+              type: boolean
+            timezone:
+              description: "If the Timezone is not set or \"\" or \"UTC\", the given
+                times and dates are considered as UTC. If the name is \"Local\", the
+                given times and dates are considered as server local timezone. \n
+                Otherwise, the Timezone should specify a location name corresponding
+                to a file in the IANA Time Zone database, such as \"Asia/Dhaka\",
+                \"America/New_York\", . Ref: https://www.iana.org/time-zones https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
+              type: string
+          type: object
+      type: object

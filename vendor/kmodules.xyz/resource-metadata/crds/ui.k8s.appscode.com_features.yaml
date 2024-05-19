@@ -50,7 +50,7 @@ spec:
                   by the FluxCD to install the respective feature
                 properties:
                   createNamespace:
-                    type: string
+                    type: boolean
                   name:
                     description: Name specifies the name of the chart
                     type: string

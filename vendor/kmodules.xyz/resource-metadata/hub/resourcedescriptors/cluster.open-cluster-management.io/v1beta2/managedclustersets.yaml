@@ -1,0 +1,147 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: cluster.open-cluster-management.io
+    k8s.io/kind: ManagedClusterSet
+    k8s.io/resource: managedclustersets
+    k8s.io/version: v1beta2
+  name: cluster.open-cluster-management.io-v1beta2-managedclustersets
+spec:
+  connections:
+  - labels:
+    - offshoot
+    selector:
+      matchLabels:
+        cluster.open-cluster-management.io/clusterset: '{.metadata.name}'
+    target:
+      apiVersion: cluster.open-cluster-management.io/v1
+      kind: ManagedCluster
+    type: MatchSelector
+  resource:
+    group: cluster.open-cluster-management.io
+    kind: ManagedClusterSet
+    name: managedclustersets
+    scope: Cluster
+    version: v1beta2
+  validation:
+    openAPIV3Schema:
+      description: "ManagedClusterSet defines a group of ManagedClusters that user's
+        workload can run on. A workload can be defined to deployed on a ManagedClusterSet,
+        which mean: 1. The workload can run on any ManagedCluster in the ManagedClusterSet
+        2. The workload cannot run on any ManagedCluster outside the ManagedClusterSet
+        3. The service exposed by the workload can be shared in any ManagedCluster
+        in the ManagedClusterSet \n In order to assign a ManagedCluster to a certian
+        ManagedClusterSet, add a label with name `cluster.open-cluster-management.io/clusterset`
+        on the ManagedCluster to refers to the ManagedClusterSet. User is not allow
+        to add/remove this label on a ManagedCluster unless they have a RBAC rule
+        to CREATE on a virtual subresource of managedclustersets/join. In order to
+        update this label, user must have the permission on both the old and new ManagedClusterSet."
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          default:
+            clusterSelector:
+              selectorType: ExclusiveClusterSetLabel
+          description: Spec defines the attributes of the ManagedClusterSet
+          properties:
+            clusterSelector:
+              default:
+                selectorType: ExclusiveClusterSetLabel
+              description: ClusterSelector represents a selector of ManagedClusters
+              properties:
+                labelSelector:
+                  description: LabelSelector define the general labelSelector which
+                    clusterset will use to select target managedClusters
+                  properties:
+                    matchExpressions:
+                      description: matchExpressions is a list of label selector requirements.
+                        The requirements are ANDed.
+                      items:
+                        description: A label selector requirement is a selector that
+                          contains values, a key, and an operator that relates the
+                          key and values.
+                        properties:
+                          key:
+                            description: key is the label key that the selector applies
+                              to.
+                            type: string
+                          operator:
+                            description: operator represents a key's relationship
+                              to a set of values. Valid operators are In, NotIn, Exists
+                              and DoesNotExist.
+                            type: string
+                          values:
+                            description: values is an array of string values. If the
+                              operator is In or NotIn, the values array must be non-empty.
+                              If the operator is Exists or DoesNotExist, the values
+                              array must be empty. This array is replaced during a
+                              strategic merge patch.
+                            items:
+                              type: string
+                            type: array
+                        required:
+                        - key
+                        - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      description: matchLabels is a map of {key,value} pairs. A single
+                        {key,value} in the matchLabels map is equivalent to an element
+                        of matchExpressions, whose key field is "key", the operator
+                        is "In", and the values array contains only "value". The requirements
+                        are ANDed.
+                      type: object
+                  type: object
+                  x-kubernetes-map-type: atomic
+                selectorType:
+                  default: ExclusiveClusterSetLabel
+                  description: SelectorType could only be "ExclusiveClusterSetLabel"
+                    or "LabelSelector" "ExclusiveClusterSetLabel" means to use label
+                    "cluster.open-cluster-management.io/clusterset:<ManagedClusterSet
+                    Name>"" to select target clusters. "LabelSelector" means use labelSelector
+                    to select target managedClusters
+                  enum:
+                  - ExclusiveClusterSetLabel
+                  - LabelSelector
+                  type: string
+              type: object
+          type: object
+      type: object

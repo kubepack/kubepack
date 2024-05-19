@@ -1,0 +1,321 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: work.open-cluster-management.io
+    k8s.io/kind: ManifestWork
+    k8s.io/resource: manifestworks
+    k8s.io/version: v1
+  name: work.open-cluster-management.io-v1-manifestworks
+spec:
+  connections:
+  - labels:
+    - source
+    level: Controller
+    target:
+      apiVersion: addon.open-cluster-management.io/v1alpha1
+      kind: ManagedClusterAddOn
+    type: OwnedBy
+  resource:
+    group: work.open-cluster-management.io
+    kind: ManifestWork
+    name: manifestworks
+    scope: Namespaced
+    version: v1
+  validation:
+    openAPIV3Schema:
+      description: ManifestWork represents a manifests workload that hub wants to
+        deploy on the managed cluster. A manifest workload is defined as a set of
+        Kubernetes resources. ManifestWork must be created in the cluster namespace
+        on the hub, so that agent on the corresponding managed cluster can access
+        this resource and deploy on the managed cluster.
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: Spec represents a desired configuration of work to be deployed
+            on the managed cluster.
+          properties:
+            deleteOption:
+              description: DeleteOption represents deletion strategy when the manifestwork
+                is deleted. Foreground deletion strategy is applied to all the resource
+                in this manifestwork if it is not set.
+              properties:
+                propagationPolicy:
+                  default: Foreground
+                  description: propagationPolicy can be Foreground, Orphan or SelectivelyOrphan
+                    SelectivelyOrphan should be rarely used.  It is provided for cases
+                    where particular resources is transfering ownership from one ManifestWork
+                    to another or another management unit. Setting this value will
+                    allow a flow like 1. create manifestwork/2 to manage foo 2. update
+                    manifestwork/1 to selectively orphan foo 3. remove foo from manifestwork/1
+                    without impacting continuity because manifestwork/2 adopts it.
+                  enum:
+                  - Foreground
+                  - Orphan
+                  - SelectivelyOrphan
+                  type: string
+                selectivelyOrphans:
+                  description: selectivelyOrphan represents a list of resources following
+                    orphan deletion stratecy
+                  properties:
+                    orphaningRules:
+                      description: orphaningRules defines a slice of orphaningrule.
+                        Each orphaningrule identifies a single resource included in
+                        this manifestwork
+                      items:
+                        description: OrphaningRule identifies a single resource included
+                          in this manifestwork to be orphaned
+                        properties:
+                          group:
+                            description: Group is the API Group of the Kubernetes
+                              resource, empty string indicates it is in core group.
+                            type: string
+                          name:
+                            description: Name is the name of the Kubernetes resource.
+                            type: string
+                          namespace:
+                            description: Name is the namespace of the Kubernetes resource,
+                              empty string indicates it is a cluster scoped resource.
+                            type: string
+                          resource:
+                            description: Resource is the resource name of the Kubernetes
+                              resource.
+                            type: string
+                        required:
+                        - name
+                        - resource
+                        type: object
+                      type: array
+                  type: object
+              type: object
+            executor:
+              description: Executor is the configuration that makes the work agent
+                to perform some pre-request processing/checking. e.g. the executor
+                identity tells the work agent to check the executor has sufficient
+                permission to write the workloads to the local managed cluster. Note
+                that nil executor is still supported for backward-compatibility which
+                indicates that the work agent will not perform any additional actions
+                before applying resources.
+              properties:
+                subject:
+                  description: Subject is the subject identity which the work agent
+                    uses to talk to the local cluster when applying the resources.
+                  properties:
+                    serviceAccount:
+                      description: ServiceAccount is for identifying which service
+                        account to use by the work agent. Only required if the type
+                        is "ServiceAccount".
+                      properties:
+                        name:
+                          description: Name is the name of the service account.
+                          maxLength: 253
+                          minLength: 1
+                          pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)$
+                          type: string
+                        namespace:
+                          description: Namespace is the namespace of the service account.
+                          maxLength: 253
+                          minLength: 1
+                          pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)$
+                          type: string
+                      required:
+                      - name
+                      - namespace
+                      type: object
+                    type:
+                      description: 'Type is the type of the subject identity. Supported
+                        types are: "ServiceAccount".'
+                      enum:
+                      - ServiceAccount
+                      type: string
+                  required:
+                  - type
+                  type: object
+              type: object
+            manifestConfigs:
+              description: ManifestConfigs represents the configurations of manifests
+                defined in workload field.
+              items:
+                description: ManifestConfigOption represents the configurations of
+                  a manifest defined in workload field.
+                properties:
+                  feedbackRules:
+                    description: FeedbackRules defines what resource status field
+                      should be returned. If it is not set or empty, no feedback rules
+                      will be honored.
+                    items:
+                      properties:
+                        jsonPaths:
+                          description: JsonPaths defines the json path under status
+                            field to be synced.
+                          items:
+                            properties:
+                              name:
+                                description: Name represents the alias name for this
+                                  field
+                                type: string
+                              path:
+                                description: Path represents the json path of the
+                                  field under status. The path must point to a field
+                                  with single value in the type of integer, bool or
+                                  string. If the path points to a non-existing field,
+                                  no value will be returned. If the path points to
+                                  a structure, map or slice, no value will be returned
+                                  and the status conddition of StatusFeedBackSynced
+                                  will be set as false. Ref to https://kubernetes.io/docs/reference/kubectl/jsonpath/
+                                  on how to write a jsonPath.
+                                type: string
+                              version:
+                                description: Version is the version of the Kubernetes
+                                  resource. If it is not specified, the resource with
+                                  the semantically latest version is used to resolve
+                                  the path.
+                                type: string
+                            required:
+                            - name
+                            - path
+                            type: object
+                          type: array
+                        type:
+                          description: Type defines the option of how status can be
+                            returned. It can be jsonPaths or wellKnownStatus. If the
+                            type is JSONPaths, user should specify the jsonPaths field
+                            If the type is WellKnownStatus, certain common fields
+                            of status defined by a rule only for types in in k8s.io/api
+                            and open-cluster-management/api will be reported, If these
+                            status fields do not exist, no values will be reported.
+                          enum:
+                          - WellKnownStatus
+                          - JSONPaths
+                          type: string
+                      required:
+                      - type
+                      type: object
+                    type: array
+                  resourceIdentifier:
+                    description: ResourceIdentifier represents the group, resource,
+                      name and namespace of a resoure. iff this refers to a resource
+                      not created by this manifest work, the related rules will not
+                      be executed.
+                    properties:
+                      group:
+                        description: Group is the API Group of the Kubernetes resource,
+                          empty string indicates it is in core group.
+                        type: string
+                      name:
+                        description: Name is the name of the Kubernetes resource.
+                        type: string
+                      namespace:
+                        description: Name is the namespace of the Kubernetes resource,
+                          empty string indicates it is a cluster scoped resource.
+                        type: string
+                      resource:
+                        description: Resource is the resource name of the Kubernetes
+                          resource.
+                        type: string
+                    required:
+                    - name
+                    - resource
+                    type: object
+                  updateStrategy:
+                    description: UpdateStrategy defines the strategy to update this
+                      manifest. UpdateStrategy is Update if it is not set.
+                    properties:
+                      serverSideApply:
+                        description: serverSideApply defines the configuration for
+                          server side apply. It is honored only when type of updateStrategy
+                          is ServerSideApply
+                        properties:
+                          fieldManager:
+                            default: work-agent
+                            description: FieldManager is the manager to apply the
+                              resource. It is work-agent by default, but can be other
+                              name with work-agent as the prefix.
+                            pattern: ^work-agent
+                            type: string
+                          force:
+                            description: Force represents to force apply the manifest.
+                            type: boolean
+                        type: object
+                      type:
+                        default: Update
+                        description: type defines the strategy to update this manifest,
+                          default value is Update. Update type means to update resource
+                          by an update call. CreateOnly type means do not update resource
+                          based on current manifest. ServerSideApply type means to
+                          update resource using server side apply with work-controller
+                          as the field manager. If there is conflict, the related
+                          Applied condition of manifest will be in the status of False
+                          with the reason of ApplyConflict.
+                        enum:
+                        - Update
+                        - CreateOnly
+                        - ServerSideApply
+                        type: string
+                    required:
+                    - type
+                    type: object
+                required:
+                - resourceIdentifier
+                type: object
+              type: array
+            workload:
+              description: Workload represents the manifest workload to be deployed
+                on a managed cluster.
+              properties:
+                manifests:
+                  description: Manifests represents a list of kuberenetes resources
+                    to be deployed on a managed cluster.
+                  items:
+                    description: Manifest represents a resource to be deployed on
+                      managed cluster.
+                    type: object
+                    x-kubernetes-embedded-resource: true
+                    x-kubernetes-preserve-unknown-fields: true
+                  type: array
+              type: object
+          type: object
+      type: object

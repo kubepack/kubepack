@@ -1,0 +1,43 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: kubedb.com
+    k8s.io/kind: MSSQLServer
+    k8s.io/resource: mssqlservers
+    k8s.io/version: v1alpha2
+  name: kubedb.com-v1alpha2-mssqlservers
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/mssqlservers.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/mssqlservers.png
+    type: image/png
+  resource:
+    group: kubedb.com
+    kind: MSSQLServer
+    name: mssqlservers
+    scope: Namespaced
+    version: v1alpha2
+  ui:
+    editor:
+      name: kubedbcom-mssqlserver-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.19
+    enforceQuota: true
+    options:
+      name: kubedbcom-mssqlserver-editor-options
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.19
+  variants:
+  - name: default
+    selector:
+      matchLabels:
+        charts.x-helm.dev/is-default-preset: "true"

@@ -1,0 +1,267 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: source.toolkit.fluxcd.io
+    k8s.io/kind: OCIRepository
+    k8s.io/resource: ocirepositories
+    k8s.io/version: v1beta2
+  name: source.toolkit.fluxcd.io-v1beta2-ocirepositories
+spec:
+  resource:
+    group: source.toolkit.fluxcd.io
+    kind: OCIRepository
+    name: ocirepositories
+    scope: Namespaced
+    version: v1beta2
+  validation:
+    openAPIV3Schema:
+      description: OCIRepository is the Schema for the ocirepositories API
+      properties:
+        apiVersion:
+          description: |-
+            APIVersion defines the versioned schema of this representation of an object.
+            Servers should convert recognized schemas to the latest internal value, and
+            may reject unrecognized values.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+          type: string
+        kind:
+          description: |-
+            Kind is a string value representing the REST resource this object represents.
+            Servers may infer this from the endpoint the client submits requests to.
+            Cannot be updated.
+            In CamelCase.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: OCIRepositorySpec defines the desired state of OCIRepository
+          properties:
+            certSecretRef:
+              description: |-
+                CertSecretRef can be given the name of a Secret containing
+                either or both of
+
+
+                - a PEM-encoded client certificate (`tls.crt`) and private
+                key (`tls.key`);
+                - a PEM-encoded CA certificate (`ca.crt`)
+
+
+                and whichever are supplied, will be used for connecting to the
+                registry. The client cert and key are useful if you are
+                authenticating with a certificate; the CA cert is useful if
+                you are using a self-signed server certificate. The Secret must
+                be of type `Opaque` or `kubernetes.io/tls`.
+
+
+                Note: Support for the `caFile`, `certFile` and `keyFile` keys have
+                been deprecated.
+              properties:
+                name:
+                  description: Name of the referent.
+                  type: string
+              required:
+              - name
+              type: object
+            ignore:
+              description: |-
+                Ignore overrides the set of excluded patterns in the .sourceignore format
+                (which is the same as .gitignore). If not provided, a default will be used,
+                consult the documentation for your version to find out what those are.
+              type: string
+            insecure:
+              description: Insecure allows connecting to a non-TLS HTTP container
+                registry.
+              type: boolean
+            interval:
+              description: |-
+                Interval at which the OCIRepository URL is checked for updates.
+                This interval is approximate and may be subject to jitter to ensure
+                efficient use of resources.
+              pattern: ^([0-9]+(\.[0-9]+)?(ms|s|m|h))+$
+              type: string
+            layerSelector:
+              description: |-
+                LayerSelector specifies which layer should be extracted from the OCI artifact.
+                When not specified, the first layer found in the artifact is selected.
+              properties:
+                mediaType:
+                  description: |-
+                    MediaType specifies the OCI media type of the layer
+                    which should be extracted from the OCI Artifact. The
+                    first layer matching this type is selected.
+                  type: string
+                operation:
+                  description: |-
+                    Operation specifies how the selected layer should be processed.
+                    By default, the layer compressed content is extracted to storage.
+                    When the operation is set to 'copy', the layer compressed content
+                    is persisted to storage as it is.
+                  enum:
+                  - extract
+                  - copy
+                  type: string
+              type: object
+            provider:
+              default: generic
+              description: |-
+                The provider used for authentication, can be 'aws', 'azure', 'gcp' or 'generic'.
+                When not specified, defaults to 'generic'.
+              enum:
+              - generic
+              - aws
+              - azure
+              - gcp
+              type: string
+            ref:
+              description: |-
+                The OCI reference to pull and monitor for changes,
+                defaults to the latest tag.
+              properties:
+                digest:
+                  description: |-
+                    Digest is the image digest to pull, takes precedence over SemVer.
+                    The value should be in the format 'sha256:<HASH>'.
+                  type: string
+                semver:
+                  description: |-
+                    SemVer is the range of tags to pull selecting the latest within
+                    the range, takes precedence over Tag.
+                  type: string
+                semverFilter:
+                  description: SemverFilter is a regex pattern to filter the tags
+                    within the SemVer range.
+                  type: string
+                tag:
+                  description: Tag is the image tag to pull, defaults to latest.
+                  type: string
+              type: object
+            secretRef:
+              description: |-
+                SecretRef contains the secret name containing the registry login
+                credentials to resolve image metadata.
+                The secret must be of type kubernetes.io/dockerconfigjson.
+              properties:
+                name:
+                  description: Name of the referent.
+                  type: string
+              required:
+              - name
+              type: object
+            serviceAccountName:
+              description: |-
+                ServiceAccountName is the name of the Kubernetes ServiceAccount used to authenticate
+                the image pull if the service account has attached pull secrets. For more information:
+                https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#add-imagepullsecrets-to-a-service-account
+              type: string
+            suspend:
+              description: This flag tells the controller to suspend the reconciliation
+                of this source.
+              type: boolean
+            timeout:
+              default: 60s
+              description: The timeout for remote OCI Repository operations like pulling,
+                defaults to 60s.
+              pattern: ^([0-9]+(\.[0-9]+)?(ms|s|m))+$
+              type: string
+            url:
+              description: |-
+                URL is a reference to an OCI artifact repository hosted
+                on a remote container registry.
+              pattern: ^oci://.*$
+              type: string
+            verify:
+              description: |-
+                Verify contains the secret name containing the trusted public keys
+                used to verify the signature and specifies which provider to use to check
+                whether OCI image is authentic.
+              properties:
+                matchOIDCIdentity:
+                  description: |-
+                    MatchOIDCIdentity specifies the identity matching criteria to use
+                    while verifying an OCI artifact which was signed using Cosign keyless
+                    signing. The artifact's identity is deemed to be verified if any of the
+                    specified matchers match against the identity.
+                  items:
+                    description: |-
+                      OIDCIdentityMatch specifies options for verifying the certificate identity,
+                      i.e. the issuer and the subject of the certificate.
+                    properties:
+                      issuer:
+                        description: |-
+                          Issuer specifies the regex pattern to match against to verify
+                          the OIDC issuer in the Fulcio certificate. The pattern must be a
+                          valid Go regular expression.
+                        type: string
+                      subject:
+                        description: |-
+                          Subject specifies the regex pattern to match against to verify
+                          the identity subject in the Fulcio certificate. The pattern must
+                          be a valid Go regular expression.
+                        type: string
+                    required:
+                    - issuer
+                    - subject
+                    type: object
+                  type: array
+                provider:
+                  default: cosign
+                  description: Provider specifies the technology used to sign the
+                    OCI Artifact.
+                  enum:
+                  - cosign
+                  - notation
+                  type: string
+                secretRef:
+                  description: |-
+                    SecretRef specifies the Kubernetes Secret containing the
+                    trusted public keys.
+                  properties:
+                    name:
+                      description: Name of the referent.
+                      type: string
+                  required:
+                  - name
+                  type: object
+              required:
+              - provider
+              type: object
+          required:
+          - interval
+          - url
+          type: object
+      type: object

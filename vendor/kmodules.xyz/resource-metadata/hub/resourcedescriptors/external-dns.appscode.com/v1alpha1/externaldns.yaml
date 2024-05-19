@@ -1,0 +1,441 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: external-dns.appscode.com
+    k8s.io/kind: ExternalDNS
+    k8s.io/resource: externaldns
+    k8s.io/version: v1alpha1
+  name: external-dns.appscode.com-v1alpha1-externaldns
+spec:
+  resource:
+    group: external-dns.appscode.com
+    kind: ExternalDNS
+    name: externaldns
+    scope: Namespaced
+    version: v1alpha1
+  validation:
+    openAPIV3Schema:
+      description: ExternalDNS is the Schema for the externaldns API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: ExternalDNSSpec defines the desired state of ExternalDNS
+          properties:
+            aws:
+              description: AWS provider information
+              properties:
+                apiRetries:
+                  description: When using the AWS provider, set the maximum number
+                    of retries for API calls before giving up.
+                  type: integer
+                assumeRole:
+                  description: When using the AWS provider, assume this IAM role.
+                    Useful for hosted zones in another AWS account. Specify the full
+                    ARN, e.g. `arn:aws:iam::123455567:role/external-dns`
+                  type: string
+                batchChangeInterval:
+                  description: When using the AWS provider, set the interval between
+                    batch changes.
+                  format: int64
+                  type: integer
+                batchChangeSize:
+                  description: When using AWS provide, set the maximum number of changes
+                    that will be applied in each batch
+                  type: integer
+                evaluateTargetHealth:
+                  description: 'When using the AWS provider, set whether to evaluate
+                    the health of the DNS target (default: enable, disable with --no-aws-evaluate-target-health)'
+                  type: boolean
+                preferCNAME:
+                  description: 'When using the AWS provider, prefer using CNAME instead
+                    of ALIAS (default: disabled)'
+                  type: boolean
+                sdServiceCleanup:
+                  description: 'When using the AWS CloudMap provider, delete empty
+                    Services without endpoints (default: disabled)'
+                  type: boolean
+                secretRef:
+                  description: provider secret credential information
+                  properties:
+                    credentialKey:
+                      description: credential key of the provider secret
+                      type: string
+                    name:
+                      description: Name of the provider secret
+                      type: string
+                  required:
+                  - credentialKey
+                  - name
+                  type: object
+                zoneCacheDuration:
+                  description: When using the AWS provider, set the zones list cache
+                    TTL (0s to disable).
+                  format: int64
+                  type: integer
+                zoneTagFilter:
+                  description: When using the AWS provider, filter for zones with
+                    these tags
+                  items:
+                    type: string
+                  type: array
+                zoneType:
+                  description: 'When using the AWS provider, filter for zones of this
+                    type. (support: public, private)'
+                  type: string
+              type: object
+            azure:
+              description: Azure provider infomation
+              properties:
+                resourceGroup:
+                  description: When using the Azure provider, override the Azure resource
+                    group to use (required for azure-private-dns)
+                  type: string
+                secretRef:
+                  description: Provider secret credential information
+                  properties:
+                    credentialKey:
+                      description: credential key of the provider secret
+                      type: string
+                    name:
+                      description: Name of the provider secret
+                      type: string
+                  required:
+                  - credentialKey
+                  - name
+                  type: object
+                subscriptionId:
+                  description: When using the Azure provider, specify the Azure configuration
+                    file. (required for azure-private-dns)
+                  type: string
+                userAssignedIdentityClientID:
+                  description: When using the Azure provider, override the client
+                    id of user assigned identity in config file
+                  type: string
+              type: object
+            cloudflare:
+              description: Cloudflare provider information
+              properties:
+                baseURL:
+                  type: string
+                proxied:
+                  description: 'When using the Cloudflare provider, specify if the
+                    proxy mode must be enabled (default: disabled)'
+                  type: boolean
+                secretRef:
+                  description: CloudflareSecretReference contains the name of the
+                    provider secret. The secret information may differ with respect
+                    to provider. It is considered optional where workload identity
+                    or IRSA (IAM Role for Service Account) is used, otherwise it is
+                    mandatory
+                  properties:
+                    apiEmailKey:
+                      type: string
+                    apiKey:
+                      type: string
+                    apiTokenKey:
+                      type: string
+                    name:
+                      description: Name is the name of the secret that contains the
+                        provider credentials
+                      type: string
+                  required:
+                  - name
+                  type: object
+                zonesPerPage:
+                  description: 'When using the Cloudflare provider, specify how many
+                    zones per page listed, max. possible 50 (default: 50)'
+                  type: integer
+              type: object
+            connectorSourceServer:
+              description: The server to connect for connector source, valid only
+                when using connector source
+              type: string
+            defaultTargets:
+              description: Set globally a list of default IP address that will apply
+                as a target instead of source addresses.
+              items:
+                type: string
+              type: array
+            domainFilter:
+              description: Limit possible target zones by a domain suffix
+              items:
+                type: string
+              type: array
+            excludeDomains:
+              description: Exclude subdomains
+              items:
+                type: string
+              type: array
+            gatewayLabelFilter:
+              description: Filter Gateways of Route endpoints via label selector
+              type: string
+            gatewayNamespace:
+              description: Limit Gateways of route endpoints to a specific namespace
+              type: string
+            google:
+              description: Google provider
+              properties:
+                batchChangeInterval:
+                  description: When using the Google provider, set the interval between
+                    batch changes
+                  format: int64
+                  type: integer
+                batchChangeSize:
+                  description: When using the Google provider, set the maximum number
+                    of changes that will be applied in each batch
+                  type: integer
+                project:
+                  description: When using the Google provider, current project is
+                    auto-detected, when running on GCP. Specify other project with
+                    this. Must be specified when running outside GCP.
+                  type: string
+                secretRef:
+                  description: Provider secret credential information
+                  properties:
+                    credentialKey:
+                      description: credential key of the provider secret
+                      type: string
+                    name:
+                      description: Name of the provider secret
+                      type: string
+                  required:
+                  - credentialKey
+                  - name
+                  type: object
+                zoneVisibility:
+                  description: 'When using the Google provider, filter for zones with
+                    this visibility (optional, options: public, private)'
+                  type: string
+              type: object
+            manageDNSRecordTypes:
+              description: 'Comma separated list of record types to manage (default:
+                A, CNAME; supported: A,CNAME,NS)'
+              items:
+                type: string
+              type: array
+            ocRouterName:
+              description: If source is openshift router then you can pass the ingress
+                controller name. Based on this name the external dns will select the
+                respective router from the route status and map that routeCanonicalHostname
+                to the route host while creating a CNAME record.
+              type: string
+            policy:
+              description: "POLICY INFORMATION \n Modify how DNS records are synchronized
+                between sources and providers (default: sync, options: sync, upsert-only,
+                create-only)"
+              type: string
+            provider:
+              description: RELATED TO PROVIDERS The DNS provider where the DNS records
+                will be created. (AWS, Cloudflare)
+              type: string
+            registry:
+              description: "REGISTRY information \n The registry implementation to
+                use to keep track of DNS record ownership (default: txt, options:
+                txt, noop, aws-sd)"
+              type: string
+            requestTimeout:
+              description: Request timeout when calling Kubernetes API. 0s means no
+                timeout
+              format: int64
+              type: integer
+            source:
+              description: 'RELATED TO PROCESSING SOURCE The resource types that are
+                queried for endpoints; List of source. ex: source, ingress, node etc.
+                source: group: "" version: v1 kind: Service'
+              properties:
+                ingress:
+                  description: For source type Ingress
+                  properties:
+                    annotationFilter:
+                      description: Filter sources managed by external-dns via label
+                        selector when listing all resources
+                      type: string
+                    combineFQDNAndAnnotation:
+                      description: Combine FQDN template and Annotations instead of
+                        overwriting
+                      type: boolean
+                    fqdnTemplate:
+                      description: A templated string that's used to generate DNS
+                        names from source that don't define a hostname themselves,
+                        or to add a hostname suffix when paired with the fake source
+                      type: string
+                    ignoreHostnameAnnotation:
+                      description: Ignore hostname annotation when generating DNS
+                        names, valid only when using fqdn-template is set
+                      type: boolean
+                    ignoreIngressRulesSpec:
+                      description: Ignore rules spec section in ingresses resources,
+                        applicable only for ingress sources
+                      type: boolean
+                    ignoreIngressTLSSpec:
+                      description: Ignore TLS Spec section in ingresses resources,
+                        applicable only for ingress source
+                      type: boolean
+                    labelFilter:
+                      description: Filter sources managed by external-dns via annotation
+                        using label selector semantics
+                      type: string
+                    namespace:
+                      description: 'Limit sources of endpoints to a specific namespace
+                        (default: all namespaces)'
+                      type: string
+                  type: object
+                node:
+                  description: For source type Node
+                  properties:
+                    annotationFilter:
+                      description: Filter sources managed by external-dns via label
+                        selector when listing all resources
+                      type: string
+                    fqdnTemplate:
+                      description: A templated string that's used to generate DNS
+                        names from source that don't define a hostname themselves,
+                        or to add a hostname suffix when paired with the fake source
+                      type: string
+                    labelFilter:
+                      description: Filter sources managed by external-dns via annotation
+                        using label selector semantics
+                      type: string
+                  type: object
+                service:
+                  description: For source type Service
+                  properties:
+                    alwaysPublishNotReadyAddresses:
+                      description: Always publish also not ready addresses for headless
+                        services
+                      type: boolean
+                    annotationFilter:
+                      description: Filter sources managed by external-dns via label
+                        selector when listing all resources
+                      type: string
+                    combineFQDNAndAnnotation:
+                      description: Combine FQDN template and Annotations instead of
+                        overwriting
+                      type: boolean
+                    compatibility:
+                      description: Process  annotation semantics from legacy implementations
+                      type: string
+                    fqdnTemplate:
+                      description: A templated string that's used to generate DNS
+                        names from source that don't define a hostname themselves,
+                        or to add a hostname suffix when paired with the fake source
+                      type: string
+                    ignoreHostnameAnnotation:
+                      description: Ignore hostname annotation when generating DNS
+                        names, valid only when using fqdn-template is set
+                      type: boolean
+                    labelFilter:
+                      description: Filter sources managed by external-dns via annotation
+                        using label selector semantics
+                      type: string
+                    namespace:
+                      description: 'Limit sources of endpoints to a specific namespace
+                        (default: all namespaces)'
+                      type: string
+                    publishHostIP:
+                      description: Allow external-dns to publish host-ip for headless
+                        services
+                      type: boolean
+                    publishInternal:
+                      description: Allow  externals-dns to publish DNS records for
+                        ClusterIP services
+                      type: boolean
+                    serviceTypeFilter:
+                      description: 'The service types to take care about (default
+                        all, expected: ClusterIP, NodePort, LoadBalancer or ExternalName)'
+                      items:
+                        type: string
+                      type: array
+                  type: object
+                type:
+                  description: 'TypeInfo contains the source type of the external
+                    dns example: type: group: version: kind:'
+                  properties:
+                    group:
+                      type: string
+                    kind:
+                      type: string
+                    version:
+                      type: string
+                  required:
+                  - group
+                  - kind
+                  - version
+                  type: object
+              required:
+              - type
+              type: object
+            txtOwnerID:
+              description: 'When using the TXT registry, a name that identifies this
+                instance of ExternalDNS (default: default)'
+              type: string
+            txtPrefix:
+              description: When using the TXT registry, a custom string that's prefixed
+                to each ownership DNS record (optional). Could contain record type
+                template like '%{record_type}-prefix-'. Mutual exclusive with txt-suffix!
+              type: string
+            txtSuffix:
+              description: When using the TXT registry, a custom string that's suffixed
+                to the host portion of each ownership DNS record. Could contain record
+                type template like '-%{record_type}-suffix'. Mutual exclusive with
+                txt-prefix!
+              type: string
+            txtWildcardReplacement:
+              description: When using the TXT registry, a custom string that's used
+                instead of an asterisk for TXT records corresponding to wildcard DNS
+                records
+              type: string
+            zoneIDFilter:
+              description: Filter target zones by hosted zone id
+              items:
+                type: string
+              type: array
+          required:
+          - provider
+          - source
+          type: object
+      type: object

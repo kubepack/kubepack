@@ -1,0 +1,164 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: runtime.cluster.x-k8s.io
+    k8s.io/kind: ExtensionConfig
+    k8s.io/resource: extensionconfigs
+    k8s.io/version: v1alpha1
+  name: runtime.cluster.x-k8s.io-v1alpha1-extensionconfigs
+spec:
+  resource:
+    group: runtime.cluster.x-k8s.io
+    kind: ExtensionConfig
+    name: extensionconfigs
+    scope: Cluster
+    version: v1alpha1
+  validation:
+    openAPIV3Schema:
+      description: ExtensionConfig is the Schema for the ExtensionConfig API.
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: ExtensionConfigSpec is the desired state of the ExtensionConfig
+          properties:
+            clientConfig:
+              description: ClientConfig defines how to communicate with the Extension
+                server.
+              properties:
+                caBundle:
+                  description: CABundle is a PEM encoded CA bundle which will be used
+                    to validate the Extension server's server certificate.
+                  format: byte
+                  type: string
+                service:
+                  description: "Service is a reference to the Kubernetes service for
+                    the Extension server. Note: Exactly one of `url` or `service`
+                    must be specified. \n If the Extension server is running within
+                    a cluster, then you should use `service`."
+                  properties:
+                    name:
+                      description: Name is the name of the service.
+                      type: string
+                    namespace:
+                      description: Namespace is the namespace of the service.
+                      type: string
+                    path:
+                      description: Path is an optional URL path and if present may
+                        be any string permissible in a URL. If a path is set it will
+                        be used as prefix to the hook-specific path.
+                      type: string
+                    port:
+                      description: Port is the port on the service that's hosting
+                        the Extension server. Defaults to 443. Port should be a valid
+                        port number (1-65535, inclusive).
+                      format: int32
+                      type: integer
+                  required:
+                  - name
+                  - namespace
+                  type: object
+                url:
+                  description: "URL gives the location of the Extension server, in
+                    standard URL form (`scheme://host:port/path`). Note: Exactly one
+                    of `url` or `service` must be specified. \n The scheme must be
+                    \"https\". \n The `host` should not refer to a service running
+                    in the cluster; use the `service` field instead. \n A path is
+                    optional, and if present may be any string permissible in a URL.
+                    If a path is set it will be used as prefix to the hook-specific
+                    path. \n Attempting to use a user or basic auth e.g. \"user:password@\"
+                    is not allowed. Fragments (\"#...\") and query parameters (\"?...\")
+                    are not allowed either."
+                  type: string
+              type: object
+            namespaceSelector:
+              description: NamespaceSelector decides whether to call the hook for
+                an object based on whether the namespace for that object matches the
+                selector. Defaults to the empty LabelSelector, which matches all objects.
+              properties:
+                matchExpressions:
+                  description: matchExpressions is a list of label selector requirements.
+                    The requirements are ANDed.
+                  items:
+                    description: A label selector requirement is a selector that contains
+                      values, a key, and an operator that relates the key and values.
+                    properties:
+                      key:
+                        description: key is the label key that the selector applies
+                          to.
+                        type: string
+                      operator:
+                        description: operator represents a key's relationship to a
+                          set of values. Valid operators are In, NotIn, Exists and
+                          DoesNotExist.
+                        type: string
+                      values:
+                        description: values is an array of string values. If the operator
+                          is In or NotIn, the values array must be non-empty. If the
+                          operator is Exists or DoesNotExist, the values array must
+                          be empty. This array is replaced during a strategic merge
+                          patch.
+                        items:
+                          type: string
+                        type: array
+                    required:
+                    - key
+                    - operator
+                    type: object
+                  type: array
+                matchLabels:
+                  additionalProperties:
+                    type: string
+                  description: matchLabels is a map of {key,value} pairs. A single
+                    {key,value} in the matchLabels map is equivalent to an element
+                    of matchExpressions, whose key field is "key", the operator is
+                    "In", and the values array contains only "value". The requirements
+                    are ANDed.
+                  type: object
+              type: object
+            settings:
+              additionalProperties:
+                type: string
+              description: 'Settings defines key value pairs to be passed to all calls
+                to all supported RuntimeExtensions. Note: Settings can be overridden
+                on the ClusterClass.'
+              type: object
+          required:
+          - clientConfig
+          type: object
+      type: object

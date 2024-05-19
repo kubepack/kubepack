@@ -1,0 +1,79 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: work.open-cluster-management.io
+    k8s.io/kind: AppliedManifestWork
+    k8s.io/resource: appliedmanifestworks
+    k8s.io/version: v1
+  name: work.open-cluster-management.io-v1-appliedmanifestworks
+spec:
+  resource:
+    group: work.open-cluster-management.io
+    kind: AppliedManifestWork
+    name: appliedmanifestworks
+    scope: Cluster
+    version: v1
+  validation:
+    openAPIV3Schema:
+      description: AppliedManifestWork represents an applied manifestwork on managed
+        cluster that is placed on a managed cluster. An AppliedManifestWork links
+        to a manifestwork on a hub recording resources deployed in the managed cluster.
+        When the agent is removed from managed cluster, cluster-admin on managed cluster
+        can delete appliedmanifestwork to remove resources deployed by the agent.
+        The name of the appliedmanifestwork must be in the format of {hash of hub's
+        first kube-apiserver url}-{manifestwork name}
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: Spec represents the desired configuration of AppliedManifestWork.
+          properties:
+            agentID:
+              description: AgentID represents the ID of the work agent who is to handle
+                this AppliedManifestWork.
+              type: string
+            hubHash:
+              description: HubHash represents the hash of the first hub kube apiserver
+                to identify which hub this AppliedManifestWork links to.
+              type: string
+            manifestWorkName:
+              description: ManifestWorkName represents the name of the related manifestwork
+                on the hub.
+              type: string
+          type: object
+      type: object

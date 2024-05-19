@@ -1,0 +1,423 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: supervisor.appscode.com
+    k8s.io/kind: Recommendation
+    k8s.io/resource: recommendations
+    k8s.io/version: v1alpha1
+  name: supervisor.appscode.com-v1alpha1-recommendations
+spec:
+  connections:
+  - labels:
+    - recommended_for
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: Elasticsearch
+    type: MatchRef
+  - labels:
+    - ops
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.operation.metadata.name},{.spec.operation.metadata.namespace},{.spec.operation.kind},{.spec.operation.apiVersion}'
+    target:
+      apiVersion: kubedb.com/v1alpha1
+      kind: ElasticsearchOpsRequest
+    type: MatchRef
+  - labels:
+    - recommended_for
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: MariaDB
+    type: MatchRef
+  - labels:
+    - ops
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.operation.metadata.name},{.spec.operation.metadata.namespace},{.spec.operation.kind},{.spec.operation.apiVersion}'
+    target:
+      apiVersion: kubedb.com/v1alpha1
+      kind: MariaDBOpsRequest
+    type: MatchRef
+  - labels:
+    - recommended_for
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: Memcached
+    type: MatchRef
+  - labels:
+    - ops
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.operation.metadata.name},{.spec.operation.metadata.namespace},{.spec.operation.kind},{.spec.operation.apiVersion}'
+    target:
+      apiVersion: kubedb.com/v1alpha1
+      kind: MemcachedOpsRequest
+    type: MatchRef
+  - labels:
+    - recommended_for
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: MongoDB
+    type: MatchRef
+  - labels:
+    - ops
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.operation.metadata.name},{.spec.operation.metadata.namespace},{.spec.operation.kind},{.spec.operation.apiVersion}'
+    target:
+      apiVersion: kubedb.com/v1alpha1
+      kind: MongoDBOpsRequest
+    type: MatchRef
+  - labels:
+    - recommended_for
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: MySQL
+    type: MatchRef
+  - labels:
+    - ops
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.operation.metadata.name},{.spec.operation.metadata.namespace},{.spec.operation.kind},{.spec.operation.apiVersion}'
+    target:
+      apiVersion: kubedb.com/v1alpha1
+      kind: MySQLOpsRequest
+    type: MatchRef
+  - labels:
+    - recommended_for
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: PerconaXtraDB
+    type: MatchRef
+  - labels:
+    - ops
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.operation.metadata.name},{.spec.operation.metadata.namespace},{.spec.operation.kind},{.spec.operation.apiVersion}'
+    target:
+      apiVersion: kubedb.com/v1alpha1
+      kind: PerconaXtraDBOpsRequest
+    type: MatchRef
+  - labels:
+    - recommended_for
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: PgBouncer
+    type: MatchRef
+  - labels:
+    - ops
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.operation.metadata.name},{.spec.operation.metadata.namespace},{.spec.operation.kind},{.spec.operation.apiVersion}'
+    target:
+      apiVersion: kubedb.com/v1alpha1
+      kind: PgBouncerOpsRequest
+    type: MatchRef
+  - labels:
+    - recommended_for
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: Postgres
+    type: MatchRef
+  - labels:
+    - ops
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.operation.metadata.name},{.spec.operation.metadata.namespace},{.spec.operation.kind},{.spec.operation.apiVersion}'
+    target:
+      apiVersion: kubedb.com/v1alpha1
+      kind: PostgresOpsRequest
+    type: MatchRef
+  - labels:
+    - recommended_for
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: ProxySQL
+    type: MatchRef
+  - labels:
+    - ops
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.operation.metadata.name},{.spec.operation.metadata.namespace},{.spec.operation.kind},{.spec.operation.apiVersion}'
+    target:
+      apiVersion: kubedb.com/v1alpha1
+      kind: ProxySQLOpsRequest
+    type: MatchRef
+  - labels:
+    - recommended_for
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: Redis
+    type: MatchRef
+  - labels:
+    - ops
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.operation.metadata.name},{.spec.operation.metadata.namespace},{.spec.operation.kind},{.spec.operation.apiVersion}'
+    target:
+      apiVersion: kubedb.com/v1alpha1
+      kind: RedisOpsRequest
+    type: MatchRef
+  resource:
+    group: supervisor.appscode.com
+    kind: Recommendation
+    name: recommendations
+    scope: Namespaced
+    version: v1alpha1
+  validation:
+    openAPIV3Schema:
+      description: Recommendation is the Schema for the recommendations API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: RecommendationSpec defines the desired state of Recommendation
+          properties:
+            backoffLimit:
+              description: BackoffLimit specifies the number of retries before marking
+                this recommendation failed. By default set as five(5). If BackoffLimit
+                is zero(0), the operation will be tried to executed only once.
+              format: int32
+              maximum: 10
+              minimum: 0
+              type: integer
+            deadline:
+              description: The recommendation will be executed within the given Deadline.
+                To maintain deadline, Parallelism can be compromised.
+              format: date-time
+              type: string
+            description:
+              description: Description specifies the reason why this recommendation
+                is generated.
+              type: string
+            operation:
+              description: Operation holds a kubernetes object yaml which will be
+                applied when this recommendation will be executed. It should be a
+                valid kubernetes resource yaml containing apiVersion, kind and metadata
+                fields.
+              type: object
+              x-kubernetes-embedded-resource: true
+              x-kubernetes-preserve-unknown-fields: true
+            recommender:
+              description: Recommender holds the name and namespace of the component
+                which generate this recommendation.
+              properties:
+                name:
+                  description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                  type: string
+                namespace:
+                  description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                  type: string
+              required:
+              - name
+              type: object
+            requireExplicitApproval:
+              description: If RequireExplicitApproval is set to `true` then the Recommendation
+                must be Approved manually. Recommendation won't be executed without
+                manual approval and any kind of ApprovalPolicy will be ignored.
+              type: boolean
+            rules:
+              description: 'Rules defines OperationPhaseRules. It contains three identification
+                rules of successful execution of the operation, progressing execution
+                of the operation & failed execution of the operation. Example: rules:
+                success:    `has(self.status.phase) && self.status.phase == ''Successful''`
+                inProgress: `has(self.status.phase) && self.status.phase == ''Progressing''`
+                failed:     `has(self.status.phase) && self.status.phase == ''Failed''`'
+              properties:
+                failed:
+                  description: 'Failed defines a rule to identify that applied operation
+                    is failed. Example: inProgress: `has(self.status.phase) && self.status.phase
+                    == ''Failed''` Here self.status.phase is pointing to .status.phase
+                    field of the Operation object. When .status.phase field presents
+                    and becomes `Failed`, the Failed rule will satisfy.'
+                  type: string
+                inProgress:
+                  description: 'InProgress defines a rule to identify that applied
+                    operation is progressing. Example: inProgress: `has(self.status.phase)
+                    && self.status.phase == ''Progressing''` Here self.status.phase
+                    is pointing to .status.phase field of the Operation object. When
+                    .status.phase field presents and becomes `Progressing`, the InProgress
+                    rule will satisfy.'
+                  type: string
+                success:
+                  description: 'Success defines a rule to identify the successful
+                    execution of the operation. Example: success: `has(self.status.phase)
+                    && self.status.phase == ''Successful''` Here self.status.phase
+                    is pointing to .status.phase field of the Operation object. When
+                    .status.phase field presents and becomes `Successful`, the Success
+                    rule will satisfy.'
+                  type: string
+              required:
+              - failed
+              - inProgress
+              - success
+              type: object
+            target:
+              description: Target specifies the APIGroup, Kind & Name of the target
+                resource for which the recommendation is generated
+              properties:
+                apiGroup:
+                  description: APIGroup is the group for the resource being referenced.
+                    If APIGroup is not specified, the specified Kind must be in the
+                    core API group. For any other third-party types, APIGroup is required.
+                  type: string
+                kind:
+                  description: Kind is the type of resource being referenced
+                  type: string
+                name:
+                  description: Name is the name of resource being referenced
+                  type: string
+              required:
+              - kind
+              - name
+              type: object
+              x-kubernetes-map-type: atomic
+            vulnerabilityReport:
+              description: VulnerabilityReport specifies any kind vulnerability report
+                like cve fixed information
+              properties:
+                fixed:
+                  description: Fixed represents the list of CVEs fixed if the recommendation
+                    is applied
+                  properties:
+                    count:
+                      additionalProperties:
+                        type: integer
+                      type: object
+                    vulnerabilities:
+                      items:
+                        properties:
+                          primaryURL:
+                            type: string
+                          severity:
+                            type: string
+                          vulnerabilityID:
+                            type: string
+                        type: object
+                      type: array
+                  type: object
+                known:
+                  description: Known represents the list of CVEs known to exist after
+                    the recommendation is applied
+                  properties:
+                    count:
+                      additionalProperties:
+                        type: integer
+                      type: object
+                    vulnerabilities:
+                      items:
+                        properties:
+                          primaryURL:
+                            type: string
+                          severity:
+                            type: string
+                          vulnerabilityID:
+                            type: string
+                        type: object
+                      type: array
+                  type: object
+                message:
+                  type: string
+                status:
+                  type: string
+              type: object
+          required:
+          - operation
+          - recommender
+          - rules
+          - target
+          type: object
+      type: object

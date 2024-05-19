@@ -42,9 +42,9 @@ var (
 	// name    = "kubedb"
 	// version = "v0.13.0-rc.0"
 
-	url     = "https://kubernetes-charts.storage.googleapis.com"
-	name    = "wordpress"
-	version = "8.1.1"
+	url     = "https://charts.appscode.com/stable/"
+	name    = "opscenter-features"
+	version = "v2024.4.2"
 )
 
 func main() {
@@ -80,8 +80,7 @@ func main() {
 				SourceName:      url,
 			},
 			Options: values.Options{
-				ValuesFile:  "",
-				ValuesPatch: nil,
+				ValuesFile: "",
 			},
 			DryRun:       false,
 			DisableHooks: false,

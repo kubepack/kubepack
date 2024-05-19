@@ -1,0 +1,305 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: gateway.envoyproxy.io
+    k8s.io/kind: BackendTrafficPolicy
+    k8s.io/resource: backendtrafficpolicies
+    k8s.io/version: v1alpha1
+  name: gateway.envoyproxy.io-v1alpha1-backendtrafficpolicies
+spec:
+  resource:
+    group: gateway.envoyproxy.io
+    kind: BackendTrafficPolicy
+    name: backendtrafficpolicies
+    scope: Namespaced
+    version: v1alpha1
+  validation:
+    openAPIV3Schema:
+      description: BackendTrafficPolicy allows the user to configure the behavior
+        of the connection between the downstream client and Envoy Proxy listener.
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: spec defines the desired state of BackendTrafficPolicy.
+          properties:
+            loadBalancer:
+              description: LoadBalancer policy to apply when routing traffic from
+                the gateway to the backend endpoints
+              properties:
+                consistentHash:
+                  description: ConsistentHash defines the configuration when the load
+                    balancer type is set to ConsistentHash
+                  properties:
+                    type:
+                      description: ConsistentHashType defines the type of input to
+                        hash on.
+                      enum:
+                      - SourceIP
+                      type: string
+                  required:
+                  - type
+                  type: object
+                type:
+                  description: Type decides the type of Load Balancer policy. Valid
+                    LoadBalancerType values are "ConsistentHash", "LeastRequest",
+                    "Random", "RoundRobin",
+                  enum:
+                  - ConsistentHash
+                  - LeastRequest
+                  - Random
+                  - RoundRobin
+                  type: string
+              required:
+              - type
+              type: object
+              x-kubernetes-validations:
+              - message: If LoadBalancer type is consistentHash, consistentHash field
+                  needs to be set.
+                rule: 'self.type == ''ConsistentHash'' ? has(self.consistentHash)
+                  : !has(self.consistentHash)'
+            rateLimit:
+              description: RateLimit allows the user to limit the number of incoming
+                requests to a predefined value based on attributes within the traffic
+                flow.
+              properties:
+                global:
+                  description: Global defines global rate limit configuration.
+                  properties:
+                    rules:
+                      description: Rules are a list of RateLimit selectors and limits.
+                        Each rule and its associated limit is applied in a mutually
+                        exclusive way i.e. if multiple rules get selected, each of
+                        their associated limits get applied, so a single traffic request
+                        might increase the rate limit counters for multiple rules
+                        if selected.
+                      items:
+                        description: RateLimitRule defines the semantics for matching
+                          attributes from the incoming requests, and setting limits
+                          for them.
+                        properties:
+                          clientSelectors:
+                            description: ClientSelectors holds the list of select
+                              conditions to select specific clients using attributes
+                              from the traffic flow. All individual select conditions
+                              must hold True for this rule and its limit to be applied.
+                              If this field is empty, it is equivalent to True, and
+                              the limit is applied.
+                            items:
+                              description: RateLimitSelectCondition specifies the
+                                attributes within the traffic flow that can be used
+                                to select a subset of clients to be ratelimited. All
+                                the individual conditions must hold True for the overall
+                                condition to hold True.
+                              properties:
+                                headers:
+                                  description: Headers is a list of request headers
+                                    to match. Multiple header values are ANDed together,
+                                    meaning, a request MUST match all the specified
+                                    headers.
+                                  items:
+                                    description: HeaderMatch defines the match attributes
+                                      within the HTTP Headers of the request.
+                                    properties:
+                                      name:
+                                        description: Name of the HTTP header.
+                                        maxLength: 256
+                                        minLength: 1
+                                        type: string
+                                      type:
+                                        default: Exact
+                                        description: Type specifies how to match against
+                                          the value of the header.
+                                        enum:
+                                        - Exact
+                                        - RegularExpression
+                                        - Distinct
+                                        type: string
+                                      value:
+                                        description: Value within the HTTP header.
+                                          Due to the case-insensitivity of header
+                                          names, "foo" and "Foo" are considered equivalent.
+                                          Do not set this field when Type="Distinct",
+                                          implying matching on any/all unique values
+                                          within the header.
+                                        maxLength: 1024
+                                        type: string
+                                    required:
+                                    - name
+                                    type: object
+                                  maxItems: 16
+                                  type: array
+                                  x-kubernetes-list-map-keys:
+                                  - name
+                                  x-kubernetes-list-type: map
+                                sourceCIDR:
+                                  description: SourceCIDR is the client IP Address
+                                    range to match on.
+                                  properties:
+                                    type:
+                                      default: Exact
+                                      type: string
+                                    value:
+                                      description: Value is the IP CIDR that represents
+                                        the range of Source IP Addresses of the client.
+                                        These could also be the intermediate addresses
+                                        through which the request has flown through
+                                        and is part of the  `X-Forwarded-For` header.
+                                        For example, `192.168.0.1/32`, `192.168.0.0/24`,
+                                        `001:db8::/64`.
+                                      maxLength: 256
+                                      minLength: 1
+                                      type: string
+                                  required:
+                                  - value
+                                  type: object
+                              type: object
+                            maxItems: 8
+                            type: array
+                          limit:
+                            description: Limit holds the rate limit values. This limit
+                              is applied for traffic flows when the selectors compute
+                              to True, causing the request to be counted towards the
+                              limit. The limit is enforced and the request is ratelimited,
+                              i.e. a response with 429 HTTP status code is sent back
+                              to the client when the selected requests have reached
+                              the limit.
+                            properties:
+                              requests:
+                                type: integer
+                              unit:
+                                description: RateLimitUnit specifies the intervals
+                                  for setting rate limits. Valid RateLimitUnit values
+                                  are "Second", "Minute", "Hour", and "Day".
+                                enum:
+                                - Second
+                                - Minute
+                                - Hour
+                                - Day
+                                type: string
+                            required:
+                            - requests
+                            - unit
+                            type: object
+                        required:
+                        - limit
+                        type: object
+                      maxItems: 16
+                      type: array
+                  required:
+                  - rules
+                  type: object
+                type:
+                  description: Type decides the scope for the RateLimits. Valid RateLimitType
+                    values are "Global".
+                  enum:
+                  - Global
+                  type: string
+              required:
+              - type
+              type: object
+            targetRef:
+              description: targetRef is the name of the resource this policy is being
+                attached to. This Policy and the TargetRef MUST be in the same namespace
+                for this Policy to have effect and be applied to the Gateway.
+              properties:
+                group:
+                  description: Group is the group of the target resource.
+                  maxLength: 253
+                  pattern: ^$|^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                  type: string
+                kind:
+                  description: Kind is kind of the target resource.
+                  maxLength: 63
+                  minLength: 1
+                  pattern: ^[a-zA-Z]([-a-zA-Z0-9]*[a-zA-Z0-9])?$
+                  type: string
+                name:
+                  description: Name is the name of the target resource.
+                  maxLength: 253
+                  minLength: 1
+                  type: string
+                namespace:
+                  description: Namespace is the namespace of the referent. When unspecified,
+                    the local namespace is inferred. Even when policy targets a resource
+                    in a different namespace, it MUST only apply to traffic originating
+                    from the same namespace as the policy.
+                  maxLength: 63
+                  minLength: 1
+                  pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                  type: string
+                sectionName:
+                  description: "SectionName is the name of a section within the target
+                    resource. When unspecified, this targetRef targets the entire
+                    resource. In the following resources, SectionName is interpreted
+                    as the following: \n * Gateway: Listener Name * Service: Port
+                    Name \n If a SectionName is specified, but does not exist on the
+                    targeted object, the Policy must fail to attach, and the policy
+                    implementation should record a `ResolvedRefs` or similar Condition
+                    in the Policy's status."
+                  maxLength: 253
+                  minLength: 1
+                  pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                  type: string
+              required:
+              - group
+              - kind
+              - name
+              type: object
+              x-kubernetes-validations:
+              - message: this policy can only have a targetRef.group of gateway.networking.k8s.io
+                rule: self.group == 'gateway.networking.k8s.io'
+              - message: this policy can only have a targetRef.kind of Gateway/HTTPRoute/GRPCRoute/TCPRoute/UDPRoute/TLSRoute
+                rule: self.kind in ['Gateway', 'HTTPRoute', 'GRPCRoute', 'UDPRoute',
+                  'TCPRoute', 'TLSRoute']
+              - message: this policy does not yet support the sectionName field
+                rule: '!has(self.sectionName)'
+          required:
+          - targetRef
+          type: object
+      required:
+      - spec
+      type: object

@@ -111,7 +111,7 @@ type ChartInfo struct {
 	// +optional
 	Namespace string `json:"namespace,omitempty"`
 	// +optional
-	CreateNamespace string `json:"createNamespace,omitempty"`
+	CreateNamespace bool `json:"createNamespace,omitempty"`
 	// Version specifies the version of the chart.
 	// +optional
 	Version string `json:"version,omitempty"`

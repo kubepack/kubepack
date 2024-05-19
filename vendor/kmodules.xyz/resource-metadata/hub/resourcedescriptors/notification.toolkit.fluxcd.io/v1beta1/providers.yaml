@@ -1,0 +1,146 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: notification.toolkit.fluxcd.io
+    k8s.io/kind: Provider
+    k8s.io/resource: providers
+    k8s.io/version: v1beta1
+  name: notification.toolkit.fluxcd.io-v1beta1-providers
+spec:
+  resource:
+    group: notification.toolkit.fluxcd.io
+    kind: Provider
+    name: providers
+    scope: Namespaced
+    version: v1beta1
+  validation:
+    openAPIV3Schema:
+      description: Provider is the Schema for the providers API
+      properties:
+        apiVersion:
+          description: |-
+            APIVersion defines the versioned schema of this representation of an object.
+            Servers should convert recognized schemas to the latest internal value, and
+            may reject unrecognized values.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+          type: string
+        kind:
+          description: |-
+            Kind is a string value representing the REST resource this object represents.
+            Servers may infer this from the endpoint the client submits requests to.
+            Cannot be updated.
+            In CamelCase.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: ProviderSpec defines the desired state of Provider
+          properties:
+            address:
+              description: HTTP/S webhook address of this provider
+              pattern: ^(http|https)://
+              type: string
+            certSecretRef:
+              description: |-
+                CertSecretRef can be given the name of a secret containing
+                a PEM-encoded CA certificate (`caFile`)
+              properties:
+                name:
+                  description: Name of the referent.
+                  type: string
+              required:
+              - name
+              type: object
+            channel:
+              description: Alert channel for this provider
+              type: string
+            proxy:
+              description: HTTP/S address of the proxy
+              pattern: ^(http|https)://
+              type: string
+            secretRef:
+              description: |-
+                Secret reference containing the provider webhook URL
+                using "address" as data key
+              properties:
+                name:
+                  description: Name of the referent.
+                  type: string
+              required:
+              - name
+              type: object
+            suspend:
+              description: |-
+                This flag tells the controller to suspend subsequent events handling.
+                Defaults to false.
+              type: boolean
+            timeout:
+              description: Timeout for sending alerts to the provider.
+              pattern: ^([0-9]+(\.[0-9]+)?(ms|s|m))+$
+              type: string
+            type:
+              description: Type of provider
+              enum:
+              - slack
+              - discord
+              - msteams
+              - rocket
+              - generic
+              - generic-hmac
+              - github
+              - gitlab
+              - bitbucket
+              - azuredevops
+              - googlechat
+              - webex
+              - sentry
+              - azureeventhub
+              - telegram
+              - lark
+              - matrix
+              - opsgenie
+              - alertmanager
+              - grafana
+              - githubdispatch
+              type: string
+            username:
+              description: Bot username for this provider
+              type: string
+          required:
+          - type
+          type: object
+      type: object

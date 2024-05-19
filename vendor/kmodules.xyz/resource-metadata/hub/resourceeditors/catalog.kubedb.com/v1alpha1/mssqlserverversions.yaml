@@ -1,0 +1,31 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: catalog.kubedb.com
+    k8s.io/kind: MSSQLServerVersion
+    k8s.io/resource: mssqlserverversions
+    k8s.io/version: v1alpha1
+  name: catalog.kubedb.com-v1alpha1-mssqlserverversions
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/mssqlserverversions.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/catalog.kubedb.com/mssqlserverversions.png
+    type: image/png
+  resource:
+    group: catalog.kubedb.com
+    kind: MSSQLServerVersion
+    name: mssqlserverversions
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: catalogkubedbcom-mssqlserverversion-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.4.19
+    enforceQuota: false

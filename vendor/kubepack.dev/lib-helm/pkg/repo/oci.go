@@ -2,22 +2,15 @@ package repo
 
 import (
 	"context"
-	"crypto/tls"
 	"errors"
 	"fmt"
+	"net/url"
 	"os"
-	"strings"
 
-	"github.com/fluxcd/pkg/oci"
-	"github.com/fluxcd/pkg/oci/auth/login"
-	fluxsrc "github.com/fluxcd/source-controller/api/v1beta2"
-	"github.com/google/go-containerregistry/pkg/authn"
-	"github.com/google/go-containerregistry/pkg/name"
+	fluxsrc "github.com/fluxcd/source-controller/api/v1"
 	"helm.sh/helm/v3/pkg/chart/loader"
 	helmgetter "helm.sh/helm/v3/pkg/getter"
 	helmreg "helm.sh/helm/v3/pkg/registry"
-	core "k8s.io/api/core/v1"
-	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/klog/v2"
 	"kubepack.dev/lib-helm/pkg/internal/helm/getter"
 	"kubepack.dev/lib-helm/pkg/internal/helm/registry"
@@ -48,64 +41,31 @@ func (r *Registry) getFluxChart(obj releasesapi.ChartSourceRef) (*ChartExtended,
 
 	switch repo.Spec.Type {
 	case fluxsrc.HelmRepositoryTypeOCI:
-		var (
-			// tlsConfig     *tls.Config
-			authenticator authn.Authenticator
-			keychain      authn.Keychain
-		)
 		// Used to login with the repository declared provider
-		ctxTimeout, cancel := context.WithTimeout(ctx, repo.Spec.Timeout.Duration)
+		ctxTimeout, cancel := context.WithTimeout(ctx, repo.GetTimeout())
 		defer cancel()
 
-		normalizedURL := repository.NormalizeURL(repo.Spec.URL)
-		err = repository.ValidateDepURL(normalizedURL)
+		normalizedURL, err := repository.NormalizeURL(repo.Spec.URL)
 		if err != nil {
+			return nil, chartRepoConfigErrorReturn(err)
+		}
+
+		clientOpts, certsTmpDir, err := getter.GetClientOpts(ctxTimeout, r.kc, &repo, normalizedURL)
+		if err != nil && !errors.Is(err, getter.ErrDeprecatedTLSConfig) {
 			return nil, err
 		}
-		// Construct the Getter options from the HelmRepository data
-		clientOpts := []helmgetter.Option{
-			helmgetter.WithURL(normalizedURL),
-			helmgetter.WithTimeout(repo.Spec.Timeout.Duration),
-			helmgetter.WithPassCredentialsAll(repo.Spec.PassCredentials),
+		if certsTmpDir != "" {
+			defer func() {
+				if err := os.RemoveAll(certsTmpDir); err != nil {
+					klog.Warningf("failed to delete temporary certificates directory: %s", err)
+				}
+			}()
 		}
 
-		if secret, err := getHelmRepositorySecret(ctx, r.kc, &repo); secret != nil || err != nil {
-			if err != nil {
-				return nil, fmt.Errorf("failed to get secret '%s': %w", repo.Spec.SecretRef.Name, err)
-			}
-
-			// Build client options from secret
-			opts, _, err := clientOptionsFromSecret(secret, normalizedURL)
-			if err != nil {
-				return nil, err
-			}
-			clientOpts = append(clientOpts, opts...)
-			// TODO(tamal): TLS not used
-			// tlsConfig = tls
-
-			// Build registryClient options from secret
-			keychain, err = registry.LoginOptionFromSecret(normalizedURL, *secret)
-			if err != nil {
-				return nil, fmt.Errorf("failed to configure Helm client with secret data: %w", err)
-			}
-		} else if repo.Spec.Provider != fluxsrc.GenericOCIProvider && repo.Spec.Type == fluxsrc.HelmRepositoryTypeOCI {
-			auth, authErr := oidcAuth(ctxTimeout, repo.Spec.URL, repo.Spec.Provider)
-			if authErr != nil && !errors.Is(authErr, oci.ErrUnconfiguredProvider) {
-				return nil, fmt.Errorf("failed to get credential from %s: %w", repo.Spec.Provider, authErr)
-			}
-			if auth != nil {
-				authenticator = auth
-			}
-		}
-
-		loginOpt, err := makeLoginOption(authenticator, keychain, normalizedURL)
-		if err != nil {
-			return nil, err
-		}
+		getterOpts := clientOpts.GetterOpts
 
 		// Initialize the chart repository
 		var chartRepo repository.Downloader
-
 		if !helmreg.IsOCI(normalizedURL) {
 			return nil, fmt.Errorf("invalid OCI registry URL: %s", normalizedURL)
 		}
@@ -114,7 +74,7 @@ func (r *Registry) getFluxChart(obj releasesapi.ChartSourceRef) (*ChartExtended,
 		// this is needed because otherwise the credentials are stored in ~/.docker/config.json.
 		// TODO@souleb: remove this once the registry move to Oras v2
 		// or rework to enable reusing credentials to avoid the unneccessary handshake operations
-		registryClient, credentialsFile, err := registry.ClientGenerator(loginOpt != nil)
+		registryClient, credentialsFile, err := registry.ClientGenerator(clientOpts.TlsConfig, clientOpts.MustLoginToRegistry())
 		if err != nil {
 			return nil, fmt.Errorf("failed to construct Helm client: %w", err)
 		}
@@ -129,11 +89,10 @@ func (r *Registry) getFluxChart(obj releasesapi.ChartSourceRef) (*ChartExtended,
 
 		/*
 			// TODO(tamal): SKIP verifier
-
 			var verifiers []soci.Verifier
 			if obj.Spec.Verify != nil {
 				provider := obj.Spec.Verify.Provider
-				verifiers, err = r.makeVerifiers(ctx, obj, authenticator, keychain)
+				verifiers, err = r.makeVerifiers(ctx, obj, *clientOpts)
 				if err != nil {
 					if obj.Spec.Verify.SecretRef == nil {
 						provider = fmt.Sprintf("%s keyless", provider)
@@ -149,27 +108,27 @@ func (r *Registry) getFluxChart(obj releasesapi.ChartSourceRef) (*ChartExtended,
 		*/
 
 		// Tell the chart repository to use the OCI client with the configured getter
-		clientOpts = append(clientOpts, helmgetter.WithRegistryClient(registryClient))
+		getterOpts = append(getterOpts, helmgetter.WithRegistryClient(registryClient))
 		ociChartRepo, err := repository.NewOCIChartRepository(normalizedURL,
 			repository.WithOCIGetter(getters),
-			repository.WithOCIGetterOptions(clientOpts),
+			repository.WithOCIGetterOptions(getterOpts),
 			repository.WithOCIRegistryClient(registryClient),
 			// repository.WithVerifiers(verifiers),
 		)
 		if err != nil {
-			return nil, err
+			return nil, chartRepoConfigErrorReturn(err)
 		}
-		chartRepo = ociChartRepo
 
 		// If login options are configured, use them to login to the registry
 		// The OCIGetter will later retrieve the stored credentials to pull the chart
-		if loginOpt != nil {
-			err = ociChartRepo.Login(loginOpt)
+		if clientOpts.MustLoginToRegistry() {
+			err = ociChartRepo.Login(clientOpts.RegLoginOpts...)
 			if err != nil {
 				return nil, fmt.Errorf("failed to login to OCI registry: %w", err)
 			}
 			defer ociChartRepo.Logout()
 		}
+		chartRepo = ociChartRepo
 
 		// https://github.com/fluxcd/source-controller/blob/04d87b61ca76e8081869cf3f9937bc178195f876/controllers/helmchart_controller.go#L467
 		remote := chartRepo
@@ -197,67 +156,11 @@ func (r *Registry) getFluxChart(obj releasesapi.ChartSourceRef) (*ChartExtended,
 	}
 }
 
-func getHelmRepositorySecret(ctx context.Context, client client.Reader, repository *fluxsrc.HelmRepository) (*core.Secret, error) {
-	if repository.Spec.SecretRef == nil {
-		return nil, nil
+func chartRepoConfigErrorReturn(err error) error {
+	switch err.(type) {
+	case *url.Error:
+		return fmt.Errorf("invalid Helm repository URL: %w", err)
+	default:
+		return fmt.Errorf("failed to construct Helm client: %w", err)
 	}
-	key := types.NamespacedName{
-		Namespace: repository.GetNamespace(),
-		Name:      repository.Spec.SecretRef.Name,
-	}
-	var secret core.Secret
-	err := client.Get(ctx, key, &secret)
-	if err != nil {
-		return nil, err
-	}
-	return &secret, nil
-}
-
-func clientOptionsFromSecret(secret *core.Secret, normalizedURL string) ([]helmgetter.Option, *tls.Config, error) {
-	opts, err := getter.ClientOptionsFromSecret(*secret)
-	if err != nil {
-		return nil, nil, fmt.Errorf("failed to configure Helm client with secret data: %w", err)
-	}
-
-	tlsConfig, err := getter.TLSClientConfigFromSecret(*secret, normalizedURL)
-	if err != nil {
-		return nil, nil, fmt.Errorf("failed to create TLS client config with secret data: %w", err)
-	}
-
-	return opts, tlsConfig, nil
-}
-
-// makeLoginOption returns a registry login option for the given HelmRepository.
-// If the HelmRepository does not specify a secretRef, a nil login option is returned.
-func makeLoginOption(auth authn.Authenticator, keychain authn.Keychain, registryURL string) (helmreg.LoginOption, error) {
-	if auth != nil {
-		return registry.AuthAdaptHelper(auth)
-	}
-
-	if keychain != nil {
-		return registry.KeychainAdaptHelper(keychain)(registryURL)
-	}
-
-	return nil, nil
-}
-
-// oidcAuth generates the OIDC credential authenticator based on the specified cloud provider.
-func oidcAuth(ctx context.Context, url, provider string) (authn.Authenticator, error) {
-	u := strings.TrimPrefix(url, fluxsrc.OCIRepositoryPrefix)
-	ref, err := name.ParseReference(u)
-	if err != nil {
-		return nil, fmt.Errorf("failed to parse URL '%s': %w", u, err)
-	}
-
-	opts := login.ProviderOptions{}
-	switch provider {
-	case fluxsrc.AmazonOCIProvider:
-		opts.AwsAutoLogin = true
-	case fluxsrc.AzureOCIProvider:
-		opts.AzureAutoLogin = true
-	case fluxsrc.GoogleOCIProvider:
-		opts.GcpAutoLogin = true
-	}
-
-	return login.NewManager().Login(ctx, u, ref, opts)
 }

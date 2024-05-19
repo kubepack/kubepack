@@ -1,0 +1,173 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: gateway.envoyproxy.io
+    k8s.io/kind: EnvoyPatchPolicy
+    k8s.io/resource: envoypatchpolicies
+    k8s.io/version: v1alpha1
+  name: gateway.envoyproxy.io-v1alpha1-envoypatchpolicies
+spec:
+  resource:
+    group: gateway.envoyproxy.io
+    kind: EnvoyPatchPolicy
+    name: envoypatchpolicies
+    scope: Namespaced
+    version: v1alpha1
+  validation:
+    openAPIV3Schema:
+      description: EnvoyPatchPolicy allows the user to modify the generated Envoy
+        xDS resources by Envoy Gateway using this patch API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: Spec defines the desired state of EnvoyPatchPolicy.
+          properties:
+            jsonPatches:
+              description: JSONPatch defines the JSONPatch configuration.
+              items:
+                description: EnvoyJSONPatchConfig defines the configuration for patching
+                  a Envoy xDS Resource using JSONPatch semantic
+                properties:
+                  name:
+                    description: Name is the name of the resource
+                    type: string
+                  operation:
+                    description: Patch defines the JSON Patch Operation
+                    properties:
+                      op:
+                        description: Op is the type of operation to perform
+                        enum:
+                        - add
+                        - remove
+                        - replace
+                        - move
+                        - copy
+                        - test
+                        type: string
+                      path:
+                        description: Path is the location of the target document/field
+                          where the operation will be performed Refer to https://datatracker.ietf.org/doc/html/rfc6901
+                          for more details.
+                        type: string
+                      value:
+                        description: Value is the new value of the path location.
+                        x-kubernetes-preserve-unknown-fields: true
+                    required:
+                    - op
+                    - path
+                    - value
+                    type: object
+                  type:
+                    description: Type is the typed URL of the Envoy xDS Resource
+                    enum:
+                    - type.googleapis.com/envoy.config.listener.v3.Listener
+                    - type.googleapis.com/envoy.config.route.v3.RouteConfiguration
+                    - type.googleapis.com/envoy.config.cluster.v3.Cluster
+                    - type.googleapis.com/envoy.config.endpoint.v3.ClusterLoadAssignment
+                    type: string
+                required:
+                - name
+                - operation
+                - type
+                type: object
+              type: array
+            priority:
+              description: Priority of the EnvoyPatchPolicy. If multiple EnvoyPatchPolicies
+                are applied to the same TargetRef, they will be applied in the ascending
+                order of the priority i.e. int32.min has the highest priority and
+                int32.max has the lowest priority. Defaults to 0.
+              format: int32
+              type: integer
+            targetRef:
+              description: TargetRef is the name of the Gateway API resource this
+                policy is being attached to. Currently only attaching to Gateway is
+                supported This Policy and the TargetRef MUST be in the same namespace
+                for this Policy to have effect and be applied to the Gateway TargetRef
+              properties:
+                group:
+                  description: Group is the group of the target resource.
+                  maxLength: 253
+                  pattern: ^$|^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                  type: string
+                kind:
+                  description: Kind is kind of the target resource.
+                  maxLength: 63
+                  minLength: 1
+                  pattern: ^[a-zA-Z]([-a-zA-Z0-9]*[a-zA-Z0-9])?$
+                  type: string
+                name:
+                  description: Name is the name of the target resource.
+                  maxLength: 253
+                  minLength: 1
+                  type: string
+                namespace:
+                  description: Namespace is the namespace of the referent. When unspecified,
+                    the local namespace is inferred. Even when policy targets a resource
+                    in a different namespace, it MUST only apply to traffic originating
+                    from the same namespace as the policy.
+                  maxLength: 63
+                  minLength: 1
+                  pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                  type: string
+              required:
+              - group
+              - kind
+              - name
+              type: object
+            type:
+              description: Type decides the type of patch. Valid EnvoyPatchType values
+                are "JSONPatch".
+              enum:
+              - JSONPatch
+              type: string
+          required:
+          - targetRef
+          - type
+          type: object
+      required:
+      - spec
+      type: object

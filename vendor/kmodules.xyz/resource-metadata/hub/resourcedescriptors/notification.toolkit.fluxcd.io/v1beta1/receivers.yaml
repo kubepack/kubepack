@@ -1,0 +1,163 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: notification.toolkit.fluxcd.io
+    k8s.io/kind: Receiver
+    k8s.io/resource: receivers
+    k8s.io/version: v1beta1
+  name: notification.toolkit.fluxcd.io-v1beta1-receivers
+spec:
+  resource:
+    group: notification.toolkit.fluxcd.io
+    kind: Receiver
+    name: receivers
+    scope: Namespaced
+    version: v1beta1
+  validation:
+    openAPIV3Schema:
+      description: Receiver is the Schema for the receivers API
+      properties:
+        apiVersion:
+          description: |-
+            APIVersion defines the versioned schema of this representation of an object.
+            Servers should convert recognized schemas to the latest internal value, and
+            may reject unrecognized values.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+          type: string
+        kind:
+          description: |-
+            Kind is a string value representing the REST resource this object represents.
+            Servers may infer this from the endpoint the client submits requests to.
+            Cannot be updated.
+            In CamelCase.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: ReceiverSpec defines the desired state of Receiver
+          properties:
+            events:
+              description: |-
+                A list of events to handle,
+                e.g. 'push' for GitHub or 'Push Hook' for GitLab.
+              items:
+                type: string
+              type: array
+            resources:
+              description: A list of resources to be notified about changes.
+              items:
+                description: |-
+                  CrossNamespaceObjectReference contains enough information to let you locate the
+                  typed referenced object at cluster level
+                properties:
+                  apiVersion:
+                    description: API version of the referent
+                    type: string
+                  kind:
+                    description: Kind of the referent
+                    enum:
+                    - Bucket
+                    - GitRepository
+                    - Kustomization
+                    - HelmRelease
+                    - HelmChart
+                    - HelmRepository
+                    - ImageRepository
+                    - ImagePolicy
+                    - ImageUpdateAutomation
+                    - OCIRepository
+                    type: string
+                  matchLabels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      MatchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
+                      map is equivalent to an element of matchExpressions, whose key field is "key", the
+                      operator is "In", and the values array contains only "value". The requirements are ANDed.
+                    type: object
+                  name:
+                    description: Name of the referent
+                    maxLength: 53
+                    minLength: 1
+                    type: string
+                  namespace:
+                    description: Namespace of the referent
+                    maxLength: 53
+                    minLength: 1
+                    type: string
+                required:
+                - name
+                type: object
+              type: array
+            secretRef:
+              description: |-
+                Secret reference containing the token used
+                to validate the payload authenticity
+              properties:
+                name:
+                  description: Name of the referent.
+                  type: string
+              required:
+              - name
+              type: object
+            suspend:
+              description: |-
+                This flag tells the controller to suspend subsequent events handling.
+                Defaults to false.
+              type: boolean
+            type:
+              description: |-
+                Type of webhook sender, used to determine
+                the validation procedure and payload deserialization.
+              enum:
+              - generic
+              - generic-hmac
+              - github
+              - gitlab
+              - bitbucket
+              - harbor
+              - dockerhub
+              - quay
+              - gcr
+              - nexus
+              - acr
+              type: string
+          required:
+          - resources
+          - type
+          type: object
+      type: object

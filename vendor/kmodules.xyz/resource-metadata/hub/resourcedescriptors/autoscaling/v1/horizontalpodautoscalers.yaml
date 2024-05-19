@@ -1,0 +1,62 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: autoscaling
+    k8s.io/kind: HorizontalPodAutoscaler
+    k8s.io/resource: horizontalpodautoscalers
+    k8s.io/version: v1
+  name: autoscaling-v1-horizontalpodautoscalers
+spec:
+  connections:
+  - labels:
+    - offshoot
+    - scaled_by
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.scaleTargetRef.name},{.metadata.namespace},{.spec.scaleTargetRef.kind},{.spec.scaleTargetRef.apiVersion}'
+    target:
+      apiVersion: apps/v1
+      kind: Deployment
+    type: MatchRef
+  - labels:
+    - offshoot
+    - scaled_by
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.scaleTargetRef.name},{.metadata.namespace},{.spec.scaleTargetRef.kind},{.spec.scaleTargetRef.apiVersion}'
+    target:
+      apiVersion: apps/v1
+      kind: ReplicaSet
+    type: MatchRef
+  - labels:
+    - offshoot
+    - scaled_by
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.scaleTargetRef.name},{.metadata.namespace},{.spec.scaleTargetRef.kind}'
+    target:
+      apiVersion: v1
+      kind: ReplicationController
+    type: MatchRef
+  - labels:
+    - offshoot
+    - scaled_by
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.scaleTargetRef.name},{.metadata.namespace},{.spec.scaleTargetRef.kind},{.spec.scaleTargetRef.apiVersion}'
+    target:
+      apiVersion: apps/v1
+      kind: StatefulSet
+    type: MatchRef
+  resource:
+    group: autoscaling
+    kind: HorizontalPodAutoscaler
+    name: horizontalpodautoscalers
+    scope: Namespaced
+    version: v1

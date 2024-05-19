@@ -18,6 +18,7 @@ package repository
 
 import (
 	"fmt"
+	"net/url"
 	"strings"
 
 	helmreg "helm.sh/helm/v3/pkg/registry"
@@ -35,16 +36,28 @@ var (
 )
 
 // NormalizeURL normalizes a ChartRepository URL by its scheme.
-func NormalizeURL(repositoryURL string) string {
+func NormalizeURL(repositoryURL string) (string, error) {
 	if repositoryURL == "" {
-		return ""
+		return "", nil
+	}
+	u, err := url.Parse(repositoryURL)
+	if err != nil {
+		return "", err
 	}
 
-	if strings.Contains(repositoryURL, helmreg.OCIScheme) {
-		return strings.TrimRight(repositoryURL, "/")
+	if u.Scheme == helmreg.OCIScheme {
+		u.Path = strings.TrimRight(u.Path, "/")
+		// we perform the same operation on u.RawPath so that it will be a valid encoding
+		// of u.Path. This allows u.EscapedPath() (which is used in computing u.String()) to return
+		// the correct value when the path is url encoded.
+		// ref: https://pkg.go.dev/net/url#URL.EscapedPath
+		u.RawPath = strings.TrimRight(u.RawPath, "/")
+		return u.String(), nil
 	}
 
-	return strings.TrimRight(repositoryURL, "/") + "/"
+	u.Path = strings.TrimRight(u.Path, "/") + "/"
+	u.RawPath = strings.TrimRight(u.RawPath, "/") + "/"
+	return u.String(), nil
 }
 
 // ValidateDepURL returns an error if the given depended repository URL declaration is not supported

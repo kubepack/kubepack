@@ -45,7 +45,7 @@ func getValuesDiff(original, modified map[string]any, prefix string, diff map[st
 				diff[k] = d2
 			}
 		case []any, string, int8, uint8, int16, uint16, int32, uint32, int64, uint64, int, uint, float32, float64, bool, json.Number, nil:
-			if !reflect.DeepEqual(original[k], val) {
+			if origVal, ok := original[k]; !ok || !reflect.DeepEqual(origVal, val) {
 				diff[k] = val
 			}
 		default:
@@ -72,11 +72,11 @@ func getValuesDiff(original, modified map[string]any, prefix string, diff map[st
 }
 
 func GetValuesDiff(orig, od any) (map[string]any, error) {
-	origMap, err := ToJsonMap(orig)
+	origMap, err := kj.ToJsonMap(orig)
 	if err != nil {
 		return nil, err
 	}
-	modMap, err := ToJsonMap(od)
+	modMap, err := kj.ToJsonMap(od)
 	if err != nil {
 		return nil, err
 	}
@@ -85,11 +85,11 @@ func GetValuesDiff(orig, od any) (map[string]any, error) {
 }
 
 func GetValuesDiffYAML(orig, od any) ([]byte, error) {
-	origMap, err := ToJsonMap(orig)
+	origMap, err := kj.ToJsonMap(orig)
 	if err != nil {
 		return nil, err
 	}
-	modMap, err := ToJsonMap(od)
+	modMap, err := kj.ToJsonMap(od)
 	if err != nil {
 		return nil, err
 	}
@@ -102,11 +102,11 @@ func GetValuesDiffYAML(orig, od any) ([]byte, error) {
 }
 
 func GetValuesDiffJson(orig, od any) ([]byte, error) {
-	origMap, err := ToJsonMap(orig)
+	origMap, err := kj.ToJsonMap(orig)
 	if err != nil {
 		return nil, err
 	}
-	modMap, err := ToJsonMap(od)
+	modMap, err := kj.ToJsonMap(od)
 	if err != nil {
 		return nil, err
 	}
@@ -115,20 +115,7 @@ func GetValuesDiffJson(orig, od any) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	return json.Marshal(diff)
-}
-
-func ToJsonMap(v any) (map[string]any, error) {
-	data, err := kj.Marshal(v)
-	if err != nil {
-		return nil, err
-	}
-	var out map[string]any
-	err = kj.Unmarshal(data, &out)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	return kj.Marshal(diff)
 }
 
 func GetChangedValues(original, modified map[string]any) ([]string, error) {
@@ -197,7 +184,7 @@ func getChangedValues(original, modified map[string]any, prefix string, cmds []s
 				cmds = append(cmds, fmt.Sprintf("%s=%v", curKey, val))
 			}
 		case nil:
-			if !reflect.DeepEqual(original[k], val) {
+			if origVal, ok := original[k]; !ok || !reflect.DeepEqual(origVal, val) {
 				cmds = append(cmds, fmt.Sprintf("%s=null", curKey))
 			}
 		default:

@@ -1,0 +1,251 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: ops.kubevault.com
+    k8s.io/kind: VaultOpsRequest
+    k8s.io/resource: vaultopsrequests
+    k8s.io/version: v1alpha1
+  name: ops.kubevault.com-v1alpha1-vaultopsrequests
+spec:
+  resource:
+    group: ops.kubevault.com
+    kind: VaultOpsRequest
+    name: vaultopsrequests
+    scope: Namespaced
+    version: v1alpha1
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: VaultOpsRequestSpec is the spec for VaultOpsRequest
+          properties:
+            restart:
+              description: Specifies information necessary for restarting VaultServer
+              type: object
+            timeout:
+              description: Timeout for each step of the ops request in second. If
+                a step doesn't finish within the specified timeout, the ops request
+                will result in failure.
+              type: string
+            tls:
+              description: Specifies information necessary for configuring TLS
+              properties:
+                certificates:
+                  description: 'Certificate provides server and/or client certificate
+                    options used by application pods. These options are passed to
+                    a cert-manager Certificate object. xref: https://github.com/jetstack/cert-manager/blob/v0.16.0/pkg/apis/certmanager/v1beta1/types_certificate.go#L82-L162'
+                  items:
+                    properties:
+                      alias:
+                        description: Alias represents the identifier of the certificate.
+                        type: string
+                      dnsNames:
+                        description: DNSNames is a list of subject alt names to be
+                          used on the Certificate.
+                        items:
+                          type: string
+                        type: array
+                      duration:
+                        description: Certificate default Duration
+                        type: string
+                      emailAddresses:
+                        description: EmailAddresses is a list of email subjectAltNames
+                          to be set on the Certificate.
+                        items:
+                          type: string
+                        type: array
+                      ipAddresses:
+                        description: IPAddresses is a list of IP addresses to be used
+                          on the Certificate
+                        items:
+                          type: string
+                        type: array
+                      issuerRef:
+                        description: IssuerRef is a reference to a Certificate Issuer.
+                        properties:
+                          apiGroup:
+                            description: APIGroup is the group for the resource being
+                              referenced. If APIGroup is not specified, the specified
+                              Kind must be in the core API group. For any other third-party
+                              types, APIGroup is required.
+                            type: string
+                          kind:
+                            description: Kind is the type of resource being referenced
+                            type: string
+                          name:
+                            description: Name is the name of resource being referenced
+                            type: string
+                        required:
+                        - kind
+                        - name
+                        type: object
+                        x-kubernetes-map-type: atomic
+                      privateKey:
+                        description: Options to control private keys used for the
+                          Certificate.
+                        properties:
+                          encoding:
+                            description: 'The private key cryptography standards (PKCS)
+                              encoding for this certificate''s private key to be encoded
+                              in. If provided, allowed values are "pkcs1" and "pkcs8"
+                              standing for PKCS#1 and PKCS#8, respectively. Defaults
+                              to PKCS#1 if not specified. See here for the difference
+                              between the formats: https://stackoverflow.com/a/48960291'
+                            enum:
+                            - PKCS1
+                            - PKCS8
+                            type: string
+                        type: object
+                      renewBefore:
+                        description: Certificate renew before expiration duration
+                        type: string
+                      secretName:
+                        description: Specifies the k8s secret name that holds the
+                          certificates. Default to <resource-name>-<cert-alias>-cert.
+                        type: string
+                      subject:
+                        description: Full X509 name specification (https://golang.org/pkg/crypto/x509/pkix/#Name).
+                        properties:
+                          countries:
+                            description: Countries to be used on the CertificateSpec.
+                            items:
+                              type: string
+                            type: array
+                          localities:
+                            description: Cities to be used on the CertificateSpec.
+                            items:
+                              type: string
+                            type: array
+                          organizationalUnits:
+                            description: Organizational Units to be used on the CertificateSpec.
+                            items:
+                              type: string
+                            type: array
+                          organizations:
+                            description: Organizations to be used on the Certificate.
+                            items:
+                              type: string
+                            type: array
+                          postalCodes:
+                            description: Postal codes to be used on the CertificateSpec.
+                            items:
+                              type: string
+                            type: array
+                          provinces:
+                            description: State/Provinces to be used on the CertificateSpec.
+                            items:
+                              type: string
+                            type: array
+                          serialNumber:
+                            description: Serial number to be used on the CertificateSpec.
+                            type: string
+                          streetAddresses:
+                            description: Street addresses to be used on the CertificateSpec.
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                      uris:
+                        description: URIs is a list of URI subjectAltNames to be set
+                          on the Certificate.
+                        items:
+                          type: string
+                        type: array
+                    required:
+                    - alias
+                    type: object
+                  type: array
+                issuerRef:
+                  description: IssuerRef is a reference to a Certificate Issuer.
+                  properties:
+                    apiGroup:
+                      description: APIGroup is the group for the resource being referenced.
+                        If APIGroup is not specified, the specified Kind must be in
+                        the core API group. For any other third-party types, APIGroup
+                        is required.
+                      type: string
+                    kind:
+                      description: Kind is the type of resource being referenced
+                      type: string
+                    name:
+                      description: Name is the name of resource being referenced
+                      type: string
+                  required:
+                  - kind
+                  - name
+                  type: object
+                  x-kubernetes-map-type: atomic
+                remove:
+                  description: Remove tells operator to remove TLS configuration
+                  type: boolean
+                rotateCertificates:
+                  description: RotateCertificates tells operator to initiate certificate
+                    rotation
+                  type: boolean
+              type: object
+            type:
+              description: 'Specifies the ops request type: ReconfigureTLS, Upgrade,
+                etc.'
+              enum:
+              - ReconfigureTLS
+              - Restart
+              type: string
+            vaultRef:
+              description: Specifies the Vault reference
+              properties:
+                name:
+                  description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                    TODO: Add other useful fields. apiVersion, kind, uid?'
+                  type: string
+              type: object
+              x-kubernetes-map-type: atomic
+          required:
+          - type
+          - vaultRef
+          type: object
+      type: object
