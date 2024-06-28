@@ -555,7 +555,7 @@ func (x *YAMLPrinter) Do() error {
 
 		for _, crd := range crds {
 			// Open the key "${releaseName}.yaml" for writing with the default options.
-			w, err := dirCRD.NewWriter(ctx, crd.Name+".yaml", nil)
+			w, err := dirCRD.NewWriter(ctx, crd.Name, nil)
 			if err != nil {
 				return err
 			}
@@ -569,7 +569,7 @@ func (x *YAMLPrinter) Do() error {
 				return closeErr
 			}
 
-			_, err = fmt.Fprintf(&buf, "kubectl apply -f %s\n", x.PublicURL+"/"+path.Join(x.UID, "crds", crd.Name+".yaml"))
+			_, err = fmt.Fprintf(&buf, "kubectl apply -f %s\n", x.PublicURL+"/"+path.Join(x.UID, "crds", crd.Name))
 			if err != nil {
 				return err
 			}
