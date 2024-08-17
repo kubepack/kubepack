@@ -12,7 +12,7 @@ concurrency:
 jobs:
   kubernetes:
     name: Kubernetes
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: contains(github.event.issue.html_url, '/pull/') && github.event.comment.body == '/ok-to-test'
     strategy:
       matrix:
