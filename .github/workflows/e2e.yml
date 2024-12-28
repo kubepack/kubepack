@@ -18,7 +18,7 @@ jobs:
       matrix:
         k8s: [v1.20.15, v1.25.8, v1.29.0]
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
 
       - name: Checkout pr
         env:
