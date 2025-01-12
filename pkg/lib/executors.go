@@ -67,6 +67,7 @@ import (
 	disco_util "kmodules.xyz/client-go/discovery"
 	"kmodules.xyz/client-go/tools/parser"
 	wait2 "kmodules.xyz/client-go/tools/wait"
+	"kmodules.xyz/resource-metadata/hub"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	yamllib "sigs.k8s.io/yaml"
 	"x-helm.dev/apimachinery/apis"
@@ -1228,4 +1229,194 @@ func ExtractResourceAttributes(data []byte, verb string, mapper disco_util.Resou
 
 		return nil
 	})
+}
+
+type ChartRenderer struct {
+	Registry repo.IRegistry
+	releasesapi.ChartSourceRef
+	ReleaseName string
+	Namespace   string
+	KubeVersion string
+	ValuesFile  string
+	ValuesPatch *runtime.RawExtension
+	Values      map[string]interface{}
+
+	CRDs               []chart.File
+	Manifest           *chart.File
+	IsFeaturesetEditor bool
+}
+
+func (x *ChartRenderer) Do() error {
+	chrt, err := x.Registry.GetChart(x.ChartSourceRef)
+	if err != nil {
+		return err
+	}
+
+	if data, ok := chrt.Chart.Metadata.Annotations["meta.x-helm.dev/editor"]; ok && data != "" {
+		var gvr metav1.GroupVersionResource
+		if err := json.Unmarshal([]byte(data), &gvr); err != nil {
+			return fmt.Errorf("failed to parse %s annotation %s", "meta.x-helm.dev/editor", data)
+		}
+		x.IsFeaturesetEditor = hub.IsFeaturesetGR(schema.GroupResource{Group: gvr.Group, Resource: gvr.Resource})
+	}
+
+	cfg := new(action.Configuration)
+	client := action.NewInstall(cfg)
+	var extraAPIs []string
+
+	client.DryRun = true
+	client.ReleaseName = x.ReleaseName
+	client.Namespace = x.Namespace
+	client.Replace = true // Skip the name check
+	client.ClientOnly = true
+	client.APIVersions = extraAPIs
+	client.Version = x.Version
+
+	validInstallableChart, err := libchart.IsChartInstallable(chrt.Chart)
+	if !validInstallableChart {
+		return err
+	}
+
+	//if chrt.Metadata.Deprecated {
+	//}
+
+	if req := chrt.Metadata.Dependencies; req != nil {
+		// If CheckDependencies returns an error, we have unfulfilled dependencies.
+		// As of Helm 2.4.0, this is treated as a stopping condition:
+		// https://github.com/helm/helm/issues/2209
+		if err := action.CheckDependencies(chrt.Chart, req); err != nil {
+			return err
+		}
+	}
+
+	vals := chrt.Values
+	if x.ValuesPatch != nil {
+		if x.ValuesFile != "" {
+			for _, f := range chrt.Raw {
+				if f.Name == x.ValuesFile {
+					if err := yamllib.Unmarshal(f.Data, &vals); err != nil {
+						return fmt.Errorf("cannot load %s. Reason: %v", f.Name, err.Error())
+					}
+					break
+				}
+			}
+		}
+		values, err := json.Marshal(vals)
+		if err != nil {
+			return err
+		}
+
+		patchData, err := json.Marshal(x.ValuesPatch)
+		if err != nil {
+			return err
+		}
+		patch, err := jsonpatch.DecodePatch(patchData)
+		if err != nil {
+			return err
+		}
+		modifiedValues, err := patch.Apply(values)
+		if err != nil {
+			return err
+		}
+		err = json.Unmarshal(modifiedValues, &vals)
+		if err != nil {
+			return err
+		}
+	} else if x.Values != nil {
+		vals = x.Values
+	}
+
+	// Pre-install anything in the crd/ directory. We do this before Helm
+	// contacts the upstream server and builds the capabilities object.
+	if crds := chrt.CRDObjects(); len(crds) > 0 {
+		for _, crd := range crds {
+			x.CRDs = append(x.CRDs, chart.File{
+				Name: crd.Filename,
+				Data: crd.File.Data,
+			})
+		}
+	}
+
+	if err := chartutil.ProcessDependencies(chrt.Chart, vals); err != nil {
+		return err
+	}
+
+	caps := chartutil.DefaultCapabilities
+	if x.KubeVersion != "" {
+		infoPtr, err := semver.NewVersion(x.KubeVersion)
+		if err != nil {
+			return err
+		}
+		info := *infoPtr
+		info, _ = info.SetPrerelease("")
+		info, _ = info.SetMetadata("")
+		caps.KubeVersion = chartutil.KubeVersion{
+			Version: info.Original(),
+			Major:   strconv.FormatUint(info.Major(), 10),
+			Minor:   strconv.FormatUint(info.Minor(), 10),
+		}
+	}
+	options := chartutil.ReleaseOptions{
+		Name:      x.ReleaseName,
+		Namespace: x.Namespace,
+		Revision:  1,
+		IsInstall: true,
+	}
+	valuesToRender, err := chartutil.ToRenderValues(chrt.Chart, vals, options, caps)
+	if err != nil {
+		return err
+	}
+	if x.Values != nil {
+		valuesToRender["Values"] = x.Values
+	}
+
+	hooks, manifests, err := libchart.RenderResources(chrt.Chart, caps, valuesToRender)
+	if err != nil {
+		return err
+	}
+
+	var manifestDoc bytes.Buffer
+
+	for _, hook := range hooks {
+		if libchart.IsEvent(hook.Events, release.HookPreInstall) {
+			// TODO: Mark as pre-install hook
+			_, err = fmt.Fprintf(&manifestDoc, "---\n# Source: %s\n%s\n", hook.Path, hook.Manifest)
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	for _, m := range manifests {
+		_, err = fmt.Fprintf(&manifestDoc, "---\n# Source: %s\n%s\n", m.Name, m.Content)
+		if err != nil {
+			return err
+		}
+	}
+
+	for _, hook := range hooks {
+		if libchart.IsEvent(hook.Events, release.HookPostInstall) {
+			// TODO: Mark as post-install hook
+			_, err = fmt.Fprintf(&manifestDoc, "---\n# Source: %s\n%s\n", hook.Path, hook.Manifest)
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	{
+		x.Manifest = &chart.File{
+			Name: "manifest.yaml",
+			Data: manifestDoc.Bytes(),
+		}
+	}
+
+	return nil
+}
+
+func (x *ChartRenderer) Result() (crds []chart.File, manifest *chart.File) {
+	crds = x.CRDs
+	manifest = x.Manifest
+
+	return
 }
