@@ -17,36 +17,26 @@ limitations under the License.
 package v1alpha1
 
 import (
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-)
+	uiapi "kmodules.xyz/resource-metadata/apis/ui/v1alpha1"
 
-const (
-	ResourceKindClusterProfile = "ClusterProfile"
-	ResourceClusterProfile     = "clusterprofile"
-	ResourceClusterProfiles    = "clusterprofiles"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // +genclient
 // +genclient:nonNamespaced
+// +genclient:skipVerbs=updateStatus
 // +k8s:openapi-gen=true
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
-
 // +kubebuilder:object:root=true
-// +kubebuilder:resource:path=resourceeditors,singular=resourceeditor,scope=Cluster
 // +kubebuilder:subresource:status
+// +kubebuilder:resource:scope=Cluster
 // +kubebuilder:printcolumn:name="Status",type="string",JSONPath=".status.phase"
 // +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp"
 type ClusterProfile struct {
 	metav1.TypeMeta `json:",inline"`
 	// +optional
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              ClusterProfileSpec `json:"spec,omitempty"`
-}
-
-type ClusterProfileSpec struct {
-	Title               string                 `json:"title"`
-	Description         string                 `json:"description"`
-	RequiredFeatureSets map[string]FeatureList `json:"requiredFeatureSets,omitempty"`
+	Spec              uiapi.ClusterProfileSpec `json:"spec,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

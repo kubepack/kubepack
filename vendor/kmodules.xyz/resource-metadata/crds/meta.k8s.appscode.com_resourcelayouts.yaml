@@ -50,6 +50,10 @@ spec:
                     type: string
                   fieldPath:
                     type: string
+                  filters:
+                    additionalProperties:
+                      type: boolean
+                    type: object
                   icons:
                     items:
                       description: ImageSpec contains information about an image used
@@ -72,6 +76,8 @@ spec:
                       - src
                       type: object
                     type: array
+                  impersonate:
+                    type: boolean
                   kind:
                     enum:
                     - Block
@@ -85,7 +91,7 @@ spec:
                   query:
                     properties:
                       byLabel:
-                        description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,placed_into,policy,recommended_for,restore_into,scaled_by,source,storage,view)
+                        description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,policy,recommended_for,restore_into,scaled_by,source,storage,view)
                         enum:
                         - authn
                         - authz
@@ -102,7 +108,6 @@ spec:
                         - ocm_bind
                         - offshoot
                         - ops
-                        - placed_into
                         - policy
                         - recommended_for
                         - restore_into
@@ -299,6 +304,10 @@ spec:
                                   type: string
                                 fieldPath:
                                   type: string
+                                filters:
+                                  additionalProperties:
+                                    type: boolean
+                                  type: object
                                 icons:
                                   items:
                                     description: ImageSpec contains information about
@@ -322,6 +331,8 @@ spec:
                                     - src
                                     type: object
                                   type: array
+                                impersonate:
+                                  type: boolean
                                 kind:
                                   enum:
                                   - Block
@@ -335,7 +346,7 @@ spec:
                                 query:
                                   properties:
                                     byLabel:
-                                      description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,placed_into,policy,recommended_for,restore_into,scaled_by,source,storage,view)
+                                      description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,policy,recommended_for,restore_into,scaled_by,source,storage,view)
                                       enum:
                                       - authn
                                       - authz
@@ -352,7 +363,6 @@ spec:
                                       - ocm_bind
                                       - offshoot
                                       - ops
-                                      - placed_into
                                       - policy
                                       - recommended_for
                                       - restore_into
@@ -569,6 +579,10 @@ spec:
                                 type: string
                               fieldPath:
                                 type: string
+                              filters:
+                                additionalProperties:
+                                  type: boolean
+                                type: object
                               icons:
                                 items:
                                   description: ImageSpec contains information about
@@ -592,6 +606,8 @@ spec:
                                   - src
                                   type: object
                                 type: array
+                              impersonate:
+                                type: boolean
                               kind:
                                 enum:
                                 - Block
@@ -605,7 +621,7 @@ spec:
                               query:
                                 properties:
                                   byLabel:
-                                    description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,placed_into,policy,recommended_for,restore_into,scaled_by,source,storage,view)
+                                    description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,policy,recommended_for,restore_into,scaled_by,source,storage,view)
                                     enum:
                                     - authn
                                     - authz
@@ -622,7 +638,6 @@ spec:
                                     - ocm_bind
                                     - offshoot
                                     - ops
-                                    - placed_into
                                     - policy
                                     - recommended_for
                                     - restore_into
@@ -812,6 +827,10 @@ spec:
                                 type: string
                               fieldPath:
                                 type: string
+                              filters:
+                                additionalProperties:
+                                  type: boolean
+                                type: object
                               icons:
                                 items:
                                   description: ImageSpec contains information about
@@ -835,6 +854,8 @@ spec:
                                   - src
                                   type: object
                                 type: array
+                              impersonate:
+                                type: boolean
                               kind:
                                 enum:
                                 - Block
@@ -848,7 +869,7 @@ spec:
                               query:
                                 properties:
                                   byLabel:
-                                    description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,placed_into,policy,recommended_for,restore_into,scaled_by,source,storage,view)
+                                    description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,policy,recommended_for,restore_into,scaled_by,source,storage,view)
                                     enum:
                                     - authn
                                     - authz
@@ -865,7 +886,6 @@ spec:
                                     - ocm_bind
                                     - offshoot
                                     - ops
-                                    - placed_into
                                     - policy
                                     - recommended_for
                                     - restore_into
@@ -1092,6 +1112,10 @@ spec:
                     type: string
                   fieldPath:
                     type: string
+                  filters:
+                    additionalProperties:
+                      type: boolean
+                    type: object
                   icons:
                     items:
                       description: ImageSpec contains information about an image used
@@ -1114,6 +1138,8 @@ spec:
                       - src
                       type: object
                     type: array
+                  impersonate:
+                    type: boolean
                   kind:
                     enum:
                     - Block
@@ -1127,7 +1153,7 @@ spec:
                   query:
                     properties:
                       byLabel:
-                        description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,placed_into,policy,recommended_for,restore_into,scaled_by,source,storage,view)
+                        description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,policy,recommended_for,restore_into,scaled_by,source,storage,view)
                         enum:
                         - authn
                         - authz
@@ -1144,7 +1170,6 @@ spec:
                         - ocm_bind
                         - offshoot
                         - ops
-                        - placed_into
                         - policy
                         - recommended_for
                         - restore_into
@@ -1331,7 +1356,7 @@ spec:
                                   name:
                                     type: string
                                   sourceRef:
-                                    description: TypedObjectReference represents an
+                                    description: TypedObjectReference represents a
                                       typed namespaced object.
                                     properties:
                                       apiGroup:
@@ -1406,7 +1431,7 @@ spec:
                       name:
                         type: string
                       sourceRef:
-                        description: TypedObjectReference represents an typed namespaced
+                        description: TypedObjectReference represents a typed namespaced
                           object.
                         properties:
                           apiGroup:
@@ -1444,7 +1469,7 @@ spec:
                       name:
                         type: string
                       sourceRef:
-                        description: TypedObjectReference represents an typed namespaced
+                        description: TypedObjectReference represents a typed namespaced
                           object.
                         properties:
                           apiGroup:

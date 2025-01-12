@@ -59,6 +59,9 @@ type FeatureSetSpec struct {
 	// Required specify whether this feature set is mandatory or not for using the UI.
 	// +optional
 	Recommended bool `json:"recommended,omitempty"`
+	// Disabled specify whether this feature set is disabled.
+	// +optional
+	Disabled bool `json:"disabled,omitempty"`
 	// RequiredFeatures specifies list of features that are necessary to consider this feature set as ready.
 	// +optional
 	RequiredFeatures []string `json:"requiredFeatures,omitempty"`

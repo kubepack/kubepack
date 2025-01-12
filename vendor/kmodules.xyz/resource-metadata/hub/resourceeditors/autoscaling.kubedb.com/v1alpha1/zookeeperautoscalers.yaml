@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: autoscaling.kubedb.com
+    k8s.io/kind: ZooKeeperAutoscaler
+    k8s.io/resource: zookeeperautoscalers
+    k8s.io/version: v1alpha1
+  name: autoscaling.kubedb.com-v1alpha1-zookeeperautoscalers
+spec:
+  resource:
+    group: autoscaling.kubedb.com
+    kind: ZooKeeperAutoscaler
+    name: zookeeperautoscalers
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: autoscalingkubedbcom-zookeeperautoscaler-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.12.0
+    enforceQuota: false

@@ -103,7 +103,7 @@ func (opts *Options) MergeValues(chrt *chart.Chart) (map[string]interface{}, err
 			return nil, errors.Wrapf(err, "failed to parse %s", bytes)
 		}
 		// Merge with the previous map
-		base = mergeMaps(base, currentMap)
+		base = MergeMaps(base, currentMap)
 	}
 
 	// User specified a value via --set
@@ -130,7 +130,7 @@ func (opts *Options) MergeValues(chrt *chart.Chart) (map[string]interface{}, err
 	return base, nil
 }
 
-func mergeMaps(a, b map[string]interface{}) map[string]interface{} {
+func MergeMaps(a, b map[string]interface{}) map[string]interface{} {
 	out := make(map[string]interface{}, len(a))
 	for k, v := range a {
 		out[k] = v
@@ -139,7 +139,7 @@ func mergeMaps(a, b map[string]interface{}) map[string]interface{} {
 		if v, ok := v.(map[string]interface{}); ok {
 			if bv, ok := out[k]; ok {
 				if bv, ok := bv.(map[string]interface{}); ok {
-					out[k] = mergeMaps(bv, v)
+					out[k] = MergeMaps(bv, v)
 					continue
 				}
 			}

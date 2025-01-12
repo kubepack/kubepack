@@ -197,7 +197,7 @@ func RefillMetadata(kc client.Client, ref, actual map[string]interface{}, gvr me
 
 		gvk := schema.FromAPIVersionAndKind(refObj["apiVersion"].(string), refObj["kind"].(string))
 		if gvr, err := mapper.GVR(gvk); err == nil {
-			if ed, ok := resourceeditors.LoadByGVR(kc, gvr); ok {
+			if ed, err := resourceeditors.LoadByGVR(kc, gvr); err == nil {
 				if ed.Spec.UI != nil {
 					for _, fields := range ed.Spec.UI.InstanceLabelPaths {
 						fields := strings.Trim(fields, ".")

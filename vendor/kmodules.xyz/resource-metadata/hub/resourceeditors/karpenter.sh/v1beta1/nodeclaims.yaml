@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: karpenter.sh
+    k8s.io/kind: NodeClaim
+    k8s.io/resource: nodeclaims
+    k8s.io/version: v1beta1
+  name: karpenter.sh-v1beta1-nodeclaims
+spec:
+  resource:
+    group: karpenter.sh
+    kind: NodeClaim
+    name: nodeclaims
+    scope: Cluster
+    version: v1beta1
+  ui:
+    editor:
+      name: karpentersh-nodeclaim-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.12.0
+    enforceQuota: false

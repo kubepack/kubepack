@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: infrastructure.cluster.x-k8s.io
+    k8s.io/kind: ROSACluster
+    k8s.io/resource: rosaclusters
+    k8s.io/version: v1beta2
+  name: infrastructure.cluster.x-k8s.io-v1beta2-rosaclusters
+spec:
+  resource:
+    group: infrastructure.cluster.x-k8s.io
+    kind: ROSACluster
+    name: rosaclusters
+    scope: Namespaced
+    version: v1beta2
+  ui:
+    editor:
+      name: infrastructureclusterxk8sio-rosacluster-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.12.0
+    enforceQuota: false

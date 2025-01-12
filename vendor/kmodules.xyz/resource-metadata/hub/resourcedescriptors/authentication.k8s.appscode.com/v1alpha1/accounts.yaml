@@ -1,0 +1,70 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: authentication.k8s.appscode.com
+    k8s.io/kind: Account
+    k8s.io/resource: accounts
+    k8s.io/version: v1alpha1
+  name: authentication.k8s.appscode.com-v1alpha1-accounts
+spec:
+  resource:
+    group: authentication.k8s.appscode.com
+    kind: Account
+    name: accounts
+    scope: Cluster
+    version: v1alpha1
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          properties:
+            extra:
+              additionalProperties:
+                items:
+                  type: string
+                type: array
+              type: object
+            groups:
+              items:
+                type: string
+              type: array
+            tokenGeneration:
+              format: int64
+              type: integer
+            uid:
+              type: string
+            username:
+              type: string
+          type: object
+      type: object

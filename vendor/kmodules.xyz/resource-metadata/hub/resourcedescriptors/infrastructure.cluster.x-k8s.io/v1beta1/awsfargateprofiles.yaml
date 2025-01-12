@@ -20,14 +20,19 @@ spec:
       description: AWSFargateProfile is the Schema for the awsfargateprofiles API.
       properties:
         apiVersion:
-          description: 'APIVersion defines the versioned schema of this representation
-            of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          description: |-
+            APIVersion defines the versioned schema of this representation of an object.
+            Servers should convert recognized schemas to the latest internal value, and
+            may reject unrecognized values.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
           type: string
         kind:
-          description: 'Kind is a string value representing the REST resource this
-            object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          description: |-
+            Kind is a string value representing the REST resource this object represents.
+            Servers may infer this from the endpoint the client submits requests to.
+            Cannot be updated.
+            In CamelCase.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
           type: string
         metadata:
           properties:
@@ -68,9 +73,9 @@ spec:
             additionalTags:
               additionalProperties:
                 type: string
-              description: AdditionalTags is an optional set of tags to add to AWS
-                resources managed by the AWS provider, in addition to the ones added
-                by default.
+              description: |-
+                AdditionalTags is an optional set of tags to add to AWS resources managed by the AWS provider, in addition to the
+                ones added by default.
               type: object
             clusterName:
               description: ClusterName is the name of the Cluster this object belongs
@@ -81,10 +86,11 @@ spec:
               description: ProfileName specifies the profile name.
               type: string
             roleName:
-              description: RoleName specifies the name of IAM role for this fargate
-                pool If the role is pre-existing we will treat it as unmanaged and
-                not delete it on deletion. If the EKSEnableIAM feature flag is true
-                and no name is supplied then a role is created.
+              description: |-
+                RoleName specifies the name of IAM role for this fargate pool
+                If the role is pre-existing we will treat it as unmanaged
+                and not delete it on deletion. If the EKSEnableIAM feature
+                flag is true and no name is supplied then a role is created.
               type: string
             selectors:
               description: Selectors specify fargate pod selectors.
@@ -105,8 +111,9 @@ spec:
                 type: object
               type: array
             subnetIDs:
-              description: SubnetIDs specifies which subnets are used for the auto
-                scaling group of this nodegroup.
+              description: |-
+                SubnetIDs specifies which subnets are used for the
+                auto scaling group of this nodegroup.
               items:
                 type: string
               type: array

@@ -9,15 +9,6 @@ metadata:
     k8s.io/version: v1alpha1
   name: ops.kubedb.com-v1alpha1-etcdopsrequests
 spec:
-  connections:
-  - labels:
-    - ops
-    references:
-    - '{.spec.databaseRef.name}'
-    target:
-      apiVersion: kubedb.com/v1alpha2
-      kind: Etcd
-    type: MatchRef
   resource:
     group: ops.kubedb.com
     kind: EtcdOpsRequest
@@ -72,11 +63,22 @@ spec:
               - IfReady
               - Always
               type: string
+            authentication:
+              properties:
+                secretRef:
+                  properties:
+                    name:
+                      default: ""
+                      type: string
+                  type: object
+                  x-kubernetes-map-type: atomic
+              type: object
             configuration:
               type: object
             databaseRef:
               properties:
                 name:
+                  default: ""
                   type: string
               type: object
               x-kubernetes-map-type: atomic
@@ -198,6 +200,7 @@ spec:
               - Restart
               - Reconfigure
               - ReconfigureTLS
+              - RotateAuth
               type: string
             updateVersion:
               properties:

@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: gateway.networking.k8s.io
+    k8s.io/kind: BackendLBPolicy
+    k8s.io/resource: backendlbpolicies
+    k8s.io/version: v1alpha2
+  name: gateway.networking.k8s.io-v1alpha2-backendlbpolicies
+spec:
+  resource:
+    group: gateway.networking.k8s.io
+    kind: BackendLBPolicy
+    name: backendlbpolicies
+    scope: Namespaced
+    version: v1alpha2
+  ui:
+    editor:
+      name: gatewaynetworkingk8sio-backendlbpolicy-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.12.0
+    enforceQuota: false

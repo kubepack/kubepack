@@ -1,0 +1,205 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: gateway.open-cluster-management.io
+    k8s.io/kind: ClusterGateway
+    k8s.io/resource: clustergateways
+    k8s.io/version: v1alpha1
+  name: gateway.open-cluster-management.io-v1alpha1-clustergateways
+spec:
+  resource:
+    group: gateway.open-cluster-management.io
+    kind: ClusterGateway
+    name: clustergateways
+    scope: Namespaced
+    version: v1alpha1
+  validation:
+    openAPIV3Schema:
+      description: |-
+        ClusterGateway is an extension model for ManagedCluster which implements
+        the Tier-II cluster model based on OCM's original abstraction of
+        ManagedCluster. The Tier-II cluster model should be highly protected under
+        RBAC policies and only the admin shall have the access to view the content
+        of cluster credentials.
+      properties:
+        apiVersion:
+          description: |-
+            APIVersion defines the versioned schema of this representation of an object.
+            Servers should convert recognized schemas to the latest internal value, and
+            may reject unrecognized values.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+          type: string
+        kind:
+          description: |-
+            Kind is a string value representing the REST resource this object represents.
+            Servers may infer this from the endpoint the client submits requests to.
+            Cannot be updated.
+            In CamelCase.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: ClusterGatewaySpec defines the desired state of ClusterGateway
+          properties:
+            access:
+              properties:
+                credential:
+                  description: |-
+                    Credential holds authentication configuration for
+                    accessing the target cluster.
+                  properties:
+                    type:
+                      description: Type is the union discriminator for credential
+                        contents.
+                      type: string
+                  required:
+                  - type
+                  type: object
+                endpoint:
+                  description: |-
+                    Endpoint is a qualified URL string for accessing the cluster.
+                    e.g. https://example.com:6443/
+                  properties:
+                    const:
+                      description: Const prescribes fixed endpoint for requesting
+                        target clusters.
+                      properties:
+                        address:
+                          description: Address is a qualified hostname for accessing
+                            the local kube-apiserver.
+                          type: string
+                        caBundle:
+                          description: CABundle is used for verifying cluster's serving
+                            CA certificate.
+                          format: byte
+                          type: string
+                        insecure:
+                          description: |-
+                            Insecure indicates the cluster should be access'd w/o verifying
+                            CA certificate at client-side.
+                          type: boolean
+                        proxy-url:
+                          description: ProxyURL indicates the proxy url of the server
+                          type: string
+                      required:
+                      - address
+                      type: object
+                    type:
+                      description: Type is the union discriminator for prescribing
+                        apiserver endpoint.
+                      type: string
+                  required:
+                  - type
+                  type: object
+              required:
+              - endpoint
+              type: object
+            proxyConfig:
+              properties:
+                apiVersion:
+                  description: |-
+                    APIVersion defines the versioned schema of this representation of an object.
+                    Servers should convert recognized schemas to the latest internal value, and
+                    may reject unrecognized values.
+                    More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+                  type: string
+                kind:
+                  description: |-
+                    Kind is a string value representing the REST resource this object represents.
+                    Servers may infer this from the endpoint the client submits requests to.
+                    Cannot be updated.
+                    In CamelCase.
+                    More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+                  type: string
+                spec:
+                  properties:
+                    clientIdentityExchanger:
+                      properties:
+                        rules:
+                          items:
+                            properties:
+                              name:
+                                type: string
+                              source:
+                                properties:
+                                  cluster:
+                                    type: string
+                                  clusterPattern:
+                                    type: string
+                                  group:
+                                    type: string
+                                  groupPattern:
+                                    type: string
+                                  uid:
+                                    type: string
+                                  user:
+                                    type: string
+                                  userPattern:
+                                    type: string
+                                type: object
+                              target:
+                                properties:
+                                  groups:
+                                    items:
+                                      type: string
+                                    type: array
+                                  uid:
+                                    type: string
+                                  user:
+                                    type: string
+                                type: object
+                              type:
+                                type: string
+                              url:
+                                type: string
+                            required:
+                            - name
+                            - source
+                            - type
+                            type: object
+                          type: array
+                      type: object
+                  required:
+                  - clientIdentityExchanger
+                  type: object
+              required:
+              - spec
+              type: object
+          required:
+          - access
+          type: object
+      type: object

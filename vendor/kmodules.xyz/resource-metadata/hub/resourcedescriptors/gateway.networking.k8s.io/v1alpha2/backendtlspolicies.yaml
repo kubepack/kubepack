@@ -17,18 +17,24 @@ spec:
     version: v1alpha2
   validation:
     openAPIV3Schema:
-      description: BackendTLSPolicy provides a way to configure how a Gateway connects
-        to a Backend via TLS.
+      description: |-
+        BackendTLSPolicy provides a way to configure how a Gateway
+        connects to a Backend via TLS.
       properties:
         apiVersion:
-          description: 'APIVersion defines the versioned schema of this representation
-            of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          description: |-
+            APIVersion defines the versioned schema of this representation of an object.
+            Servers should convert recognized schemas to the latest internal value, and
+            may reject unrecognized values.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
           type: string
         kind:
-          description: 'Kind is a string value representing the REST resource this
-            object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          description: |-
+            Kind is a string value representing the REST resource this object represents.
+            Servers may infer this from the endpoint the client submits requests to.
+            Cannot be updated.
+            In CamelCase.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
           type: string
         metadata:
           properties:
@@ -67,13 +73,19 @@ spec:
           description: Spec defines the desired state of BackendTLSPolicy.
           properties:
             targetRef:
-              description: "TargetRef identifies an API object to apply the policy
-                to. Only Services have Extended support. Implementations MAY support
-                additional objects, with Implementation Specific support. Note that
-                this config applies to the entire referenced resource by default,
-                but this default may change in the future to provide a more granular
-                application of the policy. \n Support: Extended for Kubernetes Service
-                \n Support: Implementation-specific for any other resource"
+              description: |-
+                TargetRef identifies an API object to apply the policy to.
+                Only Services have Extended support. Implementations MAY support
+                additional objects, with Implementation Specific support.
+                Note that this config applies to the entire referenced resource
+                by default, but this default may change in the future to provide
+                a more granular application of the policy.
+
+
+                Support: Extended for Kubernetes Service
+
+
+                Support: Implementation-specific for any other resource
               properties:
                 group:
                   description: Group is the group of the target resource.
@@ -92,23 +104,29 @@ spec:
                   minLength: 1
                   type: string
                 namespace:
-                  description: Namespace is the namespace of the referent. When unspecified,
-                    the local namespace is inferred. Even when policy targets a resource
-                    in a different namespace, it MUST only apply to traffic originating
-                    from the same namespace as the policy.
+                  description: |-
+                    Namespace is the namespace of the referent. When unspecified, the local
+                    namespace is inferred. Even when policy targets a resource in a different
+                    namespace, it MUST only apply to traffic originating from the same
+                    namespace as the policy.
                   maxLength: 63
                   minLength: 1
                   pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                   type: string
                 sectionName:
-                  description: "SectionName is the name of a section within the target
-                    resource. When unspecified, this targetRef targets the entire
-                    resource. In the following resources, SectionName is interpreted
-                    as the following: \n * Gateway: Listener Name * Service: Port
-                    Name \n If a SectionName is specified, but does not exist on the
-                    targeted object, the Policy must fail to attach, and the policy
-                    implementation should record a `ResolvedRefs` or similar Condition
-                    in the Policy's status."
+                  description: |-
+                    SectionName is the name of a section within the target resource. When
+                    unspecified, this targetRef targets the entire resource. In the following
+                    resources, SectionName is interpreted as the following:
+
+
+                    * Gateway: Listener Name
+                    * Service: Port Name
+
+
+                    If a SectionName is specified, but does not exist on the targeted object,
+                    the Policy must fail to attach, and the policy implementation should record
+                    a `ResolvedRefs` or similar Condition in the Policy's status.
                   maxLength: 253
                   minLength: 1
                   pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
@@ -122,35 +140,49 @@ spec:
               description: TLS contains backend TLS policy configuration.
               properties:
                 caCertRefs:
-                  description: "CACertRefs contains one or more references to Kubernetes
-                    objects that contain a PEM-encoded TLS CA certificate bundle,
-                    which is used to validate a TLS handshake between the Gateway
-                    and backend Pod. \n If CACertRefs is empty or unspecified, then
-                    WellKnownCACerts must be specified. Only one of CACertRefs or
-                    WellKnownCACerts may be specified, not both. If CACertRefs is
-                    empty or unspecified, the configuration for WellKnownCACerts MUST
-                    be honored instead. \n References to a resource in a different
-                    namespace are invalid for the moment, although we will revisit
-                    this in the future. \n A single CACertRef to a Kubernetes ConfigMap
-                    kind has \"Core\" support. Implementations MAY choose to support
-                    attaching multiple certificates to a backend, but this behavior
-                    is implementation-specific. \n Support: Core - An optional single
-                    reference to a Kubernetes ConfigMap, with the CA certificate in
-                    a key named `ca.crt`. \n Support: Implementation-specific (More
-                    than one reference, or other kinds of resources)."
+                  description: |-
+                    CACertRefs contains one or more references to Kubernetes objects that
+                    contain a PEM-encoded TLS CA certificate bundle, which is used to
+                    validate a TLS handshake between the Gateway and backend Pod.
+
+
+                    If CACertRefs is empty or unspecified, then WellKnownCACerts must be
+                    specified. Only one of CACertRefs or WellKnownCACerts may be specified,
+                    not both. If CACertRefs is empty or unspecified, the configuration for
+                    WellKnownCACerts MUST be honored instead.
+
+
+                    References to a resource in a different namespace are invalid for the
+                    moment, although we will revisit this in the future.
+
+
+                    A single CACertRef to a Kubernetes ConfigMap kind has "Core" support.
+                    Implementations MAY choose to support attaching multiple certificates to
+                    a backend, but this behavior is implementation-specific.
+
+
+                    Support: Core - An optional single reference to a Kubernetes ConfigMap,
+                    with the CA certificate in a key named `ca.crt`.
+
+
+                    Support: Implementation-specific (More than one reference, or other kinds
+                    of resources).
                   items:
-                    description: "LocalObjectReference identifies an API object within
-                      the namespace of the referrer. The API object must be valid
-                      in the cluster; the Group and Kind must be registered in the
-                      cluster for this reference to be valid. \n References to objects
-                      with invalid Group and Kind are not valid, and must be rejected
-                      by the implementation, with appropriate Conditions set on the
-                      containing object."
+                    description: |-
+                      LocalObjectReference identifies an API object within the namespace of the
+                      referrer.
+                      The API object must be valid in the cluster; the Group and Kind must
+                      be registered in the cluster for this reference to be valid.
+
+
+                      References to objects with invalid Group and Kind are not valid, and must
+                      be rejected by the implementation, with appropriate Conditions set
+                      on the containing object.
                     properties:
                       group:
-                        description: Group is the group of the referent. For example,
-                          "gateway.networking.k8s.io". When unspecified or empty string,
-                          core API group is inferred.
+                        description: |-
+                          Group is the group of the referent. For example, "gateway.networking.k8s.io".
+                          When unspecified or empty string, core API group is inferred.
                         maxLength: 253
                         pattern: ^$|^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
                         type: string
@@ -167,29 +199,39 @@ spec:
                         minLength: 1
                         type: string
                     required:
-                    - group
                     - kind
                     - name
                     type: object
                   maxItems: 8
                   type: array
                 hostname:
-                  description: "Hostname is used for two purposes in the connection
-                    between Gateways and backends: \n 1. Hostname MUST be used as
-                    the SNI to connect to the backend (RFC 6066). 2. Hostname MUST
-                    be used for authentication and MUST match the certificate served
-                    by the matching backend. \n Support: Core"
+                  description: |-
+                    Hostname is used for two purposes in the connection between Gateways and
+                    backends:
+
+
+                    1. Hostname MUST be used as the SNI to connect to the backend (RFC 6066).
+                    2. Hostname MUST be used for authentication and MUST match the certificate
+                       served by the matching backend.
+
+
+                    Support: Core
                   maxLength: 253
                   minLength: 1
                   pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
                   type: string
                 wellKnownCACerts:
-                  description: "WellKnownCACerts specifies whether system CA certificates
-                    may be used in the TLS handshake between the gateway and backend
-                    pod. \n If WellKnownCACerts is unspecified or empty (\"\"), then
-                    CACertRefs must be specified with at least one entry for a valid
-                    configuration. Only one of CACertRefs or WellKnownCACerts may
-                    be specified, not both. \n Support: Core for \"System\""
+                  description: |-
+                    WellKnownCACerts specifies whether system CA certificates may be used in
+                    the TLS handshake between the gateway and backend pod.
+
+
+                    If WellKnownCACerts is unspecified or empty (""), then CACertRefs must be
+                    specified with at least one entry for a valid configuration. Only one of
+                    CACertRefs or WellKnownCACerts may be specified, not both.
+
+
+                    Support: Core for "System"
                   enum:
                   - System
                   type: string

@@ -11,14 +11,14 @@ metadata:
 spec:
   connections:
   - labels:
-    - storage
+    - offshoot
     level: Controller
     target:
       apiVersion: storage.kubestash.com/v1alpha1
       kind: Repository
     type: OwnedBy
   - labels:
-    - offshoot
+    - storage
     namespace:
       path: metadata.namespace
     references:
@@ -26,6 +26,78 @@ spec:
     target:
       apiVersion: core.kubestash.com/v1alpha1
       kind: BackupSession
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1
+      kind: Elasticsearch
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1
+      kind: MariaDB
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1
+      kind: MongoDB
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: MSSQLServer
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1
+      kind: MySQL
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1
+      kind: PerconaXtraDB
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1
+      kind: Postgres
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1
+      kind: Redis
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: Singlestore
     type: MatchRef
   resource:
     group: storage.kubestash.com
@@ -35,21 +107,10 @@ spec:
     version: v1alpha1
   validation:
     openAPIV3Schema:
-      description: Snapshot represents the state of a backup run to a particular Repository.
-        Multiple components of the same target may be backed up in the same Snapshot.
-        This is a namespaced CRD. It should be in the same namespace as the respective
-        Repository. KubeStash operator is responsible for creating Snapshot CR. Snapshot
-        is not supposed to be created/edited by the end user.
       properties:
         apiVersion:
-          description: 'APIVersion defines the versioned schema of this representation
-            of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
           type: string
         kind:
-          description: 'Kind is a string value representing the REST resource this
-            object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
           type: string
         metadata:
           properties:
@@ -85,67 +146,39 @@ spec:
               type: object
           type: object
         spec:
-          description: SnapshotSpec specifies the information regarding the application
-            that is being backed up, the Repository where the backed up data is being
-            stored, and the session which is responsible for this snapshot etc.
           properties:
             appRef:
-              description: AppRef specifies the reference of the application that
-                has been backed up in this Snapshot.
               properties:
                 apiGroup:
                   type: string
                 kind:
                   type: string
                 name:
-                  description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
                   type: string
                 namespace:
-                  description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
                   type: string
               required:
               - name
               type: object
             backupSession:
-              description: BackupSession represents the name of the respective BackupSession
-                which is responsible for this Snapshot.
               type: string
             deletionPolicy:
               default: Delete
-              description: 'DeletionPolicy specifies what to do when you delete a
-                Snapshot CR. The valid values are: - "Delete": This will delete just
-                the Snapshot CR from the cluster but keep the backed up data in the
-                remote backend. This is the default behavior. - "WipeOut": This will
-                delete the Snapshot CR as well as the backed up data from the backend.'
               enum:
               - Delete
               - WipeOut
               type: string
             paused:
-              description: Paused specifies whether the Snapshot is paused or not.
-                If the Snapshot is paused, KubeStash will not process any further
-                event for the Snapshot.
               type: boolean
             repository:
-              description: Repository specifies the name of the Repository where this
-                Snapshot is being stored.
               type: string
             session:
-              description: Session specifies the name of the session which is responsible
-                for this Snapshot
               type: string
             snapshotID:
-              description: 'SnapshotID represents a "Universally Unique Lexicographically
-                Sortable Identifier" (ULID) for the Snapshot. For more details about
-                ULID, please see: https://github.com/oklog/ulid'
               type: string
             type:
-              description: Type specifies whether this snapshot represents a full
-                or incremental backup
               type: string
             version:
-              description: Version denotes the respective data organization structure
-                inside the Repository
               type: string
           type: object
       type: object

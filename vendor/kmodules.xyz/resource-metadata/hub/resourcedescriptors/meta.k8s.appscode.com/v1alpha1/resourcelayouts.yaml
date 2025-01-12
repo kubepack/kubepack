@@ -13,7 +13,7 @@ spec:
     group: meta.k8s.appscode.com
     kind: ResourceLayout
     name: resourcelayouts
-    scope: Namespaced
+    scope: Cluster
     version: v1alpha1
   validation:
     openAPIV3Schema:
@@ -36,14 +36,6 @@ spec:
                 request the generation of an appropriate name automatically. Name
                 is primarily intended for creation idempotence and configuration definition.
                 Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
-              type: string
-            namespace:
-              description: "Namespace defines the space within which each name must
-                be unique. An empty namespace is equivalent to the \"default\" namespace,
-                but \"default\" is the canonical representation. Not all objects are
-                required to be scoped to a namespace - the value of this field for
-                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
-                More info: http://kubernetes.io/docs/user-guide/namespaces"
               type: string
             labels:
               additionalProperties:
@@ -81,6 +73,10 @@ spec:
                   type: string
                 fieldPath:
                   type: string
+                filters:
+                  additionalProperties:
+                    type: boolean
+                  type: object
                 icons:
                   items:
                     description: ImageSpec contains information about an image used
@@ -103,6 +99,8 @@ spec:
                     - src
                     type: object
                   type: array
+                impersonate:
+                  type: boolean
                 kind:
                   enum:
                   - Block
@@ -116,7 +114,7 @@ spec:
                 query:
                   properties:
                     byLabel:
-                      description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,placed_into,policy,recommended_for,restore_into,scaled_by,source,storage,view)
+                      description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,policy,recommended_for,restore_into,scaled_by,source,storage,view)
                       enum:
                       - authn
                       - authz
@@ -133,7 +131,6 @@ spec:
                       - ocm_bind
                       - offshoot
                       - ops
-                      - placed_into
                       - policy
                       - recommended_for
                       - restore_into
@@ -329,6 +326,10 @@ spec:
                                 type: string
                               fieldPath:
                                 type: string
+                              filters:
+                                additionalProperties:
+                                  type: boolean
+                                type: object
                               icons:
                                 items:
                                   description: ImageSpec contains information about
@@ -352,6 +353,8 @@ spec:
                                   - src
                                   type: object
                                 type: array
+                              impersonate:
+                                type: boolean
                               kind:
                                 enum:
                                 - Block
@@ -365,7 +368,7 @@ spec:
                               query:
                                 properties:
                                   byLabel:
-                                    description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,placed_into,policy,recommended_for,restore_into,scaled_by,source,storage,view)
+                                    description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,policy,recommended_for,restore_into,scaled_by,source,storage,view)
                                     enum:
                                     - authn
                                     - authz
@@ -382,7 +385,6 @@ spec:
                                     - ocm_bind
                                     - offshoot
                                     - ops
-                                    - placed_into
                                     - policy
                                     - recommended_for
                                     - restore_into
@@ -595,6 +597,10 @@ spec:
                               type: string
                             fieldPath:
                               type: string
+                            filters:
+                              additionalProperties:
+                                type: boolean
+                              type: object
                             icons:
                               items:
                                 description: ImageSpec contains information about
@@ -618,6 +624,8 @@ spec:
                                 - src
                                 type: object
                               type: array
+                            impersonate:
+                              type: boolean
                             kind:
                               enum:
                               - Block
@@ -631,7 +639,7 @@ spec:
                             query:
                               properties:
                                 byLabel:
-                                  description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,placed_into,policy,recommended_for,restore_into,scaled_by,source,storage,view)
+                                  description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,policy,recommended_for,restore_into,scaled_by,source,storage,view)
                                   enum:
                                   - authn
                                   - authz
@@ -648,7 +656,6 @@ spec:
                                   - ocm_bind
                                   - offshoot
                                   - ops
-                                  - placed_into
                                   - policy
                                   - recommended_for
                                   - restore_into
@@ -838,6 +845,10 @@ spec:
                               type: string
                             fieldPath:
                               type: string
+                            filters:
+                              additionalProperties:
+                                type: boolean
+                              type: object
                             icons:
                               items:
                                 description: ImageSpec contains information about
@@ -861,6 +872,8 @@ spec:
                                 - src
                                 type: object
                               type: array
+                            impersonate:
+                              type: boolean
                             kind:
                               enum:
                               - Block
@@ -874,7 +887,7 @@ spec:
                             query:
                               properties:
                                 byLabel:
-                                  description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,placed_into,policy,recommended_for,restore_into,scaled_by,source,storage,view)
+                                  description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,policy,recommended_for,restore_into,scaled_by,source,storage,view)
                                   enum:
                                   - authn
                                   - authz
@@ -891,7 +904,6 @@ spec:
                                   - ocm_bind
                                   - offshoot
                                   - ops
-                                  - placed_into
                                   - policy
                                   - recommended_for
                                   - restore_into
@@ -1118,6 +1130,10 @@ spec:
                   type: string
                 fieldPath:
                   type: string
+                filters:
+                  additionalProperties:
+                    type: boolean
+                  type: object
                 icons:
                   items:
                     description: ImageSpec contains information about an image used
@@ -1140,6 +1156,8 @@ spec:
                     - src
                     type: object
                   type: array
+                impersonate:
+                  type: boolean
                 kind:
                   enum:
                   - Block
@@ -1153,7 +1171,7 @@ spec:
                 query:
                   properties:
                     byLabel:
-                      description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,placed_into,policy,recommended_for,restore_into,scaled_by,source,storage,view)
+                      description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,policy,recommended_for,restore_into,scaled_by,source,storage,view)
                       enum:
                       - authn
                       - authz
@@ -1170,7 +1188,6 @@ spec:
                       - ocm_bind
                       - offshoot
                       - ops
-                      - placed_into
                       - policy
                       - recommended_for
                       - restore_into
@@ -1356,8 +1373,8 @@ spec:
                                 name:
                                   type: string
                                 sourceRef:
-                                  description: TypedObjectReference represents an
-                                    typed namespaced object.
+                                  description: TypedObjectReference represents a typed
+                                    namespaced object.
                                   properties:
                                     apiGroup:
                                       type: string
@@ -1431,7 +1448,7 @@ spec:
                     name:
                       type: string
                     sourceRef:
-                      description: TypedObjectReference represents an typed namespaced
+                      description: TypedObjectReference represents a typed namespaced
                         object.
                       properties:
                         apiGroup:
@@ -1469,7 +1486,7 @@ spec:
                     name:
                       type: string
                     sourceRef:
-                      description: TypedObjectReference represents an typed namespaced
+                      description: TypedObjectReference represents a typed namespaced
                         object.
                       properties:
                         apiGroup:

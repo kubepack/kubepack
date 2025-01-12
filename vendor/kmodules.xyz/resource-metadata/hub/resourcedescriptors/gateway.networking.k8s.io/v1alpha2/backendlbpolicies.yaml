@@ -1,0 +1,221 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: gateway.networking.k8s.io
+    k8s.io/kind: BackendLBPolicy
+    k8s.io/resource: backendlbpolicies
+    k8s.io/version: v1alpha2
+  name: gateway.networking.k8s.io-v1alpha2-backendlbpolicies
+spec:
+  resource:
+    group: gateway.networking.k8s.io
+    kind: BackendLBPolicy
+    name: backendlbpolicies
+    scope: Namespaced
+    version: v1alpha2
+  validation:
+    openAPIV3Schema:
+      description: |-
+        BackendLBPolicy provides a way to define load balancing rules
+        for a backend.
+      properties:
+        apiVersion:
+          description: |-
+            APIVersion defines the versioned schema of this representation of an object.
+            Servers should convert recognized schemas to the latest internal value, and
+            may reject unrecognized values.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+          type: string
+        kind:
+          description: |-
+            Kind is a string value representing the REST resource this object represents.
+            Servers may infer this from the endpoint the client submits requests to.
+            Cannot be updated.
+            In CamelCase.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: Spec defines the desired state of BackendLBPolicy.
+          properties:
+            sessionPersistence:
+              description: |-
+                SessionPersistence defines and configures session persistence
+                for the backend.
+
+
+                Support: Extended
+              properties:
+                absoluteTimeout:
+                  description: |-
+                    AbsoluteTimeout defines the absolute timeout of the persistent
+                    session. Once the AbsoluteTimeout duration has elapsed, the
+                    session becomes invalid.
+
+
+                    Support: Extended
+                  pattern: ^([0-9]{1,5}(h|m|s|ms)){1,4}$
+                  type: string
+                cookieConfig:
+                  description: |-
+                    CookieConfig provides configuration settings that are specific
+                    to cookie-based session persistence.
+
+
+                    Support: Core
+                  properties:
+                    lifetimeType:
+                      default: Session
+                      description: |-
+                        LifetimeType specifies whether the cookie has a permanent or
+                        session-based lifetime. A permanent cookie persists until its
+                        specified expiry time, defined by the Expires or Max-Age cookie
+                        attributes, while a session cookie is deleted when the current
+                        session ends.
+
+
+                        When set to "Permanent", AbsoluteTimeout indicates the
+                        cookie's lifetime via the Expires or Max-Age cookie attributes
+                        and is required.
+
+
+                        When set to "Session", AbsoluteTimeout indicates the
+                        absolute lifetime of the cookie tracked by the gateway and
+                        is optional.
+
+
+                        Support: Core for "Session" type
+
+
+                        Support: Extended for "Permanent" type
+                      enum:
+                      - Permanent
+                      - Session
+                      type: string
+                  type: object
+                idleTimeout:
+                  description: |-
+                    IdleTimeout defines the idle timeout of the persistent session.
+                    Once the session has been idle for more than the specified
+                    IdleTimeout duration, the session becomes invalid.
+
+
+                    Support: Extended
+                  pattern: ^([0-9]{1,5}(h|m|s|ms)){1,4}$
+                  type: string
+                sessionName:
+                  description: |-
+                    SessionName defines the name of the persistent session token
+                    which may be reflected in the cookie or the header. Users
+                    should avoid reusing session names to prevent unintended
+                    consequences, such as rejection or unpredictable behavior.
+
+
+                    Support: Implementation-specific
+                  maxLength: 128
+                  type: string
+                type:
+                  default: Cookie
+                  description: |-
+                    Type defines the type of session persistence such as through
+                    the use a header or cookie. Defaults to cookie based session
+                    persistence.
+
+
+                    Support: Core for "Cookie" type
+
+
+                    Support: Extended for "Header" type
+                  enum:
+                  - Cookie
+                  - Header
+                  type: string
+              type: object
+              x-kubernetes-validations:
+              - message: AbsoluteTimeout must be specified when cookie lifetimeType
+                  is Permanent
+                rule: '!has(self.cookieConfig.lifetimeType) || self.cookieConfig.lifetimeType
+                  != ''Permanent'' || has(self.absoluteTimeout)'
+            targetRefs:
+              description: |-
+                TargetRef identifies an API object to apply policy to.
+                Currently, Backends (i.e. Service, ServiceImport, or any
+                implementation-specific backendRef) are the only valid API
+                target references.
+              items:
+                description: |-
+                  LocalPolicyTargetReference identifies an API object to apply a direct or
+                  inherited policy to. This should be used as part of Policy resources
+                  that can target Gateway API resources. For more information on how this
+                  policy attachment model works, and a sample Policy resource, refer to
+                  the policy attachment documentation for Gateway API.
+                properties:
+                  group:
+                    description: Group is the group of the target resource.
+                    maxLength: 253
+                    pattern: ^$|^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                    type: string
+                  kind:
+                    description: Kind is kind of the target resource.
+                    maxLength: 63
+                    minLength: 1
+                    pattern: ^[a-zA-Z]([-a-zA-Z0-9]*[a-zA-Z0-9])?$
+                    type: string
+                  name:
+                    description: Name is the name of the target resource.
+                    maxLength: 253
+                    minLength: 1
+                    type: string
+                required:
+                - group
+                - kind
+                - name
+                type: object
+              maxItems: 16
+              minItems: 1
+              type: array
+              x-kubernetes-list-map-keys:
+              - group
+              - kind
+              - name
+              x-kubernetes-list-type: map
+          required:
+          - targetRefs
+          type: object
+      required:
+      - spec
+      type: object

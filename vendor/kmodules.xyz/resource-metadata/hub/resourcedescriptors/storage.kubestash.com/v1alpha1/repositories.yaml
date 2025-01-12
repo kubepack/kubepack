@@ -31,23 +31,7 @@ spec:
     references:
     - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
     target:
-      apiVersion: kubedb.com/v1alpha2
-      kind: Postgres
-    type: MatchRef
-  - labels:
-    - backup_via
-    references:
-    - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
-    target:
-      apiVersion: kubedb.com/v1alpha2
-      kind: Redis
-    type: MatchRef
-  - labels:
-    - backup_via
-    references:
-    - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
-    target:
-      apiVersion: kubedb.com/v1alpha2
+      apiVersion: kubedb.com/v1
       kind: Elasticsearch
     type: MatchRef
   - labels:
@@ -55,15 +39,7 @@ spec:
     references:
     - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
     target:
-      apiVersion: kubedb.com/v1alpha2
-      kind: Kafka
-    type: MatchRef
-  - labels:
-    - backup_via
-    references:
-    - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
-    target:
-      apiVersion: kubedb.com/v1alpha2
+      apiVersion: kubedb.com/v1
       kind: MariaDB
     type: MatchRef
   - labels:
@@ -71,7 +47,7 @@ spec:
     references:
     - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
     target:
-      apiVersion: kubedb.com/v1alpha2
+      apiVersion: kubedb.com/v1
       kind: MongoDB
     type: MatchRef
   - labels:
@@ -80,6 +56,14 @@ spec:
     - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
     target:
       apiVersion: kubedb.com/v1alpha2
+      kind: MSSQLServer
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1
       kind: MySQL
     type: MatchRef
   - labels:
@@ -87,7 +71,7 @@ spec:
     references:
     - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
     target:
-      apiVersion: kubedb.com/v1alpha2
+      apiVersion: kubedb.com/v1
       kind: PerconaXtraDB
     type: MatchRef
   - labels:
@@ -95,8 +79,24 @@ spec:
     references:
     - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
     target:
+      apiVersion: kubedb.com/v1
+      kind: Postgres
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1
+      kind: Redis
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.appRef.name},{.spec.appRef.namespace},{.spec.appRef.kind},{.spec.appRef.apiGroup}'
+    target:
       apiVersion: kubedb.com/v1alpha2
-      kind: RedisSentinel
+      kind: Singlestore
     type: MatchRef
   resource:
     group: storage.kubestash.com
@@ -106,21 +106,10 @@ spec:
     version: v1alpha1
   validation:
     openAPIV3Schema:
-      description: Repository specifies the information about the targeted application
-        that has been backed up and the BackupStorage where the backed up data is
-        being stored. It also holds a list of recent Snapshots that have been taken
-        in this Repository. Repository is a namespaced object. It must be in the same
-        namespace as the targeted application.
       properties:
         apiVersion:
-          description: 'APIVersion defines the versioned schema of this representation
-            of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
           type: string
         kind:
-          description: 'Kind is a string value representing the REST resource this
-            object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
           type: string
         metadata:
           properties:
@@ -156,76 +145,44 @@ spec:
               type: object
           type: object
         spec:
-          description: RepositorySpec specifies the application reference and the
-            BackupStorage reference.It also specifies what should be the behavior
-            when a Repository CR is deleted from the cluster.
           properties:
             appRef:
-              description: AppRef refers to the application that is being backed up
-                in this Repository.
               properties:
                 apiGroup:
                   type: string
                 kind:
                   type: string
                 name:
-                  description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
                   type: string
                 namespace:
-                  description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
                   type: string
               required:
               - name
               type: object
             deletionPolicy:
               default: Delete
-              description: 'DeletionPolicy specifies what to do when you delete a
-                Repository CR. The valid values are: "Delete": This will delete the
-                respective Snapshot CRs from the cluster but keep the backed up data
-                in the remote backend. This is the default behavior. "WipeOut": This
-                will delete the respective Snapshot CRs as well as the backed up data
-                from the backend.'
               enum:
               - Delete
               - WipeOut
               type: string
             encryptionSecret:
-              description: EncryptionSecret refers to the Secret containing the encryption
-                key which will be used to encode/decode the backed up data. You can
-                refer to a Secret of a different namespace. If you don't provide the
-                namespace field, KubeStash will look for the Secret in the same namespace
-                as the BackupConfiguration / BackupBatch.
               properties:
                 name:
-                  description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
                   type: string
                 namespace:
-                  description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
                   type: string
               required:
               - name
               type: object
             path:
-              description: Path represents the directory inside the BackupStorage
-                where this Repository is storing its data This path is relative to
-                the path of BackupStorage.
               type: string
             paused:
-              description: Paused specifies whether the Repository is paused or not.
-                If the Repository is paused, KubeStash will not process any further
-                event for the Repository.
               type: boolean
             storageRef:
-              description: StorageRef refers to the BackupStorage CR which contain
-                the backend information where the backed up data will be stored. The
-                BackupStorage could be in a different namespace. However, the Repository
-                namespace must be allowed to use the BackupStorage.
               properties:
                 name:
-                  description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
                   type: string
                 namespace:
-                  description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
                   type: string
               required:
               - name

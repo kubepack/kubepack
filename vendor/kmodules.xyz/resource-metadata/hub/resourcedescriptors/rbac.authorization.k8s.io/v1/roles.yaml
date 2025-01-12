@@ -9,17 +9,6 @@ metadata:
     k8s.io/version: v1
   name: rbac.authorization.k8s.io-v1-roles
 spec:
-  connections:
-  - labels:
-    - policy
-    namespace:
-      path: metadata.namespace
-    references:
-    - '{range .rules[?(@.resources[*]=="podsecuritypolicies")]}{range @.resourceNames[*]}{@}{"\n"}{end}{end}'
-    target:
-      apiVersion: policy/v1beta1
-      kind: PodSecurityPolicy
-    type: MatchRef
   resource:
     group: rbac.authorization.k8s.io
     kind: Role

@@ -208,7 +208,7 @@ func (r *OCIChartRepository) DownloadChart(chart *repo.ChartVersion) (*bytes.Buf
 
 	t := transport.NewOrIdle(r.tlsConfig)
 	clientOpts := append(r.Options, getter.WithTransport(t))
-	defer transport.Release(t)
+	defer transport.Release(t) //nolint:errcheck
 
 	// trim the oci scheme prefix if needed
 	return r.Client.Get(strings.TrimPrefix(u.String(), fmt.Sprintf("%s://", registry.OCIScheme)), clientOpts...)

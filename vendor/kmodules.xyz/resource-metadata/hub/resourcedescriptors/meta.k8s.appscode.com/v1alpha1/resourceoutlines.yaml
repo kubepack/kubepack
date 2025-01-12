@@ -13,7 +13,7 @@ spec:
     group: meta.k8s.appscode.com
     kind: ResourceOutline
     name: resourceoutlines
-    scope: Namespaced
+    scope: Cluster
     version: v1alpha1
   validation:
     openAPIV3Schema:
@@ -36,14 +36,6 @@ spec:
                 request the generation of an appropriate name automatically. Name
                 is primarily intended for creation idempotence and configuration definition.
                 Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
-              type: string
-            namespace:
-              description: "Namespace defines the space within which each name must
-                be unique. An empty namespace is equivalent to the \"default\" namespace,
-                but \"default\" is the canonical representation. Not all objects are
-                required to be scoped to a namespace - the value of this field for
-                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
-                More info: http://kubernetes.io/docs/user-guide/namespaces"
               type: string
             labels:
               additionalProperties:
@@ -82,7 +74,7 @@ spec:
                             name:
                               type: string
                             sourceRef:
-                              description: TypedObjectReference represents an typed
+                              description: TypedObjectReference represents a typed
                                 namespaced object.
                               properties:
                                 apiGroup:
@@ -188,6 +180,8 @@ spec:
                     - src
                     type: object
                   type: array
+                impersonate:
+                  type: boolean
                 kind:
                   enum:
                   - Block
@@ -201,7 +195,7 @@ spec:
                 query:
                   properties:
                     byLabel:
-                      description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,placed_into,policy,recommended_for,restore_into,scaled_by,source,storage,view)
+                      description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,policy,recommended_for,restore_into,scaled_by,source,storage,view)
                       enum:
                       - authn
                       - authz
@@ -218,7 +212,6 @@ spec:
                       - ocm_bind
                       - offshoot
                       - ops
-                      - placed_into
                       - policy
                       - recommended_for
                       - restore_into
@@ -439,6 +432,8 @@ spec:
                                   - src
                                   type: object
                                 type: array
+                              impersonate:
+                                type: boolean
                               kind:
                                 enum:
                                 - Block
@@ -452,7 +447,7 @@ spec:
                               query:
                                 properties:
                                   byLabel:
-                                    description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,placed_into,policy,recommended_for,restore_into,scaled_by,source,storage,view)
+                                    description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,policy,recommended_for,restore_into,scaled_by,source,storage,view)
                                     enum:
                                     - authn
                                     - authz
@@ -469,7 +464,6 @@ spec:
                                     - ocm_bind
                                     - offshoot
                                     - ops
-                                    - placed_into
                                     - policy
                                     - recommended_for
                                     - restore_into
@@ -707,6 +701,8 @@ spec:
                                 - src
                                 type: object
                               type: array
+                            impersonate:
+                              type: boolean
                             kind:
                               enum:
                               - Block
@@ -720,7 +716,7 @@ spec:
                             query:
                               properties:
                                 byLabel:
-                                  description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,placed_into,policy,recommended_for,restore_into,scaled_by,source,storage,view)
+                                  description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,policy,recommended_for,restore_into,scaled_by,source,storage,view)
                                   enum:
                                   - authn
                                   - authz
@@ -737,7 +733,6 @@ spec:
                                   - ocm_bind
                                   - offshoot
                                   - ops
-                                  - placed_into
                                   - policy
                                   - recommended_for
                                   - restore_into
@@ -952,6 +947,8 @@ spec:
                                 - src
                                 type: object
                               type: array
+                            impersonate:
+                              type: boolean
                             kind:
                               enum:
                               - Block
@@ -965,7 +962,7 @@ spec:
                             query:
                               properties:
                                 byLabel:
-                                  description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,placed_into,policy,recommended_for,restore_into,scaled_by,source,storage,view)
+                                  description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,policy,recommended_for,restore_into,scaled_by,source,storage,view)
                                   enum:
                                   - authn
                                   - authz
@@ -982,7 +979,6 @@ spec:
                                   - ocm_bind
                                   - offshoot
                                   - ops
-                                  - placed_into
                                   - policy
                                   - recommended_for
                                   - restore_into
@@ -1233,6 +1229,8 @@ spec:
                     - src
                     type: object
                   type: array
+                impersonate:
+                  type: boolean
                 kind:
                   enum:
                   - Block
@@ -1246,7 +1244,7 @@ spec:
                 query:
                   properties:
                     byLabel:
-                      description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,placed_into,policy,recommended_for,restore_into,scaled_by,source,storage,view)
+                      description: ENUM(authn,authz,auth_secret,backup_via,catalog,cert_issuer,config,connect_via,exposed_by,event,located_on,monitored_by,ocm_bind,offshoot,ops,policy,recommended_for,restore_into,scaled_by,source,storage,view)
                       enum:
                       - authn
                       - authz
@@ -1263,7 +1261,6 @@ spec:
                       - ocm_bind
                       - offshoot
                       - ops
-                      - placed_into
                       - policy
                       - recommended_for
                       - restore_into

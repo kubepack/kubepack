@@ -15,7 +15,7 @@ spec:
     references:
     - '{.spec.proxyRef.name}'
     target:
-      apiVersion: kubedb.com/v1alpha2
+      apiVersion: kubedb.com/v1
       kind: ProxySQL
     type: MatchRef
   resource:
@@ -72,6 +72,16 @@ spec:
               - IfReady
               - Always
               type: string
+            authentication:
+              properties:
+                secretRef:
+                  properties:
+                    name:
+                      default: ""
+                      type: string
+                  type: object
+                  x-kubernetes-map-type: atomic
+              type: object
             configuration:
               properties:
                 adminVariables:
@@ -146,6 +156,7 @@ spec:
             proxyRef:
               properties:
                 name:
+                  default: ""
                   type: string
               type: object
               x-kubernetes-map-type: atomic
@@ -266,6 +277,7 @@ spec:
               - Restart
               - Reconfigure
               - ReconfigureTLS
+              - RotateAuth
               type: string
             updateVersion:
               properties:
@@ -279,9 +291,6 @@ spec:
                 proxysql:
                   properties:
                     nodeSelectionPolicy:
-                      enum:
-                      - LabelSelector
-                      - Taint
                       type: string
                     resources:
                       properties:

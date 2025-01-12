@@ -73,6 +73,32 @@ spec:
                   format: int64
                   type: integer
               type: object
+            ui:
+              items:
+                properties:
+                  disable:
+                    type: boolean
+                  name:
+                    type: string
+                  values:
+                    x-kubernetes-preserve-unknown-fields: true
+                  version:
+                    type: string
+                required:
+                - name
+                type: object
+              type: array
+            updateConstraints:
+              properties:
+                allowlist:
+                  items:
+                    type: string
+                  type: array
+                denylist:
+                  items:
+                    type: string
+                  type: array
+              type: object
             version:
               type: string
           required:

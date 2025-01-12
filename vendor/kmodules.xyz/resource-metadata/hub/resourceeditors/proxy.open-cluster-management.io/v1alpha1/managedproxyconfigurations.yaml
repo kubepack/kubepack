@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: proxy.open-cluster-management.io
+    k8s.io/kind: ManagedProxyConfiguration
+    k8s.io/resource: managedproxyconfigurations
+    k8s.io/version: v1alpha1
+  name: proxy.open-cluster-management.io-v1alpha1-managedproxyconfigurations
+spec:
+  resource:
+    group: proxy.open-cluster-management.io
+    kind: ManagedProxyConfiguration
+    name: managedproxyconfigurations
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: proxyopenclustermanagementio-managedproxyconfiguration-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.12.0
+    enforceQuota: false

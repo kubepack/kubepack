@@ -62,7 +62,7 @@ spec:
                 name:
                   type: string
                 sourceRef:
-                  description: TypedObjectReference represents an typed namespaced
+                  description: TypedObjectReference represents a typed namespaced
                     object.
                   properties:
                     apiGroup:
@@ -89,6 +89,9 @@ spec:
               description: Description specifies a short description of the services
                 this feature set provides.
               type: string
+            disabled:
+              description: Disabled specify whether this feature set is disabled.
+              type: boolean
             icons:
               description: Icons is an optional list of icons for an application.
                 Icon information includes the source, size, and mime type. These icons

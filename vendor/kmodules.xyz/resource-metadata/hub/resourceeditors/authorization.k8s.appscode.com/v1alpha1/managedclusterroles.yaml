@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: authorization.k8s.appscode.com
+    k8s.io/kind: ManagedClusterRole
+    k8s.io/resource: managedclusterroles
+    k8s.io/version: v1alpha1
+  name: authorization.k8s.appscode.com-v1alpha1-managedclusterroles
+spec:
+  resource:
+    group: authorization.k8s.appscode.com
+    kind: ManagedClusterRole
+    name: managedclusterroles
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: authorizationk8sappscodecom-managedclusterrole-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.12.0
+    enforceQuota: false

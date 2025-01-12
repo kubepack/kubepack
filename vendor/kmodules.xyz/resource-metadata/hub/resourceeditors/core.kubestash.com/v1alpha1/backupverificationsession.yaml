@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: core.kubestash.com
+    k8s.io/kind: BackupVerificationSession
+    k8s.io/resource: backupverificationsession
+    k8s.io/version: v1alpha1
+  name: core.kubestash.com-v1alpha1-backupverificationsession
+spec:
+  resource:
+    group: core.kubestash.com
+    kind: BackupVerificationSession
+    name: backupverificationsession
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: corekubestashcom-backupverificationsession-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.12.0
+    enforceQuota: false

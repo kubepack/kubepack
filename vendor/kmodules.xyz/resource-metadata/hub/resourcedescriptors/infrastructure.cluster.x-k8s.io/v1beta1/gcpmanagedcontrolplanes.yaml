@@ -21,14 +21,19 @@ spec:
         API.
       properties:
         apiVersion:
-          description: 'APIVersion defines the versioned schema of this representation
-            of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          description: |-
+            APIVersion defines the versioned schema of this representation of an object.
+            Servers should convert recognized schemas to the latest internal value, and
+            may reject unrecognized values.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
           type: string
         kind:
-          description: 'Kind is a string value representing the REST resource this
-            object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          description: |-
+            Kind is a string value representing the REST resource this object represents.
+            Servers may infer this from the endpoint the client submits requests to.
+            Cannot be updated.
+            In CamelCase.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
           type: string
         metadata:
           properties:
@@ -67,14 +72,16 @@ spec:
           description: GCPManagedControlPlaneSpec defines the desired state of GCPManagedControlPlane.
           properties:
             clusterName:
-              description: ClusterName allows you to specify the name of the GKE cluster.
-                If you don't specify a name then a default name will be created based
-                on the namespace and name of the managed control plane.
+              description: |-
+                ClusterName allows you to specify the name of the GKE cluster.
+                If you don't specify a name then a default name will be created
+                based on the namespace and name of the managed control plane.
               type: string
             controlPlaneVersion:
-              description: ControlPlaneVersion represents the control plane version
-                of the GKE cluster. If not specified, the default version currently
-                supported by GKE will be used.
+              description: |-
+                ControlPlaneVersion represents the control plane version of the GKE cluster.
+                If not specified, the default version currently supported by GKE will be
+                used.
               type: string
             enableAutopilot:
               description: EnableAutopilot indicates whether to enable autopilot for
@@ -96,9 +103,38 @@ spec:
               - port
               type: object
             location:
-              description: Location represents the location (region or zone) in which
-                the GKE cluster will be created.
+              description: |-
+                Location represents the location (region or zone) in which the GKE cluster
+                will be created.
               type: string
+            master_authorized_networks_config:
+              description: |-
+                MasterAuthorizedNetworksConfig represents configuration options for master authorized networks feature of the GKE cluster.
+                This feature is disabled if this field is not specified.
+              properties:
+                cidr_blocks:
+                  description: |-
+                    cidr_blocks define up to 50 external networks that could access
+                    Kubernetes master through HTTPS.
+                  items:
+                    description: MasterAuthorizedNetworksConfigCidrBlock contains
+                      an optional name and one CIDR block.
+                    properties:
+                      cidr_block:
+                        description: cidr_block must be specified in CIDR notation.
+                        pattern: ^(?:[0-9]{1,3}\.){3}[0-9]{1,3}(?:\/([0-9]|[1-2][0-9]|3[0-2]))?$|^([a-fA-F0-9:]+:+)+[a-fA-F0-9]+\/[0-9]{1,3}$
+                        type: string
+                      display_name:
+                        description: display_name is an field for users to identify
+                          CIDR blocks.
+                        type: string
+                    type: object
+                  type: array
+                gcp_public_cidrs_access_enabled:
+                  description: Whether master is accessible via Google Compute Engine
+                    Public IP addresses.
+                  type: boolean
+              type: object
             project:
               description: Project is the name of the project to deploy the cluster
                 to.
@@ -112,7 +148,6 @@ spec:
               - stable
               type: string
           required:
-          - enableAutopilot
           - location
           - project
           type: object

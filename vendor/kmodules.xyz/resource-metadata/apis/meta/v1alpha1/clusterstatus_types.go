@@ -59,9 +59,11 @@ type ClusterStatusResponse struct {
 	// ClusterAPI contains capi cluster information if the cluster is created by cluster-api
 	// +optional
 	ClusterAPI *kmapi.CAPIClusterInfo `json:"clusterAPI,omitempty"`
+	// +optional
+	ClusterMetadata *kmapi.ClusterMetadata `json:"clusterMetadata,omitempty"`
 }
 
-// +kubebuilder:validation:Enum=Active;Inactive;NotReady;NotConnected;Registered;NotImported
+// +kubebuilder:validation:Enum=Active;Inactive;NotReady;NotConnected;Registered;NotImported;Lost
 type ClusterPhase string
 
 const (
@@ -71,6 +73,7 @@ const (
 	ClusterPhaseNotConnected ClusterPhase = "NotConnected"
 	ClusterPhaseRegistered   ClusterPhase = "Registered"
 	ClusterPhaseNotImported  ClusterPhase = "NotImported"
+	ClusterPhaseLost         ClusterPhase = "Lost"
 )
 
 // +kubebuilder:validation:Enum=Unknown;ClusterNotFound;AuthIssue;MissingComponent

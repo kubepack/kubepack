@@ -31,9 +31,9 @@ func LoadPresetValues(kc client.Client, ref chartsapi.ChartPresetFlatRef) ([]cha
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to detect resource ID for %#v", *rid)
 	}
-	ed, ok := resourceeditors.LoadByGVR(kc, rid.GroupVersionResource())
-	if !ok {
-		return nil, errors.Errorf("failed to detect ResourceEditor for %#v", rid.GroupVersionResource())
+	ed, err := resourceeditors.LoadByGVR(kc, rid.GroupVersionResource())
+	if err != nil {
+		return nil, err
 	}
 
 	var variant *uiapi.VariantRef

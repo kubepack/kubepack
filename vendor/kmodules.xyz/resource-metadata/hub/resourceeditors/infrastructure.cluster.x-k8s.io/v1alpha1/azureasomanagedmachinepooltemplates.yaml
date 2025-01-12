@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: infrastructure.cluster.x-k8s.io
+    k8s.io/kind: AzureASOManagedMachinePoolTemplate
+    k8s.io/resource: azureasomanagedmachinepooltemplates
+    k8s.io/version: v1alpha1
+  name: infrastructure.cluster.x-k8s.io-v1alpha1-azureasomanagedmachinepooltemplates
+spec:
+  resource:
+    group: infrastructure.cluster.x-k8s.io
+    kind: AzureASOManagedMachinePoolTemplate
+    name: azureasomanagedmachinepooltemplates
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: infrastructureclusterxk8sio-azureasomanagedmachinepooltemplate-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.12.0
+    enforceQuota: false

@@ -1,0 +1,191 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: infrastructure.cluster.x-k8s.io
+    k8s.io/kind: ROSAMachinePool
+    k8s.io/resource: rosamachinepools
+    k8s.io/version: v1beta2
+  name: infrastructure.cluster.x-k8s.io-v1beta2-rosamachinepools
+spec:
+  resource:
+    group: infrastructure.cluster.x-k8s.io
+    kind: ROSAMachinePool
+    name: rosamachinepools
+    scope: Namespaced
+    version: v1beta2
+  validation:
+    openAPIV3Schema:
+      description: ROSAMachinePool is the Schema for the rosamachinepools API.
+      properties:
+        apiVersion:
+          description: |-
+            APIVersion defines the versioned schema of this representation of an object.
+            Servers should convert recognized schemas to the latest internal value, and
+            may reject unrecognized values.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+          type: string
+        kind:
+          description: |-
+            Kind is a string value representing the REST resource this object represents.
+            Servers may infer this from the endpoint the client submits requests to.
+            Cannot be updated.
+            In CamelCase.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          description: RosaMachinePoolSpec defines the desired state of RosaMachinePool.
+          properties:
+            additionalSecurityGroups:
+              description: |-
+                AdditionalSecurityGroups is an optional set of security groups to associate
+                with all node instances of the machine pool.
+              items:
+                type: string
+              type: array
+            additionalTags:
+              additionalProperties:
+                type: string
+              description: AdditionalTags are user-defined tags to be added on the
+                underlying EC2 instances associated with this machine pool.
+              type: object
+            autoRepair:
+              default: true
+              description: |-
+                AutoRepair specifies whether health checks should be enabled for machines
+                in the NodePool. The default is true.
+              type: boolean
+            autoscaling:
+              description: |-
+                Autoscaling specifies auto scaling behaviour for this MachinePool.
+                required if Replicas is not configured
+              properties:
+                maxReplicas:
+                  minimum: 1
+                  type: integer
+                minReplicas:
+                  minimum: 1
+                  type: integer
+              type: object
+            availabilityZone:
+              description: |-
+                AvailabilityZone is an optinal field specifying the availability zone where instances of this machine pool should run
+                For Multi-AZ clusters, you can create a machine pool in a Single-AZ of your choice.
+              type: string
+            instanceType:
+              description: InstanceType specifies the AWS instance type
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: Labels specifies labels for the Kubernetes node objects
+              type: object
+            nodeDrainGracePeriod:
+              description: |-
+                NodeDrainGracePeriod is grace period for how long Pod Disruption Budget-protected workloads will be
+                respected during upgrades. After this grace period, any workloads protected by Pod Disruption
+                Budgets that have not been successfully drained from a node will be forcibly evicted.
+
+
+                Valid values are from 0 to 1 week(10080m|168h) .
+                0 or empty value means that the MachinePool can be drained without any time limitation.
+              type: string
+            nodePoolName:
+              description: |-
+                NodePoolName specifies the name of the nodepool in Rosa
+                must be a valid DNS-1035 label, so it must consist of lower case alphanumeric and have a max length of 15 characters.
+              maxLength: 15
+              pattern: ^[a-z]([-a-z0-9]*[a-z0-9])?$
+              type: string
+              x-kubernetes-validations:
+              - message: nodepoolName is immutable
+                rule: self == oldSelf
+            providerIDList:
+              description: ProviderIDList contain a ProviderID for each machine instance
+                that's currently managed by this machine pool.
+              items:
+                type: string
+              type: array
+            subnet:
+              type: string
+              x-kubernetes-validations:
+              - message: subnet is immutable
+                rule: self == oldSelf
+            taints:
+              description: Taints specifies the taints to apply to the nodes of the
+                machine pool
+              items:
+                description: RosaTaint represents a taint to be applied to a node.
+                properties:
+                  effect:
+                    description: |-
+                      The effect of the taint on pods that do not tolerate the taint.
+                      Valid effects are NoSchedule, PreferNoSchedule and NoExecute.
+                    enum:
+                    - NoSchedule
+                    - PreferNoSchedule
+                    - NoExecute
+                    type: string
+                  key:
+                    description: The taint key to be applied to a node.
+                    type: string
+                  value:
+                    description: The taint value corresponding to the taint key.
+                    pattern: ^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?$
+                    type: string
+                required:
+                - effect
+                - key
+                type: object
+              type: array
+            tuningConfigs:
+              description: |-
+                TuningConfigs specifies the names of the tuning configs to be applied to this MachinePool.
+                Tuning configs must already exist.
+              items:
+                type: string
+              type: array
+            version:
+              description: |-
+                Version specifies the OpenShift version of the nodes associated with this machinepool.
+                ROSAControlPlane version is used if not set.
+              type: string
+          required:
+          - instanceType
+          - nodePoolName
+          type: object
+      type: object

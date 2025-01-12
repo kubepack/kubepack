@@ -4,16 +4,16 @@ metadata:
   creationTimestamp: null
   labels:
     k8s.io/group: meta.k8s.appscode.com
-    k8s.io/kind: ResourceEditor
+    k8s.io/kind: ResourceDescriptor
     k8s.io/resource: resourcedescriptors
     k8s.io/version: v1alpha1
   name: meta.k8s.appscode.com-v1alpha1-resourcedescriptors
 spec:
   resource:
     group: meta.k8s.appscode.com
-    kind: ResourceEditor
+    kind: ResourceDescriptor
     name: resourcedescriptors
-    scope: Namespaced
+    scope: Cluster
     version: v1alpha1
   ui:
     editor:
@@ -22,5 +22,5 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-charts-oci
-      version: v0.4.19
+      version: v0.12.0
     enforceQuota: false

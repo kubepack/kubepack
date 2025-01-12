@@ -1,0 +1,31 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: apps.k8s.appscode.com
+    k8s.io/kind: PetSet
+    k8s.io/resource: petsets
+    k8s.io/version: v1
+  name: apps.k8s.appscode.com-v1-petsets
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/apps.k8s.appscode.com/petsets.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/apps.k8s.appscode.com/petsets.png
+    type: image/png
+  resource:
+    group: apps.k8s.appscode.com
+    kind: PetSet
+    name: petsets
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: appsk8sappscodecom-petset-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.12.0
+    enforceQuota: false

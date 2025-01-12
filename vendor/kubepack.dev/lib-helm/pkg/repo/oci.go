@@ -126,7 +126,7 @@ func (r *Registry) getFluxChart(obj releasesapi.ChartSourceRef) (*ChartExtended,
 			if err != nil {
 				return nil, fmt.Errorf("failed to login to OCI registry: %w", err)
 			}
-			defer ociChartRepo.Logout()
+			defer ociChartRepo.Logout() //nolint:errcheck
 		}
 		chartRepo = ociChartRepo
 

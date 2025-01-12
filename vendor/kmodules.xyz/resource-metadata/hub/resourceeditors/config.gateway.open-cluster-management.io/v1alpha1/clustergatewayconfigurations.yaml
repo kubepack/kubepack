@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: config.gateway.open-cluster-management.io
+    k8s.io/kind: ClusterGatewayConfiguration
+    k8s.io/resource: clustergatewayconfigurations
+    k8s.io/version: v1alpha1
+  name: config.gateway.open-cluster-management.io-v1alpha1-clustergatewayconfigurations
+spec:
+  resource:
+    group: config.gateway.open-cluster-management.io
+    kind: ClusterGatewayConfiguration
+    name: clustergatewayconfigurations
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: configgatewayopenclustermanagementio-clustergatewayconfiguration-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.12.0
+    enforceQuota: false

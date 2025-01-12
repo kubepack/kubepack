@@ -84,6 +84,7 @@ type PageBlockLayout struct {
 	View *PageBlockTableDefinition `json:"view,omitempty"`
 
 	RequiredFeatureSets map[string]FeatureList `json:"requiredFeatureSets,omitempty"`
+	Filters             map[string]bool        `json:"filters,omitempty"`
 }
 
 type FeatureList []string

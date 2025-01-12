@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: gateway.catalog.appscode.com
+    k8s.io/kind: GatewayConfig
+    k8s.io/resource: gatewayconfigs
+    k8s.io/version: v1alpha1
+  name: gateway.catalog.appscode.com-v1alpha1-gatewayconfigs
+spec:
+  resource:
+    group: gateway.catalog.appscode.com
+    kind: GatewayConfig
+    name: gatewayconfigs
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: gatewaycatalogappscodecom-gatewayconfig-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.12.0
+    enforceQuota: false

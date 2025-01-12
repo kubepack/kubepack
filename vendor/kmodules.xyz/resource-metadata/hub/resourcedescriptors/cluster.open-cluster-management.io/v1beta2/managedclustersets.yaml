@@ -27,27 +27,35 @@ spec:
     version: v1beta2
   validation:
     openAPIV3Schema:
-      description: "ManagedClusterSet defines a group of ManagedClusters that user's
-        workload can run on. A workload can be defined to deployed on a ManagedClusterSet,
-        which mean: 1. The workload can run on any ManagedCluster in the ManagedClusterSet
-        2. The workload cannot run on any ManagedCluster outside the ManagedClusterSet
-        3. The service exposed by the workload can be shared in any ManagedCluster
-        in the ManagedClusterSet \n In order to assign a ManagedCluster to a certian
-        ManagedClusterSet, add a label with name `cluster.open-cluster-management.io/clusterset`
-        on the ManagedCluster to refers to the ManagedClusterSet. User is not allow
-        to add/remove this label on a ManagedCluster unless they have a RBAC rule
-        to CREATE on a virtual subresource of managedclustersets/join. In order to
-        update this label, user must have the permission on both the old and new ManagedClusterSet."
+      description: |-
+        ManagedClusterSet defines a group of ManagedClusters that you can run
+        workloads on. You can define a workload to be deployed on a ManagedClusterSet. See the following options  for the workload:
+        - The workload can run on any ManagedCluster in the ManagedClusterSet
+        - The workload cannot run on any ManagedCluster outside the ManagedClusterSet
+        - The service exposed by the workload can be shared in any ManagedCluster in the ManagedClusterSet
+
+
+        To assign a ManagedCluster to a certain ManagedClusterSet, add a label with the name cluster.open-cluster-management.io/clusterset
+        on the ManagedCluster to refer to the ManagedClusterSet. You are not
+        allowed to add or remove this label on a ManagedCluster unless you have an
+        RBAC rule to CREATE on a virtual subresource of managedclustersets/join.
+        To update this label, you must have the permission on both
+        the old and new ManagedClusterSet.
       properties:
         apiVersion:
-          description: 'APIVersion defines the versioned schema of this representation
-            of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          description: |-
+            APIVersion defines the versioned schema of this representation of an object.
+            Servers should convert recognized schemas to the latest internal value, and
+            may reject unrecognized values.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
           type: string
         kind:
-          description: 'Kind is a string value representing the REST resource this
-            object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          description: |-
+            Kind is a string value representing the REST resource this object represents.
+            Servers may infer this from the endpoint the client submits requests to.
+            Cannot be updated.
+            In CamelCase.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
           type: string
         metadata:
           properties:
@@ -93,51 +101,51 @@ spec:
                       description: matchExpressions is a list of label selector requirements.
                         The requirements are ANDed.
                       items:
-                        description: A label selector requirement is a selector that
-                          contains values, a key, and an operator that relates the
-                          key and values.
+                        description: |-
+                          A label selector requirement is a selector that contains values, a key, and an operator that
+                          relates the key and values.
                         properties:
                           key:
                             description: key is the label key that the selector applies
                               to.
                             type: string
                           operator:
-                            description: operator represents a key's relationship
-                              to a set of values. Valid operators are In, NotIn, Exists
-                              and DoesNotExist.
+                            description: |-
+                              operator represents a key's relationship to a set of values.
+                              Valid operators are In, NotIn, Exists and DoesNotExist.
                             type: string
                           values:
-                            description: values is an array of string values. If the
-                              operator is In or NotIn, the values array must be non-empty.
-                              If the operator is Exists or DoesNotExist, the values
-                              array must be empty. This array is replaced during a
-                              strategic merge patch.
+                            description: |-
+                              values is an array of string values. If the operator is In or NotIn,
+                              the values array must be non-empty. If the operator is Exists or DoesNotExist,
+                              the values array must be empty. This array is replaced during a strategic
+                              merge patch.
                             items:
                               type: string
                             type: array
+                            x-kubernetes-list-type: atomic
                         required:
                         - key
                         - operator
                         type: object
                       type: array
+                      x-kubernetes-list-type: atomic
                     matchLabels:
                       additionalProperties:
                         type: string
-                      description: matchLabels is a map of {key,value} pairs. A single
-                        {key,value} in the matchLabels map is equivalent to an element
-                        of matchExpressions, whose key field is "key", the operator
-                        is "In", and the values array contains only "value". The requirements
-                        are ANDed.
+                      description: |-
+                        matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
+                        map is equivalent to an element of matchExpressions, whose key field is "key", the
+                        operator is "In", and the values array contains only "value". The requirements are ANDed.
                       type: object
                   type: object
                   x-kubernetes-map-type: atomic
                 selectorType:
                   default: ExclusiveClusterSetLabel
-                  description: SelectorType could only be "ExclusiveClusterSetLabel"
-                    or "LabelSelector" "ExclusiveClusterSetLabel" means to use label
-                    "cluster.open-cluster-management.io/clusterset:<ManagedClusterSet
-                    Name>"" to select target clusters. "LabelSelector" means use labelSelector
-                    to select target managedClusters
+                  description: |-
+                    SelectorType could only be "ExclusiveClusterSetLabel" or "LabelSelector"
+                    "ExclusiveClusterSetLabel" means to use label "cluster.open-cluster-management.io/clusterset:<ManagedClusterSet Name>"" to select target clusters.
+                    "LabelSelector" means use labelSelector to select target managedClusters
                   enum:
                   - ExclusiveClusterSetLabel
                   - LabelSelector

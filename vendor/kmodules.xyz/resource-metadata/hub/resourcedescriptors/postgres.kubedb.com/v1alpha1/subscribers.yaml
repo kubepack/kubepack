@@ -59,6 +59,13 @@ spec:
           properties:
             databaseName:
               type: string
+            databaseRef:
+              properties:
+                name:
+                  default: ""
+                  type: string
+              type: object
+              x-kubernetes-map-type: atomic
             deletionPolicy:
               default: Delete
               enum:
@@ -122,6 +129,7 @@ spec:
                       items:
                         properties:
                           name:
+                            default: ""
                             type: string
                         type: object
                         x-kubernetes-map-type: atomic
@@ -130,16 +138,10 @@ spec:
                   - refs
                   type: object
               type: object
-            serverRef:
-              properties:
-                name:
-                  type: string
-              type: object
-              x-kubernetes-map-type: atomic
           required:
           - databaseName
+          - databaseRef
           - name
           - publisher
-          - serverRef
           type: object
       type: object

@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: offline.licenses.appscode.com
+    k8s.io/kind: OfflineLicense
+    k8s.io/resource: offlinelicenses
+    k8s.io/version: v1alpha1
+  name: offline.licenses.appscode.com-v1alpha1-offlinelicenses
+spec:
+  resource:
+    group: offline.licenses.appscode.com
+    kind: OfflineLicense
+    name: offlinelicenses
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: offlinelicensesappscodecom-offlinelicense-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.12.0
+    enforceQuota: false

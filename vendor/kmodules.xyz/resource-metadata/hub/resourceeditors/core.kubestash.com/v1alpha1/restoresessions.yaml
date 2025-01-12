@@ -9,6 +9,11 @@ metadata:
     k8s.io/version: v1alpha1
   name: core.kubestash.com-v1alpha1-restoresessions
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/core.kubestash.com/restoresessions.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/core.kubestash.com/restoresessions.png
+    type: image/png
   resource:
     group: core.kubestash.com
     kind: RestoreSession
@@ -22,5 +27,12 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-charts-oci
-      version: v0.4.19
+      version: v0.12.0
     enforceQuota: false
+    options:
+      name: corekubestashcom-restoresession-editor-options
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.12.0

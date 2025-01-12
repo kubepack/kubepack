@@ -171,7 +171,7 @@ func (c *Client) Update(original_nee_current, target kube.ResourceList, force bo
 	case err != nil:
 		return res, err
 	case len(updateErrors) != 0:
-		return res, errors.Errorf(strings.Join(updateErrors, " && "))
+		return res, errors.New(strings.Join(updateErrors, " && "))
 	}
 
 	for _, info := range original_nee_current.Difference(target) {

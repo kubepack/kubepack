@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: karpenter.azure.com
+    k8s.io/kind: AKSNodeClass
+    k8s.io/resource: aksnodeclasses
+    k8s.io/version: v1alpha2
+  name: karpenter.azure.com-v1alpha2-aksnodeclasses
+spec:
+  resource:
+    group: karpenter.azure.com
+    kind: AKSNodeClass
+    name: aksnodeclasses
+    scope: Cluster
+    version: v1alpha2
+  ui:
+    editor:
+      name: karpenterazurecom-aksnodeclass-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.12.0
+    enforceQuota: false

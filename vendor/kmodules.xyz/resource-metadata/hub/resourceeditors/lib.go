@@ -34,7 +34,6 @@ import (
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/klog/v2"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/yaml"
 )
@@ -95,7 +94,7 @@ func DefaultEditorName(gvr schema.GroupVersionResource) string {
 	return fmt.Sprintf("%s-%s-%s", gvr.Group, gvr.Version, gvr.Resource)
 }
 
-func LoadByName(name string) (*v1alpha1.ResourceEditor, error) {
+func LoadInternalByName(name string) (*v1alpha1.ResourceEditor, error) {
 	m.Lock()
 	defer m.Unlock()
 	loader.ReloadIfTriggered()
@@ -106,26 +105,24 @@ func LoadByName(name string) (*v1alpha1.ResourceEditor, error) {
 	return nil, apierrors.NewNotFound(v1alpha1.Resource(v1alpha1.ResourceKindResourceEditor), name)
 }
 
-func LoadDefaultByGVR(gvr schema.GroupVersionResource) (*v1alpha1.ResourceEditor, bool) {
-	m.Lock()
-	defer m.Unlock()
-	loader.ReloadIfTriggered()
-
-	name := DefaultEditorName(gvr)
-	obj, ok := reMap[name]
-	return obj, ok
+func LoadInternalByGVR(gvr schema.GroupVersionResource) (*v1alpha1.ResourceEditor, error) {
+	return LoadInternalByName(DefaultEditorName(gvr))
 }
 
-func LoadByGVR(kc client.Client, gvr schema.GroupVersionResource) (*v1alpha1.ResourceEditor, bool) {
+func LoadByName(kc client.Client, name string) (*v1alpha1.ResourceEditor, error) {
 	var ed v1alpha1.ResourceEditor
-	err := kc.Get(context.TODO(), client.ObjectKey{Name: DefaultEditorName(gvr)}, &ed)
-	if err == nil {
-		d, _ := LoadDefaultByGVR(gvr)
-		return merge(&ed, d), true
-	} else if !meta.IsNoMatchError(err) && !apierrors.IsNotFound(err) {
-		klog.V(3).ErrorS(err, fmt.Sprintf("failed to load resource editor for %+v", gvr))
+	err := kc.Get(context.TODO(), client.ObjectKey{Name: name}, &ed)
+	if meta.IsNoMatchError(err) || apierrors.IsNotFound(err) {
+		return LoadInternalByName(name)
+	} else if err != nil {
+		return nil, err
 	}
-	return LoadDefaultByGVR(gvr)
+	d, _ := LoadInternalByName(name)
+	return merge(&ed, d), nil
+}
+
+func LoadByGVR(kc client.Client, gvr schema.GroupVersionResource) (*v1alpha1.ResourceEditor, error) {
+	return LoadByName(kc, DefaultEditorName(gvr))
 }
 
 func merge(in, d *v1alpha1.ResourceEditor) *v1alpha1.ResourceEditor {
@@ -161,17 +158,16 @@ func merge(in, d *v1alpha1.ResourceEditor) *v1alpha1.ResourceEditor {
 	return in
 }
 
-func LoadByResourceID(kc client.Client, rid *kmapi.ResourceID) (*v1alpha1.ResourceEditor, bool) {
+func LoadByResourceID(kc client.Client, rid *kmapi.ResourceID) (*v1alpha1.ResourceEditor, error) {
 	if rid == nil {
-		return nil, false
+		return nil, errors.New("missing ResourceID")
 	}
 
 	gvr := rid.GroupVersionResource()
 	if gvr.Version == "" || gvr.Resource == "" {
 		id, err := kmapi.ExtractResourceID(kc.RESTMapper(), *rid)
 		if err != nil {
-			klog.V(3).InfoS(fmt.Sprintf("failed to extract resource id for %+v", *rid))
-			return nil, false
+			return nil, errors.Wrapf(err, "failed to extract resource id for %+v", *rid)
 		}
 		gvr = id.GroupVersionResource()
 	}

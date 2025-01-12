@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: identity.k8s.appscode.com
+    k8s.io/kind: SiteInfo
+    k8s.io/resource: siteinfos
+    k8s.io/version: v1alpha1
+  name: identity.k8s.appscode.com-v1alpha1-siteinfos
+spec:
+  resource:
+    group: identity.k8s.appscode.com
+    kind: SiteInfo
+    name: siteinfos
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: identityk8sappscodecom-siteinfo-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.12.0
+    enforceQuota: false

@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: authentication.k8s.appscode.com
+    k8s.io/kind: Account
+    k8s.io/resource: accounts
+    k8s.io/version: v1alpha1
+  name: authentication.k8s.appscode.com-v1alpha1-accounts
+spec:
+  resource:
+    group: authentication.k8s.appscode.com
+    kind: Account
+    name: accounts
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: authenticationk8sappscodecom-account-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.12.0
+    enforceQuota: false

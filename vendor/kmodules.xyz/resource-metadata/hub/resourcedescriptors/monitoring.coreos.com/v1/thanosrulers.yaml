@@ -932,7 +932,7 @@ spec:
               x-kubernetes-map-type: atomic
             alertmanagersConfig:
               description: Define configuration for connecting to alertmanager.  Only
-                available with thanos v0.10.0 and higher.  Maps to the `alertmanagers.config`
+                available with thanos v0.12.0 and higher.  Maps to the `alertmanagers.config`
                 arg.
               properties:
                 key:
@@ -952,7 +952,7 @@ spec:
               x-kubernetes-map-type: atomic
             alertmanagersUrl:
               description: 'Define URLs to send alerts to Alertmanager.  For Thanos
-                v0.10.0 and higher, AlertManagersConfig should be used instead.  Note:
+                v0.12.0 and higher, AlertManagersConfig should be used instead.  Note:
                 this field will be ignored if AlertManagersConfig is specified. Maps
                 to the `alertmanagers.url` arg.'
               items:
@@ -3870,7 +3870,7 @@ spec:
             queryConfig:
               description: Define configuration for connecting to thanos query instances.
                 If this is defined, the QueryEndpoints field will be ignored. Maps
-                to the `query.config` CLI argument. Only available with thanos v0.11.0
+                to the `query.config` CLI argument. Only available with thanos v0.12.0
                 and higher.
               properties:
                 key:

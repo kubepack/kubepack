@@ -17,7 +17,7 @@ spec:
     references:
     - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
     target:
-      apiVersion: kubedb.com/v1alpha2
+      apiVersion: kubedb.com/v1
       kind: Elasticsearch
     type: MatchRef
   - labels:
@@ -37,7 +37,7 @@ spec:
     references:
     - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
     target:
-      apiVersion: kubedb.com/v1alpha2
+      apiVersion: kubedb.com/v1
       kind: MariaDB
     type: MatchRef
   - labels:
@@ -57,7 +57,7 @@ spec:
     references:
     - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
     target:
-      apiVersion: kubedb.com/v1alpha2
+      apiVersion: kubedb.com/v1
       kind: Memcached
     type: MatchRef
   - labels:
@@ -77,7 +77,7 @@ spec:
     references:
     - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
     target:
-      apiVersion: kubedb.com/v1alpha2
+      apiVersion: kubedb.com/v1
       kind: MongoDB
     type: MatchRef
   - labels:
@@ -97,7 +97,7 @@ spec:
     references:
     - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
     target:
-      apiVersion: kubedb.com/v1alpha2
+      apiVersion: kubedb.com/v1
       kind: MySQL
     type: MatchRef
   - labels:
@@ -117,7 +117,7 @@ spec:
     references:
     - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
     target:
-      apiVersion: kubedb.com/v1alpha2
+      apiVersion: kubedb.com/v1
       kind: PerconaXtraDB
     type: MatchRef
   - labels:
@@ -137,7 +137,7 @@ spec:
     references:
     - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
     target:
-      apiVersion: kubedb.com/v1alpha2
+      apiVersion: kubedb.com/v1
       kind: PgBouncer
     type: MatchRef
   - labels:
@@ -157,7 +157,7 @@ spec:
     references:
     - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
     target:
-      apiVersion: kubedb.com/v1alpha2
+      apiVersion: kubedb.com/v1
       kind: Postgres
     type: MatchRef
   - labels:
@@ -177,7 +177,7 @@ spec:
     references:
     - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
     target:
-      apiVersion: kubedb.com/v1alpha2
+      apiVersion: kubedb.com/v1
       kind: ProxySQL
     type: MatchRef
   - labels:
@@ -197,7 +197,7 @@ spec:
     references:
     - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
     target:
-      apiVersion: kubedb.com/v1alpha2
+      apiVersion: kubedb.com/v1
       kind: Redis
     type: MatchRef
   - labels:

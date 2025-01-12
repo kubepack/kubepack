@@ -140,6 +140,29 @@ func FeatureVersion(kc client.Client, featureName string) string {
 	return ""
 }
 
+func FeatureValues(kc client.Client, featureName string) (map[string]any, error) {
+	preset, found := GetBootstrapPresets(kc)
+	if found {
+		hr := preset.Helm.Releases[featureName]
+		if hr != nil && hr.Values != nil {
+			var vals map[string]any
+			if err := toMap(hr.Values, &vals); err != nil {
+				return nil, err
+			}
+			return vals, nil
+		}
+	}
+	return map[string]any{}, nil
+}
+
+func toMap(src, dst any) error {
+	data, err := json.Marshal(src)
+	if err != nil {
+		return err
+	}
+	return json.Unmarshal(data, dst)
+}
+
 func HelmCreateNamespace(kc client.Client) bool {
 	preset, found := GetBootstrapPresets(kc)
 	if found {

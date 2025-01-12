@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: apps.k8s.appscode.com
+    k8s.io/kind: PlacementPolicy
+    k8s.io/resource: placementpolicies
+    k8s.io/version: v1
+  name: apps.k8s.appscode.com-v1-placementpolicies
+spec:
+  resource:
+    group: apps.k8s.appscode.com
+    kind: PlacementPolicy
+    name: placementpolicies
+    scope: Cluster
+    version: v1
+  ui:
+    editor:
+      name: appsk8sappscodecom-placementpolicy-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.12.0
+    enforceQuota: false

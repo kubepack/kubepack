@@ -21,14 +21,19 @@ spec:
         API.
       properties:
         apiVersion:
-          description: 'APIVersion defines the versioned schema of this representation
-            of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          description: |-
+            APIVersion defines the versioned schema of this representation of an object.
+            Servers should convert recognized schemas to the latest internal value, and
+            may reject unrecognized values.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
           type: string
         kind:
-          description: 'Kind is a string value representing the REST resource this
-            object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          description: |-
+            Kind is a string value representing the REST resource this object represents.
+            Servers may infer this from the endpoint the client submits requests to.
+            Cannot be updated.
+            In CamelCase.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
           type: string
         metadata:
           properties:
@@ -68,14 +73,12 @@ spec:
             to create an AzureIdentity.
           properties:
             allowedNamespaces:
-              description: AllowedNamespaces is used to identify the namespaces the
-                clusters are allowed to use the identity from. Namespaces can be selected
-                either using an array of namespaces or with label selector. An empty
-                allowedNamespaces object indicates that AzureClusters can use this
-                identity from any namespace. If this object is nil, no namespaces
-                will be allowed (default behaviour, if this field is not provided)
-                A namespace should be either in the NamespaceList or match with Selector
-                to use the identity.
+              description: |-
+                AllowedNamespaces is used to identify the namespaces the clusters are allowed to use the identity from.
+                Namespaces can be selected either using an array of namespaces or with label selector.
+                An empty allowedNamespaces object indicates that AzureClusters can use this identity from any namespace.
+                If this object is nil, no namespaces will be allowed (default behaviour, if this field is not provided)
+                A namespace should be either in the NamespaceList or match with Selector to use the identity.
               nullable: true
               properties:
                 list:
@@ -86,36 +89,39 @@ spec:
                   nullable: true
                   type: array
                 selector:
-                  description: "Selector is a selector of namespaces that AzureCluster
-                    can use this Identity from. This is a standard Kubernetes LabelSelector,
-                    a label query over a set of resources. The result of matchLabels
-                    and matchExpressions are ANDed. \n A nil or empty selector indicates
-                    that AzureCluster cannot use this AzureClusterIdentity from any
-                    namespace."
+                  description: |-
+                    Selector is a selector of namespaces that AzureCluster can
+                    use this Identity from. This is a standard Kubernetes LabelSelector,
+                    a label query over a set of resources. The result of matchLabels and
+                    matchExpressions are ANDed.
+
+
+                    A nil or empty selector indicates that AzureCluster cannot use this
+                    AzureClusterIdentity from any namespace.
                   properties:
                     matchExpressions:
                       description: matchExpressions is a list of label selector requirements.
                         The requirements are ANDed.
                       items:
-                        description: A label selector requirement is a selector that
-                          contains values, a key, and an operator that relates the
-                          key and values.
+                        description: |-
+                          A label selector requirement is a selector that contains values, a key, and an operator that
+                          relates the key and values.
                         properties:
                           key:
                             description: key is the label key that the selector applies
                               to.
                             type: string
                           operator:
-                            description: operator represents a key's relationship
-                              to a set of values. Valid operators are In, NotIn, Exists
-                              and DoesNotExist.
+                            description: |-
+                              operator represents a key's relationship to a set of values.
+                              Valid operators are In, NotIn, Exists and DoesNotExist.
                             type: string
                           values:
-                            description: values is an array of string values. If the
-                              operator is In or NotIn, the values array must be non-empty.
-                              If the operator is Exists or DoesNotExist, the values
-                              array must be empty. This array is replaced during a
-                              strategic merge patch.
+                            description: |-
+                              values is an array of string values. If the operator is In or NotIn,
+                              the values array must be non-empty. If the operator is Exists or DoesNotExist,
+                              the values array must be empty. This array is replaced during a strategic
+                              merge patch.
                             items:
                               type: string
                             type: array
@@ -127,18 +133,18 @@ spec:
                     matchLabels:
                       additionalProperties:
                         type: string
-                      description: matchLabels is a map of {key,value} pairs. A single
-                        {key,value} in the matchLabels map is equivalent to an element
-                        of matchExpressions, whose key field is "key", the operator
-                        is "In", and the values array contains only "value". The requirements
-                        are ANDed.
+                      description: |-
+                        matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
+                        map is equivalent to an element of matchExpressions, whose key field is "key", the
+                        operator is "In", and the values array contains only "value". The requirements are ANDed.
                       type: object
                   type: object
                   x-kubernetes-map-type: atomic
               type: object
             clientID:
-              description: ClientID is the service principal client ID. Both User
-                Assigned MSI and SP can use this field.
+              description: |-
+                ClientID is the service principal client ID.
+                Both User Assigned MSI and SP can use this field.
               type: string
             clientSecret:
               description: ClientSecret is a secret reference which should contain
@@ -155,20 +161,26 @@ spec:
               type: object
               x-kubernetes-map-type: atomic
             resourceID:
-              description: ResourceID is the Azure resource ID for the User Assigned
-                MSI resource. Only applicable when type is UserAssignedMSI.
+              description: |-
+                ResourceID is the Azure resource ID for the User Assigned MSI resource.
+                Only applicable when type is UserAssignedMSI.
+
+
+                Deprecated: This field no longer has any effect.
               type: string
             tenantID:
               description: TenantID is the service principal primary tenant id.
               type: string
             type:
-              description: Type is the type of Azure Identity used. ServicePrincipal,
-                ServicePrincipalCertificate, UserAssignedMSI or ManualServicePrincipal.
+              description: |-
+                Type is the type of Azure Identity used.
+                ServicePrincipal, ServicePrincipalCertificate, UserAssignedMSI, ManualServicePrincipal or WorkloadIdentity.
               enum:
               - ServicePrincipal
               - UserAssignedMSI
               - ManualServicePrincipal
               - ServicePrincipalCertificate
+              - WorkloadIdentity
               type: string
           required:
           - clientID
