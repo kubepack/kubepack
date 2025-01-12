@@ -28,6 +28,7 @@ require (
 	k8s.io/client-go v0.30.2
 	k8s.io/klog/v2 v2.130.1
 	kmodules.xyz/client-go v0.30.44
+	kmodules.xyz/resource-metadata v0.24.2
 	kubepack.dev/lib-helm v0.29.13
 	sigs.k8s.io/controller-runtime v0.18.4
 	sigs.k8s.io/yaml v1.4.0
@@ -244,7 +245,6 @@ require (
 	kmodules.xyz/apply v0.29.0 // indirect
 	kmodules.xyz/go-containerregistry v0.0.12 // indirect
 	kmodules.xyz/offshoot-api v0.30.1 // indirect
-	kmodules.xyz/resource-metadata v0.24.2 // indirect
 	kmodules.xyz/resource-metrics v0.30.5 // indirect
 	oras.land/oras-go v1.2.5 // indirect
 	sigs.k8s.io/cli-utils v0.36.0 // indirect
