@@ -27,12 +27,12 @@ require (
 	k8s.io/cli-runtime v0.30.1
 	k8s.io/client-go v0.30.2
 	k8s.io/klog/v2 v2.130.1
-	kmodules.xyz/client-go v0.30.44
-	kmodules.xyz/resource-metadata v0.24.2
+	kmodules.xyz/client-go v0.30.46
+	kmodules.xyz/resource-metadata v0.26.0
 	kubepack.dev/lib-helm v0.29.13
 	sigs.k8s.io/controller-runtime v0.18.4
 	sigs.k8s.io/yaml v1.4.0
-	x-helm.dev/apimachinery v0.0.16
+	x-helm.dev/apimachinery v0.0.17
 )
 
 require (

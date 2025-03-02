@@ -73,6 +73,19 @@ spec:
               required:
               - image
               type: object
+            initContainer:
+              description: init container image
+              properties:
+                image:
+                  description: Image is the Docker image name
+                  type: string
+                imagePullPolicy:
+                  description: ImagePullPolicy one of Always, Never, IfNotPresent.
+                    It defaults to Always if :latest is used, or IfNotPresent otherwise.
+                  type: string
+              required:
+              - image
+              type: object
             stash:
               description: Stash defines backup and restore task definitions.
               properties:

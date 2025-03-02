@@ -9402,6 +9402,7 @@ spec:
                               enum:
                               - Delete
                               - WipeOut
+                              - Retain
                               type: string
                             directory:
                               type: string

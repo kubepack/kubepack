@@ -19,6 +19,7 @@ package v1alpha1
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/apimachinery/pkg/types"
 	kmapi "kmodules.xyz/client-go/api/v1"
 	releasesv1alpha1 "x-helm.dev/apimachinery/apis/releases/v1alpha1"
 )
@@ -64,4 +65,8 @@ type SourceLocator struct {
 	Resource kmapi.ResourceID `json:"resource"`
 	// +optional
 	Ref kmapi.ObjectReference `json:"ref"`
+	// +optional
+	UID types.UID `json:"-"`
+	// +optional
+	Generation int64 `json:"-"`
 }

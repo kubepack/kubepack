@@ -18,6 +18,7 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/util/json"
 	chartsapi "x-helm.dev/apimachinery/apis/charts/v1alpha1"
 )
 
@@ -41,5 +42,35 @@ type ChartPresetQuery struct {
 	Request *chartsapi.ChartPresetFlatRef `json:"request,omitempty"`
 	// Response describes the attributes for the preset response.
 	// +optional
-	Response []chartsapi.ChartPresetValues `json:"response,omitempty"`
+	Response *ChartPresetQueryResponse `json:"response,omitempty"`
+}
+
+type ChartPresetQueryResponse struct {
+	Presets []chartsapi.ChartPresetValues `json:"presets,omitempty"`
+	State   string                        `json:"state,omitempty"`
+}
+
+func (q *ChartPresetQuery) UnmarshalJSON(data []byte) error {
+	// https://stackoverflow.com/a/43178272/244009
+	type nq ChartPresetQuery
+	if err := json.Unmarshal(data, (*nq)(q)); err == nil {
+		return nil
+	}
+
+	var oq struct {
+		metav1.TypeMeta `json:",inline"`
+		Request         *chartsapi.ChartPresetFlatRef `json:"request,omitempty"`
+		Response        []chartsapi.ChartPresetValues `json:"response,omitempty"`
+	}
+	if err := json.Unmarshal(data, &oq); err != nil {
+		return err
+	}
+	*q = ChartPresetQuery{
+		TypeMeta: oq.TypeMeta,
+		Request:  oq.Request,
+		Response: &ChartPresetQueryResponse{
+			Presets: oq.Response,
+		},
+	}
+	return nil
 }

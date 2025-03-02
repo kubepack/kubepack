@@ -529,6 +529,13 @@ spec:
                 ref:
                   type: string
               type: object
+            tls:
+              properties:
+                disableSSLSessionResumption:
+                  description: DisableSSLSessionResumption determines whether to disable
+                    or enable Envoy TLS Session Resumption
+                  type: boolean
+              type: object
           required:
           - rules
           type: object
