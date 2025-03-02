@@ -360,6 +360,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kmodules.xyz/offshoot-api/api/v1.VolumeSource":                                 schema_kmodulesxyz_offshoot_api_api_v1_VolumeSource(ref),
 		"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.AttributeDefinition":         schema_resource_metadata_apis_meta_v1alpha1_AttributeDefinition(ref),
 		"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ChartPresetQuery":            schema_resource_metadata_apis_meta_v1alpha1_ChartPresetQuery(ref),
+		"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ChartPresetQueryResponse":    schema_resource_metadata_apis_meta_v1alpha1_ChartPresetQueryResponse(ref),
 		"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ClusterProfile":              schema_resource_metadata_apis_meta_v1alpha1_ClusterProfile(ref),
 		"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ClusterProfileList":          schema_resource_metadata_apis_meta_v1alpha1_ClusterProfileList(ref),
 		"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ClusterStatus":               schema_resource_metadata_apis_meta_v1alpha1_ClusterStatus(ref),
@@ -432,6 +433,9 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourceLayout":              schema_resource_metadata_apis_meta_v1alpha1_ResourceLayout(ref),
 		"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourceLayoutList":          schema_resource_metadata_apis_meta_v1alpha1_ResourceLayoutList(ref),
 		"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourceLayoutSpec":          schema_resource_metadata_apis_meta_v1alpha1_ResourceLayoutSpec(ref),
+		"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourceManifests":           schema_resource_metadata_apis_meta_v1alpha1_ResourceManifests(ref),
+		"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourceManifestsRequest":    schema_resource_metadata_apis_meta_v1alpha1_ResourceManifestsRequest(ref),
+		"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourceManifestsResponse":   schema_resource_metadata_apis_meta_v1alpha1_ResourceManifestsResponse(ref),
 		"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourceOutline":             schema_resource_metadata_apis_meta_v1alpha1_ResourceOutline(ref),
 		"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourceOutlineFilter":       schema_resource_metadata_apis_meta_v1alpha1_ResourceOutlineFilter(ref),
 		"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourceOutlineFilterList":   schema_resource_metadata_apis_meta_v1alpha1_ResourceOutlineFilterList(ref),
@@ -18989,7 +18993,26 @@ func schema_resource_metadata_apis_meta_v1alpha1_ChartPresetQuery(ref common.Ref
 					"response": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Response describes the attributes for the preset response.",
-							Type:        []string{"array"},
+							Ref:         ref("kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ChartPresetQueryResponse"),
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ChartPresetQueryResponse", "x-helm.dev/apimachinery/apis/charts/v1alpha1.ChartPresetFlatRef"},
+	}
+}
+
+func schema_resource_metadata_apis_meta_v1alpha1_ChartPresetQueryResponse(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"presets": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
@@ -19000,11 +19023,17 @@ func schema_resource_metadata_apis_meta_v1alpha1_ChartPresetQuery(ref common.Ref
 							},
 						},
 					},
+					"state": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
 				},
 			},
 		},
 		Dependencies: []string{
-			"x-helm.dev/apimachinery/apis/charts/v1alpha1.ChartPresetFlatRef", "x-helm.dev/apimachinery/apis/charts/v1alpha1.ChartPresetValues"},
+			"x-helm.dev/apimachinery/apis/charts/v1alpha1.ChartPresetValues"},
 	}
 }
 
@@ -22428,6 +22457,125 @@ func schema_resource_metadata_apis_meta_v1alpha1_ResourceLayoutSpec(ref common.R
 		},
 		Dependencies: []string{
 			"kmodules.xyz/client-go/api/v1.ResourceID", "kmodules.xyz/resource-metadata/apis/meta/v1alpha1.PageBlockLayout", "kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourcePageLayout", "kmodules.xyz/resource-metadata/apis/shared.UIParameterTemplate"},
+	}
+}
+
+func schema_resource_metadata_apis_meta_v1alpha1_ResourceManifests(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"request": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Request describes the attributes for the preset query.",
+							Ref:         ref("kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourceManifestsRequest"),
+						},
+					},
+					"response": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Response describes the attributes for the preset response.",
+							Default:     map[string]interface{}{},
+							Ref:         ref("kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourceManifestsResponse"),
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourceManifestsRequest", "kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourceManifestsResponse"},
+	}
+}
+
+func schema_resource_metadata_apis_meta_v1alpha1_ResourceManifestsRequest(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"group": {
+						SchemaProps: spec.SchemaProps{
+							Default: "",
+							Type:    []string{"string"},
+							Format:  "",
+						},
+					},
+					"version": {
+						SchemaProps: spec.SchemaProps{
+							Default: "",
+							Type:    []string{"string"},
+							Format:  "",
+						},
+					},
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Default: "",
+							Type:    []string{"string"},
+							Format:  "",
+						},
+					},
+					"namespace": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"name": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+							Default:     "",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+				},
+				Required: []string{"group", "version", "kind", "name"},
+			},
+		},
+	}
+}
+
+func schema_resource_metadata_apis_meta_v1alpha1_ResourceManifestsResponse(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"objects": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Objects hold all the yamls related to the request. The key here is G,V,N,NS",
+							Type:        []string{"object"},
+							AdditionalProperties: &spec.SchemaOrBool{
+								Allows: true,
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"objects"},
+			},
+		},
+		Dependencies: []string{
+			"k8s.io/apimachinery/pkg/runtime.RawExtension"},
 	}
 }
 

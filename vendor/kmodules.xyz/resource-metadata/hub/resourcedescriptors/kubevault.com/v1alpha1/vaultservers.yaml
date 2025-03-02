@@ -9978,7 +9978,8 @@ spec:
                             type: string
                         type: object
                       renewBefore:
-                        description: Certificate renew before expiration duration
+                        description: "Certificate renew before expiration duration
+                          \n Deprecated use `ReconfigureTLS` type OpsRequest instead."
                         type: string
                       secretName:
                         description: Specifies the k8s secret name that holds the
