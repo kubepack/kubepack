@@ -27,6 +27,18 @@ import (
 const (
 	// GitRepositoryKind is the string representation of a GitRepository.
 	GitRepositoryKind = "GitRepository"
+
+	// GitProviderGeneric provides support for authentication using
+	// credentials specified in secretRef.
+	GitProviderGeneric string = "generic"
+
+	// GitProviderAzure provides support for authentication to azure
+	// repositories using Managed Identity.
+	GitProviderAzure string = "azure"
+
+	// GitProviderGitHub provides support for authentication to git
+	// repositories using GitHub App authentication
+	GitProviderGitHub string = "github"
 )
 
 const (
@@ -79,6 +91,12 @@ type GitRepositorySpec struct {
 	// and 'known_hosts' fields.
 	// +optional
 	SecretRef *meta.LocalObjectReference `json:"secretRef,omitempty"`
+
+	// Provider used for authentication, can be 'azure', 'github', 'generic'.
+	// When not specified, defaults to 'generic'.
+	// +kubebuilder:validation:Enum=generic;azure;github
+	// +optional
+	Provider string `json:"provider,omitempty"`
 
 	// Interval at which the GitRepository URL is checked for updates.
 	// This interval is approximate and may be subject to jitter to ensure
@@ -286,6 +304,14 @@ func (in GitRepository) GetRequeueAfter() time.Duration {
 // the status sub-resource.
 func (in *GitRepository) GetArtifact() *Artifact {
 	return in.Status.Artifact
+}
+
+// GetProvider returns the Git authentication provider.
+func (v *GitRepository) GetProvider() string {
+	if v.Spec.Provider == "" {
+		return GitProviderGeneric
+	}
+	return v.Spec.Provider
 }
 
 // GetMode returns the declared GitVerificationMode, or a ModeGitHEAD default.

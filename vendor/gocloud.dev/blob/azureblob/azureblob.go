@@ -23,18 +23,38 @@
 // # URLs
 //
 // For blob.OpenBucket, azureblob registers for the scheme "azblob".
-// The default URL opener will use credentials from the environment variables
-// AZURE_STORAGE_ACCOUNT, AZURE_STORAGE_KEY, and AZURE_STORAGE_SAS_TOKEN.
-// AZURE_STORAGE_ACCOUNT is required, along with one of the other two.
-// AZURE_STORAGE_DOMAIN can optionally be used to provide an Azure Environment
-// blob storage domain to use. If no AZURE_STORAGE_DOMAIN is provided, the
-// default Azure public domain "blob.core.windows.net" will be used. Check
-// the Azure Developer Guide for your particular cloud environment to see
-// the proper blob storage domain name to provide.
-// If there are multiple identities assigned to your account, you can also provide
-// AZURE_CLIENT_ID to designate which identity should be used for authentication.
+//
+// The default URL opener will use environment variables to generate
+// credentials and a service URL; see
+// https://pkg.go.dev/github.com/Azure/azure-sdk-for-go/sdk/storage/azblob
+// for a more complete descriptions of each approach.
+//   - AZURE_STORAGE_ACCOUNT: The service account name. Required if used along with AZURE_STORAGE KEY, because it defines
+//     authentication mechanism to be azblob.NewSharedKeyCredential, which creates immutable shared key credentials.
+//     Otherwise, "storage_account" in the URL query string parameter can be used.
+//   - AZURE_STORAGE_KEY: To use a shared key credential. The service account
+//     name and key are passed to NewSharedKeyCredential and then the
+//     resulting credential is passed to NewClientWithSharedKeyCredential.
+//   - AZURE_STORAGE_CONNECTION_STRING or AZURE_STORAGEBLOB_CONNECTIONSTRING: To use a connection string, passed to
+//     NewClientFromConnectionString.
+//   - AZURE_STORAGE_SAS_TOKEN: To use a SAS token. The SAS token is added
+//     as a URL parameter to the service URL, and passed to
+//     NewClientWithNoCredential.
+//   - If none of the above are provided, azureblob defaults to
+//     azidentity.NewDefaultAzureCredential:
+//     https://pkg.go.dev/github.com/Azure/azure-sdk-for-go/sdk/azidentity#NewDefaultAzureCredential.
+//     See the documentation there for the credential types it supports, including
+//     CLI creds, environment variables like AZURE_CLIENT_ID, AZURE_TENANT_ID, etc.
+//
+// In addition, the environment variables AZURE_STORAGE_ACCOUNT, AZURE_STORAGE_DOMAIN,
+// AZURE_STORAGE_PROTOCOL, AZURE_STORAGE_IS_CDN, and AZURE_STORAGE_IS_LOCAL_EMULATOR
+// can be used to configure how the default URLOpener generates the Azure
+// Service URL via ServiceURLOptions. These can all be configured via URL
+// parameters as well. See ServiceURLOptions and NewDefaultServiceURL
+// for more details.
+//
 // To customize the URL opener, or for more details on the URL format,
 // see URLOpener.
+//
 // See https://gocloud.dev/concepts/urls/ for background information.
 //
 // # Escaping
@@ -42,9 +62,9 @@
 // Go CDK supports all UTF-8 strings; to make this work with services lacking
 // full UTF-8 support, strings must be escaped (during writes) and unescaped
 // (during reads). The following escapes are performed for azureblob:
-//   - Blob keys: ASCII characters 0-31, 92 ("\"), and 127 are escaped to
-//     "__0x<hex>__". Additionally, the "/" in "../" and a trailing "/" in a
-//     key (e.g., "foo/") are escaped in the same way.
+//   - Blob keys: ASCII characters 0-31, 34 ("\""), 35 ("#"), 37 ("%"), 63 ("?"),
+//     92 ("\"), and 127 are escaped to "__0x<hex>__".
+//     Additionally, the "/" in "../" and a trailing "/" in a key (e.g., "foo/") are escaped in the same way.
 //   - Metadata keys: Per https://docs.microsoft.com/en-us/azure/storage/blobs/storage-properties-metadata,
 //     Azure only allows C# identifiers as metadata keys. Therefore, characters
 //     other than "[a-z][A-z][0-9]_" are escaped using "__0x<hex>__". In addition,
@@ -55,16 +75,16 @@
 // # As
 //
 // azureblob exposes the following types for As:
-//   - Bucket: *azblob.ContainerURL
-//   - Error: azblob.StorageError
-//   - ListObject: azblob.BlobItemInternal for objects, azblob.BlobPrefix for "directories"
-//   - ListOptions.BeforeList: *azblob.ListBlobsSegmentOptions
-//   - Reader: azblob.DownloadResponse
-//   - Reader.BeforeRead: *azblob.BlockBlobURL, *azblob.BlobAccessConditions
-//   - Attributes: azblob.BlobGetPropertiesResponse
-//   - CopyOptions.BeforeCopy: azblob.Metadata, *azblob.ModifiedAccessConditions, *azblob.BlobAccessConditions
-//   - WriterOptions.BeforeWrite: *azblob.UploadStreamToBlockBlobOptions
-//   - SignedURLOptions.BeforeSign: *azblob.BlobSASSignatureValues
+//   - Bucket: *container.Client
+//   - Error: *azcore.ResponseError. You can use bloberror.HasCode directly though.
+//   - ListObject: container.BlobItem for objects, container.BlobPrefix for "directories"
+//   - ListOptions.BeforeList: *container.ListBlobsHierarchyOptions
+//   - Reader: azblobblob.DownloadStreamResponse
+//   - Reader.BeforeRead: *azblob.DownloadStreamOptions
+//   - Attributes: azblobblob.GetPropertiesResponse
+//   - CopyOptions.BeforeCopy: *azblobblob.StartCopyFromURLOptions
+//   - WriterOptions.BeforeWrite: *azblob.UploadStreamOptions
+//   - SignedURLOptions.BeforeSign: *sas.BlobPermissions
 package azureblob
 
 import (
@@ -81,11 +101,16 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Azure/azure-pipeline-go/pipeline"
-	"github.com/Azure/azure-storage-blob-go/azblob"
-	"github.com/Azure/go-autorest/autorest/adal"
-	"github.com/Azure/go-autorest/autorest/azure"
-	"github.com/google/uuid"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
+	"github.com/Azure/azure-sdk-for-go/sdk/storage/azblob"
+	azblobblob "github.com/Azure/azure-sdk-for-go/sdk/storage/azblob/blob"
+	"github.com/Azure/azure-sdk-for-go/sdk/storage/azblob/bloberror"
+	"github.com/Azure/azure-sdk-for-go/sdk/storage/azblob/blockblob"
+	"github.com/Azure/azure-sdk-for-go/sdk/storage/azblob/container"
+	"github.com/Azure/azure-sdk-for-go/sdk/storage/azblob/sas"
+	"github.com/Azure/go-autorest/autorest/to"
 	"github.com/google/wire"
 	"gocloud.dev/blob"
 	"gocloud.dev/blob/driver"
@@ -97,105 +122,255 @@ import (
 )
 
 const (
-	tokenRefreshTolerance = 300
-)
-
-// Options sets options for constructing a *blob.Bucket backed by Azure Block Blob.
-type Options struct {
-	// Credential represents the authorizer for SignedURL.
-	// Required to use SignedURL. If you're using MSI for authentication, this will
-	// attempt to be loaded lazily the first time you call SignedURL.
-	Credential azblob.StorageAccountCredential
-
-	// SASToken can be provided along with anonymous credentials to use
-	// delegated privileges.
-	// See https://docs.microsoft.com/en-us/azure/storage/common/storage-dotnet-shared-access-signature-part-1#shared-access-signature-parameters.
-	SASToken SASToken
-
-	// StorageDomain can be provided to specify an Azure Cloud Environment
-	// domain to target for the blob storage account (i.e. public, government, china).
-	// The default value is "blob.core.windows.net". Possible values will look similar
-	// to this but are different for each cloud (i.e. "blob.core.govcloudapi.net" for USGovernment).
-	// Check the Azure developer guide for the cloud environment where your bucket resides.
-	// The full URL used is "<Protocol>://<account name>.<StorageDomain>", where the
-	// "<account name>." part is dropped if IsCDN is set to true.
-	StorageDomain StorageDomain
-
-	// Protocol can be provided to specify protocol to access Azure Blob Storage.
-	// Protocols that can be specified are "http" for local emulator and "https" for general.
-	// If blank is specified, "https" will be used.
-	// The full URL used is "<Protocol>://<account name>.<StorageDomain>", where the
-	// "<account name>." part is dropped if IsCDN is set to true.
-	Protocol Protocol
-
-	// IsCDN can be set to true when using a CDN URL pointing to a blob storage account:
-	// https://docs.microsoft.com/en-us/azure/cdn/cdn-create-a-storage-account-with-cdn
-	// The full URL used is "<Protocol>://<account name>.<StorageDomain>", where the
-	// "<account name>." part is dropped if IsCDN is set to true.
-	IsCDN bool
-
-	// IsLocalEmulator should be set to true when targetting Local Storage Emulator (Azurite).
-	// The URL format is "<Protocol>://<StorageDomain>/<account name>" (ex: http://127.0.0.1:10000/devstoreaccount1).
-	IsLocalEmulator bool
-}
-
-const (
-	defaultMaxDownloadRetryRequests = 3               // download retry policy (Azure default is zero)
-	defaultPageSize                 = 1000            // default page size for ListPaged (Azure default is 5000)
-	defaultUploadBuffers            = 5               // configure the number of rotating buffers that are used when uploading (for degree of parallelism)
-	defaultUploadBlockSize          = 8 * 1024 * 1024 // configure the upload buffer size
+	defaultPageSize        = 1000            // default page size for ListPaged (Azure default is 5000)
+	defaultUploadBuffers   = 5               // configure the number of rotating buffers that are used when uploading (for degree of parallelism)
+	defaultUploadBlockSize = 8 * 1024 * 1024 // configure the upload buffer size
 )
 
 func init() {
-	blob.DefaultURLMux().RegisterBucket(Scheme, new(lazyCredsOpener))
+	blob.DefaultURLMux().RegisterBucket(Scheme, new(lazyOpener))
 }
 
 // Set holds Wire providers for this package.
 var Set = wire.NewSet(
-	NewPipeline,
-	wire.Struct(new(Options), "Credential", "SASToken"),
-	wire.Struct(new(URLOpener), "AccountName", "Pipeline", "Options"),
+	NewDefaultServiceURLOptions,
+	NewServiceURL,
+	NewDefaultClient,
 )
 
-// lazyCredsOpener obtains credentials from the environment on the first call
-// to OpenBucketURL.
-type lazyCredsOpener struct {
-	init   sync.Once
-	opener *URLOpener
-	err    error
+// Options sets options for constructing a *blob.Bucket backed by Azure Blob.
+type Options struct{}
+
+// ServiceURL represents an Azure service URL.
+type ServiceURL string
+
+// ContainerName represents an Azure blob container name.
+type ContainerName string
+
+// ServiceURLOptions sets options for constructing a service URL for Azure Blob.
+type ServiceURLOptions struct {
+	// AccountName is the account name the credentials are for.
+	AccountName string
+
+	// SASToken will be appended to the service URL.
+	// See https://docs.microsoft.com/en-us/azure/storage/common/storage-dotnet-shared-access-signature-part-1#shared-access-signature-parameters.
+	SASToken string
+
+	// StorageDomain can be provided to specify an Azure Cloud Environment
+	// domain to target for the blob storage account (i.e. public, government, china).
+	// Defaults to "blob.core.windows.net". Possible values will look similar
+	// to this but are different for each cloud (i.e. "blob.core.govcloudapi.net" for USGovernment).
+	// Check the Azure developer guide for the cloud environment where your bucket resides.
+	// See the docstring for NewServiceURL to see examples of how this is used
+	// along with the other Options fields.
+	StorageDomain string
+
+	// Protocol can be provided to specify protocol to access Azure Blob Storage.
+	// Protocols that can be specified are "http" for local emulator and "https" for general.
+	// Defaults to "https".
+	// See the docstring for NewServiceURL to see examples of how this is used
+	// along with the other Options fields.
+	Protocol string
+
+	// IsCDN can be set to true when using a CDN URL pointing to a blob storage account:
+	// https://docs.microsoft.com/en-us/azure/cdn/cdn-create-a-storage-account-with-cdn
+	// See the docstring for NewServiceURL to see examples of how this is used
+	// along with the other Options fields.
+	IsCDN bool
+
+	// IsLocalEmulator should be set to true when targeting Local Storage Emulator (Azurite).
+	// See the docstring for NewServiceURL to see examples of how this is used
+	// along with the other Options fields.
+	IsLocalEmulator bool
 }
 
-func (o *lazyCredsOpener) OpenBucketURL(ctx context.Context, u *url.URL) (*blob.Bucket, error) {
-	o.init.Do(func() {
-		// Use default credential info from the environment.
-		// Ignore errors, as we'll get errors from OpenBucket later.
-		accountName, _ := DefaultAccountName()
-		accountKey, _ := DefaultAccountKey()
-		clientId, _ := DefaultClientId()
-		sasToken, _ := DefaultSASToken()
-		storageDomain, _ := DefaultStorageDomain()
-		isCDN, _ := DefaultIsCDN()
-		protocol, _ := DefaultProtocol()
+// NewDefaultServiceURLOptions generates a ServiceURLOptions based on environment variables.
+func NewDefaultServiceURLOptions() *ServiceURLOptions {
+	isCDN, _ := strconv.ParseBool(os.Getenv("AZURE_STORAGE_IS_CDN"))
+	isLocalEmulator, _ := strconv.ParseBool(os.Getenv("AZURE_STORAGE_IS_LOCAL_EMULATOR"))
+	return &ServiceURLOptions{
+		AccountName:     os.Getenv("AZURE_STORAGE_ACCOUNT"),
+		SASToken:        os.Getenv("AZURE_STORAGE_SAS_TOKEN"),
+		StorageDomain:   os.Getenv("AZURE_STORAGE_DOMAIN"),
+		Protocol:        os.Getenv("AZURE_STORAGE_PROTOCOL"),
+		IsCDN:           isCDN,
+		IsLocalEmulator: isLocalEmulator,
+	}
+}
 
-		isMSIEnvironment := adal.MSIAvailable(ctx, adal.CreateSender())
-		opts := Options{
-			StorageDomain: storageDomain,
-			Protocol:      protocol,
-			IsCDN:         isCDN,
+// withOverrides returns o with overrides from urlValues.
+// See URLOpener for supported overrides.
+func (o *ServiceURLOptions) withOverrides(urlValues url.Values) (*ServiceURLOptions, error) {
+	retval := *o
+	for param, values := range urlValues {
+		if len(values) > 1 {
+			return nil, fmt.Errorf("multiple values of %v not allowed", param)
 		}
+		value := values[0]
+		switch param {
+		case "domain":
+			retval.StorageDomain = value
+		case "protocol":
+			retval.Protocol = value
+		case "cdn":
+			isCDN, err := strconv.ParseBool(value)
+			if err != nil {
+				return nil, err
+			}
+			retval.IsCDN = isCDN
+		case "localemu":
+			isLocalEmulator, err := strconv.ParseBool(value)
+			if err != nil {
+				return nil, err
+			}
+			retval.IsLocalEmulator = isLocalEmulator
+		case "storage_account":
+			retval.AccountName = value
+		default:
+			return nil, fmt.Errorf("unknown query parameter %q", param)
+		}
+	}
+	return &retval, nil
+}
 
-		if accountKey != "" || sasToken != "" {
-			o.opener, o.err = openerFromEnv(accountName, accountKey, sasToken, opts)
-		} else if isMSIEnvironment {
-			o.opener, o.err = openerFromMSI(accountName, clientId, opts)
-		} else {
-			o.opener, o.err = openerFromAnon(accountName, opts)
+// NewServiceURL generates a URL for addressing an Azure Blob service
+// account. It uses several parameters, each of which can be specified
+// via ServiceURLOptions.
+//
+// The generated URL is "<protocol>://<account name>.<domain>"
+// with the following caveats:
+//   - If opts.SASToken is provided, it is appended to the URL as a query
+//     parameter.
+//   - If opts.IsCDN is true, the <account name> part is dropped.
+//   - If opts.IsLocalEmulator is true, or the domain starts with "localhost"
+//     or "127.0.0.1", the account name and domain are flipped, e.g.:
+//     http://127.0.0.1:10000/myaccount
+func NewServiceURL(opts *ServiceURLOptions) (ServiceURL, error) {
+	if opts == nil {
+		opts = &ServiceURLOptions{}
+	}
+	accountName := opts.AccountName
+	if accountName == "" {
+		return "", errors.New("azureblob: Options.AccountName is required")
+	}
+	domain := opts.StorageDomain
+	if domain == "" {
+		domain = "blob.core.windows.net"
+	}
+	protocol := opts.Protocol
+	if protocol == "" {
+		protocol = "https"
+	} else if protocol != "http" && protocol != "https" {
+		return "", fmt.Errorf("invalid protocol %q", protocol)
+	}
+	var svcURL string
+	if strings.HasPrefix(domain, "127.0.0.1") || strings.HasPrefix(domain, "localhost") || opts.IsLocalEmulator {
+		svcURL = fmt.Sprintf("%s://%s/%s", protocol, domain, accountName)
+	} else if opts.IsCDN {
+		svcURL = fmt.Sprintf("%s://%s", protocol, domain)
+	} else {
+		svcURL = fmt.Sprintf("%s://%s.%s", protocol, accountName, domain)
+	}
+	if opts.SASToken != "" {
+		svcURL += "?" + opts.SASToken
+	}
+	return ServiceURL(svcURL), nil
+}
+
+// lazyOpener obtains credentials and creates a client on the first call to OpenBucketURL.
+type lazyOpener struct {
+	init   sync.Once
+	opener *URLOpener
+}
+
+func (o *lazyOpener) OpenBucketURL(ctx context.Context, u *url.URL) (*blob.Bucket, error) {
+	o.init.Do(func() {
+		credInfo := newCredInfoFromEnv()
+		opts := NewDefaultServiceURLOptions()
+		o.opener = &URLOpener{
+			MakeClient:        credInfo.NewClient,
+			ServiceURLOptions: *opts,
 		}
 	})
-	if o.err != nil {
-		return nil, fmt.Errorf("open bucket %v: %v", u, o.err)
-	}
 	return o.opener.OpenBucketURL(ctx, u)
+}
+
+type credTypeEnumT int
+
+const (
+	credTypeDefault credTypeEnumT = iota
+	credTypeSharedKey
+	credTypeSASViaNone
+	credTypeConnectionString
+)
+
+type credInfoT struct {
+	CredType credTypeEnumT
+
+	// For credTypeSharedKey.
+	AccountName string
+	AccountKey  string
+
+	// For credTypeConnectionString
+	ConnectionString string
+}
+
+func newCredInfoFromEnv() *credInfoT {
+	accountName := os.Getenv("AZURE_STORAGE_ACCOUNT")
+	accountKey := os.Getenv("AZURE_STORAGE_KEY")
+	sasToken := os.Getenv("AZURE_STORAGE_SAS_TOKEN")
+	connectionString := os.Getenv("AZURE_STORAGE_CONNECTION_STRING")
+	if connectionString == "" {
+		connectionString = os.Getenv("AZURE_STORAGEBLOB_CONNECTIONSTRING")
+	}
+	credInfo := &credInfoT{
+		AccountName: accountName,
+	}
+	if accountName != "" && accountKey != "" {
+		credInfo.CredType = credTypeSharedKey
+		credInfo.AccountKey = accountKey
+	} else if sasToken != "" {
+		credInfo.CredType = credTypeSASViaNone
+	} else if connectionString != "" {
+		credInfo.CredType = credTypeConnectionString
+		credInfo.ConnectionString = connectionString
+	} else {
+		credInfo.CredType = credTypeDefault
+	}
+	return credInfo
+}
+
+func (i *credInfoT) NewClient(svcURL ServiceURL, containerName ContainerName) (*container.Client, error) {
+	// Set the ApplicationID.
+	azClientOpts := &container.ClientOptions{}
+	azClientOpts.Telemetry = policy.TelemetryOptions{
+		ApplicationID: useragent.AzureUserAgentPrefix("blob"),
+	}
+
+	containerURL, err := url.JoinPath(string(svcURL), string(containerName))
+	if err != nil {
+		return nil, err
+	}
+	switch i.CredType {
+	case credTypeDefault:
+		cred, err := azidentity.NewDefaultAzureCredential(nil)
+		if err != nil {
+			return nil, fmt.Errorf("failed azidentity.NewDefaultAzureCredential: %v", err)
+		}
+		return container.NewClient(containerURL, cred, azClientOpts)
+	case credTypeSharedKey:
+		sharedKeyCred, err := azblob.NewSharedKeyCredential(i.AccountName, i.AccountKey)
+		if err != nil {
+			return nil, fmt.Errorf("failed azblob.NewSharedKeyCredential: %v", err)
+		}
+		return container.NewClientWithSharedKeyCredential(containerURL, sharedKeyCred, azClientOpts)
+	case credTypeSASViaNone:
+		return container.NewClientWithNoCredential(containerURL, azClientOpts)
+	case credTypeConnectionString:
+		return container.NewClientFromConnectionString(i.ConnectionString, string(containerName), azClientOpts)
+	default:
+		return nil, errors.New("internal error, unknown cred type")
+	}
 }
 
 // Scheme is the URL scheme gcsblob registers its URLOpener under on
@@ -207,355 +382,76 @@ const Scheme = "azblob"
 // The URL host is used as the bucket name.
 //
 // The following query options are supported:
-//   - domain: The domain name used to access the Azure Blob storage (e.g. blob.core.windows.net)
-//   - protocol: The protocol to use (e.g., http or https; default to https)
-//   - cdn: Set to true when domain represents a CDN
-//   - localemu: Set to true when domain points to the Local Storage Emulator (Azurite)
-//
-// See Options for more details.
+//   - domain: Overrides Options.StorageDomain.
+//   - protocol: Overrides Options.Protocol.
+//   - cdn: Overrides Options.IsCDN.
+//   - localemu: Overrides Options.IsLocalEmulator.
 type URLOpener struct {
-	// AccountName must be specified.
-	AccountName AccountName
+	// MakeClient must be set to a non-nil value.
+	MakeClient func(svcURL ServiceURL, containerName ContainerName) (*container.Client, error)
 
-	// Pipeline must be set to a non-nil value.
-	Pipeline pipeline.Pipeline
+	// ServiceURLOptions specifies default options for generating the service URL.
+	// Some options can be overridden in the URL as described above.
+	ServiceURLOptions ServiceURLOptions
 
 	// Options specifies the options to pass to OpenBucket.
 	Options Options
 }
 
-func openerFromEnv(accountName AccountName, accountKey AccountKey, sasToken SASToken, opts Options) (*URLOpener, error) {
-	// azblob.Credential is an interface; we will use either a SharedKeyCredential
-	// or anonymous credentials. If the former, we will also fill in
-	// Options.Credential so that SignedURL will work.
-	var credential azblob.Credential
-	var storageAccountCredential azblob.StorageAccountCredential
-	if accountKey != "" {
-		sharedKeyCred, err := NewCredential(accountName, accountKey)
-		if err != nil {
-			return nil, fmt.Errorf("invalid credentials %s/%s: %v", accountName, accountKey, err)
-		}
-		credential = sharedKeyCred
-		storageAccountCredential = sharedKeyCred
-	} else {
-		credential = azblob.NewAnonymousCredential()
-	}
-	opts.Credential = storageAccountCredential
-	opts.SASToken = sasToken
-	return &URLOpener{
-		AccountName: accountName,
-		Pipeline:    NewPipeline(credential, azblob.PipelineOptions{}),
-		Options:     opts,
-	}, nil
-}
-
-// openerFromAnon creates an anonymous credential backend URLOpener
-func openerFromAnon(accountName AccountName, opts Options) (*URLOpener, error) {
-	return &URLOpener{
-		AccountName: accountName,
-		Pipeline:    NewPipeline(azblob.NewAnonymousCredential(), azblob.PipelineOptions{}),
-		Options:     opts,
-	}, nil
-}
-
-var defaultTokenRefreshFunction = func(spToken *adal.ServicePrincipalToken) func(credential azblob.TokenCredential) time.Duration {
-	return func(credential azblob.TokenCredential) time.Duration {
-		err := spToken.Refresh()
-		if err != nil {
-			return 0
-		}
-		expiresIn, err := strconv.ParseInt(string(spToken.Token().ExpiresIn), 10, 64)
-		if err != nil {
-			return 0
-		}
-		credential.SetToken(spToken.Token().AccessToken)
-		return time.Duration(expiresIn-tokenRefreshTolerance) * time.Second
-	}
-}
-
-// openerFromMSI acquires an MSI token and returns TokenCredential backed URLOpener
-func openerFromMSI(accountName AccountName, clientId ClientId, opts Options) (*URLOpener, error) {
-
-	spToken, err := getMSIServicePrincipalToken(azure.PublicCloud.ResourceIdentifiers.Storage, clientId)
-	if err != nil {
-		return nil, fmt.Errorf("failure acquiring token from MSI endpoint %w", err)
-	}
-
-	err = spToken.Refresh()
-	if err != nil {
-		return nil, fmt.Errorf("failure refreshing token from MSI endpoint %w", err)
-	}
-
-	credential := azblob.NewTokenCredential(spToken.Token().AccessToken, defaultTokenRefreshFunction(spToken))
-	return &URLOpener{
-		AccountName: accountName,
-		Pipeline:    NewPipeline(credential, azblob.PipelineOptions{}),
-		Options:     opts,
-	}, nil
-}
-
-// getMSIServicePrincipalToken retrieves Azure API Service Principal token.
-func getMSIServicePrincipalToken(resource string, clientId ClientId) (*adal.ServicePrincipalToken, error) {
-
-	msiEndpoint, err := adal.GetMSIEndpoint()
-	if err != nil {
-		return nil, fmt.Errorf("failed to get the managed service identity endpoint: %v", err)
-	}
-
-	var token *adal.ServicePrincipalToken
-	if clientId == "" {
-		token, err = adal.NewServicePrincipalTokenFromMSI(msiEndpoint, resource)
-	} else {
-		opts := &adal.ManagedIdentityOptions{
-			ClientID: string(clientId),
-		}
-		token, err = adal.NewServicePrincipalTokenFromManagedIdentity(resource, opts)
-	}
-
-	if err != nil {
-		return nil, fmt.Errorf("failed to create the managed service identity token: %v", err)
-	}
-	return token, nil
-
-}
-
 // OpenBucketURL opens a blob.Bucket based on u.
 func (o *URLOpener) OpenBucketURL(ctx context.Context, u *url.URL) (*blob.Bucket, error) {
-	opts := new(Options)
-	*opts = o.Options
-
-	err := setOptionsFromURLParams(u.Query(), opts)
+	opts, err := o.ServiceURLOptions.withOverrides(u.Query())
 	if err != nil {
 		return nil, err
 	}
-
-	return OpenBucket(ctx, o.Pipeline, o.AccountName, u.Host, opts)
-}
-
-func setOptionsFromURLParams(q url.Values, o *Options) error {
-	for param, values := range q {
-		if len(values) > 1 {
-			return fmt.Errorf("multiple values of %v not allowed", param)
-		}
-
-		value := values[0]
-		switch param {
-		case "domain":
-			o.StorageDomain = StorageDomain(value)
-		case "protocol":
-			o.Protocol = Protocol(value)
-		case "cdn":
-			isCDN, err := strconv.ParseBool(value)
-			if err != nil {
-				return err
-			}
-			o.IsCDN = isCDN
-		case "localemu":
-			isLocalEmulator, err := strconv.ParseBool(value)
-			if err != nil {
-				return err
-			}
-			o.IsLocalEmulator = isLocalEmulator
-		default:
-			return fmt.Errorf("unknown query parameter %q", param)
-		}
+	svcURL, err := NewServiceURL(opts)
+	if err != nil {
+		return nil, err
 	}
-
-	return nil
-}
-
-// DefaultIdentity is a Wire provider set that provides an Azure storage
-// account name, key, and SharedKeyCredential from environment variables.
-var DefaultIdentity = wire.NewSet(
-	DefaultAccountName,
-	DefaultAccountKey,
-	NewCredential,
-	wire.Bind(new(azblob.Credential), new(*azblob.SharedKeyCredential)),
-	wire.Value(azblob.PipelineOptions{}),
-)
-
-// SASTokenIdentity is a Wire provider set that provides an Azure storage
-// account name, SASToken, and anonymous credential from environment variables.
-var SASTokenIdentity = wire.NewSet(
-	DefaultAccountName,
-	DefaultSASToken,
-	azblob.NewAnonymousCredential,
-	wire.Value(azblob.PipelineOptions{}),
-)
-
-// AccountName is an Azure storage account name.
-type AccountName string
-
-// AccountKey is an Azure storage account key (primary or secondary).
-type AccountKey string
-
-// ClientID is an Azure client id
-type ClientId string
-
-// SASToken is an Azure shared access signature.
-// https://docs.microsoft.com/en-us/azure/storage/common/storage-dotnet-shared-access-signature-part-1
-type SASToken string
-
-// StorageDomain is an Azure Cloud Environment domain name to target
-// (i.e. blob.core.windows.net, blob.core.govcloudapi.net, blob.core.chinacloudapi.cn).
-// It is read from the AZURE_STORAGE_DOMAIN environment variable.
-type StorageDomain string
-
-// Protocol is an protocol to access Azure Blob Storage.
-// It must be "http" or "https".
-// It is read from the AZURE_STORAGE_PROTOCOL environment variable.
-type Protocol string
-
-// DefaultAccountName loads the Azure storage account name from the
-// AZURE_STORAGE_ACCOUNT environment variable.
-func DefaultAccountName() (AccountName, error) {
-	s := os.Getenv("AZURE_STORAGE_ACCOUNT")
-	if s == "" {
-		return "", errors.New("azureblob: environment variable AZURE_STORAGE_ACCOUNT not set")
+	client, err := o.MakeClient(svcURL, ContainerName(u.Host))
+	if err != nil {
+		return nil, err
 	}
-	return AccountName(s), nil
-}
-
-// DefaultAccountKey loads the Azure storage account key (primary or secondary)
-// from the AZURE_STORAGE_KEY environment variable.
-func DefaultAccountKey() (AccountKey, error) {
-	s := os.Getenv("AZURE_STORAGE_KEY")
-	if s == "" {
-		return "", errors.New("azureblob: environment variable AZURE_STORAGE_KEY not set")
-	}
-	return AccountKey(s), nil
-}
-
-// DefaultClientId loads the Azure client Id from the
-// AZURE_CLIENT_ID environment variable. Use of the client Id is optional
-func DefaultClientId() (ClientId, error) {
-	s := os.Getenv("AZURE_CLIENT_ID")
-	return ClientId(s), nil
-}
-
-// DefaultSASToken loads a Azure SAS token from the AZURE_STORAGE_SAS_TOKEN
-// environment variable.
-func DefaultSASToken() (SASToken, error) {
-	s := os.Getenv("AZURE_STORAGE_SAS_TOKEN")
-	if s == "" {
-		return "", errors.New("azureblob: environment variable AZURE_STORAGE_SAS_TOKEN not set")
-	}
-	return SASToken(s), nil
-}
-
-// DefaultStorageDomain loads the desired Azure Cloud to target from
-// the AZURE_STORAGE_DOMAIN environment variable.
-func DefaultStorageDomain() (StorageDomain, error) {
-	s := os.Getenv("AZURE_STORAGE_DOMAIN")
-	return StorageDomain(s), nil
-}
-
-// DefaultProtocol loads the protocol to access Azure Blob Storage from the
-// AZURE_STORAGE_PROTOCOL environment variable.
-func DefaultProtocol() (Protocol, error) {
-	s := os.Getenv("AZURE_STORAGE_PROTOCOL")
-	return Protocol(s), nil
-}
-
-// DefaultIsCDN loads the desired value of IsCDN from the
-// AZURE_STORAGE_IS_CDN environment variable.
-func DefaultIsCDN() (bool, error) {
-	s := os.Getenv("AZURE_STORAGE_IS_CDN")
-	if s == "" {
-		return false, nil
-	}
-	return strconv.ParseBool(s)
-}
-
-// NewCredential creates a SharedKeyCredential.
-func NewCredential(accountName AccountName, accountKey AccountKey) (*azblob.SharedKeyCredential, error) {
-	return azblob.NewSharedKeyCredential(string(accountName), string(accountKey))
-}
-
-// NewPipeline creates a Pipeline for making HTTP requests to Azure.
-func NewPipeline(credential azblob.Credential, opts azblob.PipelineOptions) pipeline.Pipeline {
-	opts.Telemetry.Value = useragent.AzureUserAgentPrefix("blob") + opts.Telemetry.Value
-	return azblob.NewPipeline(credential, opts)
+	return OpenBucket(ctx, client, &o.Options)
 }
 
 // bucket represents a Azure Storage Account Container, which handles read,
 // write and delete operations on objects within it.
 // See https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction.
 type bucket struct {
-	name         string
-	pageMarkers  map[string]azblob.Marker
-	serviceURL   *azblob.ServiceURL
-	containerURL azblob.ContainerURL
-	opts         *Options
+	client *container.Client
+	opts   *Options
+}
 
-	mu                    sync.Mutex // protect the fields below
-	credentialExpiration  time.Time
-	delegationCredentials azblob.StorageAccountCredential
+// NewDefaultClient returns an Azure Blob container client
+// with credentials from the environment as described in the package
+// docstring.
+func NewDefaultClient(svcURL ServiceURL, containerName ContainerName) (*container.Client, error) {
+	return newCredInfoFromEnv().NewClient(svcURL, containerName)
 }
 
 // OpenBucket returns a *blob.Bucket backed by Azure Storage Account. See the package
 // documentation for an example and
 // https://godoc.org/github.com/Azure/azure-storage-blob-go/azblob
 // for more details.
-func OpenBucket(ctx context.Context, pipeline pipeline.Pipeline, accountName AccountName, containerName string, opts *Options) (*blob.Bucket, error) {
-	b, err := openBucket(ctx, pipeline, accountName, containerName, opts)
+func OpenBucket(ctx context.Context, client *container.Client, opts *Options) (*blob.Bucket, error) {
+	b, err := openBucket(ctx, client, opts)
 	if err != nil {
 		return nil, err
 	}
 	return blob.NewBucket(b), nil
 }
 
-func openBucket(ctx context.Context, pipeline pipeline.Pipeline, accountName AccountName, containerName string, opts *Options) (*bucket, error) {
-	if pipeline == nil {
-		return nil, errors.New("azureblob.OpenBucket: pipeline is required")
-	}
-	if accountName == "" {
-		return nil, errors.New("azureblob.OpenBucket: accountName is required")
-	}
-	if containerName == "" {
-		return nil, errors.New("azureblob.OpenBucket: containerName is required")
+func openBucket(ctx context.Context, client *container.Client, opts *Options) (*bucket, error) {
+	if client == nil {
+		return nil, errors.New("azureblob.OpenBucket: client is required")
 	}
 	if opts == nil {
 		opts = &Options{}
 	}
-	if opts.StorageDomain == "" {
-		// If opts.StorageDomain is missing, use default domain.
-		opts.StorageDomain = "blob.core.windows.net"
-	}
-	switch opts.Protocol {
-	case "":
-		// If opts.Protocol is missing, use "https".
-		opts.Protocol = "https"
-	case "https", "http":
-	default:
-		return nil, errors.New("azureblob.OpenBucket: protocol must be http or https")
-	}
-	d := string(opts.StorageDomain)
-	var u string
-	// The URL structure of the local emulator is a bit different from the real one.
-	if strings.HasPrefix(d, "127.0.0.1") || strings.HasPrefix(d, "localhost") || opts.IsLocalEmulator {
-		u = fmt.Sprintf("%s://%s/%s", opts.Protocol, opts.StorageDomain, accountName) // http://127.0.0.1:10000/devstoreaccount1
-	} else if opts.IsCDN {
-		u = fmt.Sprintf("%s://%s", opts.Protocol, opts.StorageDomain) // https://mycdnname.azureedge.net
-	} else {
-		u = fmt.Sprintf("%s://%s.%s", opts.Protocol, accountName, opts.StorageDomain) // https://myaccount.blob.core.windows.net
-	}
-	blobURL, err := url.Parse(u)
-	if err != nil {
-		return nil, err
-	}
-	if opts.SASToken != "" {
-		// The Azure portal includes a leading "?" for the SASToken, which we
-		// don't want here.
-		blobURL.RawQuery = strings.TrimPrefix(string(opts.SASToken), "?")
-	}
-	serviceURL := azblob.NewServiceURL(*blobURL, pipeline)
 	return &bucket{
-		name:         containerName,
-		pageMarkers:  map[string]azblob.Marker{},
-		serviceURL:   &serviceURL,
-		containerURL: serviceURL.NewContainerURL(containerName),
-		opts:         opts,
+		client: client,
+		opts:   opts,
 	}, nil
 }
 
@@ -567,24 +463,15 @@ func (b *bucket) Close() error {
 // Copy implements driver.Copy.
 func (b *bucket) Copy(ctx context.Context, dstKey, srcKey string, opts *driver.CopyOptions) error {
 	dstKey = escapeKey(dstKey, false)
-	dstBlobURL := b.containerURL.NewBlobURL(dstKey)
+	dstBlobClient := b.client.NewBlobClient(dstKey)
 	srcKey = escapeKey(srcKey, false)
-	srcURL := b.containerURL.NewBlobURL(srcKey).URL()
-	md := azblob.Metadata{}
-	mac := azblob.ModifiedAccessConditions{}
-	bac := azblob.BlobAccessConditions{}
-	at := azblob.AccessTierNone
+	srcBlobClient := b.client.NewBlobClient(srcKey)
+	copyOptions := &azblobblob.StartCopyFromURLOptions{}
 	if opts.BeforeCopy != nil {
 		asFunc := func(i interface{}) bool {
 			switch v := i.(type) {
-			case *azblob.Metadata:
-				*v = md
-				return true
-			case **azblob.ModifiedAccessConditions:
-				*v = &mac
-				return true
-			case **azblob.BlobAccessConditions:
-				*v = &bac
+			case **azblobblob.StartCopyFromURLOptions:
+				*v = copyOptions
 				return true
 			}
 			return false
@@ -593,16 +480,16 @@ func (b *bucket) Copy(ctx context.Context, dstKey, srcKey string, opts *driver.C
 			return err
 		}
 	}
-	resp, err := dstBlobURL.StartCopyFromURL(ctx, srcURL, md, mac, bac, at, nil /* BlobTagsMap */)
+	resp, err := dstBlobClient.StartCopyFromURL(ctx, srcBlobClient.URL(), copyOptions)
 	if err != nil {
 		return err
 	}
-	copyStatus := resp.CopyStatus()
 	nErrors := 0
-	for copyStatus == azblob.CopyStatusPending {
+	copyStatus := *resp.CopyStatus
+	for copyStatus == azblobblob.CopyStatusTypePending {
 		// Poll until the copy is complete.
 		time.Sleep(500 * time.Millisecond)
-		propertiesResp, err := dstBlobURL.GetProperties(ctx, azblob.BlobAccessConditions{}, azblob.ClientProvidedKeyOptions{})
+		propertiesResp, err := dstBlobClient.GetProperties(ctx, nil)
 		if err != nil {
 			// A GetProperties failure may be transient, so allow a couple
 			// of them before giving up.
@@ -611,9 +498,9 @@ func (b *bucket) Copy(ctx context.Context, dstKey, srcKey string, opts *driver.C
 				return err
 			}
 		}
-		copyStatus = propertiesResp.CopyStatus()
+		copyStatus = *propertiesResp.CopyStatus
 	}
-	if copyStatus != azblob.CopyStatusSuccess {
+	if copyStatus != azblobblob.CopyStatusTypeSuccess {
 		return fmt.Errorf("Copy failed with status: %s", copyStatus)
 	}
 	return nil
@@ -622,8 +509,8 @@ func (b *bucket) Copy(ctx context.Context, dstKey, srcKey string, opts *driver.C
 // Delete implements driver.Delete.
 func (b *bucket) Delete(ctx context.Context, key string) error {
 	key = escapeKey(key, false)
-	blockBlobURL := b.containerURL.NewBlockBlobURL(key)
-	_, err := blockBlobURL.Delete(ctx, azblob.DeleteSnapshotsOptionInclude, azblob.BlobAccessConditions{})
+	blobClient := b.client.NewBlobClient(key)
+	_, err := blobClient.Delete(ctx, nil)
 	return err
 }
 
@@ -631,20 +518,23 @@ func (b *bucket) Delete(ctx context.Context, key string) error {
 type reader struct {
 	body  io.ReadCloser
 	attrs driver.ReaderAttributes
-	raw   *azblob.DownloadResponse
+	raw   *azblobblob.DownloadStreamResponse
 }
 
 func (r *reader) Read(p []byte) (int, error) {
 	return r.body.Read(p)
 }
+
 func (r *reader) Close() error {
 	return r.body.Close()
 }
+
 func (r *reader) Attributes() *driver.ReaderAttributes {
 	return &r.attrs
 }
+
 func (r *reader) As(i interface{}) bool {
-	p, ok := i.(*azblob.DownloadResponse)
+	p, ok := i.(*azblobblob.DownloadStreamResponse)
 	if !ok {
 		return false
 	}
@@ -655,22 +545,18 @@ func (r *reader) As(i interface{}) bool {
 // NewRangeReader implements driver.NewRangeReader.
 func (b *bucket) NewRangeReader(ctx context.Context, key string, offset, length int64, opts *driver.ReaderOptions) (driver.Reader, error) {
 	key = escapeKey(key, false)
-	blockBlobURL := b.containerURL.NewBlockBlobURL(key)
-	blockBlobURLp := &blockBlobURL
-	accessConditions := &azblob.BlobAccessConditions{}
-
-	end := length
-	if end < 0 {
-		end = azblob.CountToEnd
+	blobClient := b.client.NewBlobClient(key)
+	downloadOpts := azblob.DownloadStreamOptions{}
+	if offset != 0 {
+		downloadOpts.Range.Offset = offset
+	}
+	if length >= 0 {
+		downloadOpts.Range.Count = length
 	}
 	if opts.BeforeRead != nil {
 		asFunc := func(i interface{}) bool {
-			if p, ok := i.(**azblob.BlockBlobURL); ok {
-				*p = blockBlobURLp
-				return true
-			}
-			if p, ok := i.(**azblob.BlobAccessConditions); ok {
-				*p = accessConditions
+			if p, ok := i.(**azblobblob.DownloadStreamOptions); ok {
+				*p = &downloadOpts
 				return true
 			}
 			return false
@@ -679,34 +565,36 @@ func (b *bucket) NewRangeReader(ctx context.Context, key string, offset, length 
 			return nil, err
 		}
 	}
-
-	blobDownloadResponse, err := blockBlobURLp.Download(ctx, offset, end, *accessConditions, false, azblob.ClientProvidedKeyOptions{})
+	blobDownloadResponse, err := blobClient.DownloadStream(ctx, &downloadOpts)
 	if err != nil {
 		return nil, err
 	}
 	attrs := driver.ReaderAttributes{
-		ContentType: blobDownloadResponse.ContentType(),
-		Size:        getSize(blobDownloadResponse.ContentLength(), blobDownloadResponse.ContentRange()),
-		ModTime:     blobDownloadResponse.LastModified(),
+		ContentType: to.String(blobDownloadResponse.ContentType),
+		Size:        getSize(blobDownloadResponse.ContentLength, to.String(blobDownloadResponse.ContentRange)),
+		ModTime:     *blobDownloadResponse.LastModified,
 	}
 	var body io.ReadCloser
 	if length == 0 {
 		body = http.NoBody
 	} else {
-		body = blobDownloadResponse.Body(azblob.RetryReaderOptions{MaxRetryRequests: defaultMaxDownloadRetryRequests})
+		body = blobDownloadResponse.Body
 	}
 	return &reader{
 		body:  body,
 		attrs: attrs,
-		raw:   blobDownloadResponse,
+		raw:   &blobDownloadResponse,
 	}, nil
 }
 
-func getSize(contentLength int64, contentRange string) int64 {
+func getSize(contentLength *int64, contentRange string) int64 {
+	var size int64
 	// Default size to ContentLength, but that's incorrect for partial-length reads,
 	// where ContentLength refers to the size of the returned Body, not the entire
 	// size of the blob. ContentRange has the full size.
-	size := contentLength
+	if contentLength != nil {
+		size = *contentLength
+	}
 	if contentRange != "" {
 		// Sample: bytes 10-14/27 (where 27 is the full size).
 		parts := strings.Split(contentRange, "/")
@@ -721,19 +609,19 @@ func getSize(contentLength int64, contentRange string) int64 {
 
 // As implements driver.As.
 func (b *bucket) As(i interface{}) bool {
-	p, ok := i.(**azblob.ContainerURL)
+	p, ok := i.(**container.Client)
 	if !ok {
 		return false
 	}
-	*p = &b.containerURL
+	*p = b.client
 	return true
 }
 
 // As implements driver.ErrorAs.
 func (b *bucket) ErrorAs(err error, i interface{}) bool {
 	switch v := err.(type) {
-	case azblob.StorageError:
-		if p, ok := i.(*azblob.StorageError); ok {
+	case *azcore.ResponseError:
+		if p, ok := i.(**azcore.ResponseError); ok {
 			*p = v
 			return true
 		}
@@ -742,59 +630,69 @@ func (b *bucket) ErrorAs(err error, i interface{}) bool {
 }
 
 func (b *bucket) ErrorCode(err error) gcerrors.ErrorCode {
-	serr, ok := err.(azblob.StorageError)
-	switch {
-	case !ok:
-		// This happens with an invalid storage account name; the host
-		// is something like invalidstorageaccount.blob.core.windows.net.
-		if strings.Contains(err.Error(), "no such host") {
+	if bloberror.HasCode(err, bloberror.BlobNotFound) {
+		return gcerrors.NotFound
+	}
+	if bloberror.HasCode(err, bloberror.AuthenticationFailed) {
+		return gcerrors.PermissionDenied
+	}
+	var rErr *azcore.ResponseError
+	if errors.As(err, &rErr) {
+		code := bloberror.Code(rErr.ErrorCode)
+		if code == bloberror.BlobNotFound || rErr.StatusCode == 404 {
 			return gcerrors.NotFound
 		}
-		return gcerrors.Unknown
-	case serr.ServiceCode() == azblob.ServiceCodeBlobNotFound || serr.Response().StatusCode == 404:
-		// Check and fail both the SDK ServiceCode and the Http Response Code for NotFound
-		return gcerrors.NotFound
-	case serr.ServiceCode() == azblob.ServiceCodeAuthenticationFailed:
-		return gcerrors.PermissionDenied
-	default:
-		return gcerrors.Unknown
+		if code == bloberror.AuthenticationFailed {
+			return gcerrors.PermissionDenied
+		}
 	}
+	if strings.Contains(err.Error(), "no such host") {
+		// This happens with an invalid storage account name; the host
+		// is something like invalidstorageaccount.blob.core.windows.net.
+		return gcerrors.NotFound
+	}
+	return gcerrors.Unknown
 }
 
 // Attributes implements driver.Attributes.
 func (b *bucket) Attributes(ctx context.Context, key string) (*driver.Attributes, error) {
 	key = escapeKey(key, false)
-	blockBlobURL := b.containerURL.NewBlockBlobURL(key)
-	blobPropertiesResponse, err := blockBlobURL.GetProperties(ctx, azblob.BlobAccessConditions{}, azblob.ClientProvidedKeyOptions{})
+	blobClient := b.client.NewBlobClient(key)
+	blobPropertiesResponse, err := blobClient.GetProperties(ctx, nil)
 	if err != nil {
 		return nil, err
 	}
 
-	azureMD := blobPropertiesResponse.NewMetadata()
-	md := make(map[string]string, len(azureMD))
-	for k, v := range azureMD {
+	md := make(map[string]string, len(blobPropertiesResponse.Metadata))
+	for k, v := range blobPropertiesResponse.Metadata {
 		// See the package comments for more details on escaping of metadata
 		// keys & values.
-		md[escape.HexUnescape(k)] = escape.URLUnescape(v)
+		if v != nil {
+			md[escape.HexUnescape(k)] = escape.URLUnescape(*v)
+		}
+	}
+	var eTag string
+	if blobPropertiesResponse.ETag != nil {
+		eTag = string(*blobPropertiesResponse.ETag)
 	}
 	return &driver.Attributes{
-		CacheControl:       blobPropertiesResponse.CacheControl(),
-		ContentDisposition: blobPropertiesResponse.ContentDisposition(),
-		ContentEncoding:    blobPropertiesResponse.ContentEncoding(),
-		ContentLanguage:    blobPropertiesResponse.ContentLanguage(),
-		ContentType:        blobPropertiesResponse.ContentType(),
-		Size:               blobPropertiesResponse.ContentLength(),
-		CreateTime:         blobPropertiesResponse.CreationTime(),
-		ModTime:            blobPropertiesResponse.LastModified(),
-		MD5:                blobPropertiesResponse.ContentMD5(),
-		ETag:               fmt.Sprintf("%v", blobPropertiesResponse.ETag()),
+		CacheControl:       to.String(blobPropertiesResponse.CacheControl),
+		ContentDisposition: to.String(blobPropertiesResponse.ContentDisposition),
+		ContentEncoding:    to.String(blobPropertiesResponse.ContentEncoding),
+		ContentLanguage:    to.String(blobPropertiesResponse.ContentLanguage),
+		ContentType:        to.String(blobPropertiesResponse.ContentType),
+		Size:               to.Int64(blobPropertiesResponse.ContentLength),
+		CreateTime:         *blobPropertiesResponse.CreationTime,
+		ModTime:            *blobPropertiesResponse.LastModified,
+		MD5:                blobPropertiesResponse.ContentMD5,
+		ETag:               eTag,
 		Metadata:           md,
 		AsFunc: func(i interface{}) bool {
-			p, ok := i.(*azblob.BlobGetPropertiesResponse)
+			p, ok := i.(*azblobblob.GetPropertiesResponse)
 			if !ok {
 				return false
 			}
-			*p = *blobPropertiesResponse
+			*p = blobPropertiesResponse
 			return true
 		},
 	}, nil
@@ -807,20 +705,22 @@ func (b *bucket) ListPaged(ctx context.Context, opts *driver.ListOptions) (*driv
 		pageSize = defaultPageSize
 	}
 
-	marker := azblob.Marker{}
+	var marker *string
 	if len(opts.PageToken) > 0 {
-		if m, ok := b.pageMarkers[string(opts.PageToken)]; ok {
-			marker = m
-		}
+		pt := string(opts.PageToken)
+		marker = &pt
 	}
 
-	azOpts := azblob.ListBlobsSegmentOptions{
-		MaxResults: int32(pageSize),
-		Prefix:     escapeKey(opts.Prefix, true),
+	pageSize32 := int32(pageSize)
+	prefix := escapeKey(opts.Prefix, true)
+	azOpts := container.ListBlobsHierarchyOptions{
+		MaxResults: &pageSize32,
+		Prefix:     &prefix,
+		Marker:     marker,
 	}
 	if opts.BeforeList != nil {
 		asFunc := func(i interface{}) bool {
-			p, ok := i.(**azblob.ListBlobsSegmentOptions)
+			p, ok := i.(**container.ListBlobsHierarchyOptions)
 			if !ok {
 				return false
 			}
@@ -831,54 +731,50 @@ func (b *bucket) ListPaged(ctx context.Context, opts *driver.ListOptions) (*driv
 			return nil, err
 		}
 	}
-	listBlob, err := b.containerURL.ListBlobsHierarchySegment(ctx, marker, escapeKey(opts.Delimiter, true), azOpts)
+	azPager := b.client.NewListBlobsHierarchyPager(escapeKey(opts.Delimiter, true), &azOpts)
+	resp, err := azPager.NextPage(ctx)
 	if err != nil {
 		return nil, err
 	}
-
 	page := &driver.ListPage{}
 	page.Objects = []*driver.ListObject{}
-	for _, blobPrefix := range listBlob.Segment.BlobPrefixes {
+	segment := resp.ListBlobsHierarchySegmentResponse.Segment
+	for _, blobPrefix := range segment.BlobPrefixes {
 		blobPrefix := blobPrefix // capture loop variable for use in AsFunc
 		page.Objects = append(page.Objects, &driver.ListObject{
-			Key:   unescapeKey(blobPrefix.Name),
+			Key:   unescapeKey(to.String(blobPrefix.Name)),
 			Size:  0,
 			IsDir: true,
 			AsFunc: func(i interface{}) bool {
-				p, ok := i.(*azblob.BlobPrefix)
-				if !ok {
-					return false
+				v, ok := i.(*container.BlobPrefix)
+				if ok {
+					*v = *blobPrefix
 				}
-				*p = blobPrefix
-				return true
-			}})
+				return ok
+			},
+		})
 	}
-
-	for _, blobInfo := range listBlob.Segment.BlobItems {
+	for _, blobInfo := range segment.BlobItems {
 		blobInfo := blobInfo // capture loop variable for use in AsFunc
 		page.Objects = append(page.Objects, &driver.ListObject{
-			Key:     unescapeKey(blobInfo.Name),
-			ModTime: blobInfo.Properties.LastModified,
+			Key:     unescapeKey(to.String(blobInfo.Name)),
+			ModTime: *blobInfo.Properties.LastModified,
 			Size:    *blobInfo.Properties.ContentLength,
 			MD5:     blobInfo.Properties.ContentMD5,
 			IsDir:   false,
 			AsFunc: func(i interface{}) bool {
-				p, ok := i.(*azblob.BlobItemInternal)
-				if !ok {
-					return false
+				v, ok := i.(*container.BlobItem)
+				if ok {
+					*v = *blobInfo
 				}
-				*p = blobInfo
-				return true
+				return ok
 			},
 		})
 	}
-
-	if listBlob.NextMarker.NotDone() {
-		token := uuid.New().String()
-		b.pageMarkers[token] = listBlob.NextMarker
-		page.NextPageToken = []byte(token)
+	if resp.NextMarker != nil {
+		page.NextPageToken = []byte(*resp.NextMarker)
 	}
-	if len(listBlob.Segment.BlobPrefixes) > 0 && len(listBlob.Segment.BlobItems) > 0 {
+	if len(segment.BlobPrefixes) > 0 && len(segment.BlobItems) > 0 {
 		sort.Slice(page.Objects, func(i, j int) bool {
 			return page.Objects[i].Key < page.Objects[j].Key
 		})
@@ -886,52 +782,15 @@ func (b *bucket) ListPaged(ctx context.Context, opts *driver.ListOptions) (*driv
 	return page, nil
 }
 
-func (b *bucket) refreshDelegationCredentials(ctx context.Context) (azblob.StorageAccountCredential, error) {
-	b.mu.Lock()
-	defer b.mu.Unlock()
-
-	if time.Now().UTC().After(b.credentialExpiration) {
-		validPeriod := 48 * time.Hour
-		currentTime := time.Now().UTC()
-		expires := currentTime.Add(validPeriod)
-		keyInfo := azblob.NewKeyInfo(currentTime, expires)
-
-		creds, err := b.serviceURL.GetUserDelegationCredential(ctx, keyInfo, nil /* default timeout */, nil /* no request id */)
-		if err != nil {
-			return nil, err
-		}
-
-		b.credentialExpiration = expires
-		b.delegationCredentials = creds
-	}
-
-	return b.delegationCredentials, nil
-}
-
 // SignedURL implements driver.SignedURL.
 func (b *bucket) SignedURL(ctx context.Context, key string, opts *driver.SignedURLOptions) (string, error) {
-	var credential azblob.StorageAccountCredential
-	if b.opts.Credential != nil {
-		credential = b.opts.Credential
-	} else if isMSIEnvironment := adal.MSIAvailable(ctx, adal.CreateSender()); isMSIEnvironment {
-		var err error
-		credential, err = b.refreshDelegationCredentials(ctx)
-		if err != nil {
-			return "", gcerr.New(gcerr.Internal, err, 1, "azureblob: unable to generate User Delegation Credential")
-		}
-	} else {
-		return "", gcerr.New(gcerr.Unimplemented, nil, 1, "azureblob: to use SignedURL, you must call OpenBucket with a non-nil Options.Credential")
-	}
-
 	if opts.ContentType != "" || opts.EnforceAbsentContentType {
 		return "", gcerr.New(gcerr.Unimplemented, nil, 1, "azureblob: does not enforce Content-Type on PUT")
 	}
 
 	key = escapeKey(key, false)
-	blockBlobURL := b.containerURL.NewBlockBlobURL(key)
-	srcBlobParts := azblob.NewBlobURLParts(blockBlobURL.URL())
-
-	perms := azblob.BlobSASPermissions{}
+	blobClient := b.client.NewBlobClient(key)
+	perms := sas.BlobPermissions{}
 	switch opts.Method {
 	case http.MethodGet:
 		perms.Read = true
@@ -943,18 +802,12 @@ func (b *bucket) SignedURL(ctx context.Context, key string, opts *driver.SignedU
 	default:
 		return "", fmt.Errorf("unsupported Method %s", opts.Method)
 	}
-	signVals := &azblob.BlobSASSignatureValues{
-		Protocol:      azblob.SASProtocolHTTPS,
-		ExpiryTime:    time.Now().UTC().Add(opts.Expiry),
-		ContainerName: b.name,
-		BlobName:      srcBlobParts.BlobName,
-		Permissions:   perms.String(),
-	}
+
 	if opts.BeforeSign != nil {
 		asFunc := func(i interface{}) bool {
-			v, ok := i.(**azblob.BlobSASSignatureValues)
+			v, ok := i.(**sas.BlobPermissions)
 			if ok {
-				*v = signVals
+				*v = &perms
 			}
 			return ok
 		}
@@ -962,22 +815,27 @@ func (b *bucket) SignedURL(ctx context.Context, key string, opts *driver.SignedU
 			return "", err
 		}
 	}
-	var err error
-	if srcBlobParts.SAS, err = signVals.NewSASQueryParameters(credential); err != nil {
-		return "", err
-	}
-	srcBlobURLWithSAS := srcBlobParts.URL()
-	return srcBlobURLWithSAS.String(), nil
+	start := time.Now().UTC()
+	expiry := start.Add(opts.Expiry)
+	return blobClient.GetSASURL(perms, expiry, &azblobblob.GetSASURLOptions{StartTime: &start})
 }
 
 type writer struct {
-	ctx          context.Context
-	blockBlobURL *azblob.BlockBlobURL
-	uploadOpts   *azblob.UploadStreamToBlockBlobOptions
+	ctx        context.Context
+	client     *blockblob.Client
+	uploadOpts *azblob.UploadStreamOptions
 
-	w     *io.PipeWriter
-	donec chan struct{}
-	err   error
+	// Ends of an io.Pipe, created when the first byte is written.
+	pw *io.PipeWriter
+	pr *io.PipeReader
+
+	// Alternatively, upload is set to true when Upload was
+	// used to upload data.
+	upload bool
+
+	donec chan struct{} // closed when done writing
+	// The following fields will be written before donec closes:
+	err error
 }
 
 // escapeKey does all required escaping for UTF-8 strings to work with Azure.
@@ -990,10 +848,10 @@ func escapeKey(key string, isPrefix bool) string {
 		case c == '\\':
 			return true
 		// Azure doesn't handle these characters (determined via experimentation).
-		case c < 32 || c == 127:
+		case c < 32 || c == 34 || c == 35 || c == 37 || c == 63 || c == 127:
 			return true
-			// Escape trailing "/" for full keys, otherwise Azure can't address them
-			// consistently.
+		// Escape trailing "/" for full keys, otherwise Azure can't address them
+		// consistently.
 		case !isPrefix && i == len(key)-1 && c == '/':
 			return true
 		// For "../", escape the trailing slash.
@@ -1010,9 +868,9 @@ func unescapeKey(key string) string {
 }
 
 // NewTypedWriter implements driver.NewTypedWriter.
-func (b *bucket) NewTypedWriter(ctx context.Context, key string, contentType string, opts *driver.WriterOptions) (driver.Writer, error) {
+func (b *bucket) NewTypedWriter(ctx context.Context, key, contentType string, opts *driver.WriterOptions) (driver.Writer, error) {
 	key = escapeKey(key, false)
-	blockBlobURL := b.containerURL.NewBlockBlobURL(key)
+	blobClient := b.client.NewBlockBlobClient(key)
 	if opts.BufferSize == 0 {
 		opts.BufferSize = defaultUploadBlockSize
 	}
@@ -1020,7 +878,7 @@ func (b *bucket) NewTypedWriter(ctx context.Context, key string, contentType str
 		opts.MaxConcurrency = defaultUploadBuffers
 	}
 
-	md := make(map[string]string, len(opts.Metadata))
+	md := make(map[string]*string, len(opts.Metadata))
 	for k, v := range opts.Metadata {
 		// See the package comments for more details on escaping of metadata
 		// keys & values.
@@ -1039,24 +897,25 @@ func (b *bucket) NewTypedWriter(ctx context.Context, key string, contentType str
 		if _, ok := md[e]; ok {
 			return nil, fmt.Errorf("duplicate keys after escaping: %q => %q", k, e)
 		}
-		md[e] = escape.URLEscape(v)
+		escaped := escape.URLEscape(v)
+		md[e] = &escaped
 	}
-	uploadOpts := &azblob.UploadStreamToBlockBlobOptions{
-		BufferSize: opts.BufferSize,
-		MaxBuffers: opts.MaxConcurrency,
-		Metadata:   md,
-		BlobHTTPHeaders: azblob.BlobHTTPHeaders{
-			CacheControl:       opts.CacheControl,
-			ContentDisposition: opts.ContentDisposition,
-			ContentEncoding:    opts.ContentEncoding,
-			ContentLanguage:    opts.ContentLanguage,
-			ContentMD5:         opts.ContentMD5,
-			ContentType:        contentType,
+	uploadOpts := &azblob.UploadStreamOptions{
+		BlockSize:   int64(opts.BufferSize),
+		Concurrency: opts.MaxConcurrency,
+		Metadata:    md,
+		HTTPHeaders: &azblobblob.HTTPHeaders{
+			BlobCacheControl:       &opts.CacheControl,
+			BlobContentDisposition: &opts.ContentDisposition,
+			BlobContentEncoding:    &opts.ContentEncoding,
+			BlobContentLanguage:    &opts.ContentLanguage,
+			BlobContentMD5:         opts.ContentMD5,
+			BlobContentType:        &contentType,
 		},
 	}
 	if opts.BeforeWrite != nil {
 		asFunc := func(i interface{}) bool {
-			p, ok := i.(**azblob.UploadStreamToBlockBlobOptions)
+			p, ok := i.(**azblob.UploadStreamOptions)
 			if !ok {
 				return false
 			}
@@ -1068,57 +927,71 @@ func (b *bucket) NewTypedWriter(ctx context.Context, key string, contentType str
 		}
 	}
 	return &writer{
-		ctx:          ctx,
-		blockBlobURL: &blockBlobURL,
-		uploadOpts:   uploadOpts,
-		donec:        make(chan struct{}),
+		ctx:        ctx,
+		client:     blobClient,
+		uploadOpts: uploadOpts,
+		donec:      make(chan struct{}),
 	}, nil
 }
 
-// Write appends p to w. User must call Close to close the w after done writing.
+// Write appends p to w.pw. User must call Close to close the w after done writing.
 func (w *writer) Write(p []byte) (int, error) {
+	// Avoid opening the pipe for a zero-length write;
+	// the concrete can do these for empty blobs.
 	if len(p) == 0 {
 		return 0, nil
 	}
-	if w.w == nil {
-		pr, pw := io.Pipe()
-		w.w = pw
-		if err := w.open(pr); err != nil {
-			return 0, err
-		}
+	if w.pw == nil {
+		// We'll write into pw and use pr as an io.Reader for the
+		// Upload call to Azure.
+		w.pr, w.pw = io.Pipe()
+		w.open(w.pr, true)
 	}
-	return w.w.Write(p)
+	return w.pw.Write(p)
 }
 
-func (w *writer) open(pr *io.PipeReader) error {
+// Upload reads from r. Per the driver, it is guaranteed to be the only
+// write call for this writer.
+func (w *writer) Upload(r io.Reader) error {
+	w.upload = true
+	w.open(r, false)
+	return nil
+}
+
+// r may be nil if we're Closing and no data was written.
+// If closePipeOnError is true, w.pr will be closed if there's an
+// error uploading to Azure.
+func (w *writer) open(r io.Reader, closePipeOnError bool) {
 	go func() {
 		defer close(w.donec)
 
-		var body io.Reader
-		if pr == nil {
-			body = http.NoBody
-		} else {
-			body = pr
+		if r == nil {
+			r = http.NoBody
 		}
-		_, w.err = azblob.UploadStreamToBlockBlob(w.ctx, body, *w.blockBlobURL, *w.uploadOpts)
+		_, w.err = w.client.UploadStream(w.ctx, r, w.uploadOpts)
 		if w.err != nil {
-			if pr != nil {
-				pr.CloseWithError(w.err)
+			if closePipeOnError {
+				w.pr.CloseWithError(w.err)
+				w.pr = nil
 			}
-			return
 		}
 	}()
-	return nil
 }
 
 // Close completes the writer and closes it. Any error occurring during write will
 // be returned. If a writer is closed before any Write is called, Close will
 // create an empty file at the given key.
 func (w *writer) Close() error {
-	if w.w == nil {
-		w.open(nil)
-	} else if err := w.w.Close(); err != nil {
-		return err
+	if !w.upload {
+		if w.pr != nil {
+			defer w.pr.Close()
+		}
+		if w.pw == nil {
+			// We never got any bytes written. We'll write an http.NoBody.
+			w.open(nil, false)
+		} else if err := w.pw.Close(); err != nil {
+			return err
+		}
 	}
 	<-w.donec
 	return w.err

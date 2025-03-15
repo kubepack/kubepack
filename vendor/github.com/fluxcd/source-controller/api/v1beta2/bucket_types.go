@@ -33,22 +33,48 @@ const (
 )
 
 const (
+	// BucketProviderGeneric for any S3 API compatible storage Bucket.
+	BucketProviderGeneric string = apiv1.BucketProviderGeneric
+	// BucketProviderAmazon for an AWS S3 object storage Bucket.
+	// Provides support for retrieving credentials from the AWS EC2 service.
+	BucketProviderAmazon string = apiv1.BucketProviderAmazon
+	// BucketProviderGoogle for a Google Cloud Storage Bucket.
+	// Provides support for authentication using a workload identity.
+	BucketProviderGoogle string = apiv1.BucketProviderGoogle
+	// BucketProviderAzure for an Azure Blob Storage Bucket.
+	// Provides support for authentication using a Service Principal,
+	// Managed Identity or Shared Key.
+	BucketProviderAzure string = apiv1.BucketProviderAzure
+
 	// GenericBucketProvider for any S3 API compatible storage Bucket.
-	GenericBucketProvider string = "generic"
+	//
+	// Deprecated: use BucketProviderGeneric.
+	GenericBucketProvider string = apiv1.BucketProviderGeneric
 	// AmazonBucketProvider for an AWS S3 object storage Bucket.
 	// Provides support for retrieving credentials from the AWS EC2 service.
-	AmazonBucketProvider string = "aws"
+	//
+	// Deprecated: use BucketProviderAmazon.
+	AmazonBucketProvider string = apiv1.BucketProviderAmazon
 	// GoogleBucketProvider for a Google Cloud Storage Bucket.
 	// Provides support for authentication using a workload identity.
-	GoogleBucketProvider string = "gcp"
+	//
+	// Deprecated: use BucketProviderGoogle.
+	GoogleBucketProvider string = apiv1.BucketProviderGoogle
 	// AzureBucketProvider for an Azure Blob Storage Bucket.
 	// Provides support for authentication using a Service Principal,
 	// Managed Identity or Shared Key.
-	AzureBucketProvider string = "azure"
+	//
+	// Deprecated: use BucketProviderAzure.
+	AzureBucketProvider string = apiv1.BucketProviderAzure
 )
 
 // BucketSpec specifies the required configuration to produce an Artifact for
 // an object storage bucket.
+// +kubebuilder:validation:XValidation:rule="self.provider == 'aws' || self.provider == 'generic' || !has(self.sts)", message="STS configuration is only supported for the 'aws' and 'generic' Bucket providers"
+// +kubebuilder:validation:XValidation:rule="self.provider != 'aws' || !has(self.sts) || self.sts.provider == 'aws'", message="'aws' is the only supported STS provider for the 'aws' Bucket provider"
+// +kubebuilder:validation:XValidation:rule="self.provider != 'generic' || !has(self.sts) || self.sts.provider == 'ldap'", message="'ldap' is the only supported STS provider for the 'generic' Bucket provider"
+// +kubebuilder:validation:XValidation:rule="!has(self.sts) || self.sts.provider != 'aws' || !has(self.sts.secretRef)", message="spec.sts.secretRef is not required for the 'aws' STS provider"
+// +kubebuilder:validation:XValidation:rule="!has(self.sts) || self.sts.provider != 'aws' || !has(self.sts.certSecretRef)", message="spec.sts.certSecretRef is not required for the 'aws' STS provider"
 type BucketSpec struct {
 	// Provider of the object storage bucket.
 	// Defaults to 'generic', which expects an S3 (API) compatible object
@@ -66,6 +92,14 @@ type BucketSpec struct {
 	// +required
 	Endpoint string `json:"endpoint"`
 
+	// STS specifies the required configuration to use a Security Token
+	// Service for fetching temporary credentials to authenticate in a
+	// Bucket provider.
+	//
+	// This field is only supported for the `aws` and `generic` providers.
+	// +optional
+	STS *BucketSTSSpec `json:"sts,omitempty"`
+
 	// Insecure allows connecting to a non-TLS HTTP Endpoint.
 	// +optional
 	Insecure bool `json:"insecure,omitempty"`
@@ -82,6 +116,28 @@ type BucketSpec struct {
 	// for the Bucket.
 	// +optional
 	SecretRef *meta.LocalObjectReference `json:"secretRef,omitempty"`
+
+	// CertSecretRef can be given the name of a Secret containing
+	// either or both of
+	//
+	// - a PEM-encoded client certificate (`tls.crt`) and private
+	// key (`tls.key`);
+	// - a PEM-encoded CA certificate (`ca.crt`)
+	//
+	// and whichever are supplied, will be used for connecting to the
+	// bucket. The client cert and key are useful if you are
+	// authenticating with a certificate; the CA cert is useful if
+	// you are using a self-signed server certificate. The Secret must
+	// be of type `Opaque` or `kubernetes.io/tls`.
+	//
+	// This field is only supported for the `generic` provider.
+	// +optional
+	CertSecretRef *meta.LocalObjectReference `json:"certSecretRef,omitempty"`
+
+	// ProxySecretRef specifies the Secret containing the proxy configuration
+	// to use while communicating with the Bucket server.
+	// +optional
+	ProxySecretRef *meta.LocalObjectReference `json:"proxySecretRef,omitempty"`
 
 	// Interval at which the Bucket Endpoint is checked for updates.
 	// This interval is approximate and may be subject to jitter to ensure
@@ -114,6 +170,45 @@ type BucketSpec struct {
 	// NOTE: Not implemented, provisional as of https://github.com/fluxcd/flux2/pull/2092
 	// +optional
 	AccessFrom *acl.AccessFrom `json:"accessFrom,omitempty"`
+}
+
+// BucketSTSSpec specifies the required configuration to use a Security Token
+// Service for fetching temporary credentials to authenticate in a Bucket
+// provider.
+type BucketSTSSpec struct {
+	// Provider of the Security Token Service.
+	// +kubebuilder:validation:Enum=aws;ldap
+	// +required
+	Provider string `json:"provider"`
+
+	// Endpoint is the HTTP/S endpoint of the Security Token Service from
+	// where temporary credentials will be fetched.
+	// +required
+	// +kubebuilder:validation:Pattern="^(http|https)://.*$"
+	Endpoint string `json:"endpoint"`
+
+	// SecretRef specifies the Secret containing authentication credentials
+	// for the STS endpoint. This Secret must contain the fields `username`
+	// and `password` and is supported only for the `ldap` provider.
+	// +optional
+	SecretRef *meta.LocalObjectReference `json:"secretRef,omitempty"`
+
+	// CertSecretRef can be given the name of a Secret containing
+	// either or both of
+	//
+	// - a PEM-encoded client certificate (`tls.crt`) and private
+	// key (`tls.key`);
+	// - a PEM-encoded CA certificate (`ca.crt`)
+	//
+	// and whichever are supplied, will be used for connecting to the
+	// STS endpoint. The client cert and key are useful if you are
+	// authenticating with a certificate; the CA cert is useful if
+	// you are using a self-signed server certificate. The Secret must
+	// be of type `Opaque` or `kubernetes.io/tls`.
+	//
+	// This field is only supported for the `ldap` provider.
+	// +optional
+	CertSecretRef *meta.LocalObjectReference `json:"certSecretRef,omitempty"`
 }
 
 // BucketStatus records the observed state of a Bucket.
@@ -175,9 +270,9 @@ func (in *Bucket) GetArtifact() *apiv1.Artifact {
 }
 
 // +genclient
-// +kubebuilder:storageversion
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
+// +kubebuilder:deprecatedversion:warning="v1beta2 Bucket is deprecated, upgrade to v1"
 // +kubebuilder:printcolumn:name="Endpoint",type=string,JSONPath=`.spec.endpoint`
 // +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp",description=""
 // +kubebuilder:printcolumn:name="Ready",type="string",JSONPath=".status.conditions[?(@.type==\"Ready\")].status",description=""

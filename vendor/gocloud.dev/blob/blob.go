@@ -18,6 +18,9 @@
 //
 // See https://gocloud.dev/howto/blob/ for a detailed how-to guide.
 //
+// *blob.Bucket implements io/fs.FS and io/fs.SubFS, so it can be used with
+// functions in that package.
+//
 // # Errors
 //
 // The errors returned from this package can be inspected in several ways:
@@ -67,7 +70,6 @@ import (
 	"fmt"
 	"hash"
 	"io"
-	"io/ioutil"
 	"log"
 	"mime"
 	"net/http"
@@ -125,12 +127,11 @@ func (r *Reader) Read(p []byte) (int, error) {
 		// to (SeekEnd, 0) and use the return value to determine the size
 		// of the data, then Seek back to (SeekStart, 0).
 		saved := r.savedOffset
-		r.savedOffset = -1
 		if r.relativeOffset == saved {
 			// Nope! We're at the same place we left off.
+			r.savedOffset = -1
 		} else {
 			// Yep! We've changed the offset. Recreate the reader.
-			_ = r.r.Close()
 			length := r.baseLength
 			if length >= 0 {
 				length -= r.relativeOffset
@@ -139,11 +140,13 @@ func (r *Reader) Read(p []byte) (int, error) {
 					return 0, gcerr.Newf(gcerr.Internal, nil, "blob: invalid Seek (base length %d, relative offset %d)", r.baseLength, r.relativeOffset)
 				}
 			}
-			var err error
-			r.r, err = r.b.NewRangeReader(r.ctx, r.key, r.baseOffset+r.relativeOffset, length, r.dopts)
+			newR, err := r.b.NewRangeReader(r.ctx, r.key, r.baseOffset+r.relativeOffset, length, r.dopts)
 			if err != nil {
 				return 0, wrapError(r.b, err, r.key)
 			}
+			_ = r.r.Close()
+			r.savedOffset = -1
+			r.r = newR
 		}
 	}
 	n, err := r.r.Read(p)
@@ -233,8 +236,40 @@ func (r *Reader) As(i interface{}) bool {
 //
 // It implements the io.WriterTo interface.
 func (r *Reader) WriteTo(w io.Writer) (int64, error) {
+	// If the writer has a ReaderFrom method, use it to do the copy.
+	// Don't do this for our own *Writer to avoid infinite recursion.
+	// Avoids an allocation and a copy.
+	switch w.(type) {
+	case *Writer:
+	default:
+		if rf, ok := w.(io.ReaderFrom); ok {
+			n, err := rf.ReadFrom(r)
+			return n, err
+		}
+	}
+
 	_, nw, err := readFromWriteTo(r, w)
 	return nw, err
+}
+
+// downloadAndClose is similar to WriteTo, but ensures it's the only read.
+// This pattern is more optimal for some drivers.
+func (r *Reader) downloadAndClose(w io.Writer) (err error) {
+	if r.bytesRead != 0 {
+		// Shouldn't happen.
+		return gcerr.Newf(gcerr.Internal, nil, "blob: downloadAndClose isn't the first read")
+	}
+	driverDownloader, ok := r.r.(driver.Downloader)
+	if ok {
+		err = driverDownloader.Download(w)
+	} else {
+		_, err = r.WriteTo(w)
+	}
+	cerr := r.Close()
+	if err == nil && cerr != nil {
+		err = cerr
+	}
+	return err
 }
 
 // readFromWriteTo is a helper for ReadFrom and WriteTo.
@@ -242,6 +277,8 @@ func (r *Reader) WriteTo(w io.Writer) (int64, error) {
 // It returns the number of bytes read from r and the number of bytes
 // written to w.
 func readFromWriteTo(r io.Reader, w io.Writer) (int64, int64, error) {
+	// Note: can't use io.Copy because it will try to use r.WriteTo
+	// or w.WriteTo, which is recursive in this context.
 	buf := make([]byte, 1024)
 	var totalRead, totalWritten int64
 	for {
@@ -454,8 +491,45 @@ func (w *Writer) write(p []byte) (int, error) {
 //
 // It implements the io.ReaderFrom interface.
 func (w *Writer) ReadFrom(r io.Reader) (int64, error) {
+	// If the reader has a WriteTo method, use it to do the copy.
+	// Don't do this for our own *Reader to avoid infinite recursion.
+	// Avoids an allocation and a copy.
+	switch r.(type) {
+	case *Reader:
+	default:
+		if wt, ok := r.(io.WriterTo); ok {
+			n, err := wt.WriteTo(w)
+			return n, err
+		}
+	}
+
 	nr, _, err := readFromWriteTo(r, w)
 	return nr, err
+}
+
+// uploadAndClose is similar to ReadFrom, but ensures it's the only write.
+// This pattern is more optimal for some drivers.
+func (w *Writer) uploadAndClose(r io.Reader) (err error) {
+	if w.bytesWritten != 0 {
+		// Shouldn't happen.
+		return gcerr.Newf(gcerr.Internal, nil, "blob: uploadAndClose must be the first write")
+	}
+	// When ContentMD5 is being checked, we can't use Upload.
+	if len(w.contentMD5) > 0 {
+		_, err = w.ReadFrom(r)
+	} else {
+		driverUploader, ok := w.w.(driver.Uploader)
+		if ok {
+			err = driverUploader.Upload(r)
+		} else {
+			_, err = w.ReadFrom(r)
+		}
+	}
+	cerr := w.Close()
+	if err == nil && cerr != nil {
+		err = cerr
+	}
+	return err
 }
 
 // ListOptions sets options for listing blobs via Bucket.List.
@@ -570,6 +644,11 @@ type Bucket struct {
 	b      driver.Bucket
 	tracer *oc.Tracer
 
+	// ioFSCallback is set via SetIOFSCallback, which must be
+	// called before calling various functions implementing interfaces
+	// from the io/fs package.
+	ioFSCallback func() (context.Context, *ReaderOptions)
+
 	// mu protects the closed variable.
 	// Read locks are kept to allow holding a read lock for long-running calls,
 	// and thereby prevent closing until a call finishes.
@@ -614,7 +693,8 @@ var NewBucket = newBucket
 // function; see the package documentation for details.
 func newBucket(b driver.Bucket) *Bucket {
 	return &Bucket{
-		b: b,
+		b:            b,
+		ioFSCallback: func() (context.Context, *ReaderOptions) { return context.Background(), nil },
 		tracer: &oc.Tracer{
 			Package:        pkgName,
 			Provider:       oc.ProviderName(b),
@@ -644,6 +724,8 @@ func (b *Bucket) ErrorAs(err error, i interface{}) bool {
 
 // ReadAll is a shortcut for creating a Reader via NewReader with nil
 // ReaderOptions, and reading the entire blob.
+//
+// Using Download may be more efficient.
 func (b *Bucket) ReadAll(ctx context.Context, key string) (_ []byte, err error) {
 	b.mu.RLock()
 	defer b.mu.RUnlock()
@@ -655,7 +737,21 @@ func (b *Bucket) ReadAll(ctx context.Context, key string) (_ []byte, err error) 
 		return nil, err
 	}
 	defer r.Close()
-	return ioutil.ReadAll(r)
+	return io.ReadAll(r)
+}
+
+// Download writes the content of a blob into an io.Writer w.
+func (b *Bucket) Download(ctx context.Context, key string, w io.Writer, opts *ReaderOptions) error {
+	b.mu.RLock()
+	defer b.mu.RUnlock()
+	if b.closed {
+		return errClosed
+	}
+	r, err := b.NewReader(ctx, key, opts)
+	if err != nil {
+		return err
+	}
+	return r.downloadAndClose(w)
 }
 
 // List returns a ListIterator that can be used to iterate over blobs in a
@@ -934,6 +1030,8 @@ func (b *Bucket) newRangeReader(ctx context.Context, key string, offset, length 
 //
 // If opts.ContentMD5 is not set, WriteAll will compute the MD5 of p and use it
 // as the ContentMD5 option for the Writer it creates.
+//
+// Using Upload may be more efficient.
 func (b *Bucket) WriteAll(ctx context.Context, key string, p []byte, opts *WriterOptions) (err error) {
 	realOpts := new(WriterOptions)
 	if opts != nil {
@@ -952,6 +1050,20 @@ func (b *Bucket) WriteAll(ctx context.Context, key string, p []byte, opts *Write
 		return err
 	}
 	return w.Close()
+}
+
+// Upload reads from an io.Reader r and writes into a blob.
+//
+// opts.ContentType is required.
+func (b *Bucket) Upload(ctx context.Context, key string, r io.Reader, opts *WriterOptions) error {
+	if opts == nil || opts.ContentType == "" {
+		return gcerr.Newf(gcerr.InvalidArgument, nil, "blob: Upload requires WriterOptions.ContentType")
+	}
+	w, err := b.NewWriter(ctx, key, opts)
+	if err != nil {
+		return err
+	}
+	return w.uploadAndClose(r)
 }
 
 // NewWriter returns a Writer that writes to the blob stored at key.
@@ -977,14 +1089,15 @@ func (b *Bucket) NewWriter(ctx context.Context, key string, opts *WriterOptions)
 		opts = &WriterOptions{}
 	}
 	dopts := &driver.WriterOptions{
-		CacheControl:       opts.CacheControl,
-		ContentDisposition: opts.ContentDisposition,
-		ContentEncoding:    opts.ContentEncoding,
-		ContentLanguage:    opts.ContentLanguage,
-		ContentMD5:         opts.ContentMD5,
-		BufferSize:         opts.BufferSize,
-		MaxConcurrency:     opts.MaxConcurrency,
-		BeforeWrite:        opts.BeforeWrite,
+		CacheControl:                opts.CacheControl,
+		ContentDisposition:          opts.ContentDisposition,
+		ContentEncoding:             opts.ContentEncoding,
+		ContentLanguage:             opts.ContentLanguage,
+		ContentMD5:                  opts.ContentMD5,
+		BufferSize:                  opts.BufferSize,
+		MaxConcurrency:              opts.MaxConcurrency,
+		BeforeWrite:                 opts.BeforeWrite,
+		DisableContentTypeDetection: opts.DisableContentTypeDetection,
 	}
 	if len(opts.Metadata) > 0 {
 		// Services are inconsistent, but at least some treat keys
@@ -1032,13 +1145,16 @@ func (b *Bucket) NewWriter(ctx context.Context, key string, opts *WriterOptions)
 		md5hash:          md5.New(),
 		statsTagMutators: []tag.Mutator{tag.Upsert(oc.ProviderKey, b.tracer.Provider)},
 	}
-	if opts.ContentType != "" {
-		t, p, err := mime.ParseMediaType(opts.ContentType)
-		if err != nil {
-			cancel()
-			return nil, err
+	if opts.ContentType != "" || opts.DisableContentTypeDetection {
+		var ct string
+		if opts.ContentType != "" {
+			t, p, err := mime.ParseMediaType(opts.ContentType)
+			if err != nil {
+				cancel()
+				return nil, err
+			}
+			ct = mime.FormatMediaType(t, p)
 		}
-		ct := mime.FormatMediaType(t, p)
 		dw, err := b.b.NewTypedWriter(ctx, key, ct, dopts)
 		if err != nil {
 			cancel()
@@ -1273,8 +1389,17 @@ type WriterOptions struct {
 	// ContentType specifies the MIME type of the blob being written. If not set,
 	// it will be inferred from the content using the algorithm described at
 	// http://mimesniff.spec.whatwg.org/.
+	// Set DisableContentTypeDetection to true to disable the above and force
+	// the ContentType to stay empty.
 	// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type
 	ContentType string
+
+	// When true, if ContentType is the empty string, it will stay the empty
+	// string rather than being inferred from the content.
+	// Note that while the blob will be written with an empty string ContentType,
+	// most providers will fill one in during reads, so don't expect an empty
+	// ContentType if you read the blob back.
+	DisableContentTypeDetection bool
 
 	// ContentMD5 is used as a message integrity check.
 	// If len(ContentMD5) > 0, the MD5 hash of the bytes written must match

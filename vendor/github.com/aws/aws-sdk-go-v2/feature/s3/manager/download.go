@@ -100,7 +100,8 @@ func WithDownloaderClientOptions(opts ...func(*s3.Options)) func(*Downloader) {
 // interface.
 //
 // Example:
-// 	// Load AWS Config
+//
+//	// Load AWS Config
 //	cfg, err := config.LoadDefaultConfig(context.TODO())
 //	if err != nil {
 //		panic(err)
@@ -153,6 +154,7 @@ func NewDownloader(c DownloadAPIClient, options ...func(*Downloader)) *Downloade
 // and GC runs.
 //
 // Example:
+//
 //	// pre-allocate in memory buffer, where headObject type is *s3.HeadObjectOutput
 //	buf := make([]byte, int(headObject.ContentLength))
 //	// wrap with aws.WriteAtBuffer
@@ -181,7 +183,10 @@ func (d Downloader) Download(ctx context.Context, w io.WriterAt, input *s3.GetOb
 	// Copy ClientOptions
 	clientOptions := make([]func(*s3.Options), 0, len(impl.cfg.ClientOptions)+1)
 	clientOptions = append(clientOptions, func(o *s3.Options) {
-		o.APIOptions = append(o.APIOptions, middleware.AddSDKAgentKey(middleware.FeatureMetadata, userAgentKey))
+		o.APIOptions = append(o.APIOptions,
+			middleware.AddSDKAgentKey(middleware.FeatureMetadata, userAgentKey),
+			addFeatureUserAgent, // yes, there are two of these
+		)
 	})
 	clientOptions = append(clientOptions, impl.cfg.ClientOptions...)
 	impl.cfg.ClientOptions = clientOptions
@@ -397,7 +402,11 @@ func (d *downloader) tryDownloadChunk(params *s3.GetObjectInput, w io.Writer) (i
 	}
 	d.setTotalBytes(resp) // Set total if not yet set.
 
-	n, err := io.Copy(w, resp.Body)
+	var src io.Reader = resp.Body
+	if d.cfg.BufferProvider != nil {
+		src = &suppressWriterAt{suppressed: src}
+	}
+	n, err := io.Copy(w, src)
 	resp.Body.Close()
 	if err != nil {
 		return n, &errReadingBody{err: err}
@@ -430,8 +439,8 @@ func (d *downloader) setTotalBytes(resp *s3.GetObjectOutput) {
 	if resp.ContentRange == nil {
 		// ContentRange is nil when the full file contents is provided, and
 		// is not chunked. Use ContentLength instead.
-		if resp.ContentLength > 0 {
-			d.totalBytes = resp.ContentLength
+		if aws.ToInt64(resp.ContentLength) > 0 {
+			d.totalBytes = aws.ToInt64(resp.ContentLength)
 			return
 		}
 	} else {

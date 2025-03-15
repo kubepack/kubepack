@@ -152,6 +152,8 @@ func bundleChartPresets(kc client.Client, ns string, sel labels.Selector, knownP
 					Namespace: cp.Namespace,
 					Name:      cp.Namespace,
 				},
+				UID:        cp.UID,
+				Generation: cp.Generation,
 			},
 			Values: cp.Spec.Values,
 		})
@@ -188,6 +190,8 @@ func bundleClusterChartPresets(kc client.Client, sel labels.Selector, knownPrese
 					Namespace: ccp.Namespace,
 					Name:      ccp.Namespace,
 				},
+				UID:        ccp.UID,
+				Generation: ccp.Generation,
 			},
 			Values: ccp.Spec.Values,
 		})

@@ -23,7 +23,6 @@
 // for more details.
 // Use "awssdk=v1" or "awssdk=v2" to force a specific AWS SDK version.
 // To customize the URL opener, or for more details on the URL format,
-// To customize the URL opener, or for more details on the URL format,
 // see URLOpener.
 // See https://gocloud.dev/concepts/urls/ for background information.
 //
@@ -33,8 +32,7 @@
 // full UTF-8 support, strings must be escaped (during writes) and unescaped
 // (during reads). The following escapes are performed for s3blob:
 //   - Blob keys: ASCII characters 0-31 are escaped to "__0x<hex>__".
-//     Additionally, the "/" in "../" and the trailing "/" in "//" are escaped in
-//     the same way.
+//     Additionally, the "/" in "../" is escaped in the same way.
 //   - Metadata keys: Escaped using URL encoding, then additionally "@:=" are
 //     escaped using "__0x<hex>__". These characters were determined by
 //     experimentation.
@@ -45,12 +43,12 @@
 // s3blob exposes the following types for As:
 //   - Bucket: (V1) *s3.S3; (V2) *s3v2.Client
 //   - Error: (V1) awserr.Error; (V2) any error type returned by the service, notably smithy.APIError
-//   - ListObject: (V1) s3.Object for objects, s3.CommonPrefix for "directories"; (V2) typesv2.Object for objects, typesv2.CommonPrefix for "directories
-//   - ListOptions.BeforeList: (V1) *s3.ListObjectsV2Input, or *s3.ListObjectsInput
-//     when Options.UseLegacyList == true; (V2) *s3v2.ListObjectsV2Input, or *s3v2.ListObjectsInput
+//   - ListObject: (V1) s3.Object for objects, s3.CommonPrefix for "directories"; (V2) typesv2.Object for objects, typesv2.CommonPrefix for "directories"
+//   - ListOptions.BeforeList: (V1) *s3.ListObjectsV2Input or *s3.ListObjectsInput
+//     when Options.UseLegacyList == true; (V2) *s3v2.ListObjectsV2Input or *[]func(*s3v2.Options), or *s3v2.ListObjectsInput
 //     when Options.UseLegacyList == true
-//   - Reader: (V1) s3.GetObjectOutput; (V2) s3v2.GetObjectInput
-//   - ReaderOptions.BeforeRead: (V1) *s3.GetObjectInput; (V2) *s3v2.GetObjectInput
+//   - Reader: (V1) s3.GetObjectOutput; (V2) s3v2.GetObjectOutput
+//   - ReaderOptions.BeforeRead: (V1) *s3.GetObjectInput; (V2) *s3v2.GetObjectInput or *[]func(*s3v2.Options)
 //   - Attributes: (V1) s3.HeadObjectOutput; (V2)s3v2.HeadObjectOutput
 //   - CopyOptions.BeforeCopy: *(V1) s3.CopyObjectInput; (V2) s3v2.CopyObjectInput
 //   - WriterOptions.BeforeWrite: (V1) *s3manager.UploadInput, *s3manager.Uploader; (V2) *s3v2.PutObjectInput, *s3v2manager.Uploader
@@ -132,6 +130,11 @@ const Scheme = "s3"
 // Use "awssdk=v1" to force using AWS SDK v1, "awssdk=v2" to force using AWS SDK v2,
 // or anything else to accept the default.
 //
+// The following S3-specific query options are also supported:
+//   - ssetype: The type of server side encryption used (AES256, aws:kms, aws:kms:dsse)
+//   - kmskeyid: The KMS key ID for server side encryption
+//   - accelerate: A value of "true" uses the S3 Transfer Accleration endpoints
+//
 // For V1, see gocloud.dev/aws/ConfigFromURLParams for supported query parameters
 // for overriding the aws.Session from the URL.
 // For V2, see gocloud.dev/aws/V2ConfigFromURLParams.
@@ -146,24 +149,99 @@ type URLOpener struct {
 	Options Options
 }
 
+const (
+	sseTypeParamKey      = "ssetype"
+	kmsKeyIdParamKey     = "kmskeyid"
+	accelerateParamKey   = "accelerate"
+	usePathStyleParamkey = "use_path_style"
+	disableHTTPSParamKey = "disable_https"
+)
+
+func toServerSideEncryptionType(value string) (typesv2.ServerSideEncryption, error) {
+	for _, sseType := range typesv2.ServerSideEncryptionAes256.Values() {
+		if strings.EqualFold(string(sseType), value) {
+			return sseType, nil
+		}
+	}
+	return "", fmt.Errorf("%q is not a valid value for %q", value, sseTypeParamKey)
+}
+
 // OpenBucketURL opens a blob.Bucket based on u.
 func (o *URLOpener) OpenBucketURL(ctx context.Context, u *url.URL) (*blob.Bucket, error) {
+	q := u.Query()
+
+	if sseTypeParam := q.Get(sseTypeParamKey); sseTypeParam != "" {
+		q.Del(sseTypeParamKey)
+
+		sseType, err := toServerSideEncryptionType(sseTypeParam)
+		if err != nil {
+			return nil, err
+		}
+
+		o.Options.EncryptionType = sseType
+	}
+
+	if kmsKeyID := q.Get(kmsKeyIdParamKey); kmsKeyID != "" {
+		q.Del(kmsKeyIdParamKey)
+		o.Options.KMSEncryptionID = kmsKeyID
+	}
+
+	accelerate := false
+	if accelerateParam := q.Get(accelerateParamKey); accelerateParam != "" {
+		q.Del(accelerateParamKey)
+		var err error
+		accelerate, err = strconv.ParseBool(accelerateParam)
+		if err != nil {
+			return nil, fmt.Errorf("invalid value for %q: %v", accelerateParamKey, err)
+		}
+	}
+
 	if o.UseV2 {
-		cfg, err := gcaws.V2ConfigFromURLParams(ctx, u.Query())
+		opts := []func(*s3v2.Options){
+			func(o *s3v2.Options) {
+				o.UseAccelerate = accelerate
+			},
+		}
+		if disableHTTPSParam := q.Get(disableHTTPSParamKey); disableHTTPSParam != "" {
+			q.Del(disableHTTPSParamKey)
+			value, err := strconv.ParseBool(disableHTTPSParam)
+			if err != nil {
+				return nil, fmt.Errorf("invalid value for %q: %v", disableHTTPSParamKey, err)
+			}
+			opts = append(opts, func(o *s3v2.Options) {
+				o.EndpointOptions.DisableHTTPS = value
+			})
+		}
+		if usePathStyleParam := q.Get(usePathStyleParamkey); usePathStyleParam != "" {
+			q.Del(usePathStyleParamkey)
+			value, err := strconv.ParseBool(usePathStyleParam)
+			if err != nil {
+				return nil, fmt.Errorf("invalid value for %q: %v", usePathStyleParamkey, err)
+			}
+			opts = append(opts, func(o *s3v2.Options) {
+				o.UsePathStyle = value
+			})
+		}
+
+		cfg, err := gcaws.V2ConfigFromURLParams(ctx, q)
 		if err != nil {
 			return nil, fmt.Errorf("open bucket %v: %v", u, err)
 		}
-		clientV2 := s3v2.NewFromConfig(cfg)
+		clientV2 := s3v2.NewFromConfig(cfg, opts...)
+
 		return OpenBucketV2(ctx, clientV2, u.Host, &o.Options)
 	}
 	configProvider := &gcaws.ConfigOverrider{
 		Base: o.ConfigProvider,
 	}
-	overrideCfg, err := gcaws.ConfigFromURLParams(u.Query())
+	overrideCfg, err := gcaws.ConfigFromURLParams(q)
 	if err != nil {
 		return nil, fmt.Errorf("open bucket %v: %v", u, err)
 	}
+
+	overrideCfg.S3UseAccelerate = &accelerate
 	configProvider.Configs = append(configProvider.Configs, overrideCfg)
+
 	return OpenBucket(ctx, configProvider, u.Host, &o.Options)
 }
 
@@ -173,6 +251,16 @@ type Options struct {
 	// Some S3-compatible services (like CEPH) do not currently support
 	// ListObjectsV2.
 	UseLegacyList bool
+
+	// EncryptionType sets the encryption type headers when making write or
+	// copy calls. This is required if the bucket has a restrictive bucket
+	// policy that enforces a specific encryption type
+	EncryptionType typesv2.ServerSideEncryption
+
+	// KMSEncryptionID sets the kms key id header for write or copy calls.
+	// This is required when a bucket policy enforces the use of a specific
+	// KMS key for uploads
+	KMSEncryptionID string
 }
 
 // openBucket returns an S3 Bucket.
@@ -195,11 +283,13 @@ func openBucket(ctx context.Context, useV2 bool, sess client.ConfigProvider, cli
 		client = s3.New(sess)
 	}
 	return &bucket{
-		useV2:         useV2,
-		name:          bucketName,
-		client:        client,
-		clientV2:      clientV2,
-		useLegacyList: opts.UseLegacyList,
+		useV2:          useV2,
+		name:           bucketName,
+		client:         client,
+		clientV2:       clientV2,
+		useLegacyList:  opts.UseLegacyList,
+		kmsKeyId:       opts.KMSEncryptionID,
+		encryptionType: opts.EncryptionType,
 	}, nil
 }
 
@@ -207,6 +297,8 @@ func openBucket(ctx context.Context, useV2 bool, sess client.ConfigProvider, cli
 // AWS buckets are bound to a region; sess must have been created using an
 // aws.Config with Region set to the right region for bucketName.
 // See the package documentation for an example.
+//
+// Deprecated: AWS no longer supports their V1 API. Please migrate to OpenBucketV2.
 func OpenBucket(ctx context.Context, sess client.ConfigProvider, bucketName string, opts *Options) (*blob.Bucket, error) {
 	drv, err := openBucket(ctx, false, sess, nil, bucketName, opts)
 	if err != nil {
@@ -265,7 +357,13 @@ func (r *reader) Attributes() *driver.ReaderAttributes {
 
 // writer writes an S3 object, it implements io.WriteCloser.
 type writer struct {
-	w *io.PipeWriter // created when the first byte is written
+	// Ends of an io.Pipe, created when the first byte is written.
+	pw *io.PipeWriter
+	pr *io.PipeReader
+
+	// Alternatively, upload is set to true when Upload was
+	// used to upload data.
+	upload bool
 
 	ctx   context.Context
 	useV2 bool
@@ -281,69 +379,73 @@ type writer struct {
 	err error
 }
 
-// Write appends p to w. User must call Close to close the w after done writing.
+// Write appends p to w.pw. User must call Close to close the w after done writing.
 func (w *writer) Write(p []byte) (int, error) {
 	// Avoid opening the pipe for a zero-length write;
 	// the concrete can do these for empty blobs.
 	if len(p) == 0 {
 		return 0, nil
 	}
-	if w.w == nil {
+	if w.pw == nil {
 		// We'll write into pw and use pr as an io.Reader for the
 		// Upload call to S3.
-		pr, pw := io.Pipe()
-		w.w = pw
-		if err := w.open(pr); err != nil {
-			return 0, err
-		}
+		w.pr, w.pw = io.Pipe()
+		w.open(w.pr, true)
 	}
-	select {
-	case <-w.donec:
-		return 0, w.err
-	default:
-	}
-	return w.w.Write(p)
+	return w.pw.Write(p)
 }
 
-// pr may be nil if we're Closing and no data was written.
-func (w *writer) open(pr *io.PipeReader) error {
+// Upload reads from r. Per the driver, it is guaranteed to be the only
+// write call for this writer.
+func (w *writer) Upload(r io.Reader) error {
+	w.upload = true
+	w.open(r, false)
+	return nil
+}
 
+// r may be nil if we're Closing and no data was written.
+// If closePipeOnError is true, w.pr will be closed if there's an
+// error uploading to S3.
+func (w *writer) open(r io.Reader, closePipeOnError bool) {
+	// This goroutine will keep running until Close, unless there's an error.
 	go func() {
 		defer close(w.donec)
 
-		body := io.Reader(pr)
-		if pr == nil {
+		if r == nil {
 			// AWS doesn't like a nil Body.
-			body = http.NoBody
+			r = http.NoBody
 		}
 		var err error
 		if w.useV2 {
-			w.reqV2.Body = body
+			w.reqV2.Body = r
 			_, err = w.uploaderV2.Upload(w.ctx, w.reqV2)
 		} else {
-			w.req.Body = body
+			w.req.Body = r
 			_, err = w.uploader.UploadWithContext(w.ctx, w.req)
 		}
 		if err != nil {
-			w.err = err
-			if pr != nil {
-				pr.CloseWithError(err)
+			if closePipeOnError {
+				w.pr.CloseWithError(err)
 			}
-			return
+			w.err = err
 		}
 	}()
-	return nil
 }
 
 // Close completes the writer and closes it. Any error occurring during write
 // will be returned. If a writer is closed before any Write is called, Close
 // will create an empty file at the given key.
 func (w *writer) Close() error {
-	if w.w == nil {
-		// We never got any bytes written. We'll write an http.NoBody.
-		w.open(nil)
-	} else if err := w.w.Close(); err != nil {
-		return err
+	if !w.upload {
+		if w.pr != nil {
+			defer w.pr.Close()
+		}
+		if w.pw == nil {
+			// We never got any bytes written. We'll write an http.NoBody.
+			w.open(nil, false)
+		} else if err := w.pw.Close(); err != nil {
+			return err
+		}
 	}
 	<-w.donec
 	return w.err
@@ -356,6 +458,9 @@ type bucket struct {
 	client        *s3.S3
 	clientV2      *s3v2.Client
 	useLegacyList bool
+
+	encryptionType typesv2.ServerSideEncryption
+	kmsKeyId       string
 }
 
 func (b *bucket) Close() error {
@@ -399,7 +504,7 @@ func (b *bucket) ListPaged(ctx context.Context, opts *driver.ListOptions) (*driv
 	if b.useV2 {
 		in := &s3v2.ListObjectsV2Input{
 			Bucket:  aws.String(b.name),
-			MaxKeys: int32(pageSize),
+			MaxKeys: aws.Int32(int32(pageSize)),
 		}
 		if len(opts.PageToken) > 0 {
 			in.ContinuationToken = aws.String(string(opts.PageToken))
@@ -425,7 +530,7 @@ func (b *bucket) ListPaged(ctx context.Context, opts *driver.ListOptions) (*driv
 				page.Objects[i] = &driver.ListObject{
 					Key:     unescapeKey(aws.StringValue(obj.Key)),
 					ModTime: *obj.LastModified,
-					Size:    obj.Size,
+					Size:    aws.Int64Value(obj.Size),
 					MD5:     eTagToMD5(obj.ETag),
 					AsFunc: func(i interface{}) bool {
 						p, ok := i.(*typesv2.Object)
@@ -529,20 +634,24 @@ func (b *bucket) ListPaged(ctx context.Context, opts *driver.ListOptions) (*driv
 
 func (b *bucket) listObjectsV2(ctx context.Context, in *s3v2.ListObjectsV2Input, opts *driver.ListOptions) (*s3v2.ListObjectsV2Output, error) {
 	if !b.useLegacyList {
+		var varopt []func(*s3v2.Options)
 		if opts.BeforeList != nil {
 			asFunc := func(i interface{}) bool {
-				p, ok := i.(**s3v2.ListObjectsV2Input)
-				if !ok {
-					return false
+				if p, ok := i.(**s3v2.ListObjectsV2Input); ok {
+					*p = in
+					return true
 				}
-				*p = in
-				return true
+				if p, ok := i.(**[]func(*s3v2.Options)); ok {
+					*p = &varopt
+					return true
+				}
+				return false
 			}
 			if err := opts.BeforeList(asFunc); err != nil {
 				return nil, err
 			}
 		}
-		return b.clientV2.ListObjectsV2(ctx, in)
+		return b.clientV2.ListObjectsV2(ctx, in, varopt...)
 	}
 
 	// Use the legacy ListObjects request.
@@ -576,7 +685,7 @@ func (b *bucket) listObjectsV2(ctx context.Context, in *s3v2.ListObjectsV2Input,
 	var nextContinuationToken *string
 	if legacyResp.NextMarker != nil {
 		nextContinuationToken = legacyResp.NextMarker
-	} else if legacyResp.IsTruncated {
+	} else if aws.BoolValue(legacyResp.IsTruncated) {
 		nextContinuationToken = aws.String(aws.StringValue(legacyResp.Contents[len(legacyResp.Contents)-1].Key))
 	}
 	return &s3v2.ListObjectsV2Output{
@@ -590,12 +699,11 @@ func (b *bucket) listObjects(ctx context.Context, in *s3.ListObjectsV2Input, opt
 	if !b.useLegacyList {
 		if opts.BeforeList != nil {
 			asFunc := func(i interface{}) bool {
-				p, ok := i.(**s3.ListObjectsV2Input)
-				if !ok {
-					return false
+				if p, ok := i.(**s3.ListObjectsV2Input); ok {
+					*p = in
+					return true
 				}
-				*p = in
-				return true
+				return false
 			}
 			if err := opts.BeforeList(asFunc); err != nil {
 				return nil, err
@@ -706,7 +814,7 @@ func (b *bucket) Attributes(ctx context.Context, key string) (*driver.Attributes
 			Metadata:           md,
 			// CreateTime not supported; left as the zero time.
 			ModTime: aws.TimeValue(resp.LastModified),
-			Size:    resp.ContentLength,
+			Size:    aws.Int64Value(resp.ContentLength),
 			MD5:     eTagToMD5(resp.ETag),
 			ETag:    aws.StringValue(resp.ETag),
 			AsFunc: func(i interface{}) bool {
@@ -777,10 +885,15 @@ func (b *bucket) NewRangeReader(ctx context.Context, key string, offset, length 
 			Key:    aws.String(key),
 			Range:  byteRange,
 		}
+		var varopt []func(*s3v2.Options)
 		if opts.BeforeRead != nil {
 			asFunc := func(i interface{}) bool {
 				if p, ok := i.(**s3v2.GetObjectInput); ok {
 					*p = in
+					return true
+				}
+				if p, ok := i.(**[]func(*s3v2.Options)); ok {
+					*p = &varopt
 					return true
 				}
 				return false
@@ -789,7 +902,7 @@ func (b *bucket) NewRangeReader(ctx context.Context, key string, offset, length 
 				return nil, err
 			}
 		}
-		resp, err := b.clientV2.GetObject(ctx, in)
+		resp, err := b.clientV2.GetObject(ctx, in, varopt...)
 		if err != nil {
 			return nil, err
 		}
@@ -803,7 +916,7 @@ func (b *bucket) NewRangeReader(ctx context.Context, key string, offset, length 
 			attrs: driver.ReaderAttributes{
 				ContentType: aws.StringValue(resp.ContentType),
 				ModTime:     aws.TimeValue(resp.LastModified),
-				Size:        getSize(resp.ContentLength, aws.StringValue(resp.ContentRange)),
+				Size:        getSize(aws.Int64Value(resp.ContentLength), aws.StringValue(resp.ContentRange)),
 			},
 			rawV2: resp,
 		}, nil
@@ -903,9 +1016,6 @@ func escapeKey(key string) string {
 		// For "../", escape the trailing slash.
 		case i > 1 && c == '/' && r[i-1] == '.' && r[i-2] == '.':
 			return true
-		// For "//", escape the trailing slash. Otherwise, S3 drops it.
-		case i > 0 && c == '/' && r[i-1] == '/':
-			return true
 		}
 		return false
 	})
@@ -917,7 +1027,7 @@ func unescapeKey(key string) string {
 }
 
 // NewTypedWriter implements driver.NewTypedWriter.
-func (b *bucket) NewTypedWriter(ctx context.Context, key string, contentType string, opts *driver.WriterOptions) (driver.Writer, error) {
+func (b *bucket) NewTypedWriter(ctx context.Context, key, contentType string, opts *driver.WriterOptions) (driver.Writer, error) {
 	key = escapeKey(key)
 	if b.useV2 {
 		uploaderV2 := s3managerv2.NewUploader(b.clientV2, func(u *s3managerv2.Uploader) {
@@ -959,16 +1069,30 @@ func (b *bucket) NewTypedWriter(ctx context.Context, key string, contentType str
 		if len(opts.ContentMD5) > 0 {
 			reqV2.ContentMD5 = aws.String(base64.StdEncoding.EncodeToString(opts.ContentMD5))
 		}
+		if b.encryptionType != "" {
+			reqV2.ServerSideEncryption = b.encryptionType
+		}
+		if b.kmsKeyId != "" {
+			reqV2.SSEKMSKeyId = aws.String(b.kmsKeyId)
+		}
 		if opts.BeforeWrite != nil {
 			asFunc := func(i interface{}) bool {
-				pu, ok := i.(**s3managerv2.Uploader)
-				if ok {
-					*pu = uploaderV2
+				// Note that since the Go CDK Blob
+				// abstraction does not expose AWS's
+				// Uploader concept, there does not
+				// appear to be any utility in
+				// exposing the options list to the v2
+				// Uploader's Upload() method.
+				// Instead, applications can
+				// manipulate the exposed *Uploader
+				// directly, including by setting
+				// ClientOptions if needed.
+				if p, ok := i.(**s3managerv2.Uploader); ok {
+					*p = uploaderV2
 					return true
 				}
-				pui, ok := i.(**s3v2.PutObjectInput)
-				if ok {
-					*pui = reqV2
+				if p, ok := i.(**s3v2.PutObjectInput); ok {
+					*p = reqV2
 					return true
 				}
 				return false
@@ -1024,6 +1148,12 @@ func (b *bucket) NewTypedWriter(ctx context.Context, key string, contentType str
 		if len(opts.ContentMD5) > 0 {
 			req.ContentMD5 = aws.String(base64.StdEncoding.EncodeToString(opts.ContentMD5))
 		}
+		if b.encryptionType != "" {
+			req.ServerSideEncryption = aws.String(string(b.encryptionType))
+		}
+		if b.kmsKeyId != "" {
+			req.SSEKMSKeyId = aws.String(b.kmsKeyId)
+		}
 		if opts.BeforeWrite != nil {
 			asFunc := func(i interface{}) bool {
 				pu, ok := i.(**s3manager.Uploader)
@@ -1055,11 +1185,18 @@ func (b *bucket) NewTypedWriter(ctx context.Context, key string, contentType str
 func (b *bucket) Copy(ctx context.Context, dstKey, srcKey string, opts *driver.CopyOptions) error {
 	dstKey = escapeKey(dstKey)
 	srcKey = escapeKey(srcKey)
+	srcKeyWithBucketEscaped := url.QueryEscape(b.name + "/" + srcKey)
 	if b.useV2 {
 		input := &s3v2.CopyObjectInput{
 			Bucket:     aws.String(b.name),
-			CopySource: aws.String(b.name + "/" + srcKey),
+			CopySource: aws.String(srcKeyWithBucketEscaped),
 			Key:        aws.String(dstKey),
+		}
+		if b.encryptionType != "" {
+			input.ServerSideEncryption = b.encryptionType
+		}
+		if b.kmsKeyId != "" {
+			input.SSEKMSKeyId = aws.String(b.kmsKeyId)
 		}
 		if opts.BeforeCopy != nil {
 			asFunc := func(i interface{}) bool {
@@ -1079,8 +1216,14 @@ func (b *bucket) Copy(ctx context.Context, dstKey, srcKey string, opts *driver.C
 	} else {
 		input := &s3.CopyObjectInput{
 			Bucket:     aws.String(b.name),
-			CopySource: aws.String(b.name + "/" + srcKey),
+			CopySource: aws.String(srcKeyWithBucketEscaped),
 			Key:        aws.String(dstKey),
+		}
+		if b.encryptionType != "" {
+			input.ServerSideEncryption = aws.String(string(b.encryptionType))
+		}
+		if b.kmsKeyId != "" {
+			input.SSEKMSKeyId = aws.String(b.kmsKeyId)
 		}
 		if opts.BeforeCopy != nil {
 			asFunc := func(i interface{}) bool {
