@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: gateway.envoyproxy.io
+    k8s.io/kind: HTTPRouteFilter
+    k8s.io/resource: httproutefilters
+    k8s.io/version: v1alpha1
+  name: gateway.envoyproxy.io-v1alpha1-httproutefilters
+spec:
+  resource:
+    group: gateway.envoyproxy.io
+    kind: HTTPRouteFilter
+    name: httproutefilters
+    scope: Namespaced
+    version: v1alpha1

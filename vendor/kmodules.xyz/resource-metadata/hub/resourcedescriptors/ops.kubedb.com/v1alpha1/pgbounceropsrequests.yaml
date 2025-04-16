@@ -13,7 +13,7 @@ spec:
   - labels:
     - ops
     references:
-    - '{.spec.serverRef.name}'
+    - '{.spec.databaseRef.name}'
     target:
       apiVersion: kubedb.com/v1
       kind: PgBouncer
@@ -265,6 +265,8 @@ spec:
                             properties:
                               name:
                                 type: string
+                              request:
+                                type: string
                             required:
                             - name
                             type: object
@@ -300,6 +302,8 @@ spec:
                           items:
                             properties:
                               name:
+                                type: string
+                              request:
                                 type: string
                             required:
                             - name

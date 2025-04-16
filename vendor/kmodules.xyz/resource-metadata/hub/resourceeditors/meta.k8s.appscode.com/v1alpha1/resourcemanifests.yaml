@@ -15,3 +15,12 @@ spec:
     name: resourcemanifests
     scope: Namespaced
     version: v1alpha1
+  ui:
+    editor:
+      name: metak8sappscodecom-resourcemanifests-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.16.0
+    enforceQuota: false

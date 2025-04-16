@@ -29,7 +29,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.14.0
+          version: v0.16.0
         enforceQuota: false
         flow: standalone-create
         icons:
@@ -43,7 +43,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.14.0
+          version: v0.16.0
         enforceQuota: false
         flow: standalone-create
         icons:
@@ -53,15 +53,13 @@ spec:
         operationId: create-opsrequest-restart
       name: Operations
     - items:
-      - disabledTemplate: |
-          {{ not (gt .spec.replicas 1) }}
-        editor:
+      - editor:
           name: opskubedbcom-ferretdbopsrequest-editor
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.14.0
+          version: v0.16.0
         enforceQuota: true
         flow: standalone-create
         icons:
@@ -75,7 +73,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.14.0
+          version: v0.16.0
         enforceQuota: true
         flow: standalone-create
         icons:
@@ -91,7 +89,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.14.0
+          version: v0.16.0
         enforceQuota: true
         flow: standalone-edit
         icons:
@@ -107,7 +105,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.14.0
+          version: v0.16.0
         enforceQuota: false
         flow: standalone-create
         icons:
@@ -116,12 +114,12 @@ spec:
         name: TLS Configure
         operationId: create-opsrequest-reconfiguretls
       - editor:
-          name: kubedbcom-mysql-editor
+          name: kubedbcom-ferretdb-editor
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.14.0
+          version: v0.16.0
         enforceQuota: false
         flow: standalone-edit
         icons:
@@ -136,7 +134,7 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-charts-oci
-      version: v0.14.0
+      version: v0.16.0
     enforceQuota: true
     options:
       name: kubedbcom-ferretdb-editor-options
@@ -144,7 +142,7 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-charts-oci
-      version: v0.14.0
+      version: v0.16.0
   variants:
   - name: default
     selector:

@@ -73,6 +73,11 @@ spec:
         spec:
           description: Spec defines the desired state of MySQLRoute.
           properties:
+            enableDecoding:
+              description: |-
+                Controls whether SQL statements received in Frontend Query messages
+                are decoded. Defaults to false.
+              type: boolean
             hostnames:
               description: |-
                 Hostnames defines a set of SNI names that should match against the

@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: gitops.kubedb.com
+    k8s.io/kind: Solr
+    k8s.io/resource: solrs
+    k8s.io/version: v1alpha1
+  name: gitops.kubedb.com-v1alpha1-solrs
+spec:
+  resource:
+    group: gitops.kubedb.com
+    kind: Solr
+    name: solrs
+    scope: Namespaced
+    version: v1alpha1
