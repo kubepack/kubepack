@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: gateway.voyagermesh.com
+    k8s.io/kind: MSSQLServerRoute
+    k8s.io/resource: mssqlserverroutes
+    k8s.io/version: v1alpha1
+  name: gateway.voyagermesh.com-v1alpha1-mssqlserverroutes
+spec:
+  resource:
+    group: gateway.voyagermesh.com
+    kind: MSSQLServerRoute
+    name: mssqlserverroutes
+    scope: Namespaced
+    version: v1alpha1

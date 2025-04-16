@@ -125,6 +125,9 @@ spec:
                   Compression defines the config of enabling compression.
                   This can help reduce the bandwidth at the expense of higher CPU.
                 properties:
+                  brotli:
+                    description: The configuration for Brotli compressor.
+                    type: object
                   gzip:
                     description: The configuration for GZIP compressor.
                     type: object
@@ -133,6 +136,7 @@ spec:
                       for compression.
                     enum:
                     - Gzip
+                    - Brotli
                     type: string
                 required:
                 - type
@@ -142,20 +146,48 @@ spec:
               description: Connection includes backend connection settings.
               properties:
                 bufferLimit:
+                  allOf:
+                  - pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                  - pattern: ^[1-9]+[0-9]*([EPTGMK]i|[EPTGMk])?$
                   anyOf:
                   - type: integer
                   - type: string
                   description: |-
                     BufferLimit Soft limit on size of the cluster’s connections read and write buffers.
+                    BufferLimit applies to connection streaming (maybe non-streaming) channel between processes, it's in user space.
                     If unspecified, an implementation defined default is applied (32768 bytes).
                     For example, 20Mi, 1Gi, 256Ki etc.
                     Note: that when the suffix is not provided, the value is interpreted as bytes.
-                  pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                   x-kubernetes-int-or-string: true
-                  x-kubernetes-validations:
-                  - message: BufferLimit must be of the format "^[1-9]+[0-9]*([EPTGMK]i|[EPTGMk])?$"
-                    rule: 'type(self) == string ? self.matches(r"^[1-9]+[0-9]*([EPTGMK]i|[EPTGMk])?$")
-                      : type(self) == int'
+                socketBufferLimit:
+                  allOf:
+                  - pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                  - pattern: ^[1-9]+[0-9]*([EPTGMK]i|[EPTGMk])?$
+                  anyOf:
+                  - type: integer
+                  - type: string
+                  description: |-
+                    SocketBufferLimit provides configuration for the maximum buffer size in bytes for each socket
+                    to backend.
+                    SocketBufferLimit applies to socket streaming channel between TCP/IP stacks, it's in kernel space.
+                    For example, 20Mi, 1Gi, 256Ki etc.
+                    Note that when the suffix is not provided, the value is interpreted as bytes.
+                  x-kubernetes-int-or-string: true
+              type: object
+            dns:
+              description: DNS includes dns resolution settings.
+              properties:
+                dnsRefreshRate:
+                  description: |-
+                    DNSRefreshRate specifies the rate at which DNS records should be refreshed.
+                    Defaults to 30 seconds.
+                  type: string
+                respectDnsTtl:
+                  description: |-
+                    RespectDNSTTL indicates whether the DNS Time-To-Live (TTL) should be respected.
+                    If the value is set to true, the DNS refresh rate will be set to the resource record’s TTL.
+                    Defaults to true.
+                  type: boolean
               type: object
             faultInjection:
               description: |-
@@ -216,6 +248,18 @@ spec:
                 active:
                   description: Active health check configuration
                   properties:
+                    grpc:
+                      description: |-
+                        GRPC defines the configuration of the GRPC health checker.
+                        It's optional, and can only be used if the specified type is GRPC.
+                      properties:
+                        service:
+                          description: |-
+                            Service to send in the health check request.
+                            If this is not specified, then the health check request applies to the entire
+                            server and not to a specific service.
+                          type: string
+                      type: object
                     healthyThreshold:
                       default: 1
                       description: HealthyThreshold defines the number of healthy
@@ -367,9 +411,11 @@ spec:
                       - enum:
                         - HTTP
                         - TCP
+                        - GRPC
                       - enum:
                         - HTTP
                         - TCP
+                        - GRPC
                       description: Type defines the type of health checker.
                       type: string
                     unhealthyThreshold:
@@ -389,6 +435,9 @@ spec:
                   - message: If Health Checker type is TCP, tcp field needs to be
                       set.
                     rule: 'self.type == ''TCP'' ? has(self.tcp) : !has(self.tcp)'
+                  - message: The grpc field can only be set if the Health Checker
+                      type is GRPC.
+                    rule: 'has(self.grpc) ? self.type == ''GRPC'' : true'
                 passive:
                   description: Passive passive check configuration
                   properties:
@@ -436,10 +485,51 @@ spec:
                       type: boolean
                   type: object
               type: object
+            http2:
+              description: HTTP2 provides HTTP/2 configuration for backend connections.
+              properties:
+                initialConnectionWindowSize:
+                  allOf:
+                  - pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                  - pattern: ^[1-9]+[0-9]*([EPTGMK]i|[EPTGMk])?$
+                  anyOf:
+                  - type: integer
+                  - type: string
+                  description: |-
+                    InitialConnectionWindowSize sets the initial window size for HTTP/2 connections.
+                    If not set, the default value is 1 MiB.
+                  x-kubernetes-int-or-string: true
+                initialStreamWindowSize:
+                  allOf:
+                  - pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                  - pattern: ^[1-9]+[0-9]*([EPTGMK]i|[EPTGMk])?$
+                  anyOf:
+                  - type: integer
+                  - type: string
+                  description: |-
+                    InitialStreamWindowSize sets the initial window size for HTTP/2 streams.
+                    If not set, the default value is 64 KiB(64*1024).
+                  x-kubernetes-int-or-string: true
+                maxConcurrentStreams:
+                  description: |-
+                    MaxConcurrentStreams sets the maximum number of concurrent streams allowed per connection.
+                    If not set, the default value is 100.
+                  format: int32
+                  maximum: 2147483647
+                  minimum: 1
+                  type: integer
+                onInvalidMessage:
+                  description: |-
+                    OnInvalidMessage determines if Envoy will terminate the connection or just the offending stream in the event of HTTP messaging error
+                    It's recommended for L2 Envoy deployments to set this value to TerminateStream.
+                    https://www.envoyproxy.io/docs/envoy/latest/configuration/best_practices/level_two
+                    Default: TerminateConnection
+                  type: string
+              type: object
             loadBalancer:
               description: |-
                 LoadBalancer policy to apply when routing traffic from the gateway to
-                the backend endpoints
+                the backend endpoints. Defaults to `LeastRequest`.
               properties:
                 consistentHash:
                   description: |-
@@ -600,10 +690,8 @@ spec:
                               All individual select conditions must hold True for this rule
                               and its limit to be applied.
 
-
                               If no client selectors are specified, the rule applies to all traffic of
                               the targeted Route.
-
 
                               If the policy targets a Gateway, the rule applies to each Route of the Gateway.
                               Please note that each Route has its own rate limit counters. For example,
@@ -624,6 +712,13 @@ spec:
                                     description: HeaderMatch defines the match attributes
                                       within the HTTP Headers of the request.
                                     properties:
+                                      invert:
+                                        default: false
+                                        description: |-
+                                          Invert specifies whether the value match result will be inverted.
+                                          Do not set this field when Type="Distinct", implying matching on any/all unique
+                                          values within the header.
+                                        type: boolean
                                       name:
                                         description: Name of the HTTP header.
                                         maxLength: 256
@@ -651,9 +746,6 @@ spec:
                                     type: object
                                   maxItems: 16
                                   type: array
-                                  x-kubernetes-list-map-keys:
-                                  - name
-                                  x-kubernetes-list-type: map
                                 sourceCIDR:
                                   description: |-
                                     SourceCIDR is the client IP Address range to match on.
@@ -679,6 +771,110 @@ spec:
                               type: object
                             maxItems: 8
                             type: array
+                          cost:
+                            description: |-
+                              Cost specifies the cost of requests and responses for the rule.
+
+                              This is optional and if not specified, the default behavior is to reduce the rate limit counters by 1 on
+                              the request path and do not reduce the rate limit counters on the response path.
+                            properties:
+                              request:
+                                description: |-
+                                  Request specifies the number to reduce the rate limit counters
+                                  on the request path. If this is not specified, the default behavior
+                                  is to reduce the rate limit counters by 1.
+
+                                  When Envoy receives a request that matches the rule, it tries to reduce the
+                                  rate limit counters by the specified number. If the counter doesn't have
+                                  enough capacity, the request is rate limited.
+                                properties:
+                                  from:
+                                    description: From specifies where to get the rate
+                                      limit cost. Currently, only "Number" and "Metadata"
+                                      are supported.
+                                    enum:
+                                    - Number
+                                    - Metadata
+                                    type: string
+                                  metadata:
+                                    description: Metadata specifies the per-request
+                                      metadata to retrieve the usage number from.
+                                    properties:
+                                      key:
+                                        description: Key is the key to retrieve the
+                                          usage number from the filter metadata.
+                                        type: string
+                                      namespace:
+                                        description: Namespace is the namespace of
+                                          the dynamic metadata.
+                                        type: string
+                                    required:
+                                    - key
+                                    - namespace
+                                    type: object
+                                  number:
+                                    description: |-
+                                      Number specifies the fixed usage number to reduce the rate limit counters.
+                                      Using zero can be used to only check the rate limit counters without reducing them.
+                                    format: int64
+                                    type: integer
+                                required:
+                                - from
+                                type: object
+                                x-kubernetes-validations:
+                                - message: only one of number or metadata can be specified
+                                  rule: '!(has(self.number) && has(self.metadata))'
+                              response:
+                                description: |-
+                                  Response specifies the number to reduce the rate limit counters
+                                  after the response is sent back to the client or the request stream is closed.
+
+                                  The cost is used to reduce the rate limit counters for the matching requests.
+                                  Since the reduction happens after the request stream is complete, the rate limit
+                                  won't be enforced for the current request, but for the subsequent matching requests.
+
+                                  This is optional and if not specified, the rate limit counters are not reduced
+                                  on the response path.
+
+                                  Currently, this is only supported for HTTP Global Rate Limits.
+                                properties:
+                                  from:
+                                    description: From specifies where to get the rate
+                                      limit cost. Currently, only "Number" and "Metadata"
+                                      are supported.
+                                    enum:
+                                    - Number
+                                    - Metadata
+                                    type: string
+                                  metadata:
+                                    description: Metadata specifies the per-request
+                                      metadata to retrieve the usage number from.
+                                    properties:
+                                      key:
+                                        description: Key is the key to retrieve the
+                                          usage number from the filter metadata.
+                                        type: string
+                                      namespace:
+                                        description: Namespace is the namespace of
+                                          the dynamic metadata.
+                                        type: string
+                                    required:
+                                    - key
+                                    - namespace
+                                    type: object
+                                  number:
+                                    description: |-
+                                      Number specifies the fixed usage number to reduce the rate limit counters.
+                                      Using zero can be used to only check the rate limit counters without reducing them.
+                                    format: int64
+                                    type: integer
+                                required:
+                                - from
+                                type: object
+                                x-kubernetes-validations:
+                                - message: only one of number or metadata can be specified
+                                  rule: '!(has(self.number) && has(self.metadata))'
+                            type: object
                           limit:
                             description: |-
                               Limit holds the rate limit values.
@@ -733,10 +929,8 @@ spec:
                               All individual select conditions must hold True for this rule
                               and its limit to be applied.
 
-
                               If no client selectors are specified, the rule applies to all traffic of
                               the targeted Route.
-
 
                               If the policy targets a Gateway, the rule applies to each Route of the Gateway.
                               Please note that each Route has its own rate limit counters. For example,
@@ -757,6 +951,13 @@ spec:
                                     description: HeaderMatch defines the match attributes
                                       within the HTTP Headers of the request.
                                     properties:
+                                      invert:
+                                        default: false
+                                        description: |-
+                                          Invert specifies whether the value match result will be inverted.
+                                          Do not set this field when Type="Distinct", implying matching on any/all unique
+                                          values within the header.
+                                        type: boolean
                                       name:
                                         description: Name of the HTTP header.
                                         maxLength: 256
@@ -784,9 +985,6 @@ spec:
                                     type: object
                                   maxItems: 16
                                   type: array
-                                  x-kubernetes-list-map-keys:
-                                  - name
-                                  x-kubernetes-list-type: map
                                 sourceCIDR:
                                   description: |-
                                     SourceCIDR is the client IP Address range to match on.
@@ -812,6 +1010,110 @@ spec:
                               type: object
                             maxItems: 8
                             type: array
+                          cost:
+                            description: |-
+                              Cost specifies the cost of requests and responses for the rule.
+
+                              This is optional and if not specified, the default behavior is to reduce the rate limit counters by 1 on
+                              the request path and do not reduce the rate limit counters on the response path.
+                            properties:
+                              request:
+                                description: |-
+                                  Request specifies the number to reduce the rate limit counters
+                                  on the request path. If this is not specified, the default behavior
+                                  is to reduce the rate limit counters by 1.
+
+                                  When Envoy receives a request that matches the rule, it tries to reduce the
+                                  rate limit counters by the specified number. If the counter doesn't have
+                                  enough capacity, the request is rate limited.
+                                properties:
+                                  from:
+                                    description: From specifies where to get the rate
+                                      limit cost. Currently, only "Number" and "Metadata"
+                                      are supported.
+                                    enum:
+                                    - Number
+                                    - Metadata
+                                    type: string
+                                  metadata:
+                                    description: Metadata specifies the per-request
+                                      metadata to retrieve the usage number from.
+                                    properties:
+                                      key:
+                                        description: Key is the key to retrieve the
+                                          usage number from the filter metadata.
+                                        type: string
+                                      namespace:
+                                        description: Namespace is the namespace of
+                                          the dynamic metadata.
+                                        type: string
+                                    required:
+                                    - key
+                                    - namespace
+                                    type: object
+                                  number:
+                                    description: |-
+                                      Number specifies the fixed usage number to reduce the rate limit counters.
+                                      Using zero can be used to only check the rate limit counters without reducing them.
+                                    format: int64
+                                    type: integer
+                                required:
+                                - from
+                                type: object
+                                x-kubernetes-validations:
+                                - message: only one of number or metadata can be specified
+                                  rule: '!(has(self.number) && has(self.metadata))'
+                              response:
+                                description: |-
+                                  Response specifies the number to reduce the rate limit counters
+                                  after the response is sent back to the client or the request stream is closed.
+
+                                  The cost is used to reduce the rate limit counters for the matching requests.
+                                  Since the reduction happens after the request stream is complete, the rate limit
+                                  won't be enforced for the current request, but for the subsequent matching requests.
+
+                                  This is optional and if not specified, the rate limit counters are not reduced
+                                  on the response path.
+
+                                  Currently, this is only supported for HTTP Global Rate Limits.
+                                properties:
+                                  from:
+                                    description: From specifies where to get the rate
+                                      limit cost. Currently, only "Number" and "Metadata"
+                                      are supported.
+                                    enum:
+                                    - Number
+                                    - Metadata
+                                    type: string
+                                  metadata:
+                                    description: Metadata specifies the per-request
+                                      metadata to retrieve the usage number from.
+                                    properties:
+                                      key:
+                                        description: Key is the key to retrieve the
+                                          usage number from the filter metadata.
+                                        type: string
+                                      namespace:
+                                        description: Namespace is the namespace of
+                                          the dynamic metadata.
+                                        type: string
+                                    required:
+                                    - key
+                                    - namespace
+                                    type: object
+                                  number:
+                                    description: |-
+                                      Number specifies the fixed usage number to reduce the rate limit counters.
+                                      Using zero can be used to only check the rate limit counters without reducing them.
+                                    format: int64
+                                    type: integer
+                                required:
+                                - from
+                                type: object
+                                x-kubernetes-validations:
+                                - message: only one of number or metadata can be specified
+                                  rule: '!(has(self.number) && has(self.metadata))'
+                            type: object
                           limit:
                             description: |-
                               Limit holds the rate limit values.
@@ -842,6 +1144,9 @@ spec:
                         type: object
                       maxItems: 16
                       type: array
+                      x-kubernetes-validations:
+                      - message: response cost is not supported for Local Rate Limits
+                        rule: self.all(foo, !has(foo.cost) || !has(foo.cost.response))
                   type: object
                 type:
                   description: |-
@@ -854,6 +1159,158 @@ spec:
               required:
               - type
               type: object
+            responseOverride:
+              description: |-
+                ResponseOverride defines the configuration to override specific responses with a custom one.
+                If multiple configurations are specified, the first one to match wins.
+              items:
+                description: ResponseOverride defines the configuration to override
+                  specific responses with a custom one.
+                properties:
+                  match:
+                    description: Match configuration.
+                    properties:
+                      statusCodes:
+                        description: Status code to match on. The match evaluates
+                          to true if any of the matches are successful.
+                        items:
+                          description: StatusCodeMatch defines the configuration for
+                            matching a status code.
+                          properties:
+                            range:
+                              description: Range contains the range of status codes.
+                              properties:
+                                end:
+                                  description: End of the range, including the end
+                                    value.
+                                  type: integer
+                                start:
+                                  description: Start of the range, including the start
+                                    value.
+                                  type: integer
+                              required:
+                              - end
+                              - start
+                              type: object
+                              x-kubernetes-validations:
+                              - message: end must be greater than start
+                                rule: self.end > self.start
+                            type:
+                              allOf:
+                              - enum:
+                                - Value
+                                - Range
+                              - enum:
+                                - Value
+                                - Range
+                              default: Value
+                              description: |-
+                                Type is the type of value.
+                                Valid values are Value and Range, default is Value.
+                              type: string
+                            value:
+                              description: Value contains the value of the status
+                                code.
+                              type: integer
+                          required:
+                          - type
+                          type: object
+                          x-kubernetes-validations:
+                          - message: value must be set for type Value
+                            rule: '(!has(self.type) || self.type == ''Value'')? has(self.value)
+                              : true'
+                          - message: range must be set for type Range
+                            rule: '(has(self.type) && self.type == ''Range'')? has(self.range)
+                              : true'
+                        maxItems: 50
+                        minItems: 1
+                        type: array
+                    required:
+                    - statusCodes
+                    type: object
+                  response:
+                    description: Response configuration.
+                    properties:
+                      body:
+                        description: Body of the Custom Response
+                        properties:
+                          inline:
+                            description: Inline contains the value as an inline string.
+                            type: string
+                          type:
+                            allOf:
+                            - enum:
+                              - Inline
+                              - ValueRef
+                            - enum:
+                              - Inline
+                              - ValueRef
+                            default: Inline
+                            description: |-
+                              Type is the type of method to use to read the body value.
+                              Valid values are Inline and ValueRef, default is Inline.
+                            type: string
+                          valueRef:
+                            description: |-
+                              ValueRef contains the contents of the body
+                              specified as a local object reference.
+                              Only a reference to ConfigMap is supported.
+
+                              The value of key `response.body` in the ConfigMap will be used as the response body.
+                              If the key is not found, the first value in the ConfigMap will be used.
+                            properties:
+                              group:
+                                description: |-
+                                  Group is the group of the referent. For example, "gateway.networking.k8s.io".
+                                  When unspecified or empty string, core API group is inferred.
+                                maxLength: 253
+                                pattern: ^$|^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                                type: string
+                              kind:
+                                description: Kind is kind of the referent. For example
+                                  "HTTPRoute" or "Service".
+                                maxLength: 63
+                                minLength: 1
+                                pattern: ^[a-zA-Z]([-a-zA-Z0-9]*[a-zA-Z0-9])?$
+                                type: string
+                              name:
+                                description: Name is the name of the referent.
+                                maxLength: 253
+                                minLength: 1
+                                type: string
+                            required:
+                            - group
+                            - kind
+                            - name
+                            type: object
+                        required:
+                        - type
+                        type: object
+                        x-kubernetes-validations:
+                        - message: inline must be set for type Inline
+                          rule: '(!has(self.type) || self.type == ''Inline'')? has(self.inline)
+                            : true'
+                        - message: valueRef must be set for type ValueRef
+                          rule: '(has(self.type) && self.type == ''ValueRef'')? has(self.valueRef)
+                            : true'
+                        - message: only ConfigMap is supported for ValueRef
+                          rule: 'has(self.valueRef) ? self.valueRef.kind == ''ConfigMap''
+                            : true'
+                      contentType:
+                        description: Content Type of the response. This will be set
+                          in the Content-Type header.
+                        type: string
+                      statusCode:
+                        description: |-
+                          Status Code of the Custom Response
+                          If unset, does not override the status of response.
+                        type: integer
+                    type: object
+                required:
+                - match
+                - response
+                type: object
+              type: array
             retry:
               description: |-
                 Retry provides more advanced usage, allowing users to customize the number of retries, retry fallback strategy, and retry triggering conditions.
@@ -896,7 +1353,6 @@ spec:
                   description: |-
                     RetryOn specifies the retry trigger condition.
 
-
                     If not specified, the default is to retry on connect-failure,refused-stream,unavailable,cancelled,retriable-status-codes(503).
                   properties:
                     httpStatusCodes:
@@ -938,7 +1394,6 @@ spec:
                 This policy and the TargetRef MUST be in the same namespace for this
                 Policy to have effect
 
-
                 Deprecated: use targetRefs/targetSelectors instead
               properties:
                 group:
@@ -963,11 +1418,9 @@ spec:
                     unspecified, this targetRef targets the entire resource. In the following
                     resources, SectionName is interpreted as the following:
 
-
                     * Gateway: Listener name
                     * HTTPRoute: HTTPRouteRule name
                     * Service: Port name
-
 
                     If a SectionName is specified, but does not exist on the targeted object,
                     the Policy must fail to attach, and the policy implementation should record
@@ -992,7 +1445,6 @@ spec:
                   target single resources. For more information on how this policy attachment
                   mode works, and a sample Policy resource, refer to the policy attachment
                   documentation for Gateway API.
-
 
                   Note: This should only be used for direct policy attachment when references
                   to SectionName are actually needed. In all other cases,
@@ -1020,11 +1472,9 @@ spec:
                       unspecified, this targetRef targets the entire resource. In the following
                       resources, SectionName is interpreted as the following:
 
-
                       * Gateway: Listener name
                       * HTTPRoute: HTTPRouteRule name
                       * Service: Port name
-
 
                       If a SectionName is specified, but does not exist on the targeted object,
                       the Policy must fail to attach, and the policy implementation should record
@@ -1115,6 +1565,11 @@ spec:
                       description: |-
                         The maximum duration of an HTTP connection.
                         Default: unlimited.
+                      pattern: ^([0-9]{1,5}(h|m|s|ms)){1,4}$
+                      type: string
+                    requestTimeout:
+                      description: RequestTimeout is the time until which entire response
+                        is received from the upstream.
                       pattern: ^([0-9]{1,5}(h|m|s|ms)){1,4}$
                       type: string
                   type: object

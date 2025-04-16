@@ -24,6 +24,7 @@ import (
 	kmapi "kmodules.xyz/client-go/api/v1"
 
 	core "k8s.io/api/core/v1"
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -46,7 +47,12 @@ func IsOpenClusterSpoke(kc client.Reader) bool {
 	list.SetAPIVersion("operator.open-cluster-management.io/v1")
 	list.SetKind("Klusterlet")
 	err := kc.List(context.TODO(), &list)
-	return err == nil && len(list.Items) > 0
+	if err != nil {
+		if !meta.IsNoMatchError(err) && !apierrors.IsNotFound(err) {
+			panic(err) // panic if 403 (missing rbac)
+		}
+	}
+	return len(list.Items) > 0
 }
 
 func IsOpenClusterMulticlusterControlplane(mapper meta.RESTMapper) bool {
