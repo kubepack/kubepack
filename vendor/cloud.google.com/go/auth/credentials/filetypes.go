@@ -33,7 +33,7 @@ func fileCredentials(b []byte, opts *DetectOptions) (*auth.Credentials, error) {
 		return nil, err
 	}
 
-	var projectID, universeDomain string
+	var projectID, quotaProjectID, universeDomain string
 	var tp auth.TokenProvider
 	switch fileType {
 	case credsfile.ServiceAccountKey:
@@ -56,6 +56,7 @@ func fileCredentials(b []byte, opts *DetectOptions) (*auth.Credentials, error) {
 		if err != nil {
 			return nil, err
 		}
+		quotaProjectID = f.QuotaProjectID
 		universeDomain = f.UniverseDomain
 	case credsfile.ExternalAccountKey:
 		f, err := credsfile.ParseExternalAccount(b)
@@ -66,6 +67,7 @@ func fileCredentials(b []byte, opts *DetectOptions) (*auth.Credentials, error) {
 		if err != nil {
 			return nil, err
 		}
+		quotaProjectID = f.QuotaProjectID
 		universeDomain = resolveUniverseDomain(opts.UniverseDomain, f.UniverseDomain)
 	case credsfile.ExternalAccountAuthorizedUserKey:
 		f, err := credsfile.ParseExternalAccountAuthorizedUser(b)
@@ -76,6 +78,7 @@ func fileCredentials(b []byte, opts *DetectOptions) (*auth.Credentials, error) {
 		if err != nil {
 			return nil, err
 		}
+		quotaProjectID = f.QuotaProjectID
 		universeDomain = f.UniverseDomain
 	case credsfile.ImpersonatedServiceAccountKey:
 		f, err := credsfile.ParseImpersonatedServiceAccount(b)
@@ -105,9 +108,9 @@ func fileCredentials(b []byte, opts *DetectOptions) (*auth.Credentials, error) {
 		TokenProvider: auth.NewCachedTokenProvider(tp, &auth.CachedTokenProviderOptions{
 			ExpireEarly: opts.EarlyTokenRefresh,
 		}),
-		JSON:              b,
-		ProjectIDProvider: internalauth.StaticCredentialsProperty(projectID),
-		// TODO(codyoss): only set quota project here if there was a user override
+		JSON:                   b,
+		ProjectIDProvider:      internalauth.StaticCredentialsProperty(projectID),
+		QuotaProjectIDProvider: internalauth.StaticCredentialsProperty(quotaProjectID),
 		UniverseDomainProvider: internalauth.StaticCredentialsProperty(universeDomain),
 	}), nil
 }

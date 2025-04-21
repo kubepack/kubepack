@@ -17,9 +17,7 @@ package transport
 import (
 	"context"
 	"crypto/tls"
-	"crypto/x509"
 	"errors"
-	"log"
 	"net"
 	"net/http"
 	"net/url"
@@ -46,12 +44,10 @@ const (
 	googleAPIUseMTLSOld    = "GOOGLE_API_USE_MTLS"
 
 	universeDomainPlaceholder = "UNIVERSE_DOMAIN"
-
-	mtlsMDSRoot = "/run/google-mds-mtls/root.crt"
-	mtlsMDSKey  = "/run/google-mds-mtls/client.key"
 )
 
 var (
+	mdsMTLSAutoConfigSource     mtlsConfigSource
 	errUniverseNotSupportedMTLS = errors.New("mTLS is not supported in any universe other than googleapis.com")
 )
 
@@ -124,20 +120,7 @@ func GetGRPCTransportCredsAndEndpoint(opts *Options) (credentials.TransportCrede
 	defaultTransportCreds := credentials.NewTLS(&tls.Config{
 		GetClientCertificate: config.clientCertSource,
 	})
-
-	var s2aAddr string
-	var transportCredsForS2A credentials.TransportCredentials
-
-	if config.mtlsS2AAddress != "" {
-		s2aAddr = config.mtlsS2AAddress
-		transportCredsForS2A, err = loadMTLSMDSTransportCreds(mtlsMDSRoot, mtlsMDSKey)
-		if err != nil {
-			log.Printf("Loading MTLS MDS credentials failed: %v", err)
-			return defaultTransportCreds, config.endpoint, nil
-		}
-	} else if config.s2aAddress != "" {
-		s2aAddr = config.s2aAddress
-	} else {
+	if config.s2aAddress == "" {
 		return defaultTransportCreds, config.endpoint, nil
 	}
 
@@ -150,9 +133,8 @@ func GetGRPCTransportCredsAndEndpoint(opts *Options) (credentials.TransportCrede
 	}
 
 	s2aTransportCreds, err := s2a.NewClientCreds(&s2a.ClientOptions{
-		S2AAddress:     s2aAddr,
-		TransportCreds: transportCredsForS2A,
-		FallbackOpts:   fallbackOpts,
+		S2AAddress:   config.s2aAddress,
+		FallbackOpts: fallbackOpts,
 	})
 	if err != nil {
 		// Use default if we cannot initialize S2A client transport credentials.
@@ -169,19 +151,7 @@ func GetHTTPTransportConfig(opts *Options) (cert.Provider, func(context.Context,
 		return nil, nil, err
 	}
 
-	var s2aAddr string
-	var transportCredsForS2A credentials.TransportCredentials
-
-	if config.mtlsS2AAddress != "" {
-		s2aAddr = config.mtlsS2AAddress
-		transportCredsForS2A, err = loadMTLSMDSTransportCreds(mtlsMDSRoot, mtlsMDSKey)
-		if err != nil {
-			log.Printf("Loading MTLS MDS credentials failed: %v", err)
-			return config.clientCertSource, nil, nil
-		}
-	} else if config.s2aAddress != "" {
-		s2aAddr = config.s2aAddress
-	} else {
+	if config.s2aAddress == "" {
 		return config.clientCertSource, nil, nil
 	}
 
@@ -199,36 +169,10 @@ func GetHTTPTransportConfig(opts *Options) (cert.Provider, func(context.Context,
 	}
 
 	dialTLSContextFunc := s2a.NewS2ADialTLSContextFunc(&s2a.ClientOptions{
-		S2AAddress:     s2aAddr,
-		TransportCreds: transportCredsForS2A,
-		FallbackOpts:   fallbackOpts,
+		S2AAddress:   config.s2aAddress,
+		FallbackOpts: fallbackOpts,
 	})
 	return nil, dialTLSContextFunc, nil
-}
-
-func loadMTLSMDSTransportCreds(mtlsMDSRootFile, mtlsMDSKeyFile string) (credentials.TransportCredentials, error) {
-	rootPEM, err := os.ReadFile(mtlsMDSRootFile)
-	if err != nil {
-		return nil, err
-	}
-	caCertPool := x509.NewCertPool()
-	ok := caCertPool.AppendCertsFromPEM(rootPEM)
-	if !ok {
-		return nil, errors.New("failed to load MTLS MDS root certificate")
-	}
-	// The mTLS MDS credentials are formatted as the concatenation of a PEM-encoded certificate chain
-	// followed by a PEM-encoded private key. For this reason, the concatenation is passed in to the
-	// tls.X509KeyPair function as both the certificate chain and private key arguments.
-	cert, err := tls.LoadX509KeyPair(mtlsMDSKeyFile, mtlsMDSKeyFile)
-	if err != nil {
-		return nil, err
-	}
-	tlsConfig := tls.Config{
-		RootCAs:      caCertPool,
-		Certificates: []tls.Certificate{cert},
-		MinVersion:   tls.VersionTLS13,
-	}
-	return credentials.NewTLS(&tlsConfig), nil
 }
 
 func getTransportConfig(opts *Options) (*transportConfig, error) {
@@ -252,17 +196,17 @@ func getTransportConfig(opts *Options) (*transportConfig, error) {
 		return nil, errUniverseNotSupportedMTLS
 	}
 
+	s2aMTLSEndpoint := opts.DefaultMTLSEndpoint
+
 	s2aAddress := GetS2AAddress()
-	mtlsS2AAddress := GetMTLSS2AAddress()
-	if s2aAddress == "" && mtlsS2AAddress == "" {
+	if s2aAddress == "" {
 		return &defaultTransportConfig, nil
 	}
 	return &transportConfig{
 		clientCertSource: clientCertSource,
 		endpoint:         endpoint,
 		s2aAddress:       s2aAddress,
-		mtlsS2AAddress:   mtlsS2AAddress,
-		s2aMTLSEndpoint:  opts.DefaultMTLSEndpoint,
+		s2aMTLSEndpoint:  s2aMTLSEndpoint,
 	}, nil
 }
 
@@ -297,10 +241,8 @@ type transportConfig struct {
 	clientCertSource cert.Provider
 	// The corresponding endpoint to use based on client certificate source.
 	endpoint string
-	// The plaintext S2A address if it can be used, otherwise an empty string.
+	// The S2A address if it can be used, otherwise an empty string.
 	s2aAddress string
-	// The MTLS S2A address if it can be used, otherwise an empty string.
-	mtlsS2AAddress string
 	// The MTLS endpoint to use with S2A.
 	s2aMTLSEndpoint string
 }

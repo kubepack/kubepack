@@ -17,15 +17,19 @@
 // Package storage is an auto-generated package for the
 // Cloud Storage API.
 //
-// This folder contains protocol buffer definitions for an API only
-// accessible to select customers. Customers not participating should not
-// depend on this file. Please contact Google Cloud sales if you are
-// interested. Unless told otherwise by a Google Cloud representative, do not
-// use or otherwise rely on any of the contents of this folder. If you would
-// like to use Cloud Storage, please consult our official documentation (at
+// Stop. This folder is likely not what you are looking for. This folder
+// contains protocol buffer definitions for an API only accessible to select
+// customers. Customers not participating should not depend on this file.
+// Please contact Google Cloud sales if you are interested. Unless told
+// otherwise by a Google Cloud representative, do not use or otherwise rely
+// on any of the contents of this folder. If you would like to use Cloud
+// Storage, please consult our official documentation (at
 // https://cloud.google.com/storage/docs/apis) for details on our XML and
 // JSON APIs, or else consider one of our client libraries (at
-// https://cloud.google.com/storage/docs/reference/libraries).
+// https://cloud.google.com/storage/docs/reference/libraries). This API
+// defined in this folder is unreleased and may shut off, break, or fail at
+// any time for any users who are not registered as a part of a private
+// preview program.
 //
 // # General documentation
 //
