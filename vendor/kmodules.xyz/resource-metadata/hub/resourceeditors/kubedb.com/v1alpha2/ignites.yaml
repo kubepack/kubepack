@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: kubedb.com
+    k8s.io/kind: Ignite
+    k8s.io/resource: ignites
+    k8s.io/version: v1alpha2
+  name: kubedb.com-v1alpha2-ignites
+spec:
+  resource:
+    group: kubedb.com
+    kind: Ignite
+    name: ignites
+    scope: Namespaced
+    version: v1alpha2

@@ -67,10 +67,12 @@ spec:
                     - enum:
                       - Restic
                       - WalG
+                      - Medusa
                       - VolumeSnapshotter
                     - enum:
                       - Restic
                       - WalG
+                      - Medusa
                       - VolumeSnapshotter
                     type: string
                   executor:
@@ -1068,10 +1070,12 @@ spec:
                     - enum:
                       - Restic
                       - WalG
+                      - Medusa
                       - VolumeSnapshotter
                     - enum:
                       - Restic
                       - WalG
+                      - Medusa
                       - VolumeSnapshotter
                     type: string
                   executor:

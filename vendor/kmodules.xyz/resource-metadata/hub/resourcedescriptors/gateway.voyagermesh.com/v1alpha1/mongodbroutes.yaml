@@ -73,6 +73,133 @@ spec:
         spec:
           description: Spec defines the desired state of MongoDBRoute.
           properties:
+            horizons:
+              description: |-
+                Horizons specifies the information about replicaset horizons.
+                rs.conf().members[*].horizons field will be populated using this
+              properties:
+                backendRef:
+                  description: |-
+                    BackendRef defines how a Route should forward a request to a Kubernetes
+                    resource.
+
+                    Note that when a namespace different than the local namespace is specified, a
+                    ReferenceGrant object is required in the referent namespace to allow that
+                    namespace's owner to accept the reference. See the ReferenceGrant
+                    documentation for details.
+
+                    <gateway:experimental:description>
+
+                    When the BackendRef points to a Kubernetes Service, implementations SHOULD
+                    honor the appProtocol field if it is set for the target Service Port.
+
+                    Implementations supporting appProtocol SHOULD recognize the Kubernetes
+                    Standard Application Protocols defined in KEP-3726.
+
+                    If a Service appProtocol isn't specified, an implementation MAY infer the
+                    backend protocol through its own means. Implementations MAY infer the
+                    protocol from the Route type referring to the backend Service.
+
+                    If a Route is not able to send traffic to the backend using the specified
+                    protocol then the backend is considered invalid. Implementations MUST set the
+                    "ResolvedRefs" condition to "False" with the "UnsupportedProtocol" reason.
+
+                    </gateway:experimental:description>
+
+                    Note that when the BackendTLSPolicy object is enabled by the implementation,
+                    there are some extra rules about validity to consider here. See the fields
+                    where this struct is used for more information about the exact behavior.
+                  properties:
+                    group:
+                      default: ""
+                      description: |-
+                        Group is the group of the referent. For example, "gateway.networking.k8s.io".
+                        When unspecified or empty string, core API group is inferred.
+                      maxLength: 253
+                      pattern: ^$|^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                      type: string
+                    kind:
+                      default: Service
+                      description: |-
+                        Kind is the Kubernetes resource kind of the referent. For example
+                        "Service".
+
+                        Defaults to "Service" when not specified.
+
+                        ExternalName services can refer to CNAME DNS records that may live
+                        outside of the cluster and as such are difficult to reason about in
+                        terms of conformance. They also may not be safe to forward to (see
+                        CVE-2021-25740 for more information). Implementations SHOULD NOT
+                        support ExternalName Services.
+
+                        Support: Core (Services with a type other than ExternalName)
+
+                        Support: Implementation-specific (Services with type ExternalName)
+                      maxLength: 63
+                      minLength: 1
+                      pattern: ^[a-zA-Z]([-a-zA-Z0-9]*[a-zA-Z0-9])?$
+                      type: string
+                    name:
+                      description: Name is the name of the referent.
+                      maxLength: 253
+                      minLength: 1
+                      type: string
+                    namespace:
+                      description: |-
+                        Namespace is the namespace of the backend. When unspecified, the local
+                        namespace is inferred.
+
+                        Note that when a namespace different than the local namespace is specified,
+                        a ReferenceGrant object is required in the referent namespace to allow that
+                        namespace's owner to accept the reference. See the ReferenceGrant
+                        documentation for details.
+
+                        Support: Core
+                      maxLength: 63
+                      minLength: 1
+                      pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                      type: string
+                    port:
+                      description: |-
+                        Port specifies the destination port number to use for this resource.
+                        Port is required when the referent is a Kubernetes Service. In this
+                        case, the port number is the service port number, not the target port.
+                        For other resources, destination port might be derived from the referent
+                        resource or this field.
+                      format: int32
+                      maximum: 65535
+                      minimum: 1
+                      type: integer
+                    weight:
+                      default: 1
+                      description: |-
+                        Weight specifies the proportion of requests forwarded to the referenced
+                        backend. This is computed as weight/(sum of all weights in this
+                        BackendRefs list). For non-zero values, there may be some epsilon from
+                        the exact proportion defined here depending on the precision an
+                        implementation supports. Weight is not a percentage and the sum of
+                        weights does not need to equal 100.
+
+                        If only one backend is specified and it has a weight greater than 0, 100%
+                        of the traffic is forwarded to that backend. If weight is set to 0, no
+                        traffic should be forwarded for this entry. If unspecified, weight
+                        defaults to 1.
+
+                        Support for this field varies based on the context where used.
+                      format: int32
+                      maximum: 1000000
+                      minimum: 0
+                      type: integer
+                  required:
+                  - name
+                  type: object
+                  x-kubernetes-validations:
+                  - message: Must have port for Service reference
+                    rule: '(size(self.group) == 0 && self.kind == ''Service'') ? has(self.port)
+                      : true'
+              required:
+              - backendRef
+              type: object
             hostnames:
               description: |-
                 Hostnames defines a set of SNI names that should match against the
@@ -524,8 +651,6 @@ spec:
               maxItems: 16
               minItems: 1
               type: array
-          required:
-          - rules
           type: object
       required:
       - spec

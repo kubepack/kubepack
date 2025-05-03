@@ -45,6 +45,8 @@ spec:
                     type: string
                   caBundle:
                     type: string
+                  cloudServiceAuthMode:
+                    type: string
                   displayName:
                     type: string
                   hubClusterID:
