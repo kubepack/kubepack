@@ -9,9 +9,116 @@ metadata:
     k8s.io/version: v1alpha2
   name: kubedb.com-v1alpha2-ignites
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/ignites.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/ignites.png
+    type: image/png
   resource:
     group: kubedb.com
     kind: Ignite
     name: ignites
     scope: Namespaced
     version: v1alpha2
+  ui:
+    actions:
+    - items:
+      - editor:
+          name: opskubedbcom-igniteopsrequest-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-charts-oci
+          version: v0.18.0
+        enforceQuota: false
+        flow: standalone-create
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/restart.svg
+          type: image/svg+xml
+        name: Restart
+        operationId: create-opsrequest-restart
+      - editor:
+          name: opskubedbcom-igniteopsrequest-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-charts-oci
+          version: v0.18.0
+        enforceQuota: false
+        flow: standalone-create
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/reconfigure.svg
+          type: image/svg+xml
+        name: Reconfigure
+        operationId: create-opsrequest-reconfigure
+      name: Operations
+    - items:
+      - disabledTemplate: |
+          {{ not (gt .spec.replicas 1) }}
+        editor:
+          name: opskubedbcom-igniteopsrequest-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-charts-oci
+          version: v0.18.0
+        enforceQuota: true
+        flow: standalone-create
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/horizontal_scale.svg
+          type: image/svg+xml
+        name: Horizontal Scale
+        operationId: create-opsrequest-horizontalscaling
+      - editor:
+          name: opskubedbcom-igniteopsrequest-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-charts-oci
+          version: v0.18.0
+        enforceQuota: true
+        flow: standalone-create
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/vertical_scale.svg
+          type: image/svg+xml
+        name: Vertical Scale
+        operationId: create-opsrequest-verticalscaling
+      - editor:
+          name: opskubedbcom-igniteopsrequest-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-charts-oci
+          version: v0.18.0
+        enforceQuota: true
+        flow: standalone-create
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/expand.svg
+          type: image/svg+xml
+        name: Expand Volume
+        operationId: create-opsrequest-volumeexpansion
+      name: Scaling
+    editor:
+      name: kubedbcom-ignite-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.18.0
+    enforceQuota: true
+    options:
+      name: kubedbcom-ignite-editor-options
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.18.0
+  variants:
+  - name: default
+    selector:
+      matchExpressions:
+      - key: charts.x-helm.dev/is-default-preset
+        operator: In
+        values:
+        - "true"
+        - kubedb
