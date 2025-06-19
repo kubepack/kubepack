@@ -19,14 +19,19 @@ spec:
     openAPIV3Schema:
       properties:
         apiVersion:
-          description: 'APIVersion defines the versioned schema of this representation
-            of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          description: |-
+            APIVersion defines the versioned schema of this representation of an object.
+            Servers should convert recognized schemas to the latest internal value, and
+            may reject unrecognized values.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
           type: string
         kind:
-          description: 'Kind is a string value representing the REST resource this
-            object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          description: |-
+            Kind is a string value representing the REST resource this object represents.
+            Servers may infer this from the endpoint the client submits requests to.
+            Cannot be updated.
+            In CamelCase.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
           type: string
         metadata:
           properties:
@@ -62,43 +67,46 @@ spec:
               type: object
           type: object
         spec:
-          description: 'AzureRoleSpec contains connection information, Azure role
-            info, etc More info: https://www.vaultproject.io/api/secret/azure/index.html#create-update-role'
+          description: |-
+            AzureRoleSpec contains connection information, Azure role info, etc
+            More info: https://www.vaultproject.io/api/secret/azure/index.html#create-update-role
           properties:
             applicationObjectID:
-              description: Application Object ID for an existing service principal
+              description: |-
+                Application Object ID for an existing service principal
                 that will be used instead of creating dynamic service principals.
                 If present, azure_roles will be ignored.
               type: string
             azureRoles:
-              description: List of Azure roles to be assigned to the generated service
-                principal. The array must be in JSON format, properly escaped as a
-                string
+              description: |-
+                List of Azure roles to be assigned to the generated service principal.
+                The array must be in JSON format, properly escaped as a string
               type: string
             maxTTL:
-              description: Specifies the maximum TTL for service principals generated
-                using this role. Accepts time suffixed strings ("1h") or an integer
-                number of seconds. Defaults to the system/engine max TTL time.
+              description: |-
+                Specifies the maximum TTL for service principals
+                generated using this role. Accepts time suffixed strings ("1h")
+                or an integer number of seconds. Defaults to the system/engine max TTL time.
               type: string
             secretEngineRef:
               description: SecretEngineRef is the name of a Secret Engine
               properties:
                 name:
                   default: ""
-                  description: 'Name of the referent. This field is effectively required,
-                    but due to backwards compatibility is allowed to be empty. Instances
-                    of this type with an empty value here are almost certainly wrong.
-                    TODO: Add other useful fields. apiVersion, kind, uid? More info:
-                    https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                    TODO: Drop `kubebuilder:default` when controller-gen doesn''t
-                    need it https://github.com/kubernetes-sigs/kubebuilder/issues/3896.'
+                  description: |-
+                    Name of the referent.
+                    This field is effectively required, but due to backwards compatibility is
+                    allowed to be empty. Instances of this type with an empty value here are
+                    almost certainly wrong.
+                    More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
                   type: string
               type: object
               x-kubernetes-map-type: atomic
             ttl:
-              description: Specifies the default TTL for service principals generated
-                using this role. Accepts time suffixed strings ("1h") or an integer
-                number of seconds. Defaults to the system/engine default TTL time.
+              description: |-
+                Specifies the default TTL for service principals generated using this role.
+                Accepts time suffixed strings ("1h") or an integer number of seconds.
+                Defaults to the system/engine default TTL time.
               type: string
           required:
           - secretEngineRef

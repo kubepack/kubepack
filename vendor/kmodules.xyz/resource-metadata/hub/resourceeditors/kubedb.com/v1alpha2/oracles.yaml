@@ -1,0 +1,26 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: kubedb.com
+    k8s.io/kind: Oracle
+    k8s.io/resource: oracles
+    k8s.io/version: v1alpha2
+  name: kubedb.com-v1alpha2-oracles
+spec:
+  resource:
+    group: kubedb.com
+    kind: Oracle
+    name: oracles
+    scope: Namespaced
+    version: v1alpha2
+  ui:
+    editor:
+      name: kubedbcom-oracle-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.19.0
+    enforceQuota: false
