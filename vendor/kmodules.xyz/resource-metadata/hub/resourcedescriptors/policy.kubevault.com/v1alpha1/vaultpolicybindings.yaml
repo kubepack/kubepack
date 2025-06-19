@@ -19,14 +19,19 @@ spec:
     openAPIV3Schema:
       properties:
         apiVersion:
-          description: 'APIVersion defines the versioned schema of this representation
-            of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          description: |-
+            APIVersion defines the versioned schema of this representation of an object.
+            Servers should convert recognized schemas to the latest internal value, and
+            may reject unrecognized values.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
           type: string
         kind:
-          description: 'Kind is a string value representing the REST resource this
-            object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          description: |-
+            Kind is a string value representing the REST resource this object represents.
+            Servers may infer this from the endpoint the client submits requests to.
+            Cannot be updated.
+            In CamelCase.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
           type: string
         metadata:
           properties:
@@ -69,12 +74,14 @@ spec:
               items:
                 properties:
                   name:
-                    description: 'Name is a Vault server policy name. This name should
-                      be returned by `vault read sys/policy` command. More info: https://www.vaultproject.io/docs/concepts/policies.html#listing-policies'
+                    description: |-
+                      Name is a Vault server policy name. This name should be returned by `vault read sys/policy` command.
+                      More info: https://www.vaultproject.io/docs/concepts/policies.html#listing-policies
                     type: string
                   ref:
-                    description: 'Ref is name of a VaultPolicy crd object. Actual
-                      vault policy name is spec.vaultRoleName field. More info: https://www.vaultproject.io/docs/concepts/policies.html#listing-policies'
+                    description: |-
+                      Ref is name of a VaultPolicy crd object. Actual vault policy name is spec.vaultRoleName field.
+                      More info: https://www.vaultproject.io/docs/concepts/policies.html#listing-policies
                     type: string
                 type: object
               type: array
@@ -94,12 +101,14 @@ spec:
                         and once set, it can't be reset later.
                       type: boolean
                     path:
-                      description: 'Specifies the path where approle auth is enabled
-                        default : approle'
+                      description: |-
+                        Specifies the path where approle auth is enabled
+                        default : approle
                       type: string
                     roleName:
-                      description: 'RoleName is the Name of the AppRole This defaults
-                        to following format: k8s.${cluster}.${metadata.namespace}.${metadata.name}'
+                      description: |-
+                        RoleName is the Name of the AppRole
+                        This defaults to following format: k8s.${cluster}.${metadata.namespace}.${metadata.name}
                       type: string
                     secretIdBoundCidrs:
                       description: List of CIDR blocks; if set, specifies blocks of
@@ -221,8 +230,9 @@ spec:
                         login. The claim value must be a list of strings.
                       type: string
                     name:
-                      description: 'Name of the role. This defaults to following format:
-                        k8s.${cluster}.${metadata.namespace}.${metadata.name}'
+                      description: |-
+                        Name of the role.
+                        This defaults to following format: k8s.${cluster}.${metadata.namespace}.${metadata.name}
                       type: string
                     oidcScopes:
                       description: If set, a list of OIDC scopes to be used with an
@@ -300,8 +310,9 @@ spec:
                   - userClaim
                   type: object
                 kubernetes:
-                  description: 'Kubernetes refers to Vault users who are authenticated
-                    via Kubernetes auth method More info: https://www.vaultproject.io/docs/auth/kubernetes.html#configuration'
+                  description: |-
+                    Kubernetes refers to Vault users who are authenticated via Kubernetes auth method
+                    More info: https://www.vaultproject.io/docs/auth/kubernetes.html#configuration
                   properties:
                     audience:
                       description: Optional Audience claim to verify in the JWT.
@@ -314,14 +325,15 @@ spec:
                       description: Name of the role
                       type: string
                     path:
-                      description: 'Specifies the path where kubernetes auth is enabled
-                        default : kubernetes'
+                      description: |-
+                        Specifies the path where kubernetes auth is enabled
+                        default : kubernetes
                       type: string
                     period:
-                      description: If set, indicates that the token generated using
-                        this role should never expire. The token should be renewed
-                        within the duration specified by this value. At each renewal,
-                        the token's TTL will be set to the value of this parameter.
+                      description: |-
+                        If set, indicates that the token generated using this role should never expire.
+                        The token should be renewed within the duration specified by this value.
+                        At each renewal, the token's TTL will be set to the value of this parameter.
                       type: string
                     serviceAccountNames:
                       description: Specifies the names of the service account to bind
@@ -349,8 +361,9 @@ spec:
                       description: The name of the LDAP group
                       type: string
                     path:
-                      description: 'Specifies the path where ldap groups auth is enabled
-                        default : ldap/groups'
+                      description: |-
+                        Specifies the path where ldap groups auth is enabled
+                        default : ldap/groups
                       type: string
                     policies:
                       description: List of policies to encode onto generated tokens.
@@ -371,8 +384,9 @@ spec:
                         type: string
                       type: array
                     path:
-                      description: 'Specifies the path where ldap groups auth is enabled
-                        default : ldap/users'
+                      description: |-
+                        Specifies the path where ldap groups auth is enabled
+                        default : ldap/users
                       type: string
                     policies:
                       description: List of policies to encode onto generated tokens.
@@ -435,8 +449,9 @@ spec:
                         login. The claim value must be a list of strings.
                       type: string
                     name:
-                      description: 'Name of the role. This defaults to following format:
-                        k8s.${cluster}.${metadata.namespace}.${metadata.name}'
+                      description: |-
+                        Name of the role.
+                        This defaults to following format: k8s.${cluster}.${metadata.namespace}.${metadata.name}
                       type: string
                     oidcScopes:
                       description: If set, a list of OIDC scopes to be used with an
@@ -520,20 +535,20 @@ spec:
               properties:
                 name:
                   default: ""
-                  description: 'Name of the referent. This field is effectively required,
-                    but due to backwards compatibility is allowed to be empty. Instances
-                    of this type with an empty value here are almost certainly wrong.
-                    TODO: Add other useful fields. apiVersion, kind, uid? More info:
-                    https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                    TODO: Drop `kubebuilder:default` when controller-gen doesn''t
-                    need it https://github.com/kubernetes-sigs/kubebuilder/issues/3896.'
+                  description: |-
+                    Name of the referent.
+                    This field is effectively required, but due to backwards compatibility is
+                    allowed to be empty. Instances of this type with an empty value here are
+                    almost certainly wrong.
+                    More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
                   type: string
               type: object
               x-kubernetes-map-type: atomic
             vaultRoleName:
-              description: 'VaultRoleName is the role name which will be bound of
-                the policies This defaults to following format: k8s.${cluster}.${metadata.namespace}.${metadata.name}
-                xref: https://www.vaultproject.io/api/auth/kubernetes/index.html#create-role'
+              description: |-
+                VaultRoleName is the role name which will be bound of the policies
+                This defaults to following format: k8s.${cluster}.${metadata.namespace}.${metadata.name}
+                xref: https://www.vaultproject.io/api/auth/kubernetes/index.html#create-role
               type: string
           required:
           - policies

@@ -19,14 +19,19 @@ spec:
     openAPIV3Schema:
       properties:
         apiVersion:
-          description: 'APIVersion defines the versioned schema of this representation
-            of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          description: |-
+            APIVersion defines the versioned schema of this representation of an object.
+            Servers should convert recognized schemas to the latest internal value, and
+            may reject unrecognized values.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
           type: string
         kind:
-          description: 'Kind is a string value representing the REST resource this
-            object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          description: |-
+            Kind is a string value representing the REST resource this object represents.
+            Servers may infer this from the endpoint the client submits requests to.
+            Cannot be updated.
+            In CamelCase.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
           type: string
         metadata:
           properties:
@@ -62,33 +67,37 @@ spec:
               type: object
           type: object
         spec:
-          description: 'GCPRoleSpec contains connection information, GCP role info,
-            etc More info: https://www.vaultproject.io/api/secret/gcp/index.html#parameters'
+          description: |-
+            GCPRoleSpec contains connection information, GCP role info, etc
+            More info: https://www.vaultproject.io/api/secret/gcp/index.html#parameters
           properties:
             bindings:
-              description: Bindings configuration string (expects HCL or JSON format
-                in raw or base64-encoded string)
+              description: |-
+                Bindings configuration string (expects HCL or JSON format in raw
+                or base64-encoded string)
               type: string
             path:
-              description: 'Path defines the path of the Google Cloud secret engine
-                default: gcp More info: https://www.vaultproject.io/docs/auth/gcp.html#via-the-cli-helper'
+              description: |-
+                Path defines the path of the Google Cloud secret engine
+                default: gcp
+                More info: https://www.vaultproject.io/docs/auth/gcp.html#via-the-cli-helper
               type: string
             project:
-              description: Name of the GCP project that this roleset's service account
-                will belong to. Cannot be updated.
+              description: |-
+                Name of the GCP project that this roleset's service account will belong to.
+                Cannot be updated.
               type: string
             secretEngineRef:
               description: SecretEngineRef is the name of a Secret Engine
               properties:
                 name:
                   default: ""
-                  description: 'Name of the referent. This field is effectively required,
-                    but due to backwards compatibility is allowed to be empty. Instances
-                    of this type with an empty value here are almost certainly wrong.
-                    TODO: Add other useful fields. apiVersion, kind, uid? More info:
-                    https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                    TODO: Drop `kubebuilder:default` when controller-gen doesn''t
-                    need it https://github.com/kubernetes-sigs/kubebuilder/issues/3896.'
+                  description: |-
+                    Name of the referent.
+                    This field is effectively required, but due to backwards compatibility is
+                    allowed to be empty. Instances of this type with an empty value here are
+                    almost certainly wrong.
+                    More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
                   type: string
               type: object
               x-kubernetes-map-type: atomic
@@ -99,8 +108,9 @@ spec:
               - service_account_key
               type: string
             tokenScopes:
-              description: List of OAuth scopes to assign to access_token secrets
-                generated under this role set (access_token role sets only)
+              description: |-
+                List of OAuth scopes to assign to access_token secrets generated
+                under this role set (access_token role sets only)
               items:
                 type: string
               type: array

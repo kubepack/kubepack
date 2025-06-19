@@ -19,14 +19,19 @@ spec:
     openAPIV3Schema:
       properties:
         apiVersion:
-          description: 'APIVersion defines the versioned schema of this representation
-            of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          description: |-
+            APIVersion defines the versioned schema of this representation of an object.
+            Servers should convert recognized schemas to the latest internal value, and
+            may reject unrecognized values.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
           type: string
         kind:
-          description: 'Kind is a string value representing the REST resource this
-            object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          description: |-
+            Kind is a string value representing the REST resource this object represents.
+            Servers may infer this from the endpoint the client submits requests to.
+            Cannot be updated.
+            In CamelCase.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
           type: string
         metadata:
           properties:
@@ -62,8 +67,9 @@ spec:
               type: object
           type: object
         spec:
-          description: 'PKIRoleSpec contains connection information, PKI role info,
-            etc More info: https://developer.hashicorp.com/vault/api-docs/secret/pki#create-update-role'
+          description: |-
+            PKIRoleSpec contains connection information, PKI role info, etc
+            More info: https://developer.hashicorp.com/vault/api-docs/secret/pki#create-update-role
           properties:
             additionalPayload:
               additionalProperties:
@@ -90,13 +96,12 @@ spec:
               properties:
                 name:
                   default: ""
-                  description: 'Name of the referent. This field is effectively required,
-                    but due to backwards compatibility is allowed to be empty. Instances
-                    of this type with an empty value here are almost certainly wrong.
-                    TODO: Add other useful fields. apiVersion, kind, uid? More info:
-                    https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                    TODO: Drop `kubebuilder:default` when controller-gen doesn''t
-                    need it https://github.com/kubernetes-sigs/kubebuilder/issues/3896.'
+                  description: |-
+                    Name of the referent.
+                    This field is effectively required, but due to backwards compatibility is
+                    allowed to be empty. Instances of this type with an empty value here are
+                    almost certainly wrong.
+                    More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
                   type: string
               type: object
               x-kubernetes-map-type: atomic

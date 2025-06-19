@@ -15,3 +15,12 @@ spec:
     name: perconaxtradbs
     scope: Namespaced
     version: v1alpha1
+  ui:
+    editor:
+      name: gitopskubedbcom-perconaxtradb-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.19.0
+    enforceQuota: false

@@ -49,6 +49,14 @@ spec:
                   type: string
                 managerID:
                   type: string
+                mode:
+                  description: ENUM(prod,qa,staging,dev)
+                  enum:
+                  - prod
+                  - qa
+                  - staging
+                  - dev
+                  type: string
                 name:
                   type: string
                 ownerID:
