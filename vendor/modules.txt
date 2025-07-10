@@ -1836,7 +1836,7 @@ kmodules.xyz/go-containerregistry/name
 ## explicit; go 1.23.0
 kmodules.xyz/offshoot-api/api/v1
 kmodules.xyz/offshoot-api/api/v2
-# kmodules.xyz/resource-metadata v0.31.0
+# kmodules.xyz/resource-metadata v0.32.0
 ## explicit; go 1.23.0
 kmodules.xyz/resource-metadata/apis/meta
 kmodules.xyz/resource-metadata/apis/meta/v1alpha1
@@ -1847,7 +1847,7 @@ kmodules.xyz/resource-metadata/crds
 kmodules.xyz/resource-metadata/hub
 kmodules.xyz/resource-metadata/hub/resourcedescriptors
 kmodules.xyz/resource-metadata/hub/resourceeditors
-# kmodules.xyz/resource-metrics v0.30.6
+# kmodules.xyz/resource-metrics v0.30.9
 ## explicit; go 1.23.0
 kmodules.xyz/resource-metrics/api
 # kubepack.dev/lib-helm v0.32.1

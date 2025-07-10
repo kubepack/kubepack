@@ -9,6 +9,75 @@ metadata:
     k8s.io/version: v1alpha2
   name: kubedb.com-v1alpha2-oracles
 spec:
+  connections:
+  - labels:
+    - offshoot
+    level: Controller
+    namespace:
+      path: metadata.namespace
+    selector:
+      matchLabels:
+        app.kubernetes.io/instance: '{.metadata.name}'
+        app.kubernetes.io/managed-by: kubedb.com
+        app.kubernetes.io/name: oracles.kubedb.com
+    target:
+      apiVersion: apps.k8s.appscode.com/v1
+      kind: PetSet
+    type: MatchSelector
+  - labels:
+    - connect_via
+    level: Controller
+    nameTemplate: '{.metadata.name}'
+    namespace:
+      path: metadata.namespace
+    target:
+      apiVersion: appcatalog.appscode.com/v1alpha1
+      kind: AppBinding
+    type: MatchName
+  - labels:
+    - catalog
+    references:
+    - '{.spec.version}'
+    target:
+      apiVersion: catalog.kubedb.com/v1alpha1
+      kind: OracleVersion
+    type: MatchRef
+  - labels:
+    - cert_issuer
+    namespace:
+      path: metadata.namespace
+    references:
+    - '{.spec.tls.issuerRef.name},{.metadata.namespace}'
+    target:
+      apiVersion: cert-manager.io/v1
+      kind: Issuer
+    type: MatchRef
+  - labels:
+    - cert_issuer
+    references:
+    - '{.spec.tls.issuerRef.name}'
+    target:
+      apiVersion: cert-manager.io/v1
+      kind: ClusterIssuer
+    type: MatchRef
+  - labels:
+    - view
+    nameTemplate: '{.metadata.name}~Oracle.kubedb.com'
+    namespace:
+      path: metadata.namespace
+    target:
+      apiVersion: core.k8s.appscode.com/v1alpha1
+      kind: GenericResource
+    type: MatchName
+  - labels:
+    - view
+    nameTemplate: '{.metadata.name}~Oracle.kubedb.com'
+    namespace:
+      path: metadata.namespace
+    target:
+      apiVersion: core.k8s.appscode.com/v1alpha1
+      kind: GenericResourceService
+    type: MatchName
   resource:
     group: kubedb.com
     kind: Oracle
@@ -75,6 +144,11 @@ spec:
                   type: string
               type: object
               x-kubernetes-map-type: atomic
+            autoOps:
+              properties:
+                disabled:
+                  type: boolean
+              type: object
             configSecret:
               properties:
                 name:
