@@ -68,7 +68,7 @@ TAG_DBG          := $(VERSION)-dbg_$(OS)_$(ARCH)
 
 GO_VERSION       ?= 1.24
 BUILD_IMAGE      ?= ghcr.io/appscode/golang-dev:$(GO_VERSION)
-CHART_TEST_IMAGE ?= quay.io/helmpack/chart-testing:v3.11.0
+CHART_TEST_IMAGE ?= quay.io/helmpack/chart-testing:v3.13.0
 
 OUTBIN = bin/$(OS)_$(ARCH)/$(BIN)
 ifeq ($(OS),windows)
