@@ -98,6 +98,7 @@ type PageBlockOutline struct {
 type ResourceTableDefinitionRef struct {
 	Name    string                     `json:"name,omitempty"`
 	Columns []ResourceColumnDefinition `json:"columns,omitempty"`
+	Sort    *TableSortOption           `json:"sort,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

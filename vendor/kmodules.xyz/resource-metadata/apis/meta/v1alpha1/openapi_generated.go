@@ -468,6 +468,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.TableCell":                   schema_resource_metadata_apis_meta_v1alpha1_TableCell(ref),
 		"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.TableOptions":                schema_resource_metadata_apis_meta_v1alpha1_TableOptions(ref),
 		"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.TableRow":                    schema_resource_metadata_apis_meta_v1alpha1_TableRow(ref),
+		"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.TableSortOption":             schema_resource_metadata_apis_meta_v1alpha1_TableSortOption(ref),
 		"kmodules.xyz/resource-metadata/apis/shared.Action":                             schema_kmodulesxyz_resource_metadata_apis_shared_Action(ref),
 		"kmodules.xyz/resource-metadata/apis/shared.ActionGroup":                        schema_kmodulesxyz_resource_metadata_apis_shared_ActionGroup(ref),
 		"kmodules.xyz/resource-metadata/apis/shared.ActionInfo":                         schema_kmodulesxyz_resource_metadata_apis_shared_ActionInfo(ref),
@@ -21055,11 +21056,16 @@ func schema_resource_metadata_apis_meta_v1alpha1_PageBlockTableDefinition(ref co
 							},
 						},
 					},
+					"sort": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("kmodules.xyz/resource-metadata/apis/meta/v1alpha1.TableSortOption"),
+						},
+					},
 				},
 			},
 		},
 		Dependencies: []string{
-			"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourceColumnDefinition"},
+			"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourceColumnDefinition", "kmodules.xyz/resource-metadata/apis/meta/v1alpha1.TableSortOption"},
 	}
 }
 
@@ -23562,11 +23568,16 @@ func schema_resource_metadata_apis_meta_v1alpha1_ResourceTableDefinitionRef(ref 
 							},
 						},
 					},
+					"sort": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("kmodules.xyz/resource-metadata/apis/meta/v1alpha1.TableSortOption"),
+						},
+					},
 				},
 			},
 		},
 		Dependencies: []string{
-			"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourceColumnDefinition"},
+			"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.ResourceColumnDefinition", "kmodules.xyz/resource-metadata/apis/meta/v1alpha1.TableSortOption"},
 	}
 }
 
@@ -24112,6 +24123,30 @@ func schema_resource_metadata_apis_meta_v1alpha1_TableRow(ref common.ReferenceCa
 		},
 		Dependencies: []string{
 			"kmodules.xyz/resource-metadata/apis/meta/v1alpha1.TableCell"},
+	}
+}
+
+func schema_resource_metadata_apis_meta_v1alpha1_TableSortOption(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"order": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"fieldName": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+				},
+			},
+		},
 	}
 }
 
