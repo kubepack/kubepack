@@ -91,7 +91,22 @@ type FeatureList []string
 
 type PageBlockTableDefinition struct {
 	Columns []ResourceColumnDefinition `json:"columns,omitempty"`
+	Sort    *TableSortOption           `json:"sort,omitempty"`
 }
+
+type TableSortOption struct {
+	Order     TableSortOrder `json:"order,omitempty"`
+	FieldName string         `json:"fieldName,omitempty"`
+}
+
+// +kubebuilder:validation:Enum=Ascending;Descending
+
+type TableSortOrder string
+
+const (
+	TableSortOrderAscending  TableSortOrder = "Ascending"
+	TableSortOrderDescending TableSortOrder = "Descending"
+)
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 // +kubebuilder:object:root=true
