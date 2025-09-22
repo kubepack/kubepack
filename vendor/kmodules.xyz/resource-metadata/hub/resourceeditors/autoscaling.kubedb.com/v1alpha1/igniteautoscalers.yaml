@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: autoscaling.kubedb.com
+    k8s.io/kind: IgniteAutoscaler
+    k8s.io/resource: igniteautoscalers
+    k8s.io/version: v1alpha1
+  name: autoscaling.kubedb.com-v1alpha1-igniteautoscalers
+spec:
+  resource:
+    group: autoscaling.kubedb.com
+    kind: IgniteAutoscaler
+    name: igniteautoscalers
+    scope: Namespaced
+    version: v1alpha1
