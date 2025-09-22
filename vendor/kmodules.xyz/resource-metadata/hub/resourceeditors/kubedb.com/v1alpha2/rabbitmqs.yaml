@@ -29,7 +29,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.24.0
+          version: v0.25.0
         enforceQuota: false
         flow: standalone-create
         icons:
@@ -37,14 +37,13 @@ spec:
           type: image/svg+xml
         name: Update Version
         operationId: create-opsrequest-upgrade
-    - items:
       - editor:
           name: opskubedbcom-rabbitmqopsrequest-editor
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.24.0
+          version: v0.25.0
         enforceQuota: false
         flow: standalone-create
         icons:
@@ -58,7 +57,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.24.0
+          version: v0.25.0
         enforceQuota: false
         flow: standalone-create
         icons:
@@ -76,7 +75,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.24.0
+          version: v0.25.0
         enforceQuota: true
         flow: standalone-create
         icons:
@@ -90,7 +89,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.24.0
+          version: v0.25.0
         enforceQuota: true
         flow: standalone-create
         icons:
@@ -104,7 +103,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.24.0
+          version: v0.25.0
         enforceQuota: true
         flow: standalone-create
         icons:
@@ -120,7 +119,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.24.0
+          version: v0.25.0
         enforceQuota: true
         flow: standalone-edit
         icons:
@@ -134,7 +133,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.24.0
+          version: v0.25.0
         enforceQuota: true
         flow: standalone-edit
         icons:
@@ -150,7 +149,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.24.0
+          version: v0.25.0
         enforceQuota: false
         flow: standalone-create
         icons:
@@ -164,7 +163,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.24.0
+          version: v0.25.0
         enforceQuota: false
         flow: standalone-edit
         icons:
@@ -173,13 +172,29 @@ spec:
         name: Monitoring
         operationId: edit-self-monitoring
       name: Security & Monitoring
+    - items:
+      - editor:
+          name: kubedbcom-rabbitmq-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-charts-oci
+          version: v0.25.0
+        enforceQuota: false
+        flow: standalone-edit
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/configure.svg
+          type: image/svg+xml
+        name: Expose via Gateway
+        operationId: edit-self-binding
+      name: Extras
     editor:
       name: kubedbcom-rabbitmq-editor
       sourceRef:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-charts-oci
-      version: v0.24.0
+      version: v0.25.0
     enforceQuota: true
     options:
       name: kubedbcom-rabbitmq-editor-options
@@ -187,7 +202,7 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-charts-oci
-      version: v0.24.0
+      version: v0.25.0
   variants:
   - name: default
     selector:
