@@ -63,22 +63,33 @@ spec:
                   format: date-time
                   type: string
                 apiGroup:
+                  default: ""
                   type: string
                 externallyManaged:
                   type: boolean
+                kind:
+                  default: Secret
+                  type: string
                 name:
-                  default: ""
                   type: string
                 rotateAfter:
                   type: string
                 secretStoreName:
                   type: string
+              required:
+              - kind
+              - name
               type: object
               x-kubernetes-map-type: atomic
             autoOps:
               properties:
                 disabled:
                   type: boolean
+              type: object
+            brokerRack:
+              properties:
+                topologyKey:
+                  type: string
               type: object
             configSecret:
               properties:
@@ -102,16 +113,22 @@ spec:
                       format: date-time
                       type: string
                     apiGroup:
+                      default: ""
                       type: string
                     externallyManaged:
                       type: boolean
+                    kind:
+                      default: Secret
+                      type: string
                     name:
-                      default: ""
                       type: string
                     rotateAfter:
                       type: string
                     secretStoreName:
                       type: string
+                  required:
+                  - kind
+                  - name
                   type: object
                   x-kubernetes-map-type: atomic
                 podTemplate:
@@ -3284,16 +3301,22 @@ spec:
                   format: date-time
                   type: string
                 apiGroup:
+                  default: ""
                   type: string
                 externallyManaged:
                   type: boolean
+                kind:
+                  default: Secret
+                  type: string
                 name:
-                  default: ""
                   type: string
                 rotateAfter:
                   type: string
                 secretStoreName:
                   type: string
+              required:
+              - kind
+              - name
               type: object
               x-kubernetes-map-type: atomic
             monitor:

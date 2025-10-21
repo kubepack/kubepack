@@ -9,6 +9,11 @@ metadata:
     k8s.io/version: v1alpha1
   name: catalog.appscode.com-v1alpha1-singlestorebindings
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/catalog.appscode.com/singlestorebindings.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/catalog.appscode.com/singlestorebindings.png
+    type: image/png
   resource:
     group: catalog.appscode.com
     kind: SinglestoreBinding
@@ -22,5 +27,5 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-charts-oci
-      version: v0.25.0
+      version: v0.26.0
     enforceQuota: false
