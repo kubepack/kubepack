@@ -45,7 +45,7 @@ func GetPackageDescriptor(pkgChart *chart.Chart) releasesapi.PackageDescriptor {
 			if mime, err := mimetype.DetectReader(resp.Body); err == nil {
 				imgType = mime.String()
 			}
-			_ = resp.Body.Close()
+			_ = resp.Body.Close() // nolint:errcheck
 		}
 		out.Icons = []shared.ImageSpec{
 			{
@@ -94,7 +94,7 @@ func CreatePackageView(srcRef kmapi.TypedObjectReference, chrt *chart.Chart) (*r
 
 	for _, f := range chrt.Raw {
 		if f.Name == chartutil.ValuesfileName || (strings.HasPrefix(f.Name, "values-") && strings.HasSuffix(f.Name, ".yaml")) {
-			var values map[string]interface{}
+			var values map[string]any
 			err := yamllib.Unmarshal(f.Data, &values)
 			if err != nil {
 				return nil, err

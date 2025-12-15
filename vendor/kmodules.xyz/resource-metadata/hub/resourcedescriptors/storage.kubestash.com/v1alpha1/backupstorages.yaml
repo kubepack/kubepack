@@ -1706,6 +1706,9 @@ spec:
                       - lun
                       - targetPortal
                       type: object
+                    maxConnections:
+                      format: int64
+                      type: integer
                     mountPath:
                       type: string
                     nfs:
@@ -2059,6 +2062,9 @@ spec:
                       type: string
                     insecureTLS:
                       type: boolean
+                    maxConnections:
+                      format: int64
+                      type: integer
                     prefix:
                       type: string
                     region:

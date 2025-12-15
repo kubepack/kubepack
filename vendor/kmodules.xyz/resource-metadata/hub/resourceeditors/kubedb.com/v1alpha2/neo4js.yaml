@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: kubedb.com
+    k8s.io/kind: Neo4j
+    k8s.io/resource: neo4js
+    k8s.io/version: v1alpha2
+  name: kubedb.com-v1alpha2-neo4js
+spec:
+  resource:
+    group: kubedb.com
+    kind: Neo4j
+    name: neo4js
+    scope: Namespaced
+    version: v1alpha2

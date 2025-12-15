@@ -194,7 +194,7 @@ func FormatMetadata(data []byte) ([]byte, error) {
 	return yaml.Marshal(root)
 }
 
-func find(node yaml.MapSlice, key string) interface{} {
+func find(node yaml.MapSlice, key string) any {
 	for i := range node {
 		if node[i].Key.(string) == key {
 			return node[i].Value

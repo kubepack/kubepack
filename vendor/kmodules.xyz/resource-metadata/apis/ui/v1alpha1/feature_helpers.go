@@ -28,7 +28,7 @@ func (v Feature) CustomResourceDefinition() *apiextensions.CustomResourceDefinit
 	return crds.MustCustomResourceDefinition(SchemeGroupVersion.WithResource(ResourceFeatures))
 }
 
-func (_ Feature) FormatLabels(featureSet string) labels.Selector {
+func (Feature) FormatLabels(featureSet string) labels.Selector {
 	return labels.SelectorFromSet(map[string]string{
 		ui.LabelFeatureSet: featureSet,
 	})

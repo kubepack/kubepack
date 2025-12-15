@@ -69,12 +69,20 @@ func CheckPermissions(getter genericclioptions.RESTClientGetter, reg repo.IRegis
 		w := new(tabwriter.Writer)
 		// Format in tab-separated columns with a tab stop of 8.
 		w.Init(os.Stdout, 0, 20, 0, '\t', 0)
-		fmt.Fprintln(w, "Group\tVersion\tResource\tNamespace\tName\tAllowed\t")
-		for k, v := range attrs {
-			fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%v\n", k.Group, k.Version, k.Resource, k.Namespace, k.Name, v.Allowed)
+		if _, err := fmt.Fprintln(w, "Group\tVersion\tResource\tNamespace\tName\tAllowed\t"); err != nil {
+			return false, err
 		}
-		fmt.Fprintln(w)
-		w.Flush()
+		for k, v := range attrs {
+			if _, err := fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%v\n", k.Group, k.Version, k.Resource, k.Namespace, k.Name, v.Allowed); err != nil {
+				return false, err
+			}
+		}
+		if _, err := fmt.Fprintln(w); err != nil {
+			return false, err
+		}
+		if err := w.Flush(); err != nil {
+			return false, err
+		}
 	}
 	return true, nil
 }
