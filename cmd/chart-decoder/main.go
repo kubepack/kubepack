@@ -80,17 +80,17 @@ func main() {
 
 	var manifests bytes.Buffer
 
-	fmt.Fprintln(&manifests, strings.TrimSpace(rel.Manifest))
+	_, _ = fmt.Fprintln(&manifests, strings.TrimSpace(rel.Manifest))
 	if !client.DisableHooks {
 		for _, m := range rel.Hooks {
-			fmt.Fprintf(&manifests, "---\n# Source: %s\n%s\n", m.Path, m.Manifest)
+			_, _ = fmt.Fprintf(&manifests, "---\n# Source: %s\n%s\n", m.Path, m.Manifest)
 		}
 	}
 
-	fmt.Fprintf(os.Stdout, "%s", manifests.String())
+	_, _ = fmt.Fprintf(os.Stdout, "%s", manifests.String())
 }
 
-func debug(format string, v ...interface{}) {
+func debug(format string, v ...any) {
 	format = fmt.Sprintf("[debug] %s\n", format)
 	_ = log.Output(2, fmt.Sprintf(format, v...))
 }
@@ -108,7 +108,7 @@ func runInstall(args []string, client *action.Install, valueOpts *values.Options
 	}
 	client.ReleaseName = name
 
-	cp, err := client.ChartPathOptions.LocateChart(chart, settings)
+	cp, err := client.LocateChart(chart, settings)
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +133,9 @@ func runInstall(args []string, client *action.Install, valueOpts *values.Options
 	}
 
 	if chartRequested.Metadata.Deprecated {
-		fmt.Fprintln(out, "WARNING: This chart is deprecated")
+		if _, err := fmt.Fprintln(out, "WARNING: This chart is deprecated"); err != nil {
+			return nil, err
+		}
 	}
 
 	if req := chartRequested.Metadata.Dependencies; req != nil {

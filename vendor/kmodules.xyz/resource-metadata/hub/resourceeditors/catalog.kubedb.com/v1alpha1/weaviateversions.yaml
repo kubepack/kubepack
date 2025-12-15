@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: catalog.kubedb.com
+    k8s.io/kind: WeaviateVersion
+    k8s.io/resource: weaviateversions
+    k8s.io/version: v1alpha1
+  name: catalog.kubedb.com-v1alpha1-weaviateversions
+spec:
+  resource:
+    group: catalog.kubedb.com
+    kind: WeaviateVersion
+    name: weaviateversions
+    scope: Cluster
+    version: v1alpha1

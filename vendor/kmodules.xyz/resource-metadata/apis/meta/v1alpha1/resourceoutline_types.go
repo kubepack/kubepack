@@ -56,6 +56,7 @@ type ResourceOutlineSpec struct {
 
 type ResourcePageOutline struct {
 	Name string `json:"name"`
+	Icon string `json:"icon,omitempty"`
 	// +optional
 	RequiredFeatureSets map[string]FeatureList `json:"requiredFeatureSets,omitempty"`
 	Sections            []SectionOutline       `json:"sections,omitempty"`

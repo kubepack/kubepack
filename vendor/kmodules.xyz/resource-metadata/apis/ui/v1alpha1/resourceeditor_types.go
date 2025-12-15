@@ -67,23 +67,7 @@ type UIParameters struct {
 	// +optional
 	InstanceLabelPaths []string `json:"instanceLabelPaths,omitempty"`
 	// +optional
-	Actions []*ActionTemplateGroup `json:"actions,omitempty"`
-}
-
-type ActionTemplateGroup struct {
-	shared.ActionInfo `json:",inline,omitempty"`
-	Items             []ActionTemplate `json:"items"`
-}
-
-type ActionTemplate struct {
-	shared.ActionInfo `json:",inline,omitempty"`
-	// +optional
-	Icons            []helmshared.ImageSpec      `json:"icons,omitempty"`
-	OperationID      string                      `json:"operationId"`
-	Flow             string                      `json:"flow"`
-	DisabledTemplate string                      `json:"disabledTemplate,omitempty"`
-	Editor           *releasesapi.ChartSourceRef `json:"editor,omitempty"`
-	EnforceQuota     bool                        `json:"enforceQuota"`
+	Actions []*shared.ActionTemplateGroup `json:"actions,omitempty"`
 }
 
 type VariantRef struct {

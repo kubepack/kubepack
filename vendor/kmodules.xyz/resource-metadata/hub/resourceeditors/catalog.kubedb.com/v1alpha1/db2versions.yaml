@@ -1,0 +1,17 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s.io/group: catalog.kubedb.com
+    k8s.io/kind: DB2Version
+    k8s.io/resource: db2versions
+    k8s.io/version: v1alpha1
+  name: catalog.kubedb.com-v1alpha1-db2versions
+spec:
+  resource:
+    group: catalog.kubedb.com
+    kind: DB2Version
+    name: db2versions
+    scope: Cluster
+    version: v1alpha1

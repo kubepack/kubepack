@@ -169,7 +169,7 @@ func GenerateHelm3Script(bs *BlobStore, reg repo.IRegistry, order releasesapi.Or
 	}, nil
 }
 
-func PrintHelm3CommandFromStructValues(reg repo.IRegistry, opts releasesapi.InstallOptions, baseValuesStruct, modValuesStruct interface{}, useValuesFile bool) (string, []byte, error) {
+func PrintHelm3CommandFromStructValues(reg repo.IRegistry, opts releasesapi.InstallOptions, baseValuesStruct, modValuesStruct any, useValuesFile bool) (string, []byte, error) {
 	baseMap, err := toJson(baseValuesStruct)
 	if err != nil {
 		return "", nil, err
@@ -185,7 +185,7 @@ func PrintHelm3CommandFromStructValues(reg repo.IRegistry, opts releasesapi.Inst
 	return PrintHelm3Command(reg, opts, applyValues, useValuesFile)
 }
 
-func PrintHelm3Command(reg repo.IRegistry, opts releasesapi.InstallOptions, applyValues map[string]interface{}, useValuesFile bool) (string, []byte, error) {
+func PrintHelm3Command(reg repo.IRegistry, opts releasesapi.InstallOptions, applyValues map[string]any, useValuesFile bool) (string, []byte, error) {
 	valuesBytes, err := json.Marshal(applyValues)
 	if err != nil {
 		return "", nil, err
@@ -211,12 +211,12 @@ func PrintHelm3Command(reg repo.IRegistry, opts releasesapi.InstallOptions, appl
 	return buf.String(), f3.ValuesFile(), nil
 }
 
-func toJson(v interface{}) (map[string]interface{}, error) {
+func toJson(v any) (map[string]any, error) {
 	data, err := json.Marshal(v)
 	if err != nil {
 		return nil, err
 	}
-	var out map[string]interface{}
+	var out map[string]any
 	err = json.Unmarshal(data, &out)
 	if err != nil {
 		return nil, err

@@ -53,7 +53,6 @@ import (
 	crdv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	crd_cs "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -111,7 +110,7 @@ func (x *WaitForPrinter) Do() error {
 		if w.Labels != nil {
 			parts = append(parts, "-l")
 
-			selector, err := v1.LabelSelectorAsSelector(w.Labels)
+			selector, err := metav1.LabelSelectorAsSelector(w.Labels)
 			if err != nil {
 				return err
 			}
@@ -173,7 +172,7 @@ func (x *WaitForChecker) Do() error {
 			builder.ResourceTypeOrNameArgs(false, flags.Resource.Group+"/"+flags.Resource.Resource)
 		}
 		if flags.Labels != nil {
-			selector, err := v1.LabelSelectorAsSelector(flags.Labels)
+			selector, err := metav1.LabelSelectorAsSelector(flags.Labels)
 			if err != nil {
 				return err
 			}
@@ -265,7 +264,7 @@ func (x *CRDReadinessChecker) Do() error {
 	for _, crd := range x.CRDs {
 		crds = append(crds, &apiextensions.CustomResourceDefinition{
 			V1: &crdv1.CustomResourceDefinition{
-				ObjectMeta: v1.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name: fmt.Sprintf("%s.%s", crd.Resource, crd.Group),
 				},
 				Spec: crdv1.CustomResourceDefinitionSpec{
@@ -462,9 +461,9 @@ func (x *YAMLPrinter) Do() error {
 		bucket = blob.PrefixedBucket(bucket, strings.TrimSuffix(x.Prefix, "/")+"/")
 	}
 	dirManifest := blob.PrefixedBucket(bucket, x.UID+"/manifests/")
-	defer dirManifest.Close()
+	defer dirManifest.Close() // nolint:errcheck
 	dirCRD := blob.PrefixedBucket(bucket, x.UID+"/crds/")
-	defer dirCRD.Close()
+	defer dirCRD.Close() // nolint:errcheck
 
 	var buf bytes.Buffer
 
@@ -562,7 +561,7 @@ func (x *YAMLPrinter) Do() error {
 			}
 			_, writeErr := w.Write(crd.File.Data)
 			// Always check the return value of Close when writing.
-			closeErr := w.Close()
+			closeErr := w.Close() // nolint:errcheck
 			if writeErr != nil {
 				return writeErr
 			}
@@ -615,7 +614,7 @@ func (x *YAMLPrinter) Do() error {
 	var manifestDoc bytes.Buffer
 
 	if !apis.BuiltinNamespaces.Has(x.Namespace) {
-		manifestDoc.WriteString(fmt.Sprintf(`apiVersion: v1
+		manifestDoc.WriteString(fmt.Sprintf(`apiVersion: metav1
 kind: Namespace
 metadata:
   name: %s
@@ -658,7 +657,7 @@ metadata:
 		}
 		_, writeErr := manifestDoc.WriteTo(w)
 		// Always check the return value of Close when writing.
-		closeErr := w.Close()
+		closeErr := w.Close() // nolint:errcheck
 		if writeErr != nil {
 			return writeErr
 		}
@@ -676,7 +675,7 @@ metadata:
 	return err
 }
 
-func debug(format string, v ...interface{}) {
+func debug(format string, v ...any) {
 	format = fmt.Sprintf("[debug] %s\n", format)
 	_ = log.Output(2, fmt.Sprintf(format, v...))
 }
@@ -944,7 +943,7 @@ func (x *ApplicationUploader) Do() error {
 		bucket = blob.PrefixedBucket(bucket, strings.TrimSuffix(x.Prefix, "/")+"/")
 	}
 	bucket = blob.PrefixedBucket(bucket, x.UID+"/apps/"+x.App.Namespace+"/")
-	defer bucket.Close()
+	defer bucket.Close() // nolint:errcheck
 
 	data, err := yamllib.Marshal(x.App)
 	if err != nil {
@@ -957,7 +956,7 @@ func (x *ApplicationUploader) Do() error {
 	}
 	_, writeErr := fmt.Fprintln(w, string(data))
 	// Always check the return value of Close when writing.
-	closeErr := w.Close()
+	closeErr := w.Close() // nolint:errcheck
 	if writeErr != nil {
 		return writeErr
 	}
@@ -1239,7 +1238,7 @@ type ChartRenderer struct {
 	KubeVersion string
 	ValuesFile  string
 	ValuesPatch *runtime.RawExtension
-	Values      map[string]interface{}
+	Values      map[string]any
 
 	CRDs               []chart.File
 	Manifest           *chart.File
@@ -1252,7 +1251,7 @@ func (x *ChartRenderer) Do() error {
 		return err
 	}
 
-	if data, ok := chrt.Chart.Metadata.Annotations["meta.x-helm.dev/editor"]; ok && data != "" {
+	if data, ok := chrt.Metadata.Annotations["meta.x-helm.dev/editor"]; ok && data != "" {
 		var gvr metav1.GroupVersionResource
 		if err := json.Unmarshal([]byte(data), &gvr); err != nil {
 			return fmt.Errorf("failed to parse %s annotation %s", "meta.x-helm.dev/editor", data)

@@ -36,7 +36,7 @@ func main() {
 
 	resp, err := http.Get("https://raw.githubusercontent.com/helm/hub/master/repos.yaml")
 	if err == nil {
-		defer resp.Body.Close()
+		defer resp.Body.Close() // nolint:errcheck
 		if data, err := io.ReadAll(resp.Body); err == nil {
 			var hub releasesapi.Hub
 			err = yaml.Unmarshal(data, &hub)
@@ -54,7 +54,7 @@ func main() {
 						if err != nil {
 							klog.Fatalln(err)
 						}
-						resp.Body.Close()
+						resp.Body.Close() // nolint:errcheck
 						err = os.MkdirAll("artifacts/hub", 0o755)
 						if err != nil {
 							klog.Fatalln(err)

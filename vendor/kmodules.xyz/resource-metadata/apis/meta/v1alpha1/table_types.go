@@ -52,9 +52,9 @@ type TableCell struct {
 	// cells will be as wide as the column definitions array and may contain strings, numbers (float64 or
 	// int64), booleans, simple maps, lists, or null. See the type field of the column definition for a
 	// more detailed description.
-	Data interface{} `json:"data"`
+	Data any `json:"data"`
 	// +optional
-	Sort interface{} `json:"sort,omitempty"`
+	Sort any `json:"sort,omitempty"`
 	// +optional
 	Link string `json:"link,omitempty"`
 	// +optional
