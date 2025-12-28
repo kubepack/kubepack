@@ -32,7 +32,6 @@ import (
 	"gomodules.xyz/sets"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/release"
-	rspb "helm.sh/helm/v3/pkg/release"
 	helmtime "helm.sh/helm/v3/pkg/time"
 	crd_cs "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	"k8s.io/apimachinery/pkg/api/meta"
@@ -54,7 +53,7 @@ import (
 
 var empty = struct{}{}
 
-func mustNewAppReleaseObject(rls *rspb.Release) *driversapi.AppRelease {
+func mustNewAppReleaseObject(rls *release.Release) *driversapi.AppRelease {
 	out, err := newAppReleaseObject(rls)
 	if err != nil {
 		panic(err)
@@ -74,7 +73,7 @@ func mustNewAppReleaseObject(rls *rspb.Release) *driversapi.AppRelease {
 //	"status"         - status of the release (see pkg/release/status.go for variants)
 //	"owner"          - owner of the configmap, currently "helm".
 //	"name"           - name of the release.
-func newAppReleaseObject(rls *rspb.Release) (*driversapi.AppRelease, error) {
+func newAppReleaseObject(rls *release.Release) (*driversapi.AppRelease, error) {
 	const owner = "helm"
 
 	appName := rls.Name
@@ -128,7 +127,7 @@ func newAppReleaseObject(rls *rspb.Release) (*driversapi.AppRelease, error) {
 			if mime, err := mimetype.DetectReader(resp.Body); err == nil {
 				imgType = mime.String()
 			}
-			_ = resp.Body.Close()
+			_ = resp.Body.Close() // nolint:errcheck
 		}
 		obj.Spec.Descriptor.Icons = []shared.ImageSpec{
 			{
@@ -220,8 +219,8 @@ func newAppReleaseObject(rls *rspb.Release) (*driversapi.AppRelease, error) {
 // decodeRelease decodes the bytes of data into a release
 // type. Data must contain a base64 encoded gzipped string of a
 // valid release, otherwise an error is returned.
-func decodeReleaseFromApp(kc client.Client, app *driversapi.AppRelease) (*rspb.Release, error) {
-	var rls rspb.Release
+func decodeReleaseFromApp(kc client.Client, app *driversapi.AppRelease) (*release.Release, error) {
+	var rls release.Release
 
 	rls.Name = app.Name
 	rls.Namespace = app.Namespace
@@ -268,7 +267,7 @@ func decodeReleaseFromApp(kc client.Client, app *driversapi.AppRelease) (*rspb.R
 
 	if editorGVR != nil {
 		rls.Chart = &chart.Chart{
-			Values: map[string]interface{}{},
+			Values: map[string]any{},
 		}
 		if app.Spec.Release.Form != nil {
 			if form, err := runtime.DefaultUnstructuredConverter.ToUnstructured(app.Spec.Release.Form); err == nil {
@@ -296,7 +295,7 @@ func EditorChartValueManifest(kc client.Client, app *driversapi.AppRelease, rls 
 	// labelSelector := selector.String()
 
 	var buf bytes.Buffer
-	resourceMap := map[string]interface{}{}
+	resourceMap := map[string]any{}
 	resourceKeys := sets.NewString(app.Spec.ResourceKeys...)
 	formKeys := sets.NewString(app.Spec.FormKeys...)
 
@@ -359,14 +358,14 @@ func EditorChartValueManifest(kc client.Client, app *driversapi.AppRelease, rls 
 	}
 	if editorGVR != nil {
 		tpl.Values = &unstructured.Unstructured{
-			Object: map[string]interface{}{
-				"metadata": map[string]interface{}{
-					"resource": map[string]interface{}{
+			Object: map[string]any{
+				"metadata": map[string]any{
+					"resource": map[string]any{
 						"group":    editorGVR.Group,
 						"version":  editorGVR.Version,
 						"resource": editorGVR.Resource,
 					},
-					"release": map[string]interface{}{
+					"release": map[string]any{
 						"name":      rls.Name,
 						"namespace": rls.Namespace,
 					},
@@ -394,7 +393,7 @@ func ResourceKey(apiVersion, kind, chartName, name string) (string, error) {
 	groupPrefix = strings.TrimSuffix(groupPrefix, ".k8s.io")
 	groupPrefix = strings.TrimSuffix(groupPrefix, ".kubernetes.io")
 	// groupPrefix = strings.TrimSuffix(groupPrefix, ".x-k8s.io")
-	groupPrefix = strings.Replace(groupPrefix, ".", "_", -1)
+	groupPrefix = strings.ReplaceAll(groupPrefix, ".", "_")
 	groupPrefix = flect.Pascalize(groupPrefix)
 
 	var nameSuffix string
@@ -422,12 +421,12 @@ func ResourceFilename(apiVersion, kind, chartName, name string) (string, string,
 	groupPrefix = strings.TrimSuffix(groupPrefix, ".k8s.io")
 	groupPrefix = strings.TrimSuffix(groupPrefix, ".kubernetes.io")
 	// groupPrefix = strings.TrimSuffix(groupPrefix, ".x-k8s.io")
-	groupPrefix = strings.Replace(groupPrefix, ".", "_", -1)
+	groupPrefix = strings.ReplaceAll(groupPrefix, ".", "_")
 	groupPrefix = flect.Pascalize(groupPrefix)
 
 	var nameSuffix string
 	nameSuffix = strings.TrimPrefix(name, chartName)
-	nameSuffix = strings.Replace(nameSuffix, ".", "-", -1)
+	nameSuffix = strings.ReplaceAll(nameSuffix, ".", "-")
 	nameSuffix = strings.Trim(nameSuffix, "-")
 	nameSuffix = flect.Pascalize(nameSuffix)
 
@@ -489,7 +488,7 @@ func GenerateAppReleaseObject(chrt *chart.Chart, model releasesapi.Metadata) (*d
 			if mime, err := mimetype.DetectReader(resp.Body); err == nil {
 				imgType = mime.String()
 			}
-			_ = resp.Body.Close()
+			_ = resp.Body.Close() // nolint:errcheck
 		}
 		obj.Spec.Descriptor.Icons = []shared.ImageSpec{
 			{

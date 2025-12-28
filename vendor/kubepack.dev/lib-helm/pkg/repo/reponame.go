@@ -104,7 +104,7 @@ func (r *RepoNamer) loadHelmHubAliases() error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer resp.Body.Close() // nolint:errcheck
 	data, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return err

@@ -38,6 +38,7 @@ type DeployOptions struct {
 	ResetValues                    bool          `json:"resetValues"`
 	ReuseValues                    bool          `json:"reuseValues"`
 	CleanupOnFail                  bool          `json:"cleanupOnFail"`
+	TakeOwnership                  bool          `json:"takeOwnership"`
 }
 
 type Deployer struct {
@@ -103,6 +104,7 @@ func (x *Deployer) Run() (*release.Release, error) {
 				IncludeCRDs:              x.opts.IncludeCRDs,
 				PartOf:                   x.opts.PartOf,
 				CreateNamespace:          x.opts.CreateNamespace,
+				TakeOwnership:            x.opts.TakeOwnership,
 			})
 		return i.Run()
 	} else if err != nil {
@@ -130,6 +132,7 @@ func (x *Deployer) Run() (*release.Release, error) {
 			Atomic:             x.opts.Atomic,
 			CleanupOnFail:      x.opts.CleanupOnFail,
 			PartOf:             x.opts.PartOf,
+			TakeOwnership:      x.opts.TakeOwnership,
 		})
 	return i.Run()
 }

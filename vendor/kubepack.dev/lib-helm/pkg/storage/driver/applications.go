@@ -51,7 +51,7 @@ const AppReleasesDriverName = "drivers.x-helm.dev/appreleases"
 // AppReleasesInterface.
 type AppReleases struct {
 	kc  client.Client
-	Log func(string, ...interface{})
+	Log func(string, ...any)
 }
 
 // NewAppReleases initializes a new AppReleases wrapping an implementation of
@@ -59,7 +59,7 @@ type AppReleases struct {
 func NewAppReleases(ai client.Client) *AppReleases {
 	return &AppReleases{
 		kc:  ai,
-		Log: func(_ string, _ ...interface{}) {},
+		Log: func(_ string, _ ...any) {},
 	}
 }
 
@@ -196,7 +196,7 @@ func (d *AppReleases) Create(_ string, rls *rspb.Release) error {
 		in.Annotations = meta_util.OverwriteKeys(in.Annotations, obj.Annotations)
 
 		// merge GKs
-		gvkMap := map[metav1.GroupVersionKind]interface{}{}
+		gvkMap := map[metav1.GroupVersionKind]any{}
 		for _, gvk := range in.Spec.Components {
 			gvkMap[gvk] = empty
 		}

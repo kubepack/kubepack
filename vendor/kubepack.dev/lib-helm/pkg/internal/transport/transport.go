@@ -51,7 +51,7 @@ import (
 type TransportPool struct{}
 
 var pool = &sync.Pool{
-	New: func() interface{} {
+	New: func() any {
 		return &http.Transport{
 			DisableCompression: true,
 			Proxy:              http.ProxyFromEnvironment,

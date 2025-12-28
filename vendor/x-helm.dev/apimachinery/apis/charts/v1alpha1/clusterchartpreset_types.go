@@ -79,6 +79,6 @@ func init() {
 	SchemeBuilder.Register(&ClusterChartPreset{}, &ClusterChartPresetList{})
 }
 
-func (_ ClusterChartPreset) CustomResourceDefinition() *apiextensions.CustomResourceDefinition {
+func (ClusterChartPreset) CustomResourceDefinition() *apiextensions.CustomResourceDefinition {
 	return crds.MustCustomResourceDefinition(GroupVersion.WithResource(ResourceClusterChartPresets))
 }

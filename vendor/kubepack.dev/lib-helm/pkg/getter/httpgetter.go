@@ -70,7 +70,7 @@ func (g *HTTPGetter) get(href string) (out *bytes.Reader, err error) {
 		return nil, err
 	}
 	defer func() {
-		e2 := resp.Body.Close()
+		e2 := resp.Body.Close() // nolint:errcheck
 		err = utilerrors.NewAggregate([]error{err, e2})
 	}()
 	if resp.StatusCode != 200 {

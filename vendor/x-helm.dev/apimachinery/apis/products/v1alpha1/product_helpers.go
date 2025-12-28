@@ -25,7 +25,7 @@ import (
 	"x-helm.dev/apimachinery/crds"
 )
 
-func (_ Product) CustomResourceDefinition() *apiextensions.CustomResourceDefinition {
+func (Product) CustomResourceDefinition() *apiextensions.CustomResourceDefinition {
 	return crds.MustCustomResourceDefinition(GroupVersion.WithResource(ResourceProducts))
 }
 
@@ -36,10 +36,10 @@ func (prod *Product) ResetLabels(prodID, prodKey, phase string, ownerID int64) {
 		apis.LabelProductPhase:   phase,
 		apis.LabelProductOwnerID: strconv.FormatInt(ownerID, 10),
 	}
-	prod.ObjectMeta.SetLabels(labelMap)
+	prod.SetLabels(labelMap)
 }
 
-func (_ Product) FormatLabels(prodID, prodKey, phase string, ownerID int64) labels.Selector {
+func (Product) FormatLabels(prodID, prodKey, phase string, ownerID int64) labels.Selector {
 	labelMap := make(map[string]string)
 	if prodID != "" {
 		labelMap[apis.LabelProductID] = prodID
