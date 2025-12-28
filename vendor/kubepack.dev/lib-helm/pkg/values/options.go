@@ -24,23 +24,23 @@ import (
 See also: https://github.com/helm/helm/blob/v3.5.4/pkg/cli/values/options.go#L39-L86
 */
 type Options struct {
-	ReplaceValues map[string]interface{} `json:"replaceValues"`
-	ValuesFile    string                 `json:"valuesFile"`
-	ValuesPatch   *runtime.RawExtension  `json:"valuesPatch"`
-	ValueBytes    [][]byte               `json:"valueBytes"`
-	StringValues  []string               `json:"stringValues"`
-	Values        []string               `json:"values"`
-	KVPairs       []KV                   `json:"kv_pairs"`
+	ReplaceValues map[string]any        `json:"replaceValues"`
+	ValuesFile    string                `json:"valuesFile"`
+	ValuesPatch   *runtime.RawExtension `json:"valuesPatch"`
+	ValueBytes    [][]byte              `json:"valueBytes"`
+	StringValues  []string              `json:"stringValues"`
+	Values        []string              `json:"values"`
+	KVPairs       []KV                  `json:"kv_pairs"`
 }
 
 type KV struct {
 	K string
-	V interface{}
+	V any
 }
 
 // MergeValues merges values from files specified via -f/--values and directly
 // via --set, --set-string, or --set-file, marshaling them to YAML
-func (opts *Options) MergeValues(chrt *chart.Chart) (map[string]interface{}, error) {
+func (opts *Options) MergeValues(chrt *chart.Chart) (map[string]any, error) {
 	// Note that len(opts.ReplaceValues) == 0 will be considered a valid replacement
 	if opts.ReplaceValues != nil {
 		return opts.ReplaceValues, nil
@@ -80,7 +80,7 @@ func (opts *Options) MergeValues(chrt *chart.Chart) (map[string]interface{}, err
 			return nil, err
 		}
 
-		vals := map[string]interface{}{}
+		vals := map[string]any{}
 		err = json.Unmarshal(valuesBytes, &vals)
 		if err != nil {
 			return nil, err
@@ -90,14 +90,14 @@ func (opts *Options) MergeValues(chrt *chart.Chart) (map[string]interface{}, err
 	}
 
 	// Use StringValues, Values flags
-	base := map[string]interface{}{}
+	base := map[string]any{}
 	if err := yaml.Unmarshal(baseFile.Data, &base); err != nil {
 		return nil, errors.Wrapf(err, "failed to parse %s", opts.ValuesFile)
 	}
 
 	// User specified a values files via -f/--values
 	for _, bytes := range opts.ValueBytes {
-		currentMap := map[string]interface{}{}
+		currentMap := map[string]any{}
 
 		if err := yaml.Unmarshal(bytes, &currentMap); err != nil {
 			return nil, errors.Wrapf(err, "failed to parse %s", bytes)
@@ -130,15 +130,15 @@ func (opts *Options) MergeValues(chrt *chart.Chart) (map[string]interface{}, err
 	return base, nil
 }
 
-func MergeMaps(a, b map[string]interface{}) map[string]interface{} {
-	out := make(map[string]interface{}, len(a))
+func MergeMaps(a, b map[string]any) map[string]any {
+	out := make(map[string]any, len(a))
 	for k, v := range a {
 		out[k] = v
 	}
 	for k, v := range b {
-		if v, ok := v.(map[string]interface{}); ok {
+		if v, ok := v.(map[string]any); ok {
 			if bv, ok := out[k]; ok {
-				if bv, ok := bv.(map[string]interface{}); ok {
+				if bv, ok := bv.(map[string]any); ok {
 					out[k] = MergeMaps(bv, v)
 					continue
 				}

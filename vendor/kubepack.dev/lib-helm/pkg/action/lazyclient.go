@@ -62,6 +62,13 @@ func (s *lazyClient) init() error {
 // appReleaseClient implements a coreappv1beta1.AppReleaseInterface
 type appReleaseClient struct{ *lazyClient }
 
+func (a *appReleaseClient) Apply(ctx context.Context, obj runtime.ApplyConfiguration, opts ...client.ApplyOption) error {
+	if err := a.init(); err != nil {
+		return err
+	}
+	return client.NewNamespacedClient(a.kb, a.namespace).Apply(ctx, obj, opts...)
+}
+
 func (a *appReleaseClient) Get(ctx context.Context, key client.ObjectKey, obj client.Object, opts ...client.GetOption) error {
 	if err := a.init(); err != nil {
 		return err

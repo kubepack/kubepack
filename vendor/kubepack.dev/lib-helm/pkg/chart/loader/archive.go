@@ -56,7 +56,7 @@ func LoadFile(name string) (*chart.Chart, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer raw.Close()
+	defer raw.Close() // nolint:errcheck
 
 	err = ensureArchive(name, raw)
 	if err != nil {
@@ -110,7 +110,7 @@ func LoadArchiveFiles(in io.Reader) ([]*BufferedFile, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer unzipped.Close()
+	defer unzipped.Close() // nolint:errcheck
 
 	files := []*BufferedFile{}
 	tr := tar.NewReader(unzipped)

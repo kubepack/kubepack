@@ -1,7 +1,6 @@
 apiVersion: meta.k8s.appscode.com/v1alpha1
 kind: ResourceDescriptor
 metadata:
-  creationTimestamp: null
   labels:
     k8s.io/group: dbforpostgresql.azure.kubedb.com
     k8s.io/kind: FirewallRule

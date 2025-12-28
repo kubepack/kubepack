@@ -37,6 +37,7 @@ type UpgradeOptions struct {
 	Atomic                         bool          `json:"atomic"`
 	CleanupOnFail                  bool          `json:"cleanupOnFail"`
 	PartOf                         string        `json:"partOf"`
+	TakeOwnership                  bool          `json:"takeOwnership"`
 }
 
 type Upgrader struct {
@@ -91,7 +92,7 @@ func (x *Upgrader) Run() (*release.Release, error) {
 		return nil, errors.New("x.reg is not set")
 	}
 
-	chrt, err := x.reg.GetChart(x.opts.ChartSourceFlatRef.ToAPIObject())
+	chrt, err := x.reg.GetChart(x.opts.ToAPIObject())
 	if err != nil {
 		return nil, err
 	}
@@ -113,6 +114,7 @@ func (x *Upgrader) Run() (*release.Release, error) {
 	cmd.MaxHistory = x.opts.MaxHistory
 	cmd.Atomic = x.opts.Atomic
 	cmd.CleanupOnFail = x.opts.CleanupOnFail
+	cmd.TakeOwnership = x.opts.TakeOwnership
 
 	validInstallableChart, err := libchart.IsChartInstallable(chrt.Chart)
 	if !validInstallableChart {
@@ -137,11 +139,11 @@ func (x *Upgrader) Run() (*release.Release, error) {
 		return nil, err
 	}
 
-	vals, err := x.opts.Options.MergeValues(chrt.Chart)
+	vals, err := x.opts.MergeValues(chrt.Chart)
 	if err != nil {
 		return nil, err
 	}
-	if data, ok := chrt.Chart.Metadata.Annotations["meta.x-helm.dev/editor"]; ok && data != "" {
+	if data, ok := chrt.Metadata.Annotations["meta.x-helm.dev/editor"]; ok && data != "" {
 		var gvr metav1.GroupVersionResource
 		if err := json.Unmarshal([]byte(data), &gvr); err != nil {
 			return nil, fmt.Errorf("failed to parse %s annotation %s", "meta.x-helm.dev/editor", data)
@@ -150,12 +152,12 @@ func (x *Upgrader) Run() (*release.Release, error) {
 			Namespace: x.opts.Namespace,
 			Name:      x.releaseName,
 		}
-		if err := RefillMetadata(kc, chrt.Chart.Values, vals, gvr, rls); err != nil {
+		if err := RefillMetadata(kc, chrt.Values, vals, gvr, rls); err != nil {
 			return nil, err
 		}
 	}
 	// chartutil.CoalesceValues(chrt, chrtVals) will use vals to render templates
-	chrt.Chart.Values = map[string]interface{}{}
+	chrt.Values = map[string]any{}
 
 	return cmd.Run(x.releaseName, chrt.Chart, vals)
 }

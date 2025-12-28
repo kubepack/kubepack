@@ -32,7 +32,6 @@ import (
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 	"k8s.io/cli-runtime/pkg/printers"
 	"k8s.io/cli-runtime/pkg/resource"
-	"k8s.io/client-go/discovery"
 	"k8s.io/client-go/dynamic"
 	"k8s.io/kubectl/pkg/cmd/delete"
 	cmdutil "k8s.io/kubectl/pkg/cmd/util"
@@ -164,8 +163,8 @@ func NewCmdApply(baseName string, f cmdutil.Factory, ioStreams genericclioptions
 	cmd.Flags().StringArrayVar(&o.PruneWhitelist, "prune-whitelist", o.PruneWhitelist, "Overwrite the default whitelist with <group/version/kind> for --prune")
 	cmd.Flags().BoolVar(&o.OpenAPIPatch, "openapi-patch", o.OpenAPIPatch, "If true, use openapi to calculate diff when the openapi presents and the resource can be found in the openapi spec. Otherwise, fall back to use baked-in types.")
 	cmd.Flags().Bool("server-dry-run", false, "If true, request will be sent to server with dry-run flag, which means the modifications won't be persisted.")
-	cmd.Flags().MarkDeprecated("server-dry-run", "--server-dry-run is deprecated and can be replaced with --dry-run=server.")
-	cmd.Flags().MarkHidden("server-dry-run")
+	_ = cmd.Flags().MarkDeprecated("server-dry-run", "--server-dry-run is deprecated and can be replaced with --dry-run=server.")
+	_ = cmd.Flags().MarkHidden("server-dry-run")
 	cmdutil.AddDryRunFlag(cmd)
 	cmdutil.AddServerSideApplyFlags(cmd)
 
@@ -192,14 +191,6 @@ func (o *ApplyOptions) CompleteFlags(f cmdutil.Factory, cmd *cobra.Command) erro
 		return err
 	}
 	return o.Complete(f)
-}
-
-func openAPIGetter(f cmdutil.Factory) discovery.OpenAPISchemaInterface {
-	discovery, err := f.ToDiscoveryClient()
-	if err != nil {
-		return nil
-	}
-	return openapi.NewOpenAPIGetter(discovery)
 }
 
 // Complete verifies if ApplyOptions are valid and without conflicts.
@@ -376,7 +367,7 @@ func (o *ApplyOptions) ApplyOneObject(info *resource.Info) error {
 		)
 		if err != nil {
 			if isIncompatibleServerError(err) {
-				err = fmt.Errorf("Server-side apply not available on the server: (%v)", err)
+				err = fmt.Errorf("server-side apply not available on the server: (%v)", err)
 			}
 			if errors.IsConflict(err) {
 				err = fmt.Errorf(`%v
@@ -395,7 +386,9 @@ See http://k8s.io/docs/reference/using-api/api-concepts/#conflicts`, err)
 			return err
 		}
 
-		info.Refresh(obj, true)
+		if err := info.Refresh(obj, true); err != nil {
+			return err
+		}
 
 		if o.shouldPrintObject() {
 			return nil
@@ -444,7 +437,9 @@ See http://k8s.io/docs/reference/using-api/api-concepts/#conflicts`, err)
 			if err != nil {
 				return cmdutil.AddSourceToErr("creating", info.Source, err)
 			}
-			info.Refresh(obj, true)
+			if err := info.Refresh(obj, true); err != nil {
+				return err
+			}
 		}
 
 		if o.shouldPrintObject() {
@@ -465,19 +460,18 @@ See http://k8s.io/docs/reference/using-api/api-concepts/#conflicts`, err)
 		metadata, _ := meta.Accessor(info.Object)
 		annotationMap := metadata.GetAnnotations()
 		if _, ok := annotationMap[corev1.LastAppliedConfigAnnotation]; !ok {
-			fmt.Fprintf(o.ErrOut, warningNoLastAppliedConfigAnnotation, o.cmdBaseName)
+			_, _ = fmt.Fprintf(o.ErrOut, warningNoLastAppliedConfigAnnotation, o.cmdBaseName)
 		}
 
-		patcher, err := newPatcher(o, info)
-		if err != nil {
-			return err
-		}
+		patcher := newPatcher(o, info)
 		patchBytes, patchedObject, err := patcher.Patch(info.Object, modified, info.Source, info.Namespace, info.Name, o.ErrOut)
 		if err != nil {
 			return cmdutil.AddSourceToErr(fmt.Sprintf("applying patch:\n%s\nto:\n%v\nfor:", patchBytes, info), info.Source, err)
 		}
 
-		info.Refresh(patchedObject, true)
+		if err := info.Refresh(patchedObject, true); err != nil {
+			return err
+		}
 
 		if string(patchBytes) == "{}" && !o.shouldPrintObject() {
 			printer, err := o.ToPrinter("unchanged")

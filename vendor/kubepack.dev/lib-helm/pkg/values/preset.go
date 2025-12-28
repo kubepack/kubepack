@@ -199,7 +199,7 @@ func bundleClusterChartPresets(kc client.Client, sel labels.Selector, knownPrese
 	return values, nil
 }
 
-func MergePresetValues(kc client.Client, chrt *chart.Chart, ref chartsapi.ChartPresetFlatRef) (map[string]interface{}, error) {
+func MergePresetValues(kc client.Client, chrt *chart.Chart, ref chartsapi.ChartPresetFlatRef) (map[string]any, error) {
 	presets, err := LoadPresetValues(kc, ref)
 	if err != nil {
 		return nil, err

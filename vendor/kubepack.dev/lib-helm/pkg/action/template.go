@@ -83,7 +83,7 @@ func (x *Renderer) ForChart(url, name, version string) *Renderer {
 }
 
 func (x *Renderer) ForChartSource(srcRef releasesapi.ChartSourceRef) *Renderer {
-	x.opts.ChartSourceFlatRef.FromAPIObject(srcRef)
+	x.opts.FromAPIObject(srcRef)
 	return x
 }
 
@@ -125,7 +125,7 @@ func (x *Renderer) Run() (string, map[string][]string, error) {
 	cmd.Namespace = x.opts.Namespace
 
 	// Check chart dependencies to make sure all are present in /charts
-	chrt, err := x.reg.GetChart(x.opts.ChartSourceFlatRef.ToAPIObject())
+	chrt, err := x.reg.GetChart(x.opts.ToAPIObject())
 	if err != nil {
 		return "", nil, err
 	}
@@ -149,11 +149,11 @@ func (x *Renderer) Run() (string, map[string][]string, error) {
 		}
 	}
 
-	vals, err := x.opts.Options.MergeValues(chrt.Chart)
+	vals, err := x.opts.MergeValues(chrt.Chart)
 	if err != nil {
 		return "", nil, err
 	}
-	chrt.Chart.Values = map[string]interface{}{}
+	chrt.Values = map[string]any{}
 
 	rel, err := cmd.Run(chrt.Chart, vals)
 	if err != nil {
