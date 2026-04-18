@@ -20,6 +20,7 @@ import (
 	"context"
 	"fmt"
 	"io/fs"
+	"slices"
 	"strings"
 	"sync"
 	"time"
@@ -31,8 +32,8 @@ import (
 	"kmodules.xyz/resource-metadata/apis/meta/v1alpha1"
 	"kmodules.xyz/resource-metadata/hub/resourcedescriptors"
 
-	stringz "gomodules.xyz/x/strings"
 	crd_cs "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/typed/apiextensions/v1"
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/discovery"
@@ -142,7 +143,7 @@ func (r *Registry) Reset() {
 	}
 }
 
-func (r *Registry) Register(gvr schema.GroupVersionResource, cfg *rest.Config) error {
+func (r *Registry) Rediscover(gvr schema.GroupVersionResource, cfg *rest.Config) error {
 	r.m.RLock()
 	if _, found := r.regGVR[gvr]; found {
 		r.m.RUnlock()
@@ -151,6 +152,51 @@ func (r *Registry) Register(gvr schema.GroupVersionResource, cfg *rest.Config) e
 	r.m.RUnlock()
 
 	return r.DiscoverResources(cfg)
+}
+
+func (r *Registry) RegisterGVK(gvk schema.GroupVersionKind) error {
+	r.m.RLock()
+	if _, found := r.regGVK[gvk]; found {
+		r.m.RUnlock()
+		return nil
+	}
+	r.m.RUnlock()
+
+	latestGVR, ok := resourcedescriptors.LatestGVRs()[gvk.GroupKind()]
+	if !ok {
+		return apierrors.NewNotFound(v1alpha1.Resource(v1alpha1.ResourceKindResourceDescriptor), gvk.String())
+	}
+	return r.RegisterGVR(latestGVR.GroupResource().WithVersion(gvk.Version))
+}
+
+func (r *Registry) RegisterGVR(gvr schema.GroupVersionResource) error {
+	r.m.RLock()
+	if _, found := r.regGVR[gvr]; found {
+		r.m.RUnlock()
+		return nil
+	}
+	r.m.RUnlock()
+
+	filename := resourcedescriptors.GetName(gvr)
+	rd, err := resourcedescriptors.LoadByGVR(gvr)
+	if err != nil {
+		return err
+	}
+
+	r.m.Lock()
+	defer r.m.Unlock()
+
+	r.regGVK[rd.Spec.Resource.GroupVersionKind()] = &rd.Spec.Resource
+	r.regGVR[rd.Spec.Resource.GroupVersionResource()] = &rd.Spec.Resource
+	r.cache.Set(filename, rd)
+
+	if existing, ok := r.preferred[gvr.GroupResource()]; !ok {
+		r.preferred[gvr.GroupResource()] = gvr
+	} else if diff, _ := apiversion.Compare(existing.Version, gvr.Version); diff < 0 {
+		r.preferred[gvr.GroupResource()] = gvr
+	}
+
+	return nil
 }
 
 func (r *Registry) createRegistry(cfg *rest.Config) (map[schema.GroupResource]schema.GroupVersionResource, map[string]*v1alpha1.ResourceDescriptor, error) {
@@ -179,7 +225,7 @@ func (r *Registry) createRegistry(cfg *rest.Config) (map[schema.GroupResource]sc
 				continue
 			}
 			// if resource can't be listed or read (get) skip it
-			if !stringz.Contains(rs.Verbs, "list") || !stringz.Contains(rs.Verbs, "get") {
+			if !slices.Contains(rs.Verbs, "list") || !slices.Contains(rs.Verbs, "get") {
 				continue
 			}
 
@@ -236,7 +282,11 @@ func (r *Registry) createRegistry(cfg *rest.Config) (map[schema.GroupResource]sc
 	preferred := make(map[schema.GroupResource]schema.GroupVersionResource)
 	for _, rd := range reg {
 		gvr := rd.Spec.Resource.GroupVersionResource()
-		preferred[gvr.GroupResource()] = gvr
+		if existing, ok := preferred[gvr.GroupResource()]; !ok {
+			preferred[gvr.GroupResource()] = gvr
+		} else if diff, _ := apiversion.Compare(existing.Version, gvr.Version); diff < 0 {
+			preferred[gvr.GroupResource()] = gvr
+		}
 	}
 
 	err = fs.WalkDir(resourcedescriptors.EmbeddedFS(), ".", func(filename string, e fs.DirEntry, err error) error {

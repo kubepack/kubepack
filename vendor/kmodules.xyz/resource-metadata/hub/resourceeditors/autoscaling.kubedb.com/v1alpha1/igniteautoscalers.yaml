@@ -14,3 +14,12 @@ spec:
     name: igniteautoscalers
     scope: Namespaced
     version: v1alpha1
+  ui:
+    editor:
+      name: autoscalingkubedbcom-igniteautoscaler-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.32.0
+    enforceQuota: false

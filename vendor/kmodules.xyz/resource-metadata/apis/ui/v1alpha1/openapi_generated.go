@@ -17125,8 +17125,9 @@ func schema_kmodulesxyz_client_go_api_v1_ClusterClaimFeatures(ref common.Referen
 				Properties: map[string]spec.Schema{
 					"enabledFeatures": {
 						SchemaProps: spec.SchemaProps{
-							Type: []string{"array"},
-							Items: &spec.SchemaOrArray{
+							Type: []string{"object"},
+							AdditionalProperties: &spec.SchemaOrBool{
+								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
 										Default: "",
@@ -20437,6 +20438,14 @@ func schema_kmodulesxyz_resource_metadata_apis_shared_RegistryProxies(ref common
 					"appscode": {
 						SchemaProps: spec.SchemaProps{
 							Description: "r.appscode.com",
+							Default:     "",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"oracle": {
+						SchemaProps: spec.SchemaProps{
+							Description: "container-registry.oracle.com",
 							Default:     "",
 							Type:        []string{"string"},
 							Format:      "",

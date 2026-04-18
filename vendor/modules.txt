@@ -389,7 +389,7 @@ github.com/cyphar/filepath-securejoin/internal/consts
 # github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc
 ## explicit
 github.com/davecgh/go-spew/spew
-# github.com/docker/cli v29.0.3+incompatible
+# github.com/docker/cli v29.2.0+incompatible
 ## explicit
 github.com/docker/cli/cli/config
 github.com/docker/cli/cli/config/configfile
@@ -868,8 +868,8 @@ go.opencensus.io/trace
 go.opencensus.io/trace/internal
 go.opencensus.io/trace/propagation
 go.opencensus.io/trace/tracestate
-# go.opentelemetry.io/auto/sdk v1.1.0
-## explicit; go 1.22.0
+# go.opentelemetry.io/auto/sdk v1.2.1
+## explicit; go 1.24.0
 go.opentelemetry.io/auto/sdk
 go.opentelemetry.io/auto/sdk/internal/telemetry
 # go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.60.0
@@ -882,11 +882,12 @@ go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp
 go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp/internal/request
 go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp/internal/semconv
 go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp/internal/semconvutil
-# go.opentelemetry.io/otel v1.36.0
-## explicit; go 1.23.0
+# go.opentelemetry.io/otel v1.40.0
+## explicit; go 1.24.0
 go.opentelemetry.io/otel
 go.opentelemetry.io/otel/attribute
 go.opentelemetry.io/otel/attribute/internal
+go.opentelemetry.io/otel/attribute/internal/xxhash
 go.opentelemetry.io/otel/baggage
 go.opentelemetry.io/otel/codes
 go.opentelemetry.io/otel/internal/baggage
@@ -895,13 +896,15 @@ go.opentelemetry.io/otel/propagation
 go.opentelemetry.io/otel/semconv/v1.17.0
 go.opentelemetry.io/otel/semconv/v1.20.0
 go.opentelemetry.io/otel/semconv/v1.26.0
-# go.opentelemetry.io/otel/metric v1.36.0
-## explicit; go 1.23.0
+go.opentelemetry.io/otel/semconv/v1.37.0
+go.opentelemetry.io/otel/semconv/v1.39.0
+# go.opentelemetry.io/otel/metric v1.40.0
+## explicit; go 1.24.0
 go.opentelemetry.io/otel/metric
 go.opentelemetry.io/otel/metric/embedded
 go.opentelemetry.io/otel/metric/noop
-# go.opentelemetry.io/otel/trace v1.36.0
-## explicit; go 1.23.0
+# go.opentelemetry.io/otel/trace v1.40.0
+## explicit; go 1.24.0
 go.opentelemetry.io/otel/trace
 go.opentelemetry.io/otel/trace/embedded
 go.opentelemetry.io/otel/trace/internal/telemetry
@@ -985,7 +988,7 @@ golang.org/x/oauth2/jwt
 ## explicit; go 1.24.0
 golang.org/x/sync/errgroup
 golang.org/x/sync/semaphore
-# golang.org/x/sys v0.39.0
+# golang.org/x/sys v0.40.0
 ## explicit; go 1.24.0
 golang.org/x/sys/cpu
 golang.org/x/sys/plan9
@@ -1055,7 +1058,6 @@ gomodules.xyz/sets
 gomodules.xyz/x/crypto/rand
 gomodules.xyz/x/env
 gomodules.xyz/x/ioutil
-gomodules.xyz/x/strings
 gomodules.xyz/x/term
 # google.golang.org/api v0.191.0
 ## explicit; go 1.20
@@ -1792,7 +1794,7 @@ kmodules.xyz/apiversion
 # kmodules.xyz/apply v0.34.0
 ## explicit; go 1.24.0
 kmodules.xyz/apply
-# kmodules.xyz/client-go v0.34.2
+# kmodules.xyz/client-go v0.34.3
 ## explicit; go 1.24.0
 kmodules.xyz/client-go
 kmodules.xyz/client-go/api/v1
@@ -1814,7 +1816,7 @@ kmodules.xyz/go-containerregistry/name
 ## explicit; go 1.24.0
 kmodules.xyz/offshoot-api/api/v1
 kmodules.xyz/offshoot-api/api/v2
-# kmodules.xyz/resource-metadata v0.42.0
+# kmodules.xyz/resource-metadata v0.44.0
 ## explicit; go 1.25
 kmodules.xyz/resource-metadata/apis/meta
 kmodules.xyz/resource-metadata/apis/meta/v1alpha1

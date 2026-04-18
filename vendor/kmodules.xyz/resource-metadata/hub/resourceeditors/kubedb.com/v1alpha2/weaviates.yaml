@@ -8,9 +8,39 @@ metadata:
     k8s.io/version: v1alpha2
   name: kubedb.com-v1alpha2-weaviates
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/weaviates.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/weaviates.png
+    type: image/png
   resource:
     group: kubedb.com
     kind: Weaviate
     name: weaviates
     scope: Namespaced
     version: v1alpha2
+  ui:
+    editor:
+      name: kubedbcom-weaviate-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.32.0
+    enforceQuota: true
+    options:
+      name: kubedbcom-weaviate-editor-options
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.32.0
+  variants:
+  - name: default
+    selector:
+      matchExpressions:
+      - key: charts.x-helm.dev/is-default-preset
+        operator: In
+        values:
+        - "true"
+        - kubedb

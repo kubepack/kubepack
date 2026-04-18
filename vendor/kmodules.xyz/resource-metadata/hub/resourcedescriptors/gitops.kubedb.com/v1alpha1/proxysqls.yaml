@@ -99,6 +99,63 @@ spec:
                   type: string
               type: object
               x-kubernetes-map-type: atomic
+            configuration:
+              properties:
+                init:
+                  properties:
+                    inline:
+                      properties:
+                        adminVariables:
+                          type: object
+                          x-kubernetes-preserve-unknown-fields: true
+                        mysqlQueryRules:
+                          items:
+                            type: object
+                            x-kubernetes-preserve-unknown-fields: true
+                          type: array
+                          x-kubernetes-preserve-unknown-fields: true
+                        mysqlUsers:
+                          items:
+                            properties:
+                              active:
+                                type: integer
+                              attributes:
+                                type: string
+                              backend:
+                                type: integer
+                              comment:
+                                type: string
+                              default_hostgroup:
+                                type: integer
+                              default_schema:
+                                type: string
+                              fast_forward:
+                                type: integer
+                              frontend:
+                                type: integer
+                              max_connections:
+                                format: int32
+                                type: integer
+                              schema_locked:
+                                type: integer
+                              transaction_persistent:
+                                type: integer
+                              use_ssl:
+                                type: integer
+                              username:
+                                type: string
+                            required:
+                            - username
+                            type: object
+                          type: array
+                        mysqlVariables:
+                          type: object
+                          x-kubernetes-preserve-unknown-fields: true
+                      type: object
+                    secretName:
+                      type: string
+                  type: object
+              type: object
             deletionPolicy:
               enum:
               - Halt
@@ -389,12 +446,119 @@ spec:
                       type: object
                     serviceMonitor:
                       properties:
+                        endpoints:
+                          items:
+                            properties:
+                              metricRelabelings:
+                                items:
+                                  properties:
+                                    action:
+                                      default: replace
+                                      enum:
+                                      - replace
+                                      - Replace
+                                      - keep
+                                      - Keep
+                                      - drop
+                                      - Drop
+                                      - hashmod
+                                      - HashMod
+                                      - labelmap
+                                      - LabelMap
+                                      - labeldrop
+                                      - LabelDrop
+                                      - labelkeep
+                                      - LabelKeep
+                                      - lowercase
+                                      - Lowercase
+                                      - uppercase
+                                      - Uppercase
+                                      - keepequal
+                                      - KeepEqual
+                                      - dropequal
+                                      - DropEqual
+                                      type: string
+                                    modulus:
+                                      format: int64
+                                      type: integer
+                                    regex:
+                                      type: string
+                                    replacement:
+                                      type: string
+                                    separator:
+                                      type: string
+                                    sourceLabels:
+                                      items:
+                                        type: string
+                                      type: array
+                                    targetLabel:
+                                      type: string
+                                  type: object
+                                type: array
+                              port:
+                                type: string
+                              relabelings:
+                                items:
+                                  properties:
+                                    action:
+                                      default: replace
+                                      enum:
+                                      - replace
+                                      - Replace
+                                      - keep
+                                      - Keep
+                                      - drop
+                                      - Drop
+                                      - hashmod
+                                      - HashMod
+                                      - labelmap
+                                      - LabelMap
+                                      - labeldrop
+                                      - LabelDrop
+                                      - labelkeep
+                                      - LabelKeep
+                                      - lowercase
+                                      - Lowercase
+                                      - uppercase
+                                      - Uppercase
+                                      - keepequal
+                                      - KeepEqual
+                                      - dropequal
+                                      - DropEqual
+                                      type: string
+                                    modulus:
+                                      format: int64
+                                      type: integer
+                                    regex:
+                                      type: string
+                                    replacement:
+                                      type: string
+                                    separator:
+                                      type: string
+                                    sourceLabels:
+                                      items:
+                                        type: string
+                                      type: array
+                                    targetLabel:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
                         interval:
                           type: string
                         labels:
                           additionalProperties:
                             type: string
                           type: object
+                        podTargetLabels:
+                          items:
+                            type: string
+                          type: array
+                        targetLabels:
+                          items:
+                            type: string
+                          type: array
                       type: object
                   type: object
               type: object

@@ -8,9 +8,72 @@ metadata:
     k8s.io/version: v1alpha2
   name: kubedb.com-v1alpha2-qdrants
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/qdrants.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/qdrants.png
+    type: image/png
   resource:
     group: kubedb.com
     kind: Qdrant
     name: qdrants
     scope: Namespaced
     version: v1alpha2
+  ui:
+    actions:
+    - items:
+      - editor:
+          name: opskubedbcom-qdrantopsrequest-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-charts-oci
+          version: v0.32.0
+        enforceQuota: false
+        flow: standalone-create
+        icon: hugeicons:security-check
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/configure.svg
+          type: image/svg+xml
+        name: TLS Configure
+        operationId: create-opsrequest-reconfiguretls
+      - editor:
+          name: kubedbcom-qdrant-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-charts-oci
+          version: v0.32.0
+        enforceQuota: false
+        flow: standalone-edit
+        icon: hugeicons:presentation-line-chart-01
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/monitor.svg
+          type: image/svg+xml
+        name: Monitoring
+        operationId: edit-self-monitoring
+      name: Security & Monitoring
+    editor:
+      name: kubedbcom-qdrant-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.32.0
+    enforceQuota: true
+    options:
+      name: kubedbcom-qdrant-editor-options
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.32.0
+  variants:
+  - name: default
+    selector:
+      matchExpressions:
+      - key: charts.x-helm.dev/is-default-preset
+        operator: In
+        values:
+        - "true"
+        - kubedb

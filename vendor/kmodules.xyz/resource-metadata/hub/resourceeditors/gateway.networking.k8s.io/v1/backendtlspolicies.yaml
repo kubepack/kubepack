@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: gateway.networking.k8s.io
+    k8s.io/kind: BackendTLSPolicy
+    k8s.io/resource: backendtlspolicies
+    k8s.io/version: v1
+  name: gateway.networking.k8s.io-v1-backendtlspolicies
+spec:
+  resource:
+    group: gateway.networking.k8s.io
+    kind: BackendTLSPolicy
+    name: backendtlspolicies
+    scope: Namespaced
+    version: v1
+  ui:
+    editor:
+      name: gatewaynetworkingk8sio-backendtlspolicy-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.32.0
+    enforceQuota: false

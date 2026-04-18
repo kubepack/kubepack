@@ -116,6 +116,25 @@ spec:
               - notAfter
               - notBefore
               type: object
+            distributions:
+              items:
+                type: string
+              type: array
+            features:
+              properties:
+                disabledFeatures:
+                  items:
+                    type: string
+                  type: array
+                enabledFeatures:
+                  additionalProperties:
+                    type: string
+                  type: object
+                externallyManagedFeatures:
+                  items:
+                    type: string
+                  type: array
+              type: object
             nodeStats:
               properties:
                 allocatable:
@@ -197,6 +216,10 @@ spec:
                       type: integer
                   type: object
               type: object
+            storageProvisioners:
+              items:
+                type: string
+              type: array
             version:
               description: |-
                 Info contains versioning information.
@@ -205,6 +228,14 @@ spec:
                 buildDate:
                   type: string
                 compiler:
+                  type: string
+                emulationMajor:
+                  description: EmulationMajor is the major version of the emulation
+                    version
+                  type: string
+                emulationMinor:
+                  description: EmulationMinor is the minor version of the emulation
+                    version
                   type: string
                 gitCommit:
                   type: string
@@ -215,8 +246,18 @@ spec:
                 goVersion:
                   type: string
                 major:
+                  description: Major is the major version of the binary version
+                  type: string
+                minCompatibilityMajor:
+                  description: MinCompatibilityMajor is the major version of the minimum
+                    compatibility version
+                  type: string
+                minCompatibilityMinor:
+                  description: MinCompatibilityMinor is the minor version of the minimum
+                    compatibility version
                   type: string
                 minor:
+                  description: Minor is the minor version of the binary version
                   type: string
                 platform:
                   type: string

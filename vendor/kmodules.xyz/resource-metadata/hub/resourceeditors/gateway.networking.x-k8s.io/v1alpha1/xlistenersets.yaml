@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: gateway.networking.x-k8s.io
+    k8s.io/kind: XListenerSet
+    k8s.io/resource: xlistenersets
+    k8s.io/version: v1alpha1
+  name: gateway.networking.x-k8s.io-v1alpha1-xlistenersets
+spec:
+  resource:
+    group: gateway.networking.x-k8s.io
+    kind: XListenerSet
+    name: xlistenersets
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: gatewaynetworkingxk8sio-xlistenerset-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.32.0
+    enforceQuota: false

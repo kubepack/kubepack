@@ -8,9 +8,39 @@ metadata:
     k8s.io/version: v1alpha2
   name: kubedb.com-v1alpha2-db2s
 spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/db2s.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/db2s.png
+    type: image/png
   resource:
     group: kubedb.com
     kind: DB2
     name: db2s
     scope: Namespaced
     version: v1alpha2
+  ui:
+    editor:
+      name: kubedbcom-db2-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.32.0
+    enforceQuota: true
+    options:
+      name: kubedbcom-db2-editor-options
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.32.0
+  variants:
+  - name: default
+    selector:
+      matchExpressions:
+      - key: charts.x-helm.dev/is-default-preset
+        operator: In
+        values:
+        - "true"
+        - kubedb

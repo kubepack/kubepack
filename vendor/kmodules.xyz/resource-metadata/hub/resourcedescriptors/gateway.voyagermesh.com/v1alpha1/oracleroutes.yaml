@@ -1,0 +1,182 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  labels:
+    k8s.io/group: gateway.voyagermesh.com
+    k8s.io/kind: OracleRoute
+    k8s.io/resource: oracleroutes
+    k8s.io/version: v1alpha1
+  name: gateway.voyagermesh.com-v1alpha1-oracleroutes
+spec:
+  resource:
+    group: gateway.voyagermesh.com
+    kind: OracleRoute
+    name: oracleroutes
+    scope: Namespaced
+    version: v1alpha1
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            namespace:
+              description: "Namespace defines the space within which each name must
+                be unique. An empty namespace is equivalent to the \"default\" namespace,
+                but \"default\" is the canonical representation. Not all objects are
+                required to be scoped to a namespace - the value of this field for
+                those objects will be empty. \n Must be a DNS_LABEL. Cannot be updated.
+                More info: http://kubernetes.io/docs/user-guide/namespaces"
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          properties:
+            hostnames:
+              items:
+                maxLength: 253
+                minLength: 1
+                pattern: ^(\*\.)?[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                type: string
+              maxItems: 16
+              type: array
+            parentRefs:
+              items:
+                properties:
+                  group:
+                    default: gateway.networking.k8s.io
+                    maxLength: 253
+                    pattern: ^$|^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                    type: string
+                  kind:
+                    default: Gateway
+                    maxLength: 63
+                    minLength: 1
+                    pattern: ^[a-zA-Z]([-a-zA-Z0-9]*[a-zA-Z0-9])?$
+                    type: string
+                  name:
+                    maxLength: 253
+                    minLength: 1
+                    type: string
+                  namespace:
+                    maxLength: 63
+                    minLength: 1
+                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                    type: string
+                  port:
+                    format: int32
+                    maximum: 65535
+                    minimum: 1
+                    type: integer
+                  sectionName:
+                    maxLength: 253
+                    minLength: 1
+                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                    type: string
+                required:
+                - name
+                type: object
+              maxItems: 32
+              type: array
+              x-kubernetes-list-type: atomic
+            rules:
+              items:
+                properties:
+                  backendRefs:
+                    items:
+                      properties:
+                        group:
+                          default: ""
+                          maxLength: 253
+                          pattern: ^$|^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                          type: string
+                        kind:
+                          default: Service
+                          maxLength: 63
+                          minLength: 1
+                          pattern: ^[a-zA-Z]([-a-zA-Z0-9]*[a-zA-Z0-9])?$
+                          type: string
+                        name:
+                          maxLength: 253
+                          minLength: 1
+                          type: string
+                        namespace:
+                          maxLength: 63
+                          minLength: 1
+                          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                          type: string
+                        port:
+                          format: int32
+                          maximum: 65535
+                          minimum: 1
+                          type: integer
+                        weight:
+                          default: 1
+                          format: int32
+                          maximum: 1000000
+                          minimum: 0
+                          type: integer
+                      required:
+                      - name
+                      type: object
+                      x-kubernetes-validations:
+                      - message: Must have port for Service reference
+                        rule: '(size(self.group) == 0 && self.kind == ''Service'')
+                          ? has(self.port) : true'
+                    maxItems: 16
+                    minItems: 1
+                    type: array
+                  filters:
+                    items:
+                      type: object
+                    maxItems: 16
+                    type: array
+                  name:
+                    maxLength: 253
+                    minLength: 1
+                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                    type: string
+                type: object
+              maxItems: 16
+              minItems: 1
+              type: array
+            telemetry:
+              properties:
+                ref:
+                  type: string
+              type: object
+            useDefaultGateways:
+              enum:
+              - All
+              - None
+              type: string
+          required:
+          - rules
+          type: object
+      required:
+      - spec
+      type: object

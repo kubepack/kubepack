@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: gateway.networking.x-k8s.io
+    k8s.io/kind: XMesh
+    k8s.io/resource: xmeshes
+    k8s.io/version: v1alpha1
+  name: gateway.networking.x-k8s.io-v1alpha1-xmeshes
+spec:
+  resource:
+    group: gateway.networking.x-k8s.io
+    kind: XMesh
+    name: xmeshes
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: gatewaynetworkingxk8sio-xmesh-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.32.0
+    enforceQuota: false
