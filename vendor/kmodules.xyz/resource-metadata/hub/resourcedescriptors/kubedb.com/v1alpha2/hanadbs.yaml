@@ -80,13 +80,15 @@ spec:
               - name
               type: object
               x-kubernetes-map-type: atomic
-            configSecret:
+            configuration:
               properties:
-                name:
-                  default: ""
+                inline:
+                  additionalProperties:
+                    type: string
+                  type: object
+                secretName:
                   type: string
               type: object
-              x-kubernetes-map-type: atomic
             deletionPolicy:
               enum:
               - Halt
@@ -3526,6 +3528,24 @@ spec:
                   - Standalone
                   - SystemReplication
                   type: string
+                systemReplication:
+                  properties:
+                    operationMode:
+                      default: logreplay
+                      enum:
+                      - logreplay
+                      - delta_datashipping
+                      - logreplay_readaccess
+                      type: string
+                    replicationMode:
+                      default: sync
+                      enum:
+                      - sync
+                      - syncmem
+                      - async
+                      - fullsync
+                      type: string
+                  type: object
               type: object
             version:
               type: string

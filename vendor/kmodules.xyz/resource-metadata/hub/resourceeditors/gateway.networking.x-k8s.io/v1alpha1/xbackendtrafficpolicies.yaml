@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: gateway.networking.x-k8s.io
+    k8s.io/kind: XBackendTrafficPolicy
+    k8s.io/resource: xbackendtrafficpolicies
+    k8s.io/version: v1alpha1
+  name: gateway.networking.x-k8s.io-v1alpha1-xbackendtrafficpolicies
+spec:
+  resource:
+    group: gateway.networking.x-k8s.io
+    kind: XBackendTrafficPolicy
+    name: xbackendtrafficpolicies
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: gatewaynetworkingxk8sio-xbackendtrafficpolicy-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.32.0
+    enforceQuota: false

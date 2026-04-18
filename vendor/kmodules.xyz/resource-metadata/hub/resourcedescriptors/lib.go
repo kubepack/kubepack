@@ -80,7 +80,7 @@ var (
 				return err
 			})
 			if e2 != nil {
-				panic(errors.Wrapf(e2, "failed to load %s", reflect.TypeOf(v1alpha1.ResourceDescriptor{})))
+				panic(errors.Wrapf(e2, "failed to load %s", reflect.TypeFor[v1alpha1.ResourceDescriptor]()))
 			}
 		},
 	)

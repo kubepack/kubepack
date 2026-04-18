@@ -73,7 +73,7 @@ var (
 
 				return nil
 			}); err != nil {
-				panic(errors.Wrapf(err, "failed to load %s", reflect.TypeOf(v1alpha1.ResourceEditor{})))
+				panic(errors.Wrapf(err, "failed to load %s", reflect.TypeFor[v1alpha1.ResourceEditor]()))
 			}
 		},
 	)

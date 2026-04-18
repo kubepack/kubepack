@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: migrator.kubedb.com
+    k8s.io/kind: Migrator
+    k8s.io/resource: migrators
+    k8s.io/version: v1alpha1
+  name: migrator.kubedb.com-v1alpha1-migrators
+spec:
+  resource:
+    group: migrator.kubedb.com
+    kind: Migrator
+    name: migrators
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: migratorkubedbcom-migrator-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.32.0
+    enforceQuota: false
