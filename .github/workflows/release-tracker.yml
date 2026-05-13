@@ -11,15 +11,13 @@ concurrency:
 
 jobs:
   build:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-24.04
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Update release tracker
-        if: |
-          github.event.action == 'closed' &&
-          github.event.pull_request.merged == true
         env:
           GITHUB_USER: 1gtm
           GITHUB_TOKEN: ${{ secrets.LGTM_GITHUB_TOKEN }}
