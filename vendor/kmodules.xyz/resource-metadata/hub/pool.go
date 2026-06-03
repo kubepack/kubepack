@@ -20,6 +20,7 @@ import (
 	"sync"
 
 	lru "github.com/hashicorp/golang-lru"
+	"k8s.io/klog/v2"
 )
 
 type Pool struct {
@@ -31,7 +32,15 @@ type Pool struct {
 const PoolSize = 1024 // This number should match the max number of concurrent clusters handled
 
 func NewPool(kvFactory func() KV) (*Pool, error) {
-	cache, err := lru.New(PoolSize)
+	// Log evictions so it's visible when the pool is undersized for the
+	// workload. With each registry now owning its own KV map (see
+	// NewKVMapFromKnown), an evicted registry just becomes garbage as
+	// in-flight goroutines release it — but any work it had buffered
+	// (e.g. recent RegisterGVR calls) is gone, so frequent evictions are
+	// worth surfacing.
+	cache, err := lru.NewWithEvict(PoolSize, func(key, _ any) {
+		klog.V(2).InfoS("evicted cluster registry from pool", "uid", key)
+	})
 	if err != nil {
 		return nil, err
 	}

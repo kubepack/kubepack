@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: archiver.kubedb.com
+    k8s.io/kind: ClickHouseArchiver
+    k8s.io/resource: clickhousearchivers
+    k8s.io/version: v1alpha1
+  name: archiver.kubedb.com-v1alpha1-clickhousearchivers
+spec:
+  resource:
+    group: archiver.kubedb.com
+    kind: ClickHouseArchiver
+    name: clickhousearchivers
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: archiverkubedbcom-clickhousearchiver-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.34.0
+    enforceQuota: false

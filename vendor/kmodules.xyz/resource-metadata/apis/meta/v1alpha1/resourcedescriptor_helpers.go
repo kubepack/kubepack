@@ -46,6 +46,10 @@ func (rd ResourceDescriptor) ToYAML() ([]byte, error) {
 		if rd.Spec.Resource.Scope == kmapi.ClusterScoped {
 			delete(mc.Properties, "namespace")
 		}
+		// Deep-copy before mutating: Spec.Validation is a pointer that may be
+		// shared with the embedded registry; rewriting Properties in place
+		// corrupts the schema for every subsequent reader.
+		rd.Spec.Validation = rd.Spec.Validation.DeepCopy()
 		rd.Spec.Validation.OpenAPIV3Schema.Properties["metadata"] = mc
 		delete(rd.Spec.Validation.OpenAPIV3Schema.Properties, "status")
 	}

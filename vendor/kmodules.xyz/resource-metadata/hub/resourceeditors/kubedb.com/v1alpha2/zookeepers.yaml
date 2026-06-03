@@ -28,7 +28,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: false
         flow: standalone-edit
         icon: material-symbols-light:backup-outline
@@ -43,7 +43,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: false
         flow: standalone-create
         icon: carbon:ibm-cloud-backup-and-recovery
@@ -58,7 +58,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: false
         flow: standalone-create
         icon: mdi:backup-restore
@@ -75,7 +75,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: false
         flow: standalone-create
         icon: qlementine-icons:version-control-16
@@ -90,7 +90,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: false
         flow: standalone-create
         icon: hugeicons:redo
@@ -105,7 +105,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: false
         flow: standalone-create
         icon: hugeicons:settings-05
@@ -126,14 +126,16 @@ spec:
         icon: hugeicons:arrow-expand
         name: Scale Storage
         operationId: scale-storage
-      - editor:
+      - disabledTemplate: |
+          {{ not (gt .spec.replicas 1) }}
+        editor:
           name: opskubedbcom-zookeeperopsrequest-editor
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
-        enforceQuota: false
+          version: v0.34.0
+        enforceQuota: true
         flow: standalone-create
         icon: hugeicons:horizontal-resize
         icons:
@@ -147,8 +149,8 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
-        enforceQuota: false
+          version: v0.34.0
+        enforceQuota: true
         flow: standalone-create
         icons:
         - src: https://cdn.appscode.com/k8s/icons/action-icons/vertical_scale.svg
@@ -162,7 +164,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: true
         flow: standalone-create
         icons:
@@ -174,12 +176,29 @@ spec:
       name: Scaling
     - items:
       - editor:
+          name: kubedbcom-zookeeper-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-charts-oci
+          version: v0.34.0
+        enforceQuota: true
+        flow: standalone-edit
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/compute.svg
+          type: image/svg+xml
+        name: Compute
+        operationId: edit-self-compute-autoscaler
+        partOf: Scale Vertically
+      name: Autoscaling
+    - items:
+      - editor:
           name: opskubedbcom-zookeeperopsrequest-editor
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: false
         flow: standalone-create
         icon: hugeicons:security-check
@@ -194,7 +213,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: false
         flow: standalone-edit
         icon: hugeicons:presentation-line-chart-01
@@ -210,7 +229,7 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-charts-oci
-      version: v0.32.0
+      version: v0.34.0
     enforceQuota: true
     options:
       name: kubedbcom-zookeeper-editor-options
@@ -218,7 +237,7 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-charts-oci
-      version: v0.32.0
+      version: v0.34.0
   variants:
   - name: default
     selector:

@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: autoscaling.kubedb.com
+    k8s.io/kind: HanaDBAutoscaler
+    k8s.io/resource: hanadbautoscalers
+    k8s.io/version: v1alpha1
+  name: autoscaling.kubedb.com-v1alpha1-hanadbautoscalers
+spec:
+  resource:
+    group: autoscaling.kubedb.com
+    kind: HanaDBAutoscaler
+    name: hanadbautoscalers
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: autoscalingkubedbcom-hanadbautoscaler-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.34.0
+    enforceQuota: false

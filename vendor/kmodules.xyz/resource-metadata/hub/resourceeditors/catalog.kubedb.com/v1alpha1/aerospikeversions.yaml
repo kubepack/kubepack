@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: catalog.kubedb.com
+    k8s.io/kind: AerospikeVersion
+    k8s.io/resource: aerospikeversions
+    k8s.io/version: v1alpha1
+  name: catalog.kubedb.com-v1alpha1-aerospikeversions
+spec:
+  resource:
+    group: catalog.kubedb.com
+    kind: AerospikeVersion
+    name: aerospikeversions
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: catalogkubedbcom-aerospikeversion-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.34.0
+    enforceQuota: false

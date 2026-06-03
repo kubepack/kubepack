@@ -23,12 +23,59 @@ spec:
     actions:
     - items:
       - editor:
+          name: kubedbcom-clickhouse-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-charts-oci
+          version: v0.34.0
+        enforceQuota: false
+        flow: standalone-edit
+        icon: material-symbols-light:backup-outline
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/configure-backup.svg
+          type: image/svg+xml
+        name: Configure Backup
+        operationId: edit-self-backupconfiguration
+      - editor:
+          name: corekubestashcom-backupsession-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-charts-oci
+          version: v0.34.0
+        enforceQuota: false
+        flow: standalone-create
+        icon: carbon:ibm-cloud-backup-and-recovery
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/instant-backup.svg
+          type: image/svg+xml
+        name: Instant Backup
+        operationId: create-instant-backup
+      - editor:
+          name: corekubestashcom-restoresession-editor-options
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-charts-oci
+          version: v0.34.0
+        enforceQuota: false
+        flow: standalone-create
+        icon: mdi:backup-restore
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/restore.svg
+          type: image/svg+xml
+        name: Restore
+        operationId: create-restoresession
+      name: Backups
+    - items:
+      - editor:
           name: opskubedbcom-clickhouseopsrequest-editor
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: false
         flow: standalone-create
         icon: qlementine-icons:version-control-16
@@ -43,7 +90,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: false
         flow: standalone-create
         icon: hugeicons:redo
@@ -58,7 +105,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: false
         flow: standalone-create
         icon: hugeicons:settings-05
@@ -87,7 +134,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: true
         flow: standalone-create
         icon: hugeicons:horizontal-resize
@@ -102,7 +149,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: true
         flow: standalone-create
         icons:
@@ -117,7 +164,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: true
         flow: standalone-create
         icons:
@@ -134,7 +181,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: true
         flow: standalone-edit
         icons:
@@ -149,7 +196,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: true
         flow: standalone-edit
         icons:
@@ -166,7 +213,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: false
         flow: standalone-create
         icon: hugeicons:security-check
@@ -181,7 +228,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: false
         flow: standalone-edit
         icon: hugeicons:presentation-line-chart-01
@@ -198,7 +245,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-charts-oci
-          version: v0.32.0
+          version: v0.34.0
         enforceQuota: false
         flow: standalone-edit
         icon: streamline-ultimate:server-share
@@ -214,7 +261,7 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-charts-oci
-      version: v0.32.0
+      version: v0.34.0
     enforceQuota: true
     options:
       name: kubedbcom-clickhouse-editor-options
@@ -222,7 +269,7 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-charts-oci
-      version: v0.32.0
+      version: v0.34.0
   variants:
   - name: default
     selector:

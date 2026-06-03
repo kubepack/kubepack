@@ -32,6 +32,7 @@ import (
 	ioutilx "gomodules.xyz/x/ioutil"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/klog/v2"
 	"sigs.k8s.io/yaml"
 )
 
@@ -47,8 +48,8 @@ var (
 		filepath.Join("/tmp", "hub", "resourcedescriptors"),
 		fs,
 		func(fsys iofs.FS) {
-			knownDescriptors = map[string]*v1alpha1.ResourceDescriptor{}
-			latestGVRs = map[schema.GroupKind]schema.GroupVersionResource{}
+			nextKnown := map[string]*v1alpha1.ResourceDescriptor{}
+			nextLatest := map[schema.GroupKind]schema.GroupVersionResource{}
 
 			e2 := iofs.WalkDir(fsys, ".", func(path string, d iofs.DirEntry, err error) error {
 				if d.IsDir() || err != nil {
@@ -68,20 +69,27 @@ var (
 				if err != nil {
 					return errors.Wrap(err, path)
 				}
-				knownDescriptors[rd.Name] = &rd
+				nextKnown[rd.Name] = &rd
 
 				gvr := rd.Spec.Resource.GroupVersionResource()
 				gk := rd.Spec.Resource.GroupKind()
-				if existing, ok := latestGVRs[gk]; !ok {
-					latestGVRs[gk] = gvr
+				if existing, ok := nextLatest[gk]; !ok {
+					nextLatest[gk] = gvr
 				} else if diff, _ := apiversion.Compare(existing.Version, gvr.Version); diff < 0 {
-					latestGVRs[gk] = gvr
+					nextLatest[gk] = gvr
 				}
 				return err
 			})
 			if e2 != nil {
-				panic(errors.Wrapf(e2, "failed to load %s", reflect.TypeFor[v1alpha1.ResourceDescriptor]()))
+				if knownDescriptors == nil {
+					// First load (init); embedded data must be valid.
+					panic(errors.Wrapf(e2, "failed to load %s", reflect.TypeFor[v1alpha1.ResourceDescriptor]()))
+				}
+				klog.ErrorS(e2, "failed to reload resourcedescriptors; keeping previous state")
+				return
 			}
+			knownDescriptors = nextKnown
+			latestGVRs = nextLatest
 		},
 	)
 )
