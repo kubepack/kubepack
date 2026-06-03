@@ -64,6 +64,13 @@ spec:
               type: object
             deprecated:
               type: boolean
+            exporter:
+              properties:
+                image:
+                  type: string
+              required:
+              - image
+              type: object
             securityContext:
               properties:
                 runAsGroup:
@@ -104,6 +111,7 @@ spec:
           required:
           - coordinator
           - db
+          - exporter
           - version
           type: object
       type: object

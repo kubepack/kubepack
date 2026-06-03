@@ -20,13 +20,117 @@ spec:
     scope: Namespaced
     version: v1alpha2
   ui:
+    actions:
+    - items:
+      - editor:
+          name: opskubedbcom-hanadbopsrequest-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-charts-oci
+          version: v0.34.0
+        enforceQuota: false
+        flow: standalone-create
+        icon: hugeicons:redo
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/restart.svg
+          type: image/svg+xml
+        name: Restart
+        operationId: create-opsrequest-restart
+      - editor:
+          name: opskubedbcom-hanadbopsrequest-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-charts-oci
+          version: v0.34.0
+        enforceQuota: false
+        flow: standalone-create
+        icon: hugeicons:settings-05
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/reconfigure.svg
+          type: image/svg+xml
+        name: Reconfigure
+        operationId: create-opsrequest-reconfigure
+      name: Operations
+    - items:
+      - enforceQuota: false
+        flow: ""
+        icon: hugeicons:vertical-resize
+        name: Scale Vertically
+        operationId: scale-vertically
+      - editor:
+          name: opskubedbcom-hanadbopsrequest-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-charts-oci
+          version: v0.34.0
+        enforceQuota: true
+        flow: standalone-create
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/vertical_scale.svg
+          type: image/svg+xml
+        name: Vertical Scale
+        operationId: create-opsrequest-verticalscaling
+        partOf: Scale Vertically
+      name: Scaling
+    - items:
+      - editor:
+          name: kubedbcom-hanadb-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-charts-oci
+          version: v0.34.0
+        enforceQuota: true
+        flow: standalone-edit
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/compute.svg
+          type: image/svg+xml
+        name: Compute
+        operationId: edit-self-compute-autoscaler
+        partOf: Scale Vertically
+      name: Autoscaling
+    - items:
+      - editor:
+          name: opskubedbcom-hanadbopsrequest-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-charts-oci
+          version: v0.34.0
+        enforceQuota: false
+        flow: standalone-create
+        icon: hugeicons:security-check
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/configure.svg
+          type: image/svg+xml
+        name: TLS Configure
+        operationId: create-opsrequest-reconfiguretls
+      - editor:
+          name: kubedbcom-hanadb-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-charts-oci
+          version: v0.34.0
+        enforceQuota: false
+        flow: standalone-edit
+        icon: hugeicons:presentation-line-chart-01
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/monitor.svg
+          type: image/svg+xml
+        name: Monitoring
+        operationId: edit-self-monitoring
+      name: Security & Monitoring
     editor:
       name: kubedbcom-hanadb-editor
       sourceRef:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-charts-oci
-      version: v0.32.0
+      version: v0.34.0
     enforceQuota: true
     options:
       name: kubedbcom-hanadb-editor-options
@@ -34,7 +138,7 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-charts-oci
-      version: v0.32.0
+      version: v0.34.0
   variants:
   - name: default
     selector:

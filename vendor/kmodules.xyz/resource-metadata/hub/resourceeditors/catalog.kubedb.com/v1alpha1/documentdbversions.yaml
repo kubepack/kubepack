@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: catalog.kubedb.com
+    k8s.io/kind: DocumentDBVersion
+    k8s.io/resource: documentdbversions
+    k8s.io/version: v1alpha1
+  name: catalog.kubedb.com-v1alpha1-documentdbversions
+spec:
+  resource:
+    group: catalog.kubedb.com
+    kind: DocumentDBVersion
+    name: documentdbversions
+    scope: Cluster
+    version: v1alpha1
+  ui:
+    editor:
+      name: catalogkubedbcom-documentdbversion-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.34.0
+    enforceQuota: false

@@ -1,0 +1,30 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: ops.kubedb.com
+    k8s.io/kind: MilvusOpsRequest
+    k8s.io/resource: milvusopsrequests
+    k8s.io/version: v1alpha1
+  name: ops.kubedb.com-v1alpha1-milvusopsrequests
+spec:
+  icons:
+  - src: https://cdn.appscode.com/k8s/icons/ops.kubedb.com/milvusopsrequests.svg
+    type: image/svg+xml
+  - src: https://cdn.appscode.com/k8s/icons/ops.kubedb.com/milvusopsrequests.png
+    type: image/png
+  resource:
+    group: ops.kubedb.com
+    kind: MilvusOpsRequest
+    name: milvusopsrequests
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: opskubedbcom-milvusopsrequest-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.34.0
+    enforceQuota: false

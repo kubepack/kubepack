@@ -32,6 +32,7 @@ import (
 	"kmodules.xyz/resource-metadata/apis/meta/v1alpha1"
 	"kmodules.xyz/resource-metadata/hub/resourcedescriptors"
 
+	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	crd_cs "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/typed/apiextensions/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -93,9 +94,7 @@ func NewRegistry(uid string, cache KV) *Registry {
 }
 
 func NewRegistryOfKnownResources() *Registry {
-	return NewRegistry(KnownUID, &KVMap{
-		cache: resourcedescriptors.KnownDescriptors(),
-	})
+	return NewRegistry(KnownUID, NewKVMapFromKnown())
 }
 
 func (r *Registry) DiscoverResources(cfg *rest.Config) error {
@@ -112,6 +111,15 @@ func (r *Registry) discoverResources() error {
 		return err
 	}
 
+	// Preserve manually-registered GroupResources that server discovery did
+	// not see (e.g. a CRD just applied but not yet in the discovery cache).
+	// Discovery wins for GroupResources it does know about, since the
+	// api-server is authoritative on its own preferred version.
+	for gr, gvr := range r.preferred {
+		if _, ok := preferred[gr]; !ok {
+			preferred[gr] = gvr
+		}
+	}
 	r.preferred = preferred
 	r.lastRefreshed = time.Now()
 	for filename, rd := range reg {
@@ -126,10 +134,13 @@ func (r *Registry) discoverResources() error {
 }
 
 func (r *Registry) Refresh(cfg *rest.Config) error {
-	if time.Since(r.lastRefreshed) > ttl {
-		return r.DiscoverResources(cfg)
+	r.m.Lock()
+	defer r.m.Unlock()
+	if time.Since(r.lastRefreshed) <= ttl {
+		return nil
 	}
-	return nil
+	r.cfg = cfg
+	return r.discoverResources()
 }
 
 func (r *Registry) Reset() {
@@ -215,6 +226,17 @@ func (r *Registry) createRegistry(cfg *rest.Config) (map[schema.GroupResource]sc
 		return nil, nil, err
 	}
 
+	crdList, crdErr := apiext.CustomResourceDefinitions().List(context.TODO(), metav1.ListOptions{})
+	if crdErr != nil {
+		klog.ErrorS(crdErr, "failed to list CRDs")
+	}
+	crdMap := make(map[string]*apiextensionsv1.CustomResourceDefinition)
+	if crdList != nil {
+		for i := range crdList.Items {
+			crdMap[crdList.Items[i].Name] = &crdList.Items[i]
+		}
+	}
+
 	reg := make(map[string]*v1alpha1.ResourceDescriptor)
 	for _, rsList := range rsLists {
 		for i := range rsList.APIResources {
@@ -265,8 +287,8 @@ func (r *Registry) createRegistry(cfg *rest.Config) (map[schema.GroupResource]sc
 				},
 			}
 			if !meta_util.IsOfficialType(rd.Spec.Resource.Group) {
-				crd, err := apiext.CustomResourceDefinitions().Get(context.TODO(), fmt.Sprintf("%s.%s", rd.Spec.Resource.Name, rd.Spec.Resource.Group), metav1.GetOptions{})
-				if err == nil {
+				key := fmt.Sprintf("%s.%s", rd.Spec.Resource.Name, rd.Spec.Resource.Group)
+				if crd, ok := crdMap[key]; ok {
 					for _, v := range crd.Spec.Versions {
 						if v.Name == rid.Version {
 							rd.Spec.Validation = v.Schema
@@ -466,7 +488,7 @@ func (r *Registry) Resources() []schema.GroupVersionResource {
 	r.m.RLock()
 	defer r.m.RUnlock()
 
-	out := make([]schema.GroupVersionResource, len(r.preferred))
+	out := make([]schema.GroupVersionResource, 0, len(r.preferred))
 	for _, gvr := range r.preferred {
 		out = append(out, gvr)
 	}
@@ -477,7 +499,7 @@ func (r *Registry) Kinds() []schema.GroupVersionKind {
 	r.m.RLock()
 	defer r.m.RUnlock()
 
-	out := make([]schema.GroupVersionKind, len(r.preferred))
+	out := make([]schema.GroupVersionKind, 0, len(r.preferred))
 	for _, gvr := range r.preferred {
 		out = append(out, r.regGVR[gvr].GroupVersionKind())
 	}

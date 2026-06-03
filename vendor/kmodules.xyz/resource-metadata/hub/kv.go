@@ -17,6 +17,7 @@ limitations under the License.
 package hub
 
 import (
+	"maps"
 	"sync"
 
 	"kmodules.xyz/resource-metadata/apis/meta/v1alpha1"
@@ -38,6 +39,18 @@ type KVMap struct {
 var _ KV = &KVMap{}
 
 func NewKVMap(cache map[string]*v1alpha1.ResourceDescriptor) KV {
+	return &KVMap{cache: cache}
+}
+
+// NewKVMapFromKnown returns a KVMap seeded with a shallow copy of the
+// embedded known-descriptors map. Use this when constructing per-cluster
+// registries so that each registry mutates its own map: KnownDescriptors()
+// returns the package-global map, and sharing it across registries leads to
+// concurrent-map-writes when several clusters discover CRDs simultaneously.
+func NewKVMapFromKnown() KV {
+	known := resourcedescriptors.KnownDescriptors()
+	cache := make(map[string]*v1alpha1.ResourceDescriptor, len(known))
+	maps.Copy(cache, known)
 	return &KVMap{cache: cache}
 }
 
@@ -72,9 +85,7 @@ var _ KV = &KVLocal{}
 
 func NewKVLocal() KV {
 	return &KVLocal{
-		known: &KVMap{
-			cache: resourcedescriptors.KnownDescriptors(),
-		},
+		known: NewKVMapFromKnown(),
 		cache: map[string]*v1alpha1.ResourceDescriptor{},
 	}
 }

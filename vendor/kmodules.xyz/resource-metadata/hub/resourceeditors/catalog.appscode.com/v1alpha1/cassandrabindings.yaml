@@ -1,0 +1,16 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: catalog.appscode.com
+    k8s.io/kind: CassandraBinding
+    k8s.io/resource: cassandrabindings
+    k8s.io/version: v1alpha1
+  name: catalog.appscode.com-v1alpha1-cassandrabindings
+spec:
+  resource:
+    group: catalog.appscode.com
+    kind: CassandraBinding
+    name: cassandrabindings
+    scope: Namespaced
+    version: v1alpha1

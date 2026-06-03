@@ -76,7 +76,7 @@ spec:
               type: object
           type: object
         spec:
-          description: DruidBindingSpec defines the desired state of DruidBinding
+          description: BindingSpec defines the desired state of Binding
           properties:
             sourceRef:
               description: SourceRef refers to the source app instance.
@@ -93,6 +93,17 @@ spec:
                   type: string
               required:
               - name
+              type: object
+            uiExposure:
+              description: UIExposure holds the specification of UI exposer
+              properties:
+                disableCostEfficiency:
+                  type: boolean
+                disableUI:
+                  type: boolean
+              required:
+              - disableCostEfficiency
+              - disableUI
               type: object
           required:
           - sourceRef
