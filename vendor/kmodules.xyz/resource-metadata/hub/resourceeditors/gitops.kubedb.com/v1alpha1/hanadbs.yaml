@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: gitops.kubedb.com
+    k8s.io/kind: HanaDB
+    k8s.io/resource: hanadbs
+    k8s.io/version: v1alpha1
+  name: gitops.kubedb.com-v1alpha1-hanadbs
+spec:
+  resource:
+    group: gitops.kubedb.com
+    kind: HanaDB
+    name: hanadbs
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: gitopskubedbcom-hanadb-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.35.0
+    enforceQuota: false

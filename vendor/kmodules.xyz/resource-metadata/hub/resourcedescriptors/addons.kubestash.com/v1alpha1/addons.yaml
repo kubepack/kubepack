@@ -70,6 +70,7 @@ spec:
                       - Solr
                       - Medusa
                       - ClickHouseBackup
+                      - Neo4jAdmin
                     - enum:
                       - Restic
                       - WalG
@@ -77,6 +78,7 @@ spec:
                       - VolumeSnapshotter
                       - Solr
                       - ClickHouseBackup
+                      - Neo4jAdmin
                     type: string
                   executor:
                     enum:
@@ -1096,6 +1098,7 @@ spec:
                       - Solr
                       - Medusa
                       - ClickHouseBackup
+                      - Neo4jAdmin
                     - enum:
                       - Restic
                       - WalG
@@ -1103,6 +1106,7 @@ spec:
                       - VolumeSnapshotter
                       - Solr
                       - ClickHouseBackup
+                      - Neo4jAdmin
                     type: string
                   executor:
                     enum:

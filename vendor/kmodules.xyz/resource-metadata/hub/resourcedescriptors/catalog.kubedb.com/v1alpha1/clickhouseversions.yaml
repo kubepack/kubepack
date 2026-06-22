@@ -131,6 +131,13 @@ spec:
               type: object
             endOfLife:
               type: boolean
+            gitSyncer:
+              properties:
+                image:
+                  type: string
+              required:
+              - image
+              type: object
             initContainer:
               properties:
                 image:

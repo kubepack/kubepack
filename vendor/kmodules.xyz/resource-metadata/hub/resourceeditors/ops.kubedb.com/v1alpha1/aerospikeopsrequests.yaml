@@ -1,0 +1,16 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: ops.kubedb.com
+    k8s.io/kind: AerospikeOpsRequest
+    k8s.io/resource: aerospikeopsrequests
+    k8s.io/version: v1alpha1
+  name: ops.kubedb.com-v1alpha1-aerospikeopsrequests
+spec:
+  resource:
+    group: ops.kubedb.com
+    kind: AerospikeOpsRequest
+    name: aerospikeopsrequests
+    scope: Namespaced
+    version: v1alpha1

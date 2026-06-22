@@ -56,26 +56,6 @@ spec:
     references:
     - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
     target:
-      apiVersion: kubedb.com/v1alpha2
-      kind: FerretDB
-    type: MatchRef
-  - labels:
-    - ops
-    namespace:
-      path: metadata.namespace
-    references:
-    - '{.spec.operation.metadata.name},{.spec.operation.metadata.namespace},{.spec.operation.kind},{.spec.operation.apiVersion}'
-    target:
-      apiVersion: kubedb.com/v1alpha1
-      kind: FerretDBOpsRequest
-    type: MatchRef
-  - labels:
-    - recommended_for
-    namespace:
-      path: metadata.namespace
-    references:
-    - '{.spec.target.name},{.metadata.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
-    target:
       apiVersion: kubedb.com/v1
       kind: Kafka
     type: MatchRef

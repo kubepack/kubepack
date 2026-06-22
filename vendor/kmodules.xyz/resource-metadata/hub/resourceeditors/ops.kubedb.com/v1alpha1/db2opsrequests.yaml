@@ -1,0 +1,16 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: ops.kubedb.com
+    k8s.io/kind: DB2OpsRequest
+    k8s.io/resource: db2opsrequests
+    k8s.io/version: v1alpha1
+  name: ops.kubedb.com-v1alpha1-db2opsrequests
+spec:
+  resource:
+    group: ops.kubedb.com
+    kind: DB2OpsRequest
+    name: db2opsrequests
+    scope: Namespaced
+    version: v1alpha1
