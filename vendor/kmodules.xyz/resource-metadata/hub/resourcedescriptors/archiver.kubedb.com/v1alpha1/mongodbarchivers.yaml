@@ -681,6 +681,7 @@ spec:
                   - Solr
                   - Medusa
                   - ClickHouseBackup
+                  - Neo4jAdmin
                   type: string
                 jobTemplate:
                   properties:

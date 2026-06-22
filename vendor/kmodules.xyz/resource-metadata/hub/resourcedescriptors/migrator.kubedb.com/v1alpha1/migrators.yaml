@@ -2811,21 +2811,35 @@ spec:
                   properties:
                     connectionInfo:
                       properties:
-                        address:
-                          type: string
+                        appBinding:
+                          properties:
+                            name:
+                              type: string
+                            namespace:
+                              type: string
+                          required:
+                          - name
+                          type: object
                         dbName:
                           type: string
                         maxConnections:
+                          format: int32
                           type: integer
-                        password:
+                        tls:
+                          properties:
+                            caFile:
+                              type: string
+                            certFile:
+                              type: string
+                            insecureSkipVerify:
+                              type: boolean
+                            keyFile:
+                              type: string
+                            serverName:
+                              type: string
+                          type: object
+                        url:
                           type: string
-                        user:
-                          type: string
-                      required:
-                      - address
-                      - dbName
-                      - password
-                      - user
                       type: object
                     schema:
                       properties:
@@ -2892,6 +2906,19 @@ spec:
                         maxConnections:
                           format: int32
                           type: integer
+                        tls:
+                          properties:
+                            caFile:
+                              type: string
+                            certFile:
+                              type: string
+                            insecureSkipVerify:
+                              type: boolean
+                            keyFile:
+                              type: string
+                            serverName:
+                              type: string
+                          type: object
                         url:
                           type: string
                       type: object
@@ -2938,21 +2965,35 @@ spec:
                   properties:
                     connectionInfo:
                       properties:
-                        address:
-                          type: string
+                        appBinding:
+                          properties:
+                            name:
+                              type: string
+                            namespace:
+                              type: string
+                          required:
+                          - name
+                          type: object
                         dbName:
                           type: string
                         maxConnections:
+                          format: int32
                           type: integer
-                        password:
+                        tls:
+                          properties:
+                            caFile:
+                              type: string
+                            certFile:
+                              type: string
+                            insecureSkipVerify:
+                              type: boolean
+                            keyFile:
+                              type: string
+                            serverName:
+                              type: string
+                          type: object
+                        url:
                           type: string
-                        user:
-                          type: string
-                      required:
-                      - address
-                      - dbName
-                      - password
-                      - user
                       type: object
                     schema:
                       properties:
@@ -3019,6 +3060,19 @@ spec:
                         maxConnections:
                           format: int32
                           type: integer
+                        tls:
+                          properties:
+                            caFile:
+                              type: string
+                            certFile:
+                              type: string
+                            insecureSkipVerify:
+                              type: boolean
+                            keyFile:
+                              type: string
+                            serverName:
+                              type: string
+                          type: object
                         url:
                           type: string
                       type: object
@@ -3085,21 +3139,35 @@ spec:
                   properties:
                     connectionInfo:
                       properties:
-                        address:
-                          type: string
+                        appBinding:
+                          properties:
+                            name:
+                              type: string
+                            namespace:
+                              type: string
+                          required:
+                          - name
+                          type: object
                         dbName:
                           type: string
                         maxConnections:
+                          format: int32
                           type: integer
-                        password:
+                        tls:
+                          properties:
+                            caFile:
+                              type: string
+                            certFile:
+                              type: string
+                            insecureSkipVerify:
+                              type: boolean
+                            keyFile:
+                              type: string
+                            serverName:
+                              type: string
+                          type: object
+                        url:
                           type: string
-                        user:
-                          type: string
-                      required:
-                      - address
-                      - dbName
-                      - password
-                      - user
                       type: object
                   required:
                   - connectionInfo
@@ -3122,6 +3190,19 @@ spec:
                         maxConnections:
                           format: int32
                           type: integer
+                        tls:
+                          properties:
+                            caFile:
+                              type: string
+                            certFile:
+                              type: string
+                            insecureSkipVerify:
+                              type: boolean
+                            keyFile:
+                              type: string
+                            serverName:
+                              type: string
+                          type: object
                         url:
                           type: string
                       type: object
@@ -3132,21 +3213,35 @@ spec:
                   properties:
                     connectionInfo:
                       properties:
-                        address:
-                          type: string
+                        appBinding:
+                          properties:
+                            name:
+                              type: string
+                            namespace:
+                              type: string
+                          required:
+                          - name
+                          type: object
                         dbName:
                           type: string
                         maxConnections:
+                          format: int32
                           type: integer
-                        password:
+                        tls:
+                          properties:
+                            caFile:
+                              type: string
+                            certFile:
+                              type: string
+                            insecureSkipVerify:
+                              type: boolean
+                            keyFile:
+                              type: string
+                            serverName:
+                              type: string
+                          type: object
+                        url:
                           type: string
-                        user:
-                          type: string
-                      required:
-                      - address
-                      - dbName
-                      - password
-                      - user
                       type: object
                   required:
                   - connectionInfo
@@ -3169,6 +3264,19 @@ spec:
                         maxConnections:
                           format: int32
                           type: integer
+                        tls:
+                          properties:
+                            caFile:
+                              type: string
+                            certFile:
+                              type: string
+                            insecureSkipVerify:
+                              type: boolean
+                            keyFile:
+                              type: string
+                            serverName:
+                              type: string
+                          type: object
                         url:
                           type: string
                       type: object

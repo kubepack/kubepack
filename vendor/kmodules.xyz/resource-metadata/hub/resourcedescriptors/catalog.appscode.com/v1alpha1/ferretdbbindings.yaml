@@ -8,15 +8,6 @@ metadata:
     k8s.io/version: v1alpha1
   name: catalog.appscode.com-v1alpha1-ferretdbbindings
 spec:
-  connections:
-  - labels:
-    - exposed_by
-    references:
-    - '{.spec.sourceRef.name},{.spec.sourceRef.namespace}'
-    target:
-      apiVersion: kubedb.com/v1alpha2
-      kind: FerretDB
-    type: MatchRef
   resource:
     group: catalog.appscode.com
     kind: FerretDBBinding

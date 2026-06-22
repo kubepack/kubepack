@@ -1,0 +1,25 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: gitops.kubedb.com
+    k8s.io/kind: Ignite
+    k8s.io/resource: ignites
+    k8s.io/version: v1alpha1
+  name: gitops.kubedb.com-v1alpha1-ignites
+spec:
+  resource:
+    group: gitops.kubedb.com
+    kind: Ignite
+    name: ignites
+    scope: Namespaced
+    version: v1alpha1
+  ui:
+    editor:
+      name: gitopskubedbcom-ignite-editor
+      sourceRef:
+        apiGroup: source.toolkit.fluxcd.io
+        kind: HelmRepository
+        name: appscode-charts-oci
+      version: v0.35.0
+    enforceQuota: false
