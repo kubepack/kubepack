@@ -3,20 +3,20 @@ kind: ResourceDescriptor
 metadata:
   labels:
     k8s.io/group: catalog.appscode.com
-    k8s.io/kind: FerretDBBinding
-    k8s.io/resource: ferretdbbindings
+    k8s.io/kind: IgniteBinding
+    k8s.io/resource: ignitebindings
     k8s.io/version: v1alpha1
-  name: catalog.appscode.com-v1alpha1-ferretdbbindings
+  name: catalog.appscode.com-v1alpha1-ignitebindings
 spec:
   resource:
     group: catalog.appscode.com
-    kind: FerretDBBinding
-    name: ferretdbbindings
+    kind: IgniteBinding
+    name: ignitebindings
     scope: Namespaced
     version: v1alpha1
   validation:
     openAPIV3Schema:
-      description: FerretDBBinding is the Schema for the ferretdbbindings API
+      description: IgniteBinding is the Schema for the ignitebindings API
       properties:
         apiVersion:
           description: |-

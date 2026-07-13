@@ -1,0 +1,16 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: courier.kubedb.com
+    k8s.io/kind: MongoDBMigration
+    k8s.io/resource: mongodbmigrations
+    k8s.io/version: v1alpha1
+  name: courier.kubedb.com-v1alpha1-mongodbmigrations
+spec:
+  resource:
+    group: courier.kubedb.com
+    kind: MongoDBMigration
+    name: mongodbmigrations
+    scope: Namespaced
+    version: v1alpha1

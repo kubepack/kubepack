@@ -4952,6 +4952,15 @@ spec:
               type: string
             tls:
               properties:
+                backup:
+                  properties:
+                    mode:
+                      enum:
+                      - Disabled
+                      - TLS
+                      - mTLS
+                      type: string
+                  type: object
                 bolt:
                   properties:
                     mode:

@@ -54,7 +54,8 @@ func main() {
 
 	cc := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
 		&clientcmd.ClientConfigLoadingRules{ExplicitPath: kubeconfigPath},
-		&clientcmd.ConfigOverrides{ClusterInfo: clientcmdapi.Cluster{Server: masterURL}})
+		&clientcmd.ConfigOverrides{ClusterInfo: clientcmdapi.Cluster{Server: masterURL}},
+	)
 	kubeconfig, err := cc.RawConfig()
 	if err != nil {
 		klog.Fatal(err)

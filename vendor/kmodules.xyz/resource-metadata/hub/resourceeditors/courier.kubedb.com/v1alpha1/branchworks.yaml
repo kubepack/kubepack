@@ -1,0 +1,16 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: courier.kubedb.com
+    k8s.io/kind: BranchWork
+    k8s.io/resource: branchworks
+    k8s.io/version: v1alpha1
+  name: courier.kubedb.com-v1alpha1-branchworks
+spec:
+  resource:
+    group: courier.kubedb.com
+    kind: BranchWork
+    name: branchworks
+    scope: Namespaced
+    version: v1alpha1
