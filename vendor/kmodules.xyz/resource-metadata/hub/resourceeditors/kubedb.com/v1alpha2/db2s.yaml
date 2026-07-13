@@ -25,16 +25,16 @@ spec:
       sourceRef:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
-        name: appscode-charts-oci
-      version: v0.35.0
+        name: appscode-wizards-oci
+      version: v0.36.0
     enforceQuota: true
     options:
       name: kubedbcom-db2-editor-options
       sourceRef:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
-        name: appscode-charts-oci
-      version: v0.35.0
+        name: appscode-wizards-oci
+      version: v0.36.0
   variants:
   - name: default
     selector:

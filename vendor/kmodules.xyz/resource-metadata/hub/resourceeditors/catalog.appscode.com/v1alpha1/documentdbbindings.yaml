@@ -1,0 +1,16 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: catalog.appscode.com
+    k8s.io/kind: DocumentDBBinding
+    k8s.io/resource: documentdbbindings
+    k8s.io/version: v1alpha1
+  name: catalog.appscode.com-v1alpha1-documentdbbindings
+spec:
+  resource:
+    group: catalog.appscode.com
+    kind: DocumentDBBinding
+    name: documentdbbindings
+    scope: Namespaced
+    version: v1alpha1

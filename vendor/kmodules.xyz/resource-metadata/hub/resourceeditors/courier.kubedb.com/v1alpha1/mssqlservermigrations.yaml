@@ -1,0 +1,16 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: courier.kubedb.com
+    k8s.io/kind: MSSQLServerMigration
+    k8s.io/resource: mssqlservermigrations
+    k8s.io/version: v1alpha1
+  name: courier.kubedb.com-v1alpha1-mssqlservermigrations
+spec:
+  resource:
+    group: courier.kubedb.com
+    kind: MSSQLServerMigration
+    name: mssqlservermigrations
+    scope: Namespaced
+    version: v1alpha1

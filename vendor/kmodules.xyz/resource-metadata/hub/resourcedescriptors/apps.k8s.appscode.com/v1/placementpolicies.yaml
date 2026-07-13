@@ -16,20 +16,29 @@ spec:
     version: v1
   validation:
     openAPIV3Schema:
-      description: "PlacementPolicy represents a set of pods with consistent identities.
-        Identities are defined as: - Network: A single stable DNS and hostname. -
-        Storage: As many VolumeClaims as requested. \n The PlacementPolicy guarantees
-        that a given network identity will always map to the same storage identity."
+      description: |-
+        PlacementPolicy represents a set of pods with consistent identities.
+        Identities are defined as:
+          - Network: A single stable DNS and hostname.
+          - Storage: As many VolumeClaims as requested.
+
+        The PlacementPolicy guarantees that a given network identity will always
+        map to the same storage identity.
       properties:
         apiVersion:
-          description: 'APIVersion defines the versioned schema of this representation
-            of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          description: |-
+            APIVersion defines the versioned schema of this representation of an object.
+            Servers should convert recognized schemas to the latest internal value, and
+            may reject unrecognized values.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
           type: string
         kind:
-          description: 'Kind is a string value representing the REST resource this
-            object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          description: |-
+            Kind is a string value representing the REST resource this object represents.
+            Servers may infer this from the endpoint the client submits requests to.
+            Cannot be updated.
+            In CamelCase.
+            More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
           type: string
         metadata:
           properties:
@@ -98,6 +107,172 @@ spec:
                     - whenUnsatisfiable
                     type: object
                   type: array
+              type: object
+            clusterSpreadConstraint:
+              description: ClusterSpreadConstraint provides spec for distributed pod
+                placements
+              properties:
+                distributionRules:
+                  items:
+                    properties:
+                      clusterName:
+                        type: string
+                      monitoring:
+                        properties:
+                          prometheus:
+                            properties:
+                              appBindingRef:
+                                description: ObjectReference contains enough information
+                                  to let you inspect or modify the referred object.
+                                properties:
+                                  name:
+                                    description: |-
+                                      Name of the referent.
+                                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                    type: string
+                                  namespace:
+                                    description: |-
+                                      Namespace of the referent.
+                                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+                                    type: string
+                                required:
+                                - name
+                                type: object
+                              authSecret:
+                                description: |-
+                                  Secret is the name of the secret to create in the AppBinding's
+                                  namespace that will hold the credentials associated with the AppBinding.
+                                properties:
+                                  name:
+                                    description: |-
+                                      Name of the referent.
+                                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                    type: string
+                                  namespace:
+                                    description: |-
+                                      Namespace of the referent.
+                                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+                                    type: string
+                                required:
+                                - name
+                                type: object
+                              caBundle:
+                                description: CABundle is a PEM encoded CA bundle which
+                                  will be used to validate the serving certificate
+                                  of this app.
+                                format: byte
+                                type: string
+                              insecureSkipTLSVerify:
+                                description: |-
+                                  InsecureSkipTLSVerify disables TLS certificate verification when communicating with this app.
+                                  This is strongly discouraged.  You should use the CABundle instead.
+                                type: boolean
+                              serverName:
+                                description: |-
+                                  ServerName is used to verify the hostname on the returned
+                                  certificates unless InsecureSkipVerify is given. It is also included
+                                  in the client's handshake to support virtual hosting unless it is
+                                  an IP address.
+                                type: string
+                              tlsSecret:
+                                description: |-
+                                  TLSSecret is the name of the secret that will hold
+                                  the client certificate and private key associated with the AppBinding.
+                                properties:
+                                  name:
+                                    description: |-
+                                      Name of the referent.
+                                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                    type: string
+                                  namespace:
+                                    description: |-
+                                      Namespace of the referent.
+                                      More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+                                    type: string
+                                required:
+                                - name
+                                type: object
+                              url:
+                                description: |-
+                                  `url` gives the location of the app, in standard URL form
+                                  (`[scheme://]host:port/path`). Exactly one of `url` or `service`
+                                  must be specified.
+                                type: string
+                            type: object
+                        type: object
+                      replicaIndices:
+                        items:
+                          format: int32
+                          type: integer
+                        type: array
+                      role:
+                        description: |-
+                          Role describes how this data center participates in DC/DR failover.
+                          Member: data bearing and primary eligible (a candidate for the primary DC).
+                          Arbiter: votes only, holds no data, never primary.
+                          Witness: data bearing but never primary (for engines like MongoDB whose
+                          witness must carry data to satisfy majority writes, yet must not be elected).
+                          Defaults to Member when empty.
+                        enum:
+                        - Member
+                        - Arbiter
+                        - Witness
+                        type: string
+                      storageClassName:
+                        type: string
+                    required:
+                    - clusterName
+                    - replicaIndices
+                    type: object
+                  type: array
+                failoverPolicy:
+                  description: |-
+                    FailoverPolicy, when set, marks this as a cross data center (DC/DR) deployment
+                    and selects how the common DC failover service drives failover for it.
+                    When nil, the placement is not managed for DC/DR.
+                  properties:
+                    mode:
+                      description: |-
+                        Mode is the DC topology. It can be derived from the per rule roles
+                        (two Members plus an Arbiter or Witness is TwoDC, three Members is ThreeDC);
+                        when set it is validated against the roles.
+                      enum:
+                      - TwoDC
+                      - ThreeDC
+                      type: string
+                    trigger:
+                      description: Trigger selects which primary DC Lease this workload
+                        follows.
+                      properties:
+                        group:
+                          description: Group is required when Scope is Group; it names
+                            the primary-dc-<group> Lease.
+                          type: string
+                        scope:
+                          description: Scope is Global or Group.
+                          enum:
+                          - Global
+                          - Group
+                          type: string
+                      required:
+                      - scope
+                      type: object
+                  required:
+                  - trigger
+                  type: object
+                slice:
+                  properties:
+                    projectNamespace:
+                      type: string
+                    sliceName:
+                      type: string
+                  required:
+                  - projectNamespace
+                  - sliceName
+                  type: object
+              required:
+              - distributionRules
+              - slice
               type: object
             nodeSpreadConstraint:
               properties:

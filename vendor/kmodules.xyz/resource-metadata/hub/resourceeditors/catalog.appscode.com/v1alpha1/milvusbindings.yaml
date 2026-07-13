@@ -1,0 +1,16 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: catalog.appscode.com
+    k8s.io/kind: MilvusBinding
+    k8s.io/resource: milvusbindings
+    k8s.io/version: v1alpha1
+  name: catalog.appscode.com-v1alpha1-milvusbindings
+spec:
+  resource:
+    group: catalog.appscode.com
+    kind: MilvusBinding
+    name: milvusbindings
+    scope: Namespaced
+    version: v1alpha1

@@ -27,8 +27,8 @@ spec:
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
-            name: appscode-charts-oci
-          version: v0.35.0
+            name: appscode-wizards-oci
+          version: v0.36.0
         enforceQuota: false
         flow: standalone-edit
         icon: material-symbols-light:backup-outline
@@ -42,8 +42,8 @@ spec:
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
-            name: appscode-charts-oci
-          version: v0.35.0
+            name: appscode-wizards-oci
+          version: v0.36.0
         enforceQuota: false
         flow: standalone-create
         icon: mdi:backup-restore
@@ -59,8 +59,8 @@ spec:
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
-            name: appscode-charts-oci
-          version: v0.35.0
+            name: appscode-wizards-oci
+          version: v0.36.0
         enforceQuota: false
         flow: standalone-create
         icon: qlementine-icons:version-control-16
@@ -74,8 +74,8 @@ spec:
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
-            name: appscode-charts-oci
-          version: v0.35.0
+            name: appscode-wizards-oci
+          version: v0.36.0
         enforceQuota: false
         flow: standalone-create
         icon: hugeicons:redo
@@ -89,8 +89,8 @@ spec:
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
-            name: appscode-charts-oci
-          version: v0.35.0
+            name: appscode-wizards-oci
+          version: v0.36.0
         enforceQuota: false
         flow: standalone-create
         icon: hugeicons:settings-05
@@ -118,8 +118,8 @@ spec:
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
-            name: appscode-charts-oci
-          version: v0.35.0
+            name: appscode-wizards-oci
+          version: v0.36.0
         enforceQuota: true
         flow: standalone-create
         icon: hugeicons:horizontal-resize
@@ -133,8 +133,8 @@ spec:
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
-            name: appscode-charts-oci
-          version: v0.35.0
+            name: appscode-wizards-oci
+          version: v0.36.0
         enforceQuota: true
         flow: standalone-create
         icons:
@@ -148,8 +148,8 @@ spec:
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
-            name: appscode-charts-oci
-          version: v0.35.0
+            name: appscode-wizards-oci
+          version: v0.36.0
         enforceQuota: true
         flow: standalone-create
         icons:
@@ -165,8 +165,8 @@ spec:
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
-            name: appscode-charts-oci
-          version: v0.35.0
+            name: appscode-wizards-oci
+          version: v0.36.0
         enforceQuota: false
         flow: standalone-create
         icon: hugeicons:security-check
@@ -180,8 +180,8 @@ spec:
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
-            name: appscode-charts-oci
-          version: v0.35.0
+            name: appscode-wizards-oci
+          version: v0.36.0
         enforceQuota: false
         flow: standalone-edit
         icon: hugeicons:presentation-line-chart-01
@@ -196,16 +196,16 @@ spec:
       sourceRef:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
-        name: appscode-charts-oci
-      version: v0.35.0
+        name: appscode-wizards-oci
+      version: v0.36.0
     enforceQuota: true
     options:
       name: kubedbcom-postgres-editor-options
       sourceRef:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
-        name: appscode-charts-oci
-      version: v0.35.0
+        name: appscode-wizards-oci
+      version: v0.36.0
   variants:
   - name: default
     selector:
