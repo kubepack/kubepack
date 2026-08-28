@@ -1,0 +1,16 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: monitoring.k8s.appscode.com
+    k8s.io/kind: TelemetryStack
+    k8s.io/resource: telemetrystacks
+    k8s.io/version: v1alpha1
+  name: monitoring.k8s.appscode.com-v1alpha1-telemetrystacks
+spec:
+  resource:
+    group: monitoring.k8s.appscode.com
+    kind: TelemetryStack
+    name: telemetrystacks
+    scope: Cluster
+    version: v1alpha1

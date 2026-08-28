@@ -1055,8 +1055,8 @@ gomodules.xyz/pointer
 # gomodules.xyz/sets v0.2.1
 ## explicit; go 1.14
 gomodules.xyz/sets
-# gomodules.xyz/x v0.0.17
-## explicit; go 1.22.0
+# gomodules.xyz/x v0.0.18
+## explicit; go 1.25.0
 gomodules.xyz/x/crypto/rand
 gomodules.xyz/x/env
 gomodules.xyz/x/ioutil
@@ -1820,7 +1820,7 @@ kmodules.xyz/go-containerregistry/name
 ## explicit; go 1.24.0
 kmodules.xyz/offshoot-api/api/v1
 kmodules.xyz/offshoot-api/api/v2
-# kmodules.xyz/resource-metadata v0.48.0
+# kmodules.xyz/resource-metadata v0.49.0
 ## explicit; go 1.25.0
 kmodules.xyz/resource-metadata/apis/meta
 kmodules.xyz/resource-metadata/apis/meta/v1alpha1

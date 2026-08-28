@@ -1,0 +1,177 @@
+apiVersion: meta.k8s.appscode.com/v1alpha1
+kind: ResourceDescriptor
+metadata:
+  labels:
+    k8s.io/group: monitoring.k8s.appscode.com
+    k8s.io/kind: Tenant
+    k8s.io/resource: tenants
+    k8s.io/version: v1alpha1
+  name: monitoring.k8s.appscode.com-v1alpha1-tenants
+spec:
+  resource:
+    group: monitoring.k8s.appscode.com
+    kind: Tenant
+    name: tenants
+    scope: Cluster
+    version: v1alpha1
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          properties:
+            name:
+              description: 'Name must be unique within a namespace. Is required when
+                creating resources, although some resources may allow a client to
+                request the generation of an appropriate name automatically. Name
+                is primarily intended for creation idempotence and configuration definition.
+                Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+              type: string
+            labels:
+              additionalProperties:
+                type: string
+              description: 'Map of string keys and values that can be used to organize
+                and categorize (scope and select) objects. May match selectors of
+                replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+              type: object
+            annotations:
+              additionalProperties:
+                type: string
+              description: 'Annotations is an unstructured key value map stored with
+                a resource that may be set by external tools to store and retrieve
+                arbitrary metadata. They are not queryable and should be preserved
+                when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+              type: object
+          type: object
+        spec:
+          properties:
+            enableTenant:
+              type: boolean
+            externalLabels:
+              additionalProperties:
+                type: string
+              type: object
+            ingestConfig:
+              properties:
+                dedicated:
+                  type: boolean
+                hashringConfig:
+                  properties:
+                    externalLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                    name:
+                      type: string
+                    replicas:
+                      format: int32
+                      type: integer
+                    storageSize:
+                      type: string
+                    tenancyConfig:
+                      properties:
+                        defaultTenantID:
+                          default: default-tenant
+                          type: string
+                        splitTenantLabelName:
+                          type: string
+                        tenantCertificateField:
+                          enum:
+                          - organization
+                          - organizationalUnit
+                          - commonName
+                          type: string
+                        tenantHeader:
+                          default: THANOS-TENANT
+                          type: string
+                        tenantLabelName:
+                          default: tenant_id
+                          type: string
+                        tenantMatcherType:
+                          default: exact
+                          enum:
+                          - exact
+                          - glob
+                          type: string
+                        tenants:
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    tsdbConfig:
+                      properties:
+                        retention:
+                          default: 24h
+                          type: string
+                      required:
+                      - retention
+                      type: object
+                  required:
+                  - storageSize
+                  type: object
+              type: object
+            logs:
+              properties:
+                retention:
+                  pattern: ^(-?(0|(([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?)|([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})))$
+                  type: string
+                targetEndpoint:
+                  type: string
+              required:
+              - retention
+              - targetEndpoint
+              type: object
+            metrics:
+              properties:
+                retention:
+                  properties:
+                    fiveMinutes:
+                      pattern: ^(-?(0|(([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?)|([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})))$
+                      type: string
+                    oneHour:
+                      pattern: ^(-?(0|(([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?)|([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})))$
+                      type: string
+                    raw:
+                      pattern: ^(-?(0|(([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?)|([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})))$
+                      type: string
+                  type: object
+                targetEndpoint:
+                  type: string
+              required:
+              - retention
+              - targetEndpoint
+              type: object
+            owner:
+              type: string
+            revoked:
+              type: boolean
+            telemetryStackRef:
+              properties:
+                name:
+                  default: ""
+                  type: string
+              type: object
+              x-kubernetes-map-type: atomic
+            tenantID:
+              type: string
+            tenantName:
+              type: string
+            traces:
+              properties:
+                retention:
+                  pattern: ^(-?(0|(([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?)|([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})))$
+                  type: string
+                targetEndpoint:
+                  type: string
+              required:
+              - retention
+              - targetEndpoint
+              type: object
+          required:
+          - telemetryStackRef
+          - tenantID
+          type: object
+      type: object

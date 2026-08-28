@@ -28,7 +28,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.36.0
+          version: v0.37.0
         enforceQuota: false
         flow: standalone-create
         icon: qlementine-icons:version-control-16
@@ -43,7 +43,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.36.0
+          version: v0.37.0
         enforceQuota: false
         flow: standalone-create
         icon: hugeicons:settings-05
@@ -59,15 +59,13 @@ spec:
         icon: hugeicons:vertical-resize
         name: Scale Vertically
         operationId: scale-vertically
-      - disabledTemplate: |
-          {{ not (gt .spec.replicas 1) }}
-        editor:
+      - editor:
           name: opskubedbcom-pgbounceropsrequest-editor
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.36.0
+          version: v0.37.0
         enforceQuota: true
         flow: standalone-create
         icon: hugeicons:horizontal-resize
@@ -82,7 +80,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.36.0
+          version: v0.37.0
         enforceQuota: true
         flow: standalone-create
         icons:
@@ -99,7 +97,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.36.0
+          version: v0.37.0
         enforceQuota: true
         flow: standalone-edit
         icons:
@@ -116,7 +114,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.36.0
+          version: v0.37.0
         enforceQuota: false
         flow: standalone-edit
         icon: hugeicons:presentation-line-chart-01
@@ -132,7 +130,7 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-wizards-oci
-      version: v0.36.0
+      version: v0.37.0
     enforceQuota: false
     options:
       name: kubedbcom-pgbouncer-editor-options
@@ -140,7 +138,7 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-wizards-oci
-      version: v0.36.0
+      version: v0.37.0
   variants:
   - name: default
     selector:

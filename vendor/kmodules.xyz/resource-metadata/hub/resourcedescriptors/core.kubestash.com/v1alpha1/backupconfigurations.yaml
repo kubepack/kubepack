@@ -46,6 +46,54 @@ spec:
     references:
     - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
     target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: Aerospike
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: Cassandra
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: ClickHouse
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: DB2
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: DocumentDB
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: Druid
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
       apiVersion: kubedb.com/v1
       kind: Elasticsearch
     type: MatchRef
@@ -54,8 +102,56 @@ spec:
     references:
     - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
     target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: HanaDB
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: Hazelcast
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: Ignite
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1
+      kind: Kafka
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
       apiVersion: kubedb.com/v1
       kind: MariaDB
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1
+      kind: Memcached
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: Milvus
     type: MatchRef
   - labels:
     - backup_via
@@ -86,6 +182,22 @@ spec:
     references:
     - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
     target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: Neo4j
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: Oracle
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
       apiVersion: kubedb.com/v1
       kind: PerconaXtraDB
     type: MatchRef
@@ -95,7 +207,47 @@ spec:
     - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
     target:
       apiVersion: kubedb.com/v1
+      kind: PgBouncer
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: Pgpool
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1
       kind: Postgres
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1
+      kind: ProxySQL
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: Qdrant
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: RabbitMQ
     type: MatchRef
   - labels:
     - backup_via
@@ -112,6 +264,30 @@ spec:
     target:
       apiVersion: kubedb.com/v1alpha2
       kind: Singlestore
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: Solr
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: Weaviate
+    type: MatchRef
+  - labels:
+    - backup_via
+    references:
+    - '{.spec.target.name},{.spec.target.namespace},{.spec.target.kind},{.spec.target.apiGroup}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: ZooKeeper
     type: MatchRef
   resource:
     group: core.kubestash.com
