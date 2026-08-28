@@ -24,6 +24,16 @@ spec:
       kind: PetSet
     type: MatchSelector
   - labels:
+    - connect_via
+    level: Controller
+    nameTemplate: '{.metadata.name}'
+    namespace:
+      path: metadata.namespace
+    target:
+      apiVersion: appcatalog.appscode.com/v1alpha1
+      kind: AppBinding
+    type: MatchName
+  - labels:
     - auth_secret
     references:
     - '{.spec.authSecret.name}'

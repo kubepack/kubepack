@@ -34,6 +34,14 @@ spec:
       kind: AppBinding
     type: MatchName
   - labels:
+    - auth_secret
+    references:
+    - '{.spec.authSecret.name}'
+    target:
+      apiVersion: v1
+      kind: Secret
+    type: MatchRef
+  - labels:
     - catalog
     references:
     - '{.spec.version}'

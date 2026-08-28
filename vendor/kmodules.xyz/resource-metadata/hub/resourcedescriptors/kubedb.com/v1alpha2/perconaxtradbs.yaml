@@ -34,6 +34,14 @@ spec:
       kind: AppBinding
     type: MatchName
   - labels:
+    - auth_secret
+    references:
+    - '{.spec.authSecret.name}'
+    target:
+      apiVersion: v1
+      kind: Secret
+    type: MatchRef
+  - labels:
     - catalog
     references:
     - '{.spec.version}'
@@ -59,6 +67,24 @@ spec:
       apiVersion: cert-manager.io/v1
       kind: ClusterIssuer
     type: MatchRef
+  - labels:
+    - view
+    nameTemplate: '{.metadata.name}~PerconaXtraDB.kubedb.com'
+    namespace:
+      path: metadata.namespace
+    target:
+      apiVersion: core.k8s.appscode.com/v1alpha1
+      kind: GenericResource
+    type: MatchName
+  - labels:
+    - view
+    nameTemplate: '{.metadata.name}~PerconaXtraDB.kubedb.com'
+    namespace:
+      path: metadata.namespace
+    target:
+      apiVersion: core.k8s.appscode.com/v1alpha1
+      kind: GenericResourceService
+    type: MatchName
   exec:
   - alias: Primary
     command:

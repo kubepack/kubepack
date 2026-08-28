@@ -5,6 +5,7 @@ import (
 	"embed"
 	iofs "io/fs"
 	"os"
+	"path/filepath"
 )
 
 const (
@@ -31,7 +32,17 @@ func NewReloader(dir string, fs embed.FS, loadFn func(fsys iofs.FS)) *Reloader {
 }
 
 func (r *Reloader) FS() iofs.FS {
-	if fi, err := os.Stat(r.dir); os.IsNotExist(err) || !fi.IsDir() {
+	// Fall back to the embedded FS unless the override directory exists.
+	// Guard against every stat error (not just IsNotExist) so a nil FileInfo
+	// is never dereferenced.
+	if fi, err := os.Stat(r.dir); err != nil || !fi.IsDir() {
+		return r.fs
+	}
+	// Only adopt the override directory once it has been fully populated,
+	// signaled by the presence of the trigger file. Without this check an
+	// empty or partially-written directory (e.g. a stale leftover) would
+	// silently shadow the embedded FS and load nothing.
+	if _, err := os.Stat(filepath.Join(r.dir, TriggerFile)); err != nil {
 		return r.fs
 	}
 	return os.DirFS(r.dir)

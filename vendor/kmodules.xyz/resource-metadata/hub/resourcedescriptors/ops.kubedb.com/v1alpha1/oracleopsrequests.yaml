@@ -8,6 +8,15 @@ metadata:
     k8s.io/version: v1alpha1
   name: ops.kubedb.com-v1alpha1-oracleopsrequests
 spec:
+  connections:
+  - labels:
+    - ops
+    references:
+    - '{.spec.databaseRef.name}'
+    target:
+      apiVersion: kubedb.com/v1alpha2
+      kind: Oracle
+    type: MatchRef
   resource:
     group: ops.kubedb.com
     kind: OracleOpsRequest

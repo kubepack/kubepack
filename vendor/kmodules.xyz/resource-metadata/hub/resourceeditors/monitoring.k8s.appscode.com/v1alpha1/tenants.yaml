@@ -1,0 +1,16 @@
+apiVersion: ui.k8s.appscode.com/v1alpha1
+kind: ResourceEditor
+metadata:
+  labels:
+    k8s.io/group: monitoring.k8s.appscode.com
+    k8s.io/kind: Tenant
+    k8s.io/resource: tenants
+    k8s.io/version: v1alpha1
+  name: monitoring.k8s.appscode.com-v1alpha1-tenants
+spec:
+  resource:
+    group: monitoring.k8s.appscode.com
+    kind: Tenant
+    name: tenants
+    scope: Cluster
+    version: v1alpha1
