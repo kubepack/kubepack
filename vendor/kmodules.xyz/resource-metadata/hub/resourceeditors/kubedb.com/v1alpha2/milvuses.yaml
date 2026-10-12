@@ -9,9 +9,9 @@ metadata:
   name: kubedb.com-v1alpha2-milvuses
 spec:
   icons:
-  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/milvus.svg
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/milvuses.svg
     type: image/svg+xml
-  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/milvus.png
+  - src: https://cdn.appscode.com/k8s/icons/kubedb.com/milvuses.png
     type: image/png
   resource:
     group: kubedb.com
@@ -23,12 +23,59 @@ spec:
     actions:
     - items:
       - editor:
+          name: kubedbcom-milvus-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-wizards-oci
+          version: v0.38.0
+        enforceQuota: false
+        flow: standalone-edit
+        icon: material-symbols-light:backup-outline
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/configure-backup.svg
+          type: image/svg+xml
+        name: Configure Backup
+        operationId: edit-self-backupconfiguration
+      - editor:
+          name: corekubestashcom-backupsession-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-wizards-oci
+          version: v0.38.0
+        enforceQuota: false
+        flow: standalone-create
+        icon: carbon:ibm-cloud-backup-and-recovery
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/instant-backup.svg
+          type: image/svg+xml
+        name: Instant Backup
+        operationId: create-instant-backup
+      - editor:
+          name: corekubestashcom-restoresession-editor-options
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-wizards-oci
+          version: v0.38.0
+        enforceQuota: false
+        flow: standalone-create
+        icon: mdi:backup-restore
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/restore.svg
+          type: image/svg+xml
+        name: Restore
+        operationId: create-restoresession
+      name: Backups
+    - items:
+      - editor:
           name: opskubedbcom-milvusopsrequest-editor
           sourceRef:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.37.0
+          version: v0.38.0
         enforceQuota: false
         flow: standalone-create
         icon: qlementine-icons:version-control-16
@@ -43,7 +90,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.37.0
+          version: v0.38.0
         enforceQuota: false
         flow: standalone-create
         icon: hugeicons:redo
@@ -58,7 +105,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.37.0
+          version: v0.38.0
         enforceQuota: false
         flow: standalone-create
         icon: hugeicons:settings-05
@@ -87,7 +134,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.37.0
+          version: v0.38.0
         enforceQuota: true
         flow: standalone-create
         icon: hugeicons:horizontal-resize
@@ -102,7 +149,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.37.0
+          version: v0.38.0
         enforceQuota: true
         flow: standalone-create
         icons:
@@ -117,7 +164,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.37.0
+          version: v0.38.0
         enforceQuota: true
         flow: standalone-create
         icons:
@@ -134,7 +181,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.37.0
+          version: v0.38.0
         enforceQuota: true
         flow: standalone-edit
         icons:
@@ -149,7 +196,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.37.0
+          version: v0.38.0
         enforceQuota: true
         flow: standalone-edit
         icons:
@@ -166,7 +213,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.37.0
+          version: v0.38.0
         enforceQuota: false
         flow: standalone-create
         icon: hugeicons:security-check
@@ -181,7 +228,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.37.0
+          version: v0.38.0
         enforceQuota: false
         flow: standalone-edit
         icon: hugeicons:presentation-line-chart-01
@@ -197,7 +244,7 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-wizards-oci
-      version: v0.37.0
+      version: v0.38.0
     enforceQuota: true
     options:
       name: kubedbcom-milvus-editor-options
@@ -205,7 +252,7 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-wizards-oci
-      version: v0.37.0
+      version: v0.38.0
   variants:
   - name: default
     selector:

@@ -614,12 +614,12 @@ func (x *YAMLPrinter) Do() error {
 	var manifestDoc bytes.Buffer
 
 	if !apis.BuiltinNamespaces.Has(x.Namespace) {
-		manifestDoc.WriteString(fmt.Sprintf(`apiVersion: metav1
+		fmt.Fprintf(&manifestDoc, `apiVersion: metav1
 kind: Namespace
 metadata:
   name: %s
 
-`, x.Namespace))
+`, x.Namespace)
 	}
 
 	for _, hook := range hooks {
