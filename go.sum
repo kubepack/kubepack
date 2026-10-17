@@ -817,8 +817,8 @@ kmodules.xyz/go-containerregistry v0.0.15 h1:PRY5FDOzb6u23KOulQ4SWNdeUkBKmezLyJX
 kmodules.xyz/go-containerregistry v0.0.15/go.mod h1:rO0DEbYYEu1BfVcZ1pXV+3RgzVXr/k5hXcO+BQYVVDI=
 kmodules.xyz/offshoot-api v0.34.0 h1:HnOOp8FrCjTWjtNApRDo6Ahe79tOlLrJmyye4xxO4Kk=
 kmodules.xyz/offshoot-api v0.34.0/go.mod h1:F+B59yYw4CZJ4uD4xu6C+mMLzIXUtuH7E+SbDICl9jE=
-kmodules.xyz/resource-metadata v0.50.0 h1:UMafau7cqKQ162t6tzvMQ6ZA5E7ncQTANUIU10hyoes=
-kmodules.xyz/resource-metadata v0.50.0/go.mod h1:feZ7UFQKMNWk+WjnxbztQoCNnH6DXQMvt/y/HAXiehE=
+kmodules.xyz/resource-metadata v0.51.0 h1:091jSScBfiK3YFaqWKvjnwrvAFcxmNHpSe6Dv49nSbA=
+kmodules.xyz/resource-metadata v0.51.0/go.mod h1:feZ7UFQKMNWk+WjnxbztQoCNnH6DXQMvt/y/HAXiehE=
 kmodules.xyz/resource-metrics v0.34.0 h1:cqscgTx3PONxHj6PIySK3sTlKKv8iKTGzRd+S6YSwXg=
 kmodules.xyz/resource-metrics v0.34.0/go.mod h1:R34IKtp5+NqcQz7AQJheBJK6Iem0LqrCbm/55Mn+ECQ=
 kubepack.dev/lib-helm v0.34.0 h1:I6zYyKml4tqxTq7etlD7WvizTwgx6NE21DqHQJgWStM=
