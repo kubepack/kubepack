@@ -21,7 +21,7 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-wizards-oci
-      version: v0.38.0
+      version: v0.39.0
     enforceQuota: false
   variants:
   - name: MariaDB
