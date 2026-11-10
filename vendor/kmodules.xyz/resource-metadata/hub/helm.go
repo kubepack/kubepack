@@ -49,6 +49,7 @@ const (
 
 	ChartACE                = "ace"
 	ChartACEInstaller       = "ace-installer"
+	ChartAKPInstaller       = "akp-installer"
 	ChartLicenseProxyServer = "license-proxyserver"
 	ChartOpscenterFeatures  = "opscenter-features"
 

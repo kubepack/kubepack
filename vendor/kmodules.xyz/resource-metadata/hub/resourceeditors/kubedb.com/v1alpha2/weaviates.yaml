@@ -28,7 +28,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.39.0
+          version: v0.40.0
         enforceQuota: false
         flow: standalone-create
         icon: qlementine-icons:version-control-16
@@ -43,7 +43,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.39.0
+          version: v0.40.0
         enforceQuota: false
         flow: standalone-create
         icon: hugeicons:redo
@@ -58,7 +58,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.39.0
+          version: v0.40.0
         enforceQuota: false
         flow: standalone-create
         icon: hugeicons:settings-05
@@ -67,6 +67,23 @@ spec:
           type: image/svg+xml
         name: Reconfigure
         operationId: create-opsrequest-reconfigure
+      - disabledTemplate: |
+          {{ dig "disableSecurity" false .spec }}
+        editor:
+          name: opskubedbcom-weaviateopsrequest-editor
+          sourceRef:
+            apiGroup: source.toolkit.fluxcd.io
+            kind: HelmRepository
+            name: appscode-wizards-oci
+          version: v0.40.0
+        enforceQuota: false
+        flow: standalone-create
+        icon: hugeicons:key-01
+        icons:
+        - src: https://cdn.appscode.com/k8s/icons/action-icons/configure.svg
+          type: image/svg+xml
+        name: Rotate Auth
+        operationId: create-opsrequest-rotateauth
       name: Operations
     - items:
       - enforceQuota: false
@@ -87,7 +104,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.39.0
+          version: v0.40.0
         enforceQuota: true
         flow: standalone-create
         icon: hugeicons:horizontal-resize
@@ -102,7 +119,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.39.0
+          version: v0.40.0
         enforceQuota: true
         flow: standalone-create
         icons:
@@ -117,7 +134,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.39.0
+          version: v0.40.0
         enforceQuota: true
         flow: standalone-create
         icons:
@@ -134,7 +151,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.39.0
+          version: v0.40.0
         enforceQuota: true
         flow: standalone-edit
         icons:
@@ -149,7 +166,7 @@ spec:
             apiGroup: source.toolkit.fluxcd.io
             kind: HelmRepository
             name: appscode-wizards-oci
-          version: v0.39.0
+          version: v0.40.0
         enforceQuota: true
         flow: standalone-edit
         icons:
@@ -165,7 +182,7 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-wizards-oci
-      version: v0.39.0
+      version: v0.40.0
     enforceQuota: true
     options:
       name: kubedbcom-weaviate-editor-options
@@ -173,7 +190,7 @@ spec:
         apiGroup: source.toolkit.fluxcd.io
         kind: HelmRepository
         name: appscode-wizards-oci
-      version: v0.39.0
+      version: v0.40.0
   variants:
   - name: default
     selector:
